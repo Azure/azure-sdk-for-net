@@ -17,7 +17,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of PremierAddOn and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteSlotPremierAddOn and their operations over its parent. </summary>
     public partial class SiteSlotPremierAddOnCollection : ArmCollection
     {
         private readonly ClientDiagnostics _siteSlotPremierAddOnWebAppsClientDiagnostics;

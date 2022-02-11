@@ -217,21 +217,21 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// Operation Id: StaticSites_UpdateStaticSite
         /// </summary>
-        /// <param name="staticSiteEnvelope"> A JSON representation of the staticsite properties. See example. </param>
+        /// <param name="options"> A JSON representation of the staticsite properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="staticSiteEnvelope"/> is null. </exception>
-        public async virtual Task<Response<StaticSiteARMResource>> UpdateAsync(StaticSitePatchResource staticSiteEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<Response<StaticSiteARMResource>> UpdateAsync(StaticSiteARMResourceUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (staticSiteEnvelope == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(staticSiteEnvelope));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _staticSiteARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteARMResource.Update");
             scope.Start();
             try
             {
-                var response = await _staticSiteARMResourceStaticSitesRestClient.UpdateStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, staticSiteEnvelope, cancellationToken).ConfigureAwait(false);
+                var response = await _staticSiteARMResourceStaticSitesRestClient.UpdateStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new StaticSiteARMResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -246,21 +246,21 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// Operation Id: StaticSites_UpdateStaticSite
         /// </summary>
-        /// <param name="staticSiteEnvelope"> A JSON representation of the staticsite properties. See example. </param>
+        /// <param name="options"> A JSON representation of the staticsite properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="staticSiteEnvelope"/> is null. </exception>
-        public virtual Response<StaticSiteARMResource> Update(StaticSitePatchResource staticSiteEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<StaticSiteARMResource> Update(StaticSiteARMResourceUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (staticSiteEnvelope == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(staticSiteEnvelope));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _staticSiteARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteARMResource.Update");
             scope.Start();
             try
             {
-                var response = _staticSiteARMResourceStaticSitesRestClient.UpdateStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, staticSiteEnvelope, cancellationToken);
+                var response = _staticSiteARMResourceStaticSitesRestClient.UpdateStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
                 return Response.FromValue(new StaticSiteARMResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

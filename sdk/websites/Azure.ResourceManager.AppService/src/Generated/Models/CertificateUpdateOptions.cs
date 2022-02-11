@@ -13,15 +13,15 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ARM resource for a certificate. </summary>
-    public partial class CertificatePatchResource : ProxyOnlyResource
+    public partial class CertificateUpdateOptions : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of CertificatePatchResource. </summary>
-        public CertificatePatchResource()
+        /// <summary> Initializes a new instance of CertificateUpdateOptions. </summary>
+        public CertificateUpdateOptions()
         {
             HostNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CertificatePatchResource. </summary>
+        /// <summary> Initializes a new instance of CertificateUpdateOptions. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="serverFarmId"> Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;. </param>
         /// <param name="canonicalName"> CNAME of the certificate to be issued via free certificate. </param>
         /// <param name="domainValidationMethod"> Method of domain validation for free cert. </param>
-        internal CertificatePatchResource(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string password, string friendlyName, string subjectName, IList<string> hostNames, byte[] pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueDate, DateTimeOffset? expirationDate, string thumbprint, bool? valid, byte[] cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, string serverFarmId, string canonicalName, string domainValidationMethod) : base(id, name, type, systemData, kind)
+        internal CertificateUpdateOptions(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string password, string friendlyName, string subjectName, IList<string> hostNames, byte[] pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueDate, DateTimeOffset? expirationDate, string thumbprint, bool? valid, byte[] cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, string serverFarmId, string canonicalName, string domainValidationMethod) : base(id, name, type, systemData, kind)
         {
             Password = password;
             FriendlyName = friendlyName;

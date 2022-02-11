@@ -18,44 +18,44 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SiteConfigWeb along with the instance operations that can be performed on it. </summary>
-    public partial class SiteConfigWeb : ArmResource
+    /// <summary> A Class representing a WebSiteConfig along with the instance operations that can be performed on it. </summary>
+    public partial class WebSiteConfig : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SiteConfigWeb"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="WebSiteConfig"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _siteConfigWebWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _siteConfigWebWebAppsRestClient;
+        private readonly ClientDiagnostics _webSiteConfigWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _webSiteConfigWebAppsRestClient;
         private readonly ClientDiagnostics _siteConfigSnapshotWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _siteConfigSnapshotWebAppsRestClient;
         private readonly SiteConfigData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SiteConfigWeb"/> class for mocking. </summary>
-        protected SiteConfigWeb()
+        /// <summary> Initializes a new instance of the <see cref="WebSiteConfig"/> class for mocking. </summary>
+        protected WebSiteConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteConfigWeb"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "WebSiteConfig"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteConfigWeb(ArmClient client, SiteConfigData data) : this(client, data.Id)
+        internal WebSiteConfig(ArmClient client, SiteConfigData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteConfigWeb"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebSiteConfig"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteConfigWeb(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal WebSiteConfig(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteConfigWebWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteConfigWebWebAppsApiVersion);
-            _siteConfigWebWebAppsRestClient = new WebAppsRestOperations(_siteConfigWebWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteConfigWebWebAppsApiVersion);
+            _webSiteConfigWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string webSiteConfigWebAppsApiVersion);
+            _webSiteConfigWebAppsRestClient = new WebAppsRestOperations(_webSiteConfigWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webSiteConfigWebAppsApiVersion);
             _siteConfigSnapshotWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteConfigSnapshot.ResourceType.Namespace, DiagnosticOptions);
             Client.TryGetApiVersion(SiteConfigSnapshot.ResourceType, out string siteConfigSnapshotWebAppsApiVersion);
             _siteConfigSnapshotWebAppsRestClient = new WebAppsRestOperations(_siteConfigSnapshotWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteConfigSnapshotWebAppsApiVersion);
@@ -101,16 +101,16 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetConfiguration
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteConfigWeb>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<WebSiteConfig>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteConfigWebWebAppsClientDiagnostics.CreateScope("SiteConfigWeb.Get");
+            using var scope = _webSiteConfigWebAppsClientDiagnostics.CreateScope("WebSiteConfig.Get");
             scope.Start();
             try
             {
-                var response = await _siteConfigWebWebAppsRestClient.GetConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteConfigWebAppsRestClient.GetConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteConfigWebWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteConfigWeb(Client, response.Value), response.GetRawResponse());
+                    throw await _webSiteConfigWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new WebSiteConfig(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -125,16 +125,16 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetConfiguration
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SiteConfigWeb> Get(CancellationToken cancellationToken = default)
+        public virtual Response<WebSiteConfig> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteConfigWebWebAppsClientDiagnostics.CreateScope("SiteConfigWeb.Get");
+            using var scope = _webSiteConfigWebAppsClientDiagnostics.CreateScope("WebSiteConfig.Get");
             scope.Start();
             try
             {
-                var response = _siteConfigWebWebAppsRestClient.GetConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _webSiteConfigWebAppsRestClient.GetConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _siteConfigWebWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteConfigWeb(Client, response.Value), response.GetRawResponse());
+                    throw _webSiteConfigWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new WebSiteConfig(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,19 +151,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteConfig"/> is null. </exception>
-        public async virtual Task<Response<SiteConfigWeb>> UpdateAsync(SiteConfigData siteConfig, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<WebSiteConfig>> UpdateAsync(SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             if (siteConfig == null)
             {
                 throw new ArgumentNullException(nameof(siteConfig));
             }
 
-            using var scope = _siteConfigWebWebAppsClientDiagnostics.CreateScope("SiteConfigWeb.Update");
+            using var scope = _webSiteConfigWebAppsClientDiagnostics.CreateScope("WebSiteConfig.Update");
             scope.Start();
             try
             {
-                var response = await _siteConfigWebWebAppsRestClient.UpdateConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, siteConfig, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SiteConfigWeb(Client, response.Value), response.GetRawResponse());
+                var response = await _webSiteConfigWebAppsRestClient.UpdateConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, siteConfig, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new WebSiteConfig(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -180,19 +180,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteConfig"/> is null. </exception>
-        public virtual Response<SiteConfigWeb> Update(SiteConfigData siteConfig, CancellationToken cancellationToken = default)
+        public virtual Response<WebSiteConfig> Update(SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             if (siteConfig == null)
             {
                 throw new ArgumentNullException(nameof(siteConfig));
             }
 
-            using var scope = _siteConfigWebWebAppsClientDiagnostics.CreateScope("SiteConfigWeb.Update");
+            using var scope = _webSiteConfigWebAppsClientDiagnostics.CreateScope("WebSiteConfig.Update");
             scope.Start();
             try
             {
-                var response = _siteConfigWebWebAppsRestClient.UpdateConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, siteConfig, cancellationToken);
-                return Response.FromValue(new SiteConfigWeb(Client, response.Value), response.GetRawResponse());
+                var response = _webSiteConfigWebAppsRestClient.UpdateConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, siteConfig, cancellationToken);
+                return Response.FromValue(new WebSiteConfig(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -210,19 +210,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteConfig"/> is null. </exception>
-        public async virtual Task<ArmOperation<SiteConfigWeb>> CreateOrUpdateAsync(bool waitForCompletion, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<WebSiteConfig>> CreateOrUpdateAsync(bool waitForCompletion, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             if (siteConfig == null)
             {
                 throw new ArgumentNullException(nameof(siteConfig));
             }
 
-            using var scope = _siteConfigWebWebAppsClientDiagnostics.CreateScope("SiteConfigWeb.CreateOrUpdate");
+            using var scope = _webSiteConfigWebAppsClientDiagnostics.CreateScope("WebSiteConfig.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _siteConfigWebWebAppsRestClient.CreateOrUpdateConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, siteConfig, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteConfigWeb>(Response.FromValue(new SiteConfigWeb(Client, response), response.GetRawResponse()));
+                var response = await _webSiteConfigWebAppsRestClient.CreateOrUpdateConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, siteConfig, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<WebSiteConfig>(Response.FromValue(new WebSiteConfig(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -243,19 +243,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteConfig"/> is null. </exception>
-        public virtual ArmOperation<SiteConfigWeb> CreateOrUpdate(bool waitForCompletion, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<WebSiteConfig> CreateOrUpdate(bool waitForCompletion, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             if (siteConfig == null)
             {
                 throw new ArgumentNullException(nameof(siteConfig));
             }
 
-            using var scope = _siteConfigWebWebAppsClientDiagnostics.CreateScope("SiteConfigWeb.CreateOrUpdate");
+            using var scope = _webSiteConfigWebAppsClientDiagnostics.CreateScope("WebSiteConfig.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _siteConfigWebWebAppsRestClient.CreateOrUpdateConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, siteConfig, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteConfigWeb>(Response.FromValue(new SiteConfigWeb(Client, response), response.GetRawResponse()));
+                var response = _webSiteConfigWebAppsRestClient.CreateOrUpdateConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, siteConfig, cancellationToken);
+                var operation = new AppServiceArmOperation<WebSiteConfig>(Response.FromValue(new WebSiteConfig(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<SiteConfigurationSnapshotInfo>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigWeb.GetConfigurationSnapshotInfo");
+                using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("WebSiteConfig.GetConfigurationSnapshotInfo");
                 scope.Start();
                 try
                 {
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<SiteConfigurationSnapshotInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigWeb.GetConfigurationSnapshotInfo");
+                using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("WebSiteConfig.GetConfigurationSnapshotInfo");
                 scope.Start();
                 try
                 {
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.AppService
         {
             Page<SiteConfigurationSnapshotInfo> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigWeb.GetConfigurationSnapshotInfo");
+                using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("WebSiteConfig.GetConfigurationSnapshotInfo");
                 scope.Start();
                 try
                 {
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.AppService
             }
             Page<SiteConfigurationSnapshotInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigWeb.GetConfigurationSnapshotInfo");
+                using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("WebSiteConfig.GetConfigurationSnapshotInfo");
                 scope.Start();
                 try
                 {

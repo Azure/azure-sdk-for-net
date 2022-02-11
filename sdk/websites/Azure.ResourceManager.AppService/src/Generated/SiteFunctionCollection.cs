@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of FunctionEnvelope and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteFunction and their operations over its parent. </summary>
     public partial class SiteFunctionCollection : ArmCollection, IEnumerable<SiteFunction>, IAsyncEnumerable<SiteFunction>
     {
         private readonly ClientDiagnostics _siteFunctionWebAppsClientDiagnostics;

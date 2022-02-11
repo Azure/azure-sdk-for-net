@@ -17,7 +17,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of RecommendationRule and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteRecommendation and their operations over its parent. </summary>
     public partial class SiteRecommendationCollection : ArmCollection
     {
         private readonly ClientDiagnostics _siteRecommendationRecommendationsClientDiagnostics;

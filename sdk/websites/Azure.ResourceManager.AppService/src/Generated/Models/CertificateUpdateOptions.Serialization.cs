@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class CertificatePatchResource : IUtf8JsonSerializable
+    public partial class CertificateUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        internal static CertificatePatchResource DeserializeCertificatePatchResource(JsonElement element)
+        internal static CertificateUpdateOptions DeserializeCertificateUpdateOptions(JsonElement element)
         {
             Optional<string> kind = default;
             ResourceIdentifier id = default;
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new CertificatePatchResource(id, name, type, systemData, kind.Value, password.Value, friendlyName.Value, subjectName.Value, Optional.ToList(hostNames), pfxBlob.Value, siteName.Value, selfLink.Value, issuer.Value, Optional.ToNullable(issueDate), Optional.ToNullable(expirationDate), thumbprint.Value, Optional.ToNullable(valid), cerBlob.Value, publicKeyHash.Value, hostingEnvironmentProfile.Value, keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(keyVaultSecretStatus), serverFarmId.Value, canonicalName.Value, domainValidationMethod.Value);
+            return new CertificateUpdateOptions(id, name, type, systemData, kind.Value, password.Value, friendlyName.Value, subjectName.Value, Optional.ToList(hostNames), pfxBlob.Value, siteName.Value, selfLink.Value, issuer.Value, Optional.ToNullable(issueDate), Optional.ToNullable(expirationDate), thumbprint.Value, Optional.ToNullable(valid), cerBlob.Value, publicKeyHash.Value, hostingEnvironmentProfile.Value, keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(keyVaultSecretStatus), serverFarmId.Value, canonicalName.Value, domainValidationMethod.Value);
         }
     }
 }

@@ -17,42 +17,42 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SiteSlotBasicPublishingCredentialsPolicyScm along with the instance operations that can be performed on it. </summary>
-    public partial class SiteSlotBasicPublishingCredentialsPolicyScm : ArmResource
+    /// <summary> A Class representing a ScmSiteSlotBasicPublishingCredentialsPolicy along with the instance operations that can be performed on it. </summary>
+    public partial class ScmSiteSlotBasicPublishingCredentialsPolicy : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SiteSlotBasicPublishingCredentialsPolicyScm"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicy"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _siteSlotBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _siteSlotBasicPublishingCredentialsPolicyScmWebAppsRestClient;
+        private readonly ClientDiagnostics _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsRestClient;
         private readonly CsmPublishingCredentialsPoliciesEntityData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotBasicPublishingCredentialsPolicyScm"/> class for mocking. </summary>
-        protected SiteSlotBasicPublishingCredentialsPolicyScm()
+        /// <summary> Initializes a new instance of the <see cref="ScmSiteSlotBasicPublishingCredentialsPolicy"/> class for mocking. </summary>
+        protected ScmSiteSlotBasicPublishingCredentialsPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteSlotBasicPublishingCredentialsPolicyScm"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ScmSiteSlotBasicPublishingCredentialsPolicy"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteSlotBasicPublishingCredentialsPolicyScm(ArmClient client, CsmPublishingCredentialsPoliciesEntityData data) : this(client, data.Id)
+        internal ScmSiteSlotBasicPublishingCredentialsPolicy(ArmClient client, CsmPublishingCredentialsPoliciesEntityData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotBasicPublishingCredentialsPolicyScm"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScmSiteSlotBasicPublishingCredentialsPolicy"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteSlotBasicPublishingCredentialsPolicyScm(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ScmSiteSlotBasicPublishingCredentialsPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteSlotBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteSlotBasicPublishingCredentialsPolicyScmWebAppsApiVersion);
-            _siteSlotBasicPublishingCredentialsPolicyScmWebAppsRestClient = new WebAppsRestOperations(_siteSlotBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotBasicPublishingCredentialsPolicyScmWebAppsApiVersion);
+            _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string scmSiteSlotBasicPublishingCredentialsPolicyWebAppsApiVersion);
+            _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsRestClient = new WebAppsRestOperations(_scmSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, scmSiteSlotBasicPublishingCredentialsPolicyWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,16 +88,16 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetScmAllowedSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteSlotBasicPublishingCredentialsPolicyScm>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ScmSiteSlotBasicPublishingCredentialsPolicy>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics.CreateScope("SiteSlotBasicPublishingCredentialsPolicyScm.Get");
+            using var scope = _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateScope("ScmSiteSlotBasicPublishingCredentialsPolicy.Get");
             scope.Start();
             try
             {
-                var response = await _siteSlotBasicPublishingCredentialsPolicyScmWebAppsRestClient.GetScmAllowedSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsRestClient.GetScmAllowedSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteSlotBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotBasicPublishingCredentialsPolicyScm(Client, response.Value), response.GetRawResponse());
+                    throw await _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ScmSiteSlotBasicPublishingCredentialsPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,16 +112,16 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetScmAllowedSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SiteSlotBasicPublishingCredentialsPolicyScm> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ScmSiteSlotBasicPublishingCredentialsPolicy> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics.CreateScope("SiteSlotBasicPublishingCredentialsPolicyScm.Get");
+            using var scope = _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateScope("ScmSiteSlotBasicPublishingCredentialsPolicy.Get");
             scope.Start();
             try
             {
-                var response = _siteSlotBasicPublishingCredentialsPolicyScmWebAppsRestClient.GetScmAllowedSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
+                var response = _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsRestClient.GetScmAllowedSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _siteSlotBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotBasicPublishingCredentialsPolicyScm(Client, response.Value), response.GetRawResponse());
+                    throw _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ScmSiteSlotBasicPublishingCredentialsPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,19 +139,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
-        public async virtual Task<ArmOperation<SiteSlotBasicPublishingCredentialsPolicyScm>> CreateOrUpdateAsync(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ScmSiteSlotBasicPublishingCredentialsPolicy>> CreateOrUpdateAsync(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
         {
             if (csmPublishingAccessPoliciesEntity == null)
             {
                 throw new ArgumentNullException(nameof(csmPublishingAccessPoliciesEntity));
             }
 
-            using var scope = _siteSlotBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics.CreateScope("SiteSlotBasicPublishingCredentialsPolicyScm.CreateOrUpdate");
+            using var scope = _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateScope("ScmSiteSlotBasicPublishingCredentialsPolicy.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _siteSlotBasicPublishingCredentialsPolicyScmWebAppsRestClient.UpdateScmAllowedSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, csmPublishingAccessPoliciesEntity, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteSlotBasicPublishingCredentialsPolicyScm>(Response.FromValue(new SiteSlotBasicPublishingCredentialsPolicyScm(Client, response), response.GetRawResponse()));
+                var response = await _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsRestClient.UpdateScmAllowedSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, csmPublishingAccessPoliciesEntity, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<ScmSiteSlotBasicPublishingCredentialsPolicy>(Response.FromValue(new ScmSiteSlotBasicPublishingCredentialsPolicy(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -172,19 +172,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
-        public virtual ArmOperation<SiteSlotBasicPublishingCredentialsPolicyScm> CreateOrUpdate(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ScmSiteSlotBasicPublishingCredentialsPolicy> CreateOrUpdate(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
         {
             if (csmPublishingAccessPoliciesEntity == null)
             {
                 throw new ArgumentNullException(nameof(csmPublishingAccessPoliciesEntity));
             }
 
-            using var scope = _siteSlotBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics.CreateScope("SiteSlotBasicPublishingCredentialsPolicyScm.CreateOrUpdate");
+            using var scope = _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateScope("ScmSiteSlotBasicPublishingCredentialsPolicy.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _siteSlotBasicPublishingCredentialsPolicyScmWebAppsRestClient.UpdateScmAllowedSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, csmPublishingAccessPoliciesEntity, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteSlotBasicPublishingCredentialsPolicyScm>(Response.FromValue(new SiteSlotBasicPublishingCredentialsPolicyScm(Client, response), response.GetRawResponse()));
+                var response = _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsRestClient.UpdateScmAllowedSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, csmPublishingAccessPoliciesEntity, cancellationToken);
+                var operation = new AppServiceArmOperation<ScmSiteSlotBasicPublishingCredentialsPolicy>(Response.FromValue(new ScmSiteSlotBasicPublishingCredentialsPolicy(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

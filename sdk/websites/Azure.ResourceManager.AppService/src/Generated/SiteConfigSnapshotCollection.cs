@@ -17,7 +17,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteConfig and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteConfigSnapshot and their operations over its parent. </summary>
     public partial class SiteConfigSnapshotCollection : ArmCollection
     {
         private readonly ClientDiagnostics _siteConfigSnapshotWebAppsClientDiagnostics;

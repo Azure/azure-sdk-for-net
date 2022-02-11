@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of VnetInfoResource and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteVirtualNetworkConnection and their operations over its parent. </summary>
     public partial class SiteVirtualNetworkConnectionCollection : ArmCollection, IEnumerable<SiteVirtualNetworkConnection>, IAsyncEnumerable<SiteVirtualNetworkConnection>
     {
         private readonly ClientDiagnostics _siteVirtualNetworkConnectionWebAppsClientDiagnostics;

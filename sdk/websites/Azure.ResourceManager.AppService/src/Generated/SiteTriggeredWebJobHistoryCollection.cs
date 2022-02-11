@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of TriggeredJobHistory and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteTriggeredWebJobHistory and their operations over its parent. </summary>
     public partial class SiteTriggeredWebJobHistoryCollection : ArmCollection, IEnumerable<SiteTriggeredWebJobHistory>, IAsyncEnumerable<SiteTriggeredWebJobHistory>
     {
         private readonly ClientDiagnostics _siteTriggeredWebJobHistoryWebAppsClientDiagnostics;

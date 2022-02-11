@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class KubeEnvironmentPatchResource : IUtf8JsonSerializable
+    public partial class KubeEnvironmentUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        internal static KubeEnvironmentPatchResource DeserializeKubeEnvironmentPatchResource(JsonElement element)
+        internal static KubeEnvironmentUpdateOptions DeserializeKubeEnvironmentUpdateOptions(JsonElement element)
         {
             Optional<string> kind = default;
             ResourceIdentifier id = default;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new KubeEnvironmentPatchResource(id, name, type, systemData, kind.Value, Optional.ToNullable(provisioningState), deploymentErrors.Value, Optional.ToNullable(internalLoadBalancerEnabled), defaultDomain.Value, staticIp.Value, arcConfiguration.Value, appLogsConfiguration.Value, aksResourceID.Value);
+            return new KubeEnvironmentUpdateOptions(id, name, type, systemData, kind.Value, Optional.ToNullable(provisioningState), deploymentErrors.Value, Optional.ToNullable(internalLoadBalancerEnabled), defaultDomain.Value, staticIp.Value, arcConfiguration.Value, appLogsConfiguration.Value, aksResourceID.Value);
         }
     }
 }

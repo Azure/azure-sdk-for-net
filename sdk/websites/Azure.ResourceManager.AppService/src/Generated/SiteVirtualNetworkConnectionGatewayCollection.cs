@@ -17,7 +17,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of VnetGateway and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteVirtualNetworkConnectionGateway and their operations over its parent. </summary>
     public partial class SiteVirtualNetworkConnectionGatewayCollection : ArmCollection
     {
         private readonly ClientDiagnostics _siteVirtualNetworkConnectionGatewayWebAppsClientDiagnostics;

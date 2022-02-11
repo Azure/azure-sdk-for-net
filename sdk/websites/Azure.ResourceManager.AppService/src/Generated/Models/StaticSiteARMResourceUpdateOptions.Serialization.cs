@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StaticSitePatchResource : IUtf8JsonSerializable
+    public partial class StaticSiteARMResourceUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        internal static StaticSitePatchResource DeserializeStaticSitePatchResource(JsonElement element)
+        internal static StaticSiteARMResourceUpdateOptions DeserializeStaticSiteARMResourceUpdateOptions(JsonElement element)
         {
             Optional<string> kind = default;
             ResourceIdentifier id = default;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StaticSitePatchResource(id, name, type, systemData, kind.Value, defaultHostname.Value, repositoryUrl.Value, branch.Value, Optional.ToList(customDomains), repositoryToken.Value, buildProperties.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(stagingEnvironmentPolicy), Optional.ToNullable(allowConfigFileUpdates), templateProperties.Value, contentDistributionEndpoint.Value, keyVaultReferenceIdentity.Value, Optional.ToList(userProvidedFunctionApps), provider.Value);
+            return new StaticSiteARMResourceUpdateOptions(id, name, type, systemData, kind.Value, defaultHostname.Value, repositoryUrl.Value, branch.Value, Optional.ToList(customDomains), repositoryToken.Value, buildProperties.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(stagingEnvironmentPolicy), Optional.ToNullable(allowConfigFileUpdates), templateProperties.Value, contentDistributionEndpoint.Value, keyVaultReferenceIdentity.Value, Optional.ToList(userProvidedFunctionApps), provider.Value);
         }
     }
 }

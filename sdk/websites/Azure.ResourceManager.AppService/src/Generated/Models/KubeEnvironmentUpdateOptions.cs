@@ -11,14 +11,14 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ARM resource for a KubeEnvironment when patching. </summary>
-    public partial class KubeEnvironmentPatchResource : ProxyOnlyResource
+    public partial class KubeEnvironmentUpdateOptions : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of KubeEnvironmentPatchResource. </summary>
-        public KubeEnvironmentPatchResource()
+        /// <summary> Initializes a new instance of KubeEnvironmentUpdateOptions. </summary>
+        public KubeEnvironmentUpdateOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of KubeEnvironmentPatchResource. </summary>
+        /// <summary> Initializes a new instance of KubeEnvironmentUpdateOptions. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// supported
         /// </param>
         /// <param name="aksResourceID"></param>
-        internal KubeEnvironmentPatchResource(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? internalLoadBalancerEnabled, string defaultDomain, string staticIp, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, string aksResourceID) : base(id, name, type, systemData, kind)
+        internal KubeEnvironmentUpdateOptions(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? internalLoadBalancerEnabled, string defaultDomain, string staticIp, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, string aksResourceID) : base(id, name, type, systemData, kind)
         {
             ProvisioningState = provisioningState;
             DeploymentErrors = deploymentErrors;

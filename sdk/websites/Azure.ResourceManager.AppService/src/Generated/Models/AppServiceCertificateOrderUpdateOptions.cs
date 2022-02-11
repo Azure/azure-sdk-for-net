@@ -13,16 +13,16 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ARM resource for a certificate order that is purchased through Azure. </summary>
-    public partial class AppServiceCertificateOrderPatch : ProxyOnlyResource
+    public partial class AppServiceCertificateOrderUpdateOptions : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of AppServiceCertificateOrderPatch. </summary>
-        public AppServiceCertificateOrderPatch()
+        /// <summary> Initializes a new instance of AppServiceCertificateOrderUpdateOptions. </summary>
+        public AppServiceCertificateOrderUpdateOptions()
         {
             Certificates = new ChangeTrackingDictionary<string, AppServiceCertificate>();
             AppServiceCertificateNotRenewableReasons = new ChangeTrackingList<AppServiceCertificateNotRenewableReason>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificateOrderPatch. </summary>
+        /// <summary> Initializes a new instance of AppServiceCertificateOrderUpdateOptions. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="appServiceCertificateNotRenewableReasons"> Reasons why App Service Certificate is not renewable at the current moment. </param>
         /// <param name="nextAutoRenewalTimeStamp"> Time stamp when the certificate would be auto renewed next. </param>
         /// <param name="contact"> Contact info. </param>
-        internal AppServiceCertificateOrderPatch(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, IDictionary<string, AppServiceCertificate> certificates, string distinguishedName, string domainVerificationToken, int? validityInYears, int? keySize, CertificateProductType? productType, bool? autoRenew, ProvisioningState? provisioningState, CertificateOrderStatus? status, CertificateDetails signedCertificate, string csr, CertificateDetails intermediate, CertificateDetails root, string serialNumber, DateTimeOffset? lastCertificateIssuanceTime, DateTimeOffset? expirationTime, bool? isPrivateKeyExternal, IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons, DateTimeOffset? nextAutoRenewalTimeStamp, CertificateOrderContact contact) : base(id, name, type, systemData, kind)
+        internal AppServiceCertificateOrderUpdateOptions(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, IDictionary<string, AppServiceCertificate> certificates, string distinguishedName, string domainVerificationToken, int? validityInYears, int? keySize, CertificateProductType? productType, bool? autoRenew, ProvisioningState? provisioningState, CertificateOrderStatus? status, CertificateDetails signedCertificate, string csr, CertificateDetails intermediate, CertificateDetails root, string serialNumber, DateTimeOffset? lastCertificateIssuanceTime, DateTimeOffset? expirationTime, bool? isPrivateKeyExternal, IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons, DateTimeOffset? nextAutoRenewalTimeStamp, CertificateOrderContact contact) : base(id, name, type, systemData, kind)
         {
             Certificates = certificates;
             DistinguishedName = distinguishedName;

@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteExtensionInfo and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteSlotSiteextension and their operations over its parent. </summary>
     public partial class SiteSlotSiteextensionCollection : ArmCollection, IEnumerable<SiteSlotSiteextension>, IAsyncEnumerable<SiteSlotSiteextension>
     {
         private readonly ClientDiagnostics _siteSlotSiteextensionWebAppsClientDiagnostics;

@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of Identifier and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteSlotDomainOwnershipIdentifier and their operations over its parent. </summary>
     public partial class SiteSlotDomainOwnershipIdentifierCollection : ArmCollection, IEnumerable<SiteSlotDomainOwnershipIdentifier>, IAsyncEnumerable<SiteSlotDomainOwnershipIdentifier>
     {
         private readonly ClientDiagnostics _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics;

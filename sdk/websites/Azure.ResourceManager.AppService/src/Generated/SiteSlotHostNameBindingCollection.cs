@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of HostNameBinding and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteSlotHostNameBinding and their operations over its parent. </summary>
     public partial class SiteSlotHostNameBindingCollection : ArmCollection, IEnumerable<SiteSlotHostNameBinding>, IAsyncEnumerable<SiteSlotHostNameBinding>
     {
         private readonly ClientDiagnostics _siteSlotHostNameBindingWebAppsClientDiagnostics;

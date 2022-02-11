@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of ApiKeyVaultReference and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteConfigConnectionString and their operations over its parent. </summary>
     public partial class SiteConfigConnectionStringCollection : ArmCollection, IEnumerable<SiteConfigConnectionString>, IAsyncEnumerable<SiteConfigConnectionString>
     {
         private readonly ClientDiagnostics _siteConfigConnectionStringWebAppsClientDiagnostics;

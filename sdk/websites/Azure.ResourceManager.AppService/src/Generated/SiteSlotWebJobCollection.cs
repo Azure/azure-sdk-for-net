@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of WebJob and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteSlotWebJob and their operations over its parent. </summary>
     public partial class SiteSlotWebJobCollection : ArmCollection, IEnumerable<SiteSlotWebJob>, IAsyncEnumerable<SiteSlotWebJob>
     {
         private readonly ClientDiagnostics _siteSlotWebJobWebAppsClientDiagnostics;

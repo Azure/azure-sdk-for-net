@@ -189,21 +189,21 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
         /// Operation Id: KubeEnvironments_Update
         /// </summary>
-        /// <param name="kubeEnvironmentEnvelope"> Configuration details of the Kubernetes Environment. </param>
+        /// <param name="options"> Configuration details of the Kubernetes Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="kubeEnvironmentEnvelope"/> is null. </exception>
-        public async virtual Task<Response<KubeEnvironment>> UpdateAsync(KubeEnvironmentPatchResource kubeEnvironmentEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<Response<KubeEnvironment>> UpdateAsync(KubeEnvironmentUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (kubeEnvironmentEnvelope == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(kubeEnvironmentEnvelope));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironment.Update");
             scope.Start();
             try
             {
-                var response = await _kubeEnvironmentRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kubeEnvironmentEnvelope, cancellationToken).ConfigureAwait(false);
+                var response = await _kubeEnvironmentRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new KubeEnvironment(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -218,21 +218,21 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
         /// Operation Id: KubeEnvironments_Update
         /// </summary>
-        /// <param name="kubeEnvironmentEnvelope"> Configuration details of the Kubernetes Environment. </param>
+        /// <param name="options"> Configuration details of the Kubernetes Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="kubeEnvironmentEnvelope"/> is null. </exception>
-        public virtual Response<KubeEnvironment> Update(KubeEnvironmentPatchResource kubeEnvironmentEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<KubeEnvironment> Update(KubeEnvironmentUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (kubeEnvironmentEnvelope == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(kubeEnvironmentEnvelope));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironment.Update");
             scope.Start();
             try
             {
-                var response = _kubeEnvironmentRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kubeEnvironmentEnvelope, cancellationToken);
+                var response = _kubeEnvironmentRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
                 return Response.FromValue(new KubeEnvironment(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

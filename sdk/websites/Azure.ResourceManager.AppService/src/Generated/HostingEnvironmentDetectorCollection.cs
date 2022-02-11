@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of AppServiceDetector and their operations over its parent. </summary>
+    /// <summary> A class representing collection of HostingEnvironmentDetector and their operations over its parent. </summary>
     public partial class HostingEnvironmentDetectorCollection : ArmCollection, IEnumerable<HostingEnvironmentDetector>, IAsyncEnumerable<HostingEnvironmentDetector>
     {
         private readonly ClientDiagnostics _hostingEnvironmentDetectorDiagnosticsClientDiagnostics;

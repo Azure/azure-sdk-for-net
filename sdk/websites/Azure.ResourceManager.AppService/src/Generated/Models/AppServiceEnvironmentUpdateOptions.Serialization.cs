@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceEnvironmentPatchOptions : IUtf8JsonSerializable
+    public partial class AppServiceEnvironmentUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        internal static AppServiceEnvironmentPatchOptions DeserializeAppServiceEnvironmentPatchOptions(JsonElement element)
+        internal static AppServiceEnvironmentUpdateOptions DeserializeAppServiceEnvironmentUpdateOptions(JsonElement element)
         {
             Optional<string> kind = default;
             ResourceIdentifier id = default;
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceEnvironmentPatchOptions(id, name, type, systemData, kind.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(status), virtualNetwork.Value, Optional.ToNullable(internalLoadBalancingMode), multiSize.Value, Optional.ToNullable(multiRoleCount), Optional.ToNullable(ipsslAddressCount), dnsSuffix.Value, Optional.ToNullable(maximumNumberOfMachines), Optional.ToNullable(frontEndScaleFactor), Optional.ToNullable(suspended), Optional.ToList(clusterSettings), Optional.ToList(userWhitelistedIpRanges), Optional.ToNullable(hasLinuxWorkers), Optional.ToNullable(dedicatedHostCount), Optional.ToNullable(zoneRedundant));
+            return new AppServiceEnvironmentUpdateOptions(id, name, type, systemData, kind.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(status), virtualNetwork.Value, Optional.ToNullable(internalLoadBalancingMode), multiSize.Value, Optional.ToNullable(multiRoleCount), Optional.ToNullable(ipsslAddressCount), dnsSuffix.Value, Optional.ToNullable(maximumNumberOfMachines), Optional.ToNullable(frontEndScaleFactor), Optional.ToNullable(suspended), Optional.ToList(clusterSettings), Optional.ToList(userWhitelistedIpRanges), Optional.ToNullable(hasLinuxWorkers), Optional.ToNullable(dedicatedHostCount), Optional.ToNullable(zoneRedundant));
         }
     }
 }

@@ -17,42 +17,42 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SiteSlotConfigLogs along with the instance operations that can be performed on it. </summary>
-    public partial class SiteSlotConfigLogs : ArmResource
+    /// <summary> A Class representing a LogsSiteSlotConfig along with the instance operations that can be performed on it. </summary>
+    public partial class LogsSiteSlotConfig : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SiteSlotConfigLogs"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="LogsSiteSlotConfig"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/logs";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _siteSlotConfigLogsWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _siteSlotConfigLogsWebAppsRestClient;
+        private readonly ClientDiagnostics _logsSiteSlotConfigWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _logsSiteSlotConfigWebAppsRestClient;
         private readonly SiteLogsConfigData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotConfigLogs"/> class for mocking. </summary>
-        protected SiteSlotConfigLogs()
+        /// <summary> Initializes a new instance of the <see cref="LogsSiteSlotConfig"/> class for mocking. </summary>
+        protected LogsSiteSlotConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteSlotConfigLogs"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "LogsSiteSlotConfig"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteSlotConfigLogs(ArmClient client, SiteLogsConfigData data) : this(client, data.Id)
+        internal LogsSiteSlotConfig(ArmClient client, SiteLogsConfigData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotConfigLogs"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LogsSiteSlotConfig"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteSlotConfigLogs(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal LogsSiteSlotConfig(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteSlotConfigLogsWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteSlotConfigLogsWebAppsApiVersion);
-            _siteSlotConfigLogsWebAppsRestClient = new WebAppsRestOperations(_siteSlotConfigLogsWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotConfigLogsWebAppsApiVersion);
+            _logsSiteSlotConfigWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string logsSiteSlotConfigWebAppsApiVersion);
+            _logsSiteSlotConfigWebAppsRestClient = new WebAppsRestOperations(_logsSiteSlotConfigWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, logsSiteSlotConfigWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,16 +88,16 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetDiagnosticLogsConfigurationSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteSlotConfigLogs>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<LogsSiteSlotConfig>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotConfigLogsWebAppsClientDiagnostics.CreateScope("SiteSlotConfigLogs.Get");
+            using var scope = _logsSiteSlotConfigWebAppsClientDiagnostics.CreateScope("LogsSiteSlotConfig.Get");
             scope.Start();
             try
             {
-                var response = await _siteSlotConfigLogsWebAppsRestClient.GetDiagnosticLogsConfigurationSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _logsSiteSlotConfigWebAppsRestClient.GetDiagnosticLogsConfigurationSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteSlotConfigLogsWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotConfigLogs(Client, response.Value), response.GetRawResponse());
+                    throw await _logsSiteSlotConfigWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new LogsSiteSlotConfig(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,16 +112,16 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetDiagnosticLogsConfigurationSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SiteSlotConfigLogs> Get(CancellationToken cancellationToken = default)
+        public virtual Response<LogsSiteSlotConfig> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotConfigLogsWebAppsClientDiagnostics.CreateScope("SiteSlotConfigLogs.Get");
+            using var scope = _logsSiteSlotConfigWebAppsClientDiagnostics.CreateScope("LogsSiteSlotConfig.Get");
             scope.Start();
             try
             {
-                var response = _siteSlotConfigLogsWebAppsRestClient.GetDiagnosticLogsConfigurationSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
+                var response = _logsSiteSlotConfigWebAppsRestClient.GetDiagnosticLogsConfigurationSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _siteSlotConfigLogsWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotConfigLogs(Client, response.Value), response.GetRawResponse());
+                    throw _logsSiteSlotConfigWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new LogsSiteSlotConfig(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,19 +139,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteLogsConfig"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteLogsConfig"/> is null. </exception>
-        public async virtual Task<ArmOperation<SiteSlotConfigLogs>> CreateOrUpdateAsync(bool waitForCompletion, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<LogsSiteSlotConfig>> CreateOrUpdateAsync(bool waitForCompletion, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
         {
             if (siteLogsConfig == null)
             {
                 throw new ArgumentNullException(nameof(siteLogsConfig));
             }
 
-            using var scope = _siteSlotConfigLogsWebAppsClientDiagnostics.CreateScope("SiteSlotConfigLogs.CreateOrUpdate");
+            using var scope = _logsSiteSlotConfigWebAppsClientDiagnostics.CreateScope("LogsSiteSlotConfig.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _siteSlotConfigLogsWebAppsRestClient.UpdateDiagnosticLogsConfigSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteLogsConfig, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteSlotConfigLogs>(Response.FromValue(new SiteSlotConfigLogs(Client, response), response.GetRawResponse()));
+                var response = await _logsSiteSlotConfigWebAppsRestClient.UpdateDiagnosticLogsConfigSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteLogsConfig, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<LogsSiteSlotConfig>(Response.FromValue(new LogsSiteSlotConfig(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -172,19 +172,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteLogsConfig"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteLogsConfig"/> is null. </exception>
-        public virtual ArmOperation<SiteSlotConfigLogs> CreateOrUpdate(bool waitForCompletion, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LogsSiteSlotConfig> CreateOrUpdate(bool waitForCompletion, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
         {
             if (siteLogsConfig == null)
             {
                 throw new ArgumentNullException(nameof(siteLogsConfig));
             }
 
-            using var scope = _siteSlotConfigLogsWebAppsClientDiagnostics.CreateScope("SiteSlotConfigLogs.CreateOrUpdate");
+            using var scope = _logsSiteSlotConfigWebAppsClientDiagnostics.CreateScope("LogsSiteSlotConfig.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _siteSlotConfigLogsWebAppsRestClient.UpdateDiagnosticLogsConfigSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteLogsConfig, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteSlotConfigLogs>(Response.FromValue(new SiteSlotConfigLogs(Client, response), response.GetRawResponse()));
+                var response = _logsSiteSlotConfigWebAppsRestClient.UpdateDiagnosticLogsConfigSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteLogsConfig, cancellationToken);
+                var operation = new AppServiceArmOperation<LogsSiteSlotConfig>(Response.FromValue(new LogsSiteSlotConfig(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

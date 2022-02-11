@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of DiagnosticCategory and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteSlotDiagnostic and their operations over its parent. </summary>
     public partial class SiteSlotDiagnosticCollection : ArmCollection, IEnumerable<SiteSlotDiagnostic>, IAsyncEnumerable<SiteSlotDiagnostic>
     {
         private readonly ClientDiagnostics _siteSlotDiagnosticDiagnosticsClientDiagnostics;

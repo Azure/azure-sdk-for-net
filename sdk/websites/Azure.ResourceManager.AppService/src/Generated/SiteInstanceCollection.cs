@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of WebSiteInstanceStatus and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteInstance and their operations over its parent. </summary>
     public partial class SiteInstanceCollection : ArmCollection, IEnumerable<SiteInstance>, IAsyncEnumerable<SiteInstance>
     {
         private readonly ClientDiagnostics _siteInstanceWebAppsClientDiagnostics;

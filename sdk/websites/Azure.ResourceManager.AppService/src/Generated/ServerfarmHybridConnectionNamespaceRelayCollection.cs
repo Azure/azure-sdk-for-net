@@ -17,7 +17,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of HybridConnection and their operations over its parent. </summary>
+    /// <summary> A class representing collection of ServerfarmHybridConnectionNamespaceRelay and their operations over its parent. </summary>
     public partial class ServerfarmHybridConnectionNamespaceRelayCollection : ArmCollection
     {
         private readonly ClientDiagnostics _serverfarmHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics;

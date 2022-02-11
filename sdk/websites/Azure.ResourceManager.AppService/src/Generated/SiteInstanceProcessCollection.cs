@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of ProcessInfo and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteInstanceProcess and their operations over its parent. </summary>
     public partial class SiteInstanceProcessCollection : ArmCollection, IEnumerable<SiteInstanceProcess>, IAsyncEnumerable<SiteInstanceProcess>
     {
         private readonly ClientDiagnostics _siteInstanceProcessWebAppsClientDiagnostics;

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceCertificateOrderPatch : IUtf8JsonSerializable
+    public partial class AppServiceDomainUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,78 +25,92 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Certificates))
+            if (Optional.IsDefined(ContactAdmin))
             {
-                writer.WritePropertyName("certificates");
-                writer.WriteStartObject();
-                foreach (var item in Certificates)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WritePropertyName("contactAdmin");
+                writer.WriteObjectValue(ContactAdmin);
             }
-            if (Optional.IsDefined(DistinguishedName))
+            if (Optional.IsDefined(ContactBilling))
             {
-                writer.WritePropertyName("distinguishedName");
-                writer.WriteStringValue(DistinguishedName);
+                writer.WritePropertyName("contactBilling");
+                writer.WriteObjectValue(ContactBilling);
             }
-            if (Optional.IsDefined(ValidityInYears))
+            if (Optional.IsDefined(ContactRegistrant))
             {
-                writer.WritePropertyName("validityInYears");
-                writer.WriteNumberValue(ValidityInYears.Value);
+                writer.WritePropertyName("contactRegistrant");
+                writer.WriteObjectValue(ContactRegistrant);
             }
-            if (Optional.IsDefined(KeySize))
+            if (Optional.IsDefined(ContactTech))
             {
-                writer.WritePropertyName("keySize");
-                writer.WriteNumberValue(KeySize.Value);
+                writer.WritePropertyName("contactTech");
+                writer.WriteObjectValue(ContactTech);
             }
-            if (Optional.IsDefined(ProductType))
+            if (Optional.IsDefined(Privacy))
             {
-                writer.WritePropertyName("productType");
-                writer.WriteStringValue(ProductType.Value.ToSerialString());
+                writer.WritePropertyName("privacy");
+                writer.WriteBooleanValue(Privacy.Value);
             }
             if (Optional.IsDefined(AutoRenew))
             {
                 writer.WritePropertyName("autoRenew");
                 writer.WriteBooleanValue(AutoRenew.Value);
             }
-            if (Optional.IsDefined(Csr))
+            if (Optional.IsDefined(Consent))
             {
-                writer.WritePropertyName("csr");
-                writer.WriteStringValue(Csr);
+                writer.WritePropertyName("consent");
+                writer.WriteObjectValue(Consent);
+            }
+            if (Optional.IsDefined(DnsType))
+            {
+                writer.WritePropertyName("dnsType");
+                writer.WriteStringValue(DnsType.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(DnsZoneId))
+            {
+                writer.WritePropertyName("dnsZoneId");
+                writer.WriteStringValue(DnsZoneId);
+            }
+            if (Optional.IsDefined(TargetDnsType))
+            {
+                writer.WritePropertyName("targetDnsType");
+                writer.WriteStringValue(TargetDnsType.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(AuthCode))
+            {
+                writer.WritePropertyName("authCode");
+                writer.WriteStringValue(AuthCode);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static AppServiceCertificateOrderPatch DeserializeAppServiceCertificateOrderPatch(JsonElement element)
+        internal static AppServiceDomainUpdateOptions DeserializeAppServiceDomainUpdateOptions(JsonElement element)
         {
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<IDictionary<string, AppServiceCertificate>> certificates = default;
-            Optional<string> distinguishedName = default;
-            Optional<string> domainVerificationToken = default;
-            Optional<int> validityInYears = default;
-            Optional<int> keySize = default;
-            Optional<CertificateProductType> productType = default;
-            Optional<bool> autoRenew = default;
+            Optional<ContactInformation> contactAdmin = default;
+            Optional<ContactInformation> contactBilling = default;
+            Optional<ContactInformation> contactRegistrant = default;
+            Optional<ContactInformation> contactTech = default;
+            Optional<DomainStatus> registrationStatus = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<CertificateOrderStatus> status = default;
-            Optional<CertificateDetails> signedCertificate = default;
-            Optional<string> csr = default;
-            Optional<CertificateDetails> intermediate = default;
-            Optional<CertificateDetails> root = default;
-            Optional<string> serialNumber = default;
-            Optional<DateTimeOffset> lastCertificateIssuanceTime = default;
+            Optional<IReadOnlyList<string>> nameServers = default;
+            Optional<bool> privacy = default;
+            Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> expirationTime = default;
-            Optional<bool> isPrivateKeyExternal = default;
-            Optional<IReadOnlyList<AppServiceCertificateNotRenewableReason>> appServiceCertificateNotRenewableReasons = default;
-            Optional<DateTimeOffset> nextAutoRenewalTimeStamp = default;
-            Optional<CertificateOrderContact> contact = default;
+            Optional<DateTimeOffset> lastRenewedTime = default;
+            Optional<bool> autoRenew = default;
+            Optional<bool> readyForDnsRecordManagement = default;
+            Optional<IReadOnlyList<HostName>> managedHostNames = default;
+            Optional<DomainPurchaseConsent> consent = default;
+            Optional<IReadOnlyList<DomainNotRenewableReasons>> domainNotRenewableReasons = default;
+            Optional<DnsType> dnsType = default;
+            Optional<string> dnsZoneId = default;
+            Optional<DnsType> targetDnsType = default;
+            Optional<string> authCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -133,69 +147,54 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("certificates"))
+                        if (property0.NameEquals("contactAdmin"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, AppServiceCertificate> dictionary = new Dictionary<string, AppServiceCertificate>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, AppServiceCertificate.DeserializeAppServiceCertificate(property1.Value));
-                            }
-                            certificates = dictionary;
+                            contactAdmin = ContactInformation.DeserializeContactInformation(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("distinguishedName"))
-                        {
-                            distinguishedName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("domainVerificationToken"))
-                        {
-                            domainVerificationToken = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("validityInYears"))
+                        if (property0.NameEquals("contactBilling"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            validityInYears = property0.Value.GetInt32();
+                            contactBilling = ContactInformation.DeserializeContactInformation(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("keySize"))
+                        if (property0.NameEquals("contactRegistrant"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            keySize = property0.Value.GetInt32();
+                            contactRegistrant = ContactInformation.DeserializeContactInformation(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("productType"))
+                        if (property0.NameEquals("contactTech"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            productType = property0.Value.GetString().ToCertificateProductType();
+                            contactTech = ContactInformation.DeserializeContactInformation(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("autoRenew"))
+                        if (property0.NameEquals("registrationStatus"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            autoRenew = property0.Value.GetBoolean();
+                            registrationStatus = property0.Value.GetString().ToDomainStatus();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -208,64 +207,39 @@ namespace Azure.ResourceManager.AppService.Models
                             provisioningState = property0.Value.GetString().ToProvisioningState();
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("nameServers"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = property0.Value.GetString().ToCertificateOrderStatus();
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            nameServers = array;
                             continue;
                         }
-                        if (property0.NameEquals("signedCertificate"))
+                        if (property0.NameEquals("privacy"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            signedCertificate = CertificateDetails.DeserializeCertificateDetails(property0.Value);
+                            privacy = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("csr"))
-                        {
-                            csr = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("intermediate"))
+                        if (property0.NameEquals("createdTime"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            intermediate = CertificateDetails.DeserializeCertificateDetails(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("root"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            root = CertificateDetails.DeserializeCertificateDetails(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("serialNumber"))
-                        {
-                            serialNumber = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("lastCertificateIssuanceTime"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            lastCertificateIssuanceTime = property0.Value.GetDateTimeOffset("O");
+                            createdTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("expirationTime"))
@@ -278,56 +252,111 @@ namespace Azure.ResourceManager.AppService.Models
                             expirationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("isPrivateKeyExternal"))
+                        if (property0.NameEquals("lastRenewedTime"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            isPrivateKeyExternal = property0.Value.GetBoolean();
+                            lastRenewedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("appServiceCertificateNotRenewableReasons"))
+                        if (property0.NameEquals("autoRenew"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AppServiceCertificateNotRenewableReason> array = new List<AppServiceCertificateNotRenewableReason>();
+                            autoRenew = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("readyForDnsRecordManagement"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            readyForDnsRecordManagement = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("managedHostNames"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<HostName> array = new List<HostName>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new AppServiceCertificateNotRenewableReason(item.GetString()));
+                                array.Add(HostName.DeserializeHostName(item));
                             }
-                            appServiceCertificateNotRenewableReasons = array;
+                            managedHostNames = array;
                             continue;
                         }
-                        if (property0.NameEquals("nextAutoRenewalTimeStamp"))
+                        if (property0.NameEquals("consent"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            nextAutoRenewalTimeStamp = property0.Value.GetDateTimeOffset("O");
+                            consent = DomainPurchaseConsent.DeserializeDomainPurchaseConsent(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("contact"))
+                        if (property0.NameEquals("domainNotRenewableReasons"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            contact = CertificateOrderContact.DeserializeCertificateOrderContact(property0.Value);
+                            List<DomainNotRenewableReasons> array = new List<DomainNotRenewableReasons>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(new DomainNotRenewableReasons(item.GetString()));
+                            }
+                            domainNotRenewableReasons = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("dnsType"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            dnsType = property0.Value.GetString().ToDnsType();
+                            continue;
+                        }
+                        if (property0.NameEquals("dnsZoneId"))
+                        {
+                            dnsZoneId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("targetDnsType"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            targetDnsType = property0.Value.GetString().ToDnsType();
+                            continue;
+                        }
+                        if (property0.NameEquals("authCode"))
+                        {
+                            authCode = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new AppServiceCertificateOrderPatch(id, name, type, systemData, kind.Value, Optional.ToDictionary(certificates), distinguishedName.Value, domainVerificationToken.Value, Optional.ToNullable(validityInYears), Optional.ToNullable(keySize), Optional.ToNullable(productType), Optional.ToNullable(autoRenew), Optional.ToNullable(provisioningState), Optional.ToNullable(status), signedCertificate.Value, csr.Value, intermediate.Value, root.Value, serialNumber.Value, Optional.ToNullable(lastCertificateIssuanceTime), Optional.ToNullable(expirationTime), Optional.ToNullable(isPrivateKeyExternal), Optional.ToList(appServiceCertificateNotRenewableReasons), Optional.ToNullable(nextAutoRenewalTimeStamp), contact.Value);
+            return new AppServiceDomainUpdateOptions(id, name, type, systemData, kind.Value, contactAdmin.Value, contactBilling.Value, contactRegistrant.Value, contactTech.Value, Optional.ToNullable(registrationStatus), Optional.ToNullable(provisioningState), Optional.ToList(nameServers), Optional.ToNullable(privacy), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), Optional.ToNullable(lastRenewedTime), Optional.ToNullable(autoRenew), Optional.ToNullable(readyForDnsRecordManagement), Optional.ToList(managedHostNames), consent.Value, Optional.ToList(domainNotRenewableReasons), Optional.ToNullable(dnsType), dnsZoneId.Value, Optional.ToNullable(targetDnsType), authCode.Value);
         }
     }
 }

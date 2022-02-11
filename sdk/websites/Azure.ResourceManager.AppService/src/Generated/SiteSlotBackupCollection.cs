@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of BackupItem and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteSlotBackup and their operations over its parent. </summary>
     public partial class SiteSlotBackupCollection : ArmCollection, IEnumerable<SiteSlotBackup>, IAsyncEnumerable<SiteSlotBackup>
     {
         private readonly ClientDiagnostics _siteSlotBackupWebAppsClientDiagnostics;

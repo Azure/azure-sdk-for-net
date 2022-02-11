@@ -12,17 +12,17 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ARM resource for a static site when patching. </summary>
-    public partial class StaticSitePatchResource : ProxyOnlyResource
+    public partial class StaticSiteARMResourceUpdateOptions : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of StaticSitePatchResource. </summary>
-        public StaticSitePatchResource()
+        /// <summary> Initializes a new instance of StaticSiteARMResourceUpdateOptions. </summary>
+        public StaticSiteARMResourceUpdateOptions()
         {
             CustomDomains = new ChangeTrackingList<string>();
             PrivateEndpointConnections = new ChangeTrackingList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>();
             UserProvidedFunctionApps = new ChangeTrackingList<StaticSiteUserProvidedFunctionApp>();
         }
 
-        /// <summary> Initializes a new instance of StaticSitePatchResource. </summary>
+        /// <summary> Initializes a new instance of StaticSiteARMResourceUpdateOptions. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
         /// <param name="userProvidedFunctionApps"> User provided function apps registered with the static site. </param>
         /// <param name="provider"> The provider that submitted the last deployment to the primary environment of the static site. </param>
-        internal StaticSitePatchResource(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string defaultHostname, string repositoryUrl, string branch, IReadOnlyList<string> customDomains, string repositoryToken, StaticSiteBuildProperties buildProperties, IReadOnlyList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections, StagingEnvironmentPolicy? stagingEnvironmentPolicy, bool? allowConfigFileUpdates, StaticSiteTemplateOptions templateProperties, string contentDistributionEndpoint, string keyVaultReferenceIdentity, IReadOnlyList<StaticSiteUserProvidedFunctionApp> userProvidedFunctionApps, string provider) : base(id, name, type, systemData, kind)
+        internal StaticSiteARMResourceUpdateOptions(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string defaultHostname, string repositoryUrl, string branch, IReadOnlyList<string> customDomains, string repositoryToken, StaticSiteBuildProperties buildProperties, IReadOnlyList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections, StagingEnvironmentPolicy? stagingEnvironmentPolicy, bool? allowConfigFileUpdates, StaticSiteTemplateOptions templateProperties, string contentDistributionEndpoint, string keyVaultReferenceIdentity, IReadOnlyList<StaticSiteUserProvidedFunctionApp> userProvidedFunctionApps, string provider) : base(id, name, type, systemData, kind)
         {
             DefaultHostname = defaultHostname;
             RepositoryUrl = repositoryUrl;

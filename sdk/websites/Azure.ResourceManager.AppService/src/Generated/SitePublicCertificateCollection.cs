@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of PublicCertificate and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SitePublicCertificate and their operations over its parent. </summary>
     public partial class SitePublicCertificateCollection : ArmCollection, IEnumerable<SitePublicCertificate>, IAsyncEnumerable<SitePublicCertificate>
     {
         private readonly ClientDiagnostics _sitePublicCertificateWebAppsClientDiagnostics;

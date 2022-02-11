@@ -21,7 +21,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of RemotePrivateEndpointConnectionARMResource and their operations over its parent. </summary>
+    /// <summary> A class representing collection of StaticSitePrivateEndpointConnection and their operations over its parent. </summary>
     public partial class StaticSitePrivateEndpointConnectionCollection : ArmCollection, IEnumerable<StaticSitePrivateEndpointConnection>, IAsyncEnumerable<StaticSitePrivateEndpointConnection>
     {
         private readonly ClientDiagnostics _staticSitePrivateEndpointConnectionStaticSitesClientDiagnostics;

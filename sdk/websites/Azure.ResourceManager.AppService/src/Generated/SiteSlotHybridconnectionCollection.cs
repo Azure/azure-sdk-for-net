@@ -17,7 +17,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of RelayServiceConnectionEntity and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteSlotHybridconnection and their operations over its parent. </summary>
     public partial class SiteSlotHybridconnectionCollection : ArmCollection
     {
         private readonly ClientDiagnostics _siteSlotHybridconnectionWebAppsClientDiagnostics;

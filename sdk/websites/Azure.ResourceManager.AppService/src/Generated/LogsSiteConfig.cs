@@ -17,42 +17,42 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SiteConfigLogs along with the instance operations that can be performed on it. </summary>
-    public partial class SiteConfigLogs : ArmResource
+    /// <summary> A Class representing a LogsSiteConfig along with the instance operations that can be performed on it. </summary>
+    public partial class LogsSiteConfig : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SiteConfigLogs"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="LogsSiteConfig"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _siteConfigLogsWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _siteConfigLogsWebAppsRestClient;
+        private readonly ClientDiagnostics _logsSiteConfigWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _logsSiteConfigWebAppsRestClient;
         private readonly SiteLogsConfigData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SiteConfigLogs"/> class for mocking. </summary>
-        protected SiteConfigLogs()
+        /// <summary> Initializes a new instance of the <see cref="LogsSiteConfig"/> class for mocking. </summary>
+        protected LogsSiteConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteConfigLogs"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "LogsSiteConfig"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteConfigLogs(ArmClient client, SiteLogsConfigData data) : this(client, data.Id)
+        internal LogsSiteConfig(ArmClient client, SiteLogsConfigData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteConfigLogs"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LogsSiteConfig"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteConfigLogs(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal LogsSiteConfig(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteConfigLogsWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteConfigLogsWebAppsApiVersion);
-            _siteConfigLogsWebAppsRestClient = new WebAppsRestOperations(_siteConfigLogsWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteConfigLogsWebAppsApiVersion);
+            _logsSiteConfigWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string logsSiteConfigWebAppsApiVersion);
+            _logsSiteConfigWebAppsRestClient = new WebAppsRestOperations(_logsSiteConfigWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, logsSiteConfigWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,16 +88,16 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetDiagnosticLogsConfiguration
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteConfigLogs>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<LogsSiteConfig>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteConfigLogsWebAppsClientDiagnostics.CreateScope("SiteConfigLogs.Get");
+            using var scope = _logsSiteConfigWebAppsClientDiagnostics.CreateScope("LogsSiteConfig.Get");
             scope.Start();
             try
             {
-                var response = await _siteConfigLogsWebAppsRestClient.GetDiagnosticLogsConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _logsSiteConfigWebAppsRestClient.GetDiagnosticLogsConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteConfigLogsWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteConfigLogs(Client, response.Value), response.GetRawResponse());
+                    throw await _logsSiteConfigWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new LogsSiteConfig(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,16 +112,16 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetDiagnosticLogsConfiguration
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SiteConfigLogs> Get(CancellationToken cancellationToken = default)
+        public virtual Response<LogsSiteConfig> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteConfigLogsWebAppsClientDiagnostics.CreateScope("SiteConfigLogs.Get");
+            using var scope = _logsSiteConfigWebAppsClientDiagnostics.CreateScope("LogsSiteConfig.Get");
             scope.Start();
             try
             {
-                var response = _siteConfigLogsWebAppsRestClient.GetDiagnosticLogsConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _logsSiteConfigWebAppsRestClient.GetDiagnosticLogsConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _siteConfigLogsWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteConfigLogs(Client, response.Value), response.GetRawResponse());
+                    throw _logsSiteConfigWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new LogsSiteConfig(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,19 +139,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteLogsConfig"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteLogsConfig"/> is null. </exception>
-        public async virtual Task<ArmOperation<SiteConfigLogs>> CreateOrUpdateAsync(bool waitForCompletion, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<LogsSiteConfig>> CreateOrUpdateAsync(bool waitForCompletion, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
         {
             if (siteLogsConfig == null)
             {
                 throw new ArgumentNullException(nameof(siteLogsConfig));
             }
 
-            using var scope = _siteConfigLogsWebAppsClientDiagnostics.CreateScope("SiteConfigLogs.CreateOrUpdate");
+            using var scope = _logsSiteConfigWebAppsClientDiagnostics.CreateScope("LogsSiteConfig.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _siteConfigLogsWebAppsRestClient.UpdateDiagnosticLogsConfigAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, siteLogsConfig, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteConfigLogs>(Response.FromValue(new SiteConfigLogs(Client, response), response.GetRawResponse()));
+                var response = await _logsSiteConfigWebAppsRestClient.UpdateDiagnosticLogsConfigAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, siteLogsConfig, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<LogsSiteConfig>(Response.FromValue(new LogsSiteConfig(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -172,19 +172,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteLogsConfig"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteLogsConfig"/> is null. </exception>
-        public virtual ArmOperation<SiteConfigLogs> CreateOrUpdate(bool waitForCompletion, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LogsSiteConfig> CreateOrUpdate(bool waitForCompletion, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
         {
             if (siteLogsConfig == null)
             {
                 throw new ArgumentNullException(nameof(siteLogsConfig));
             }
 
-            using var scope = _siteConfigLogsWebAppsClientDiagnostics.CreateScope("SiteConfigLogs.CreateOrUpdate");
+            using var scope = _logsSiteConfigWebAppsClientDiagnostics.CreateScope("LogsSiteConfig.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _siteConfigLogsWebAppsRestClient.UpdateDiagnosticLogsConfig(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, siteLogsConfig, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteConfigLogs>(Response.FromValue(new SiteConfigLogs(Client, response), response.GetRawResponse()));
+                var response = _logsSiteConfigWebAppsRestClient.UpdateDiagnosticLogsConfig(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, siteLogsConfig, cancellationToken);
+                var operation = new AppServiceArmOperation<LogsSiteConfig>(Response.FromValue(new LogsSiteConfig(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

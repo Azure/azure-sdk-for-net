@@ -135,18 +135,18 @@ namespace Azure.ResourceManager.AppService
             return new SiteSlotBackupCollection(Client, Id);
         }
 
-        /// <summary> Gets an object representing a SiteSlotBasicPublishingCredentialsPolicyFtp along with the instance operations that can be performed on it in the SiteSlot. </summary>
-        /// <returns> Returns a <see cref="SiteSlotBasicPublishingCredentialsPolicyFtp" /> object. </returns>
-        public virtual SiteSlotBasicPublishingCredentialsPolicyFtp GetSiteSlotBasicPublishingCredentialsPolicyFtp()
+        /// <summary> Gets an object representing a FtpSiteSlotBasicPublishingCredentialsPolicy along with the instance operations that can be performed on it in the SiteSlot. </summary>
+        /// <returns> Returns a <see cref="FtpSiteSlotBasicPublishingCredentialsPolicy" /> object. </returns>
+        public virtual FtpSiteSlotBasicPublishingCredentialsPolicy GetFtpSiteSlotBasicPublishingCredentialsPolicy()
         {
-            return new SiteSlotBasicPublishingCredentialsPolicyFtp(Client, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/ftp"));
+            return new FtpSiteSlotBasicPublishingCredentialsPolicy(Client, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/ftp"));
         }
 
-        /// <summary> Gets an object representing a SiteSlotBasicPublishingCredentialsPolicyScm along with the instance operations that can be performed on it in the SiteSlot. </summary>
-        /// <returns> Returns a <see cref="SiteSlotBasicPublishingCredentialsPolicyScm" /> object. </returns>
-        public virtual SiteSlotBasicPublishingCredentialsPolicyScm GetSiteSlotBasicPublishingCredentialsPolicyScm()
+        /// <summary> Gets an object representing a ScmSiteSlotBasicPublishingCredentialsPolicy along with the instance operations that can be performed on it in the SiteSlot. </summary>
+        /// <returns> Returns a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicy" /> object. </returns>
+        public virtual ScmSiteSlotBasicPublishingCredentialsPolicy GetScmSiteSlotBasicPublishingCredentialsPolicy()
         {
-            return new SiteSlotBasicPublishingCredentialsPolicyScm(Client, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/scm"));
+            return new ScmSiteSlotBasicPublishingCredentialsPolicy(Client, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/scm"));
         }
 
         /// <summary> Gets a collection of SiteSlotConfigAppSettings in the SiteSlotConfigAppSetting. </summary>
@@ -163,18 +163,18 @@ namespace Azure.ResourceManager.AppService
             return new SiteSlotConfigConnectionStringCollection(Client, Id);
         }
 
-        /// <summary> Gets an object representing a SiteSlotConfigLogs along with the instance operations that can be performed on it in the SiteSlot. </summary>
-        /// <returns> Returns a <see cref="SiteSlotConfigLogs" /> object. </returns>
-        public virtual SiteSlotConfigLogs GetSiteSlotConfigLogs()
+        /// <summary> Gets an object representing a LogsSiteSlotConfig along with the instance operations that can be performed on it in the SiteSlot. </summary>
+        /// <returns> Returns a <see cref="LogsSiteSlotConfig" /> object. </returns>
+        public virtual LogsSiteSlotConfig GetLogsSiteSlotConfig()
         {
-            return new SiteSlotConfigLogs(Client, new ResourceIdentifier(Id.ToString() + "/config/logs"));
+            return new LogsSiteSlotConfig(Client, new ResourceIdentifier(Id.ToString() + "/config/logs"));
         }
 
-        /// <summary> Gets an object representing a SiteSlotConfigWeb along with the instance operations that can be performed on it in the SiteSlot. </summary>
-        /// <returns> Returns a <see cref="SiteSlotConfigWeb" /> object. </returns>
-        public virtual SiteSlotConfigWeb GetSiteSlotConfigWeb()
+        /// <summary> Gets an object representing a WebSiteSlotConfig along with the instance operations that can be performed on it in the SiteSlot. </summary>
+        /// <returns> Returns a <see cref="WebSiteSlotConfig" /> object. </returns>
+        public virtual WebSiteSlotConfig GetWebSiteSlotConfig()
         {
-            return new SiteSlotConfigWeb(Client, new ResourceIdentifier(Id.ToString() + "/config/web"));
+            return new WebSiteSlotConfig(Client, new ResourceIdentifier(Id.ToString() + "/config/web"));
         }
 
         /// <summary> Gets a collection of SiteSlotContinuousWebJobs in the SiteSlotContinuousWebJob. </summary>
@@ -640,17 +640,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListConfigurationsSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteConfigWeb" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteConfigWeb> GetConfigurationsSlotAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="WebSiteConfig" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebSiteConfig> GetConfigurationsSlotAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteConfigWeb>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<WebSiteConfig>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.GetConfigurationsSlot");
                 scope.Start();
                 try
                 {
                     var response = await _siteSlotWebAppsRestClient.ListConfigurationsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteConfigWeb(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteConfig(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -658,14 +658,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<SiteConfigWeb>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<WebSiteConfig>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.GetConfigurationsSlot");
                 scope.Start();
                 try
                 {
                     var response = await _siteSlotWebAppsRestClient.ListConfigurationsSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteConfigWeb(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteConfig(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -682,17 +682,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListConfigurationsSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteConfigWeb" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteConfigWeb> GetConfigurationsSlot(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebSiteConfig" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WebSiteConfig> GetConfigurationsSlot(CancellationToken cancellationToken = default)
         {
-            Page<SiteConfigWeb> FirstPageFunc(int? pageSizeHint)
+            Page<WebSiteConfig> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.GetConfigurationsSlot");
                 scope.Start();
                 try
                 {
                     var response = _siteSlotWebAppsRestClient.ListConfigurationsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteConfigWeb(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteConfig(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -700,14 +700,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SiteConfigWeb> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<WebSiteConfig> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.GetConfigurationsSlot");
                 scope.Start();
                 try
                 {
                     var response = _siteSlotWebAppsRestClient.ListConfigurationsSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteConfigWeb(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteConfig(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

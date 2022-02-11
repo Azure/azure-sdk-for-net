@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of WorkerPoolResource and their operations over its parent. </summary>
+    /// <summary> A class representing collection of HostingEnvironmentWorkerPool and their operations over its parent. </summary>
     public partial class HostingEnvironmentWorkerPoolCollection : ArmCollection, IEnumerable<HostingEnvironmentWorkerPool>, IAsyncEnumerable<HostingEnvironmentWorkerPool>
     {
         private readonly ClientDiagnostics _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics;

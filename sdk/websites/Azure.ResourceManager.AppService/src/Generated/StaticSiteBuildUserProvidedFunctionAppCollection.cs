@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of StaticSiteUserProvidedFunctionAppARMResource and their operations over its parent. </summary>
+    /// <summary> A class representing collection of StaticSiteBuildUserProvidedFunctionApp and their operations over its parent. </summary>
     public partial class StaticSiteBuildUserProvidedFunctionAppCollection : ArmCollection, IEnumerable<StaticSiteBuildUserProvidedFunctionApp>, IAsyncEnumerable<StaticSiteBuildUserProvidedFunctionApp>
     {
         private readonly ClientDiagnostics _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics;

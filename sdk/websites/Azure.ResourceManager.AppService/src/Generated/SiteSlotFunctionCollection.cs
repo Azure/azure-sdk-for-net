@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of FunctionEnvelope and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteSlotFunction and their operations over its parent. </summary>
     public partial class SiteSlotFunctionCollection : ArmCollection, IEnumerable<SiteSlotFunction>, IAsyncEnumerable<SiteSlotFunction>
     {
         private readonly ClientDiagnostics _siteSlotFunctionWebAppsClientDiagnostics;

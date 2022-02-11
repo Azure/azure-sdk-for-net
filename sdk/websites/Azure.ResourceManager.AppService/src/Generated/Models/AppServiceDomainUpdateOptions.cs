@@ -13,17 +13,17 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ARM resource for a domain. </summary>
-    public partial class DomainPatchResource : ProxyOnlyResource
+    public partial class AppServiceDomainUpdateOptions : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of DomainPatchResource. </summary>
-        public DomainPatchResource()
+        /// <summary> Initializes a new instance of AppServiceDomainUpdateOptions. </summary>
+        public AppServiceDomainUpdateOptions()
         {
             NameServers = new ChangeTrackingList<string>();
             ManagedHostNames = new ChangeTrackingList<HostName>();
             DomainNotRenewableReasons = new ChangeTrackingList<DomainNotRenewableReasons>();
         }
 
-        /// <summary> Initializes a new instance of DomainPatchResource. </summary>
+        /// <summary> Initializes a new instance of AppServiceDomainUpdateOptions. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="dnsZoneId"> Azure DNS Zone to use. </param>
         /// <param name="targetDnsType"> Target DNS type (would be used for migration). </param>
         /// <param name="authCode"></param>
-        internal DomainPatchResource(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, ContactInformation contactAdmin, ContactInformation contactBilling, ContactInformation contactRegistrant, ContactInformation contactTech, DomainStatus? registrationStatus, ProvisioningState? provisioningState, IReadOnlyList<string> nameServers, bool? privacy, DateTimeOffset? createdTime, DateTimeOffset? expirationTime, DateTimeOffset? lastRenewedTime, bool? autoRenew, bool? readyForDnsRecordManagement, IReadOnlyList<HostName> managedHostNames, DomainPurchaseConsent consent, IReadOnlyList<DomainNotRenewableReasons> domainNotRenewableReasons, DnsType? dnsType, string dnsZoneId, DnsType? targetDnsType, string authCode) : base(id, name, type, systemData, kind)
+        internal AppServiceDomainUpdateOptions(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, ContactInformation contactAdmin, ContactInformation contactBilling, ContactInformation contactRegistrant, ContactInformation contactTech, DomainStatus? registrationStatus, ProvisioningState? provisioningState, IReadOnlyList<string> nameServers, bool? privacy, DateTimeOffset? createdTime, DateTimeOffset? expirationTime, DateTimeOffset? lastRenewedTime, bool? autoRenew, bool? readyForDnsRecordManagement, IReadOnlyList<HostName> managedHostNames, DomainPurchaseConsent consent, IReadOnlyList<DomainNotRenewableReasons> domainNotRenewableReasons, DnsType? dnsType, string dnsZoneId, DnsType? targetDnsType, string authCode) : base(id, name, type, systemData, kind)
         {
             ContactAdmin = contactAdmin;
             ContactBilling = contactBilling;

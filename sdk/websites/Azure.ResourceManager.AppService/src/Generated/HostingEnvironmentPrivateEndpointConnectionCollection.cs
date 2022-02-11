@@ -21,7 +21,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of RemotePrivateEndpointConnectionARMResource and their operations over its parent. </summary>
+    /// <summary> A class representing collection of HostingEnvironmentPrivateEndpointConnection and their operations over its parent. </summary>
     public partial class HostingEnvironmentPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<HostingEnvironmentPrivateEndpointConnection>, IAsyncEnumerable<HostingEnvironmentPrivateEndpointConnection>
     {
         private readonly ClientDiagnostics _hostingEnvironmentPrivateEndpointConnectionAppServiceEnvironmentsClientDiagnostics;
