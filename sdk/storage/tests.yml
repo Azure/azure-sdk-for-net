@@ -6,7 +6,7 @@ extends:
     ServiceDirectory: storage
     BuildInParallel: true
     TimeoutInMinutes: 180
-    Location: canadacentral
+    Location: uswest2
     CloudConfig:
       Preview:
         SubscriptionConfigurations:
