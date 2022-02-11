@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,92 +17,64 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of FlowLog and their operations over its parent. </summary>
     public partial class FlowLogCollection : ArmCollection, IEnumerable<FlowLog>, IAsyncEnumerable<FlowLog>
-
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly FlowLogsRestOperations _flowLogsRestClient;
+        private readonly ClientDiagnostics _flowLogClientDiagnostics;
+        private readonly FlowLogsRestOperations _flowLogRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="FlowLogCollection"/> class for mocking. </summary>
         protected FlowLogCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of FlowLogCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal FlowLogCollection(ArmResource parent) : base(parent)
+        /// <summary> Initializes a new instance of the <see cref="FlowLogCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal FlowLogCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _flowLogsRestClient = new FlowLogsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _flowLogClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", FlowLog.ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(FlowLog.ResourceType, out string flowLogApiVersion);
+            _flowLogRestClient = new FlowLogsRestOperations(_flowLogClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, flowLogApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => NetworkWatcher.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != NetworkWatcher.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetworkWatcher.ResourceType), nameof(id));
+        }
 
-        // Collection level operations.
-
-        /// <summary> Create or update a flow log for the specified network security group. </summary>
+        /// <summary>
+        /// Create or update a flow log for the specified network security group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs/{flowLogName}
+        /// Operation Id: FlowLogs_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="flowLogName"> The name of the flow log. </param>
         /// <param name="parameters"> Parameters that define the create or update flow log resource. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="flowLogName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual FlowLogCreateOrUpdateOperation CreateOrUpdate(string flowLogName, FlowLogData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<FlowLog>> CreateOrUpdateAsync(bool waitForCompletion, string flowLogName, FlowLogData parameters, CancellationToken cancellationToken = default)
         {
-            if (flowLogName == null)
-            {
-                throw new ArgumentNullException(nameof(flowLogName));
-            }
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FlowLogCollection.CreateOrUpdate");
+            using var scope = _flowLogClientDiagnostics.CreateScope("FlowLogCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _flowLogsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, parameters, cancellationToken);
-                var operation = new FlowLogCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _flowLogsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, parameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or update a flow log for the specified network security group. </summary>
-        /// <param name="flowLogName"> The name of the flow log. </param>
-        /// <param name="parameters"> Parameters that define the create or update flow log resource. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<FlowLogCreateOrUpdateOperation> CreateOrUpdateAsync(string flowLogName, FlowLogData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (flowLogName == null)
-            {
-                throw new ArgumentNullException(nameof(flowLogName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("FlowLogCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _flowLogsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new FlowLogCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _flowLogsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, parameters).Request, response);
+                var response = await _flowLogRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<FlowLog>(new FlowLogOperationSource(Client), _flowLogClientDiagnostics, Pipeline, _flowLogRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -113,25 +86,34 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets a flow log resource by name. </summary>
-        /// <param name="flowLogName"> The name of the flow log resource. </param>
+        /// <summary>
+        /// Create or update a flow log for the specified network security group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs/{flowLogName}
+        /// Operation Id: FlowLogs_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="flowLogName"> The name of the flow log. </param>
+        /// <param name="parameters"> Parameters that define the create or update flow log resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> is null. </exception>
-        public virtual Response<FlowLog> Get(string flowLogName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="flowLogName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual ArmOperation<FlowLog> CreateOrUpdate(bool waitForCompletion, string flowLogName, FlowLogData parameters, CancellationToken cancellationToken = default)
         {
-            if (flowLogName == null)
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
+            if (parameters == null)
             {
-                throw new ArgumentNullException(nameof(flowLogName));
+                throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FlowLogCollection.Get");
+            using var scope = _flowLogClientDiagnostics.CreateScope("FlowLogCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _flowLogsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, cancellationToken);
-                if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FlowLog(Parent, response.Value), response.GetRawResponse());
+                var response = _flowLogRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, parameters, cancellationToken);
+                var operation = new NetworkArmOperation<FlowLog>(new FlowLogOperationSource(Client), _flowLogClientDiagnostics, Pipeline, _flowLogRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -140,25 +122,27 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets a flow log resource by name. </summary>
+        /// <summary>
+        /// Gets a flow log resource by name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs/{flowLogName}
+        /// Operation Id: FlowLogs_Get
+        /// </summary>
         /// <param name="flowLogName"> The name of the flow log resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="flowLogName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> is null. </exception>
         public async virtual Task<Response<FlowLog>> GetAsync(string flowLogName, CancellationToken cancellationToken = default)
         {
-            if (flowLogName == null)
-            {
-                throw new ArgumentNullException(nameof(flowLogName));
-            }
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
 
-            using var scope = _clientDiagnostics.CreateScope("FlowLogCollection.Get");
+            using var scope = _flowLogClientDiagnostics.CreateScope("FlowLogCollection.Get");
             scope.Start();
             try
             {
-                var response = await _flowLogsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, cancellationToken).ConfigureAwait(false);
+                var response = await _flowLogRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new FlowLog(Parent, response.Value), response.GetRawResponse());
+                    throw await _flowLogClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new FlowLog(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -167,25 +151,27 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets a flow log resource by name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs/{flowLogName}
+        /// Operation Id: FlowLogs_Get
+        /// </summary>
         /// <param name="flowLogName"> The name of the flow log resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="flowLogName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> is null. </exception>
-        public virtual Response<FlowLog> GetIfExists(string flowLogName, CancellationToken cancellationToken = default)
+        public virtual Response<FlowLog> Get(string flowLogName, CancellationToken cancellationToken = default)
         {
-            if (flowLogName == null)
-            {
-                throw new ArgumentNullException(nameof(flowLogName));
-            }
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
 
-            using var scope = _clientDiagnostics.CreateScope("FlowLogCollection.GetIfExists");
+            using var scope = _flowLogClientDiagnostics.CreateScope("FlowLogCollection.Get");
             scope.Start();
             try
             {
-                var response = _flowLogsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<FlowLog>(null, response.GetRawResponse())
-                    : Response.FromValue(new FlowLog(this, response.Value), response.GetRawResponse());
+                var response = _flowLogRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, cancellationToken);
+                if (response.Value == null)
+                    throw _flowLogClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new FlowLog(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -194,70 +180,104 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="flowLogName"> The name of the flow log resource. </param>
+        /// <summary>
+        /// Lists all flow log resources for the specified Network Watcher.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs
+        /// Operation Id: FlowLogs_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> is null. </exception>
-        public async virtual Task<Response<FlowLog>> GetIfExistsAsync(string flowLogName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="FlowLog" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FlowLog> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (flowLogName == null)
+            async Task<Page<FlowLog>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(flowLogName));
+                using var scope = _flowLogClientDiagnostics.CreateScope("FlowLogCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _flowLogRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new FlowLog(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-
-            using var scope = _clientDiagnostics.CreateScope("FlowLogCollection.GetIfExistsAsync");
-            scope.Start();
-            try
+            async Task<Page<FlowLog>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                var response = await _flowLogsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<FlowLog>(null, response.GetRawResponse())
-                    : Response.FromValue(new FlowLog(this, response.Value), response.GetRawResponse());
+                using var scope = _flowLogClientDiagnostics.CreateScope("FlowLogCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _flowLogRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new FlowLog(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="flowLogName"> The name of the flow log resource. </param>
+        /// <summary>
+        /// Lists all flow log resources for the specified Network Watcher.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs
+        /// Operation Id: FlowLogs_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string flowLogName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FlowLog" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FlowLog> GetAll(CancellationToken cancellationToken = default)
         {
-            if (flowLogName == null)
+            Page<FlowLog> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(flowLogName));
+                using var scope = _flowLogClientDiagnostics.CreateScope("FlowLogCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _flowLogRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new FlowLog(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-
-            using var scope = _clientDiagnostics.CreateScope("FlowLogCollection.CheckIfExists");
-            scope.Start();
-            try
+            Page<FlowLog> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                var response = GetIfExists(flowLogName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _flowLogClientDiagnostics.CreateScope("FlowLogCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _flowLogRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new FlowLog(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs/{flowLogName}
+        /// Operation Id: FlowLogs_Get
+        /// </summary>
         /// <param name="flowLogName"> The name of the flow log resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="flowLogName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string flowLogName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string flowLogName, CancellationToken cancellationToken = default)
         {
-            if (flowLogName == null)
-            {
-                throw new ArgumentNullException(nameof(flowLogName));
-            }
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
 
-            using var scope = _clientDiagnostics.CreateScope("FlowLogCollection.CheckIfExistsAsync");
+            using var scope = _flowLogClientDiagnostics.CreateScope("FlowLogCollection.Exists");
             scope.Start();
             try
             {
@@ -271,80 +291,89 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Lists all flow log resources for the specified Network Watcher. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs/{flowLogName}
+        /// Operation Id: FlowLogs_Get
+        /// </summary>
+        /// <param name="flowLogName"> The name of the flow log resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FlowLog" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FlowLog> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="flowLogName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> is null. </exception>
+        public virtual Response<bool> Exists(string flowLogName, CancellationToken cancellationToken = default)
         {
-            Page<FlowLog> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
+
+            using var scope = _flowLogClientDiagnostics.CreateScope("FlowLogCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("FlowLogCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _flowLogsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FlowLog(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(flowLogName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<FlowLog> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("FlowLogCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _flowLogsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FlowLog(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all flow log resources for the specified Network Watcher. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs/{flowLogName}
+        /// Operation Id: FlowLogs_Get
+        /// </summary>
+        /// <param name="flowLogName"> The name of the flow log resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FlowLog" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FlowLog> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="flowLogName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> is null. </exception>
+        public async virtual Task<Response<FlowLog>> GetIfExistsAsync(string flowLogName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<FlowLog>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
+
+            using var scope = _flowLogClientDiagnostics.CreateScope("FlowLogCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("FlowLogCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _flowLogsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FlowLog(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _flowLogRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<FlowLog>(null, response.GetRawResponse());
+                return Response.FromValue(new FlowLog(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<FlowLog>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("FlowLogCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _flowLogsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FlowLog(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs/{flowLogName}
+        /// Operation Id: FlowLogs_Get
+        /// </summary>
+        /// <param name="flowLogName"> The name of the flow log resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="flowLogName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> is null. </exception>
+        public virtual Response<FlowLog> GetIfExists(string flowLogName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
+
+            using var scope = _flowLogClientDiagnostics.CreateScope("FlowLogCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _flowLogRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<FlowLog>(null, response.GetRawResponse());
+                return Response.FromValue(new FlowLog(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<FlowLog> IEnumerable<FlowLog>.GetEnumerator()
@@ -361,8 +390,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, FlowLog, FlowLogData> Construct() { }
     }
 }

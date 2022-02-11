@@ -36,9 +36,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="resourceId">The resource identifier of the integration
         /// runtime to be shared.</param>
-        public LinkedIntegrationRuntimeRbacAuthorization(string resourceId)
+        /// <param name="credential">The credential reference containing
+        /// authentication information.</param>
+        public LinkedIntegrationRuntimeRbacAuthorization(string resourceId, CredentialReference credential = default(CredentialReference))
         {
             ResourceId = resourceId;
+            Credential = credential;
             CustomInit();
         }
 
@@ -55,6 +58,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public string ResourceId { get; set; }
 
         /// <summary>
+        /// Gets or sets the credential reference containing authentication
+        /// information.
+        /// </summary>
+        [JsonProperty(PropertyName = "credential")]
+        public CredentialReference Credential { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -65,6 +75,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (ResourceId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ResourceId");
+            }
+            if (Credential != null)
+            {
+                Credential.Validate();
             }
         }
     }

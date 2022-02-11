@@ -1,10 +1,9 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Azure.WebJobs.Host.Bindings;
+
 using Microsoft.Azure.WebJobs.Host.Bindings.Path;
-namespace Microsoft.Azure.WebJobs.Host.Tables
+
+namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
     internal static class BindableTableEntityPath
     {
@@ -20,9 +19,10 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
             {
                 return new ParameterizedTableEntityPath(tableNameTemplate, partitionKeyTemplate, rowKeyTemplate);
             }
-            TableClient.ValidateAzureTableName(tableNamePattern);
-            TableClient.ValidateAzureTableKeyValue(partitionKeyPattern);
-            TableClient.ValidateAzureTableKeyValue(rowKeyPattern);
+
+            TableClientHelpers.ValidateAzureTableName(tableNamePattern);
+            TableClientHelpers.ValidateAzureTableKeyValue(partitionKeyPattern);
+            TableClientHelpers.ValidateAzureTableKeyValue(rowKeyPattern);
             TableEntityPath innerPath = new TableEntityPath(tableNamePattern, partitionKeyPattern, rowKeyPattern);
             return new BoundTableEntityPath(innerPath);
         }

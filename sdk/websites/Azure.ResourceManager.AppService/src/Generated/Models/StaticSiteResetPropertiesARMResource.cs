@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -21,10 +22,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="repositoryToken"> The token which proves admin privileges to the repository. </param>
         /// <param name="shouldUpdateRepository"> Determines whether the repository should be updated with the new properties. </param>
-        internal StaticSiteResetPropertiesARMResource(ResourceIdentifier id, string name, ResourceType type, string kind, string repositoryToken, bool? shouldUpdateRepository) : base(id, name, type, kind)
+        internal StaticSiteResetPropertiesARMResource(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string repositoryToken, bool? shouldUpdateRepository) : base(id, name, type, systemData, kind)
         {
             RepositoryToken = repositoryToken;
             ShouldUpdateRepository = shouldUpdateRepository;

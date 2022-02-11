@@ -34,7 +34,7 @@ Once you have chosen and configured your credential, you can create instances of
 
 ```C#
 var credential = new DefaultAzureCredential();
-var client = new PurviewCatalogClient(new Url("https://<my-account-name>.purview.azure.com"), credential);
+var client = new PurviewCatalogClient(new Uri("https://<my-account-name>.purview.azure.com"), credential);
 ```
 
 ## Key concepts

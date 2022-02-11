@@ -1,34 +1,44 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
 using System.Threading.Tasks;
+using Azure;
+using Azure.Data.Tables;
+using Azure.Data.Tables.Models;
 using Microsoft.Azure.WebJobs.Host.Bindings;
-using Microsoft.Azure.WebJobs.Host.Converters;
-using Microsoft.Azure.Cosmos.Table;
-namespace Microsoft.Azure.WebJobs.Host.Tables
+
+namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
     internal class PocoEntityArgumentBinding<TElement> : IArgumentBinding<TableEntityContext>
-        where TElement : new()
     {
-        private static readonly IConverter<ITableEntity, TElement> Converter =
-            TableEntityToPocoConverter<TElement>.Create();
-        public Type ValueType
+        private readonly FuncAsyncConverter _pocoToEntityConverter;
+        private readonly FuncAsyncConverter _entityToPocoConverter;
+
+        public PocoEntityArgumentBinding(FuncAsyncConverter entityToPocoConverter, FuncAsyncConverter pocoToEntityConverter)
         {
-            get { return typeof(TElement); }
+            _pocoToEntityConverter = pocoToEntityConverter;
+            _entityToPocoConverter = entityToPocoConverter;
         }
+
+        public Type ValueType => typeof(TElement);
+
         public async Task<IValueProvider> BindAsync(TableEntityContext value, ValueBindingContext context)
         {
             var table = value.Table;
-            var retrieve = table.CreateRetrieveOperation<DynamicTableEntity>(
-                value.PartitionKey, value.RowKey);
-            TableResult result = await table.ExecuteAsync(retrieve, context.CancellationToken).ConfigureAwait(false);
-            DynamicTableEntity entity = (DynamicTableEntity)result.Result;
-            if (entity == null)
+            TableEntity entity;
+            try
+            {
+                entity = await table.GetEntityAsync<TableEntity>(
+                    value.PartitionKey, value.RowKey).ConfigureAwait(false);
+            }
+            catch (RequestFailedException e) when
+                (e.Status == 404 && (e.ErrorCode == TableErrorCode.TableNotFound || e.ErrorCode == TableErrorCode.ResourceNotFound))
             {
                 return new NullEntityValueProvider<TElement>(value);
             }
-            TElement userEntity = Converter.Convert(entity);
-            return new PocoEntityValueBinder<TElement>(value, entity.ETag, userEntity);
+
+            return new PocoEntityValueBinder<TElement>(value, context, entity, _entityToPocoConverter, _pocoToEntityConverter);
         }
     }
 }

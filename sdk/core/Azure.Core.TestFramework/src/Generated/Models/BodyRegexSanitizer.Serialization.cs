@@ -15,14 +15,19 @@ namespace Azure.Core.TestFramework.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("value");
-            writer.WriteStringValue(Value);
             writer.WritePropertyName("regex");
             writer.WriteStringValue(Regex);
+            writer.WritePropertyName("value");
+            writer.WriteStringValue(Value);
             if (Optional.IsDefined(GroupForReplace))
             {
                 writer.WritePropertyName("groupForReplace");
                 writer.WriteStringValue(GroupForReplace);
+            }
+            if (Optional.IsDefined(Condition))
+            {
+                writer.WritePropertyName("condition");
+                writer.WriteObjectValue(Condition);
             }
             writer.WriteEndObject();
         }

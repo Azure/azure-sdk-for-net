@@ -48,15 +48,13 @@ namespace Azure.ResourceManager.Network.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("ADO 6161")]
         public async Task BGPCommunityApiTest()
         {
-            //_ = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/routefilters");
             Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             AsyncPageable<BgpServiceCommunity> communitiesAsync = subscription.GetBgpServiceCommunitiesAsync();
             List<BgpServiceCommunity> communities = await communitiesAsync.ToEnumerableAsync();
             Assert.IsNotEmpty(communities);
-            Assert.True(communities.First().BgpCommunities.First().IsAuthorizedToUse);
+            Assert.That(communities.Any(c => c.BgpCommunities.Any(b => b.IsAuthorizedToUse.HasValue ? b.IsAuthorizedToUse.Value : false)));
         }
 
         [Test]

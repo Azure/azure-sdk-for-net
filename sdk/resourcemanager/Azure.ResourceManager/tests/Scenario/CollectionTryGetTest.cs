@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Tests
             _client = GetArmClient();
             var subscription = await _client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             _collection = subscription.GetResourceGroups();
-            var rgOp = await _collection.Construct(Location.WestUS2).CreateOrUpdateAsync(_rgName);
+            var rgOp = await _collection.Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(_rgName);
             _resourceGroup = rgOp.Value;
         }
 

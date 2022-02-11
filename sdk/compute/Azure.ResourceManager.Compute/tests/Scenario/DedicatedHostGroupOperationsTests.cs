@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var collection = (await CreateResourceGroupAsync()).GetDedicatedHostGroups();
             var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
-            var lro = await collection.CreateOrUpdateAsync(groupName, input);
+            var lro = await collection.CreateOrUpdateAsync(true, groupName, input);
             return lro.Value;
         }
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var groupName = Recording.GenerateAssetName("testDHG-");
             var dedicatedHostGroup = await CreateDedicatedHostGroupAsync(groupName);
-            await dedicatedHostGroup.DeleteAsync();
+            await dedicatedHostGroup.DeleteAsync(true);
         }
 
         [TestCase]

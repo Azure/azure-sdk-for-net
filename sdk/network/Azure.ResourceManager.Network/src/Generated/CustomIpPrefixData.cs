@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGuid"> The resource GUID property of the custom IP prefix resource. </param>
         /// <param name="failedReason"> The reason why resource is in failed state. </param>
         /// <param name="provisioningState"> The provisioning state of the custom IP prefix resource. </param>
-        internal CustomIpPrefixData(string id, string name, string type, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, string etag, IList<string> zones, string cidr, string signedMessage, string authorizationMessage, CustomIpPrefixData customIpPrefixParent, IReadOnlyList<CustomIpPrefixData> childCustomIpPrefixes, CommissionedState? commissionedState, IReadOnlyList<WritableSubResource> publicIpPrefixes, string resourceGuid, string failedReason, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal CustomIpPrefixData(string id, string name, string type, string location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, string etag, IList<string> zones, string cidr, string signedMessage, string authorizationMessage, CustomIpPrefixData customIpPrefixParent, IReadOnlyList<CustomIpPrefixData> childCustomIpPrefixes, CommissionedState? commissionedState, IReadOnlyList<WritableSubResource> publicIpPrefixes, string resourceGuid, string failedReason, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Etag = etag;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The extended location of the custom IP prefix. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
+        public Models.ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> A list of availability zones denoting the IP allocated for the resource needs to come from. </summary>

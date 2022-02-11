@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -21,6 +22,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="sku"> Premier add on SKU. </param>
         /// <param name="product"> Premier add on offer Product. </param>
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="legalTermsUrl"> Legal terms URL. </param>
         /// <param name="marketplacePublisher"> Marketplace publisher. </param>
         /// <param name="marketplaceOffer"> Marketplace offer. </param>
-        internal PremierAddOnOffer(ResourceIdentifier id, string name, ResourceType type, string kind, string sku, string product, string vendor, bool? promoCodeRequired, int? quota, AppServicePlanRestrictions? webHostingPlanRestrictions, string privacyPolicyUrl, string legalTermsUrl, string marketplacePublisher, string marketplaceOffer) : base(id, name, type, kind)
+        internal PremierAddOnOffer(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string sku, string product, string vendor, bool? promoCodeRequired, int? quota, AppServicePlanRestrictions? webHostingPlanRestrictions, string privacyPolicyUrl, string legalTermsUrl, string marketplacePublisher, string marketplaceOffer) : base(id, name, type, systemData, kind)
         {
             Sku = sku;
             Product = product;

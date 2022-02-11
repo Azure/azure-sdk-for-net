@@ -3,7 +3,6 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 using System;
@@ -15,7 +14,7 @@ using System.Threading.Tasks;
 namespace Azure.ResourceManager.TestFramework
 {
     public abstract class ManagementRecordedTestBase<TEnvironment> : RecordedTestBase<TEnvironment>
-        where TEnvironment: TestEnvironment, new()
+        where TEnvironment : TestEnvironment, new()
     {
         protected ResourceGroupCleanupPolicy ResourceGroupCleanupPolicy = new ResourceGroupCleanupPolicy();
 
@@ -34,7 +33,7 @@ namespace Azure.ResourceManager.TestFramework
         private ArmClient _cleanupClient;
         private bool _waitForCleanup;
 
-        protected ManagementRecordedTestBase(bool isAsync, bool useLegacyTransport = false) : base(isAsync, useLegacyTransport: useLegacyTransport)
+        protected ManagementRecordedTestBase(bool isAsync) : base(isAsync)
         {
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;
@@ -64,32 +63,50 @@ namespace Azure.ResourceManager.TestFramework
             if (Mode != RecordedTestMode.Playback)
             {
                 return new ArmClient(
-                        TestEnvironment.SubscriptionId,
-                        GetUri(TestEnvironment.ResourceManagerUrl),
-                        TestEnvironment.Credential,
-                        new ArmClientOptions());
+                    TestEnvironment.Credential,
+                    TestEnvironment.SubscriptionId,
+                    new ArmClientOptions() { Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl)});
             }
             return null;
         }
 
         protected TClient InstrumentClientExtension<TClient>(TClient client) => (TClient)InstrumentClient(typeof(TClient), client, new IInterceptor[] { new ManagementInterceptor(this) });
 
-        protected ArmClient GetArmClient(ArmClientOptions clientOptions = default)
+        protected ArmClient GetArmClient(ArmClientOptions clientOptions = default, string subscriptionId = default)
         {
             var options = InstrumentClientOptions(clientOptions ?? new ArmClientOptions());
+            options.Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl);
             options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
 
-            return CreateClient<ArmClient>(
-                TestEnvironment.SubscriptionId,
-                GetUri(TestEnvironment.ResourceManagerUrl),
+            return InstrumentClient(new ArmClient(
                 TestEnvironment.Credential,
-                options);
+                subscriptionId ?? TestEnvironment.SubscriptionId,
+                options), new IInterceptor[] { new ManagementInterceptor(this) });
         }
 
-        private Uri GetUri(string endpoint)
+        private ArmEnvironment GetEnvironment(string endpoint)
         {
-            return !string.IsNullOrEmpty(endpoint) ? new Uri(endpoint) : null;
+            if (string.IsNullOrEmpty(endpoint))
+            {
+                return ArmEnvironment.AzureCloud;
+            }
+
+            var baseUri = new Uri(endpoint);
+
+            if (baseUri == ArmEnvironment.AzureCloud.BaseUri)
+                return ArmEnvironment.AzureCloud;
+
+            if (baseUri == ArmEnvironment.AzureChinaCloud.BaseUri)
+                return ArmEnvironment.AzureChinaCloud;
+
+            if (baseUri == ArmEnvironment.AzureGermanCloud.BaseUri)
+                return ArmEnvironment.AzureGermanCloud;
+
+            if (baseUri == ArmEnvironment.AzureUSGovernment.BaseUri)
+                return ArmEnvironment.AzureUSGovernment;
+
+            return new ArmEnvironment(new Uri(endpoint), TestEnvironment.ServiceManagementUrl ?? $"{endpoint}/.default");
         }
 
         [SetUp]
@@ -120,7 +137,7 @@ namespace Azure.ResourceManager.TestFramework
                 {
                     try
                     {
-                        _cleanupClient.GetManagementGroup(mgmtGroupId).Delete(waitForCompletion: _waitForCleanup);
+                        _cleanupClient.GetManagementGroup(new ResourceIdentifier(mgmtGroupId)).Delete(waitForCompletion: _waitForCleanup);
                     }
                     catch (RequestFailedException e) when (e.Status == 404 || e.Status == 403)
                     {
@@ -170,12 +187,12 @@ namespace Azure.ResourceManager.TestFramework
             var options = InstrumentClientOptions(new ArmClientOptions(), SessionRecording);
             options.AddPolicy(OneTimeResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(OneTimeManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
+            options.Environment = GetEnvironment(SessionEnvironment.ResourceManagerUrl);
 
-            GlobalClient = CreateClient<ArmClient>(
-                SessionEnvironment.SubscriptionId,
-                GetUri(SessionEnvironment.ResourceManagerUrl),
+            GlobalClient = InstrumentClient(new ArmClient(
                 SessionEnvironment.Credential,
-                options);
+                SessionEnvironment.SubscriptionId,
+                options), new IInterceptor[] { new ManagementInterceptor(this) });
         }
 
         private bool HasOneTimeSetup()
@@ -213,7 +230,7 @@ namespace Azure.ResourceManager.TestFramework
                 });
                 Parallel.ForEach(OneTimeManagementGroupCleanupPolicy.ManagementGroupsCreated, mgmtGroupId =>
                 {
-                    _cleanupClient.GetManagementGroup(mgmtGroupId).Delete(waitForCompletion: _waitForCleanup);
+                    _cleanupClient.GetManagementGroup(new ResourceIdentifier(mgmtGroupId)).Delete(waitForCompletion: _waitForCleanup);
                 });
             }
 
@@ -222,8 +239,6 @@ namespace Azure.ResourceManager.TestFramework
         }
 
         protected override object InstrumentOperation(Type operationType, object operation)
-        {
-            return InstrumentMgmtOperation(operationType, operation, new ManagementInterceptor(this));
-        }
+            => InstrumentOperationInternal(operationType, operation, false, new ManagementInterceptor(this));
     }
 }

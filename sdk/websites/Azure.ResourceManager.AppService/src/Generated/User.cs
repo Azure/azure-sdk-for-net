@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -14,15 +14,21 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A Class representing a User along with the instance operations that can be performed on it. </summary>
     public partial class User : ArmResource
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebSiteManagementRestOperations _restClient;
+        /// <summary> Generate the resource identifier of a <see cref="User"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier()
+        {
+            var resourceId = $"/providers/Microsoft.Web/publishingUsers/web";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _userClientDiagnostics;
+        private readonly WebSiteManagementRestOperations _userRestClient;
         private readonly UserData _data;
 
         /// <summary> Initializes a new instance of the <see cref="User"/> class for mocking. </summary>
@@ -31,42 +37,29 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "User"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal User(ArmResource options, UserData resource) : base(options, resource.Id)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal User(ArmClient client, UserData data) : this(client, data.Id)
         {
             HasData = true;
-            _data = resource;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new WebSiteManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="User"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal User(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal User(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new WebSiteManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="User"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal User(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new WebSiteManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _userClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string userApiVersion);
+            _userRestClient = new WebSiteManagementRestOperations(_userClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, userApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/publishingUsers";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -83,21 +76,28 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Web/publishingUsers/web
-        /// ContextualPath: /providers/Microsoft.Web/publishingUsers/web
-        /// OperationId: GetPublishingUser
-        /// <summary> Description for Gets publishing user. </summary>
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
+
+        /// <summary>
+        /// Description for Gets publishing user
+        /// Request Path: /providers/Microsoft.Web/publishingUsers/web
+        /// Operation Id: GetPublishingUser
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<User>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("User.Get");
+            using var scope = _userClientDiagnostics.CreateScope("User.Get");
             scope.Start();
             try
             {
-                var response = await _restClient.GetPublishingUserAsync(cancellationToken).ConfigureAwait(false);
+                var response = await _userRestClient.GetPublishingUserAsync(cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new User(this, response.Value), response.GetRawResponse());
+                    throw await _userClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new User(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,21 +106,22 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Web/publishingUsers/web
-        /// ContextualPath: /providers/Microsoft.Web/publishingUsers/web
-        /// OperationId: GetPublishingUser
-        /// <summary> Description for Gets publishing user. </summary>
+        /// <summary>
+        /// Description for Gets publishing user
+        /// Request Path: /providers/Microsoft.Web/publishingUsers/web
+        /// Operation Id: GetPublishingUser
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<User> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("User.Get");
+            using var scope = _userClientDiagnostics.CreateScope("User.Get");
             scope.Start();
             try
             {
-                var response = _restClient.GetPublishingUser(cancellationToken);
+                var response = _userRestClient.GetPublishingUser(cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new User(this, response.Value), response.GetRawResponse());
+                    throw _userClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new User(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -129,20 +130,70 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Description for Updates publishing user
+        /// Request Path: /providers/Microsoft.Web/publishingUsers/web
+        /// Operation Id: UpdatePublishingUser
+        /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="userDetails"> Details of publishing user. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userDetails"/> is null. </exception>
+        public async virtual Task<ArmOperation<User>> CreateOrUpdateAsync(bool waitForCompletion, UserData userDetails, CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            if (userDetails == null)
+            {
+                throw new ArgumentNullException(nameof(userDetails));
+            }
+
+            using var scope = _userClientDiagnostics.CreateScope("User.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _userRestClient.UpdatePublishingUserAsync(userDetails, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<User>(Response.FromValue(new User(Client, response), response.GetRawResponse()));
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Description for Updates publishing user
+        /// Request Path: /providers/Microsoft.Web/publishingUsers/web
+        /// Operation Id: UpdatePublishingUser
+        /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="userDetails"> Details of publishing user. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userDetails"/> is null. </exception>
+        public virtual ArmOperation<User> CreateOrUpdate(bool waitForCompletion, UserData userDetails, CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            if (userDetails == null)
+            {
+                throw new ArgumentNullException(nameof(userDetails));
+            }
+
+            using var scope = _userClientDiagnostics.CreateScope("User.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _userRestClient.UpdatePublishingUser(userDetails, cancellationToken);
+                var operation = new AppServiceArmOperation<User>(Response.FromValue(new User(Client, response), response.GetRawResponse()));
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

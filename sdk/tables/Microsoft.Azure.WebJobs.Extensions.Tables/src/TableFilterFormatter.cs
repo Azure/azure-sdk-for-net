@@ -1,11 +1,12 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Bindings.Path;
-namespace Microsoft.Azure.WebJobs.Host.Tables
+
+namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
     internal static class TableFilterFormatter
     {
@@ -15,6 +16,7 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
             {
                 return template.Pattern;
             }
+
             if (template.ParameterNames.Count() == 1)
             {
                 // Special case where the entire filter expression
@@ -25,6 +27,7 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
                     return template.Bind(bindingData);
                 }
             }
+
             // each distinct parameter can occur one or more times in the template
             // so group by parameter name
             var parameterGroups = template.ParameterNames.GroupBy(p => p);
@@ -35,6 +38,7 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
             {
                 convertedBindingData[kv.Key] = kv.Value;
             }
+
             foreach (var parameterGroup in parameterGroups)
             {
                 // perform any OData specific formatting on the values
@@ -52,6 +56,7 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
                         convertedBindingData[parameterName] = ((DateTimeOffset)originalValue).UtcDateTime.ToString("o");
                     }
                 }
+
                 // to classify as a string literal, ALL occurrences in the template
                 // must be string literals (e.g. of the form '{p}')
                 // note that this will also capture OData expressions of the form
@@ -68,8 +73,10 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
                         isStringLiteral = false;
                         break;
                     }
+
                     idx++;
                 }
+
                 // validate and format the value based on its classification
                 object objValue = null;
                 if (convertedBindingData.TryGetValue(parameterName, out objValue))
@@ -85,8 +92,10 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
                     }
                 }
             }
+
             return template.Bind(convertedBindingData);
         }
+
         internal static bool TryValidateNonStringLiteral(string value)
         {
             // value must be one of the odata supported non string literal types:
@@ -100,6 +109,7 @@ namespace Microsoft.Azure.WebJobs.Host.Tables
             {
                 return true;
             }
+
             return false;
         }
     }

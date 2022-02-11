@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,81 +23,55 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing collection of TopLevelDomain and their operations over its parent. </summary>
     public partial class TopLevelDomainCollection : ArmCollection, IEnumerable<TopLevelDomain>, IAsyncEnumerable<TopLevelDomain>
-
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly TopLevelDomainsRestOperations _topLevelDomainsRestClient;
+        private readonly ClientDiagnostics _topLevelDomainClientDiagnostics;
+        private readonly TopLevelDomainsRestOperations _topLevelDomainRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="TopLevelDomainCollection"/> class for mocking. </summary>
         protected TopLevelDomainCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of TopLevelDomainCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal TopLevelDomainCollection(ArmResource parent) : base(parent)
+        /// <summary> Initializes a new instance of the <see cref="TopLevelDomainCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal TopLevelDomainCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _topLevelDomainsRestClient = new TopLevelDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _topLevelDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", TopLevelDomain.ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(TopLevelDomain.ResourceType, out string topLevelDomainApiVersion);
+            _topLevelDomainRestClient = new TopLevelDomainsRestOperations(_topLevelDomainClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, topLevelDomainApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Subscription.ResourceType;
-
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: TopLevelDomains_Get
-        /// <summary> Description for Get details of a top-level domain. </summary>
-        /// <param name="name"> Name of the top-level domain. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<TopLevelDomain> Get(string name, CancellationToken cancellationToken = default)
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = _topLevelDomainsRestClient.Get(Id.SubscriptionId, name, cancellationToken);
-                if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TopLevelDomain(Parent, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            if (id.ResourceType != Subscription.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: TopLevelDomains_Get
-        /// <summary> Description for Get details of a top-level domain. </summary>
+        /// <summary>
+        /// Description for Get details of a top-level domain.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
+        /// Operation Id: TopLevelDomains_Get
+        /// </summary>
         /// <param name="name"> Name of the top-level domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<TopLevelDomain>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.Get");
+            using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.Get");
             scope.Start();
             try
             {
-                var response = await _topLevelDomainsRestClient.GetAsync(Id.SubscriptionId, name, cancellationToken).ConfigureAwait(false);
+                var response = await _topLevelDomainRestClient.GetAsync(Id.SubscriptionId, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new TopLevelDomain(Parent, response.Value), response.GetRawResponse());
+                    throw await _topLevelDomainClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new TopLevelDomain(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -105,25 +80,27 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Description for Get details of a top-level domain.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
+        /// Operation Id: TopLevelDomains_Get
+        /// </summary>
         /// <param name="name"> Name of the top-level domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<TopLevelDomain> GetIfExists(string name, CancellationToken cancellationToken = default)
+        public virtual Response<TopLevelDomain> Get(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.GetIfExists");
+            using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.Get");
             scope.Start();
             try
             {
-                var response = _topLevelDomainsRestClient.Get(Id.SubscriptionId, name, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<TopLevelDomain>(null, response.GetRawResponse())
-                    : Response.FromValue(new TopLevelDomain(this, response.Value), response.GetRawResponse());
+                var response = _topLevelDomainRestClient.Get(Id.SubscriptionId, name, cancellationToken);
+                if (response.Value == null)
+                    throw _topLevelDomainClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new TopLevelDomain(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -132,70 +109,104 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="name"> Name of the top-level domain. </param>
+        /// <summary>
+        /// Description for Get all top-level domains supported for registration.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains
+        /// Operation Id: TopLevelDomains_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<TopLevelDomain>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="TopLevelDomain" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<TopLevelDomain> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (name == null)
+            async Task<Page<TopLevelDomain>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(name));
+                using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _topLevelDomainRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomain(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-
-            using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.GetIfExistsAsync");
-            scope.Start();
-            try
+            async Task<Page<TopLevelDomain>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                var response = await _topLevelDomainsRestClient.GetAsync(Id.SubscriptionId, name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<TopLevelDomain>(null, response.GetRawResponse())
-                    : Response.FromValue(new TopLevelDomain(this, response.Value), response.GetRawResponse());
+                using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _topLevelDomainRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomain(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="name"> Name of the top-level domain. </param>
+        /// <summary>
+        /// Description for Get all top-level domains supported for registration.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains
+        /// Operation Id: TopLevelDomains_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string name, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TopLevelDomain" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TopLevelDomain> GetAll(CancellationToken cancellationToken = default)
         {
-            if (name == null)
+            Page<TopLevelDomain> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(name));
+                using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _topLevelDomainRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomain(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-
-            using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.CheckIfExists");
-            scope.Start();
-            try
+            Page<TopLevelDomain> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                var response = GetIfExists(name, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _topLevelDomainRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomain(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
+        /// Operation Id: TopLevelDomains_Get
+        /// </summary>
         /// <param name="name"> Name of the top-level domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.CheckIfExistsAsync");
+            using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.Exists");
             scope.Start();
             try
             {
@@ -209,103 +220,25 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: TopLevelDomains_List
-        /// <summary> Description for Get all top-level domains supported for registration. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
+        /// Operation Id: TopLevelDomains_Get
+        /// </summary>
+        /// <param name="name"> Name of the top-level domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TopLevelDomain" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TopLevelDomain> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            Page<TopLevelDomain> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _topLevelDomainsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<TopLevelDomain> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _topLevelDomainsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: TopLevelDomains_List
-        /// <summary> Description for Get all top-level domains supported for registration. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TopLevelDomain" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TopLevelDomain> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<TopLevelDomain>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _topLevelDomainsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<TopLevelDomain>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _topLevelDomainsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of <see cref="TopLevelDomain" /> for this subscription represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.GetAllAsGenericResources");
+            using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(TopLevelDomain.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as Subscription, filters, expand, top, cancellationToken);
+                var response = GetIfExists(name, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -314,21 +247,56 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Filters the list of <see cref="TopLevelDomain" /> for this subscription represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
+        /// Operation Id: TopLevelDomains_Get
+        /// </summary>
+        /// <param name="name"> Name of the top-level domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public async virtual Task<Response<TopLevelDomain>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.GetAllAsGenericResources");
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.GetIfExists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(TopLevelDomain.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as Subscription, filters, expand, top, cancellationToken);
+                var response = await _topLevelDomainRestClient.GetAsync(Id.SubscriptionId, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<TopLevelDomain>(null, response.GetRawResponse());
+                return Response.FromValue(new TopLevelDomain(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
+        /// Operation Id: TopLevelDomains_Get
+        /// </summary>
+        /// <param name="name"> Name of the top-level domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual Response<TopLevelDomain> GetIfExists(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _topLevelDomainRestClient.Get(Id.SubscriptionId, name, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<TopLevelDomain>(null, response.GetRawResponse());
+                return Response.FromValue(new TopLevelDomain(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -351,8 +319,5 @@ namespace Azure.ResourceManager.AppService
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, TopLevelDomain, TopLevelDomainData> Construct() { }
     }
 }

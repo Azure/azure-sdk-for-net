@@ -37,24 +37,28 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="subscriptionKeyParameterNames">Protocols over which
         /// API is made available.</param>
         /// <param name="apiType">Type of API. Possible values include: 'http',
-        /// 'soap'</param>
-        /// <param name="apiRevision">Describes the Revision of the Api. If no
+        /// 'soap', 'websocket', 'graphql'</param>
+        /// <param name="apiRevision">Describes the revision of the API. If no
         /// value is provided, default revision 1 is created</param>
-        /// <param name="apiVersion">Indicates the Version identifier of the
+        /// <param name="apiVersion">Indicates the version identifier of the
         /// API if the API is versioned</param>
         /// <param name="isCurrent">Indicates if API revision is current api
         /// revision.</param>
         /// <param name="isOnline">Indicates if API revision is accessible via
         /// the gateway.</param>
-        /// <param name="apiRevisionDescription">Description of the Api
+        /// <param name="apiRevisionDescription">Description of the API
         /// Revision.</param>
-        /// <param name="apiVersionDescription">Description of the Api
+        /// <param name="apiVersionDescription">Description of the API
         /// Version.</param>
         /// <param name="apiVersionSetId">A resource identifier for the related
         /// ApiVersionSet.</param>
         /// <param name="subscriptionRequired">Specifies whether an API or
         /// Product subscription is required for accessing the API.</param>
-        public ApiEntityBaseContract(string description = default(string), AuthenticationSettingsContract authenticationSettings = default(AuthenticationSettingsContract), SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default(SubscriptionKeyParameterNamesContract), string apiType = default(string), string apiRevision = default(string), string apiVersion = default(string), bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiRevisionDescription = default(string), string apiVersionDescription = default(string), string apiVersionSetId = default(string), bool? subscriptionRequired = default(bool?))
+        /// <param name="termsOfServiceUrl"> A URL to the Terms of Service for
+        /// the API. MUST be in the format of a URL.</param>
+        /// <param name="contact">Contact information for the API.</param>
+        /// <param name="license">License information for the API.</param>
+        public ApiEntityBaseContract(string description = default(string), AuthenticationSettingsContract authenticationSettings = default(AuthenticationSettingsContract), SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default(SubscriptionKeyParameterNamesContract), string apiType = default(string), string apiRevision = default(string), string apiVersion = default(string), bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiRevisionDescription = default(string), string apiVersionDescription = default(string), string apiVersionSetId = default(string), bool? subscriptionRequired = default(bool?), string termsOfServiceUrl = default(string), ApiContactInformation contact = default(ApiContactInformation), ApiLicenseInformation license = default(ApiLicenseInformation))
         {
             Description = description;
             AuthenticationSettings = authenticationSettings;
@@ -68,6 +72,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             ApiVersionDescription = apiVersionDescription;
             ApiVersionSetId = apiVersionSetId;
             SubscriptionRequired = subscriptionRequired;
+            TermsOfServiceUrl = termsOfServiceUrl;
+            Contact = contact;
+            License = license;
             CustomInit();
         }
 
@@ -97,20 +104,21 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get; set; }
 
         /// <summary>
-        /// Gets or sets type of API. Possible values include: 'http', 'soap'
+        /// Gets or sets type of API. Possible values include: 'http', 'soap',
+        /// 'websocket', 'graphql'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string ApiType { get; set; }
 
         /// <summary>
-        /// Gets or sets describes the Revision of the Api. If no value is
+        /// Gets or sets describes the revision of the API. If no value is
         /// provided, default revision 1 is created
         /// </summary>
         [JsonProperty(PropertyName = "apiRevision")]
         public string ApiRevision { get; set; }
 
         /// <summary>
-        /// Gets or sets indicates the Version identifier of the API if the API
+        /// Gets or sets indicates the version identifier of the API if the API
         /// is versioned
         /// </summary>
         [JsonProperty(PropertyName = "apiVersion")]
@@ -129,13 +137,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public bool? IsOnline { get; private set; }
 
         /// <summary>
-        /// Gets or sets description of the Api Revision.
+        /// Gets or sets description of the API Revision.
         /// </summary>
         [JsonProperty(PropertyName = "apiRevisionDescription")]
         public string ApiRevisionDescription { get; set; }
 
         /// <summary>
-        /// Gets or sets description of the Api Version.
+        /// Gets or sets description of the API Version.
         /// </summary>
         [JsonProperty(PropertyName = "apiVersionDescription")]
         public string ApiVersionDescription { get; set; }
@@ -152,6 +160,25 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "subscriptionRequired")]
         public bool? SubscriptionRequired { get; set; }
+
+        /// <summary>
+        /// Gets or sets  A URL to the Terms of Service for the API. MUST be in
+        /// the format of a URL.
+        /// </summary>
+        [JsonProperty(PropertyName = "termsOfServiceUrl")]
+        public string TermsOfServiceUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets contact information for the API.
+        /// </summary>
+        [JsonProperty(PropertyName = "contact")]
+        public ApiContactInformation Contact { get; set; }
+
+        /// <summary>
+        /// Gets or sets license information for the API.
+        /// </summary>
+        [JsonProperty(PropertyName = "license")]
+        public ApiLicenseInformation License { get; set; }
 
         /// <summary>
         /// Validate the object.

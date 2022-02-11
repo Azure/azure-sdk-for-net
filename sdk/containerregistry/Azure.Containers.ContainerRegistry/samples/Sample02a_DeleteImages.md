@@ -24,7 +24,7 @@ foreach (string repositoryName in repositoryNames)
 
     // Obtain the images ordered from newest to oldest
     Pageable<ArtifactManifestProperties> imageManifests =
-        repository.GetManifestPropertiesCollection(orderBy: ArtifactManifestOrderBy.LastUpdatedOnDescending);
+        repository.GetAllManifestProperties(manifestOrder: ArtifactManifestOrder.LastUpdatedOnDescending);
 
     // Delete images older than the first three.
     foreach (ArtifactManifestProperties imageManifest in imageManifests.Skip(3))

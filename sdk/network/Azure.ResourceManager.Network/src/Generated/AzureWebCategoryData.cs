@@ -5,13 +5,13 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the AzureWebCategory data model. </summary>
-    public partial class AzureWebCategoryData : Resource
+    public partial class AzureWebCategoryData : ResourceData
     {
         /// <summary> Initializes a new instance of AzureWebCategoryData. </summary>
         internal AzureWebCategoryData()
@@ -22,9 +22,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="group"> The name of the group that the category belongs to. </param>
-        internal AzureWebCategoryData(ResourceIdentifier id, string name, ResourceType type, string etag, string group) : base(id, name, type)
+        internal AzureWebCategoryData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string etag, string group) : base(id, name, type, systemData)
         {
             Etag = etag;
             Group = group;

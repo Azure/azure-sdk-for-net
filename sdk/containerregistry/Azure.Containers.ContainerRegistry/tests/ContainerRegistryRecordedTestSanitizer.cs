@@ -29,11 +29,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 JsonPath = "$..refresh_token"
             });
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(SanitizeValue, @"access_token=(?<group>.*?)(?=&|$)")
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"access_token=(?<group>.*?)(?=&|$)", SanitizeValue)
             {
                 GroupForReplace = "group"
             });
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(SanitizeValue, @"refresh_token=(?<group>.*?)(?=&|$)")
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"refresh_token=(?<group>.*?)(?=&|$)", SanitizeValue)
             {
                 GroupForReplace = "group"
             });
