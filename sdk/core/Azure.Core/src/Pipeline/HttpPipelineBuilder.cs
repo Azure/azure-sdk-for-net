@@ -59,8 +59,11 @@ namespace Azure.Core.Pipeline
         {
             Argument.AssertNotNull(messageClassifier, nameof(messageClassifier));
 
-            var result = BuildInternal(options, perCallPolicies, perRetryPolicies, null, ResponseClassifier.Shared);
-            return new HttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier, messageClassifier);
+            CompositeClassifier classifier = new CompositeClassifier(ResponseClassifier.Shared);
+            classifier.PerClientClassifier = messageClassifier;
+
+            var result = BuildInternal(options, perCallPolicies, perRetryPolicies, null, classifier);
+            return new HttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier);
         }
 
         /// <summary>

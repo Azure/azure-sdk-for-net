@@ -65,22 +65,6 @@ namespace Azure.Core
         public CancellationToken CancellationToken { get; internal set; }
 
         private ResponseClassifier _classifier;
-        private MessageClassifier? _perCallClassifier;
-        // TODO: Can we hold just the composite classifier here?
-        private MessageClassifier? _perClientClassifier;
-
-        internal MessageClassifier? PerClientClassifier
-        {
-            get
-            {
-                return _perClientClassifier;
-            }
-            set
-            {
-                _perClientClassifier = value;
-                _classifier = ComposeClassifier(_classifier);
-            }
-        }
 
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
@@ -121,20 +105,33 @@ namespace Azure.Core
                 Policies.AddRange(context.Policies);
             }
 
-            _perCallClassifier = context.Classifier;
-            _classifier = ComposeClassifier(ResponseClassifier);
+            if (context.Classifier != null)
+            {
+                var classifier = ResponseClassifier as CompositeClassifier;
+                if (classifier != null)
+                {
+                    classifier.PerCallClassifier = context.Classifier;
+                }
+                else
+                {
+                    classifier = new CompositeClassifier(ResponseClassifier);
+                    classifier.PerCallClassifier = context.Classifier;
+                }
+
+                _classifier = classifier;
+            }
         }
 
         private ResponseClassifier ComposeClassifier(ResponseClassifier classifier)
         {
-            if (_perCallClassifier != null || PerClientClassifier != null)
+            var composite = ResponseClassifier as CompositeClassifier;
+            if (composite != null)
             {
-                CompositeClassifier composite = new CompositeClassifier(classifier)
-                {
-                    PerCallClassifier = _perCallClassifier,
-                    PerClientClassifier = PerClientClassifier
-                };
-                return composite;
+                CompositeClassifier updated = new CompositeClassifier(classifier);
+                updated.PerCallClassifier = composite.PerCallClassifier;
+                updated.PerClientClassifier = composite.PerClientClassifier;
+
+                return updated;
             }
 
             return classifier;

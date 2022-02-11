@@ -12,34 +12,37 @@ namespace Azure.Core.Tests
         [Test]
         public void PerCallClassifierTakesPrecedence()
         {
-            var perCallClassifier = new StatusCodeClassifier(404, false);
-            var perClientClassifier = new StatusCodeClassifier(404, true);
+            CompositeClassifier classifier = new CompositeClassifier(ResponseClassifier.Shared);
+            classifier.PerCallClassifier = new StatusCodeClassifier(404, false);
+            classifier.PerClientClassifier = new StatusCodeClassifier(404, true);
 
-            var context = new RequestContext();
-            context.AddClassifier(perCallClassifier);
-
-            var message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
-            message.PerClientClassifier = perClientClassifier;
-            message.ApplyRequestContext(context);
+            var message = new HttpMessage(new MockRequest(), classifier);
             message.Response = new MockResponse(404);
 
-            var isError = message.ResponseClassifier.IsError(message);
-
-            Assert.IsFalse(isError);
+            Assert.IsFalse(message.ResponseClassifier.IsError(message));
         }
 
         [Test]
         public void PerClientClassifierTakesPrecedence()
         {
-            var perClientClassifier = new StatusCodeClassifier(404, false);
+            CompositeClassifier classifier = new CompositeClassifier(ResponseClassifier.Shared);
+            classifier.PerClientClassifier = new StatusCodeClassifier(404, false);
 
-            var message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
-            message.PerClientClassifier = perClientClassifier;
+            var message = new HttpMessage(new MockRequest(), classifier);
             message.Response = new MockResponse(404);
 
-            var isError = message.ResponseClassifier.IsError(message);
+            Assert.IsFalse(message.ResponseClassifier.IsError(message));
+        }
 
-            Assert.IsFalse(isError);
+        [Test]
+        public void BaseClassifierTakesPrecedence()
+        {
+            CompositeClassifier classifier = new CompositeClassifier(new CustomClassifier());
+
+            var message = new HttpMessage(new MockRequest(), classifier);
+            message.Response = new MockResponse(404);
+
+            Assert.IsFalse(message.ResponseClassifier.IsError(message));
         }
 
         #region Helpers
@@ -64,6 +67,19 @@ namespace Azure.Core.Tests
 
                 isError = false;
                 return false;
+            }
+        }
+
+        private class CustomClassifier : ResponseClassifier
+        {
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                if (message.Response.Status == 404)
+                {
+                    return false;
+                }
+
+                return true;
             }
         }
         #endregion
