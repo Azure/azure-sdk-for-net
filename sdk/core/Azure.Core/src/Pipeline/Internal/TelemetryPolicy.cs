@@ -24,7 +24,10 @@ namespace Azure.Core.Pipeline
 
         public override void OnSendingRequest(HttpMessage message)
         {
-            message.Request.Headers.Add(HttpHeader.Names.UserAgent, _header);
+            var header = _header;
+            if (message.TryGetProperty("SDKUserAgent", out var userAgent) && userAgent is string userAgentString)
+                header = userAgentString;
+            message.Request.Headers.Add(HttpHeader.Names.UserAgent, header);
         }
     }
 }
