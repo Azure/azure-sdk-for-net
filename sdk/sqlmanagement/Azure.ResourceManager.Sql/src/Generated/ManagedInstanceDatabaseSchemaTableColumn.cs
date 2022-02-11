@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel along with the instance operations that can be performed on it in the ManagedInstanceDatabaseSchemaTableColumn. </summary>
-        /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel" /> object. </returns>
-        public virtual ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel GetManagedInstanceDatabaseSchemaTableColumnSensitivityLabel()
+        /// <summary> Gets a collection of ManagedInstanceDatabaseSchemaTableColumnSensitivityLabels in the ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel. </summary>
+        /// <returns> An object representing collection of ManagedInstanceDatabaseSchemaTableColumnSensitivityLabels and their operations over a ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel. </returns>
+        public virtual ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelCollection GetManagedInstanceDatabaseSchemaTableColumnSensitivityLabels()
         {
-            return new ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel(Client, new ResourceIdentifier(Id.ToString() + "/sensitivityLabels/current"));
+            return new ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelCollection(Client, Id);
         }
 
         /// <summary>
