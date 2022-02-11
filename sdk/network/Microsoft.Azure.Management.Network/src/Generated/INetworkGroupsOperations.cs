@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the network manager.
         /// </param>
         /// <param name='networkGroupName'>
-        /// The name of the network group to get.
+        /// The name of the network group.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the network manager.
         /// </param>
         /// <param name='networkGroupName'>
-        /// The name of the network group to get.
+        /// The name of the network group.
         /// </param>
         /// <param name='ifMatch'>
         /// The ETag of the transformation. Omit this value to always overwrite
@@ -98,7 +98,13 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the network manager.
         /// </param>
         /// <param name='networkGroupName'>
-        /// The name of the network group to get.
+        /// The name of the network group.
+        /// </param>
+        /// <param name='force'>
+        /// Deletes the resource even if it is part of a deployed
+        /// configuration. If the configuration has been deployed, the service
+        /// will do a cleanup deployment in the background, prior to the
+        /// delete.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -112,7 +118,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string networkManagerName, string networkGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string networkManagerName, string networkGroupName, bool? force = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the specified network group.
         /// </summary>

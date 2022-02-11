@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the network manager.
         /// </param>
         /// <param name='configurationName'>
-        /// The name of the network manager security Configuration.
+        /// The name of the network manager Security Configuration.
         /// </param>
         /// <param name='ruleCollectionName'>
         /// The name of the network manager security Configuration rule
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the network manager.
         /// </param>
         /// <param name='configurationName'>
-        /// The name of the network manager security Configuration.
+        /// The name of the network manager Security Configuration.
         /// </param>
         /// <param name='ruleCollectionName'>
         /// The name of the network manager security Configuration rule
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the network manager.
         /// </param>
         /// <param name='configurationName'>
-        /// The name of the network manager security Configuration.
+        /// The name of the network manager Security Configuration.
         /// </param>
         /// <param name='ruleCollectionName'>
         /// The name of the network manager security Configuration rule
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the network manager.
         /// </param>
         /// <param name='configurationName'>
-        /// The name of the network manager security Configuration.
+        /// The name of the network manager Security Configuration.
         /// </param>
         /// <param name='ruleCollectionName'>
         /// The name of the network manager security Configuration rule
@@ -156,6 +156,12 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         /// <param name='ruleName'>
         /// The name of the rule.
+        /// </param>
+        /// <param name='force'>
+        /// Deletes the resource even if it is part of a deployed
+        /// configuration. If the configuration has been deployed, the service
+        /// will do a cleanup deployment in the background, prior to the
+        /// delete.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -169,7 +175,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, string ruleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, string ruleName, bool? force = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all network manager security configuration admin rules.
         /// </summary>

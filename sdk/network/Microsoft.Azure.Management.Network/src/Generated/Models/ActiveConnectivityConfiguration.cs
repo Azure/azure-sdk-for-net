@@ -35,6 +35,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="connectivityTopology">Connectivity topology type.
         /// Possible values include: 'HubAndSpoke', 'Mesh'</param>
+        /// <param name="appliesToGroups">Groups for configuration</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="displayName">A friendly name for the resource.</param>
         /// <param name="description">A description of the connectivity
@@ -42,7 +43,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="hubs">List of hubItems</param>
         /// <param name="isGlobal">Flag if global mesh is supported. Possible
         /// values include: 'False', 'True'</param>
-        /// <param name="appliesToGroups">Groups for configuration</param>
         /// <param name="provisioningState">The provisioning state of the
         /// connectivity configuration resource. Possible values include:
         /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
@@ -52,8 +52,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// groups.</param>
         /// <param name="commitTime">Deployment time string.</param>
         /// <param name="region">Deployment region.</param>
-        public ActiveConnectivityConfiguration(string connectivityTopology, string id = default(string), string displayName = default(string), string description = default(string), IList<Hub> hubs = default(IList<Hub>), string isGlobal = default(string), IList<ConnectivityGroupItem> appliesToGroups = default(IList<ConnectivityGroupItem>), string provisioningState = default(string), string deleteExistingPeering = default(string), IList<ConfigurationGroup> configurationGroups = default(IList<ConfigurationGroup>), System.DateTime? commitTime = default(System.DateTime?), string region = default(string))
-            : base(connectivityTopology, id, displayName, description, hubs, isGlobal, appliesToGroups, provisioningState, deleteExistingPeering, configurationGroups)
+        public ActiveConnectivityConfiguration(string connectivityTopology, IList<ConnectivityGroupItem> appliesToGroups, string id = default(string), string displayName = default(string), string description = default(string), IList<Hub> hubs = default(IList<Hub>), string isGlobal = default(string), string provisioningState = default(string), string deleteExistingPeering = default(string), IList<ConfigurationGroup> configurationGroups = default(IList<ConfigurationGroup>), System.DateTime? commitTime = default(System.DateTime?), string region = default(string))
+            : base(connectivityTopology, appliesToGroups, id, displayName, description, hubs, isGlobal, provisioningState, deleteExistingPeering, configurationGroups)
         {
             CommitTime = commitTime;
             Region = region;

@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='configurationName'>
-            /// The name of the network manager security Configuration.
+            /// The name of the network manager Security Configuration.
             /// </param>
             public static SecurityConfiguration Get(this ISecurityUserConfigurationsOperations operations, string resourceGroupName, string networkManagerName, string configurationName)
             {
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='configurationName'>
-            /// The name of the network manager security Configuration.
+            /// The name of the network manager Security Configuration.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='configurationName'>
-            /// The name of the network manager security Configuration.
+            /// The name of the network manager Security Configuration.
             /// </param>
             public static SecurityConfiguration CreateOrUpdate(this ISecurityUserConfigurationsOperations operations, SecurityConfiguration securityUserConfiguration, string resourceGroupName, string networkManagerName, string configurationName)
             {
@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='configurationName'>
-            /// The name of the network manager security Configuration.
+            /// The name of the network manager Security Configuration.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='configurationName'>
-            /// The name of the network manager security Configuration.
+            /// The name of the network manager Security Configuration.
             /// </param>
             public static void Delete(this ISecurityUserConfigurationsOperations operations, string resourceGroupName, string networkManagerName, string configurationName)
             {
@@ -214,7 +214,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='configurationName'>
-            /// The name of the network manager security Configuration.
+            /// The name of the network manager Security Configuration.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

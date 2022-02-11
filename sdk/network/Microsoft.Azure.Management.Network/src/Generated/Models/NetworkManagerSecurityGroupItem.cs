@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -32,7 +33,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// class.
         /// </summary>
         /// <param name="networkGroupId">Network manager group Id.</param>
-        public NetworkManagerSecurityGroupItem(string networkGroupId = default(string))
+        public NetworkManagerSecurityGroupItem(string networkGroupId)
         {
             NetworkGroupId = networkGroupId;
             CustomInit();
@@ -49,5 +50,18 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "networkGroupId")]
         public string NetworkGroupId { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (NetworkGroupId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "NetworkGroupId");
+            }
+        }
     }
 }

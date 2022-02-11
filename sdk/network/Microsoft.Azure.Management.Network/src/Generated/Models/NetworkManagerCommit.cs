@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -31,12 +32,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the NetworkManagerCommit class.
         /// </summary>
-        /// <param name="commitId">Commit Id.</param>
         /// <param name="targetLocations">List of target locations.</param>
+        /// <param name="commitId">Commit Id.</param>
         /// <param name="configurationIds">List of configuration ids.</param>
         /// <param name="commitType">Commit Type. Possible values include:
         /// 'SecurityAdmin', 'SecurityUser', 'Connectivity'</param>
-        public NetworkManagerCommit(string commitId = default(string), IList<string> targetLocations = default(IList<string>), IList<string> configurationIds = default(IList<string>), string commitType = default(string))
+        public NetworkManagerCommit(IList<string> targetLocations, string commitId = default(string), IList<string> configurationIds = default(IList<string>), string commitType = default(string))
         {
             CommitId = commitId;
             TargetLocations = targetLocations;
@@ -75,5 +76,18 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "commitType")]
         public string CommitType { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (TargetLocations == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "TargetLocations");
+            }
+        }
     }
 }

@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -43,6 +45,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// configuration.</param>
         /// <param name="securityType">Security Type. Possible values include:
         /// 'AdminPolicy', 'UserPolicy'</param>
+        /// <param name="applyOnNetworkIntentPolicyBasedServices">Enum list of
+        /// network intent policy based services.</param>
         /// <param name="deleteExistingNSGs">Flag if need to delete existing
         /// network security groups. Possible values include: 'False',
         /// 'True'</param>
@@ -51,12 +55,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Deleting', 'Failed'</param>
         /// <param name="systemData">The system metadata related to this
         /// resource.</param>
-        public SecurityConfiguration(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string displayName = default(string), string description = default(string), string securityType = default(string), string deleteExistingNSGs = default(string), string provisioningState = default(string), SystemData systemData = default(SystemData))
+        public SecurityConfiguration(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string displayName = default(string), string description = default(string), string securityType = default(string), IList<string> applyOnNetworkIntentPolicyBasedServices = default(IList<string>), string deleteExistingNSGs = default(string), string provisioningState = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type, etag)
         {
             DisplayName = displayName;
             Description = description;
             SecurityType = securityType;
+            ApplyOnNetworkIntentPolicyBasedServices = applyOnNetworkIntentPolicyBasedServices;
             DeleteExistingNSGs = deleteExistingNSGs;
             ProvisioningState = provisioningState;
             SystemData = systemData;
@@ -86,6 +91,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.securityType")]
         public string SecurityType { get; set; }
+
+        /// <summary>
+        /// Gets or sets enum list of network intent policy based services.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applyOnNetworkIntentPolicyBasedServices")]
+        public IList<string> ApplyOnNetworkIntentPolicyBasedServices { get; set; }
 
         /// <summary>
         /// Gets or sets flag if need to delete existing network security

@@ -10,9 +10,13 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Connectivity group item.
+    /// </summary>
     public partial class ConnectivityGroupItem
     {
         /// <summary>
@@ -27,13 +31,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the ConnectivityGroupItem class.
         /// </summary>
         /// <param name="networkGroupId">Network group Id.</param>
+        /// <param name="groupConnectivity">Group connectivity type. Possible
+        /// values include: 'None', 'DirectlyConnected'</param>
         /// <param name="useHubGateway">Flag if need to use hub gateway.
         /// Possible values include: 'False', 'True'</param>
         /// <param name="isGlobal">Flag if global is supported. Possible values
         /// include: 'False', 'True'</param>
-        /// <param name="groupConnectivity">Group connectivity type. Possible
-        /// values include: 'None', 'DirectlyConnected'</param>
-        public ConnectivityGroupItem(string networkGroupId = default(string), string useHubGateway = default(string), string isGlobal = default(string), string groupConnectivity = default(string))
+        public ConnectivityGroupItem(string networkGroupId, string groupConnectivity, string useHubGateway = default(string), string isGlobal = default(string))
         {
             NetworkGroupId = networkGroupId;
             UseHubGateway = useHubGateway;
@@ -74,5 +78,22 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "groupConnectivity")]
         public string GroupConnectivity { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (NetworkGroupId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "NetworkGroupId");
+            }
+            if (GroupConnectivity == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "GroupConnectivity");
+            }
+        }
     }
 }

@@ -87,57 +87,5 @@ namespace Microsoft.Azure.Management.Network
                 }
             }
 
-            /// <summary>
-            /// Lists all effective virtual networks by specified network group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkManagerName'>
-            /// The name of the network manager.
-            /// </param>
-            /// <param name='networkGroupName'>
-            /// The name of the network group to get.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to list correct page.
-            /// </param>
-            public static EffectiveVirtualNetworksListResult ListByNetworkGroup(this IEffectiveVirtualNetworksOperations operations, string resourceGroupName, string networkManagerName, string networkGroupName, QueryRequestOptions parameters)
-            {
-                return operations.ListByNetworkGroupAsync(resourceGroupName, networkManagerName, networkGroupName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists all effective virtual networks by specified network group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkManagerName'>
-            /// The name of the network manager.
-            /// </param>
-            /// <param name='networkGroupName'>
-            /// The name of the network group to get.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to list correct page.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<EffectiveVirtualNetworksListResult> ListByNetworkGroupAsync(this IEffectiveVirtualNetworksOperations operations, string resourceGroupName, string networkManagerName, string networkGroupName, QueryRequestOptions parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByNetworkGroupWithHttpMessagesAsync(resourceGroupName, networkManagerName, networkGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
     }
 }

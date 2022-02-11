@@ -49,6 +49,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// uses this backend address pool.</param>
         /// <param name="outboundRules">An array of references to outbound
         /// rules that use this backend address pool.</param>
+        /// <param name="inboundNatRules">An array of references to inbound NAT
+        /// rules that use this backend address pool.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// backend address pool resource. Possible values include:
         /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
@@ -58,7 +60,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
-        public BackendAddressPool(string id = default(string), string location = default(string), IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces = default(IList<GatewayLoadBalancerTunnelInterface>), IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses = default(IList<LoadBalancerBackendAddress>), IList<NetworkInterfaceIPConfiguration> backendIPConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), SubResource outboundRule = default(SubResource), IList<SubResource> outboundRules = default(IList<SubResource>), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        public BackendAddressPool(string id = default(string), string location = default(string), IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces = default(IList<GatewayLoadBalancerTunnelInterface>), IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses = default(IList<LoadBalancerBackendAddress>), IList<NetworkInterfaceIPConfiguration> backendIPConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), SubResource outboundRule = default(SubResource), IList<SubResource> outboundRules = default(IList<SubResource>), IList<SubResource> inboundNatRules = default(IList<SubResource>), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             Location = location;
@@ -68,6 +70,7 @@ namespace Microsoft.Azure.Management.Network.Models
             LoadBalancingRules = loadBalancingRules;
             OutboundRule = outboundRule;
             OutboundRules = outboundRules;
+            InboundNatRules = inboundNatRules;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -125,6 +128,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.outboundRules")]
         public IList<SubResource> OutboundRules { get; private set; }
+
+        /// <summary>
+        /// Gets an array of references to inbound NAT rules that use this
+        /// backend address pool.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.inboundNatRules")]
+        public IList<SubResource> InboundNatRules { get; private set; }
 
         /// <summary>
         /// Gets the provisioning state of the backend address pool resource.

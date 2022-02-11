@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='networkGroupName'>
-            /// The name of the network group to get.
+            /// The name of the network group.
             /// </param>
             public static NetworkGroup Get(this INetworkGroupsOperations operations, string resourceGroupName, string networkManagerName, string networkGroupName)
             {
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='networkGroupName'>
-            /// The name of the network group to get.
+            /// The name of the network group.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='networkGroupName'>
-            /// The name of the network group to get.
+            /// The name of the network group.
             /// </param>
             /// <param name='ifMatch'>
             /// The ETag of the transformation. Omit this value to always overwrite the
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='networkGroupName'>
-            /// The name of the network group to get.
+            /// The name of the network group.
             /// </param>
             /// <param name='ifMatch'>
             /// The ETag of the transformation. Omit this value to always overwrite the
@@ -142,11 +142,16 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='networkGroupName'>
-            /// The name of the network group to get.
+            /// The name of the network group.
             /// </param>
-            public static void Delete(this INetworkGroupsOperations operations, string resourceGroupName, string networkManagerName, string networkGroupName)
+            /// <param name='force'>
+            /// Deletes the resource even if it is part of a deployed configuration. If the
+            /// configuration has been deployed, the service will do a cleanup deployment
+            /// in the background, prior to the delete.
+            /// </param>
+            public static void Delete(this INetworkGroupsOperations operations, string resourceGroupName, string networkManagerName, string networkGroupName, bool? force = default(bool?))
             {
-                operations.DeleteAsync(resourceGroupName, networkManagerName, networkGroupName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, networkManagerName, networkGroupName, force).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -162,14 +167,19 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='networkGroupName'>
-            /// The name of the network group to get.
+            /// The name of the network group.
+            /// </param>
+            /// <param name='force'>
+            /// Deletes the resource even if it is part of a deployed configuration. If the
+            /// configuration has been deployed, the service will do a cleanup deployment
+            /// in the background, prior to the delete.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this INetworkGroupsOperations operations, string resourceGroupName, string networkManagerName, string networkGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this INetworkGroupsOperations operations, string resourceGroupName, string networkManagerName, string networkGroupName, bool? force = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, networkManagerName, networkGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, networkManagerName, networkGroupName, force, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

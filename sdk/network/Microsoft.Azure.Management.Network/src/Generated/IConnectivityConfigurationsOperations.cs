@@ -99,6 +99,12 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='configurationName'>
         /// The name of the network manager connectivity configuration.
         /// </param>
+        /// <param name='force'>
+        /// Deletes the resource even if it is part of a deployed
+        /// configuration. If the configuration has been deployed, the service
+        /// will do a cleanup deployment in the background, prior to the
+        /// delete.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -111,7 +117,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string networkManagerName, string configurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string networkManagerName, string configurationName, bool? force = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all the network manager connectivity configuration in a
         /// specified network manager.

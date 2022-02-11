@@ -41,6 +41,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="access">Indicates the access allowed for this
         /// particular rule. Possible values include: 'Allow', 'Deny',
         /// 'AlwaysAllow'</param>
+        /// <param name="priority">The priority of the rule. The value can be
+        /// between 1 and 4096. The priority number must be unique for each
+        /// rule in the collection. The lower the priority number, the higher
+        /// the priority of the rule.</param>
         /// <param name="direction">Indicates if the traffic matched against
         /// the rule in inbound or outbound. Possible values include:
         /// 'Inbound', 'Outbound'</param>
@@ -65,14 +69,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="sourcePortRanges">The source port ranges.</param>
         /// <param name="destinationPortRanges">The destination port
         /// ranges.</param>
-        /// <param name="priority">The priority of the rule. The value can be
-        /// between 1 and 4096. The priority number must be unique for each
-        /// rule in the collection. The lower the priority number, the higher
-        /// the priority of the rule.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
-        public EffectiveSecurityAdminRule(string protocol, string access, string direction, string id = default(string), string configurationDisplayName = default(string), string configurationDescription = default(string), string ruleCollectionDisplayName = default(string), string ruleCollectionDescription = default(string), IList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = default(IList<NetworkManagerSecurityGroupItem>), IList<ConfigurationGroup> ruleGroups = default(IList<ConfigurationGroup>), string displayName = default(string), string description = default(string), IList<AddressPrefixItem> sources = default(IList<AddressPrefixItem>), IList<AddressPrefixItem> destinations = default(IList<AddressPrefixItem>), IList<string> sourcePortRanges = default(IList<string>), IList<string> destinationPortRanges = default(IList<string>), int? priority = default(int?), string provisioningState = default(string))
+        public EffectiveSecurityAdminRule(string protocol, string access, int priority, string direction, string id = default(string), string configurationDisplayName = default(string), string configurationDescription = default(string), string ruleCollectionDisplayName = default(string), string ruleCollectionDescription = default(string), IList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = default(IList<NetworkManagerSecurityGroupItem>), IList<ConfigurationGroup> ruleGroups = default(IList<ConfigurationGroup>), string displayName = default(string), string description = default(string), IList<AddressPrefixItem> sources = default(IList<AddressPrefixItem>), IList<AddressPrefixItem> destinations = default(IList<AddressPrefixItem>), IList<string> sourcePortRanges = default(IList<string>), IList<string> destinationPortRanges = default(IList<string>), string provisioningState = default(string))
             : base(id, configurationDisplayName, configurationDescription, ruleCollectionDisplayName, ruleCollectionDescription, ruleCollectionAppliesToGroups, ruleGroups)
         {
             DisplayName = displayName;
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// of the rule.
         /// </summary>
         [JsonProperty(PropertyName = "properties.priority")]
-        public int? Priority { get; set; }
+        public int Priority { get; set; }
 
         /// <summary>
         /// Gets or sets indicates if the traffic matched against the rule in

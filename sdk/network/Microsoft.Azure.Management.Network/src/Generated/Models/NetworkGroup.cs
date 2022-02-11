@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -34,6 +32,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the NetworkGroup class.
         /// </summary>
+        /// <param name="memberType">Group member type.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
@@ -43,23 +42,17 @@ namespace Microsoft.Azure.Management.Network.Models
         /// group.</param>
         /// <param name="description">A description of the network
         /// group.</param>
-        /// <param name="memberType">Group member type.</param>
-        /// <param name="groupMembers">Group members of network group.</param>
-        /// <param name="conditionalMembership">Network group conditional
-        /// filter.</param>
         /// <param name="provisioningState">The provisioning state of the scope
         /// assignment resource. Possible values include: 'Succeeded',
         /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="systemData">The system metadata related to this
         /// resource.</param>
-        public NetworkGroup(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string displayName = default(string), string description = default(string), string memberType = default(string), IList<GroupMembersItem> groupMembers = default(IList<GroupMembersItem>), string conditionalMembership = default(string), string provisioningState = default(string), SystemData systemData = default(SystemData))
+        public NetworkGroup(string memberType, string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string displayName = default(string), string description = default(string), string provisioningState = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type, etag)
         {
             DisplayName = displayName;
             Description = description;
             MemberType = memberType;
-            GroupMembers = groupMembers;
-            ConditionalMembership = conditionalMembership;
             ProvisioningState = provisioningState;
             SystemData = systemData;
             CustomInit();
@@ -89,18 +82,6 @@ namespace Microsoft.Azure.Management.Network.Models
         public string MemberType { get; set; }
 
         /// <summary>
-        /// Gets or sets group members of network group.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.groupMembers")]
-        public IList<GroupMembersItem> GroupMembers { get; set; }
-
-        /// <summary>
-        /// Gets or sets network group conditional filter.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.conditionalMembership")]
-        public string ConditionalMembership { get; set; }
-
-        /// <summary>
         /// Gets the provisioning state of the scope assignment resource.
         /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
         /// 'Failed'
@@ -114,5 +95,18 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "systemData")]
         public SystemData SystemData { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (MemberType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "MemberType");
+            }
+        }
     }
 }

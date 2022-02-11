@@ -34,6 +34,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the NetworkManager class.
         /// </summary>
+        /// <param name="networkManagerScopes">Scope of Network
+        /// Manager.</param>
+        /// <param name="networkManagerScopeAccesses">Scope Access.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
@@ -43,9 +46,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// manager.</param>
         /// <param name="description">A description of the network
         /// manager.</param>
-        /// <param name="networkManagerScopes">Scope of Network
-        /// Manager.</param>
-        /// <param name="networkManagerScopeAccesses">Scope Access.</param>
         /// <param name="provisioningState">The provisioning state of the scope
         /// assignment resource. Possible values include: 'Succeeded',
         /// 'Updating', 'Deleting', 'Failed'</param>
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// the resource is updated.</param>
         /// <param name="systemData">The system metadata related to this
         /// resource.</param>
-        public NetworkManager(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string displayName = default(string), string description = default(string), NetworkManagerPropertiesNetworkManagerScopes networkManagerScopes = default(NetworkManagerPropertiesNetworkManagerScopes), IList<string> networkManagerScopeAccesses = default(IList<string>), string provisioningState = default(string), string etag = default(string), SystemData systemData = default(SystemData))
+        public NetworkManager(NetworkManagerPropertiesNetworkManagerScopes networkManagerScopes, IList<string> networkManagerScopeAccesses, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string displayName = default(string), string description = default(string), string provisioningState = default(string), string etag = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type, location, tags)
         {
             DisplayName = displayName;
@@ -116,5 +116,22 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "systemData")]
         public SystemData SystemData { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (NetworkManagerScopes == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "NetworkManagerScopes");
+            }
+            if (NetworkManagerScopeAccesses == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "NetworkManagerScopeAccesses");
+            }
+        }
     }
 }

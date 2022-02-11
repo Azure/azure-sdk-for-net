@@ -35,10 +35,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="managementGroups">List of management groups.</param>
         /// <param name="subscriptions">List of subscriptions.</param>
-        public NetworkManagerPropertiesNetworkManagerScopes(IList<string> managementGroups = default(IList<string>), IList<string> subscriptions = default(IList<string>))
+        /// <param name="crossTenantScopes">List of cross tenant
+        /// scopes.</param>
+        public NetworkManagerPropertiesNetworkManagerScopes(IList<string> managementGroups = default(IList<string>), IList<string> subscriptions = default(IList<string>), IList<CrossTenantScopes> crossTenantScopes = default(IList<CrossTenantScopes>))
         {
             ManagementGroups = managementGroups;
             Subscriptions = subscriptions;
+            CrossTenantScopes = crossTenantScopes;
             CustomInit();
         }
 
@@ -58,6 +61,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "subscriptions")]
         public IList<string> Subscriptions { get; set; }
+
+        /// <summary>
+        /// Gets list of cross tenant scopes.
+        /// </summary>
+        [JsonProperty(PropertyName = "crossTenantScopes")]
+        public IList<CrossTenantScopes> CrossTenantScopes { get; private set; }
 
     }
 }
