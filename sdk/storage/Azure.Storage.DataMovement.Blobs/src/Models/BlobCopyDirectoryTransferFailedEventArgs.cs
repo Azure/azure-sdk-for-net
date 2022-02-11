@@ -12,7 +12,7 @@ namespace Azure.Storage.DataMovement.Blobs.Models
     /// <summary>
     /// Event Argument for Failed Single Blob Upload Transfers
     /// </summary>
-    public class BlobCopyDirectoryTransferFailedEventArgs : SyncAsyncEventArgs
+    public class BlobCopyDirectoryTransferFailedEventArgs : StorageTransferEventArgs
     {
         /// <summary>
         /// Gets the <see cref="BlobBaseClient"/> that was the destination blob for the upload.
@@ -32,6 +32,7 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobCopyDirectoryTransferFailedEventArgs"/>.
         /// </summary>
+        /// <param name="jobId"></param>
         /// <param name="sourceDirectoryUri"></param>
         /// <param name="destinationDirectoryClient"></param>
         /// <param name="exception"></param>
@@ -48,16 +49,18 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// default value is <see cref="CancellationToken.None"/>.
         /// </param>
         /// <exception cref="System.ArgumentNullException">
+        /// Trhown if <paramref name="jobId"/> is empty or null.
         /// Thrown if <paramref name="sourceDirectoryUri"/> is null.
-        /// Thown if <paramref name="destinationDirectoryClient"/> is null.
+        /// Thrown if <paramref name="destinationDirectoryClient"/> is null.
         /// </exception>
         public BlobCopyDirectoryTransferFailedEventArgs(
+            string jobId,
             Uri sourceDirectoryUri,
             BlobVirtualDirectoryClient destinationDirectoryClient,
             Exception exception,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)
-            : base(isRunningSynchronously, cancellationToken)
+            : base(jobId, isRunningSynchronously, cancellationToken)
         {
             Argument.AssertNotNull(SourceDirectoryUri, nameof(BlobBaseClient));
             Argument.AssertNotNull(destinationDirectoryClient, nameof(BlobBaseClient));

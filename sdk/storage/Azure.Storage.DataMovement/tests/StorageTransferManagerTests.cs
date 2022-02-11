@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
-using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.Tests.Shared;
 
 namespace Azure.Storage.DataMovement.Tests

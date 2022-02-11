@@ -5,43 +5,13 @@ using System.Collections.Generic;
 using System.Text;
 using Azure.Core;
 
-namespace Azure.Storage.DataMovement.Models
+namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// Options for the <see cref="StorageTransferManager"/>.
     /// </summary>
     public class StorageTransferManagerOptions
     {
-        /// <summary>
-        /// Optional path to set for the Transfer State File.
-        ///
-        /// If this file is not set and a transfer is started using
-        /// the transfer manager, we will default to storing the file in
-        /// %USERPROFILE%\.azstoragedml directory on Windows OS
-        /// and $HOME$\.azstoragedml directory on Mac and Linux based OS.
-        ///
-        /// TODO: this will also hold the the information of all exceptions that
-        /// have occured during the transfer state. In the case that too many
-        /// exceptions happened during a transfer job and the customer wants
-        /// to go through each exception and resolve each one.
-        /// </summary>
-        public string TransferStateDirectoryPath { get; set; }
-
-        /// <summary>
-        /// Optional path to set for the Transfer log Files.
-        ///
-        /// If this file is not set and a transfer is started using
-        /// the transfer manager, we will default to storing the file in
-        /// %USERPROFILE%\.azstoragedml directory on Windows OS
-        /// and $HOME$\.azstoragedml directory on Mac and Linux based OS.
-        ///
-        /// TODO: this will also hold the the information of all exceptions that
-        /// have occured during the transfer state. In the case that too many
-        /// exceptions happened during a transfer job and the customer wants
-        /// to go through each exception and resolve each one.
-        /// </summary>
-        public string TransferLoggerDirectoryPath { get; set; }
-
         /// <summary>
         /// Optional event handler containing all possible status event status holders
         /// </summary>

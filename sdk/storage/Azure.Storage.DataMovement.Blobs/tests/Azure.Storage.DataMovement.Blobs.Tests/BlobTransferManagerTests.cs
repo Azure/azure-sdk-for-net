@@ -12,7 +12,6 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Blobs.Models;
 using Azure.Storage.DataMovement.Blobs.Tests.Shared;
-using Azure.Storage.DataMovement.Models;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests

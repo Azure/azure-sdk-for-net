@@ -5,10 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Storage.DataMovement.Models
+namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// Defines the status of the <see cref="TransferJobInternal"/>.
+    /// Defines the status of the Transfer Job
     /// </summary>
     public enum StorageJobTransferStatus
     {

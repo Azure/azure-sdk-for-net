@@ -8,7 +8,6 @@ using Microsoft.VisualStudio.Threading;
 using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
-using Azure.Storage.DataMovement.Models;
 using System.Collections.Concurrent;
 
 namespace Azure.Storage.DataMovement
@@ -28,6 +27,16 @@ namespace Azure.Storage.DataMovement
         // private IList<StorageTransferJob> _jobsInProgress;
         // local directory path to put hte memory mapped file of the progress tracking. if we pause or break
         // we will have the information on where to continue from.
+
+        /// <summary>
+        /// If set, store the transfer states for each job in the locally at the path specified
+        /// </summary>
+        private string _transferStateLocalDirectoryPath;
+
+        /// <summary>
+        /// If set, store the transfer states for each job in the locally at the path specified
+        /// </summary>
+        protected internal string TransferStateLocalDirectoryPath => _transferStateLocalDirectoryPath;
 
         /// <summary>
         /// Transfer Manager options
@@ -51,22 +60,54 @@ namespace Azure.Storage.DataMovement
         /// class.
         /// </summary>
         /// <param name="options">Directory path where transfer state is kept.</param>
-        public StorageTransferManager(StorageTransferManagerOptions options)
+        protected StorageTransferManager(StorageTransferManagerOptions options)
         {
             _options = options;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StorageTransferManager"/>
+        /// class and specifying a local directory path to store the transfer state file.
+        /// </summary>
+        /// <param name="transferStateDirectoryPath">
+        /// Optional path to set for the Transfer State File.
+        ///
+        /// If this file is not set and a transfer is started using
+        /// the transfer manager, we will default to storing the file in
+        /// %USERPROFILE%\.azstoragedml directory on Windows OS
+        /// and $HOME$\.azstoragedml directory on Mac and Linux based OS.
+        ///
+        /// TODO: this will also hold the the information of all exceptions that
+        /// have occured during the transfer state. In the case that too many
+        /// exceptions happened during a transfer job and the customer wants
+        /// to go through each exception and resolve each one.
+        /// </param>
+        /// <param name="options"></param>
+        protected StorageTransferManager(string transferStateDirectoryPath, StorageTransferManagerOptions options)
+            : this(options)
+        {
+            _transferStateLocalDirectoryPath = transferStateDirectoryPath;
         }
 
         /// <summary>
         /// Returns storage job information if provided jobId.
         /// </summary>
         /// <param name="jobId"></param>
-        public abstract Task PauseJobAsync(string jobId);
+        public abstract Task PauseTransferJobAsync(string jobId);
 
         /// <summary>
         /// Returns storage job information if provided jobId.
         /// </summary>
         /// <param name="jobId"></param>
-        public abstract Task ResumeJobAsync(string jobId);
+        public abstract Task ResumeTransferJobAsync(string jobId);
+
+        /// <summary>
+        /// Resumes transfers that are currently being processed.
+        /// Does not allow any other transfer start.
+        /// </summary>
+        /// TODO: Returns actual object, or at least in a designated log
+        /// file we have a place where people can continue transfers
+        public abstract Task ResumeAllTransferJobsAsync();
 
         /// <summary>
         /// Pauses transfers that are currently being processed.
@@ -74,7 +115,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// TODO: Returns actual object, or at least in a designated log
         /// file we have a place where people can continue transfers
-        public abstract Task PauseTransfersAsync();
+        public abstract Task PauseAllTransferJobsAsync();
 
         /// <summary>
         /// Cancel Transfers that are currently being processed.
@@ -86,7 +127,7 @@ namespace Azure.Storage.DataMovement
         ///
         /// In order to rerun the job, the customer must readd the job back in.
         /// </summary>
-        public abstract Task CancelTransfersAsync();
+        public abstract Task CancelAllTransferJobsAsync();
 
         /// <summary>
         /// Removes all plan files/ DataTransferState Transfer files.

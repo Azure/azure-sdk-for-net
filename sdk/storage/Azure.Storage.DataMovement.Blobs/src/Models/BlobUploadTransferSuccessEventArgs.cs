@@ -13,7 +13,7 @@ namespace Azure.Storage.DataMovement.Blobs.Models
     /// <summary>
     /// Event Argument for Failed Single Blob Upload Transfers
     /// </summary>
-    public class BlobUploadTransferSuccessEventArgs : SyncAsyncEventArgs
+    public class BlobUploadTransferSuccessEventArgs : StorageTransferEventArgs
     {
         /// <summary>
         /// Gets the source path to the contents to upload to the destination.
@@ -33,6 +33,7 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobUploadTransferSuccessEventArgs"/>.
         /// </summary>
+        /// <param name="jobId"></param>
         /// <param name="sourcePath"></param>
         /// <param name="destinationBlobClient"></param>
         /// <param name="response"></param>
@@ -49,16 +50,18 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// default value is <see cref="CancellationToken.None"/>.
         /// </param>
         /// <exception cref="System.ArgumentNullException">
+        /// Trhown if <paramref name="jobId"/> is empty or null.
         /// Thrown if <paramref name="sourcePath"/> is empty or null.
         /// Thown if <paramref name="destinationBlobClient"/> is empty or null.
         /// </exception>
         public BlobUploadTransferSuccessEventArgs(
+            string jobId,
             string sourcePath,
             BlobBaseClient destinationBlobClient,
             Response response,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)
-            : base(isRunningSynchronously, cancellationToken)
+            : base(jobId, isRunningSynchronously, cancellationToken)
         {
             Argument.AssertNotNullOrEmpty(sourcePath, nameof(sourcePath));
             Argument.AssertNotNull(destinationBlobClient, nameof(BlobBaseClient));

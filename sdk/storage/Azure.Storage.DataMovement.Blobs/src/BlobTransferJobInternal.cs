@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.DataMovement.Blobs.Models;
-using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
@@ -25,11 +24,6 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Will be disposed of once all tasks of the job have completed or have been cancelled.
         /// </summary>
         public CancellationTokenSource CancellationTokenSource { get; set; }
-
-        /// <summary>
-        /// Logger for the respective job
-        /// </summary>
-        internal TransferJobLogger Logger { get; set; }
 
         /// <summary>
         /// Plan file writer for hte respective job
@@ -51,7 +45,6 @@ namespace Azure.Storage.DataMovement.Blobs
             JobId = jobId;
             string folderPath = String.IsNullOrEmpty(loggerFolderPath) ? Constants.DataMovement.DefaultLogTransferFiles : loggerFolderPath;
             // TODO; get loglevel from StorageTransferManager
-            Logger = new TransferJobLogger(folderPath, jobId);
             PlanJobWriter = new PlanJobWriter(folderPath, jobId);
         }
 
@@ -68,14 +61,18 @@ namespace Azure.Storage.DataMovement.Blobs
         public virtual async Task PauseTransferJob()
         {
             CancellationTokenSource.Cancel();
+                /* TODO: replace with Azure.Core.Diagnotiscs logger
             await Logger.LogAsync(DataMovementLogLevel.Information, $"Transfer Job has been paused.").ConfigureAwait(false);
+                */
             await PlanJobWriter.SetTransferStatus("Job Paused").ConfigureAwait(false);
         }
 
         public virtual async Task ResumeTransferJob()
         {
             CancellationTokenSource.Cancel();
+                /* TODO: replace with Azure.Core.Diagnotiscs logger
             await Logger.LogAsync(DataMovementLogLevel.Information, $"Transfer Job has been resumed.").ConfigureAwait(false);
+                */
             await PlanJobWriter.SetTransferStatus("Job Paused").ConfigureAwait(false);
         }
 

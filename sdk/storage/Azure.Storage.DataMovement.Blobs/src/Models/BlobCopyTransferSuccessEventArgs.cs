@@ -13,7 +13,7 @@ namespace Azure.Storage.DataMovement.Blobs.Models
     /// <summary>
     /// Event Argument for Failed Single Blob Upload Transfers
     /// </summary>
-    public class BlobCopyTransferSuccessEventArgs : SyncAsyncEventArgs
+    public class BlobCopyTransferSuccessEventArgs : StorageTransferEventArgs
     {
         /// <summary>
         /// Gets the <see cref="BlobBaseClient"/> that was the destination blob for the upload.
@@ -35,6 +35,7 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobCopyTransferSuccessEventArgs"/>.
         /// </summary>
+        /// <param name="jobId"></param>
         /// <param name="destinationBlobClient"></param>
         /// <param name="sourceUri"></param>
         /// <param name="response"></param>
@@ -51,16 +52,18 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// default value is <see cref="CancellationToken.None"/>.
         /// </param>
         /// <exception cref="System.ArgumentNullException">
+        /// Trhown if <paramref name="jobId"/> is empty or null.
         /// Thrown if <paramref name="destinationBlobClient"/> is empty or null.
         /// Thown if <paramref name="sourceUri"/> is empty or null.
         /// </exception>
         public BlobCopyTransferSuccessEventArgs(
+            string jobId,
             Uri sourceUri,
             BlobBaseClient destinationBlobClient,
             Response response,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)
-            : base(isRunningSynchronously, cancellationToken)
+            : base(jobId, isRunningSynchronously, cancellationToken)
         {
             Argument.AssertNotNullOrEmpty(sourceUri.AbsoluteUri, nameof(sourceUri));
             Argument.AssertNotNull(destinationBlobClient, nameof(BlobBaseClient));

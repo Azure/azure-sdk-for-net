@@ -9,12 +9,11 @@ using Azure.Storage;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.DataMovement.Blobs.Models;
 using Azure.Storage.Sas;
 using NUnit.Framework;
-using Azure.Storage.DataMovement;
+
 using Azure.Core;
 using Azure.Identity;
 using System.Linq;
@@ -372,7 +371,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
         public async Task TransferMangerJobManagement()
         {
             // Setup
-            string planFile = CreateTempPath();
+            string planDirectoryPath = CreateTempPath();
             string sourcePath = CreateSampleDirectoryTree();
             string downloadPath = CreateSampleDirectoryTree();
             // Possible someone could have gotten a list of directories from a list call
@@ -384,12 +383,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             BlobVirtualDirectoryClient destinationBlob = new BlobVirtualDirectoryClient("", "", "", new BlobClientOptions());
 
             // Set plan file or the directory where you would like the transfer state directory path
-            StorageTransferManagerOptions transferManagerOptions = new StorageTransferManagerOptions()
-            {
-                TransferStateDirectoryPath = planFile
-            };
-
-            BlobTransferManager blobTransferManager = new BlobTransferManager(transferManagerOptions);
+            StorageTransferManagerOptions transferManagerOptions = new StorageTransferManagerOptions();
+            BlobTransferManager blobTransferManager = new BlobTransferManager(planDirectoryPath, transferManagerOptions);
 
             string uploadDirectoryJobId = blobTransferManager.ScheduleUploadDirectory(sourcePath, destinationBlob);
             string downloadDirectoryJobId = blobTransferManager.ScheduleDownloadDirectory(sourceBlobDirectory, downloadPath);
@@ -402,7 +397,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             BlobTransferJobProperties job = blobTransferManager.GetJobProperties(downloadDirectoryJobId3);
 
             // Pause transfers
-            await blobTransferManager.PauseTransfersAsync();
+            await blobTransferManager.PauseAllTransferJobsAsync();
 
             await blobTransferManager.CleanAsync();
         }
@@ -619,10 +614,10 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                             failedDirectories.Add(args.Exception.Source);
 
                             // Option 2: Resolve the exception.
-                            await transferManager.PauseJobAsync(args.Job.JobId);
+                            await transferManager.PauseTransferJobAsync(args.JobId);
                             rights.AddAccessRule(new FileSystemAccessRule("userIdentity", FileSystemRights.FullControl, AccessControlType.Allow));
                             skippedDirectory.SetAccessControl(rights);
-                            await transferManager.ResumeJobAsync(args.Job.JobId);
+                            await transferManager.ResumeTransferJobAsync(args.JobId);
                         }
                     }
                     // Remove stub

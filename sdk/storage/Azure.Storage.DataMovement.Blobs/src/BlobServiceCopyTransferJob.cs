@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.Blobs.Models;
 using Azure.Core.Pipeline;
 
@@ -84,14 +83,17 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// <param name="async">Defines whether the oepration should be async</param>
         /// <returns>The Task to perform the Upload operation.</returns>
+#pragma warning disable CA1801 // Review unused parameters
         public Action ProcessCopyTransfer(bool async = true)
+#pragma warning restore CA1801 // Review unused parameters
         {
             return () =>
             {
                 // TODO: make logging messages similar to the errors class where we only take in params
                 // so we dont have magic strings hanging out here
-                Logger.LogAsync(DataMovementLogLevel.Information,
-                    $"Processing Copy Transfer source: {SourceUri.AbsoluteUri}; destination: {DestinationBlobClient.Uri}", async).EnsureCompleted();
+                /* TODO: replace with Azure.Core.Diagnotiscs logger
+                Logger.LogAsync(DataMovementLogLevel.Information,$"Processing Copy Transfer source: {SourceUri.AbsoluteUri}; destination: {DestinationBlobClient.Uri}", async).EnsureCompleted();
+                */
                 // Do only blockblob upload for now for now
                 try
                 {
@@ -104,11 +106,15 @@ namespace Azure.Storage.DataMovement.Blobs
 
                         if (copyOperation.HasCompleted && copyOperation.HasValue)
                         {
+                            /* TODO: replace with Azure.Core.Diagnotiscs logger
                             Logger.LogAsync(DataMovementLogLevel.Information, $"Copy Transfer succeeded on from source:{SourceUri.AbsoluteUri} to destination:{DestinationBlobClient.Uri.AbsoluteUri}", async).EnsureCompleted();
+                            */
                         }
                         else
                         {
+                            /* TODO: replace with Azure.Core.Diagnotiscs logger
                             Logger.LogAsync(DataMovementLogLevel.Error, $"Copy Transfer Failed due to unknown reasons. Upload Transfer returned null results", async).EnsureCompleted();
+                            */
                         }
                     }
                     else //if(CopyMethod == BlobServiceCopyMethod.ServiceSideSyncCopy)
@@ -116,23 +122,31 @@ namespace Azure.Storage.DataMovement.Blobs
                         Response<BlobCopyInfo> response = DestinationBlobClient.SyncCopyFromUri(SourceUri, CopyFromUriOptions);
                         if (response != null && response.Value != null)
                         {
+                            /* TODO: replace with Azure.Core.Diagnotiscs logger
                             Logger.LogAsync(DataMovementLogLevel.Information, $"Copy Transfer succeeded on from source:{SourceUri.AbsoluteUri} to destination:{DestinationBlobClient.Uri.AbsoluteUri}", async).EnsureCompleted();
+                            */
                         }
                         else
                         {
+                            /* TODO: replace with Azure.Core.Diagnotiscs logger
                             Logger.LogAsync(DataMovementLogLevel.Error, $"Copy Transfer Failed due to unknown reasons. Upload Transfer returned null results", async).EnsureCompleted();
+                            */
                         }
                     }
                 }
                 //TODO: catch other type of exceptions and handle gracefully
-                catch (RequestFailedException ex)
+                catch (RequestFailedException)
                 {
+                            /* TODO: replace with Azure.Core.Diagnotiscs logger
                     Logger.LogAsync(DataMovementLogLevel.Error, $"Upload Transfer Failed due to the following: {ex.ErrorCode}: {ex.Message}", async).EnsureCompleted();
+                            */
                     // Progress Handling is already done by the upload call
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
+                            /* TODO: replace with Azure.Core.Diagnotiscs logger
                     Logger.LogAsync(DataMovementLogLevel.Error, $"Upload Transfer Failed due to the following: {ex.Message}", async).EnsureCompleted();
+                            */
                     // Progress Handling is already done by the upload call
                 }
             };

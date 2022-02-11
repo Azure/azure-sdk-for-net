@@ -20,7 +20,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 JobId = transferJob.JobId,
                 TransferType = StorageTransferType.SingleUpload,
-                Status = DataMovement.Models.StorageJobTransferStatus.Completed, //TODO = update with actual job status
+                Status = StorageJobTransferStatus.Completed, //TODO = update with actual job status
                 SourceLocalPath = transferJob.SourceLocalPath,
                 DestinationBlobClient = transferJob.DestinationBlobClient,
                 SingleUploadOptions = transferJob.UploadOptions,
@@ -38,7 +38,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 JobId = transferJob.JobId,
                 TransferType = StorageTransferType.DirectoryUpload,
-                Status = DataMovement.Models.StorageJobTransferStatus.Completed, //TODO = update with actual job status
+                Status = StorageJobTransferStatus.Completed, //TODO = update with actual job status
                 SourceLocalPath = transferJob.SourceLocalPath,
                 DestinationBlobDirectoryClient = transferJob.DestinationBlobDirectoryClient,
                 DirectoryUploadOptions = transferJob.UploadOptions,
@@ -56,7 +56,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 JobId = transferJob.JobId,
                 TransferType = StorageTransferType.SingleDownload,
-                Status = DataMovement.Models.StorageJobTransferStatus.Completed, //TODO = update with actual job status
+                Status = StorageJobTransferStatus.Completed, //TODO = update with actual job status
                 SourceBlobClient = transferJob.SourceBlobClient,
                 DestinationLocalPath = transferJob.DestinationLocalPath,
                 SingleDownloadOptions = transferJob.Options
@@ -74,7 +74,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 JobId = transferJob.JobId,
                 TransferType = StorageTransferType.DirectoryDownload,
-                Status = DataMovement.Models.StorageJobTransferStatus.Completed, //TODO = update with actual job status
+                Status = StorageJobTransferStatus.Completed, //TODO = update with actual job status
                 SourceBlobDirectoryClient = transferJob.SourceBlobDirectoryClient,
                 DestinationLocalPath = transferJob.DestinationLocalPath,
                 DirectoryDownloadOptions = transferJob.Options
@@ -92,7 +92,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 JobId = transferJob.JobId,
                 TransferType = StorageTransferType.SingleServiceCopy,
-                Status = DataMovement.Models.StorageJobTransferStatus.Completed, //TODO = update with actual job status
+                Status = StorageJobTransferStatus.Completed, //TODO = update with actual job status
                 SourceUri = transferJob.SourceUri,
                 DestinationBlobClient = transferJob.DestinationBlobClient,
                 CopyMethod = transferJob.CopyMethod,
@@ -111,7 +111,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 JobId = transferJob.JobId,
                 TransferType = StorageTransferType.DirectoryServiceCopy,
-                Status = DataMovement.Models.StorageJobTransferStatus.Completed, //TODO = update with actual job status
+                Status = StorageJobTransferStatus.Completed, //TODO = update with actual job status
                 SourceUri = transferJob.SourceDirectoryUri,
                 DestinationBlobDirectoryClient = transferJob.DestinationBlobDirectoryClient,
                 CopyMethod = transferJob.CopyMethod,

@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.DataMovement.Models;
 using Azure.Core.Pipeline;
 using Azure.Storage.DataMovement.Blobs.Models;
 
@@ -84,36 +83,52 @@ namespace Azure.Storage.DataMovement.Blobs
                 transferOptions:_options.TransferOptions);
         }
 
+#pragma warning disable CA1801 // Review unused parameters
         public Action ProcessDownloadTransfer(bool async = true)
+#pragma warning restore CA1801 // Review unused parameters
         {
             return () =>
             {
                 // TODO: make logging messages similar to the errors class where we only take in params
                 // so we dont have magic strings hanging out here
+                /* TODO: replace with Azure.Core.Diagnotiscs logger
                 Logger.LogAsync(DataMovementLogLevel.Information,
                     $"Processing Upload Transfer source: {SourceBlobClient.Uri.AbsoluteUri}; destination: {DestinationLocalPath}", async).EnsureCompleted();
+                */
                 // Do only blockblob upload for now for now
                 try
                 {
                     Response response = SourceBlobClient.DownloadTo(DestinationLocalPath, transferOptions: _options.TransferOptions);
                     if (response != null)
                     {
+                        /* TODO: replace with Azure.Core.Diagnotiscs logger
                         Logger.LogAsync(DataMovementLogLevel.Information, $"Transfer succeeded on from source:{SourceBlobClient} to destination:{DestinationLocalPath}", async).EnsureCompleted();
+                        */
                     }
                     else
                     {
+                        /* TODO: replace with Azure.Core.Diagnotiscs logger
                         Logger.LogAsync(DataMovementLogLevel.Error, $"Upload Transfer Failed due to unknown reasons. Upload Transfer returned null results", async).EnsureCompleted();
+                        */
                     }
                 }
                 //TODO: catch other type of exceptions and handle gracefully
+#pragma warning disable CS0168 // Variable is declared but never used
                 catch (RequestFailedException ex)
+#pragma warning restore CS0168 // Variable is declared but never used
                 {
+                    /* TODO: replace with Azure.Core.Diagnotiscs logger
                     Logger.LogAsync(DataMovementLogLevel.Error, $"Upload Transfer Failed due to the following: {ex.ErrorCode}: {ex.Message}", async).EnsureCompleted();
+                    */
                     // Progress Handling is already done by the upload call
                 }
+#pragma warning disable CS0168 // Variable is declared but never used
                 catch (Exception ex)
+#pragma warning restore CS0168 // Variable is declared but never used
                 {
+                    /* TODO: replace with Azure.Core.Diagnotiscs logger
                     Logger.LogAsync(DataMovementLogLevel.Error, $"Upload Transfer Failed due to the following: {ex.Message}", async).EnsureCompleted();
+                    */
                     // Progress Handling is already done by the upload call
                 }
             };

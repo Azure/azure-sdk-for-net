@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Storage.DataMovement.Models
+namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// This matching the JobPartPlanHeader of azcopy
@@ -143,7 +143,8 @@ namespace Azure.Storage.DataMovement.Models
         /// <summary>
         /// This Job Part's minimal log level
         /// </summary>
-        public DataMovementLogLevel LogLevel;
+        /// TODO: use core diagnostics log level instead
+        ///public DataMovementLogLevel LogLevel;
 
         /// <summary>
         /// Additional data for blob destinations

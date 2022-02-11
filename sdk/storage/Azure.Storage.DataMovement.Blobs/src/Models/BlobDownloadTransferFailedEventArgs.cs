@@ -6,14 +6,13 @@ using System.Text;
 using System.Threading;
 using Azure.Core;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement.Blobs.Models;
 
 namespace Azure.Storage.DataMovement.Blobs.Models
 {
     /// <summary>
     /// Event Argument for Failed Single Blob Upload Transfers
     /// </summary>
-    public class BlobDownloadTransferFailedEventArgs : SyncAsyncEventArgs
+    public class BlobDownloadTransferFailedEventArgs : StorageTransferEventArgs
     {
         /// <summary>
         /// Gets the <see cref="BlobBaseClient"/> that was the destination blob for the upload.
@@ -33,6 +32,7 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobDownloadTransferFailedEventArgs"/>.
         /// </summary>
+        /// <param name="jobId"></param>
         /// <param name="destinationLocalPath"></param>
         /// <param name="sourceBlobClient"></param>
         /// <param name="exception"></param>
@@ -49,16 +49,18 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// default value is <see cref="CancellationToken.None"/>.
         /// </param>
         /// <exception cref="System.ArgumentNullException">
+        /// Thrown if <paramref name="jobId"/> is empty or null.
         /// Thrown if <paramref name="destinationLocalPath"/> is empty or null.
         /// Thown if <paramref name="sourceBlobClient"/> is empty or null.
         /// </exception>
         public BlobDownloadTransferFailedEventArgs(
+            string jobId,
             BlobBaseClient sourceBlobClient,
             string destinationLocalPath,
             Exception exception,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)
-            : base(isRunningSynchronously, cancellationToken)
+            : base(jobId, isRunningSynchronously, cancellationToken)
         {
             Argument.AssertNotNullOrEmpty(destinationLocalPath, nameof(destinationLocalPath));
             Argument.AssertNotNull(sourceBlobClient, nameof(BlobBaseClient));

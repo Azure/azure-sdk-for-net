@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Storage.DataMovement.Models
+namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// Defines the status of the <see cref="StorageTransferManager"/>.

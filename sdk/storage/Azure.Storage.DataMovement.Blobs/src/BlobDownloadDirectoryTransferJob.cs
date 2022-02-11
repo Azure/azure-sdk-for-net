@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.Blobs.Models;
 using Azure.Storage.Blobs;
 using Azure.Core.Pipeline;
@@ -95,7 +94,9 @@ namespace Azure.Storage.DataMovement.Blobs
             return response;
         }
 
+#pragma warning disable CA1801 // Review unused parameters
         public Action ProcessSingleDownloadTransfer(string blobName, bool async = true)
+#pragma warning restore CA1801 // Review unused parameters
         {
             return () =>
             {
@@ -104,9 +105,12 @@ namespace Azure.Storage.DataMovement.Blobs
 
                 // TODO: make logging messages similar to the errors class where we only take in params
                 // so we dont have magic strings hanging out here
+
+                /* TODO: replace with Azure.Core.Diagnotiscs logger
                 Logger.LogAsync(DataMovementLogLevel.Information,
                     $"Processing Download Directory Transfer source: {SourceBlobDirectoryClient.Uri.AbsoluteUri}; destination: {DestinationLocalPath}",
                     async).EnsureCompleted();
+                */
                 // Do only blockblob upload for now for now
 
                 BlobDownloadToOptions blobDownloadOptions = new BlobDownloadToOptions()
@@ -123,26 +127,38 @@ namespace Azure.Storage.DataMovement.Blobs
                         CancellationTokenSource.Token);
                     if (response != null)
                     {
+                        /* TODO: replace with Azure.Core.Diagnotiscs logger
                         Logger.LogAsync(DataMovementLogLevel.Information,
                             $"Transfer succeeded on from source:{SourceBlobDirectoryClient.Uri.AbsoluteUri} to destination:{DestinationLocalPath}",
                             async).EnsureCompleted();
+                        */
                     }
                     else
                     {
+                        /* TODO: replace with Azure.Core.Diagnotiscs logger
                         Logger.LogAsync(DataMovementLogLevel.Error,
                             $"Download Directory Transfer Failed due to unknown reasons. Download Directory Transfer returned null results",
                             async).EnsureCompleted();
+                        */
                     }
                 }
                 //TODO: catch other type of exceptions and handle gracefully
+#pragma warning disable CS0168 // Variable is declared but never used
                 catch (RequestFailedException ex)
+#pragma warning restore CS0168 // Variable is declared but never used
                 {
+                    /* TODO: replace with Azure.Core.Diagnotiscs logger
                     Logger.LogAsync(DataMovementLogLevel.Error, $"Download Directory Transfer Failed due to the following: {ex.ErrorCode}: {ex.Message}", async).EnsureCompleted();
+                    */
                     // Progress Handling is already done by the upload call
                 }
+#pragma warning disable CS0168 // Variable is declared but never used
                 catch (Exception ex)
+#pragma warning restore CS0168 // Variable is declared but never used
                 {
+                    /* TODO: replace with Azure.Core.Diagnotiscs logger
                     Logger.LogAsync(DataMovementLogLevel.Error, $"Download Directory Transfer Failed due to the following: {ex.Message}", async).EnsureCompleted();
+                    */
                     // Progress Handling is already done by the upload call
                 }
             };

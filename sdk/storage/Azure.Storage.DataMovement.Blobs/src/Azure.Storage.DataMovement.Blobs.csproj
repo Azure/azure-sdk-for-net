@@ -92,9 +92,6 @@
     <Compile Include="$(AzureStorageDataMovementSharedSources)\PathScannerFactory.cs" LinkBase="SharedDataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)\PlanJobWriter.cs" LinkBase="SharedDataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)\PlanJobWriterFactory.cs" LinkBase="SharedDataMovement" />
-    <Compile Include="$(AzureStorageDataMovementSharedSources)\TransferJobLogger.cs" LinkBase="SharedDataMovement" />
-    <Compile Include="$(AzureStorageDataMovementSharedSources)\TransferJobLoggerFactory.cs" LinkBase="SharedDataMovement" />
-    <Compile Include="$(AzureStorageDataMovementSharedSources)\TransferJobInternal.cs" LinkBase="SharedDataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)\Errors.DataMovement.cs" LinkBase="SharedDataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)\StorageManagerTransferStatus.cs" LinkBase="SharedDataMovement" />
   </ItemGroup>

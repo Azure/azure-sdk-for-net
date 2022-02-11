@@ -13,7 +13,7 @@ namespace Azure.Storage.DataMovement.Blobs.Models
     /// <summary>
     /// Event Argument for Failed Blob Directory Upload Transfers
     /// </summary>
-    public class BlobDownloadDirectoryTransferFailedEventArgs : SyncAsyncEventArgs
+    public class BlobDownloadDirectoryTransferFailedEventArgs : StorageTransferEventArgs
     {
         /// <summary>
         /// Gets the <see cref="BlobBaseClient"/> that was the destination blob for the upload.
@@ -33,6 +33,7 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobDownloadDirectoryTransferFailedEventArgs"/>.
         /// </summary>
+        /// <param name="jobId"></param>
         /// <param name="destinationPath"></param>
         /// <param name="sourceBlobDirectoryClient"></param>
         /// <param name="exception"></param>
@@ -49,16 +50,18 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// default value is <see cref="CancellationToken.None"/>.
         /// </param>
         /// <exception cref="System.ArgumentNullException">
+        /// Trhown if <paramref name="jobId"/> is empty or null.
         /// Thrown if <paramref name="destinationPath"/> is empty or null.
         /// Thown if <paramref name="sourceBlobDirectoryClient"/> is empty or null.
         /// </exception>
         public BlobDownloadDirectoryTransferFailedEventArgs(
+            string jobId,
             BlobVirtualDirectoryClient sourceBlobDirectoryClient,
             string destinationPath,
             Exception exception,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)
-            : base(isRunningSynchronously, cancellationToken)
+            : base(jobId, isRunningSynchronously, cancellationToken)
         {
             Argument.AssertNotNullOrEmpty(destinationPath, nameof(destinationPath));
             Argument.AssertNotNull(sourceBlobDirectoryClient, nameof(BlobBaseClient));

@@ -3,13 +3,16 @@ namespace Azure.Storage.DataMovement.Blobs
     public partial class BlobTransferManager : Azure.Storage.DataMovement.StorageTransferManager
     {
         protected internal BlobTransferManager() { }
-        public BlobTransferManager(Azure.Storage.DataMovement.Models.StorageTransferManagerOptions options) { }
-        public override System.Threading.Tasks.Task CancelTransfersAsync() { throw null; }
+        public BlobTransferManager(Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient transferStateDirectoryClient, Azure.Storage.DataMovement.StorageTransferManagerOptions options) { }
+        public BlobTransferManager(Azure.Storage.DataMovement.StorageTransferManagerOptions options) { }
+        public BlobTransferManager(string transferStateDirectoryPath, Azure.Storage.DataMovement.StorageTransferManagerOptions options) { }
+        public override System.Threading.Tasks.Task CancelAllTransferJobsAsync() { throw null; }
         public override System.Threading.Tasks.Task CleanAsync() { throw null; }
         public Azure.Storage.DataMovement.Blobs.Models.BlobTransferJobProperties GetJobProperties(string jobId) { throw null; }
-        public override System.Threading.Tasks.Task PauseJobAsync(string jobId) { throw null; }
-        public override System.Threading.Tasks.Task PauseTransfersAsync() { throw null; }
-        public override System.Threading.Tasks.Task ResumeJobAsync(string jobId) { throw null; }
+        public override System.Threading.Tasks.Task PauseAllTransferJobsAsync() { throw null; }
+        public override System.Threading.Tasks.Task PauseTransferJobAsync(string jobId) { throw null; }
+        public override System.Threading.Tasks.Task ResumeAllTransferJobsAsync() { throw null; }
+        public override System.Threading.Tasks.Task ResumeTransferJobAsync(string jobId) { throw null; }
         public string ScheduleCopy(System.Uri sourceUri, Azure.Storage.Blobs.BlobClient destinationClient, Azure.Storage.DataMovement.Blobs.Models.BlobCopyMethod copyMethod, Azure.Storage.Blobs.Models.BlobCopyFromUriOptions copyOptions = null) { throw null; }
         public string ScheduleCopyDirectory(System.Uri sourceUri, Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient destinationClient, Azure.Storage.DataMovement.Blobs.Models.BlobCopyMethod copyMethod, Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryCopyFromUriOptions copyOptions = null) { throw null; }
         public string ScheduleDownload(Azure.Storage.Blobs.BlobClient sourceClient, string destinationLocalPath, Azure.Storage.Blobs.Models.BlobDownloadToOptions options = null) { throw null; }
@@ -73,16 +76,16 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         public int BlobsFailedTransferred { get { throw null; } }
         public int BlobsSuccesfullyTransferred { get { throw null; } }
     }
-    public partial class BlobCopyDirectoryTransferFailedEventArgs : Azure.SyncAsyncEventArgs
+    public partial class BlobCopyDirectoryTransferFailedEventArgs : Azure.Storage.DataMovement.StorageTransferEventArgs
     {
-        public BlobCopyDirectoryTransferFailedEventArgs(System.Uri sourceDirectoryUri, Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient destinationDirectoryClient, System.Exception exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public BlobCopyDirectoryTransferFailedEventArgs(string jobId, System.Uri sourceDirectoryUri, Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient destinationDirectoryClient, System.Exception exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(string), default(bool), default(System.Threading.CancellationToken)) { }
         public Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient DestinationDirectoryPath { get { throw null; } }
         public System.Exception Exception { get { throw null; } }
         public System.Uri SourceDirectoryUri { get { throw null; } }
     }
-    public partial class BlobCopyDirectoryTransferSuccessEventArgs : Azure.SyncAsyncEventArgs
+    public partial class BlobCopyDirectoryTransferSuccessEventArgs : Azure.Storage.DataMovement.StorageTransferEventArgs
     {
-        public BlobCopyDirectoryTransferSuccessEventArgs(System.Uri sourceDirectoryUri, Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient destinationDirectoryClient, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public BlobCopyDirectoryTransferSuccessEventArgs(string jobId, System.Uri sourceDirectoryUri, Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient destinationDirectoryClient, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(string), default(bool), default(System.Threading.CancellationToken)) { }
         public Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient DestinationDirectoryPath { get { throw null; } }
         public System.Uri SourceDirectoryUri { get { throw null; } }
     }
@@ -92,23 +95,23 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         ServiceSideSyncCopy = 1,
         ServiceSideSyncUploadFromUriCopy = 2,
     }
-    public partial class BlobCopyTransferFailedEventArgs : Azure.SyncAsyncEventArgs
+    public partial class BlobCopyTransferFailedEventArgs : Azure.Storage.DataMovement.StorageTransferEventArgs
     {
-        public BlobCopyTransferFailedEventArgs(System.Uri sourceUri, Azure.Storage.Blobs.Specialized.BlobBaseClient destinationBlobClient, System.Exception exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public BlobCopyTransferFailedEventArgs(string jobId, System.Uri sourceUri, Azure.Storage.Blobs.Specialized.BlobBaseClient destinationBlobClient, System.Exception exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(string), default(bool), default(System.Threading.CancellationToken)) { }
         public Azure.Storage.Blobs.Specialized.BlobBaseClient DestinationBlobClient { get { throw null; } }
         public System.Exception Exception { get { throw null; } }
         public System.Uri SourceUri { get { throw null; } }
     }
-    public partial class BlobCopyTransferSkippedEventArgs : Azure.SyncAsyncEventArgs
+    public partial class BlobCopyTransferSkippedEventArgs : Azure.Storage.DataMovement.StorageTransferEventArgs
     {
-        public BlobCopyTransferSkippedEventArgs(System.Uri sourceUri, Azure.Storage.Blobs.Specialized.BlobBaseClient destinationBlobClient, Azure.Response response, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public BlobCopyTransferSkippedEventArgs(string jobId, System.Uri sourceUri, Azure.Storage.Blobs.Specialized.BlobBaseClient destinationBlobClient, Azure.Response response, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(string), default(bool), default(System.Threading.CancellationToken)) { }
         public Azure.Storage.Blobs.Specialized.BlobBaseClient DestinationBlobClient { get { throw null; } }
         public Azure.Response Response { get { throw null; } }
         public System.Uri SourceUri { get { throw null; } }
     }
-    public partial class BlobCopyTransferSuccessEventArgs : Azure.SyncAsyncEventArgs
+    public partial class BlobCopyTransferSuccessEventArgs : Azure.Storage.DataMovement.StorageTransferEventArgs
     {
-        public BlobCopyTransferSuccessEventArgs(System.Uri sourceUri, Azure.Storage.Blobs.Specialized.BlobBaseClient destinationBlobClient, Azure.Response response, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public BlobCopyTransferSuccessEventArgs(string jobId, System.Uri sourceUri, Azure.Storage.Blobs.Specialized.BlobBaseClient destinationBlobClient, Azure.Response response, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(string), default(bool), default(System.Threading.CancellationToken)) { }
         public Azure.Storage.Blobs.Specialized.BlobBaseClient DestinationBlobClient { get { throw null; } }
         public Azure.Response Response { get { throw null; } }
         public System.Uri SourceUri { get { throw null; } }
@@ -158,29 +161,29 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         public int BlobsSuccesfullyTransferred { get { throw null; } }
         public long TotalBytesTransferred { get { throw null; } }
     }
-    public partial class BlobDownloadDirectoryTransferFailedEventArgs : Azure.SyncAsyncEventArgs
+    public partial class BlobDownloadDirectoryTransferFailedEventArgs : Azure.Storage.DataMovement.StorageTransferEventArgs
     {
-        public BlobDownloadDirectoryTransferFailedEventArgs(Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient sourceBlobDirectoryClient, string destinationPath, System.Exception exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public BlobDownloadDirectoryTransferFailedEventArgs(string jobId, Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient sourceBlobDirectoryClient, string destinationPath, System.Exception exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(string), default(bool), default(System.Threading.CancellationToken)) { }
         public string DestinationDirectoryPath { get { throw null; } }
         public System.Exception Exception { get { throw null; } }
         public Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient SourceDirectoryClient { get { throw null; } }
     }
-    public partial class BlobDownloadDirectoryTransferSuccessEventArgs : Azure.SyncAsyncEventArgs
+    public partial class BlobDownloadDirectoryTransferSuccessEventArgs : Azure.Storage.DataMovement.StorageTransferEventArgs
     {
-        public BlobDownloadDirectoryTransferSuccessEventArgs(Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient sourceBlobDirectoryClient, string destinationPath, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public BlobDownloadDirectoryTransferSuccessEventArgs(string jobId, Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient sourceBlobDirectoryClient, string destinationPath, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(string), default(bool), default(System.Threading.CancellationToken)) { }
         public string DestinationDirectoryPath { get { throw null; } }
         public Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient SourceDirectoryClient { get { throw null; } }
     }
-    public partial class BlobDownloadTransferFailedEventArgs : Azure.SyncAsyncEventArgs
+    public partial class BlobDownloadTransferFailedEventArgs : Azure.Storage.DataMovement.StorageTransferEventArgs
     {
-        public BlobDownloadTransferFailedEventArgs(Azure.Storage.Blobs.Specialized.BlobBaseClient sourceBlobClient, string destinationLocalPath, System.Exception exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public BlobDownloadTransferFailedEventArgs(string jobId, Azure.Storage.Blobs.Specialized.BlobBaseClient sourceBlobClient, string destinationLocalPath, System.Exception exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(string), default(bool), default(System.Threading.CancellationToken)) { }
         public string DestinationLocalPath { get { throw null; } }
         public System.Exception Exception { get { throw null; } }
         public Azure.Storage.Blobs.Specialized.BlobBaseClient SourceBlobClient { get { throw null; } }
     }
-    public partial class BlobDownloadTransferSuccessEventArgs : Azure.SyncAsyncEventArgs
+    public partial class BlobDownloadTransferSuccessEventArgs : Azure.Storage.DataMovement.StorageTransferEventArgs
     {
-        public BlobDownloadTransferSuccessEventArgs(Azure.Storage.Blobs.Specialized.BlobBaseClient sourceBlobClient, string destinationLocalPath, Azure.Response response, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public BlobDownloadTransferSuccessEventArgs(string jobId, Azure.Storage.Blobs.Specialized.BlobBaseClient sourceBlobClient, string destinationLocalPath, Azure.Response response, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(string), default(bool), default(System.Threading.CancellationToken)) { }
         public string DestinationLocalPath { get { throw null; } }
         public Azure.Response Response { get { throw null; } }
         public Azure.Storage.Blobs.Specialized.BlobBaseClient SourceBlobClient { get { throw null; } }
@@ -203,7 +206,7 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         public Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient SourceBlobDirectoryClient { get { throw null; } }
         public string SourceLocalPath { get { throw null; } }
         public System.Uri SourceUri { get { throw null; } }
-        public Azure.Storage.DataMovement.Models.StorageJobTransferStatus Status { get { throw null; } }
+        public Azure.Storage.DataMovement.StorageJobTransferStatus Status { get { throw null; } }
         public Azure.Storage.DataMovement.Blobs.Models.StorageTransferType TransferType { get { throw null; } }
     }
     public partial class BlobUploadDirectoryEventHandler
@@ -223,36 +226,36 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         public int BlobsSuccesfullyTransferred { get { throw null; } }
         public long TotalBytesTransferred { get { throw null; } }
     }
-    public partial class BlobUploadDirectoryTransferFailedEventArgs : Azure.SyncAsyncEventArgs
+    public partial class BlobUploadDirectoryTransferFailedEventArgs : Azure.Storage.DataMovement.StorageTransferEventArgs
     {
-        public BlobUploadDirectoryTransferFailedEventArgs(string sourcePath, Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient destinationBlobClient, System.Exception exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public BlobUploadDirectoryTransferFailedEventArgs(string jobId, string sourcePath, Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient destinationBlobClient, System.Exception exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(string), default(bool), default(System.Threading.CancellationToken)) { }
         public Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient DestinationDirectoryClient { get { throw null; } }
         public System.Exception Exception { get { throw null; } }
         public string SourceDirectoryPath { get { throw null; } }
     }
-    public partial class BlobUploadDirectoryTransferSuccessEventArgs : Azure.SyncAsyncEventArgs
+    public partial class BlobUploadDirectoryTransferSuccessEventArgs : Azure.Storage.DataMovement.StorageTransferEventArgs
     {
-        public BlobUploadDirectoryTransferSuccessEventArgs(string sourcePath, Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient destinationBlobClient, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public BlobUploadDirectoryTransferSuccessEventArgs(string jobId, string sourcePath, Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient destinationBlobClient, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(string), default(bool), default(System.Threading.CancellationToken)) { }
         public Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient DestinationDirectoryClient { get { throw null; } }
         public string SourceDirectoryPath { get { throw null; } }
     }
-    public partial class BlobUploadTransferFailedEventArgs : Azure.SyncAsyncEventArgs
+    public partial class BlobUploadTransferFailedEventArgs : Azure.Storage.DataMovement.StorageTransferEventArgs
     {
-        public BlobUploadTransferFailedEventArgs(string sourcePath, Azure.Storage.Blobs.Specialized.BlobBaseClient destinationBlobClient, System.Exception exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public BlobUploadTransferFailedEventArgs(string jobId, string sourcePath, Azure.Storage.Blobs.Specialized.BlobBaseClient destinationBlobClient, System.Exception exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(string), default(bool), default(System.Threading.CancellationToken)) { }
         public Azure.Storage.Blobs.Specialized.BlobBaseClient DestinationBlobClient { get { throw null; } }
         public System.Exception Exception { get { throw null; } }
         public string SourcePath { get { throw null; } }
     }
-    public partial class BlobUploadTransferSkippedEventArgs : Azure.SyncAsyncEventArgs
+    public partial class BlobUploadTransferSkippedEventArgs : Azure.Storage.DataMovement.StorageTransferEventArgs
     {
-        public BlobUploadTransferSkippedEventArgs(string sourcePath, Azure.Storage.Blobs.Specialized.BlobBaseClient destinationBlobClient, System.Exception exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public BlobUploadTransferSkippedEventArgs(string jobId, string sourcePath, Azure.Storage.Blobs.Specialized.BlobBaseClient destinationBlobClient, System.Exception exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(string), default(bool), default(System.Threading.CancellationToken)) { }
         public Azure.Storage.Blobs.Specialized.BlobBaseClient DestinationBlobClient { get { throw null; } }
         public System.Exception Exception { get { throw null; } }
         public string SourcePath { get { throw null; } }
     }
-    public partial class BlobUploadTransferSuccessEventArgs : Azure.SyncAsyncEventArgs
+    public partial class BlobUploadTransferSuccessEventArgs : Azure.Storage.DataMovement.StorageTransferEventArgs
     {
-        public BlobUploadTransferSuccessEventArgs(string sourcePath, Azure.Storage.Blobs.Specialized.BlobBaseClient destinationBlobClient, Azure.Response response, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public BlobUploadTransferSuccessEventArgs(string jobId, string sourcePath, Azure.Storage.Blobs.Specialized.BlobBaseClient destinationBlobClient, Azure.Response response, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(string), default(bool), default(System.Threading.CancellationToken)) { }
         public Azure.Storage.Blobs.Specialized.BlobBaseClient DestinationBlobClient { get { throw null; } }
         public Azure.Response Response { get { throw null; } }
         public string SourcePath { get { throw null; } }
