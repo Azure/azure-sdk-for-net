@@ -1248,10 +1248,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             {
                 for (int i = 0; i < TableEntityWriter.MaxPartitionWidth + 10; i++)
                 {
-                    await collector.AddAsync(new TableEntity(i.ToString(), i.ToString())
+                    try
                     {
-                        ["Value"] = i
-                    });
+                        await collector.AddAsync(new TableEntity(i.ToString(), i.ToString()) { ["Value"] = i });
+                    }
+                    catch (FunctionInvocationException ex) when(ex.InnerException is TableTransactionFailedException ttfe && ttfe.Status == 429)
+                    {
+                        await Task.Delay(3000);
+                        await collector.AddAsync(new TableEntity(i.ToString(), i.ToString()) { ["Value"] = i });
+                    }
                 }
             }
         }
