@@ -137,6 +137,10 @@ namespace Azure.Core
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
         public virtual async ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
+            if (HasCompleted)
+            {
+                return RawResponse;
+            }
             while (true)
             {
                 Response response = await UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
