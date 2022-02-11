@@ -2287,6 +2287,50 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_06_08)]
+        [TestCase(null)]
+        [TestCase(FileLastWrittenMode.Now)]
+        [TestCase(FileLastWrittenMode.Preserve)]
+        public async Task UploadRangeAsync_PreserveFileLastWrittenOn(FileLastWrittenMode fileLastWrittenMode)
+        {
+            // Arrange
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient fileClient = test.File;
+
+            Response<ShareFileProperties> initalPropertiesResponse = await fileClient.GetPropertiesAsync();
+
+            using Stream stream = new MemoryStream(data);
+            ShareFileUploadRangeOptions options = new ShareFileUploadRangeOptions
+            {
+                FileLastWrittenMode = fileLastWrittenMode
+            };
+
+            // Act
+            await fileClient.UploadRangeAsync(
+                range: new HttpRange(Constants.KB, Constants.KB),
+                content: stream,
+                options: options);
+
+            // Assert
+            Response<ShareFileProperties> propertiesResponse = await fileClient.GetPropertiesAsync();
+
+            if (fileLastWrittenMode == FileLastWrittenMode.Preserve)
+            {
+                Assert.AreEqual(
+                    initalPropertiesResponse.Value.SmbProperties.FileLastWrittenOn,
+                    propertiesResponse.Value.SmbProperties.FileLastWrittenOn);
+            }
+            else
+            {
+                Assert.AreNotEqual(
+                    initalPropertiesResponse.Value.SmbProperties.FileLastWrittenOn,
+                    propertiesResponse.Value.SmbProperties.FileLastWrittenOn);
+            }
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task UploadRangeAsync_Lease()
         {
@@ -2827,9 +2871,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [Test]
-        [LiveOnly]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/9085")]
-        // TODO: #7645
         public async Task UploadRangeFromUriAsync()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -2884,9 +2925,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [Test]
-        [LiveOnly]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
-        // TODO: #7645
         public async Task UploadRangeFromUriAsync_Lease()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -2938,9 +2977,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [Test]
-        [LiveOnly]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
-        // TODO: #7645
         public async Task UploadRangeFromUriAsync_InvalidLease()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -2995,7 +3032,6 @@ namespace Azure.Storage.Files.Shares.Tests
         [Test]
         [LiveOnly]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/9085")]
-        // TODO: #7645
         public async Task UploadRangeFromUriAsync_NonAsciiSourceUri()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -3072,6 +3108,54 @@ namespace Azure.Storage.Files.Shares.Tests
                 range: destRange,
                 sourceRange: sourceRange),
                 e => Assert.AreEqual("CannotVerifyCopySource", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_06_08)]
+        [TestCase(null)]
+        [TestCase(FileLastWrittenMode.Now)]
+        [TestCase(FileLastWrittenMode.Preserve)]
+        public async Task UploadRangeFromUriAsync_PreserveFileLastWrittenOn(FileLastWrittenMode fileLastWrittenMode)
+        {
+            // Arrange
+            await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync();
+            await using DisposingFile testDestination = await SharesClientBuilder.GetTestFileAsync();
+
+            Response<ShareFileProperties> initalPropertiesResponse = await testDestination.File.GetPropertiesAsync();
+
+            HttpRange httpRange = new HttpRange(0, Constants.KB);
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            await testSource.File.UploadRangeAsync(httpRange, stream);
+
+            ShareFileUploadRangeFromUriOptions options = new ShareFileUploadRangeFromUriOptions
+            {
+                FileLastWrittenMode = fileLastWrittenMode
+            };
+
+            // Act
+            await testDestination.File.UploadRangeFromUriAsync(
+                sourceUri: testSource.File.GenerateSasUri(ShareFileSasPermissions.Read, Recording.UtcNow.AddDays(1)),
+                range: httpRange,
+                sourceRange: httpRange,
+                options: options);
+
+            // Assert
+            Response<ShareFileProperties> propertiesResponse = await testDestination.File.GetPropertiesAsync();
+
+            if (fileLastWrittenMode == FileLastWrittenMode.Preserve)
+            {
+                Assert.AreEqual(
+                    initalPropertiesResponse.Value.SmbProperties.FileLastWrittenOn,
+                    propertiesResponse.Value.SmbProperties.FileLastWrittenOn);
+            }
+            else
+            {
+                Assert.AreNotEqual(
+                    initalPropertiesResponse.Value.SmbProperties.FileLastWrittenOn,
+                    propertiesResponse.Value.SmbProperties.FileLastWrittenOn);
+            }
         }
 
         [RecordedTest]

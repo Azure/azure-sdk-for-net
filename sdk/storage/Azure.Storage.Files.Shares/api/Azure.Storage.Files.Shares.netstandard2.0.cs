@@ -845,12 +845,14 @@ namespace Azure.Storage.Files.Shares.Models
     {
         public ShareFileUploadRangeFromUriOptions() { }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions Conditions { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.FileLastWrittenMode? FileLastWrittenMode { get { throw null; } set { } }
         public Azure.HttpAuthorization SourceAuthentication { get { throw null; } set { } }
     }
     public partial class ShareFileUploadRangeOptions
     {
         public ShareFileUploadRangeOptions() { }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions Conditions { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.FileLastWrittenMode? FileLastWrittenMode { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
         public Azure.Storage.UploadTransactionalHashingOptions TransactionalHashingOptions { get { throw null; } set { } }
     }
