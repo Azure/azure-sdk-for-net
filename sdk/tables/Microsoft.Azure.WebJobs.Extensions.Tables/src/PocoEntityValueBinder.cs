@@ -42,7 +42,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             // where the customer binds directly to TableEntity as we return
             // a new instance with copied values.
             var copiedEntity = new TableEntity(_originalEntity);
-            foreach (var key in copiedEntity.Keys)
+            // copy the keys to avoid collection modified errors
+            var keys = copiedEntity.Keys.ToList();
+            foreach (var key in keys)
             {
                 if (copiedEntity[key] is byte[] bytes)
                 {
