@@ -15,7 +15,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         internal WebPubSubAsyncCollector(IWebPubSubService service)
         {
-            _service = service;
+            _service = service ?? throw new ArgumentNullException(nameof(service));
         }
 
         public async Task AddAsync(WebPubSubAction item, CancellationToken cancellationToken = default)
