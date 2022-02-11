@@ -1,6 +1,6 @@
 # Release History
 
-## 4.0.0-beta.3 (2021-02-10)
+## 4.0.0-beta.3 (2022-02-10)
 
 ### Features Added
 - Added the `DocumentField.AsCurrency` method and the `DocumentFieldType.Currency` enum value to support analyzed currency fields.
