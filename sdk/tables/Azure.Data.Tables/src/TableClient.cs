@@ -327,6 +327,7 @@ namespace Azure.Data.Tables
         {
             _endpoint = TableUriBuilder.GetEndpointWithoutTableName(endpoint, table);
             _tableOperations = tableOperations;
+            _tableOperations.endpoint = _endpoint.AbsoluteUri;
             _version = version;
             Name = table;
             _accountName = accountName;

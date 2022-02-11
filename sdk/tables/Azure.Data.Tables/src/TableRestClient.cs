@@ -19,6 +19,7 @@ namespace Azure.Data.Tables
         internal string endpoint
         {
             get { return _url; }
+            set { _url = value; }
         }
 
         internal string clientVersion => _version;
