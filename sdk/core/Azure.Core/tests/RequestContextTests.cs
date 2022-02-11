@@ -196,23 +196,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual("RequestContext", beforeTransportValues.ElementAt(1));
         }
 
-        public class AddHeaderPolicy : HttpPipelineSynchronousPolicy
-        {
-            private string _headerName;
-            private string _headerVaue;
-
-            public AddHeaderPolicy(string headerName, string headerValue) : base()
-            {
-                _headerName = headerName;
-                _headerVaue = headerValue;
-            }
-
-            public override void OnSendingRequest(HttpMessage message)
-            {
-                message.Request.Headers.Add(_headerName, _headerVaue);
-            }
-        }
-
         [Test]
         [NonParallelizable]
         public async Task CanSuppressLoggingAsError()
@@ -268,10 +251,135 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("otel.status_code", "UNSET"));
         }
 
+        [Test]
+        public void CanAddSimpleNonErrorClassifier()
+        {
+            var context = new RequestContext();
+            context.AddClassifier(404, false);
+
+            Assert.IsTrue(context.Classifier.TryClassify(CreateMessage(404), out bool isError));
+            Assert.IsFalse(isError);
+            Assert.IsFalse(context.Classifier.TryClassify(CreateMessage(200), out isError));
+            Assert.IsFalse(context.Classifier.TryClassify(CreateMessage(304), out isError));
+            Assert.IsFalse(context.Classifier.TryClassify(CreateMessage(500), out isError));
+        }
+
+        [Test]
+        public void CanAddSimpleErrorClassifier()
+        {
+            var context = new RequestContext();
+            context.AddClassifier(304, false);
+
+            Assert.IsTrue(context.Classifier.TryClassify(CreateMessage(304), out bool isError));
+            Assert.IsFalse(isError);
+            Assert.IsFalse(context.Classifier.TryClassify(CreateMessage(200), out isError));
+            Assert.IsFalse(context.Classifier.TryClassify(CreateMessage(409), out isError));
+            Assert.IsFalse(context.Classifier.TryClassify(CreateMessage(500), out isError));
+        }
+
+        [Test]
+        public void CanAddMessageClassifier()
+        {
+            var context = new RequestContext();
+            context.AddClassifier(new HeaderClassifier());
+
+            var errorMessage = CreateMessage(409);
+            ((MockResponse)errorMessage.Response).AddHeader("ErrorCode", "LeaseNotAquired");
+
+            Assert.IsTrue(context.Classifier.TryClassify(errorMessage, out bool isError));
+            Assert.IsTrue(isError);
+            Assert.IsTrue(context.Classifier.TryClassify(CreateMessage(409), out isError));
+            Assert.IsFalse(isError);
+            Assert.IsFalse(context.Classifier.TryClassify(CreateMessage(200), out isError));
+            Assert.IsFalse(context.Classifier.TryClassify(CreateMessage(500), out isError));
+        }
+
+        [Test]
+        public void MostRecentlyAddedClassifierTakesPrecedence_MessageClassifierLast()
+        {
+            var context = new RequestContext();
+            context.AddClassifier(409, true);
+            context.AddClassifier(new HeaderClassifier());
+
+            var errorMessage = CreateMessage(409);
+            ((MockResponse)errorMessage.Response).AddHeader("ErrorCode", "LeaseNotAquired");
+
+            Assert.IsTrue(context.Classifier.TryClassify(errorMessage, out bool isError));
+            Assert.IsTrue(isError);
+            Assert.IsTrue(context.Classifier.TryClassify(CreateMessage(409), out isError));
+            Assert.IsFalse(isError);
+        }
+
+        [Test]
+        public void MostRecentlyAddedClassifierTakesPrecedence_SimpleClassifierLast()
+        {
+            var context = new RequestContext();
+            context.AddClassifier(new HeaderClassifier());
+            context.AddClassifier(409, false);
+
+            var errorMessage = CreateMessage(409);
+            ((MockResponse)errorMessage.Response).AddHeader("ErrorCode", "LeaseNotAquired");
+
+            Assert.IsTrue(context.Classifier.TryClassify(errorMessage, out bool isError));
+            Assert.IsFalse(isError);
+            Assert.IsTrue(context.Classifier.TryClassify(CreateMessage(409), out isError));
+            Assert.IsFalse(isError);
+        }
+
         #region Helpers
+        private HttpMessage CreateMessage(int statusCode)
+        {
+            var request = new MockRequest();
+            var message = new HttpMessage(request, null);
+            message.Response = new MockResponse(statusCode);
+            return message;
+        }
+
         private class TestOptions : ClientOptions
         {
         }
+
+        public class AddHeaderPolicy : HttpPipelineSynchronousPolicy
+        {
+            private string _headerName;
+            private string _headerVaue;
+
+            public AddHeaderPolicy(string headerName, string headerValue) : base()
+            {
+                _headerName = headerName;
+                _headerVaue = headerValue;
+            }
+
+            public override void OnSendingRequest(HttpMessage message)
+            {
+                message.Request.Headers.Add(_headerName, _headerVaue);
+            }
+        }
+
+        public class HeaderClassifier : MessageClassifier
+        {
+            public readonly string HeaderName = "ErrorCode";
+            private readonly string _errorCodeValue = "LeaseNotAquired";
+
+            public override bool TryClassify(HttpMessage message, out bool isError)
+            {
+                isError = false;
+
+                if (message.Response.Status != 409)
+                {
+                    return false;
+                }
+
+                if (message.Response.Headers.TryGetValue(HeaderName, out string value) &&
+                    _errorCodeValue == value)
+                {
+                    isError = true;
+                }
+
+                return true;
+            }
+        }
+
         #endregion
     }
 }

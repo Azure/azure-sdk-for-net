@@ -108,8 +108,8 @@ namespace Azure.Core.Pipeline
         public HttpMessage CreateMessage(RequestContext? context)
         {
             var message = CreateMessage();
-            message.ApplyRequestContext(context);
             message.PerClientClassifier = _messageClassifier;
+            message.ApplyRequestContext(context);
             return message;
         }
 

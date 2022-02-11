@@ -83,12 +83,11 @@ namespace Azure
 
         /// <summary>
         /// </summary>
-        /// <param name="statusCode"></param>
-        /// <param name="classify"></param>
-        public void AddClassifier(int statusCode, Func<HttpMessage, bool> classify)
+        /// <param name="classifier"></param>
+        public void AddClassifier(MessageClassifier classifier)
         {
             _classifiers ??= new();
-            _classifiers.Add(new FuncClassifier(statusCode, classify));
+            _classifiers.Add(classifier);
         }
 
         private class StatusCodeClassifier : MessageClassifier
@@ -115,42 +114,13 @@ namespace Azure
             }
         }
 
-        private class FuncClassifier : MessageClassifier
-        {
-            private readonly int _statusCode;
-            private readonly Func<HttpMessage, bool> _classify;
-
-            internal FuncClassifier(int statusCode, Func<HttpMessage, bool> classify)
-            {
-                _statusCode = statusCode;
-                _classify = classify;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name="message"></param>
-            /// <param name="isError"></param>
-            /// <returns></returns>
-            public override bool TryClassify(HttpMessage message, out bool isError)
-            {
-                if (message.Response.Status == _statusCode)
-                {
-                    isError = _classify(message);
-                    return true;
-                }
-
-                isError = false;
-                return false;
-            }
-        }
-
         private class AggregateClassifier : MessageClassifier
         {
             // TODO: I'll come back and implement this as an array to optimize a bit
             private readonly List<MessageClassifier> _classifiers;
 
             /// <summary>
-            /// MessageClassifier composted of multiple classifiers
+            /// MessageClassifier composed of multiple classifiers.
             /// </summary>
             /// <param name="classifiers"></param>
             public AggregateClassifier(List<MessageClassifier> classifiers)

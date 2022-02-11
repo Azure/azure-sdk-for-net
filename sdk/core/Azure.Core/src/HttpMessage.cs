@@ -66,7 +66,21 @@ namespace Azure.Core
 
         private ResponseClassifier _classifier;
         private MessageClassifier? _perCallClassifier;
-        internal MessageClassifier? PerClientClassifier { get; set; }
+        // TODO: Can we hold just the composite classifier here?
+        private MessageClassifier? _perClientClassifier;
+
+        internal MessageClassifier? PerClientClassifier
+        {
+            get
+            {
+                return _perClientClassifier;
+            }
+            set
+            {
+                _perClientClassifier = value;
+                _classifier = ComposeClassifier(_classifier);
+            }
+        }
 
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
@@ -108,6 +122,7 @@ namespace Azure.Core
             }
 
             _perCallClassifier = context.Classifier;
+            _classifier = ComposeClassifier(ResponseClassifier);
         }
 
         private ResponseClassifier ComposeClassifier(ResponseClassifier classifier)

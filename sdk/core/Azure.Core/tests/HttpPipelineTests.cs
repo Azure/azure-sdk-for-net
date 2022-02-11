@@ -302,6 +302,25 @@ namespace Azure.Core.Tests
             Assert.IsFalse(response.IsError);
         }
 
+        //[Test]
+        //public async Task RequestContextClassifierTakesPrecedence()
+        //{
+        //    var mockTransport = new MockTransport(new MockResponse(404));
+        //    var pipeline = new HttpPipeline(mockTransport, responseClassifier: ResponseClassifier.Shared);
+
+        //    var context = new RequestContext();
+        //    context.AddClassifier(404, isError: false);
+
+        //    HttpMessage message = pipeline.CreateMessage(context);
+        //    Request request = message.Request;
+        //    request.Method = RequestMethod.Get;
+        //    request.Uri.Reset(new Uri("https://contoso.a.io"));
+        //    await pipeline.SendAsync(message, CancellationToken.None);
+        //    Response response = message.Response;
+
+        //    Assert.IsFalse(response.IsError);
+        //}
+
         #region Helpers
         public class AddHeaderPolicy : HttpPipelineSynchronousPolicy
         {

@@ -42,6 +42,8 @@ namespace Azure.Core.Tests
             RequestContext context = new RequestContext();
             context.AddClassifier(204, isError: true);
             message.ApplyRequestContext(context);
+
+            message.Response = new MockResponse(204);
             Assert.IsTrue(message.ResponseClassifier.IsError(message));
         }
 
@@ -52,6 +54,7 @@ namespace Azure.Core.Tests
             RequestContext context = new RequestContext();
             context.AddClassifier(404, isError: false);
             message.ApplyRequestContext(context);
+
             message.Response = new MockResponse(404);
             Assert.IsFalse(message.ResponseClassifier.IsError(message));
         }
