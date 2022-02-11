@@ -66,10 +66,10 @@ namespace Azure.Core.Pipeline
             int perCallIndex,
             int perRetryIndex,
             HttpPipelinePolicy[] pipeline,
-            ResponseClassifier responseClassifier,
-            MessageClassifier? messageClassifier = default)
+            ResponseClassifier baseClassifier,
+            MessageClassifier? perClientClassifier = default)
         {
-            ResponseClassifier = responseClassifier ?? throw new ArgumentNullException(nameof(responseClassifier));
+            ResponseClassifier = baseClassifier ?? throw new ArgumentNullException(nameof(baseClassifier));
 
             _transport = transport ?? throw new ArgumentNullException(nameof(transport));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -78,7 +78,7 @@ namespace Azure.Core.Pipeline
 
             _perCallIndex = perCallIndex;
             _perRetryIndex = perRetryIndex;
-            _messageClassifier = messageClassifier;
+            _perClientClassifier = perClientClassifier;
             _internallyConstructed = true;
         }
 
@@ -96,7 +96,7 @@ namespace Azure.Core.Pipeline
         public HttpMessage CreateMessage()
         {
             HttpMessage message = new HttpMessage(CreateRequest(), ResponseClassifier);
-            message.PerClientClassifier = _messageClassifier;
+            message.PerClientClassifier = _perClientClassifier;
             return message;
         }
 
@@ -108,7 +108,7 @@ namespace Azure.Core.Pipeline
         public HttpMessage CreateMessage(RequestContext? context)
         {
             var message = CreateMessage();
-            message.PerClientClassifier = _messageClassifier;
+            message.PerClientClassifier = _perClientClassifier;
             message.ApplyRequestContext(context);
             return message;
         }
@@ -121,7 +121,7 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// The <see cref="MessageClassifier"/> instance used in this pipeline invocations.
         /// </summary>
-        private MessageClassifier? _messageClassifier { get; }
+        private MessageClassifier? _perClientClassifier { get; }
 
         /// <summary>
         /// Invokes the pipeline asynchronously. After the task completes response would be set to the <see cref="HttpMessage.Response"/> property.

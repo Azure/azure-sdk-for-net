@@ -9,7 +9,7 @@ namespace Azure.Core
     /// <summary>
     /// A type that analyzes HTTP responses and exceptions and determines if they should be retried.
     /// </summary>
-    public class ResponseClassifier
+    public class ResponseClassifier : MessageClassifier
     {
         internal static ResponseClassifier Shared { get; } = new();
 
@@ -61,7 +61,8 @@ namespace Azure.Core
             return IsErrorResponse(message);
         }
 
-        internal virtual bool TryClassify(HttpMessage message, out bool isError)
+        /// <inheritdoc/>
+        public override bool TryClassify(HttpMessage message, out bool isError)
         {
             isError = false;
             return false;

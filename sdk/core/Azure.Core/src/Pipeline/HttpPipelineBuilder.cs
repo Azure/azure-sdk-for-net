@@ -37,7 +37,7 @@ namespace Azure.Core.Pipeline
             ClientOptions options,
             HttpPipelinePolicy[] perCallPolicies,
             HttpPipelinePolicy[] perRetryPolicies,
-            ResponseClassifier? responseClassifier)
+            ResponseClassifier? responseClassifier = default)
         {
             var result = BuildInternal(options, perCallPolicies, perRetryPolicies, null, responseClassifier);
             return new HttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier);
@@ -51,7 +51,7 @@ namespace Azure.Core.Pipeline
         /// <param name="messageClassifier">Classifier to be applied during classification for every operation on the client.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="messageClassifier"/> is null.</exception>
-        public static HttpPipeline Build1( // TODO: address ambiguous method resolution
+        public static HttpPipeline Build(
             ClientOptions options,
             HttpPipelinePolicy[] perCallPolicies,
             HttpPipelinePolicy[] perRetryPolicies,

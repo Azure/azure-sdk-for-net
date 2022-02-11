@@ -39,7 +39,7 @@ namespace Azure.Core
         /// </summary>
         internal MessageClassifier? PerClientClassifier { get; set; }
 
-        internal override bool TryClassify(HttpMessage message, out bool isError)
+        public override bool TryClassify(HttpMessage message, out bool isError)
         {
             if (PerCallClassifier?.TryClassify(message, out isError) ?? false)
             {
