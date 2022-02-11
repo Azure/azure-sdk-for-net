@@ -53,3 +53,5 @@ You can also configure a proxy using the following environment variables:
 * `HTTPS_PROXY`: the proxy server used on HTTPS requests.
 * `ALL_PROXY`: the proxy server used on HTTP and HTTPS requests in case `HTTP_PROXY` or `HTTPS_PROXY` are not defined.
 * `NO_PROXY`: a comma-separated list of hostnames that should be excluded from proxying.
+
+**Warning:** setting these environment variables will affect every new client created within the current process.
