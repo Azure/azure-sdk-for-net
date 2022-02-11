@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /{scope}/providers/Microsoft.Resources/tags/default
         /// Operation Id: Tags_UpdateAtScope
         /// </summary>
-        /// <param name="options"> The TagPatchResource to use. </param>
+        /// <param name="options"> The TagResourceUpdateOptions to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public async virtual Task<Response<TagResource>> UpdateAsync(TagResourceUpdateOptions options, CancellationToken cancellationToken = default)
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /{scope}/providers/Microsoft.Resources/tags/default
         /// Operation Id: Tags_UpdateAtScope
         /// </summary>
-        /// <param name="options"> The TagPatchResource to use. </param>
+        /// <param name="options"> The TagResourceUpdateOptions to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual Response<TagResource> Update(TagResourceUpdateOptions options, CancellationToken cancellationToken = default)
