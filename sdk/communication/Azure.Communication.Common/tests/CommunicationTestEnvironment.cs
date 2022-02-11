@@ -13,7 +13,7 @@ namespace Azure.Communication.Tests
         public const string AzurePhoneNumber = "AZURE_PHONE_NUMBER";
         private const string SkipIntSmsTestEnvironmentVariableName = "SKIP_INT_SMS_TEST";
         private const string SkipIntPhoneNumbersTestEnvironmentVariableName = "SKIP_INT_PHONENUMBERS_TEST";
-        private const string AzurePhoneNumberId = "AZURE_PHONE_NUMBER_ID";
+        private const string AzureTestAgentVariableName = "AZURE_TEST_AGENT";
 
         public string LiveTestDynamicConnectionString => GetRecordedVariable(
             LiveTestDynamicConnectionStringEnvironmentVariableName,
@@ -31,7 +31,7 @@ namespace Azure.Communication.Tests
 
         public string LiveTestStaticAccessKey => Core.ConnectionString.Parse(LiveTestStaticConnectionString).GetRequired("accesskey");
 
-        public string CommunicationTestPhoneNumber => GetRecordedVariable(AzurePhoneNumber, options => options.IsSecret("+14255550123"));
+        public string CommunicationTestPhoneNumber => GetPhoneNumberByTestAgent() ?? GetRecordedVariable(AzurePhoneNumber, options => options.IsSecret("+14255550123"));
 
         public string SkipSmsTest => GetOptionalVariable(SkipIntSmsTestEnvironmentVariableName) ?? "False";
 
@@ -41,9 +41,14 @@ namespace Azure.Communication.Tests
 
         public bool ShouldIgnorePhoneNumbersTests => bool.Parse(SkipPhoneNumbersTest);
 
-        public string CommunicationPhoneNumberId => GetOptionalVariable(AzurePhoneNumberId);
-        public string CommunicationTestPhoneNumber1 => GetRecordedOptionalVariable("AZURE_PHONE_NUMBER_1", options => options.IsSecret("+14255550123"));
-        public string CommunicationTestPhoneNumber2 => GetRecordedOptionalVariable("AZURE_PHONE_NUMBER_2", options => options.IsSecret("+14255550123"));
-        public string CommunicationTestPhoneNumber3 => GetRecordedOptionalVariable("AZURE_PHONE_NUMBER_3", options => options.IsSecret("+14255550123"));
+        public string AzureTestAgent => GetOptionalVariable(AzureTestAgentVariableName);
+
+        private string? GetPhoneNumberByTestAgent()
+        {
+            if (AzureTestAgent == null)
+                return null;
+
+            return GetRecordedOptionalVariable($"{AzurePhoneNumber}_{AzureTestAgent}", options => options.IsSecret("+14255550123"));
+        }
     }
 }

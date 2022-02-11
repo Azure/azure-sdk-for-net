@@ -88,7 +88,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             return TestEnvironment.Mode == RecordedTestMode.Playback
                 ? RecordedTestSanitizer.SanitizeValue
-                : SelectTestPhoneNumberFromAvailablePool();
+                : TestEnvironment.CommunicationTestPhoneNumber;
         }
 
         protected void SleepIfNotInPlaybackMode()
@@ -102,24 +102,6 @@ namespace Azure.Communication.PhoneNumbers.Tests
             PhoneNumbersClientOptions phoneNumbersClientOptions = new PhoneNumbersClientOptions();
             phoneNumbersClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
             return InstrumentClientOptions(phoneNumbersClientOptions);
-        }
-
-        private string SelectTestPhoneNumberFromAvailablePool()
-        {
-            if (TestEnvironment.CommunicationPhoneNumberId == null)
-            {
-                return TestEnvironment.CommunicationTestPhoneNumber;
-            }
-
-            string selectedPhoneNumber = (TestEnvironment.CommunicationPhoneNumberId) switch
-            {
-                "1" => TestEnvironment.CommunicationTestPhoneNumber1,
-                "2" => TestEnvironment.CommunicationTestPhoneNumber2,
-                "3" => TestEnvironment.CommunicationTestPhoneNumber3,
-                _ => TestEnvironment.CommunicationTestPhoneNumber,
-            };
-
-            return selectedPhoneNumber ?? TestEnvironment.CommunicationTestPhoneNumber;
         }
     }
 }

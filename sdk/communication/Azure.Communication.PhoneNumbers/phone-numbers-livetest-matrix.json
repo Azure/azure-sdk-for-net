@@ -15,7 +15,7 @@
                 "OSVmImage": "MMSUbuntu20.04",
                 "Pool": "azsdk-pool-mms-ubuntu-2004-general",
                 "TestTargetFramework": "net6.0",
-                "AZURE_PHONE_NUMBER_ID": "1",
+                "AZURE_TEST_AGENT": "ubuntu_2004_net60",
                 "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "FALSE"
             },
 
@@ -43,7 +43,7 @@
                 "OSVmImage": "macOS-10.15",
                 "Pool": "Azure Pipelines",
                 "TestTargetFramework": "net6.0",
-                "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "TRUE"
+                "AZURE_TEST_AGENT": "macos_1015_net60"
             }
         },
         "AdditionalTestArguments": [
@@ -71,7 +71,7 @@
                 }
             },
             "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "FALSE",
-            "AZURE_PHONE_NUMBER_ID": "3"
+            "AZURE_TEST_AGENT": "windows_2019_netcore31"
         }
     ]
 }
