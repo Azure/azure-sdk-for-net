@@ -22,11 +22,12 @@ namespace Azure.Communication.Identity
     }
     public partial class CommunicationIdentityClientOptions : Azure.Core.ClientOptions
     {
-        public CommunicationIdentityClientOptions(Azure.Communication.Identity.CommunicationIdentityClientOptions.ServiceVersion version = Azure.Communication.Identity.CommunicationIdentityClientOptions.ServiceVersion.V2021_10_31_preview) { }
+        public CommunicationIdentityClientOptions(Azure.Communication.Identity.CommunicationIdentityClientOptions.ServiceVersion version = Azure.Communication.Identity.CommunicationIdentityClientOptions.ServiceVersion.V2022_06_01) { }
         public enum ServiceVersion
         {
             V2021_03_07 = 1,
             V2021_10_31_preview = 2,
+            V2022_06_01 = 3,
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -36,6 +37,7 @@ namespace Azure.Communication.Identity
         private readonly int _dummyPrimitive;
         public CommunicationTokenScope(string value) { throw null; }
         public static Azure.Communication.Identity.CommunicationTokenScope Chat { get { throw null; } }
+        public static Azure.Communication.Identity.CommunicationTokenScope Email { get { throw null; } }
         public static Azure.Communication.Identity.CommunicationTokenScope VoIP { get { throw null; } }
         public bool Equals(Azure.Communication.Identity.CommunicationTokenScope other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
