@@ -64,13 +64,13 @@ namespace Azure.Core.Tests
         [TestCase(502, true)]
         [TestCase(503, true)]
         [TestCase(504, true)]
-        public void SharedClassifierClassifiesErrorResponse(int code, bool isError)
+        public void SharedClassifierClassifiesError(int code, bool isError)
         {
             var classifier = ResponseClassifier.Shared;
             var message = new HttpMessage(new MockRequest(), classifier);
             message.Response = new MockResponse(code);
 
-            Assert.AreEqual(isError, classifier.IsErrorResponse(message));
+            Assert.AreEqual(isError, classifier.IsError(message));
         }
 
         [Test]
@@ -89,13 +89,13 @@ namespace Azure.Core.Tests
         [TestCase(502, true)]
         [TestCase(503, true)]
         [TestCase(504, true)]
-        public void SharedClassifierClassifiesError(int code, bool isError)
+        public void SharedClassifierClassifiesErrorResponse(int code, bool isError)
         {
             var classifier = ResponseClassifier.Shared;
             var message = new HttpMessage(new MockRequest(), classifier);
             message.Response = new MockResponse(code);
 
-            Assert.AreEqual(isError, classifier.IsError(message));
+            Assert.AreEqual(isError, classifier.IsErrorResponse(message));
         }
     }
 }
