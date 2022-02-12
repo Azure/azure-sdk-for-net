@@ -66,15 +66,15 @@ namespace Azure
         }
 
         /// <summary>
-        /// TODO: Update this.
-        /// Adds a custom classifier to the <see cref="ResponseClassifier"/> used in this call to the service method.
+        /// Adds a custom classifier to the <see cref="ResponseClassifier"/> that decides if the response
+        /// received from the service should be considered an error response, for this service call.
         /// The custom classifier is applied before the default classifier.
         /// This is useful in cases where you'd like to prevent specific response status codes from appearing as errors in
         /// logging and distributed tracing.  It will also prevent the call from throwing an exception when a response with
         /// this status code is received.
         /// </summary>
-        /// <param name="statusCode">The status codes to classify differently in this call.</param>
-        /// <param name="isError">Whether or not the passed-in status codes will be considered errors.</param>
+        /// <param name="statusCode">The status code to customize classification for.</param>
+        /// <param name="isError">Whether the passed-in status code should be classified as an error.</param>
         public void AddClassifier(int statusCode, bool isError)
         {
             _classifiers ??= new();
@@ -82,8 +82,14 @@ namespace Azure
         }
 
         /// <summary>
+        /// Adds a custom <see cref="MessageClassifier"/> to the <see cref="ResponseClassifier"/> that decides if the response
+        /// received from the service should be considered an error response, for this service call.
+        /// The custom classifier is applied before the default classifier.
+        /// This is useful in cases where you'd like to prevent specific response status codes from appearing as errors in
+        /// logging and distributed tracing.  It will also prevent the call from throwing an exception when a response with
+        /// this status code is received.
         /// </summary>
-        /// <param name="classifier"></param>
+        /// <param name="classifier">The custom classifier.</param>
         public void AddClassifier(MessageClassifier classifier)
         {
             _classifiers ??= new();

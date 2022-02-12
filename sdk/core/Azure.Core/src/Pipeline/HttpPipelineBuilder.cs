@@ -44,11 +44,12 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
+        /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/> and client provided per call policies.
         /// </summary>
-        /// <param name="options"></param>
-        /// <param name="perCallPolicies"></param>
-        /// <param name="perRetryPolicies"></param>
-        /// <param name="messageClassifier">Classifier to be applied during classification for every operation on the client.</param>
+        /// <param name="options">The customer provided client options object.</param>
+        /// <param name="perCallPolicies">Client provided per-call policies.</param>
+        /// <param name="perRetryPolicies">Client provided per-retry policies.</param>
+        /// <param name="messageClassifier">Classifier to be applied during message classification for every service method on the client.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="messageClassifier"/> is null.</exception>
         public static HttpPipeline Build(

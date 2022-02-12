@@ -66,9 +66,9 @@ namespace Azure.Core.Pipeline
             int perCallIndex,
             int perRetryIndex,
             HttpPipelinePolicy[] pipeline,
-            ResponseClassifier baseClassifier)
+            ResponseClassifier responseClassifier)
         {
-            ResponseClassifier = baseClassifier ?? throw new ArgumentNullException(nameof(baseClassifier));
+            ResponseClassifier = responseClassifier ?? throw new ArgumentNullException(nameof(responseClassifier));
 
             _transport = transport ?? throw new ArgumentNullException(nameof(transport));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));

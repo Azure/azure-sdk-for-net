@@ -4,7 +4,9 @@
 
 ### Features Added
 
-- Added `AddClassifier` method to `RequestContext`.  This allows users to specify whether certain response status codes should be considered errors for a given operation.
+- Added `MessageClassifier` type, which introduces TryClassify semantics to message classification, allowing chaining of multiple classifiers.
+- Made `ResponseClassifier` a subclass of `MessageClassifier`.
+- Added `AddClassifier` methods to `RequestContext`. These allows callers to set custom classifiers for a given method invocation.
 
 ### Breaking Changes
 

@@ -1,20 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Azure.Core
 {
     /// <summary>
     /// Composes a response classifier applying customization precedence rules as follows:
-    ///   - First, try any per-invocation customizations
-    ///   - Then, try any per-client customizations
-    ///   - Finally, apply default logic for the operation using the base classifier, which
-    ///     may have either per-operation or per-client scope.
-    /// We need this class because most response classifiers are static instances,
-    /// or owned outside the client, so we cannot modify them.
+    ///   - First, if any custom per-invocation classifiers apply to the message, return their
+    ///     classification result.
+    ///   - Then, if any custom per-client classifiers apply to the message, return their
+    ///     classification result.
+    ///   - Finally, apply default classification logic for the operation using the base classifier,
+    ///     which may have either per-operation or per-client scope.
+    /// We need this class because most base classifiers are either static instances or owned
+    /// outside the client, so we cannot modify them directly.
     /// </summary>
     internal class CompositeClassifier : ResponseClassifier
     {
@@ -30,12 +28,15 @@ namespace Azure.Core
 
         /// <summary>
         /// User-provided customization to the classifier for this invocation
-        /// of an operation. This classifier has try-classifier semantics and may
-        /// not provide classifications for every possible status code.
+        /// of an operation. This classifier has try-classify semantics and may
+        /// not provide classification for every status code or message.
         /// </summary>
         internal MessageClassifier? PerCallClassifier { get; set; }
 
         /// <summary>
+        /// User-provided customization to the classifier for all client methods.
+        /// This classifier has try-classify semantics and may not provide classifications
+        /// for every status code or message.
         /// </summary>
         internal MessageClassifier? PerClientClassifier { get; set; }
 

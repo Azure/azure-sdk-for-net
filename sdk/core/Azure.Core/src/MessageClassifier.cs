@@ -6,6 +6,10 @@ using System;
 namespace Azure.Core
 {
     /// <summary>
+    /// A type that analyzes an HTTP message and determines if the response it holds
+    /// should be treated as an error response. A classifier of this type may use information
+    /// from the request, the response, or other message property to decide
+    /// whether and how to classify the message.
     /// </summary>
     public abstract class MessageClassifier
     {
