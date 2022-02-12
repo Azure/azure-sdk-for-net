@@ -1,21 +1,26 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core.Pipeline;
+
 namespace Azure.Core
 {
     /// <summary>
     /// Composes a response classifier applying customization precedence rules as follows:
-    ///   - First, if any custom per-invocation classifiers apply to the message, return their
-    ///     classification result.
-    ///   - Then, if any custom per-client classifiers apply to the message, return their
-    ///     classification result.
+    ///   - First, if a custom per-invocation classifier added via <see cref="RequestContext.AddClassifier(int, bool)"/>
+    ///     or <see cref="RequestContext.AddClassifier(MessageClassifier)"/> applies to the message,
+    ///     return its classification result.
+    ///   - Then, if the custom per-client classifier apply added via
+    ///     <see cref="HttpPipelineBuilder.Build(ClientOptions, HttpPipelinePolicy[], HttpPipelinePolicy[], MessageClassifier)"/>
+    ///     applies to the message, return its classification result.
     ///   - Finally, apply default classification logic for the operation using the base classifier,
     ///     which may have either per-operation or per-client scope.
-    /// We need this class because most base classifiers are either static instances or owned
-    /// outside the client, so we cannot modify them directly.
     /// </summary>
     internal class CompositeClassifier : ResponseClassifier
     {
+        // Note: We need this class because most base classifiers are either static instances
+        // or owned outside the client, so we cannot modify them directly.
+
         /// <summary>
         /// The base classifier.
         /// </summary>
