@@ -33,7 +33,8 @@ namespace Azure.Storage.Test.Shared
             UriRegexSanitizers.Add(new UriRegexSanitizer("\\!", "%21"));
             UriRegexSanitizers.Add(new UriRegexSanitizer("\\'", "%27"));
             UriRegexSanitizers.Add(new UriRegexSanitizer("\\*", "%2A"));
-            UriRegexSanitizers.Add(new UriRegexSanitizer("(?<group>:)[^\\\\]", "%3A") {GroupForReplace = "group"});
+            // Encode any colons in the Uri except for the one in the scheme
+            UriRegexSanitizers.Add(new UriRegexSanitizer("(?<group>:)[^//]", "%3A") {GroupForReplace = "group"});
 #endif
 
             HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("x-ms-encryption-key", SanitizeValue));
