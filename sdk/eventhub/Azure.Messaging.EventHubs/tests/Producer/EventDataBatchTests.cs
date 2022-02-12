@@ -132,7 +132,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies property accessors for the <see cref="EventDataBatch.AsEnumerable" />
+        ///   Verifies property accessors for the <see cref="EventDataBatch.AsList" />
         ///   method.
         /// </summary>
         ///
@@ -142,7 +142,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockBatch = new MockTransportBatch();
             var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions());
 
-            batch.AsEnumerable<string>();
+            batch.AsList<string>();
             Assert.That(mockBatch.AsEnumerableCalledWith, Is.EqualTo(typeof(string)), "The enumerable should delegated the requested type parameter.");
         }
 
@@ -289,7 +289,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 return true;
             }
 
-            public override IEnumerable<T> AsEnumerable<T>()
+            public override List<T> AsList<T>()
             {
                 AsEnumerableCalledWith = typeof(T);
                 return default;

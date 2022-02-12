@@ -2934,7 +2934,7 @@ namespace Azure.Messaging.EventHubs.Tests
             public override long SizeInBytes { get; }
             public override TransportProducerFeatures ActiveFeatures { get; }
             public override int Count => Events.Count;
-            public override IEnumerable<T> AsEnumerable<T>() => (IEnumerable<T>)Events;
+            public override List<T> AsList<T>() => Events as List<T>;
             public override void Clear() => Events.Clear();
             public override void Dispose() => throw new NotImplementedException();
 
