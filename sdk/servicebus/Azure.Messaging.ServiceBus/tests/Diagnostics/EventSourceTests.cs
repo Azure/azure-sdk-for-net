@@ -88,7 +88,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             mockTransportSender.Setup(
                 sender => sender.SendAsync(
-                    It.IsAny<IReadOnlyList<ServiceBusMessage>>(),
+                    It.IsAny<List<ServiceBusMessage>>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
 
@@ -129,7 +129,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Returns(3);
 
             mockTransportBatch
-                .Setup(transport => transport.AsReadOnly<ServiceBusMessage>())
+                .Setup(transport => transport.AsList<ServiceBusMessage>())
                 .Returns(new List<ServiceBusMessage>());
 
             mockTransportSender.Setup(

@@ -61,7 +61,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns>The set of messages as an enumerable of the requested type.</returns>
         ///
-        public abstract IReadOnlyCollection<T> AsReadOnly<T>();
+        public abstract List<T> AsList<T>();
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="TransportMessageBatch" />.

@@ -57,7 +57,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="messages">The list of messages to send.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         public abstract Task SendAsync(
-            IReadOnlyList<ServiceBusMessage> messages,
+            List<ServiceBusMessage> messages,
             CancellationToken cancellationToken);
 
         /// <summary>

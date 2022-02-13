@@ -190,9 +190,9 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
             _connection.ThrowIfClosed();
 
-            IReadOnlyList<ServiceBusMessage> messageList = messages switch
+            List<ServiceBusMessage> messageList = messages switch
             {
-                IReadOnlyList<ServiceBusMessage> alreadyList => alreadyList,
+                List<ServiceBusMessage> alreadyList => alreadyList,
                 _ => messages.ToList()
             };
 
@@ -203,7 +203,7 @@ namespace Azure.Messaging.ServiceBus
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageStart(Identifier, messageCount: messageList.Count);
-            using DiagnosticScope scope = CreateDiagnosticScope(messages, DiagnosticProperty.SendActivityName);
+            using DiagnosticScope scope = CreateDiagnosticScope(messageList, DiagnosticProperty.SendActivityName);
             scope.Start();
 
             try
@@ -223,7 +223,7 @@ namespace Azure.Messaging.ServiceBus
             Logger.SendMessageComplete(Identifier);
         }
 
-        private DiagnosticScope CreateDiagnosticScope(IEnumerable<ServiceBusMessage> messages, string activityName)
+        private DiagnosticScope CreateDiagnosticScope(List<ServiceBusMessage> messages, string activityName)
         {
             foreach (ServiceBusMessage message in messages)
             {
@@ -325,7 +325,7 @@ namespace Azure.Messaging.ServiceBus
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageStart(Identifier, messageBatch.Count);
             using DiagnosticScope scope = CreateDiagnosticScope(
-                messageBatch.AsReadOnly<ServiceBusMessage>(),
+                messageBatch.AsList<ServiceBusMessage>(),
                 DiagnosticProperty.SendActivityName);
             scope.Start();
 
@@ -405,9 +405,9 @@ namespace Azure.Messaging.ServiceBus
             _connection.ThrowIfClosed();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            IReadOnlyList<ServiceBusMessage> messageList = messages switch
+            List<ServiceBusMessage> messageList = messages switch
             {
-                IReadOnlyList<ServiceBusMessage> alreadyList => alreadyList,
+                List<ServiceBusMessage> alreadyList => alreadyList,
                 _ => messages.ToList()
             };
 
@@ -422,7 +422,7 @@ namespace Azure.Messaging.ServiceBus
                 scheduledEnqueueTime.ToString(CultureInfo.InvariantCulture));
 
             using DiagnosticScope scope = CreateDiagnosticScope(
-                messages,
+                messageList,
                 DiagnosticProperty.ScheduleActivityName);
             scope.Start();
 

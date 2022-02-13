@@ -166,7 +166,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpMessageBatch.AsReadOnly{T}" />
+        ///   Verifies functionality of the <see cref="AmqpMessageBatch.AsList{T}" />
         ///   method.
         /// </summary>
         ///
@@ -176,11 +176,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var options = new CreateMessageBatchOptions { MaxSizeInBytes = 5000 };
 
             var batch = new AmqpMessageBatch(options);
-            Assert.That(() => batch.AsReadOnly<AmqpMessage>(), Throws.InstanceOf<FormatException>());
+            Assert.That(() => batch.AsList<AmqpMessage>(), Throws.InstanceOf<FormatException>());
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpMessageBatch.AsReadOnly{T}" />
+        ///   Verifies functionality of the <see cref="AmqpMessageBatch.AsList{T}" />
         ///   method.
         /// </summary>
         ///
@@ -199,7 +199,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                 batch.TryAddMessage(batchMessages[index]);
             }
 
-            var batchReadOnly = batch.AsReadOnly<ServiceBusMessage>();
+            var batchReadOnly = batch.AsList<ServiceBusMessage>();
             Assert.That(batchReadOnly, Is.Not.Null, "The batch enumerable should have been populated.");
             Assert.That(batchReadOnly.Count, Is.EqualTo(batch.Count), "The wrong number of messages was in the enumerable.");
 
