@@ -15,17 +15,22 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             return arraySegment.Array == null ? string.Empty : Encoding.ASCII.GetString(arraySegment.Array, arraySegment.Offset, arraySegment.Count);
         }
 
-        public static void SetMessageData(this DiagnosticScope scope, IEnumerable<ServiceBusReceivedMessage> messages)
+        public static void SetMessageData(this DiagnosticScope scope, ServiceBusReceivedMessage message)
+        {
+            scope.AddLinkedDiagnostics(message);
+        }
+
+        public static void SetMessageData(this DiagnosticScope scope, IReadOnlyList<ServiceBusReceivedMessage> messages)
         {
             scope.AddLinkedDiagnostics(messages);
         }
 
-        public static void SetMessageData(this DiagnosticScope scope, IEnumerable<ServiceBusMessage> messages)
+        public static void SetMessageData(this DiagnosticScope scope, List<ServiceBusMessage> messages)
         {
             scope.AddLinkedDiagnostics(messages);
         }
 
-        private static void AddLinkedDiagnostics(this DiagnosticScope scope, IEnumerable<ServiceBusReceivedMessage> messages)
+        private static void AddLinkedDiagnostics(this DiagnosticScope scope, IReadOnlyList<ServiceBusReceivedMessage> messages)
         {
             if (scope.IsEnabled)
             {
@@ -36,7 +41,15 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        private static void AddLinkedDiagnostics(this DiagnosticScope scope, IEnumerable<ServiceBusMessage> messages)
+        private static void AddLinkedDiagnostics(this DiagnosticScope scope, ServiceBusReceivedMessage message)
+        {
+            if (scope.IsEnabled)
+            {
+                AddLinkedDiagnostics(scope, message.ApplicationProperties);
+            }
+        }
+
+        private static void AddLinkedDiagnostics(this DiagnosticScope scope, List<ServiceBusMessage> messages)
         {
             if (scope.IsEnabled)
             {
@@ -44,6 +57,16 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 {
                     AddLinkedDiagnostics(scope, message.ApplicationProperties);
                 }
+            }
+        }
+
+        private static void AddLinkedDiagnostics(this DiagnosticScope scope, IReadOnlyDictionary<string, object> properties)
+        {
+            if (EntityScopeFactory.TryExtractDiagnosticId(
+                    properties,
+                    out string diagnosticId))
+            {
+                scope.AddLink(diagnosticId, null);
             }
         }
 
