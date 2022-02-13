@@ -177,7 +177,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             };
             mockTransportSender.Setup(
                 sender => sender.ScheduleMessagesAsync(
-                    It.IsAny<IReadOnlyList<ServiceBusMessage>>(),
+                    It.IsAny<List<ServiceBusMessage>>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult((IReadOnlyList<long>) new List<long> { 1 }));
 
@@ -214,7 +214,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             mockTransportSender.Setup(
                 sender => sender.ScheduleMessagesAsync(
-                    It.IsAny<IReadOnlyList<ServiceBusMessage>>(),
+                    It.IsAny<List<ServiceBusMessage>>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
 

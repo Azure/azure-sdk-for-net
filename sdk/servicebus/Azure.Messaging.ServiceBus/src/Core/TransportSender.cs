@@ -80,7 +80,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public abstract Task<IReadOnlyList<long>> ScheduleMessagesAsync(
-            IReadOnlyList<ServiceBusMessage> messages,
+            List<ServiceBusMessage> messages,
             CancellationToken cancellationToken = default);
 
         /// <summary>
