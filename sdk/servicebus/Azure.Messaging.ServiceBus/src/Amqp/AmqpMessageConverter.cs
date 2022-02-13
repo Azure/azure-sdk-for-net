@@ -37,7 +37,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return BuildAmqpBatchFromMessages(batchMessages, source, forceBatch);
         }
 
-        public static AmqpMessage BatchSBMessagesAsAmqpMessage(List<ServiceBusMessage> source, bool forceBatch = false)
+        public static AmqpMessage BatchSBMessagesAsAmqpMessage(IReadOnlyCollection<ServiceBusMessage> source, bool forceBatch = false)
         {
             Argument.AssertNotNull(source, nameof(source));
             return BuildAmqpBatchFromMessage(source, forceBatch);
@@ -53,7 +53,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source messages.</returns>
         ///
-        private static AmqpMessage BuildAmqpBatchFromMessage(List<ServiceBusMessage> source, bool forceBatch)
+        private static AmqpMessage BuildAmqpBatchFromMessage(IReadOnlyCollection<ServiceBusMessage> source, bool forceBatch)
         {
             AmqpMessage firstAmqpMessage = null;
             ServiceBusMessage firstMessage = null;

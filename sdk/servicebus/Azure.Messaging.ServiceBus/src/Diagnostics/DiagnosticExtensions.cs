@@ -20,17 +20,17 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             scope.AddLinkedDiagnostics(message);
         }
 
-        public static void SetMessageData(this DiagnosticScope scope, IReadOnlyList<ServiceBusReceivedMessage> messages)
+        public static void SetMessageData(this DiagnosticScope scope, IReadOnlyCollection<ServiceBusReceivedMessage> messages)
         {
             scope.AddLinkedDiagnostics(messages);
         }
 
-        public static void SetMessageData(this DiagnosticScope scope, List<ServiceBusMessage> messages)
+        public static void SetMessageData(this DiagnosticScope scope, IReadOnlyCollection<ServiceBusMessage> messages)
         {
             scope.AddLinkedDiagnostics(messages);
         }
 
-        private static void AddLinkedDiagnostics(this DiagnosticScope scope, IReadOnlyList<ServiceBusReceivedMessage> messages)
+        private static void AddLinkedDiagnostics(this DiagnosticScope scope, IReadOnlyCollection<ServiceBusReceivedMessage> messages)
         {
             if (scope.IsEnabled)
             {
@@ -49,7 +49,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        private static void AddLinkedDiagnostics(this DiagnosticScope scope, List<ServiceBusMessage> messages)
+        private static void AddLinkedDiagnostics(this DiagnosticScope scope, IReadOnlyCollection<ServiceBusMessage> messages)
         {
             if (scope.IsEnabled)
             {

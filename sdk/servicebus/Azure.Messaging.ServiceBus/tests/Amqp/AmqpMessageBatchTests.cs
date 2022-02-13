@@ -176,7 +176,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var options = new CreateMessageBatchOptions { MaxSizeInBytes = 5000 };
 
             var batch = new AmqpMessageBatch(options);
-            Assert.That(() => batch.AsList<AmqpMessage>(), Throws.InstanceOf<FormatException>());
+            Assert.That(() => batch.AsReadOnly<AmqpMessage>(), Throws.InstanceOf<FormatException>());
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                 batch.TryAddMessage(batchMessages[index]);
             }
 
-            var batchReadOnly = batch.AsList<ServiceBusMessage>();
+            var batchReadOnly = batch.AsReadOnly<ServiceBusMessage>();
             Assert.That(batchReadOnly, Is.Not.Null, "The batch enumerable should have been populated.");
             Assert.That(batchReadOnly.Count, Is.EqualTo(batch.Count), "The wrong number of messages was in the enumerable.");
 

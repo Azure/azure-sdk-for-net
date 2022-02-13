@@ -154,14 +154,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>The set of messages as an enumerable of the requested type.</returns>
         ///
-        public override List<T> AsList<T>()
+        public override IReadOnlyCollection<T> AsReadOnly<T>()
         {
             if (typeof(T) != typeof(ServiceBusMessage))
             {
                 throw new FormatException(string.Format(CultureInfo.CurrentCulture, Resources.UnsupportedTransportEventType, typeof(T).Name));
             }
 
-            return BatchMessages as List<T>;
+            return (IReadOnlyCollection<T>) BatchMessages;
         }
 
         /// <summary>

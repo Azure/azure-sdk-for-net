@@ -217,7 +217,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         timeout,
                         token).ConfigureAwait(false);
                 },
-                (this, messageBatch.AsList<ServiceBusMessage>()),
+                (this, messageBatch.AsReadOnly<ServiceBusMessage>()),
             _connectionScope,
             cancellationToken).ConfigureAwait(false);
         }
@@ -231,7 +231,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         internal virtual async Task SendBatchInternalAsync(
-            List<ServiceBusMessage> messages,
+            IReadOnlyCollection<ServiceBusMessage> messages,
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
@@ -301,7 +301,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="messages">The list of messages to send.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         public override async Task SendAsync(
-            List<ServiceBusMessage> messages,
+            IReadOnlyCollection<ServiceBusMessage> messages,
             CancellationToken cancellationToken)
         {
             await _retryPolicy.RunOperation(static async (value, timeout, token) =>
@@ -375,7 +375,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override async Task<IReadOnlyList<long>> ScheduleMessagesAsync(
-            List<ServiceBusMessage> messages,
+            IReadOnlyCollection<ServiceBusMessage> messages,
             CancellationToken cancellationToken = default)
         {
             return await _retryPolicy.RunOperation(static async (value, timeout, token) =>
@@ -400,7 +400,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         internal async Task<IReadOnlyList<long>> ScheduleMessageInternalAsync(
-            List<ServiceBusMessage> messages,
+            IReadOnlyCollection<ServiceBusMessage> messages,
             TimeSpan timeout,
             CancellationToken cancellationToken = default)
         {

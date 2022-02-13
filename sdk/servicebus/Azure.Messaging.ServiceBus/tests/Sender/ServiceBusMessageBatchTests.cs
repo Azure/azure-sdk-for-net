@@ -83,7 +83,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         }
 
         /// <summary>
-        ///   Verifies property accessors for the <see cref="ServiceBusMessageBatch.AsList{T}" />
+        ///   Verifies property accessors for the <see cref="ServiceBusMessageBatch.AsReadOnly{T}" />
         ///   method.
         /// </summary>
         ///
@@ -95,7 +95,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
 
             var batch = new ServiceBusMessageBatch(mockBatch, mockScope);
 
-            batch.AsList<string>();
+            batch.AsReadOnly<string>();
             Assert.That(mockBatch.AsReadOnlyCalledWith, Is.EqualTo(typeof(string)), "The enumerable should delegated the requested type parameter.");
         }
 
@@ -226,7 +226,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 return true;
             }
 
-            public override List<T> AsList<T>()
+            public override IReadOnlyCollection<T> AsReadOnly<T>()
             {
                 AsReadOnlyCalledWith = typeof(T);
                 return default;

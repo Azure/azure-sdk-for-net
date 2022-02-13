@@ -129,7 +129,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Returns(3);
 
             mockTransportBatch
-                .Setup(transport => transport.AsList<ServiceBusMessage>())
+                .Setup(transport => transport.AsReadOnly<ServiceBusMessage>())
                 .Returns(new List<ServiceBusMessage>());
 
             mockTransportSender.Setup(
