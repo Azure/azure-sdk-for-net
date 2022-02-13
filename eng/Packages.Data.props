@@ -102,6 +102,7 @@
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.5.10" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.1.0" />
     <PackageReference Update="Microsoft.Identity.Client" Version="4.39.0" />
+    <PackageReference Update="Microsoft.Identity.Client.Desktop" Version="4.39.0" />
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="2.19.3" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
@@ -150,7 +151,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20220209.2" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20220210.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20220111.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />

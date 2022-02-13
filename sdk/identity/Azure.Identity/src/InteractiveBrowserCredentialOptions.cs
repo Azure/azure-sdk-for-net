@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading;
+using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -53,5 +54,7 @@ namespace Azure.Identity
         /// Avoids the account prompt and pre-populates the username of the account to login.
         /// </summary>
         public string LoginHint { get; set; }
+
+        internal Action<PublicClientApplicationBuilder> BeforeBuildClient { get; set; }
     }
 }

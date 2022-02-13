@@ -7,7 +7,7 @@
     <ApiCompatVersion>1.5.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Identity;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);3021</NoWarn>
+    <NoWarn>$(NoWarn);3021;AZC0011</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>

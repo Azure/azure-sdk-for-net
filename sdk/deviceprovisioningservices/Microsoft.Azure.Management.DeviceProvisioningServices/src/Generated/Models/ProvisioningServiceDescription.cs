@@ -44,12 +44,13 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         /// <param name="etag">The Etag field is *not* required. If it is
         /// provided in the response body, it must also be provided as a header
         /// per the normal ETag convention.</param>
-        public ProvisioningServiceDescription(string location, IotDpsPropertiesDescription properties, IotDpsSkuInfo sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string))
+        public ProvisioningServiceDescription(string location, IotDpsPropertiesDescription properties, IotDpsSkuInfo sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
             Etag = etag;
             Properties = properties;
             Sku = sku;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -77,6 +78,11 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public IotDpsSkuInfo Sku { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }
