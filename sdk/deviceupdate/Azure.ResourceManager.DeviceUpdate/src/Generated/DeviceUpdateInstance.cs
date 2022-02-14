@@ -15,7 +15,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.DeviceUpdate.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
@@ -176,64 +175,6 @@ namespace Azure.ResourceManager.DeviceUpdate
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates instance&apos;s tags.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances/{instanceName}
-        /// Operation Id: Instances_Update
-        /// </summary>
-        /// <param name="tagUpdatePayload"> Updated tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagUpdatePayload"/> is null. </exception>
-        public async virtual Task<Response<DeviceUpdateInstance>> UpdateAsync(TagUpdateOptions tagUpdatePayload, CancellationToken cancellationToken = default)
-        {
-            if (tagUpdatePayload == null)
-            {
-                throw new ArgumentNullException(nameof(tagUpdatePayload));
-            }
-
-            using var scope = _deviceUpdateInstanceInstancesClientDiagnostics.CreateScope("DeviceUpdateInstance.Update");
-            scope.Start();
-            try
-            {
-                var response = await _deviceUpdateInstanceInstancesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagUpdatePayload, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DeviceUpdateInstance(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates instance&apos;s tags.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances/{instanceName}
-        /// Operation Id: Instances_Update
-        /// </summary>
-        /// <param name="tagUpdatePayload"> Updated tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagUpdatePayload"/> is null. </exception>
-        public virtual Response<DeviceUpdateInstance> Update(TagUpdateOptions tagUpdatePayload, CancellationToken cancellationToken = default)
-        {
-            if (tagUpdatePayload == null)
-            {
-                throw new ArgumentNullException(nameof(tagUpdatePayload));
-            }
-
-            using var scope = _deviceUpdateInstanceInstancesClientDiagnostics.CreateScope("DeviceUpdateInstance.Update");
-            scope.Start();
-            try
-            {
-                var response = _deviceUpdateInstanceInstancesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagUpdatePayload, cancellationToken);
-                return Response.FromValue(new DeviceUpdateInstance(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
