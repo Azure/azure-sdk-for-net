@@ -2103,7 +2103,35 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(103, identifier ?? string.Empty, eventHubName ?? string.Empty, durationSeconds, loadBalancingIntervalSeconds);
+                EventProcessorLoadBalancingCycleSlowWarningCore(identifier ?? string.Empty, eventHubName ?? string.Empty, durationSeconds, loadBalancingIntervalSeconds);
+            }
+        }
+
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void EventProcessorLoadBalancingCycleSlowWarningCore(string identifier,
+                                                                            string eventHubName,
+                                                                            double durationSeconds,
+                                                                            double loadBalancingIntervalSeconds)
+        {
+            fixed (char* identifierPtr = identifier)
+            fixed (char* eventHubNamePtr = eventHubName)
+            {
+                var eventPayload = stackalloc EventData[4];
+
+                eventPayload[0].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)identifierPtr;
+
+                eventPayload[1].Size = (eventHubName.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)eventHubNamePtr;
+
+                eventPayload[2].Size = Unsafe.SizeOf<double>();
+                eventPayload[2].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
+
+                eventPayload[3].Size = Unsafe.SizeOf<double>();
+                eventPayload[3].DataPointer = (IntPtr)Unsafe.AsPointer(ref loadBalancingIntervalSeconds);
+
+                WriteEventCore(103, 4, eventPayload);
             }
         }
 
@@ -2127,7 +2155,39 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(104, identifier ?? string.Empty, eventHubName ?? string.Empty, totalPartitionCount, ownedPartitionCount, maximumAdvisedCount);
+                EventProcessorHighPartitionOwnershipWarningCore(identifier ?? string.Empty, eventHubName ?? string.Empty, totalPartitionCount, ownedPartitionCount, maximumAdvisedCount);
+            }
+        }
+
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void EventProcessorHighPartitionOwnershipWarningCore(string identifier,
+                                                                            string eventHubName,
+                                                                            int totalPartitionCount,
+                                                                            int ownedPartitionCount,
+                                                                            int maximumAdvisedCount)
+        {
+            fixed (char* identifierPtr = identifier)
+            fixed (char* eventHubNamePtr = eventHubName)
+            {
+                var eventPayload = stackalloc EventData[5];
+
+                eventPayload[0].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)identifierPtr;
+
+                eventPayload[1].Size = (eventHubName.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)eventHubNamePtr;
+
+                eventPayload[2].Size = Unsafe.SizeOf<int>();
+                eventPayload[2].DataPointer = (IntPtr)Unsafe.AsPointer(ref totalPartitionCount);
+
+                eventPayload[3].Size = Unsafe.SizeOf<int>();
+                eventPayload[3].DataPointer = (IntPtr)Unsafe.AsPointer(ref ownedPartitionCount);
+
+                eventPayload[4].Size = Unsafe.SizeOf<int>();
+                eventPayload[4].DataPointer = (IntPtr)Unsafe.AsPointer(ref maximumAdvisedCount);
+
+                WriteEventCore(104, 5, eventPayload);
             }
         }
 
@@ -2234,7 +2294,36 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(109, identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty);
+                BufferedProducerPublishingAwaitAllStartCore(identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty);
+            }
+        }
+
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void BufferedProducerPublishingAwaitAllStartCore(string identifier,
+                                                                        string eventHubName,
+                                                                        int totalActiveTasks,
+                                                                        string operationId)
+        {
+            fixed (char* identifierPtr = identifier)
+            fixed (char* eventHubNamePtr = eventHubName)
+            fixed (char* operationIdPtr = operationId)
+            {
+                var eventPayload = stackalloc EventData[4];
+
+                eventPayload[0].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)identifierPtr;
+
+                eventPayload[1].Size = (eventHubName.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)eventHubNamePtr;
+
+                eventPayload[2].Size = Unsafe.SizeOf<int>();
+                eventPayload[2].DataPointer = (IntPtr)Unsafe.AsPointer(ref totalActiveTasks);
+
+                eventPayload[3].Size = (operationId.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)operationIdPtr;
+
+                WriteEventCore(109, 4, eventPayload);
             }
         }
 
@@ -2258,7 +2347,40 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(110, identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty, durationSeconds);
+                BufferedProducerPublishingAwaitAllCompleteCore(identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty, durationSeconds);
+            }
+        }
+
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void BufferedProducerPublishingAwaitAllCompleteCore(string identifier,
+                                                                           string eventHubName,
+                                                                           int totalActiveTasks,
+                                                                           string operationId,
+                                                                           double durationSeconds)
+        {
+            fixed (char* identifierPtr = identifier)
+            fixed (char* eventHubNamePtr = eventHubName)
+            fixed (char* operationIdPtr = operationId)
+            {
+                var eventPayload = stackalloc EventData[5];
+
+                eventPayload[0].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)identifierPtr;
+
+                eventPayload[1].Size = (eventHubName.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)eventHubNamePtr;
+
+                eventPayload[2].Size = Unsafe.SizeOf<int>();
+                eventPayload[2].DataPointer = (IntPtr)Unsafe.AsPointer(ref totalActiveTasks);
+
+                eventPayload[3].Size = (operationId.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)operationIdPtr;
+
+                eventPayload[4].Size = Unsafe.SizeOf<double>();
+                eventPayload[4].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
+
+                WriteEventCore(110, 5, eventPayload);
             }
         }
 
@@ -2455,11 +2577,6 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         private unsafe void WriteEvent(int eventId, string arg1, string arg2, string arg3, string arg4)
         {
-            arg1 ??= "";
-            arg2 ??= "";
-            arg3 ??= "";
-            arg4 ??= "";
-
             fixed (char* arg1Ptr = arg1)
             fixed (char* arg2Ptr = arg2)
             fixed (char* arg3Ptr = arg3)
@@ -2486,12 +2603,6 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         private unsafe void WriteEvent(int eventId, string arg1, string arg2, string arg3, string arg4, string arg5)
         {
-            arg1 ??= "";
-            arg2 ??= "";
-            arg3 ??= "";
-            arg4 ??= "";
-            arg5 ??= "";
-
             fixed (char* arg1Ptr = arg1)
             fixed (char* arg2Ptr = arg2)
             fixed (char* arg3Ptr = arg3)
