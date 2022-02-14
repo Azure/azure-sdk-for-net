@@ -1089,7 +1089,7 @@ namespace Azure.Messaging.EventHubs.Producer
                 var resetStateOnError = false;
                 var releaseGuard = false;
                 var partitionState = PartitionState.GetOrAdd(options.PartitionId, new PartitionPublishingState(options.PartitionId));
-                var eventSet = eventBatch.AsList<EventData>() ;
+                var eventSet = eventBatch.AsReadOnlyCollection<EventData>() ;
 
                 try
                 {
@@ -1356,7 +1356,7 @@ namespace Azure.Messaging.EventHubs.Producer
         private static void AssertIdempotentBatchNotPublished(EventDataBatch batch)
         {
             if ((batch.StartingPublishedSequenceNumber.HasValue)
-                || (batch.AsList<EventData>().Any(eventData => eventData.PublishedSequenceNumber.HasValue)))
+                || (batch.AsReadOnlyCollection<EventData>().Any(eventData => eventData.PublishedSequenceNumber.HasValue)))
             {
                 throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.IdempotentAlreadyPublished));
             }

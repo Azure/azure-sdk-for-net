@@ -68,7 +68,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         /// <returns>The set of events as an enumerable of the requested type.</returns>
         ///
-        public abstract List<T> AsList<T>();
+        public abstract IReadOnlyCollection<T> AsReadOnlyCollection<T>();
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="TransportEventBatch" />.

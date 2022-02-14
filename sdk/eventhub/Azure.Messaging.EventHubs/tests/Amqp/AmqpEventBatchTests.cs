@@ -394,7 +394,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpEventBatch.AsList{T}" />
+        ///   Verifies functionality of the <see cref="AmqpEventBatch.AsReadOnlyCollection{T}" />
         ///   method.
         /// </summary>
         ///
@@ -413,11 +413,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(0);
 
             var batch = new AmqpEventBatch(mockConverter, options, default);
-            Assert.That(() => batch.AsList<AmqpMessage>(), Throws.InstanceOf<FormatException>());
+            Assert.That(() => batch.AsReadOnlyCollection<AmqpMessage>(), Throws.InstanceOf<FormatException>());
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpEventBatch.AsList{T}" />
+        ///   Verifies functionality of the <see cref="AmqpEventBatch.AsReadOnlyCollection{T}" />
         ///   method.
         /// </summary>
         ///
@@ -455,7 +455,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 batch.TryAdd(batchEvents[index]);
             }
 
-            IEnumerable<EventData> batchEnumerable = batch.AsList<EventData>();
+            IEnumerable<EventData> batchEnumerable = batch.AsReadOnlyCollection<EventData>();
             Assert.That(batchEnumerable, Is.Not.Null, "The batch enumerable should have been populated.");
 
             var batchEnumerableList = batchEnumerable.ToList();

@@ -291,7 +291,7 @@ namespace Azure.Messaging.EventHubs
             ///
             /// <returns>The set of events as an enumerable of the requested type.</returns>
             ///
-            public override List<T> AsList<T>() => _backingStore switch
+            public override IReadOnlyCollection<T> AsReadOnlyCollection<T>() => _backingStore switch
             {
                 List<T> storeList => storeList,
                 IList<T> storeIList => new List<T>(storeIList),

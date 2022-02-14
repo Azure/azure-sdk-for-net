@@ -1593,7 +1593,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await producer.Object.SendAsync(batch, CancellationToken.None);
             Assert.That(messageFactory, Is.Not.Null, "The batch message factory should have been set.");
 
-            using var batchMessage = new AmqpMessageConverter().CreateBatchFromEvents(batch.AsList<EventData>(), partitonKey);
+            using var batchMessage = new AmqpMessageConverter().CreateBatchFromEvents(batch.AsReadOnlyCollection<EventData>(), partitonKey);
             using var factoryMessage = messageFactory();
 
             Assert.That(factoryMessage.SerializedMessageSize, Is.EqualTo(batchMessage.SerializedMessageSize), "The serialized size of the messages should match.");

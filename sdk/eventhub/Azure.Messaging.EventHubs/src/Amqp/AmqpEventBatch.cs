@@ -181,14 +181,14 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The set of events as an enumerable of the requested type.</returns>
         ///
-        public override List<T> AsList<T>()
+        public override IReadOnlyCollection<T> AsReadOnlyCollection<T>()
         {
             if (typeof(T) != typeof(EventData))
             {
                 throw new FormatException(string.Format(CultureInfo.CurrentCulture, Resources.UnsupportedTransportEventType, typeof(T).Name));
             }
 
-            return BatchEvents as List<T>;
+            return BatchEvents as IReadOnlyCollection<T>;
         }
 
         /// <summary>

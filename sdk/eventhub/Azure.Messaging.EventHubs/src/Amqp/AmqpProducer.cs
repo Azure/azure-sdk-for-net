@@ -230,7 +230,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             // Make a defensive copy of the messages in the batch.
 
-            AmqpMessage messageFactory() => MessageConverter.CreateBatchFromEvents(eventBatch.AsList<EventData>(), eventBatch.SendOptions?.PartitionKey);
+            AmqpMessage messageFactory() => MessageConverter.CreateBatchFromEvents(eventBatch.AsReadOnlyCollection<EventData>(), eventBatch.SendOptions?.PartitionKey);
             await SendAsync(messageFactory, eventBatch.SendOptions?.PartitionKey, cancellationToken).ConfigureAwait(false);
         }
 
