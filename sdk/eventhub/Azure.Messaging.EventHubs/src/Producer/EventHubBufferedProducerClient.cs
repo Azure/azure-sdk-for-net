@@ -2150,9 +2150,7 @@ namespace Azure.Messaging.EventHubs.Producer
                             if ((!cancellationToken.IsCancellationRequested)
                                 && (_activePartitionStateMap.TryGetValue(partition, out var partitionState))
                                 && (partitionState.BufferedEventCount > 0)
-                                // Do a quick synchronous check first
-                                && (partitionState.PartitionGuard.Wait(0, cancellationToken) || await partitionState.PartitionGuard.WaitAsync(PartitionPublishingGuardAcquireLimitMilliseconds, cancellationToken)
-                                    .ConfigureAwait((false))))
+                                && ((partitionState.PartitionGuard.Wait(0, cancellationToken)) || (await partitionState.PartitionGuard.WaitAsync(PartitionPublishingGuardAcquireLimitMilliseconds, cancellationToken).ConfigureAwait((false)))))
                             {
                                 // Responsibility for releasing the guard semaphore is passed to the task.
 
