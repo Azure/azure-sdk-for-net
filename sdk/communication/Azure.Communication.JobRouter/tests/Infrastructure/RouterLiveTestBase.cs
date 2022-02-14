@@ -61,7 +61,14 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             Assert.AreEqual(distributionPolicyId, response.DistributionPolicyId);
             if (queueLabels != default)
             {
-                Assert.AreEqual(queueLabels, response.Labels);
+                var someting = queueLabels.ToDictionary(k => k.Key, k => k.Value);
+                Assert.True(response.Labels.ContainsKey("Id"));
+                Assert.AreEqual(queueId, response.Labels["Id"]);
+
+                // copy label collection to a new dictionary - do not implicitly modify response object within function
+                var responseLabelCollection =
+                    response.Labels.Where(lb => lb.Key != "Id").ToDictionary(x => x.Key, x => x.Value);
+                Assert.AreEqual(queueLabels, responseLabelCollection);
             }
 
             if (exceptionPolicyId != default)
@@ -77,7 +84,17 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             Assert.AreEqual(workerId, response.Id);
             Assert.AreEqual(queueAssignmentList.Count(), response.QueueAssignments.Count);
             Assert.AreEqual(totalCapacity, response.TotalCapacity);
-            Assert.AreEqual(workerLabels, response.Labels);
+
+            if (workerLabels != default)
+            {
+                Assert.True(response.Labels.ContainsKey("Id"));
+                Assert.AreEqual(workerId, response.Labels["Id"]);
+
+                // copy label collection to a new dictionary - do not implicitly modify response object within function
+                var responseLabelCollection =
+                    response.Labels.Where(lb => lb.Key != "Id").ToDictionary(x => x.Key, x => x.Value);
+                Assert.AreEqual(workerLabels, responseLabelCollection);
+            }
 
             if (channelConfigList != default)
             {
