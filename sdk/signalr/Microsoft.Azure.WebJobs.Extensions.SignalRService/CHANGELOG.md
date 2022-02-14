@@ -13,7 +13,6 @@
     ```json
     {
         "Values":{
-            //...
             "SignalRConnection":"Your-Connection-String"
         }
     }
