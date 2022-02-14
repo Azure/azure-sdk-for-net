@@ -356,7 +356,7 @@ namespace Azure.Core.Tests
             }
         }
 
-        public class HeaderClassifier : MessageClassifier
+        public class HeaderClassifier : HttpMessageClassifier
         {
             public readonly string HeaderName = "ErrorCode";
             private readonly string _errorCodeValue = "LeaseNotAquired";

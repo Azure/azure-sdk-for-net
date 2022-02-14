@@ -190,7 +190,7 @@ namespace Azure.Core.Tests
         }
 
         #region Helpers
-        private class StatusCodeMessageClassifier : MessageClassifier
+        private class StatusCodeMessageClassifier : HttpMessageClassifier
         {
             private readonly int _statusCode;
             private readonly bool _isError;

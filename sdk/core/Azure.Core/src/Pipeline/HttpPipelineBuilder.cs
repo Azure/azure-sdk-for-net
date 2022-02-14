@@ -49,14 +49,14 @@ namespace Azure.Core.Pipeline
         /// <param name="options">The customer provided client options object.</param>
         /// <param name="perCallPolicies">Client provided per-call policies.</param>
         /// <param name="perRetryPolicies">Client provided per-retry policies.</param>
-        /// <param name="messageClassifier">Classifier to be applied during message classification for every service method on the client.</param>
+        /// <param name="messageClassifier">Classifier to be applied during message response classification for every service method on the client.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="messageClassifier"/> is null.</exception>
         public static HttpPipeline Build(
             ClientOptions options,
             HttpPipelinePolicy[] perCallPolicies,
             HttpPipelinePolicy[] perRetryPolicies,
-            MessageClassifier messageClassifier)
+            HttpMessageClassifier messageClassifier)
         {
             Argument.AssertNotNull(messageClassifier, nameof(messageClassifier));
 

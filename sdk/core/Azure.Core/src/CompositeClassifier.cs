@@ -8,10 +8,10 @@ namespace Azure.Core
     /// <summary>
     /// Composes a response classifier applying customization precedence rules as follows:
     ///   - First, if a custom per-invocation classifier added via <see cref="RequestContext.AddClassifier(int, bool)"/>
-    ///     or <see cref="RequestContext.AddClassifier(MessageClassifier)"/> applies to the message,
+    ///     or <see cref="RequestContext.AddClassifier(HttpMessageClassifier)"/> applies to the message,
     ///     return its classification result.
     ///   - Then, if the custom per-client classifier apply added via
-    ///     <see cref="HttpPipelineBuilder.Build(ClientOptions, HttpPipelinePolicy[], HttpPipelinePolicy[], MessageClassifier)"/>
+    ///     <see cref="HttpPipelineBuilder.Build(ClientOptions, HttpPipelinePolicy[], HttpPipelinePolicy[], HttpMessageClassifier)"/>
     ///     applies to the message, return its classification result.
     ///   - Finally, apply default classification logic for the operation using the base classifier,
     ///     which may have either per-operation or per-client scope.
@@ -36,14 +36,14 @@ namespace Azure.Core
         /// of an operation. This classifier has try-classify semantics and may
         /// not provide classification for every status code or message.
         /// </summary>
-        internal MessageClassifier? PerCallClassifier { get; set; }
+        internal HttpMessageClassifier? PerCallClassifier { get; set; }
 
         /// <summary>
         /// User-provided customization to the classifier for all client methods.
         /// This classifier has try-classify semantics and may not provide classifications
         /// for every status code or message.
         /// </summary>
-        internal MessageClassifier? PerClientClassifier { get; set; }
+        internal HttpMessageClassifier? PerClientClassifier { get; set; }
 
         public override bool TryClassify(HttpMessage message, out bool isError)
         {

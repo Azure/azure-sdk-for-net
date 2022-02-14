@@ -14,12 +14,12 @@ namespace Azure
     /// </summary>
     public class RequestContext
     {
-        private MessageClassifier[]? _classifiers;
+        private HttpMessageClassifier[]? _classifiers;
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
 
-        private MessageClassifier? _classifier;
-        internal MessageClassifier? Classifier
+        private HttpMessageClassifier? _classifier;
+        internal HttpMessageClassifier? Classifier
         {
             get
             {
@@ -69,9 +69,9 @@ namespace Azure
         /// Adds a custom classifier to the <see cref="ResponseClassifier"/> that decides if the response
         /// received from the service should be considered an error response, for this service call.
         /// The custom classifier is applied before the default classifier.
-        /// This is useful in cases where you'd like to prevent specific response status codes from appearing as errors in
-        /// logging and distributed tracing.  It will also prevent the call from throwing an exception when a response with
-        /// this status code is received.
+        /// This is useful for cases where you'd like to prevent specific response status codes from being treated as errors by
+        /// logging and distributed tracing policies -- that is, if a response is not classified as an error, it will not appear as an error in
+        /// logs or distributed traces.
         /// </summary>
         /// <param name="statusCode">The status code to customize classification for.</param>
         /// <param name="isError">Whether the passed-in status code should be classified as an error.</param>
@@ -83,22 +83,22 @@ namespace Azure
         }
 
         /// <summary>
-        /// Adds a custom <see cref="MessageClassifier"/> to the <see cref="ResponseClassifier"/> that decides if the response
+        /// Adds a custom <see cref="HttpMessageClassifier"/> to the <see cref="ResponseClassifier"/> that decides if the response
         /// received from the service should be considered an error response, for this service call.
         /// The custom classifier is applied before the default classifier.
-        /// This is useful in cases where you'd like to prevent specific response status codes from appearing as errors in
-        /// logging and distributed tracing.  It will also prevent the call from throwing an exception when a response with
-        /// this status code is received.
+        /// This is useful for cases where you'd like to prevent specific response status codes from being treated as errors by
+        /// logging and distributed tracing policies -- that is, if a response is not classified as an error, it will not appear as an error in
+        /// logs or distributed traces.
         /// </summary>
         /// <param name="classifier">The custom classifier.</param>
-        public void AddClassifier(MessageClassifier classifier)
+        public void AddClassifier(HttpMessageClassifier classifier)
         {
             int length = _classifiers == null ? 0 : _classifiers.Length;
             Array.Resize(ref _classifiers, length + 1);
             _classifiers[length] = classifier;
         }
 
-        private class StatusCodeClassifier : MessageClassifier
+        private class StatusCodeClassifier : HttpMessageClassifier
         {
             private readonly int _statusCode;
             private readonly bool _isError;
@@ -122,15 +122,15 @@ namespace Azure
             }
         }
 
-        private class AggregateClassifier : MessageClassifier
+        private class AggregateClassifier : HttpMessageClassifier
         {
-            private readonly MessageClassifier[] _classifiers;
+            private readonly HttpMessageClassifier[] _classifiers;
 
             /// <summary>
             /// MessageClassifier composed of multiple classifiers.
             /// </summary>
             /// <param name="classifiers"></param>
-            public AggregateClassifier(MessageClassifier[] classifiers)
+            public AggregateClassifier(HttpMessageClassifier[] classifiers)
             {
                 _classifiers = classifiers;
             }
