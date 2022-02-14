@@ -1223,10 +1223,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             {
                 for (int i = 0; i < TableEntityWriter.MaxBatchSize * 4; i++)
                 {
-                    await collector.AddAsync(new TableEntity(PartitionKey, i.ToString())
+                    try
                     {
-                        ["Value"] = i
-                    });
+                        await collector.AddAsync(new TableEntity(PartitionKey, i.ToString()) { ["Value"] = i });
+                    }
+                    catch (FunctionInvocationException ex) when (ex.InnerException is TableTransactionFailedException ttfe && ttfe.Status == 429)
+                    {
+                        await Task.Delay(3000);
+                        await collector.AddAsync(new TableEntity(PartitionKey, i.ToString()) { ["Value"] = i });
+                    }
                 }
             }
         }
