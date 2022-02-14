@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.TestFramework;
+using Azure.Core.Tests.TestFramework;
 using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host;
 using Newtonsoft.Json;
@@ -1209,7 +1210,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 Assert.Ignore("Hits the rate limit");
             }
 
-            await CallAsync<InsertOverBatchLimitProgram>();
+            await CallAsync<InsertOverBatchLimitProgram>(arguments: new Dictionary<string, object> { { "test", this } });
 
             var entities = await TableClient.QueryAsync<TableEntity>().ToEnumerableAsync();
             Assert.AreEqual(TableEntityWriter.MaxBatchSize * 4, entities.Count);
@@ -1219,7 +1220,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
         private class InsertOverBatchLimitProgram
         {
-            public async Task Call([Table(TableNameExpression)] IAsyncCollector<TableEntity> collector)
+            public async Task Call([Table(TableNameExpression)] IAsyncCollector<TableEntity> collector, EntityBindingLiveTests test)
             {
                 for (int i = 0; i < TableEntityWriter.MaxBatchSize * 4; i++)
                 {
@@ -1229,7 +1230,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                     }
                     catch (FunctionInvocationException ex) when (ex.InnerException is TableTransactionFailedException ttfe && ttfe.Status == 429)
                     {
-                        await Task.Delay(3000);
+                        await test.Delay(3000);
                         await collector.AddAsync(new TableEntity(PartitionKey, i.ToString()) { ["Value"] = i });
                     }
                 }
@@ -1240,7 +1241,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         [LiveOnly]
         public async Task InsertOverPartitionLimit()
         {
-            await CallAsync<InsertOverPartitionLimitProgram>();
+            await CallAsync<InsertOverPartitionLimitProgram>(arguments: new Dictionary<string, object> { { "test", this } });
             var entities = await TableClient.QueryAsync<TableEntity>().ToEnumerableAsync();
             Assert.AreEqual(TableEntityWriter.MaxPartitionWidth + 10, entities.Count);
             Assert.AreEqual(TableEntityWriter.MaxPartitionWidth + 10, entities.Select(e=> e.RowKey).Distinct().Count());
@@ -1249,7 +1250,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
         private class InsertOverPartitionLimitProgram
         {
-            public async Task Call([Table(TableNameExpression)] IAsyncCollector<TableEntity> collector)
+            public async Task Call([Table(TableNameExpression)] IAsyncCollector<TableEntity> collector, EntityBindingLiveTests test)
             {
                 for (int i = 0; i < TableEntityWriter.MaxPartitionWidth + 10; i++)
                 {
@@ -1259,7 +1260,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                     }
                     catch (FunctionInvocationException ex) when(ex.InnerException is TableTransactionFailedException ttfe && ttfe.Status == 429)
                     {
-                        await Task.Delay(3000);
+                        await test.Delay(3000);
                         await collector.AddAsync(new TableEntity(i.ToString(), i.ToString()) { ["Value"] = i });
                     }
                 }
