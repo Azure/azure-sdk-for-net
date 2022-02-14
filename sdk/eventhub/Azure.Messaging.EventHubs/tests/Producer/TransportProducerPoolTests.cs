@@ -456,7 +456,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 PartitionId = partitionId;
             }
 
-            public override Task SendAsync(IEnumerable<EventData> events,
+            public override Task SendAsync(IReadOnlyCollection<EventData> events,
                                            SendEventOptions sendOptions,
                                            CancellationToken cancellationToken)
             {

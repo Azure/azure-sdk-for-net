@@ -195,7 +195,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="sendOptions">The set of options to consider when sending this batch.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        public override async Task SendAsync(IEnumerable<EventData> events,
+        public override async Task SendAsync(IReadOnlyCollection<EventData> events,
                                              SendEventOptions sendOptions,
                                              CancellationToken cancellationToken)
         {
