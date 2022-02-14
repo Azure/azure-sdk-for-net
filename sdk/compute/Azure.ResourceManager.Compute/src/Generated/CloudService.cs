@@ -203,60 +203,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Update a cloud service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}
-        /// Operation Id: CloudServices_Update
-        /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="options"> The cloud service object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<CloudService>> UpdateAsync(bool waitForCompletion, CloudServiceUpdateOptions options = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudService.Update");
-            scope.Start();
-            try
-            {
-                var response = await _cloudServiceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<CloudService>(new CloudServiceOperationSource(Client), _cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update a cloud service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}
-        /// Operation Id: CloudServices_Update
-        /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="options"> The cloud service object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<CloudService> Update(bool waitForCompletion, CloudServiceUpdateOptions options = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudService.Update");
-            scope.Start();
-            try
-            {
-                var response = _cloudServiceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
-                var operation = new ComputeArmOperation<CloudService>(new CloudServiceOperationSource(Client), _cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Gets the status of a cloud service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/instanceView
         /// Operation Id: CloudServices_GetInstanceView
