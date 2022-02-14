@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -175,64 +174,6 @@ namespace Azure.ResourceManager.Network
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates an VirtualNetworkTap tags.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}
-        /// Operation Id: VirtualNetworkTaps_UpdateTags
-        /// </summary>
-        /// <param name="tapParameters"> Parameters supplied to update VirtualNetworkTap tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tapParameters"/> is null. </exception>
-        public async virtual Task<Response<VirtualNetworkTap>> UpdateAsync(TagsObject tapParameters, CancellationToken cancellationToken = default)
-        {
-            if (tapParameters == null)
-            {
-                throw new ArgumentNullException(nameof(tapParameters));
-            }
-
-            using var scope = _virtualNetworkTapClientDiagnostics.CreateScope("VirtualNetworkTap.Update");
-            scope.Start();
-            try
-            {
-                var response = await _virtualNetworkTapRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tapParameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VirtualNetworkTap(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates an VirtualNetworkTap tags.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}
-        /// Operation Id: VirtualNetworkTaps_UpdateTags
-        /// </summary>
-        /// <param name="tapParameters"> Parameters supplied to update VirtualNetworkTap tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tapParameters"/> is null. </exception>
-        public virtual Response<VirtualNetworkTap> Update(TagsObject tapParameters, CancellationToken cancellationToken = default)
-        {
-            if (tapParameters == null)
-            {
-                throw new ArgumentNullException(nameof(tapParameters));
-            }
-
-            using var scope = _virtualNetworkTapClientDiagnostics.CreateScope("VirtualNetworkTap.Update");
-            scope.Start();
-            try
-            {
-                var response = _virtualNetworkTapRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tapParameters, cancellationToken);
-                return Response.FromValue(new VirtualNetworkTap(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

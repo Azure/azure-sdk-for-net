@@ -196,64 +196,6 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Updates a VirtualWAN tags.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
-        /// Operation Id: VirtualWans_UpdateTags
-        /// </summary>
-        /// <param name="wANParameters"> Parameters supplied to Update VirtualWAN tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="wANParameters"/> is null. </exception>
-        public async virtual Task<Response<VirtualWAN>> UpdateAsync(TagsObject wANParameters, CancellationToken cancellationToken = default)
-        {
-            if (wANParameters == null)
-            {
-                throw new ArgumentNullException(nameof(wANParameters));
-            }
-
-            using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWAN.Update");
-            scope.Start();
-            try
-            {
-                var response = await _virtualWANVirtualWansRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, wANParameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VirtualWAN(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates a VirtualWAN tags.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
-        /// Operation Id: VirtualWans_UpdateTags
-        /// </summary>
-        /// <param name="wANParameters"> Parameters supplied to Update VirtualWAN tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="wANParameters"/> is null. </exception>
-        public virtual Response<VirtualWAN> Update(TagsObject wANParameters, CancellationToken cancellationToken = default)
-        {
-            if (wANParameters == null)
-            {
-                throw new ArgumentNullException(nameof(wANParameters));
-            }
-
-            using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWAN.Update");
-            scope.Start();
-            try
-            {
-                var response = _virtualWANVirtualWansRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, wANParameters, cancellationToken);
-                return Response.FromValue(new VirtualWAN(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Gives the supported security providers for the virtual wan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/supportedSecurityProviders
         /// Operation Id: SupportedSecurityProviders

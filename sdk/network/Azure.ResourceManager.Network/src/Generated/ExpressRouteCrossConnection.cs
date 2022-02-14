@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -129,64 +128,6 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRouteCrossConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _expressRouteCrossConnectionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteCrossConnection(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates an express route cross connection tags.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}
-        /// Operation Id: ExpressRouteCrossConnections_UpdateTags
-        /// </summary>
-        /// <param name="crossConnectionParameters"> Parameters supplied to update express route cross connection tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionParameters"/> is null. </exception>
-        public async virtual Task<Response<ExpressRouteCrossConnection>> UpdateAsync(TagsObject crossConnectionParameters, CancellationToken cancellationToken = default)
-        {
-            if (crossConnectionParameters == null)
-            {
-                throw new ArgumentNullException(nameof(crossConnectionParameters));
-            }
-
-            using var scope = _expressRouteCrossConnectionClientDiagnostics.CreateScope("ExpressRouteCrossConnection.Update");
-            scope.Start();
-            try
-            {
-                var response = await _expressRouteCrossConnectionRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, crossConnectionParameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ExpressRouteCrossConnection(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates an express route cross connection tags.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}
-        /// Operation Id: ExpressRouteCrossConnections_UpdateTags
-        /// </summary>
-        /// <param name="crossConnectionParameters"> Parameters supplied to update express route cross connection tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionParameters"/> is null. </exception>
-        public virtual Response<ExpressRouteCrossConnection> Update(TagsObject crossConnectionParameters, CancellationToken cancellationToken = default)
-        {
-            if (crossConnectionParameters == null)
-            {
-                throw new ArgumentNullException(nameof(crossConnectionParameters));
-            }
-
-            using var scope = _expressRouteCrossConnectionClientDiagnostics.CreateScope("ExpressRouteCrossConnection.Update");
-            scope.Start();
-            try
-            {
-                var response = _expressRouteCrossConnectionRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, crossConnectionParameters, cancellationToken);
                 return Response.FromValue(new ExpressRouteCrossConnection(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

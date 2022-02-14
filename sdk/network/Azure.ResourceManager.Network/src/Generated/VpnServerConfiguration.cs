@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -175,64 +174,6 @@ namespace Azure.ResourceManager.Network
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates VpnServerConfiguration tags.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}
-        /// Operation Id: VpnServerConfigurations_UpdateTags
-        /// </summary>
-        /// <param name="vpnServerConfigurationParameters"> Parameters supplied to update VpnServerConfiguration tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vpnServerConfigurationParameters"/> is null. </exception>
-        public async virtual Task<Response<VpnServerConfiguration>> UpdateAsync(TagsObject vpnServerConfigurationParameters, CancellationToken cancellationToken = default)
-        {
-            if (vpnServerConfigurationParameters == null)
-            {
-                throw new ArgumentNullException(nameof(vpnServerConfigurationParameters));
-            }
-
-            using var scope = _vpnServerConfigurationClientDiagnostics.CreateScope("VpnServerConfiguration.Update");
-            scope.Start();
-            try
-            {
-                var response = await _vpnServerConfigurationRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnServerConfigurationParameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VpnServerConfiguration(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates VpnServerConfiguration tags.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}
-        /// Operation Id: VpnServerConfigurations_UpdateTags
-        /// </summary>
-        /// <param name="vpnServerConfigurationParameters"> Parameters supplied to update VpnServerConfiguration tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vpnServerConfigurationParameters"/> is null. </exception>
-        public virtual Response<VpnServerConfiguration> Update(TagsObject vpnServerConfigurationParameters, CancellationToken cancellationToken = default)
-        {
-            if (vpnServerConfigurationParameters == null)
-            {
-                throw new ArgumentNullException(nameof(vpnServerConfigurationParameters));
-            }
-
-            using var scope = _vpnServerConfigurationClientDiagnostics.CreateScope("VpnServerConfiguration.Update");
-            scope.Start();
-            try
-            {
-                var response = _vpnServerConfigurationRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnServerConfigurationParameters, cancellationToken);
-                return Response.FromValue(new VpnServerConfiguration(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
