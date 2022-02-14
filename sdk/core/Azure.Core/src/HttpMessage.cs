@@ -108,6 +108,13 @@ namespace Azure.Core
             if (context.Classifier != null)
             {
                 var classifier = ResponseClassifier as CompositeClassifier;
+
+                if (classifier?.PerCallClassifier != null)
+                {
+                    // don't set the per-call classifier twice
+                    return;
+                }
+
                 if (classifier != null)
                 {
                     classifier.PerCallClassifier = context.Classifier;
