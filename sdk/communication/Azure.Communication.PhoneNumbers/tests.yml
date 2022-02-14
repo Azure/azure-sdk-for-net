@@ -20,7 +20,8 @@ extends:
         SubscriptionConfigurations:
           - $(sub-config-communication-int-test-resources-common)
           - $(sub-config-communication-int-test-resources-net)
-        MatrixReplace: SKIP_UPDATE_CAPABILITIES_LIVE_TESTS=FALSE/TRUE
+        MatrixReplace: 
+          - SKIP_UPDATE_CAPABILITIES_LIVE_TESTS=FALSE/TRUE
     Clouds: Public,Int
     EnvVars:
       # SKIP_PHONENUMBER_LIVE_TESTS skips certain phone number tests such as purchase and release
