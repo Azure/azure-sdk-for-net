@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
             string key = "newTag", value = "newValue";
             Profile updatedAfdProfile = await afdProfile.AddTagAsync(key, value);
-            ResourceDataHelper.AssertTags(new Dictionary<string, string> { { key, value } }, updatedAfdProfile.Data.Tags);
+            CollectionAssert.AreEquivalent(new Dictionary<string, string> { { key, value } }, updatedAfdProfile.Data.Tags);
         }
 
         [TestCase]

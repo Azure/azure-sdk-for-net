@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Profile cdnProfile = await CreateCdnProfile(rg, cdnProfileName, SkuName.StandardAkamai);
             string key = "newTag", value = "newValue";
             Profile updatedCdnProfile = await cdnProfile.AddTagAsync(key, value);
-            ResourceDataHelper.AssertTags(new Dictionary<string, string> { { key, value } }, updatedCdnProfile.Data.Tags);
+            CollectionAssert.AreEquivalent(new Dictionary<string, string> { { key, value } }, updatedCdnProfile.Data.Tags);
         }
 
         [TestCase]

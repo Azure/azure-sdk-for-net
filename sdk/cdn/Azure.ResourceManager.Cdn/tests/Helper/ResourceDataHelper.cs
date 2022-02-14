@@ -160,11 +160,6 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.FrontdoorId, getResult.Data.FrontdoorId);
         }
 
-        public static void AssertTags(IDictionary<string, string> expectedTags, IDictionary<string, string> tags)
-        {
-            CollectionAssert.AreEquivalent(expectedTags, tags);
-        }
-
         public static void AssertValidEndpoint(CdnEndpoint model, CdnEndpoint getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);

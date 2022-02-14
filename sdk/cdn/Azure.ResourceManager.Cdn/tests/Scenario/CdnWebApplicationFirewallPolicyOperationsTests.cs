@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             CdnWebApplicationFirewallPolicy policy = await CreatePolicy(rg, policyName);
             string key = "newTag", value = "newValue";
             CdnWebApplicationFirewallPolicy updatedPolicy = await policy.AddTagAsync(key, value);
-            ResourceDataHelper.AssertTags(new Dictionary<string, string> { { key, value } }, updatedPolicy.Data.Tags);
+            CollectionAssert.AreEquivalent(new Dictionary<string, string> { { key, value } }, updatedPolicy.Data.Tags);
         }
     }
 }
