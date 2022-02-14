@@ -3,56 +3,72 @@
 
 using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal class StorageTransmissionEvaluator
     {
         private int _sampleSize;
-        private double[] _transmissionDurationsInSeconds;
+        private double[] _exportDurationsInSeconds;
         private double[] _exportIntervalsInSeconds;
-        private int _transmissionDurationIndex = -1;
+        private int _exportDurationIndex = -1;
         private int _exportIntervalIndex = -1;
         private long _prevExportTimestampTicks;
         private double _currentBatchExportDuration;
-        private double _runningExportIntervalSum;
-        private double _runningTransmissionDurationSum;
+        private double _exportIntervalRunningSum;
+        private double _exportDurationRunningSum;
         private bool _enoughSampleSize;
 
+        /// <summary> Initializes a new instance of Storage Transmission Evaluator. </summary>
+        /// <param name="sampleSize"> Number of data samples to be used for evaluation. </param>
         internal StorageTransmissionEvaluator(int sampleSize)
         {
             _sampleSize = sampleSize;
-            _transmissionDurationsInSeconds = new double[sampleSize];
+
+            // Array to store time duration in seconds for export
+            _exportDurationsInSeconds = new double[sampleSize];
+
+            // Array to store time interval in seconds between each export
             _exportIntervalsInSeconds = new double[sampleSize];
+            _prevExportTimestampTicks = Stopwatch.GetTimestamp();
         }
 
-        internal void UpdateTransmissionDuration(double currentExportDuration)
+        /// <summary>
+        /// Adds current export duration in seconds to the sample size.
+        /// Also, removes the oldest record from the sample.
+        /// </summary>
+        internal void UpdateExportDuration(double currentExportDuration)
         {
-            _transmissionDurationIndex++;
+            _exportDurationIndex++;
+
             // if we run out of elements, start from beginning
-            if (_transmissionDurationIndex == _transmissionDurationsInSeconds.Length)
+            if (_exportDurationIndex == _sampleSize)
             {
-                _transmissionDurationIndex = 0;
+                _exportDurationIndex = 0;
             }
 
-            _runningTransmissionDurationSum -= _transmissionDurationsInSeconds[_transmissionDurationIndex];
-            _transmissionDurationsInSeconds[_transmissionDurationIndex] = currentExportDuration;
-            _runningTransmissionDurationSum += currentExportDuration;
+            _exportDurationRunningSum -= _exportDurationsInSeconds[_exportDurationIndex];
+            _exportDurationsInSeconds[_exportDurationIndex] = currentExportDuration;
+            _exportDurationRunningSum += currentExportDuration;
         }
 
+        /// <summary>
+        /// Adds current export time interval in seconds to the sample size.
+        /// Also, removes the oldest record from the sample.
+        /// </summary>
         internal void UpdateExportInterval()
         {
             long curExportTimestampTicks = Stopwatch.GetTimestamp();
+
             // todo: check if this can fail
             double exportIntervalSeconds = TimeSpan.FromTicks(curExportTimestampTicks - _prevExportTimestampTicks).TotalSeconds;
 
             _prevExportTimestampTicks = curExportTimestampTicks;
 
             // If total time elapsed > 2 days
-            // set export interval to 0
-            // This can happen if
-            // 1) there was no export in 2 days of application run
-            // 2) Application just started and prevExportTime is default which = 1/1/0001 12:00:00 AM
+            // Set exportIntervalSeconds to 0
+            // This can happen if there was no export in 2 days of application run.
             if (exportIntervalSeconds > 172800)
             {
                 exportIntervalSeconds = 0;
@@ -62,15 +78,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             // if we run out of elements, start from beginning
             // This also means we now have enough samples to start calculating avg.
-            if (_exportIntervalIndex == _exportIntervalsInSeconds.Length)
+            if (_exportIntervalIndex == _sampleSize)
             {
                 _enoughSampleSize = true;
                 _exportIntervalIndex = 0;
             }
 
-            _runningExportIntervalSum -= _exportIntervalsInSeconds[_exportIntervalIndex];
+            _exportIntervalRunningSum -= _exportIntervalsInSeconds[_exportIntervalIndex];
             _exportIntervalsInSeconds[_exportIntervalIndex] = exportIntervalSeconds;
-            _runningExportIntervalSum += exportIntervalSeconds;
+            _exportIntervalRunningSum += exportIntervalSeconds;
         }
 
         internal long MaxFilesToTransmitFromStorage()
@@ -81,8 +97,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             // otherwise, simply return 0.
             if (_enoughSampleSize)
             {
-                double avgDurationPerExport = CalculateAverage(_runningTransmissionDurationSum, _sampleSize);
-                double avgExportInterval = CalculateAverage(_runningExportIntervalSum, _sampleSize);
+                double avgDurationPerExport = CalculateAverage(_exportDurationRunningSum, _sampleSize);
+                double avgExportInterval = CalculateAverage(_exportIntervalRunningSum, _sampleSize);
                 if (avgExportInterval > _currentBatchExportDuration)
                 {
                     // remove currentBatchExportDuration from avg ExportInterval first
@@ -96,6 +112,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return totalFiles;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static double CalculateAverage(double sum, int length)
         {
             return (sum / length);
