@@ -14,7 +14,7 @@ namespace Azure
     /// </summary>
     public class RequestContext
     {
-        private List<MessageClassifier>? _classifiers;
+        private MessageClassifier[]? _classifiers;
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
 
@@ -23,8 +23,8 @@ namespace Azure
         {
             get
             {
-                return _classifiers == null ?
-                    null : _classifier ??= new AggregateClassifier(_classifiers);
+                return _classifiers != null ?
+                    _classifier ??= new AggregateClassifier(_classifiers) : null;
             }
         }
 
@@ -77,8 +77,9 @@ namespace Azure
         /// <param name="isError">Whether the passed-in status code should be classified as an error.</param>
         public void AddClassifier(int statusCode, bool isError)
         {
-            _classifiers ??= new();
-            _classifiers.Add(new StatusCodeClassifier(statusCode, isError));
+            int length = _classifiers == null ? 0 : _classifiers.Length;
+            Array.Resize(ref _classifiers, length + 1);
+            _classifiers[length] = new StatusCodeClassifier(statusCode, isError);
         }
 
         /// <summary>
@@ -92,8 +93,9 @@ namespace Azure
         /// <param name="classifier">The custom classifier.</param>
         public void AddClassifier(MessageClassifier classifier)
         {
-            _classifiers ??= new();
-            _classifiers.Add(classifier);
+            int length = _classifiers == null ? 0 : _classifiers.Length;
+            Array.Resize(ref _classifiers, length + 1);
+            _classifiers[length] = classifier;
         }
 
         private class StatusCodeClassifier : MessageClassifier
@@ -122,21 +124,20 @@ namespace Azure
 
         private class AggregateClassifier : MessageClassifier
         {
-            // TODO: I'll come back and implement this as an array to optimize a bit
-            private readonly List<MessageClassifier> _classifiers;
+            private readonly MessageClassifier[] _classifiers;
 
             /// <summary>
             /// MessageClassifier composed of multiple classifiers.
             /// </summary>
             /// <param name="classifiers"></param>
-            public AggregateClassifier(List<MessageClassifier> classifiers)
+            public AggregateClassifier(MessageClassifier[] classifiers)
             {
                 _classifiers = classifiers;
             }
 
             public override bool TryClassify(HttpMessage message, out bool isError)
             {
-                for (int i = _classifiers.Count - 1; i >= 0; i--)
+                for (int i = _classifiers.Length - 1; i >= 0; i--)
                 {
                     if (_classifiers[i].TryClassify(message, out isError))
                     {
