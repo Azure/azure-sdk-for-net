@@ -1970,7 +1970,9 @@ namespace Azure.Messaging.EventHubs.Producer
             {
                 var (trackedTask, activeHandlers) = (Tuple<Task, ConcurrentDictionary<Task, byte>>)state;
                 return activeHandlers.TryRemove(trackedTask, out _);
-            }, Tuple.Create(handlerTask, _activePublishingHandlers), CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
+            }, 
+            Tuple.Create(handlerTask, _activePublishingHandlers), CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
+            
             return continuationTask;
         }
 
