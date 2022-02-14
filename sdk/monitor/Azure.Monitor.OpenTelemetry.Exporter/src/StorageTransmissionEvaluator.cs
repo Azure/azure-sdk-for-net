@@ -13,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private double[] _exportIntervalsInSeconds;
         private int _transmissionDurationIndex = -1;
         private int _exportIntervalIndex = -1;
-        private long prevExportTime;
+        private long _prevExportTimestampTicks;
         private double _currentBatchExportDuration;
         private double _runningExportIntervalSum;
         private double _runningTransmissionDurationSum;
@@ -42,20 +42,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         internal void UpdateExportInterval()
         {
-            long currentTime = Stopwatch.GetTimestamp();
+            long curExportTimestampTicks = Stopwatch.GetTimestamp();
             // todo: check if this can fail
-            double exportInterval = TimeSpan.FromTicks(currentTime - prevExportTime).TotalSeconds;
+            double exportIntervalSeconds = TimeSpan.FromTicks(curExportTimestampTicks - _prevExportTimestampTicks).TotalSeconds;
 
-            prevExportTime = currentTime;
+            _prevExportTimestampTicks = curExportTimestampTicks;
 
             // If total time elapsed > 2 days
             // set export interval to 0
             // This can happen if
             // 1) there was no export in 2 days of application run
             // 2) Application just started and prevExportTime is default which = 1/1/0001 12:00:00 AM
-            if (exportInterval > 172800)
+            if (exportIntervalSeconds > 172800)
             {
-                exportInterval = 0;
+                exportIntervalSeconds = 0;
             }
 
             _exportIntervalIndex++;
@@ -69,8 +69,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             _runningExportIntervalSum -= _exportIntervalsInSeconds[_exportIntervalIndex];
-            _exportIntervalsInSeconds[_exportIntervalIndex] = exportInterval;
-            _runningExportIntervalSum += exportInterval;
+            _exportIntervalsInSeconds[_exportIntervalIndex] = exportIntervalSeconds;
+            _runningExportIntervalSum += exportIntervalSeconds;
         }
 
         internal long MaxFilesToTransmitFromStorage()
