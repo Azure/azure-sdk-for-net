@@ -9,6 +9,7 @@ using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Kusto.Tests.Utils;
 using Microsoft.Azure.Management.Network.Models;
@@ -52,35 +53,33 @@ namespace Kusto.Tests.ScenarioTests
         [Fact]
         public void KustoClusterTests()
         {
-            string runningState = "Running";
-            string stoppedState = "Stopped";
-        
             using (var context = MockContext.Start(GetType()))
             {
                 var testBase = new KustoTestBase(context);
         
                 //create cluster
                 var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
-                VerifyCluster(createdCluster, testBase.clusterName, testBase.sku1, trustedExternalTenants: testBase.trustedExternalTenants, state: runningState, tenantId: testBase.tenantId);
+                VerifyCluster(createdCluster, testBase.clusterName, testBase.sku1, trustedExternalTenants: testBase.trustedExternalTenants, state: testBase.runningState, tenantId: testBase.tenantId);
         
                 // get cluster
                 var cluster = testBase.client.Clusters.Get(testBase.rgName, testBase.clusterName);
-                VerifyCluster(cluster, testBase.clusterName, testBase.sku1, trustedExternalTenants: testBase.trustedExternalTenants, state: runningState, tenantId: testBase.tenantId);
+                VerifyCluster(cluster, testBase.clusterName, testBase.sku1, trustedExternalTenants: testBase.trustedExternalTenants, state: testBase.runningState, tenantId: testBase.tenantId);
         
                 //update cluster
                 testBase.cluster.Sku = testBase.sku2;
+                testBase.cluster.PublicIPType = "DualStack";
                 var updatedCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
-                VerifyCluster(updatedCluster, testBase.clusterName, testBase.sku2, trustedExternalTenants: testBase.trustedExternalTenants, state: runningState, tenantId: testBase.tenantId);
+                VerifyCluster(updatedCluster, testBase.clusterName, testBase.sku2, trustedExternalTenants: testBase.trustedExternalTenants, state: testBase.runningState, tenantId: testBase.tenantId, publicIPType: testBase.cluster.PublicIPType);
         
                 //suspend cluster
                 testBase.client.Clusters.Stop(testBase.rgName, testBase.clusterName);
                 var stoppedCluster = testBase.client.Clusters.Get(testBase.rgName, testBase.clusterName);
-                VerifyCluster(stoppedCluster, testBase.clusterName, testBase.sku2, trustedExternalTenants: testBase.trustedExternalTenants, state: stoppedState, tenantId: testBase.tenantId);
+                VerifyCluster(stoppedCluster, testBase.clusterName, testBase.sku2, trustedExternalTenants: testBase.trustedExternalTenants, state: testBase.stoppedState, tenantId: testBase.tenantId, publicIPType: testBase.cluster.PublicIPType);
         
                 //suspend cluster
                 testBase.client.Clusters.Start(testBase.rgName, testBase.clusterName);
                 var runningCluster = testBase.client.Clusters.Get(testBase.rgName, testBase.clusterName);
-                VerifyCluster(runningCluster, testBase.clusterName, testBase.sku2, trustedExternalTenants: testBase.trustedExternalTenants, state: runningState, tenantId: testBase.tenantId);
+                VerifyCluster(runningCluster, testBase.clusterName, testBase.sku2, trustedExternalTenants: testBase.trustedExternalTenants, state: testBase.runningState, tenantId: testBase.tenantId, publicIPType: testBase.cluster.PublicIPType);
         
         
                 //delete cluster
@@ -371,9 +370,31 @@ namespace Kusto.Tests.ScenarioTests
                     testBase.clusterName,
                     testBase.databaseName,
                     testBase.scriptName);
-
-
-                //delete event hub
+                 
+                  //update script with content
+                  testBase.script.ScriptUrl = null;
+                  testBase.script.ScriptUrlSasToken = null;
+                  testBase.script.ScriptContent = ".create table table3 (Level:string, Timestamp:datetime, UserId:string, TraceId:string, Message:string, ProcessId:int32)";
+                  var updatedScript2 = testBase.client.Scripts.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.databaseName, testBase.scriptName, testBase.script);
+                  VerifyScript(updatedScript2,
+                      scriptUrl: null,
+                      testBase.forceUpdateTag2,
+                      testBase.continueOnErrors,
+                      testBase.clusterName,
+                      testBase.databaseName,
+                      testBase.scriptName);
+                  
+                  // get script with script content
+                  var script2 = testBase.client.Scripts.Get(testBase.rgName, testBase.clusterName, testBase.databaseName, testBase.scriptName);
+                  VerifyScript(script2,
+                      scriptUrl: null,
+                      testBase.forceUpdateTag2,
+                      testBase.continueOnErrors,
+                      testBase.clusterName,
+                      testBase.databaseName,
+                      testBase.scriptName);
+                  
+                //delete script
                 testBase.client.Scripts.Delete(testBase.rgName, testBase.clusterName, testBase.databaseName, testBase.scriptName);
                 Assert.Throws<CloudException>(() =>
                 {
@@ -512,28 +533,31 @@ namespace Kusto.Tests.ScenarioTests
                 //create cluster
                 var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
         
-                var principalName = "principal1";
                 //create cluster principal assignment
-                var clusterPrincipalAssignment = new ClusterPrincipalAssignment(testBase.clientIdForPrincipal, "AllDatabasesAdmin", "App");
-                testBase.client.ClusterPrincipalAssignments.CreateOrUpdate(testBase.rgName, testBase.clusterName, principalName, clusterPrincipalAssignment);
-                testBase.client.ClusterPrincipalAssignments.Get(testBase.rgName, testBase.clusterName, principalName);
-                testBase.client.ClusterPrincipalAssignments.Delete(testBase.rgName, testBase.clusterName, principalName);
+                var clusterPrincipalAssignment = new ClusterPrincipalAssignment(testBase.clientIdForPrincipal, testBase.clusterPrincipalRole, testBase.principalType);
+                var principalAssignment = testBase.client.ClusterPrincipalAssignments.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.principaName, clusterPrincipalAssignment);
+                VerifyClusterPrincipalAssignment(principalAssignment, name: testBase.principaName, aadObjectId: testBase.principalAadObjectId, role: testBase.clusterPrincipalRole, principalType: testBase.principalType);
+                principalAssignment = testBase.client.ClusterPrincipalAssignments.Get(testBase.rgName, testBase.clusterName, testBase.principaName);
+                VerifyClusterPrincipalAssignment(principalAssignment, name: testBase.principaName, aadObjectId: testBase.principalAadObjectId, role: testBase.clusterPrincipalRole, principalType: testBase.principalType);
+                testBase.client.ClusterPrincipalAssignments.Delete(testBase.rgName, testBase.clusterName, testBase.principaName);
                 Assert.Throws<CloudException>(() =>
                 {
-                    testBase.client.ClusterPrincipalAssignments.Get(testBase.rgName, testBase.clusterName, principalName);
+                    testBase.client.ClusterPrincipalAssignments.Get(testBase.rgName, testBase.clusterName, testBase.principaName);
                 });
         
                 //create database
                 testBase.client.Databases.CreateOrUpdate(testBase.rgName, createdCluster.Name, testBase.databaseName, testBase.database);
         
                 //create database principal assignment
-                var databasePrincipalAssignment = new DatabasePrincipalAssignment(testBase.clientIdForPrincipal, "Viewer", "App");
-                testBase.client.DatabasePrincipalAssignments.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.databaseName, principalName, databasePrincipalAssignment);
-                testBase.client.DatabasePrincipalAssignments.Get(testBase.rgName, testBase.clusterName, testBase.databaseName, principalName);
-                testBase.client.DatabasePrincipalAssignments.Delete(testBase.rgName, testBase.clusterName, testBase.databaseName, principalName);
+                var databasePrincipalAssignment = new DatabasePrincipalAssignment(testBase.clientIdForPrincipal, testBase.databasePrincipalRole, testBase.principalType);
+                var databasePrincipalAssignmentResult = testBase.client.DatabasePrincipalAssignments.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.databaseName, testBase.principaName, databasePrincipalAssignment);
+                VerifyDatabasePrincipalAssignment(databasePrincipalAssignmentResult, name: testBase.principaName, aadObjectId: testBase.principalAadObjectId, role: testBase.databasePrincipalRole, principalType: testBase.principalType);
+                databasePrincipalAssignmentResult = testBase.client.DatabasePrincipalAssignments.Get(testBase.rgName, testBase.clusterName, testBase.databaseName, testBase.principaName);
+                VerifyDatabasePrincipalAssignment(databasePrincipalAssignmentResult, name: testBase.principaName, aadObjectId: testBase.principalAadObjectId, role: testBase.databasePrincipalRole, principalType: testBase.principalType);
+                testBase.client.DatabasePrincipalAssignments.Delete(testBase.rgName, testBase.clusterName, testBase.databaseName, testBase.principaName);
                 Assert.Throws<CloudException>(() =>
                 {
-                    testBase.client.DatabasePrincipalAssignments.Get(testBase.rgName, testBase.clusterName, testBase.databaseName, principalName);
+                    testBase.client.DatabasePrincipalAssignments.Get(testBase.rgName, testBase.clusterName, testBase.databaseName, testBase.principaName);
                 });
         
                 //delete database
@@ -723,6 +747,11 @@ namespace Kusto.Tests.ScenarioTests
                     privateEndpointConnectionFetched
                 );
                 VerifyPrivateEndpointConnection(rejectedPrivateEndpointConnection, testBase.privateEndpointConnectionName, PrivateEndpointStatus.Rejected);
+                
+                //Get cluster and validate PrivateEndpointConnections
+                var cluster = testBase.client.Clusters.Get(testBase.rgName, testBase.clusterName);
+                //TODO - needs to be recorded again
+                //VerifyCluster(cluster, testBase.clusterName, testBase.sku1, trustedExternalTenants: testBase.trustedExternalTenants, state: testBase.runningState, tenantId: testBase.tenantId, privateEndpointConnections: privateEndpointConnections.ToList());
         
                 // Delete private endpoint connection
                 testBase.client.PrivateEndpointConnections.Delete(testBase.rgName, testBase.clusterName, testBase.privateEndpointConnectionName);
@@ -919,6 +948,7 @@ namespace Kusto.Tests.ScenarioTests
             Assert.Equal(createdScript.Name, eventHubFullName);
             Assert.Equal(createdScript.ForceUpdateTag, forceUpdateTag);
             Assert.Equal(createdScript.ScriptUrl, scriptUrl);
+            Assert.Null(createdScript.ScriptContent);
         }
 
         private void VerifyReadOnlyFollowingDatabase(ReadOnlyFollowingDatabase database, string databaseName, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, string principalsModificationKind, string clusterName)
@@ -942,7 +972,7 @@ namespace Kusto.Tests.ScenarioTests
             Assert.Equal(database.HotCachePeriod, hotCachePeriod);
         }
 
-        private void VerifyCluster(Cluster cluster, string name, AzureSku sku, IList<TrustedExternalTenant> trustedExternalTenants, string state, string tenantId)
+        private void VerifyCluster(Cluster cluster, string name, AzureSku sku, IList<TrustedExternalTenant> trustedExternalTenants, string state, string tenantId, string publicIPType = "IPv4", IList<PrivateEndpointConnection> privateEndpointConnections = null)
         {
             Assert.Equal(cluster.Name, name);
             AssetEqualtsSku(cluster.Sku, sku);
@@ -951,6 +981,17 @@ namespace Kusto.Tests.ScenarioTests
             Assert.Equal("SystemAssigned", cluster.Identity.Type);
             Assert.True(Guid.TryParse(cluster.Identity.PrincipalId, out _));
             Assert.Equal(tenantId, cluster.Identity.TenantId);
+            Assert.Equal(publicIPType, cluster.PublicIPType);
+            Assert.Null(cluster.VirtualClusterGraduationProperties);
+            if (privateEndpointConnections == null)
+            {
+                Assert.Null(cluster.PrivateEndpointConnections);
+            }
+            else
+            {
+                Assert.Equal(privateEndpointConnections.Count, cluster.PrivateEndpointConnections.Count);
+                Assert.Equal(privateEndpointConnections[0].GroupId, cluster.PrivateEndpointConnections[0].GroupId);
+            }
         }
         
         private void VerifyPrivateEndpointConnection(PrivateEndpointConnection privateEndpointConnection, string privateEndpointConnectionNamePrefix, PrivateEndpointStatus privateEndpointStatus)
@@ -1001,6 +1042,24 @@ namespace Kusto.Tests.ScenarioTests
                 });
                 Assert.Single(equalExternalTenants);
             }
+        }
+
+        private void VerifyClusterPrincipalAssignment(ClusterPrincipalAssignment clusterPrincipalAssignment, string name, string aadObjectId, string role, string principalType)
+        {
+            Assert.Equal(aadObjectId, clusterPrincipalAssignment.AadObjectId);
+            Assert.EndsWith(name, clusterPrincipalAssignment.Name);
+            Assert.EndsWith(name, clusterPrincipalAssignment.Id);
+            Assert.Equal(role, clusterPrincipalAssignment.Role);
+            Assert.Equal(principalType, clusterPrincipalAssignment.PrincipalType);
+        }
+        
+        private void VerifyDatabasePrincipalAssignment(DatabasePrincipalAssignment clusterPrincipalAssignment, string name, string aadObjectId, string role, string principalType)
+        {
+            Assert.Equal(aadObjectId, clusterPrincipalAssignment.AadObjectId);
+            Assert.EndsWith(name, clusterPrincipalAssignment.Name);
+            Assert.EndsWith(name, clusterPrincipalAssignment.Id);
+            Assert.Equal(role, clusterPrincipalAssignment.Role);
+            Assert.Equal(principalType, clusterPrincipalAssignment.PrincipalType);
         }
 
         private static void CreatePrivateEndpoints( KustoTestBase testBase, string clusterId)

@@ -36,6 +36,16 @@ namespace Kusto.Tests.ScenarioTests
         public readonly string KeyVersionForKeyVaultPropertiesTest = "6fd57d53ad6b4b53bacb062c98c761a0";
         public readonly string KeyVaultUriForKeyVaultPropertiesTest = "https://clientstestkv.vault.azure.net/";
         public readonly string MultiDatabaseRouting = "Multi";
+        public readonly string scriptName = "dor";
+        public readonly string dataFormat = "CSV";
+        public readonly string defaultPrincipalsModificationKind = "Replace";
+        public readonly string principaName = "principal1";
+        public readonly string principalAadObjectId = "3c634984-c431-4b6a-ad59-f27ccd22708b";
+        public readonly string clusterPrincipalRole = "AllDatabasesAdmin";
+        public readonly string databasePrincipalRole = "Viewer";
+        public readonly string principalType = "App";
+        public readonly string runningState = "Running";
+        public readonly string stoppedState = "Stopped";
         public string tenantId { get; }
         public string location { get; }
         private string subscriptionId { get; }
@@ -50,7 +60,6 @@ namespace Kusto.Tests.ScenarioTests
         public string eventHubConnectionName { get; internal set; }
         public string eventGridConnectinoName { get; internal set; }
         public string iotHubConnectionName { get; internal set; }
-        public string scriptName { get; internal set; }
         public string privateEndpointConnectionName { get; internal set; }
         public string managedPrivateEndpointName { get; internal set; }
         public string privateNetworkSubnetId { get; internal set; }
@@ -65,7 +74,6 @@ namespace Kusto.Tests.ScenarioTests
         public TimeSpan? hotCachePeriod1 { get; set; }
         public TimeSpan? softDeletePeriod2 { get; set; }
         public TimeSpan? hotCachePeriod2 { get; set; }
-        public string defaultPrincipalsModificationKind { get; set; }
         public Cluster cluster { get; set; }
         private Cluster followerCluster { get; set; }
         public ReadWriteDatabase database { get; set; }
@@ -75,7 +83,6 @@ namespace Kusto.Tests.ScenarioTests
         public IotHubDataConnection iotHubDataConnection { get; set; }
         public Script script { get; set; }
         public List<TrustedExternalTenant> trustedExternalTenants { get; set; }
-        public string dataFormat { get; set; }
         public List<DatabasePrincipal> databasePrincipals { get; set; }
         public DatabasePrincipal databasePrincipal { get; set; }
         public KeyVaultProperties keyVaultProperties { get; set; }
@@ -138,8 +145,7 @@ namespace Kusto.Tests.ScenarioTests
             iotHubConnectionName = TestUtilities.GenerateName("iothubConnection");
             privateEndpointConnectionName = TestUtilities.GenerateName("privateendpointname");
             managedPrivateEndpointName = TestUtilities.GenerateName("managedprivateendpointname");
-            scriptName = "dor";
-
+           
             sku1 = new AzureSku(name: "Standard_D13_v2", "Standard", capacity: 2);
             sku2 = new AzureSku(name: "Standard_D14_v2", "Standard", capacity: 2);
 
@@ -150,9 +156,6 @@ namespace Kusto.Tests.ScenarioTests
 
             hotCachePeriod2 = TimeSpan.FromDays(3);
             softDeletePeriod2 = TimeSpan.FromDays(6);
-            dataFormat = "CSV";
-
-            defaultPrincipalsModificationKind = "Replace";
 
             cluster = new Cluster(sku: new AzureSku(name: "Standard_D13_v2", "Standard", 2), location: location, trustedExternalTenants: trustedExternalTenants,  identity: new Identity(IdentityType.SystemAssigned));
             followerCluster = new Cluster(sku: new AzureSku(name: "Standard_D13_v2", "Standard", 2), location: location, trustedExternalTenants: trustedExternalTenants);
