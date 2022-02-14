@@ -61,7 +61,8 @@ namespace Azure.Core.Tests
         public void DefaultPropertyInitialization()
         {
             var operationInternal = CreateOperation(isOfT, UpdateResult.Success);
-            Assert.AreEqual(TimeSpan.FromSeconds(1), operationInternal.DefaultPollingInterval);
+            Assert.IsInstanceOf(typeof(ConstantPollingStrategy), operationInternal.PollingStrategy);
+            Assert.AreEqual(TimeSpan.FromSeconds(1), operationInternal.PollingStrategy.PollingInterval);
 
             Assert.IsNull(operationInternal.RawResponse);
             Assert.False(operationInternal.HasCompleted);
@@ -76,7 +77,7 @@ namespace Azure.Core.Tests
         public void RawResponseInitialization()
         {
             var operationInternal = CreateOperation(isOfT, UpdateResult.Pending, mockResponseFactory);
-            Assert.AreEqual(TimeSpan.FromSeconds(1), operationInternal.DefaultPollingInterval);
+            Assert.AreEqual(TimeSpan.FromSeconds(1), operationInternal.PollingStrategy.PollingInterval);
 
             Assert.AreEqual(mockResponse, operationInternal.RawResponse);
             Assert.False(operationInternal.HasCompleted);
@@ -327,7 +328,7 @@ namespace Azure.Core.Tests
             int expectedValue = 50;
             var operationInternal = CreateOperation(isOfT, UpdateResult.Pending, mockResponseFactory, callsToComplete: expectedCalls);
 
-            operationInternal.DefaultPollingInterval = TimeSpan.Zero;
+            operationInternal.PollingStrategy = new ConstantPollingStrategy(TimeSpan.Zero);
 
             var operationResponse = useDefaultPollingInterval
                 ? await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None)
@@ -353,7 +354,7 @@ namespace Azure.Core.Tests
 
             if (useDefaultPollingInterval)
             {
-                operationInternal.DefaultPollingInterval = expectedDelay;
+                operationInternal.PollingStrategy = new ConstantPollingStrategy(expectedDelay);
                 await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None);
             }
             else
@@ -362,6 +363,50 @@ namespace Azure.Core.Tests
             }
 
             Assert.AreEqual(expectedDelay, ((IMockOperationInternal)operationInternal).DelaysPassedToWait.Single());
+        }
+
+        [TestCase(1, 0)]
+        [TestCase(2, 1)]
+        [TestCase(3, 2)]
+        public async Task WaitForCompletionUsesDefaultPollingStrategy(int count, int totalSeconds)
+        {
+            var operationInternal = CreateOperation(isOfT, UpdateResult.Pending, mockResponseFactory, callsToComplete: count);
+            operationInternal.PollingStrategy = new ConstantPollingStrategy();
+
+            await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None);
+
+            Assert.AreEqual(totalSeconds, GetTotalDelay(((IMockOperationInternal)operationInternal).DelaysPassedToWait).TotalSeconds);
+        }
+
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        public async Task WaitForCompletionUsesConstantPollingStrategy(int delay)
+        {
+            var operationInternal = CreateOperation(isOfT, UpdateResult.Pending, mockResponseFactory, callsToComplete: 2);
+            operationInternal.PollingStrategy = new ConstantPollingStrategy(TimeSpan.FromSeconds(delay));
+
+            await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None);
+
+            Assert.AreEqual(delay, GetTotalDelay(((IMockOperationInternal)operationInternal).DelaysPassedToWait).TotalSeconds);
+        }
+
+        [TestCase(1, 0)]
+        [TestCase(2, 1)]
+        [TestCase(3, 3)]
+        [TestCase(4, 7)]
+        [TestCase(5, 15)]
+        [TestCase(6, 31)]
+        [TestCase(7, 63)]
+        [TestCase(8, 95)]
+        public async Task WaitForCompletionUsesExponentialPollingStrategy(int count, int totalDelay)
+        {
+            var operationInternal = CreateOperation(isOfT, UpdateResult.Pending, mockResponseFactory, callsToComplete: count);
+            operationInternal.PollingStrategy = new ExponentialPollingStrategy();
+
+            await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None);
+
+            Assert.AreEqual(totalDelay, GetTotalDelay(((IMockOperationInternal)operationInternal).DelaysPassedToWait).TotalSeconds);
         }
 
         [Test]
@@ -379,7 +424,7 @@ namespace Azure.Core.Tests
 
             if (useDefaultPollingInterval)
             {
-                operationInternal.DefaultPollingInterval = originalDelay;
+                operationInternal.PollingStrategy = new ConstantPollingStrategy(originalDelay);
                 await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None);
             }
             else
@@ -389,6 +434,23 @@ namespace Azure.Core.Tests
 
             // Algorithm must choose the longest delay between the two.
             Assert.AreEqual(Max(originalDelay, serviceDelay), ((IMockOperationInternal)operationInternal).DelaysPassedToWait.Single());
+        }
+
+        [TestCase(1, 0)]
+        [TestCase(2, 5)]
+        [TestCase(3, 10)]
+        public async Task ServerResponseOverrideExponentialPollingInterval(int count, int totalDelay)
+        {
+            var response = new MockResponse(200);
+            response.AddHeader(new HttpHeader("Retry-After", "5"));
+            Func<MockResponse> factoryWithHeaders = () => response;
+
+            var operationInternal = CreateOperation(isOfT, UpdateResult.Pending, factoryWithHeaders, callsToComplete: count);
+            operationInternal.PollingStrategy = new ExponentialPollingStrategy();
+
+            await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None);
+
+            Assert.AreEqual(totalDelay, GetTotalDelay(((IMockOperationInternal)operationInternal).DelaysPassedToWait).TotalSeconds);
         }
 
         [Test]
@@ -431,7 +493,7 @@ namespace Azure.Core.Tests
 
             if (useDefaultPollingInterval)
             {
-                operationInternal.DefaultPollingInterval = originalDelay;
+                operationInternal.PollingStrategy = new ConstantPollingStrategy(originalDelay);
                 await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None);
             }
             else
@@ -476,7 +538,7 @@ namespace Azure.Core.Tests
             CancellationToken originalToken = tokenSource.Token;
 
             var operationInternal = CreateOperation(isOfT, UpdateResult.Success, mockResponseFactory);
-            operationInternal.DefaultPollingInterval = TimeSpan.Zero;
+            operationInternal.PollingStrategy = new ConstantPollingStrategy(TimeSpan.Zero);
 
             _ = useDefaultPollingInterval
                 ? await operationInternal.WaitForCompletionResponseAsync(originalToken)
@@ -494,7 +556,7 @@ namespace Azure.Core.Tests
             tokenSource.Cancel();
 
             var operationInternal = CreateOperation(isOfT, UpdateResult.Pending, mockResponseFactory);
-            operationInternal.DefaultPollingInterval = TimeSpan.Zero;
+            operationInternal.PollingStrategy = new ConstantPollingStrategy(TimeSpan.Zero);
 
             _ = useDefaultPollingInterval
                 ? Assert.ThrowsAsync<TaskCanceledException>(async () => await operationInternal.WaitForCompletionResponseAsync(cancellationToken))
@@ -660,6 +722,16 @@ namespace Azure.Core.Tests
             FailureCustomException,
             Success,
             Throw
+        }
+
+        private static TimeSpan GetTotalDelay(List<TimeSpan> delays)
+        {
+            var totalDelay = TimeSpan.Zero;
+            foreach (var delay in delays)
+            {
+                totalDelay += delay;
+            }
+            return totalDelay;
         }
     }
 }
