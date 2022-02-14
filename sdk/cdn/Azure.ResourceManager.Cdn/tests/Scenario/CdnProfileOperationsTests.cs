@@ -7,6 +7,7 @@ using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Cdn.Tests.Helper;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Tests
 {
@@ -32,17 +33,15 @@ namespace Azure.ResourceManager.Cdn.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task Update()
+        public async Task AddTags()
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string cdnProfileName = Recording.GenerateAssetName("profile-");
             Profile cdnProfile = await CreateCdnProfile(rg, cdnProfileName, SkuName.StandardAkamai);
-            ProfileUpdateOptions updateOptions = new ProfileUpdateOptions();
-            updateOptions.Tags.Add("newTag", "newValue");
-            var lro = await cdnProfile.UpdateAsync(true, updateOptions);
-            Profile updatedCdnProfile = lro.Value;
-            ResourceDataHelper.AssertProfileUpdate(updatedCdnProfile, updateOptions);
+            string key = "newTag", value = "newValue";
+            Profile updatedCdnProfile = await cdnProfile.AddTagAsync(key, value);
+            ResourceDataHelper.AssertTags(new Dictionary<string, string> { { key, value } }, updatedCdnProfile.Data.Tags);
         }
 
         [TestCase]

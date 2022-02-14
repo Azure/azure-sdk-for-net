@@ -34,17 +34,15 @@ namespace Azure.ResourceManager.Cdn.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task Update()
+        public async Task AddTags()
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
             Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
-            ProfileUpdateOptions updateOptions = new ProfileUpdateOptions();
-            updateOptions.Tags.Add("newTag", "newValue");
-            var lro = await afdProfile.UpdateAsync(true, updateOptions);
-            Profile updatedAfdProfile = lro.Value;
-            ResourceDataHelper.AssertProfileUpdate(updatedAfdProfile, updateOptions);
+            string key = "newTag", value = "newValue";
+            Profile updatedAfdProfile = await afdProfile.AddTagAsync(key, value);
+            ResourceDataHelper.AssertTags(new Dictionary<string, string> { { key, value } }, updatedAfdProfile.Data.Tags);
         }
 
         [TestCase]

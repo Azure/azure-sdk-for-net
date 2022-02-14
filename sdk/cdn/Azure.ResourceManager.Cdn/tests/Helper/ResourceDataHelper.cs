@@ -160,14 +160,9 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.FrontdoorId, getResult.Data.FrontdoorId);
         }
 
-        public static void AssertProfileUpdate(Profile updatedProfile, ProfileUpdateOptions updateOptions)
+        public static void AssertTags(IDictionary<string, string> expectedTags, IDictionary<string, string> tags)
         {
-            Assert.AreEqual(updatedProfile.Data.Tags.Count, updateOptions.Tags.Count);
-            foreach (var kv in updatedProfile.Data.Tags)
-            {
-                Assert.True(updateOptions.Tags.ContainsKey(kv.Key));
-                Assert.AreEqual(kv.Value, updateOptions.Tags[kv.Key]);
-            }
+            CollectionAssert.AreEquivalent(expectedTags, tags);
         }
 
         public static void AssertValidEndpoint(CdnEndpoint model, CdnEndpoint getResult)
@@ -499,16 +494,6 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
             Assert.AreEqual(model.Data.ResourceState, getResult.Data.ResourceState);
             //Todo: PolicySettings, RateLimitRules, CustomRules, ManagedRules, EndpointLinks
-        }
-
-        public static void AssertPolicyUpdate(CdnWebApplicationFirewallPolicy updatedPolicy, CdnWebApplicationFirewallPolicyPatchOptions updateOptions)
-        {
-            Assert.AreEqual(updatedPolicy.Data.Tags.Count, updateOptions.Tags.Count);
-            foreach (var kv in updatedPolicy.Data.Tags)
-            {
-                Assert.True(updateOptions.Tags.ContainsKey(kv.Key));
-                Assert.AreEqual(kv.Value, updateOptions.Tags[kv.Key]);
-            }
         }
 
         public static void AssertValidAfdSecret(AfdSecret model, AfdSecret getResult)
