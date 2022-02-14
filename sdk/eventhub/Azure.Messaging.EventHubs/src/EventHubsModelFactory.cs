@@ -293,9 +293,8 @@ namespace Azure.Messaging.EventHubs
             ///
             public override IReadOnlyCollection<T> AsReadOnlyCollection<T>() => _backingStore switch
             {
-                List<T> storeList => storeList,
-                IList<T> storeIList => new List<T>(storeIList),
-                _ => _backingStore as List<T>
+                IReadOnlyCollection<T> storeCollection => storeCollection,
+                _ => new List<T>((IEnumerable<T>)_backingStore)
             };
 
             /// <summary>
