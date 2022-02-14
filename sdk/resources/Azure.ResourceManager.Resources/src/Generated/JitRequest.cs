@@ -184,52 +184,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Updates the JIT request.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/jitRequests/{jitRequestName}
-        /// Operation Id: JitRequests_Update
-        /// </summary>
-        /// <param name="tags"> Jit request tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<JitRequest>> UpdateAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequest.Update");
-            scope.Start();
-            try
-            {
-                var response = await _jitRequestRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new JitRequest(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates the JIT request.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/jitRequests/{jitRequestName}
-        /// Operation Id: JitRequests_Update
-        /// </summary>
-        /// <param name="tags"> Jit request tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<JitRequest> Update(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequest.Update");
-            scope.Start();
-            try
-            {
-                var response = _jitRequestRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, cancellationToken);
-                return Response.FromValue(new JitRequest(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/jitRequests/{jitRequestName}
         /// Operation Id: JitRequests_Get
