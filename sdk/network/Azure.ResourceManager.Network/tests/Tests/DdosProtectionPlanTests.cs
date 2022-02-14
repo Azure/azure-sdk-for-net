@@ -2,12 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Azure.Azure.Test;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
 
@@ -78,9 +74,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(ddosProtectionPlanData.Tags, Does.ContainKey("tag2").WithValue("value2"));
 
             // patch
-            var tags = new TagsObject();
-            tags.Tags.Add("tag2", "value2");
-            ddosProtectionPlan = await ddosProtectionPlan.UpdateAsync(tags);
+            ddosProtectionPlan = await ddosProtectionPlan.SetTagsAsync(new Dictionary<string, string> { { "tag2", "value2" } });
             ddosProtectionPlanData = ddosProtectionPlan.Data;
 
             ValidateCommon(ddosProtectionPlanData, name);

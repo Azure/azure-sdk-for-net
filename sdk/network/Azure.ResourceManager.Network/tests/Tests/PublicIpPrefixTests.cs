@@ -2,12 +2,9 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Azure.Azure.Test;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
@@ -84,9 +81,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(prefixData.Tags, Does.ContainKey("tag2").WithValue("value2"));
 
             // update tags
-            var tags = new TagsObject();
-            tags.Tags.Add("tag2", "value2");
-            prefixData = (await prefix.UpdateAsync(tags)).Value.Data;
+            prefixData = (await prefix.SetTagsAsync(new Dictionary<string, string> { { "tag2", "value2" } })).Value.Data;
 
             ValidateCommon(prefixData, name);
             Assert.That(prefixData.Tags, Has.Count.EqualTo(1));
