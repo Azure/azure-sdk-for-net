@@ -31,22 +31,5 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await instance.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task Update()
-        {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("DeviceUpdateResourceGroup");
-            DeviceUpdateAccount account = await rg.GetDeviceUpdateAccounts().GetAsync("AzureDeviceUpdateAccount");
-            DeviceUpdateInstance instance = await account.GetDeviceUpdateInstances().GetAsync("Instance");
-            DeviceUpdateInstanceUpdateOptions updateOptions = new DeviceUpdateInstanceUpdateOptions();
-            updateOptions.Tags.Add("newTag", "newValue");
-            DeviceUpdateInstance updatedInstance = await instance.UpdateAsync(updateOptions);
-            ResourceDataHelper.AssertInstanceUpdate(updatedInstance, updateOptions);
-            updateOptions.Tags.Clear();
-            updatedInstance = await instance.UpdateAsync(updateOptions);
-            ResourceDataHelper.AssertInstanceUpdate(updatedInstance, updateOptions);
-        }
     }
 }
