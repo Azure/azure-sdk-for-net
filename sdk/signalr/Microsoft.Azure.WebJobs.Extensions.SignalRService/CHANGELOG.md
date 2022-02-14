@@ -12,7 +12,6 @@
     ```
     ```json
     {
-    //local.settings.json
         "Values":{
             //...
             "SignalRConnection":"Your-Connection-String"
