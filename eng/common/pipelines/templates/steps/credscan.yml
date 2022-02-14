@@ -25,6 +25,8 @@ steps:
   inputs:
     scanFolder: "${{ parameters.SourceDirectory }}/credscan.tsv"
     suppressionsFile: ${{ parameters.SuppressionFilePath }}
+    verboseOutput: true
+
 - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
   displayName: CredScan result analysis
   inputs:
