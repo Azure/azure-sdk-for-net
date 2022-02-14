@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
@@ -12,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private double[] _exportIntervalsInSeconds;
         private int _transmissionDurationIndex = -1;
         private int _exportIntervalIndex = -1;
-        private DateTime prevExportTime;
+        private long prevExportTime;
         private double _currentBatchExportDuration;
         private double _runningExportIntervalSum;
         private double _runningTransmissionDurationSum;
@@ -41,8 +42,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         internal void UpdateExportInterval()
         {
+            long currentTime = Stopwatch.GetTimestamp();
             // todo: check if this can fail
-            double exportInterval = (DateTime.UtcNow - prevExportTime).TotalSeconds;
+            double exportInterval = TimeSpan.FromTicks(currentTime - prevExportTime).TotalSeconds;
+
+            prevExportTime = currentTime;
 
             // If total time elapsed > 2 days
             // set export interval to 0
@@ -67,7 +71,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             _runningExportIntervalSum -= _exportIntervalsInSeconds[_exportIntervalIndex];
             _exportIntervalsInSeconds[_exportIntervalIndex] = exportInterval;
             _runningExportIntervalSum += exportInterval;
-            prevExportTime = DateTime.UtcNow;
         }
 
         internal long MaxFilesToTransmitFromStorage()
