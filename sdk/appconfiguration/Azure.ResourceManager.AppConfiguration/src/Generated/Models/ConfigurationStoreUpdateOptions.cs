@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> The managed identity information for the configuration store. </summary>
-        public ResourceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The SKU of the configuration store. </summary>
         public Sku Sku { get; set; }
         /// <summary> The ARM resource tags. </summary>

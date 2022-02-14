@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,8 +27,9 @@ namespace Azure.ResourceManager.Management
             var resourceId = $"/providers/Microsoft.Management/managementGroups/{groupId}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ManagementGroupsRestOperations _managementGroupsRestClient;
+
+        private readonly ClientDiagnostics _managementGroupClientDiagnostics;
+        private readonly ManagementGroupsRestOperations _managementGroupRestClient;
         private readonly ManagementGroupData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ManagementGroup"/> class for mocking. </summary>
@@ -38,44 +38,22 @@ namespace Azure.ResourceManager.Management
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ManagementGroup"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagementGroup(ArmResource options, ManagementGroupData data) : base(options, data.Id)
+        internal ManagementGroup(ArmClient client, ManagementGroupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _managementGroupsRestClient = new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagementGroup"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagementGroup(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal ManagementGroup(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _managementGroupsRestClient = new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="ManagementGroup"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagementGroup(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _managementGroupsRestClient = new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _managementGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Management", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string managementGroupApiVersion);
+            _managementGroupRestClient = new ManagementGroupsRestOperations(_managementGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managementGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -105,12 +83,11 @@ namespace Azure.ResourceManager.Management
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// OperationId: ManagementGroups_Get
         /// <summary>
         /// Get the details of the management group.
         /// 
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
+        /// Operation Id: ManagementGroups_Get
         /// </summary>
         /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>
         /// <param name="recurse"> The $recurse=true query string parameter allows clients to request inclusion of entire hierarchy in the response payload. Note that  $expand=children must be passed up if $recurse is set to true. </param>
@@ -119,14 +96,14 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagementGroup>> GetAsync(ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroup.Get");
+            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.Get");
             scope.Start();
             try
             {
-                var response = await _managementGroupsRestClient.GetAsync(Id.Name, expand, recurse, filter, cacheControl, cancellationToken).ConfigureAwait(false);
+                var response = await _managementGroupRestClient.GetAsync(Id.Name, expand, recurse, filter, cacheControl, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagementGroup(this, response.Value), response.GetRawResponse());
+                    throw await _managementGroupClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ManagementGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,12 +112,11 @@ namespace Azure.ResourceManager.Management
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// OperationId: ManagementGroups_Get
         /// <summary>
         /// Get the details of the management group.
         /// 
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
+        /// Operation Id: ManagementGroups_Get
         /// </summary>
         /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>
         /// <param name="recurse"> The $recurse=true query string parameter allows clients to request inclusion of entire hierarchy in the response payload. Note that  $expand=children must be passed up if $recurse is set to true. </param>
@@ -149,14 +125,14 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagementGroup> Get(ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroup.Get");
+            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.Get");
             scope.Start();
             try
             {
-                var response = _managementGroupsRestClient.Get(Id.Name, expand, recurse, filter, cacheControl, cancellationToken);
+                var response = _managementGroupRestClient.Get(Id.Name, expand, recurse, filter, cacheControl, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementGroup(this, response.Value), response.GetRawResponse());
+                    throw _managementGroupClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagementGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,61 +141,24 @@ namespace Azure.ResourceManager.Management
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroup.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroup.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// OperationId: ManagementGroups_Delete
         /// <summary>
         /// Delete management group.
         /// If a management group contains child resources, the request will fail.
         /// 
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
+        /// Operation Id: ManagementGroups_Delete
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ManagementGroupDeleteOperation> DeleteAsync(bool waitForCompletion, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroup.Delete");
+            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.Delete");
             scope.Start();
             try
             {
-                var response = await _managementGroupsRestClient.DeleteAsync(Id.Name, cacheControl, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementGroupDeleteOperation(_clientDiagnostics, Pipeline, _managementGroupsRestClient.CreateDeleteRequest(Id.Name, cacheControl).Request, response);
+                var response = await _managementGroupRestClient.DeleteAsync(Id.Name, cacheControl, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagementArmOperation(_managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateDeleteRequest(Id.Name, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -231,25 +170,24 @@ namespace Azure.ResourceManager.Management
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// OperationId: ManagementGroups_Delete
         /// <summary>
         /// Delete management group.
         /// If a management group contains child resources, the request will fail.
         /// 
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
+        /// Operation Id: ManagementGroups_Delete
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ManagementGroupDeleteOperation Delete(bool waitForCompletion, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroup.Delete");
+            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.Delete");
             scope.Start();
             try
             {
-                var response = _managementGroupsRestClient.Delete(Id.Name, cacheControl, cancellationToken);
-                var operation = new ManagementGroupDeleteOperation(_clientDiagnostics, Pipeline, _managementGroupsRestClient.CreateDeleteRequest(Id.Name, cacheControl).Request, response);
+                var response = _managementGroupRestClient.Delete(Id.Name, cacheControl, cancellationToken);
+                var operation = new ManagementArmOperation(_managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateDeleteRequest(Id.Name, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -261,12 +199,11 @@ namespace Azure.ResourceManager.Management
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// OperationId: ManagementGroups_Update
         /// <summary>
         /// Update a management group.
         /// 
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
+        /// Operation Id: ManagementGroups_Update
         /// </summary>
         /// <param name="patchGroupRequest"> Management group patch parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
@@ -279,12 +216,12 @@ namespace Azure.ResourceManager.Management
                 throw new ArgumentNullException(nameof(patchGroupRequest));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroup.Update");
+            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.Update");
             scope.Start();
             try
             {
-                var response = await _managementGroupsRestClient.UpdateAsync(Id.Name, patchGroupRequest, cacheControl, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ManagementGroup(this, response.Value), response.GetRawResponse());
+                var response = await _managementGroupRestClient.UpdateAsync(Id.Name, patchGroupRequest, cacheControl, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ManagementGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -293,12 +230,11 @@ namespace Azure.ResourceManager.Management
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// OperationId: ManagementGroups_Update
         /// <summary>
         /// Update a management group.
         /// 
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
+        /// Operation Id: ManagementGroups_Update
         /// </summary>
         /// <param name="patchGroupRequest"> Management group patch parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
@@ -311,12 +247,12 @@ namespace Azure.ResourceManager.Management
                 throw new ArgumentNullException(nameof(patchGroupRequest));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroup.Update");
+            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.Update");
             scope.Start();
             try
             {
-                var response = _managementGroupsRestClient.Update(Id.Name, patchGroupRequest, cacheControl, cancellationToken);
-                return Response.FromValue(new ManagementGroup(this, response.Value), response.GetRawResponse());
+                var response = _managementGroupRestClient.Update(Id.Name, patchGroupRequest, cacheControl, cancellationToken);
+                return Response.FromValue(new ManagementGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -325,12 +261,11 @@ namespace Azure.ResourceManager.Management
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{groupId}/descendants
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// OperationId: ManagementGroups_GetDescendants
         /// <summary>
         /// List all entities that descend from a management group.
         /// 
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}/descendants
+        /// Operation Id: ManagementGroups_GetDescendants
         /// </summary>
         /// <param name="skiptoken">
         /// Page continuation token is only used if a previous operation returned a partial result. 
@@ -344,11 +279,11 @@ namespace Azure.ResourceManager.Management
         {
             async Task<Page<DescendantInfo>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroup.GetDescendants");
+                using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.GetDescendants");
                 scope.Start();
                 try
                 {
-                    var response = await _managementGroupsRestClient.GetDescendantsAsync(Id.Name, skiptoken, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managementGroupRestClient.GetDescendantsAsync(Id.Name, skiptoken, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -359,11 +294,11 @@ namespace Azure.ResourceManager.Management
             }
             async Task<Page<DescendantInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroup.GetDescendants");
+                using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.GetDescendants");
                 scope.Start();
                 try
                 {
-                    var response = await _managementGroupsRestClient.GetDescendantsNextPageAsync(nextLink, Id.Name, skiptoken, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managementGroupRestClient.GetDescendantsNextPageAsync(nextLink, Id.Name, skiptoken, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -375,12 +310,11 @@ namespace Azure.ResourceManager.Management
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{groupId}/descendants
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// OperationId: ManagementGroups_GetDescendants
         /// <summary>
         /// List all entities that descend from a management group.
         /// 
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}/descendants
+        /// Operation Id: ManagementGroups_GetDescendants
         /// </summary>
         /// <param name="skiptoken">
         /// Page continuation token is only used if a previous operation returned a partial result. 
@@ -394,11 +328,11 @@ namespace Azure.ResourceManager.Management
         {
             Page<DescendantInfo> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroup.GetDescendants");
+                using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.GetDescendants");
                 scope.Start();
                 try
                 {
-                    var response = _managementGroupsRestClient.GetDescendants(Id.Name, skiptoken, top, cancellationToken: cancellationToken);
+                    var response = _managementGroupRestClient.GetDescendants(Id.Name, skiptoken, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -409,11 +343,11 @@ namespace Azure.ResourceManager.Management
             }
             Page<DescendantInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroup.GetDescendants");
+                using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.GetDescendants");
                 scope.Start();
                 try
                 {
-                    var response = _managementGroupsRestClient.GetDescendantsNextPage(nextLink, Id.Name, skiptoken, top, cancellationToken: cancellationToken);
+                    var response = _managementGroupRestClient.GetDescendantsNextPage(nextLink, Id.Name, skiptoken, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

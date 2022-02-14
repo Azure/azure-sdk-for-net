@@ -3,10 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using OpenTelemetry.Contrib.Extensions.PersistentStorage;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
@@ -18,18 +20,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <param name="body">The list of telemetry events to track.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns></returns>
-        internal async Task<int> InternalTrackAsync(IEnumerable<TelemetryItem> body, CancellationToken cancellationToken = default)
+        internal async Task<HttpMessage> InternalTrackAsync(IEnumerable<TelemetryItem> body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateTrackRequest(body);
-            message.SetProperty("TelemetryItems", body);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var message = CreateTrackRequest(body);
 
-            return message.TryGetProperty("ItemsAccepted", out var objItemsAccepted) && objItemsAccepted is int itemsAccepted ? itemsAccepted : 0;
+            try
+            {
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                AzureMonitorExporterEventSource.Log.Write($"FailedToSend{EventLevelSuffix.Error}", ex.LogAsyncException());
+                if (ex.InnerException?.Source != "System.Net.Http")
+                {
+                    message?.Dispose();
+                    return null;
+                }
+            }
+
+            return message;
         }
 
         /// <summary>
@@ -38,12 +52,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <param name="body">Content of blob to track.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns></returns>
-        internal async Task<int> InternalTrackAsync(ReadOnlyMemory<byte> body, CancellationToken cancellationToken = default)
+        internal async Task<HttpMessage> InternalTrackAsync(ReadOnlyMemory<byte> body, CancellationToken cancellationToken = default)
         {
-            using var message = CreateTrackRequest(body);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var message = CreateTrackRequest(body);
 
-            return message.TryGetProperty("ItemsAccepted", out var objItemsAccepted) && objItemsAccepted is int itemsAccepted ? itemsAccepted : 0;
+            try
+            {
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                AzureMonitorExporterEventSource.Log.Write($"FailedToSend{EventLevelSuffix.Error}", ex.LogAsyncException());
+                if (ex.InnerException?.Source != "System.Net.Http")
+                {
+                    message?.Dispose();
+                    return null;
+                }
+            }
+
+            return message;
         }
 
         internal HttpMessage CreateTrackRequest(IEnumerable<TelemetryItem> body)
@@ -52,7 +79,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(host, false);
+            uri.AppendRaw(_host, false);
             uri.AppendRaw("/v2", false);
             uri.AppendPath("/track", false);
             request.Uri = uri;
@@ -75,7 +102,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(host, false);
+            uri.AppendRaw(_host, false);
             uri.AppendRaw("/v2", false);
             uri.AppendPath("/track", false);
             request.Uri = uri;

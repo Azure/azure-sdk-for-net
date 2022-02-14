@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> Gets or sets the Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The identity of the resource. </summary>
-        public VMwareIdentity Identity { get; set; }
+        public SystemAssignedServiceIdentity Identity { get; set; }
         /// <summary> Defines the resource properties. </summary>
         public HardwareProfile HardwareProfile { get; set; }
         /// <summary> Defines the resource update properties. </summary>

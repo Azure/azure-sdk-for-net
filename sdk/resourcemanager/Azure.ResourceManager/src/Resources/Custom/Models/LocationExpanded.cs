@@ -3,6 +3,9 @@
 
 using Azure.Core;
 
+[assembly:CodeGenSuppressType("CreatedByType")]
+[assembly:CodeGenSuppressType("PolicyAssignmentIdentityType")]
+[assembly:CodeGenSuppressType("PolicyAssignmentIdentityTypeExtensions")]
 namespace Azure.ResourceManager.Resources.Models
 {
     public partial class LocationExpanded

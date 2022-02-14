@@ -5,13 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Resources;
 
@@ -20,837 +16,267 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class to add extension methods to Tenant. </summary>
     public static partial class TenantExtensions
     {
-        #region User
-        /// <summary> Gets an object representing a User along with the instance operations that can be performed on it. </summary>
+        private static TenantExtensionClient GetExtensionClient(Tenant tenant)
+        {
+            return tenant.GetCachedClient((client) =>
+            {
+                return new TenantExtensionClient(client, tenant.Id);
+            }
+            );
+        }
+
+        /// <summary> Gets an object representing a User along with the instance operations that can be performed on it in the TenantExtensions. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="User" /> object. </returns>
         public static User GetUser(this Tenant tenant)
         {
-            return new User(tenant, new ResourceIdentifier(tenant.Id + "/providers/Microsoft.Web/publishingUsers/web"));
+            return GetExtensionClient(tenant).GetUser();
         }
-        #endregion
 
-        #region SourceControl
-        /// <summary> Gets an object representing a SourceControlCollection along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets a collection of SourceControls in the SourceControl. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="SourceControlCollection" /> object. </returns>
+        /// <returns> An object representing collection of SourceControls and their operations over a SourceControl. </returns>
         public static SourceControlCollection GetSourceControls(this Tenant tenant)
         {
-            return new SourceControlCollection(tenant);
-        }
-        #endregion
-
-        private static CertificateRegistrationProviderRestOperations GetCertificateRegistrationProviderRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
-        {
-            return new CertificateRegistrationProviderRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
+            return GetExtensionClient(tenant).GetSourceControls();
         }
 
-        private static DomainRegistrationProviderRestOperations GetDomainRegistrationProviderRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
-        {
-            return new DomainRegistrationProviderRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
-        }
-
-        private static ProviderRestOperations GetProviderRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
-        {
-            return new ProviderRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
-        }
-
-        /// RequestPath: /providers/Microsoft.CertificateRegistration/operations
-        /// ContextualPath: /
-        /// OperationId: CertificateRegistrationProvider_ListOperations
-        /// <summary> Lists the CsmOperationDescriptions for this <see cref="Tenant" />. </summary>
+        /// <summary>
+        /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
+        /// Request Path: /providers/Microsoft.CertificateRegistration/operations
+        /// Operation Id: CertificateRegistrationProvider_ListOperations
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CsmOperationDescription> GetOperationsCertificateRegistrationProvidersAsync(this Tenant tenant, CancellationToken cancellationToken = default)
         {
-            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                CertificateRegistrationProviderRestOperations restOperations = GetCertificateRegistrationProviderRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                async Task<Page<CsmOperationDescription>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetOperationsCertificateRegistrationProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListOperationsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<CsmOperationDescription>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetOperationsCertificateRegistrationProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListOperationsNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(tenant).GetOperationsCertificateRegistrationProvidersAsync(cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.CertificateRegistration/operations
-        /// ContextualPath: /
-        /// OperationId: CertificateRegistrationProvider_ListOperations
-        /// <summary> Lists the CsmOperationDescriptions for this <see cref="Tenant" />. </summary>
+        /// <summary>
+        /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
+        /// Request Path: /providers/Microsoft.CertificateRegistration/operations
+        /// Operation Id: CertificateRegistrationProvider_ListOperations
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CsmOperationDescription> GetOperationsCertificateRegistrationProviders(this Tenant tenant, CancellationToken cancellationToken = default)
         {
-            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                CertificateRegistrationProviderRestOperations restOperations = GetCertificateRegistrationProviderRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                Page<CsmOperationDescription> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetOperationsCertificateRegistrationProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListOperations(cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<CsmOperationDescription> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetOperationsCertificateRegistrationProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListOperationsNextPage(nextLink, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(tenant).GetOperationsCertificateRegistrationProviders(cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.DomainRegistration/operations
-        /// ContextualPath: /
-        /// OperationId: DomainRegistrationProvider_ListOperations
-        /// <summary> Lists the CsmOperationDescriptions for this <see cref="Tenant" />. </summary>
+        /// <summary>
+        /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
+        /// Request Path: /providers/Microsoft.DomainRegistration/operations
+        /// Operation Id: DomainRegistrationProvider_ListOperations
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CsmOperationDescription> GetOperationsDomainRegistrationProvidersAsync(this Tenant tenant, CancellationToken cancellationToken = default)
         {
-            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                DomainRegistrationProviderRestOperations restOperations = GetDomainRegistrationProviderRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                async Task<Page<CsmOperationDescription>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetOperationsDomainRegistrationProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListOperationsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<CsmOperationDescription>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetOperationsDomainRegistrationProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListOperationsNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(tenant).GetOperationsDomainRegistrationProvidersAsync(cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.DomainRegistration/operations
-        /// ContextualPath: /
-        /// OperationId: DomainRegistrationProvider_ListOperations
-        /// <summary> Lists the CsmOperationDescriptions for this <see cref="Tenant" />. </summary>
+        /// <summary>
+        /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
+        /// Request Path: /providers/Microsoft.DomainRegistration/operations
+        /// Operation Id: DomainRegistrationProvider_ListOperations
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CsmOperationDescription> GetOperationsDomainRegistrationProviders(this Tenant tenant, CancellationToken cancellationToken = default)
         {
-            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                DomainRegistrationProviderRestOperations restOperations = GetDomainRegistrationProviderRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                Page<CsmOperationDescription> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetOperationsDomainRegistrationProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListOperations(cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<CsmOperationDescription> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetOperationsDomainRegistrationProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListOperationsNextPage(nextLink, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(tenant).GetOperationsDomainRegistrationProviders(cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/availableStacks
-        /// ContextualPath: /
-        /// OperationId: Provider_GetAvailableStacks
-        /// <summary> Lists the ApplicationStackResources for this <see cref="Tenant" />. </summary>
+        /// <summary>
+        /// Description for Get available application frameworks and their versions
+        /// Request Path: /providers/Microsoft.Web/availableStacks
+        /// Operation Id: Provider_GetAvailableStacks
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApplicationStackResource> GetAvailableStacksProvidersAsync(this Tenant tenant, ProviderOsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
-            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                ProviderRestOperations restOperations = GetProviderRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                async Task<Page<ApplicationStackResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetAvailableStacksProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.GetAvailableStacksAsync(osTypeSelected, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<ApplicationStackResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetAvailableStacksProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.GetAvailableStacksNextPageAsync(nextLink, osTypeSelected, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(tenant).GetAvailableStacksProvidersAsync(osTypeSelected, cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/availableStacks
-        /// ContextualPath: /
-        /// OperationId: Provider_GetAvailableStacks
-        /// <summary> Lists the ApplicationStackResources for this <see cref="Tenant" />. </summary>
+        /// <summary>
+        /// Description for Get available application frameworks and their versions
+        /// Request Path: /providers/Microsoft.Web/availableStacks
+        /// Operation Id: Provider_GetAvailableStacks
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApplicationStackResource> GetAvailableStacksProviders(this Tenant tenant, ProviderOsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
-            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                ProviderRestOperations restOperations = GetProviderRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                Page<ApplicationStackResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetAvailableStacksProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.GetAvailableStacks(osTypeSelected, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<ApplicationStackResource> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetAvailableStacksProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.GetAvailableStacksNextPage(nextLink, osTypeSelected, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(tenant).GetAvailableStacksProviders(osTypeSelected, cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/functionAppStacks
-        /// ContextualPath: /
-        /// OperationId: Provider_GetFunctionAppStacks
-        /// <summary> Lists the FunctionAppStacks for this <see cref="Tenant" />. </summary>
+        /// <summary>
+        /// Description for Get available Function app frameworks and their versions
+        /// Request Path: /providers/Microsoft.Web/functionAppStacks
+        /// Operation Id: Provider_GetFunctionAppStacks
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksProvidersAsync(this Tenant tenant, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
-            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                ProviderRestOperations restOperations = GetProviderRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                async Task<Page<FunctionAppStack>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetFunctionAppStacksProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.GetFunctionAppStacksAsync(stackOsType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<FunctionAppStack>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetFunctionAppStacksProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.GetFunctionAppStacksNextPageAsync(nextLink, stackOsType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(tenant).GetFunctionAppStacksProvidersAsync(stackOsType, cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/functionAppStacks
-        /// ContextualPath: /
-        /// OperationId: Provider_GetFunctionAppStacks
-        /// <summary> Lists the FunctionAppStacks for this <see cref="Tenant" />. </summary>
+        /// <summary>
+        /// Description for Get available Function app frameworks and their versions
+        /// Request Path: /providers/Microsoft.Web/functionAppStacks
+        /// Operation Id: Provider_GetFunctionAppStacks
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<FunctionAppStack> GetFunctionAppStacksProviders(this Tenant tenant, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
-            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                ProviderRestOperations restOperations = GetProviderRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                Page<FunctionAppStack> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetFunctionAppStacksProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.GetFunctionAppStacks(stackOsType, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<FunctionAppStack> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetFunctionAppStacksProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.GetFunctionAppStacksNextPage(nextLink, stackOsType, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(tenant).GetFunctionAppStacksProviders(stackOsType, cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/locations/{location}/functionAppStacks
-        /// ContextualPath: /
-        /// OperationId: Provider_GetFunctionAppStacksForLocation
-        /// <summary> Lists the FunctionAppStacks for this <see cref="Tenant" />. </summary>
+        /// <summary>
+        /// Description for Get available Function app frameworks and their versions for location
+        /// Request Path: /providers/Microsoft.Web/locations/{location}/functionAppStacks
+        /// Operation Id: Provider_GetFunctionAppStacksForLocation
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="location"> Function App stack location. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="System.ArgumentException"> <paramref name="location"/> is empty. </exception>
+        /// <exception cref="System.ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> An async collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(this Tenant tenant, string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                ProviderRestOperations restOperations = GetProviderRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                async Task<Page<FunctionAppStack>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetFunctionAppStacksForLocationProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.GetFunctionAppStacksForLocationAsync(location, stackOsType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<FunctionAppStack>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetFunctionAppStacksForLocationProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.GetFunctionAppStacksForLocationNextPageAsync(nextLink, location, stackOsType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(tenant).GetFunctionAppStacksForLocationProvidersAsync(location, stackOsType, cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/locations/{location}/functionAppStacks
-        /// ContextualPath: /
-        /// OperationId: Provider_GetFunctionAppStacksForLocation
-        /// <summary> Lists the FunctionAppStacks for this <see cref="Tenant" />. </summary>
+        /// <summary>
+        /// Description for Get available Function app frameworks and their versions for location
+        /// Request Path: /providers/Microsoft.Web/locations/{location}/functionAppStacks
+        /// Operation Id: Provider_GetFunctionAppStacksForLocation
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="location"> Function App stack location. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="System.ArgumentException"> <paramref name="location"/> is empty. </exception>
+        /// <exception cref="System.ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> A collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(this Tenant tenant, string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                ProviderRestOperations restOperations = GetProviderRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                Page<FunctionAppStack> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetFunctionAppStacksForLocationProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.GetFunctionAppStacksForLocation(location, stackOsType, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<FunctionAppStack> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetFunctionAppStacksForLocationProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.GetFunctionAppStacksForLocationNextPage(nextLink, location, stackOsType, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(tenant).GetFunctionAppStacksForLocationProviders(location, stackOsType, cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/locations/{location}/webAppStacks
-        /// ContextualPath: /
-        /// OperationId: Provider_GetWebAppStacksForLocation
-        /// <summary> Lists the WebAppStacks for this <see cref="Tenant" />. </summary>
+        /// <summary>
+        /// Description for Get available Web app frameworks and their versions for location
+        /// Request Path: /providers/Microsoft.Web/locations/{location}/webAppStacks
+        /// Operation Id: Provider_GetWebAppStacksForLocation
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="location"> Web App stack location. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="System.ArgumentException"> <paramref name="location"/> is empty. </exception>
+        /// <exception cref="System.ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> An async collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<WebAppStack> GetWebAppStacksForLocationProvidersAsync(this Tenant tenant, string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                ProviderRestOperations restOperations = GetProviderRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                async Task<Page<WebAppStack>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetWebAppStacksForLocationProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.GetWebAppStacksForLocationAsync(location, stackOsType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<WebAppStack>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetWebAppStacksForLocationProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.GetWebAppStacksForLocationNextPageAsync(nextLink, location, stackOsType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(tenant).GetWebAppStacksForLocationProvidersAsync(location, stackOsType, cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/locations/{location}/webAppStacks
-        /// ContextualPath: /
-        /// OperationId: Provider_GetWebAppStacksForLocation
-        /// <summary> Lists the WebAppStacks for this <see cref="Tenant" />. </summary>
+        /// <summary>
+        /// Description for Get available Web app frameworks and their versions for location
+        /// Request Path: /providers/Microsoft.Web/locations/{location}/webAppStacks
+        /// Operation Id: Provider_GetWebAppStacksForLocation
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="location"> Web App stack location. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="System.ArgumentException"> <paramref name="location"/> is empty. </exception>
+        /// <exception cref="System.ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> A collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<WebAppStack> GetWebAppStacksForLocationProviders(this Tenant tenant, string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                ProviderRestOperations restOperations = GetProviderRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                Page<WebAppStack> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetWebAppStacksForLocationProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.GetWebAppStacksForLocation(location, stackOsType, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<WebAppStack> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetWebAppStacksForLocationProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.GetWebAppStacksForLocationNextPage(nextLink, location, stackOsType, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(tenant).GetWebAppStacksForLocationProviders(location, stackOsType, cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/operations
-        /// ContextualPath: /
-        /// OperationId: Provider_ListOperations
-        /// <summary> Lists the CsmOperationDescriptions for this <see cref="Tenant" />. </summary>
+        /// <summary>
+        /// Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions
+        /// Request Path: /providers/Microsoft.Web/operations
+        /// Operation Id: Provider_ListOperations
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CsmOperationDescription> GetOperationsProvidersAsync(this Tenant tenant, CancellationToken cancellationToken = default)
         {
-            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                ProviderRestOperations restOperations = GetProviderRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                async Task<Page<CsmOperationDescription>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetOperationsProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListOperationsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<CsmOperationDescription>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetOperationsProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListOperationsNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(tenant).GetOperationsProvidersAsync(cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/operations
-        /// ContextualPath: /
-        /// OperationId: Provider_ListOperations
-        /// <summary> Lists the CsmOperationDescriptions for this <see cref="Tenant" />. </summary>
+        /// <summary>
+        /// Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions
+        /// Request Path: /providers/Microsoft.Web/operations
+        /// Operation Id: Provider_ListOperations
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CsmOperationDescription> GetOperationsProviders(this Tenant tenant, CancellationToken cancellationToken = default)
         {
-            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                ProviderRestOperations restOperations = GetProviderRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                Page<CsmOperationDescription> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetOperationsProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListOperations(cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<CsmOperationDescription> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetOperationsProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListOperationsNextPage(nextLink, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(tenant).GetOperationsProviders(cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/webAppStacks
-        /// ContextualPath: /
-        /// OperationId: Provider_GetWebAppStacks
-        /// <summary> Lists the WebAppStacks for this <see cref="Tenant" />. </summary>
+        /// <summary>
+        /// Description for Get available Web app frameworks and their versions
+        /// Request Path: /providers/Microsoft.Web/webAppStacks
+        /// Operation Id: Provider_GetWebAppStacks
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<WebAppStack> GetWebAppStacksProvidersAsync(this Tenant tenant, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
-            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                ProviderRestOperations restOperations = GetProviderRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                async Task<Page<WebAppStack>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetWebAppStacksProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.GetWebAppStacksAsync(stackOsType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<WebAppStack>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetWebAppStacksProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.GetWebAppStacksNextPageAsync(nextLink, stackOsType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(tenant).GetWebAppStacksProvidersAsync(stackOsType, cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/webAppStacks
-        /// ContextualPath: /
-        /// OperationId: Provider_GetWebAppStacks
-        /// <summary> Lists the WebAppStacks for this <see cref="Tenant" />. </summary>
+        /// <summary>
+        /// Description for Get available Web app frameworks and their versions
+        /// Request Path: /providers/Microsoft.Web/webAppStacks
+        /// Operation Id: Provider_GetWebAppStacks
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<WebAppStack> GetWebAppStacksProviders(this Tenant tenant, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
-            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                ProviderRestOperations restOperations = GetProviderRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                Page<WebAppStack> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetWebAppStacksProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.GetWebAppStacks(stackOsType, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<WebAppStack> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetWebAppStacksProviders");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.GetWebAppStacksNextPage(nextLink, stackOsType, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(tenant).GetWebAppStacksProviders(stackOsType, cancellationToken);
         }
     }
 }

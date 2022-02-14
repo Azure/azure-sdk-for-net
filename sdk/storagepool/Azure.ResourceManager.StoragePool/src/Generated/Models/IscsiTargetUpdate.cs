@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.StoragePool.Models
 {
     /// <summary> Payload for iSCSI Target update requests. </summary>
-    public partial class IscsiTargetUpdate : Resource
+    public partial class IscsiTargetUpdate : ResourceData
     {
         /// <summary> Initializes a new instance of IscsiTargetUpdate. </summary>
         public IscsiTargetUpdate()
@@ -26,11 +26,12 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="managedBy"> Azure resource id. Indicates if this resource is managed by another Azure resource. </param>
         /// <param name="managedByExtended"> List of Azure resource ids that manage this resource. </param>
         /// <param name="staticAcls"> Access Control List (ACL) for an iSCSI Target; defines LUN masking policy. </param>
         /// <param name="luns"> List of LUNs to be exposed through iSCSI Target. </param>
-        internal IscsiTargetUpdate(ResourceIdentifier id, string name, ResourceType type, string managedBy, IList<string> managedByExtended, IList<Acl> staticAcls, IList<IscsiLun> luns) : base(id, name, type)
+        internal IscsiTargetUpdate(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string managedBy, IList<string> managedByExtended, IList<Acl> staticAcls, IList<IscsiLun> luns) : base(id, name, type, systemData)
         {
             ManagedBy = managedBy;
             ManagedByExtended = managedByExtended;

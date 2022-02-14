@@ -9,6 +9,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.TestFramework;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Tests
         {
             DisplayName = displayName,
             Description = $"{displayName} description",
-            PackageFileUri = "https://raw.githubusercontent.com/Azure/azure-managedapp-samples/master/Managed%20Application%20Sample%20Packages/201-managed-storage-account/managedstorage.zip"
+            PackageFileUri = new Uri("https://raw.githubusercontent.com/Azure/azure-managedapp-samples/master/Managed%20Application%20Sample%20Packages/201-managed-storage-account/managedstorage.zip")
         };
 
         protected static ApplicationData CreateApplicationData(string applicationDefinitionId, string managedResourceGroupId, string storageAccountPrefix) => new ApplicationData(AzureLocation.WestUS2, "ServiceCatalog")
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Resources.Tests
             ResourceIdentifier userAssignedIdentitiesId = rg4Identities.Id.AppendProviderResource("Microsoft.ManagedIdentity", "userAssignedIdentities", "test-user-assigned-msi");
             var lro2 = await Client.GetGenericResources().CreateOrUpdateAsync(true, userAssignedIdentitiesId, userAssignedIdentitiesData);
             GenericResource userAssignedIdentities = lro2.Value;
-            var managedIdentity = new ManagedServiceIdentity()
+            var managedIdentity = new DeploymentScriptManagedIdentity()
             {
                 Type = "UserAssigned",
                 UserAssignedIdentities =

@@ -24,6 +24,12 @@ namespace Azure.Storage.Blobs.Models
         public BlobRequestConditions Conditions { get; set; }
 
         /// <summary>
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </summary>
+        public IProgress<long> ProgressHandler { get; set; }
+
+        /// <summary>
         /// Optional transactional hashing options.
         /// Range must be provided explicitly stating a range withing Azure
         /// Storage size limits for requesting a transactional hash. See the
@@ -49,6 +55,7 @@ namespace Azure.Storage.Blobs.Models
 
             Range = new HttpRange(offset: deepCopySource.Range.Offset, length: deepCopySource.Range.Length);
             Conditions = BlobRequestConditions.CloneOrDefault(deepCopySource.Conditions);
+            ProgressHandler = deepCopySource.ProgressHandler;
             // can't access an internal deep copy in Storage.Common
             TransactionalHashingOptions = deepCopySource.TransactionalHashingOptions == default
                 ? default

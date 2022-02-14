@@ -244,6 +244,9 @@ await client.PurgeDeletedCertificateAsync(certificate.Name);
 
 ## Troubleshooting
 
+See our [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/TROUBLESHOOTING.md)
+for details on how to diagnose various failure scenarios.
+
 ### General
 When you interact with the Azure Key Vault certificates client library using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][keyvault_rest] requests.
 

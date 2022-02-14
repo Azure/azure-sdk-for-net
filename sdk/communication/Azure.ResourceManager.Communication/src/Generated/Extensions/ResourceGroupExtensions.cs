@@ -12,14 +12,21 @@ namespace Azure.ResourceManager.Communication
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region CommunicationService
-        /// <summary> Gets an object representing a CommunicationServiceCollection along with the instance operations that can be performed on it. </summary>
+        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        {
+            return resourceGroup.GetCachedClient((client) =>
+            {
+                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+            }
+            );
+        }
+
+        /// <summary> Gets a collection of CommunicationServices in the CommunicationService. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="CommunicationServiceCollection" /> object. </returns>
+        /// <returns> An object representing collection of CommunicationServices and their operations over a CommunicationService. </returns>
         public static CommunicationServiceCollection GetCommunicationServices(this ResourceGroup resourceGroup)
         {
-            return new CommunicationServiceCollection(resourceGroup);
+            return GetExtensionClient(resourceGroup).GetCommunicationServices();
         }
-        #endregion
     }
 }

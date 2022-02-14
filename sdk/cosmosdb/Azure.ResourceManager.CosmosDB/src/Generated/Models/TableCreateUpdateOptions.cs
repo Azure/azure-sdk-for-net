@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to create and update Cosmos DB Table. </summary>
-    public partial class TableCreateUpdateOptions : TrackedResource
+    public partial class TableCreateUpdateOptions : TrackedResourceData
     {
         /// <summary> Initializes a new instance of TableCreateUpdateOptions. </summary>
         /// <param name="location"> The location. </param>
@@ -33,11 +33,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a Table. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        internal TableCreateUpdateOptions(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, TableResource resource, CreateUpdateOptions options) : base(id, name, type, tags, location)
+        internal TableCreateUpdateOptions(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, TableResource resource, CreateUpdateOptions options) : base(id, name, type, systemData, tags, location)
         {
             Resource = resource;
             Options = options;

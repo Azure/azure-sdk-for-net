@@ -1,6 +1,6 @@
 # Release History
 
-## 5.7.0-beta.3 (Unreleased)
+## 5.7.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.7.0-beta.3 (2022-02-09)
+
+### Features Added
+
+- Added `FullyQualifiedNamespace`, `EventHubName`, and `ConsumerGroup` to the partition context associated with events read by the `EventHubConsumerClient`.
+
+### Other Changes
+
+- Improved documentation for `EventPosition` to be more explicit about defaults for inclusivity.
+
+- Minor updates to the class hierarchy of `EventData` to improve integration with Azure Schema Registry.
 
 ## 5.7.0-beta.2 (2022-01-13)
 

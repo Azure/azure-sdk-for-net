@@ -15,10 +15,26 @@ namespace Azure.Core.TestFramework.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("excludedHeaders");
-            writer.WriteStringValue(ExcludedHeaders);
-            writer.WritePropertyName("compareBodies");
-            writer.WriteBooleanValue(CompareBodies);
+            if (Optional.IsDefined(ExcludedHeaders))
+            {
+                writer.WritePropertyName("excludedHeaders");
+                writer.WriteStringValue(ExcludedHeaders);
+            }
+            if (Optional.IsDefined(CompareBodies))
+            {
+                writer.WritePropertyName("compareBodies");
+                writer.WriteBooleanValue(CompareBodies.Value);
+            }
+            if (Optional.IsDefined(IgnoredHeaders))
+            {
+                writer.WritePropertyName("ignoredHeaders");
+                writer.WriteStringValue(IgnoredHeaders);
+            }
+            if (Optional.IsDefined(IgnoredQueryParameters))
+            {
+                writer.WritePropertyName("ignoredQueryParameters");
+                writer.WriteStringValue(IgnoredQueryParameters);
+            }
             writer.WriteEndObject();
         }
     }

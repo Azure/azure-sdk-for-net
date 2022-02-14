@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the DiskRestorePoint data model. </summary>
-    public partial class DiskRestorePointData : Resource
+    public partial class DiskRestorePointData : ResourceData
     {
         /// <summary> Initializes a new instance of DiskRestorePointData. </summary>
         internal DiskRestorePointData()
@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="timeCreated"> The timestamp of restorePoint creation. </param>
         /// <param name="sourceResourceId"> arm id of source disk or source disk restore point. </param>
         /// <param name="oSType"> The Operating System type. </param>
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="completionPercent"> Percentage complete for the background copy of disk restore point when source resource is from a different region. </param>
         /// <param name="replicationState"> Replication state of disk restore point when source resource is from a different region. </param>
         /// <param name="sourceResourceLocation"> Location of source disk or source disk restore point when source resource is from a different region. </param>
-        internal DiskRestorePointData(ResourceIdentifier id, string name, ResourceType type, DateTimeOffset? timeCreated, string sourceResourceId, OperatingSystemTypes? oSType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string familyId, string sourceUniqueId, Encryption encryption, bool? supportsHibernation, NetworkAccessPolicy? networkAccessPolicy, PublicNetworkAccess? publicNetworkAccess, string diskAccessId, float? completionPercent, string replicationState, string sourceResourceLocation) : base(id, name, type)
+        internal DiskRestorePointData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, DateTimeOffset? timeCreated, string sourceResourceId, OperatingSystemTypes? oSType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string familyId, string sourceUniqueId, Encryption encryption, bool? supportsHibernation, NetworkAccessPolicy? networkAccessPolicy, PublicNetworkAccess? publicNetworkAccess, string diskAccessId, float? completionPercent, string replicationState, string sourceResourceLocation) : base(id, name, type, systemData)
         {
             TimeCreated = timeCreated;
             SourceResourceId = sourceResourceId;

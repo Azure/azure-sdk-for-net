@@ -29,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 if (IsWindowsOS())
                 {
-                    string localAppData = environmentVars["LOCALAPPDATA"].ToString();
+                    string localAppData = environmentVars["LOCALAPPDATA"]?.ToString();
                     if (localAppData != null)
                     {
                         dirPath = CreateTelemetryDirectory(localAppData);
@@ -39,7 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                             return defaultStorageDirectory;
                         }
 
-                        string temp = environmentVars["TEMP"].ToString();
+                        string temp = environmentVars["TEMP"]?.ToString();
                         if (temp != null)
                         {
                             dirPath = CreateTelemetryDirectory(temp);
@@ -53,7 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
                 else
                 {
-                    string tmpdir = environmentVars["TMPDIR"].ToString();
+                    string tmpdir = environmentVars["TMPDIR"]?.ToString();
                     if (tmpdir != null)
                     {
                         dirPath = CreateTelemetryDirectory(tmpdir);

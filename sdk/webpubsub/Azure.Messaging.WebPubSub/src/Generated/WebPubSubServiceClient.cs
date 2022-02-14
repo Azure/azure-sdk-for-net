@@ -18,10 +18,12 @@ namespace Azure.Messaging.WebPubSub
     public partial class WebPubSubServiceClient
     {
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly string _endpoint;
         private readonly string _hub;
         private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
@@ -60,12 +62,12 @@ namespace Azure.Messaging.WebPubSub
         internal virtual async Task<Response> GenerateClientTokenImplAsync(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -103,12 +105,12 @@ namespace Azure.Messaging.WebPubSub
         internal virtual Response GenerateClientTokenImpl(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -140,12 +142,12 @@ namespace Azure.Messaging.WebPubSub
         public virtual async Task<Response> CloseAllConnectionsAsync(IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseAllConnections");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseAllConnections");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCloseAllConnectionsRequest(excluded, reason, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -177,12 +179,12 @@ namespace Azure.Messaging.WebPubSub
         public virtual Response CloseAllConnections(IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseAllConnections");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseAllConnections");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCloseAllConnectionsRequest(excluded, reason, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -218,12 +220,12 @@ namespace Azure.Messaging.WebPubSub
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateSendToAllRequest(content, contentType, excluded, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -259,12 +261,12 @@ namespace Azure.Messaging.WebPubSub
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateSendToAllRequest(content, contentType, excluded, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -298,12 +300,12 @@ namespace Azure.Messaging.WebPubSub
         {
             Argument.AssertNotNull(connectionId, nameof(connectionId));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.ConnectionExistsImpl");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.ConnectionExistsImpl");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateConnectionExistsImplRequest(connectionId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -337,12 +339,12 @@ namespace Azure.Messaging.WebPubSub
         {
             Argument.AssertNotNull(connectionId, nameof(connectionId));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.ConnectionExistsImpl");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.ConnectionExistsImpl");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateConnectionExistsImplRequest(connectionId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -377,12 +379,12 @@ namespace Azure.Messaging.WebPubSub
         {
             Argument.AssertNotNull(connectionId, nameof(connectionId));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseConnection");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseConnection");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCloseConnectionRequest(connectionId, reason, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -417,12 +419,12 @@ namespace Azure.Messaging.WebPubSub
         {
             Argument.AssertNotNull(connectionId, nameof(connectionId));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseConnection");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseConnection");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCloseConnectionRequest(connectionId, reason, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -459,12 +461,12 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(connectionId, nameof(connectionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToConnection");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToConnection");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateSendToConnectionRequest(connectionId, content, contentType, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -501,12 +503,12 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(connectionId, nameof(connectionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToConnection");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToConnection");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateSendToConnectionRequest(connectionId, content, contentType, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -540,12 +542,12 @@ namespace Azure.Messaging.WebPubSub
         {
             Argument.AssertNotNull(group, nameof(group));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GroupExistsImpl");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.GroupExistsImpl");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGroupExistsImplRequest(group, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -579,12 +581,12 @@ namespace Azure.Messaging.WebPubSub
         {
             Argument.AssertNotNull(group, nameof(group));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GroupExistsImpl");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.GroupExistsImpl");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGroupExistsImplRequest(group, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -620,12 +622,12 @@ namespace Azure.Messaging.WebPubSub
         {
             Argument.AssertNotNull(group, nameof(group));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseGroupConnections");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseGroupConnections");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCloseGroupConnectionsRequest(group, excluded, reason, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -661,12 +663,12 @@ namespace Azure.Messaging.WebPubSub
         {
             Argument.AssertNotNull(group, nameof(group));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseGroupConnections");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseGroupConnections");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCloseGroupConnectionsRequest(group, excluded, reason, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -704,12 +706,12 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(group, nameof(group));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToGroup");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToGroup");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateSendToGroupRequest(group, content, contentType, excluded, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -747,12 +749,12 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(group, nameof(group));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToGroup");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToGroup");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateSendToGroupRequest(group, content, contentType, excluded, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -788,12 +790,12 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(group, nameof(group));
             Argument.AssertNotNull(connectionId, nameof(connectionId));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionToGroup");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionToGroup");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAddConnectionToGroupRequest(group, connectionId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -829,12 +831,12 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(group, nameof(group));
             Argument.AssertNotNull(connectionId, nameof(connectionId));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionToGroup");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionToGroup");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAddConnectionToGroupRequest(group, connectionId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -870,12 +872,12 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(group, nameof(group));
             Argument.AssertNotNull(connectionId, nameof(connectionId));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromGroup");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromGroup");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateRemoveConnectionFromGroupRequest(group, connectionId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -911,12 +913,12 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(group, nameof(group));
             Argument.AssertNotNull(connectionId, nameof(connectionId));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromGroup");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromGroup");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateRemoveConnectionFromGroupRequest(group, connectionId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -950,12 +952,12 @@ namespace Azure.Messaging.WebPubSub
         {
             Argument.AssertNotNull(userId, nameof(userId));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.UserExistsImpl");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.UserExistsImpl");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUserExistsImplRequest(userId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -989,12 +991,12 @@ namespace Azure.Messaging.WebPubSub
         {
             Argument.AssertNotNull(userId, nameof(userId));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.UserExistsImpl");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.UserExistsImpl");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUserExistsImplRequest(userId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1030,12 +1032,12 @@ namespace Azure.Messaging.WebPubSub
         {
             Argument.AssertNotNull(userId, nameof(userId));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseUserConnections");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseUserConnections");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCloseUserConnectionsRequest(userId, excluded, reason, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1071,12 +1073,12 @@ namespace Azure.Messaging.WebPubSub
         {
             Argument.AssertNotNull(userId, nameof(userId));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseUserConnections");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseUserConnections");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCloseUserConnectionsRequest(userId, excluded, reason, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1113,12 +1115,12 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(userId, nameof(userId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToUser");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToUser");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateSendToUserRequest(userId, content, contentType, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1155,12 +1157,12 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(userId, nameof(userId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToUser");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToUser");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateSendToUserRequest(userId, content, contentType, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1194,12 +1196,12 @@ namespace Azure.Messaging.WebPubSub
         {
             Argument.AssertNotNull(userId, nameof(userId));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromAllGroups");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromAllGroups");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateRemoveUserFromAllGroupsRequest(userId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1233,12 +1235,12 @@ namespace Azure.Messaging.WebPubSub
         {
             Argument.AssertNotNull(userId, nameof(userId));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromAllGroups");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromAllGroups");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateRemoveUserFromAllGroupsRequest(userId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1275,12 +1277,12 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(permission, nameof(permission));
             Argument.AssertNotNull(connectionId, nameof(connectionId));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GrantPermission");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.GrantPermission");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGrantPermissionRequest(permission, connectionId, targetName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1317,12 +1319,12 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(permission, nameof(permission));
             Argument.AssertNotNull(connectionId, nameof(connectionId));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GrantPermission");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.GrantPermission");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGrantPermissionRequest(permission, connectionId, targetName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1359,12 +1361,12 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(permission, nameof(permission));
             Argument.AssertNotNull(connectionId, nameof(connectionId));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RevokePermission");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RevokePermission");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateRevokePermissionRequest(permission, connectionId, targetName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1401,12 +1403,12 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(permission, nameof(permission));
             Argument.AssertNotNull(connectionId, nameof(connectionId));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RevokePermission");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RevokePermission");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateRevokePermissionRequest(permission, connectionId, targetName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1443,12 +1445,12 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(permission, nameof(permission));
             Argument.AssertNotNull(connectionId, nameof(connectionId));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CheckPermission");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CheckPermission");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCheckPermissionRequest(permission, connectionId, targetName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1485,12 +1487,12 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(permission, nameof(permission));
             Argument.AssertNotNull(connectionId, nameof(connectionId));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CheckPermission");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CheckPermission");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCheckPermissionRequest(permission, connectionId, targetName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
