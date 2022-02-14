@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(ddosProtectionPlanData.Tags, Does.ContainKey("tag2").WithValue("value2"));
 
             // patch
-            var tags = new TagsObject();
-            tags.Tags.Add("tag2", "value2");
-            ddosProtectionPlan = await ddosProtectionPlan.UpdateAsync(tags);
+            var tags = new Dictionary<string, string>();
+            tags.Add("tag2", "value2");
+            ddosProtectionPlan = await ddosProtectionPlan.SetTagsAsync(tags);
             ddosProtectionPlanData = ddosProtectionPlan.Data;
 
             ValidateCommon(ddosProtectionPlanData, name);

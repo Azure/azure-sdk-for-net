@@ -34,19 +34,17 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
 
         [TestCase]
         [RecordedTest]
+        [Ignore("This test needs updated since it doesn't create its own resources")]
         public async Task Update()
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("DeviceUpdateResourceGroup");
             DeviceUpdateAccount account = await rg.GetDeviceUpdateAccounts().GetAsync("AzureDeviceUpdateAccount");
             DeviceUpdateInstance instance = await account.GetDeviceUpdateInstances().GetAsync("Instance");
-            TagUpdateOptions updateOptions = new TagUpdateOptions();
-            updateOptions.Tags.Add("newTag", "newValue");
-            DeviceUpdateInstance updatedInstance = await instance.UpdateAsync(updateOptions);
-            ResourceDataHelper.AssertInstanceUpdate(updatedInstance, updateOptions);
-            updateOptions.Tags.Clear();
-            updatedInstance = await instance.UpdateAsync(updateOptions);
-            ResourceDataHelper.AssertInstanceUpdate(updatedInstance, updateOptions);
+            DeviceUpdateInstance updatedInstance = await instance.AddTagAsync("newTag", "newValue");
+            ResourceDataHelper.AssertInstanceUpdate(updatedInstance, "newTag", "newValue");
+            updatedInstance = await instance.RemoveTagAsync("newTag");
+            Assert.IsFalse(updatedInstance.Data.Tags.ContainsKey("newTag"));
         }
     }
 }
