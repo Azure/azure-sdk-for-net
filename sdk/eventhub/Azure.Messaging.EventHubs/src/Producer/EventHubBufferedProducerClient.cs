@@ -1972,7 +1972,7 @@ namespace Azure.Messaging.EventHubs.Producer
                 return activeHandlers.TryRemove(trackedTask, out _);
             },
             Tuple.Create(handlerTask, _activePublishingHandlers), CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
-            
+
             return continuationTask;
         }
 
