@@ -39,44 +39,62 @@ namespace Azure.Core.Tests
         [Test]
         public void AppliesResponseClassifierErrors()
         {
-            HttpMessage message = new HttpMessage(new MockRequest(), responseClassifier: null);
+            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
             RequestContext context = new RequestContext();
             context.AddClassifier(204, isError: true);
             message.ApplyRequestContext(context);
 
             message.Response = new MockResponse(204);
             Assert.IsTrue(message.ResponseClassifier.IsError(message));
+
+            message.Response = new MockResponse(304);
+            Assert.IsFalse(message.ResponseClassifier.IsError(message));
+
+            message.Response = new MockResponse(404);
+            Assert.IsTrue(message.ResponseClassifier.IsError(message));
+
+            message.Response = new MockResponse(500);
+            Assert.IsTrue(message.ResponseClassifier.IsError(message));
         }
 
         [Test]
         public void AppliesResponseClassifierNonErrors()
         {
-            HttpMessage message = new HttpMessage(new MockRequest(), responseClassifier: null);
+            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
             RequestContext context = new RequestContext();
             context.AddClassifier(404, isError: false);
             message.ApplyRequestContext(context);
 
+            message.Response = new MockResponse(304);
+            Assert.IsFalse(message.ResponseClassifier.IsError(message));
+
             message.Response = new MockResponse(404);
             Assert.IsFalse(message.ResponseClassifier.IsError(message));
+
+            message.Response = new MockResponse(500);
+            Assert.IsTrue(message.ResponseClassifier.IsError(message));
         }
 
         [Test]
         public void AppliesResponseClassifierBothErrorsAndNonErrors()
         {
-            HttpMessage message = new HttpMessage(new MockRequest(), responseClassifier: null);
+            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
             RequestContext context = new RequestContext();
             context.AddClassifier(404, isError: false);
             context.AddClassifier(301, isError: true);
             context.AddClassifier(304, isError: true);
             message.ApplyRequestContext(context);
 
-            message.Response = new MockResponse(404);
-            Assert.IsFalse(message.ResponseClassifier.IsError(message));
-
             message.Response = new MockResponse(301);
             Assert.IsTrue(message.ResponseClassifier.IsError(message));
 
             message.Response = new MockResponse(304);
+            Assert.IsTrue(message.ResponseClassifier.IsError(message));
+
+            message.Response = new MockResponse(404);
+            Assert.IsFalse(message.ResponseClassifier.IsError(message));
+
+            message.Response = new MockResponse(500);
             Assert.IsTrue(message.ResponseClassifier.IsError(message));
         }
 
@@ -88,9 +106,17 @@ namespace Azure.Core.Tests
             message.Response = new MockResponse(404);
             Assert.IsTrue(message.ResponseClassifier.IsError(message));
 
+            // This replaces the base classifier with one that only thinks 404 is a non-error
+            // and doesn't have opinions on anything else.
             message.ResponseClassifier = new StatusCodeClassifier(404, false);
 
+            message.Response = new MockResponse(304);
+            Assert.IsFalse(message.ResponseClassifier.IsError(message));
+
             message.Response = new MockResponse(404);
+            Assert.IsFalse(message.ResponseClassifier.IsError(message));
+
+            message.Response = new MockResponse(500);
             Assert.IsFalse(message.ResponseClassifier.IsError(message));
         }
 
@@ -106,12 +132,18 @@ namespace Azure.Core.Tests
             context.AddClassifier(new StatusCodeMessageClassifier(304, true));
 
             message.ApplyRequestContext(context);
+
+            // This replaces the base classifier with one that only thinks 404 is a non-error
+            // and doesn't have opinions on anything else.
             message.ResponseClassifier = new StatusCodeClassifier(404, false);
 
             message.Response = new MockResponse(304);
             Assert.IsTrue(message.ResponseClassifier.IsError(message));
 
             message.Response = new MockResponse(404);
+            Assert.IsFalse(message.ResponseClassifier.IsError(message));
+
+            message.Response = new MockResponse(500);
             Assert.IsFalse(message.ResponseClassifier.IsError(message));
         }
 
