@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotDomainOwnershipIdentifier(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteSlotDomainOwnershipIdentifierWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string siteSlotDomainOwnershipIdentifierWebAppsApiVersion);
             _siteSlotDomainOwnershipIdentifierWebAppsRestClient = new WebAppsRestOperations(_siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotDomainOwnershipIdentifierWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

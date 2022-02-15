@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal ScmSiteBasicPublishingCredentialsPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _scmSiteBasicPublishingCredentialsPolicyWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string scmSiteBasicPublishingCredentialsPolicyWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string scmSiteBasicPublishingCredentialsPolicyWebAppsApiVersion);
             _scmSiteBasicPublishingCredentialsPolicyWebAppsRestClient = new WebAppsRestOperations(_scmSiteBasicPublishingCredentialsPolicyWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, scmSiteBasicPublishingCredentialsPolicyWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

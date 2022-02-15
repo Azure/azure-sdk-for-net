@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteHybridConnectionNamespaceRelayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteHybridConnectionNamespaceRelayWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteHybridConnectionNamespaceRelay.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteHybridConnectionNamespaceRelay.ResourceType, out string siteHybridConnectionNamespaceRelayWebAppsApiVersion);
+            TryGetApiVersion(SiteHybridConnectionNamespaceRelay.ResourceType, out string siteHybridConnectionNamespaceRelayWebAppsApiVersion);
             _siteHybridConnectionNamespaceRelayWebAppsRestClient = new WebAppsRestOperations(_siteHybridConnectionNamespaceRelayWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteHybridConnectionNamespaceRelayWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

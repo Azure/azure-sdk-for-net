@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotDetector(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotDetectorDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteSlotDetectorDiagnosticsApiVersion);
+            TryGetApiVersion(ResourceType, out string siteSlotDetectorDiagnosticsApiVersion);
             _siteSlotDetectorDiagnosticsRestClient = new DiagnosticsRestOperations(_siteSlotDetectorDiagnosticsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotDetectorDiagnosticsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

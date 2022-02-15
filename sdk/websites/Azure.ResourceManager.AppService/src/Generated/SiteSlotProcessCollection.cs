@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotProcessCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotProcessWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotProcess.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteSlotProcess.ResourceType, out string siteSlotProcessWebAppsApiVersion);
+            TryGetApiVersion(SiteSlotProcess.ResourceType, out string siteSlotProcessWebAppsApiVersion);
             _siteSlotProcessWebAppsRestClient = new WebAppsRestOperations(_siteSlotProcessWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotProcessWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

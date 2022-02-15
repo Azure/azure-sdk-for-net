@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteDiagnosticDetectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteDiagnosticDetectorDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteDiagnosticDetector.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteDiagnosticDetector.ResourceType, out string siteDiagnosticDetectorDiagnosticsApiVersion);
+            TryGetApiVersion(SiteDiagnosticDetector.ResourceType, out string siteDiagnosticDetectorDiagnosticsApiVersion);
             _siteDiagnosticDetectorDiagnosticsRestClient = new DiagnosticsRestOperations(_siteDiagnosticDetectorDiagnosticsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteDiagnosticDetectorDiagnosticsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

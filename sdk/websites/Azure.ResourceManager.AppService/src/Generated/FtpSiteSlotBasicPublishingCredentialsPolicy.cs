@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal FtpSiteSlotBasicPublishingCredentialsPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _ftpSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string ftpSiteSlotBasicPublishingCredentialsPolicyWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string ftpSiteSlotBasicPublishingCredentialsPolicyWebAppsApiVersion);
             _ftpSiteSlotBasicPublishingCredentialsPolicyWebAppsRestClient = new WebAppsRestOperations(_ftpSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, ftpSiteSlotBasicPublishingCredentialsPolicyWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

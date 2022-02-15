@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotPrivateEndpointConnectionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotPrivateEndpointConnection.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteSlotPrivateEndpointConnection.ResourceType, out string siteSlotPrivateEndpointConnectionWebAppsApiVersion);
+            TryGetApiVersion(SiteSlotPrivateEndpointConnection.ResourceType, out string siteSlotPrivateEndpointConnectionWebAppsApiVersion);
             _siteSlotPrivateEndpointConnectionWebAppsRestClient = new WebAppsRestOperations(_siteSlotPrivateEndpointConnectionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotPrivateEndpointConnectionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

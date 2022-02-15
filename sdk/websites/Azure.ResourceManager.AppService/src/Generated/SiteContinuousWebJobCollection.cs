@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteContinuousWebJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteContinuousWebJobWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteContinuousWebJob.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteContinuousWebJob.ResourceType, out string siteContinuousWebJobWebAppsApiVersion);
+            TryGetApiVersion(SiteContinuousWebJob.ResourceType, out string siteContinuousWebJobWebAppsApiVersion);
             _siteContinuousWebJobWebAppsRestClient = new WebAppsRestOperations(_siteContinuousWebJobWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteContinuousWebJobWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

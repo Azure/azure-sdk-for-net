@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotTriggeredWebJobHistoryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotTriggeredWebJobHistory.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteSlotTriggeredWebJobHistory.ResourceType, out string siteSlotTriggeredWebJobHistoryWebAppsApiVersion);
+            TryGetApiVersion(SiteSlotTriggeredWebJobHistory.ResourceType, out string siteSlotTriggeredWebJobHistoryWebAppsApiVersion);
             _siteSlotTriggeredWebJobHistoryWebAppsRestClient = new WebAppsRestOperations(_siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotTriggeredWebJobHistoryWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

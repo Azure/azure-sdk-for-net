@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteBackupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteBackupWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteBackup.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteBackup.ResourceType, out string siteBackupWebAppsApiVersion);
+            TryGetApiVersion(SiteBackup.ResourceType, out string siteBackupWebAppsApiVersion);
             _siteBackupWebAppsRestClient = new WebAppsRestOperations(_siteBackupWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteBackupWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

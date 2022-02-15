@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.AppService
         internal WebSiteConfig(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _webSiteConfigWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string webSiteConfigWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string webSiteConfigWebAppsApiVersion);
             _webSiteConfigWebAppsRestClient = new WebAppsRestOperations(_webSiteConfigWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webSiteConfigWebAppsApiVersion);
             _siteConfigSnapshotWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteConfigSnapshot.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteConfigSnapshot.ResourceType, out string siteConfigSnapshotWebAppsApiVersion);
+            TryGetApiVersion(SiteConfigSnapshot.ResourceType, out string siteConfigSnapshotWebAppsApiVersion);
             _siteConfigSnapshotWebAppsRestClient = new WebAppsRestOperations(_siteConfigSnapshotWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteConfigSnapshotWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

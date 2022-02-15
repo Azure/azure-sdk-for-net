@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService
         internal AppServiceCertificateOrder(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _appServiceCertificateOrderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string appServiceCertificateOrderApiVersion);
+            TryGetApiVersion(ResourceType, out string appServiceCertificateOrderApiVersion);
             _appServiceCertificateOrderRestClient = new AppServiceCertificateOrdersRestOperations(_appServiceCertificateOrderClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, appServiceCertificateOrderApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

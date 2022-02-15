@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         internal AppServicePlan(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _appServicePlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string appServicePlanApiVersion);
+            TryGetApiVersion(ResourceType, out string appServicePlanApiVersion);
             _appServicePlanRestClient = new AppServicePlansRestOperations(_appServicePlanClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, appServicePlanApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

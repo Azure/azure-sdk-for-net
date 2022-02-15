@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         internal StaticSitePrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _staticSitePrivateEndpointConnectionStaticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSitePrivateEndpointConnection.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(StaticSitePrivateEndpointConnection.ResourceType, out string staticSitePrivateEndpointConnectionStaticSitesApiVersion);
+            TryGetApiVersion(StaticSitePrivateEndpointConnection.ResourceType, out string staticSitePrivateEndpointConnectionStaticSitesApiVersion);
             _staticSitePrivateEndpointConnectionStaticSitesRestClient = new StaticSitesRestOperations(_staticSitePrivateEndpointConnectionStaticSitesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, staticSitePrivateEndpointConnectionStaticSitesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

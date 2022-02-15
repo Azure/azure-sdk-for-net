@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotHostNameBindingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotHostNameBindingWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotHostNameBinding.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteSlotHostNameBinding.ResourceType, out string siteSlotHostNameBindingWebAppsApiVersion);
+            TryGetApiVersion(SiteSlotHostNameBinding.ResourceType, out string siteSlotHostNameBindingWebAppsApiVersion);
             _siteSlotHostNameBindingWebAppsRestClient = new WebAppsRestOperations(_siteSlotHostNameBindingWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotHostNameBindingWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

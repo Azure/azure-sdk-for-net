@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal User(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _userClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string userApiVersion);
+            TryGetApiVersion(ResourceType, out string userApiVersion);
             _userRestClient = new WebSiteManagementRestOperations(_userClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, userApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
