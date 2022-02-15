@@ -12,7 +12,7 @@ steps:
       # Add config of disable the quote and encoding on unix path. 
       # Ref: https://github.com/msysgit/msysgit/wiki/Git-for-Windows-Unicode-Support#disable-quoted-file-names
       # Ref: https://github.com/msysgit/msysgit/wiki/Git-for-Windows-Unicode-Support#disable-commit-message-transcoding
-      $changedFiles = git diff -c core.quotepath=off -c i18n.logoutputencoding=utf-8 $targetBranch HEAD --name-only --diff-filter=d
+      $changedFiles = git -c core.quotepath=off -c i18n.logoutputencoding=utf-8 diff origin/main HEAD --name-only --diff-filter=d
       $changedFiles | ForEach-Object { Add-Content -Path "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$_"}
     }
     else {
