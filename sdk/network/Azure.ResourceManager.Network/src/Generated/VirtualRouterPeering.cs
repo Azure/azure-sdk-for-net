@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
         internal VirtualRouterPeering(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualRouterPeeringClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string virtualRouterPeeringApiVersion);
+            TryGetApiVersion(ResourceType, out string virtualRouterPeeringApiVersion);
             _virtualRouterPeeringRestClient = new VirtualRouterPeeringsRestOperations(_virtualRouterPeeringClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualRouterPeeringApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

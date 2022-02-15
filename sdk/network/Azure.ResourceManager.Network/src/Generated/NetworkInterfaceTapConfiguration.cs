@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkInterfaceTapConfiguration(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _networkInterfaceTapConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string networkInterfaceTapConfigurationApiVersion);
+            TryGetApiVersion(ResourceType, out string networkInterfaceTapConfigurationApiVersion);
             _networkInterfaceTapConfigurationRestClient = new NetworkInterfaceTapConfigurationsRestOperations(_networkInterfaceTapConfigurationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkInterfaceTapConfigurationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

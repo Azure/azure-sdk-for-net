@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal IpGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _ipGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", IpGroup.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(IpGroup.ResourceType, out string ipGroupApiVersion);
+            TryGetApiVersion(IpGroup.ResourceType, out string ipGroupApiVersion);
             _ipGroupRestClient = new IpGroupsRestOperations(_ipGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, ipGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

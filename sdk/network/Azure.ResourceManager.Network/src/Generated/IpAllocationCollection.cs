@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal IpAllocationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _ipAllocationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", IpAllocation.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(IpAllocation.ResourceType, out string ipAllocationApiVersion);
+            TryGetApiVersion(IpAllocation.ResourceType, out string ipAllocationApiVersion);
             _ipAllocationRestClient = new IpAllocationsRestOperations(_ipAllocationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, ipAllocationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

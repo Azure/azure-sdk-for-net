@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal PrivateEndpointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _privateEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", PrivateEndpoint.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(PrivateEndpoint.ResourceType, out string privateEndpointApiVersion);
+            TryGetApiVersion(PrivateEndpoint.ResourceType, out string privateEndpointApiVersion);
             _privateEndpointRestClient = new PrivateEndpointsRestOperations(_privateEndpointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, privateEndpointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
