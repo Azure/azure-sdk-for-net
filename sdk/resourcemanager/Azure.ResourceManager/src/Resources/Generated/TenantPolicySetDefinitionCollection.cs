@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources
         internal TenantPolicySetDefinitionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _tenantPolicySetDefinitionPolicySetDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", TenantPolicySetDefinition.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(TenantPolicySetDefinition.ResourceType, out string tenantPolicySetDefinitionPolicySetDefinitionsApiVersion);
+            TryGetApiVersion(TenantPolicySetDefinition.ResourceType, out string tenantPolicySetDefinitionPolicySetDefinitionsApiVersion);
             _tenantPolicySetDefinitionPolicySetDefinitionsRestClient = new PolicySetDefinitionsRestOperations(_tenantPolicySetDefinitionPolicySetDefinitionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tenantPolicySetDefinitionPolicySetDefinitionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources
         internal PolicyAssignmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _policyAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", PolicyAssignment.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(PolicyAssignment.ResourceType, out string policyAssignmentApiVersion);
+            TryGetApiVersion(PolicyAssignment.ResourceType, out string policyAssignmentApiVersion);
             _policyAssignmentRestClient = new PolicyAssignmentsRestOperations(_policyAssignmentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, policyAssignmentApiVersion);
         }
 

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources
         internal ManagementLockCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managementLockClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ManagementLock.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ManagementLock.ResourceType, out string managementLockApiVersion);
+            TryGetApiVersion(ManagementLock.ResourceType, out string managementLockApiVersion);
             _managementLockRestClient = new ManagementLocksRestOperations(_managementLockClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managementLockApiVersion);
         }
 

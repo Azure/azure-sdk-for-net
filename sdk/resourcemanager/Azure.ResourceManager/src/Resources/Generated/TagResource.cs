@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources
         internal TagResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _tagResourceTagsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string tagResourceTagsApiVersion);
+            TryGetApiVersion(ResourceType, out string tagResourceTagsApiVersion);
             _tagResourceTagsRestClient = new TagsRestOperations(_tagResourceTagsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tagResourceTagsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

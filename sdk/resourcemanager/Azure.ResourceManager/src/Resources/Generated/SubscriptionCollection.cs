@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources
         internal SubscriptionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _subscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Subscription.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(Subscription.ResourceType, out string subscriptionApiVersion);
+            TryGetApiVersion(Subscription.ResourceType, out string subscriptionApiVersion);
             _subscriptionRestClient = new SubscriptionsRestOperations(_subscriptionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
