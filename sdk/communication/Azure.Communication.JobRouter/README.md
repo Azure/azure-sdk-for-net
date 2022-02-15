@@ -87,18 +87,18 @@ An exception policy controls the behavior of a Job based on a trigger and execut
 ### Distribution Policy
 Before we can create a Queue, we need a Distribution Policy.
 
-```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_DistributionPolicy
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL1D_Async
 var distributionPolicy = await routerClient.SetDistributionPolicyAsync(
     id: "distribution-policy-1",
     name: "My Distribution Policy",
-    offerTTL: TimeSpan.FromSeconds(30),
+    offerTTL: TimeSpan.FromDays(1),
     mode: new LongestIdleMode()
 );
 ```
 
 ### Queue
 Next, we can create the queue.
-```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Queue
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateQueue_Async
 var queue = await routerClient.SetQueueAsync(
     id: "queue-1",
     name: "My Queue",
@@ -108,7 +108,7 @@ var queue = await routerClient.SetQueueAsync(
 
 ### Job
 Now, we can submit a job directly to that queue, with a worker selector the requires the worker to have the label `Some-Skill` greater than 10.
-```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Job
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateJobDirectQAssign_Async
 var job = await routerClient.CreateJobAsync(
     channelId: "my-channel",
     channelReference: "12345",
@@ -122,7 +122,7 @@ var job = await routerClient.CreateJobAsync(
 
 ### Worker
 Now, we register a worker to receive work from that queue, with a label of `Some-Skill` equal to 11.
-```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_RegisterWorker
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_RegisterWorker_Async
 var worker = await routerClient.RegisterWorkerAsync(
     id: "worker-1",
     queueIds: new[] { queue.Value.Id },
@@ -141,7 +141,7 @@ var worker = await routerClient.RegisterWorkerAsync(
 ### Offer
 We should get a [RouterWorkerOfferIssued][offer_issued_event_schema] from our [EventGrid subscription][subscribe_events].
 However, we could also wait a few seconds and then query the worker directly against the JobRouter API to see if an offer was issued to it.
-```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_QueryWorker
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_QueryWorker_Async
 var result = await routerClient.GetWorkerAsync(worker.Value.Id);
 foreach (var offer in result.Value.Offers)
 {

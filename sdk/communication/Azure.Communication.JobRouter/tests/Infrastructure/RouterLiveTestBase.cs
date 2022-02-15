@@ -61,7 +61,9 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             Assert.AreEqual(distributionPolicyId, response.DistributionPolicyId);
             if (queueLabels != default)
             {
-                Assert.AreEqual(queueLabels, response.Labels);
+                Assert.True(response.Labels.ContainsKey("Id"));
+                Assert.AreEqual(queueId, response.Labels["Id"]);
+                Assert.IsTrue(response.Labels.IsEqual(queueLabels, "Id"));
             }
 
             if (exceptionPolicyId != default)
@@ -77,7 +79,13 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             Assert.AreEqual(workerId, response.Id);
             Assert.AreEqual(queueAssignmentList.Count(), response.QueueAssignments.Count);
             Assert.AreEqual(totalCapacity, response.TotalCapacity);
-            Assert.AreEqual(workerLabels, response.Labels);
+
+            if (workerLabels != default)
+            {
+                Assert.True(response.Labels.ContainsKey("Id"));
+                Assert.AreEqual(workerId, response.Labels["Id"]);
+                Assert.IsTrue(response.Labels.IsEqual(workerLabels, "Id"));
+            }
 
             if (channelConfigList != default)
             {
