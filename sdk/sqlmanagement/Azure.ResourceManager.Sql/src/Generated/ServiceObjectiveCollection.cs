@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
         internal ServiceObjectiveCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serviceObjectiveClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServiceObjective.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ServiceObjective.ResourceType, out string serviceObjectiveApiVersion);
+            TryGetApiVersion(ServiceObjective.ResourceType, out string serviceObjectiveApiVersion);
             _serviceObjectiveRestClient = new ServiceObjectivesRestOperations(_serviceObjectiveClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serviceObjectiveApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

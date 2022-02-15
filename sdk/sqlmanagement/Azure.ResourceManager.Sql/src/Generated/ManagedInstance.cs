@@ -60,15 +60,15 @@ namespace Azure.ResourceManager.Sql
         internal ManagedInstance(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managedInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string managedInstanceApiVersion);
+            TryGetApiVersion(ResourceType, out string managedInstanceApiVersion);
             _managedInstanceRestClient = new ManagedInstancesRestOperations(_managedInstanceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceApiVersion);
             _managedDatabaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedDatabase.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ManagedDatabase.ResourceType, out string managedDatabaseApiVersion);
+            TryGetApiVersion(ManagedDatabase.ResourceType, out string managedDatabaseApiVersion);
             _managedDatabaseRestClient = new ManagedDatabasesRestOperations(_managedDatabaseClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedDatabaseApiVersion);
             _managedInstanceTdeCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _managedInstanceTdeCertificatesRestClient = new ManagedInstanceTdeCertificatesRestOperations(_managedInstanceTdeCertificatesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _serverTrustGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerTrustGroup.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ServerTrustGroup.ResourceType, out string serverTrustGroupApiVersion);
+            TryGetApiVersion(ServerTrustGroup.ResourceType, out string serverTrustGroupApiVersion);
             _serverTrustGroupRestClient = new ServerTrustGroupsRestOperations(_serverTrustGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverTrustGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

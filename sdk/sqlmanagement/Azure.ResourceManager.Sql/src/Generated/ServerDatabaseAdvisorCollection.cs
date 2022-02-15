@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
         internal ServerDatabaseAdvisorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverDatabaseAdvisorDatabaseAdvisorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerDatabaseAdvisor.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ServerDatabaseAdvisor.ResourceType, out string serverDatabaseAdvisorDatabaseAdvisorsApiVersion);
+            TryGetApiVersion(ServerDatabaseAdvisor.ResourceType, out string serverDatabaseAdvisorDatabaseAdvisorsApiVersion);
             _serverDatabaseAdvisorDatabaseAdvisorsRestClient = new DatabaseAdvisorsRestOperations(_serverDatabaseAdvisorDatabaseAdvisorsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDatabaseAdvisorDatabaseAdvisorsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

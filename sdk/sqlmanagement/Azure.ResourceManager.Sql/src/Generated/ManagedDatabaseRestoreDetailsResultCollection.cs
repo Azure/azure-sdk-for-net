@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sql
         internal ManagedDatabaseRestoreDetailsResultCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedDatabaseRestoreDetailsResult.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ManagedDatabaseRestoreDetailsResult.ResourceType, out string managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsApiVersion);
+            TryGetApiVersion(ManagedDatabaseRestoreDetailsResult.ResourceType, out string managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsApiVersion);
             _managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsRestClient = new ManagedDatabaseRestoreDetailsRestOperations(_managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

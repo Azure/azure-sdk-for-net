@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         internal DatabaseSecurityAlertPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _databaseSecurityAlertPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", DatabaseSecurityAlertPolicy.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(DatabaseSecurityAlertPolicy.ResourceType, out string databaseSecurityAlertPolicyApiVersion);
+            TryGetApiVersion(DatabaseSecurityAlertPolicy.ResourceType, out string databaseSecurityAlertPolicyApiVersion);
             _databaseSecurityAlertPolicyRestClient = new DatabaseSecurityAlertPoliciesRestOperations(_databaseSecurityAlertPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseSecurityAlertPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

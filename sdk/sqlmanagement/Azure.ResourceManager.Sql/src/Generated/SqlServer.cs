@@ -66,18 +66,18 @@ namespace Azure.ResourceManager.Sql
         internal SqlServer(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sqlServerServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string sqlServerServersApiVersion);
+            TryGetApiVersion(ResourceType, out string sqlServerServersApiVersion);
             _sqlServerServersRestClient = new ServersRestOperations(_sqlServerServersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlServerServersApiVersion);
             _sqlDatabaseDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDatabase.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SqlDatabase.ResourceType, out string sqlDatabaseDatabasesApiVersion);
+            TryGetApiVersion(SqlDatabase.ResourceType, out string sqlDatabaseDatabasesApiVersion);
             _sqlDatabaseDatabasesRestClient = new DatabasesRestOperations(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlDatabaseDatabasesApiVersion);
             _replicationLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ReplicationLink.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ReplicationLink.ResourceType, out string replicationLinkApiVersion);
+            TryGetApiVersion(ReplicationLink.ResourceType, out string replicationLinkApiVersion);
             _replicationLinkRestClient = new ReplicationLinksRestOperations(_replicationLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, replicationLinkApiVersion);
             _serverUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _serverUsagesRestClient = new ServerUsagesRestOperations(_serverUsagesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _firewallRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", FirewallRule.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(FirewallRule.ResourceType, out string firewallRuleApiVersion);
+            TryGetApiVersion(FirewallRule.ResourceType, out string firewallRuleApiVersion);
             _firewallRuleRestClient = new FirewallRulesRestOperations(_firewallRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, firewallRuleApiVersion);
             _serverOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _serverOperationsRestClient = new ServerRestOperations(_serverOperationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);

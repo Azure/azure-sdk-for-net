@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         internal ServerKey(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverKeyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string serverKeyApiVersion);
+            TryGetApiVersion(ResourceType, out string serverKeyApiVersion);
             _serverKeyRestClient = new ServerKeysRestOperations(_serverKeyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverKeyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

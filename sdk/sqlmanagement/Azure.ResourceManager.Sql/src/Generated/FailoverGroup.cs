@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql
         internal FailoverGroup(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _failoverGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string failoverGroupApiVersion);
+            TryGetApiVersion(ResourceType, out string failoverGroupApiVersion);
             _failoverGroupRestClient = new FailoverGroupsRestOperations(_failoverGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, failoverGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         internal ServerAzureADAdministratorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverAzureADAdministratorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerAzureADAdministrator.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ServerAzureADAdministrator.ResourceType, out string serverAzureADAdministratorApiVersion);
+            TryGetApiVersion(ServerAzureADAdministrator.ResourceType, out string serverAzureADAdministratorApiVersion);
             _serverAzureADAdministratorRestClient = new ServerAzureADAdministratorsRestOperations(_serverAzureADAdministratorClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverAzureADAdministratorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

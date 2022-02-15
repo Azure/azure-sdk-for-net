@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql
             _longTermRetentionServerName = longTermRetentionServerName;
             _longTermRetentionDatabaseName = longTermRetentionDatabaseName;
             _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceGroupLongTermRetentionBackup.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceGroupLongTermRetentionBackup.ResourceType, out string resourceGroupLongTermRetentionBackupLongTermRetentionBackupsApiVersion);
+            TryGetApiVersion(ResourceGroupLongTermRetentionBackup.ResourceType, out string resourceGroupLongTermRetentionBackupLongTermRetentionBackupsApiVersion);
             _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsRestClient = new LongTermRetentionBackupsRestOperations(_resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceGroupLongTermRetentionBackupLongTermRetentionBackupsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
         internal ServerJobAgentJobVersionStepCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverJobAgentJobVersionStepJobStepsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerJobAgentJobVersionStep.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ServerJobAgentJobVersionStep.ResourceType, out string serverJobAgentJobVersionStepJobStepsApiVersion);
+            TryGetApiVersion(ServerJobAgentJobVersionStep.ResourceType, out string serverJobAgentJobVersionStepJobStepsApiVersion);
             _serverJobAgentJobVersionStepJobStepsRestClient = new JobStepsRestOperations(_serverJobAgentJobVersionStepJobStepsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverJobAgentJobVersionStepJobStepsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

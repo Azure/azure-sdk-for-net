@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         internal LedgerDigestUploadsCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _ledgerDigestUploadsLedgerDigestUploadsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", LedgerDigestUploads.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(LedgerDigestUploads.ResourceType, out string ledgerDigestUploadsLedgerDigestUploadsApiVersion);
+            TryGetApiVersion(LedgerDigestUploads.ResourceType, out string ledgerDigestUploadsLedgerDigestUploadsApiVersion);
             _ledgerDigestUploadsLedgerDigestUploadsRestClient = new LedgerDigestUploadsRestOperations(_ledgerDigestUploadsLedgerDigestUploadsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, ledgerDigestUploadsLedgerDigestUploadsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

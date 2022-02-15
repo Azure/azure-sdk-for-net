@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         internal ServerAzureADOnlyAuthenticationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverAzureADOnlyAuthenticationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerAzureADOnlyAuthentication.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ServerAzureADOnlyAuthentication.ResourceType, out string serverAzureADOnlyAuthenticationApiVersion);
+            TryGetApiVersion(ServerAzureADOnlyAuthentication.ResourceType, out string serverAzureADOnlyAuthenticationApiVersion);
             _serverAzureADOnlyAuthenticationRestClient = new ServerAzureADOnlyAuthenticationsRestOperations(_serverAzureADOnlyAuthenticationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverAzureADOnlyAuthenticationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

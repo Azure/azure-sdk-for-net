@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         internal ManagedRestorableDroppedDbBackupShortTermRetentionPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managedRestorableDroppedDbBackupShortTermRetentionPolicyManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedRestorableDroppedDbBackupShortTermRetentionPolicy.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ManagedRestorableDroppedDbBackupShortTermRetentionPolicy.ResourceType, out string managedRestorableDroppedDbBackupShortTermRetentionPolicyManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesApiVersion);
+            TryGetApiVersion(ManagedRestorableDroppedDbBackupShortTermRetentionPolicy.ResourceType, out string managedRestorableDroppedDbBackupShortTermRetentionPolicyManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesApiVersion);
             _managedRestorableDroppedDbBackupShortTermRetentionPolicyManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesRestClient = new ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesRestOperations(_managedRestorableDroppedDbBackupShortTermRetentionPolicyManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedRestorableDroppedDbBackupShortTermRetentionPolicyManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
