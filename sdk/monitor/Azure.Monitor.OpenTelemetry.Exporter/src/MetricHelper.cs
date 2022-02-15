@@ -10,7 +10,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal class MetricHelper
     {
-        private const int version = 2;
+        private const int Version = 2;
 
         internal static List<TelemetryItem> OtelToAzureMonitorMetrics(Batch<Metric> batch, string roleName, string roleInstance, string instrumentationKey)
         {
@@ -26,14 +26,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         string name = "Metric";
                         string utcTime = TelemetryItem.FormatUtcTimestamp(metricPoint.EndTime.UtcDateTime);
                         telemetryItem = new TelemetryItem(name, utcTime);
-                        telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
+                        telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion;
                         telemetryItem.InstrumentationKey = instrumentationKey;
                         telemetryItem.SetResource(roleName, roleInstance);
 
                         telemetryItem.Data = new MonitorBase
                         {
                             BaseType = "MetricData",
-                            BaseData = new MetricsData(version, metric, ref metricPoint)
+                            BaseData = new MetricsData(Version, metric, ref metricPoint)
                         };
                         telemetryItems.Add(telemetryItem);
                     }

@@ -13,10 +13,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal class AzureMonitorLogExporter : BaseExporter<LogRecord>
     {
-        private readonly ITransmitter Transmitter;
-        private readonly AzureMonitorExporterOptions options;
-        private readonly string instrumentationKey;
-        private readonly ResourceParser resourceParser;
+        private readonly ITransmitter _transmitter;
+        private readonly AzureMonitorExporterOptions _options;
+        private readonly string _instrumentationKey;
+        private readonly ResourceParser _resourceParser;
 
         public AzureMonitorLogExporter(AzureMonitorExporterOptions options) : this(options, new AzureMonitorTransmitter(options))
         {
@@ -24,10 +24,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         internal AzureMonitorLogExporter(AzureMonitorExporterOptions options, ITransmitter transmitter)
         {
-            this.options = options ?? throw new ArgumentNullException(nameof(options));
-            ConnectionString.ConnectionStringParser.GetValues(this.options.ConnectionString, out this.instrumentationKey, out _);
-            this.Transmitter = transmitter;
-            resourceParser = new ResourceParser();
+            _options = options ?? throw new ArgumentNullException(nameof(options));
+            ConnectionString.ConnectionStringParser.GetValues(_options.ConnectionString, out _instrumentationKey, out _);
+            _transmitter = transmitter;
+            _resourceParser = new ResourceParser();
         }
 
         /// <inheritdoc/>
@@ -38,13 +38,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                var resource = this.ParentProvider.GetResource();
-                resourceParser.UpdateRoleNameAndInstance(resource);
-                var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, resourceParser.RoleName, resourceParser.RoleInstance, instrumentationKey);
+                var resource = ParentProvider.GetResource();
+                _resourceParser.UpdateRoleNameAndInstance(resource);
+                var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, _resourceParser.RoleName, _resourceParser.RoleInstance, _instrumentationKey);
 
                 // TODO: Handle return value, it can be converted as metrics.
                 // TODO: Validate CancellationToken and async pattern here.
-                this.Transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
+                _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
                 return ExportResult.Success;
             }
             catch (Exception ex)
