@@ -18,8 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
 
-            var message = LogsHelper.GetMessage(logRecord);
-            LogsHelper.SetLogStateValuesToProperties(logRecord, Properties);
+            var message = LogsHelper.GetMessageAndSetProperties(logRecord, Properties);
 
             SeverityLevel = LogsHelper.GetSeverityLevel(logRecord.LogLevel);
             ProblemId = LogsHelper.GetProblemId(logRecord.Exception);
