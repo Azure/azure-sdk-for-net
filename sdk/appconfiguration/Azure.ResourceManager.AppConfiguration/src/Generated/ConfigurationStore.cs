@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppConfiguration
         internal ConfigurationStore(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _configurationStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string configurationStoreApiVersion);
+            TryGetApiVersion(ResourceType, out string configurationStoreApiVersion);
             _configurationStoreRestClient = new ConfigurationStoresRestOperations(_configurationStoreClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, configurationStoreApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
