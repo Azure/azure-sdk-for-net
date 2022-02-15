@@ -72,7 +72,7 @@ DeviceUpdateAccount account = await resourceGroup.GetDeviceUpdateAccounts().GetA
 DeviceUpdateInstanceCollection instanceCollection = account.GetDeviceUpdateInstances();
 // Now we can get the instance with GetAsync()
 DeviceUpdateInstance instance = await instanceCollection.GetAsync("myInstance");
-// With AddTagAsync(), we can update the instance
+// With AddTagAsync(), we can add tag to the instance
 instance = await instance.AddTagAsync("newTag", "newValue");
 ```
 
