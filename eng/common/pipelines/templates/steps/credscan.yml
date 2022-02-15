@@ -9,6 +9,7 @@ steps:
     if ("$(Build.Reason)" -eq 'PullRequest') {
       $targetBranch = "origin/$(System.PullRequest.TargetBranch)" -replace "refs/heads/"
 
+      git config core.quotepath off
       # Disable the unix path encoding.
       git config --unset i18n.logoutputencoding
 
