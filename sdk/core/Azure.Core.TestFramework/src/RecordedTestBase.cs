@@ -6,17 +6,27 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Reflection;
+using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using NUnit.Framework.Internal;
 
 namespace Azure.Core.TestFramework
 {
     public abstract class RecordedTestBase : ClientTestBase
     {
+        static RecordedTestBase()
+        {
+            // remove once https://github.com/Azure/azure-sdk-for-net/pull/25328 is shipped
+            ServicePointManager.Expect100Continue = false;
+        }
+
         protected RecordedTestSanitizer Sanitizer { get; set; }
 
-        protected RecordMatcher Matcher { get; set; }
+        protected internal RecordMatcher Matcher { get; set; }
 
         public TestRecording Recording { get; private set; }
 
@@ -54,49 +64,85 @@ namespace Azure.Core.TestFramework
             }
         }
         private bool _saveDebugRecordingsOnFailure;
+
+        private TestProxy _proxy;
+
+        private readonly bool _useLegacyTransport;
+        private DateTime _testStartTime;
+
         protected bool ValidateClientInstrumentation { get; set; }
 
-        protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
+        protected override DateTime TestStartTime => _testStartTime;
+
+        protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null, bool useLegacyTransport = false) : base(isAsync)
         {
             Sanitizer = new RecordedTestSanitizer();
             Matcher = new RecordMatcher();
             Mode = mode ?? TestEnvironment.GlobalTestMode;
+            _useLegacyTransport = useLegacyTransport;
+        }
+
+        protected async Task<TestRecording> CreateTestRecordingAsync(RecordedTestMode mode, string sessionFile,
+            RecordedTestSanitizer sanitizer, RecordMatcher matcher)
+        {
+            var recording = new TestRecording(mode, sessionFile, sanitizer, matcher, _proxy, _useLegacyTransport);
+            await recording.InitializeProxySettingsAsync();
+            return recording;
         }
 
         public T InstrumentClientOptions<T>(T clientOptions, TestRecording recording = default) where T : ClientOptions
         {
             recording ??= Recording;
-            clientOptions.Transport = recording.CreateTransport(clientOptions.Transport);
+
             if (Mode == RecordedTestMode.Playback)
             {
                 // Not making the timeout zero so retry code still goes async
                 clientOptions.Retry.Delay = TimeSpan.FromMilliseconds(10);
                 clientOptions.Retry.Mode = RetryMode.Fixed;
             }
+
+            clientOptions.Transport = recording.CreateTransport(clientOptions.Transport);
+
             return clientOptions;
         }
 
-        protected string GetSessionFilePath()
+        protected internal string GetSessionFilePath()
         {
             TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
 
             string name = new string(testAdapter.Name.Select(c => s_invalidChars.Contains(c) ? '%' : c).ToArray());
-            string additionalParameterName = testAdapter.Properties.ContainsKey(ClientTestFixtureAttribute.RecordingDirectorySuffixKey) ?
-                testAdapter.Properties.Get(ClientTestFixtureAttribute.RecordingDirectorySuffixKey).ToString() :
-                null;
 
+            string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
+
+            return Path.Combine(
+                GetSessionFileDirectory(),
+                fileName);
+        }
+
+        private string GetSessionFileDirectory()
+        {
             // Use the current class name instead of the name of the class that declared a test.
             // This can be used in inherited tests that, for example, use a different endpoint for the same tests.
             string className = GetType().Name;
 
-            string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
+            TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
 
-            string path = TestEnvironment.GetSourcePath(GetType().Assembly);
-
-            return Path.Combine(path,
+            string additionalParameterName = testAdapter.Properties.ContainsKey(ClientTestFixtureAttribute.RecordingDirectorySuffixKey) ?
+                testAdapter.Properties.Get(ClientTestFixtureAttribute.RecordingDirectorySuffixKey).ToString() :
+                null;
+            return Path.Combine(
+                TestEnvironment.GetSourcePath(GetType().Assembly),
                 "SessionRecords",
-                additionalParameterName == null ? className : $"{className}({additionalParameterName})",
-                fileName);
+                additionalParameterName == null ? className : $"{className}({additionalParameterName})");
+        }
+
+        public override void GlobalTimeoutTearDown()
+        {
+            // Only enforce the timeout on playback.
+            if (Mode == RecordedTestMode.Playback)
+            {
+                base.GlobalTimeoutTearDown();
+            }
         }
 
         /// <summary>
@@ -110,28 +156,78 @@ namespace Azure.Core.TestFramework
         /// This will run once before any tests.
         /// </summary>
         [OneTimeSetUp]
-        public void StartLoggingEvents()
+        public void InitializeRecordedTestClass()
         {
             if (Mode == RecordedTestMode.Live || Debugger.IsAttached)
             {
                 Logger = new TestLogger();
             }
+
+            if (!_useLegacyTransport && Mode != RecordedTestMode.Live)
+            {
+                _proxy = TestProxy.Start();
+            }
         }
 
         /// <summary>
-        /// Stop logging events and do necessary cleanup.
+        /// Do necessary cleanup.
         /// This will run once after all tests have finished.
         /// </summary>
         [OneTimeTearDown]
-        public void StopLoggingEvents()
+        public void TearDownRecordedTestClass()
         {
             Logger?.Dispose();
             Logger = null;
+
+            // Clean up unused test files
+            if (Mode == RecordedTestMode.Record)
+            {
+                var knownMethods = new HashSet<string>();
+
+                // Management tests record in ctor
+                knownMethods.Add(GetType().Name);
+
+                // Collect all method names
+                foreach (var method in GetType()
+                             .GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance))
+                {
+                    // TestCase attribute allows specifying a test name
+                    foreach (var attribute in method.GetCustomAttributes(true))
+                    {
+                        if (attribute is ITestData { TestName: { } name})
+                        {
+                            knownMethods.Add(name);
+                        }
+                    }
+
+                    knownMethods.Add(method.Name);
+                }
+
+                foreach (var fileInfo in new DirectoryInfo(GetSessionFileDirectory()).EnumerateFiles())
+                {
+                    bool used = knownMethods.Any(knownMethod => fileInfo.Name.StartsWith(knownMethod, StringComparison.CurrentCulture));
+
+                    if (!used)
+                    {
+                        try
+                        {
+                            fileInfo.Delete();
+                        }
+                        catch
+                        {
+                            // Ignore
+                        }
+                    }
+                }
+            }
         }
 
         [SetUp]
-        public virtual void StartTestRecording()
+        public virtual async Task StartTestRecordingAsync()
         {
+            // initialize test start time in case test is skipped
+            _testStartTime = DateTime.UtcNow;
+
             // Only create test recordings for the latest version of the service
             TestContext.TestAdapter test = TestContext.CurrentContext.Test;
             if (Mode != RecordedTestMode.Live &&
@@ -146,15 +242,17 @@ namespace Azure.Core.TestFramework
                 throw new IgnoreException((string) test.Properties.Get("_SkipLive"));
             }
 
-            Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
+            Recording = await CreateTestRecordingAsync(Mode, GetSessionFilePath(), Sanitizer, Matcher);
             ValidateClientInstrumentation = Recording.HasRequests;
+
+            // don't include test proxy overhead as part of test time
+            _testStartTime = DateTime.UtcNow;
         }
 
         [TearDown]
-        public virtual void StopTestRecording()
+        public virtual async Task StopTestRecordingAsync()
         {
             bool testPassed = TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Passed;
-
             if (ValidateClientInstrumentation && testPassed)
             {
                 throw new InvalidOperationException("The test didn't instrument any clients but had recordings. Please call InstrumentClient for the client being recorded.");
@@ -164,7 +262,12 @@ namespace Azure.Core.TestFramework
 #if DEBUG
             save |= SaveDebugRecordingsOnFailure;
 #endif
-            Recording?.Dispose(save);
+            if (Recording != null)
+            {
+                await Recording.DisposeAsync(save);
+            }
+
+            _proxy?.CheckForErrors();
         }
 
         protected internal override object InstrumentClient(Type clientType, object client, IEnumerable<IInterceptor> preInterceptors)
@@ -179,24 +282,58 @@ namespace Azure.Core.TestFramework
         }
 
         protected internal override object InstrumentOperation(Type operationType, object operation)
+            => InstrumentOperationInternal(operationType, operation, Mode == RecordedTestMode.Playback);
+
+        protected object InstrumentOperationInternal(Type operationType, object operation, bool noWait, params IInterceptor[] interceptors)
         {
+            var interceptorArray = interceptors.Concat(new IInterceptor[] { new GetOriginalInterceptor(operation), new OperationInterceptor(noWait) }).ToArray();
             return ProxyGenerator.CreateClassProxyWithTarget(
                 operationType,
                 new[] { typeof(IInstrumented) },
                 operation,
-                new GetOriginalInterceptor(operation),
-                new OperationInterceptor(Mode == RecordedTestMode.Playback));
+                interceptorArray);
         }
 
-        protected object InstrumentMgmtOperation(Type operationType, object operation, ManagementInterceptor managementInterceptor)
+        /// <summary>
+        /// A number of our tests have built in delays while we wait an expected
+        /// amount of time for a service operation to complete and this method
+        /// allows us to wait (unless we're playing back recordings, which can
+        /// complete immediately).
+        /// </summary>
+        /// <param name="milliseconds">The number of milliseconds to wait.</param>
+        /// <param name="playbackDelayMilliseconds">
+        /// An optional number of milliseconds to wait if we're playing back a
+        /// recorded test.  This is useful for allowing client side events to
+        /// get processed.
+        /// </param>
+        /// <returns>A task that will (optionally) delay.</returns>
+        public Task Delay(int milliseconds = 1000, int? playbackDelayMilliseconds = null) =>
+            Delay(Mode, milliseconds, playbackDelayMilliseconds);
+
+        /// <summary>
+        /// A number of our tests have built in delays while we wait an expected
+        /// amount of time for a service operation to complete and this method
+        /// allows us to wait (unless we're playing back recordings, which can
+        /// complete immediately).
+        /// </summary>
+        /// <param name="milliseconds">The number of milliseconds to wait.</param>
+        /// <param name="playbackDelayMilliseconds">
+        /// An optional number of milliseconds to wait if we're playing back a
+        /// recorded test.  This is useful for allowing client side events to
+        /// get processed.
+        /// </param>
+        /// <returns>A task that will (optionally) delay.</returns>
+        public static Task Delay(RecordedTestMode mode, int milliseconds = 1000, int? playbackDelayMilliseconds = null)
         {
-            return ProxyGenerator.CreateClassProxyWithTarget(
-                operationType,
-                new[] { typeof(IInstrumented) },
-                operation,
-                managementInterceptor,
-                new GetOriginalInterceptor(operation),
-                new OperationInterceptor(Mode == RecordedTestMode.Playback));
+            if (mode != RecordedTestMode.Playback)
+            {
+                return Task.Delay(milliseconds);
+            }
+            else if (playbackDelayMilliseconds != null)
+            {
+                return Task.Delay(playbackDelayMilliseconds.Value);
+            }
+            return Task.CompletedTask;
         }
 
         protected TestRetryHelper TestRetryHelper => new TestRetryHelper(Mode == RecordedTestMode.Playback);

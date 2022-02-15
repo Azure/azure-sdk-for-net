@@ -15,6 +15,8 @@ namespace Azure.AI.TextAnalytics.Tests
     TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
     public class TextAnalyticsClientLiveTestBase : RecordedTestBase<TextAnalyticsTestEnvironment>
     {
+        internal const int MaxRetriesCount = 12;
+
         /// <summary>
         /// The version of the REST API to test against.  This will be passed
         /// to the .ctor via ClientTestFixture's values.
@@ -28,7 +30,11 @@ namespace Azure.AI.TextAnalytics.Tests
             Sanitizer = new TextAnalyticsRecordedTestSanitizer();
         }
 
+        protected TextAnalyticsClient GetClient(AzureKeyCredential credential = default, TextAnalyticsClientOptions options = default, bool useTokenCredential = default)
+            => GetClient(out _, credential, options, useTokenCredential);
+
         public TextAnalyticsClient GetClient(
+            out TextAnalyticsClient nonInstrumentedClient,
             AzureKeyCredential credential = default,
             TextAnalyticsClientOptions options = default,
             bool useTokenCredential = default)
@@ -39,17 +45,18 @@ namespace Azure.AI.TextAnalytics.Tests
             // While we use a persistent resource for live tests, we need to increase our retries.
             // We should remove when having dynamic resource again
             // Issue: https://github.com/Azure/azure-sdk-for-net/issues/25041
-            options.Retry.MaxRetries = 6;
+            options.Retry.MaxRetries = MaxRetriesCount;
 
             if (useTokenCredential)
             {
-                return InstrumentClient(new TextAnalyticsClient(endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)));
+                nonInstrumentedClient = new TextAnalyticsClient(endpoint, TestEnvironment.Credential, InstrumentClientOptions(options));
             }
             else
             {
                 credential ??= new AzureKeyCredential(TestEnvironment.ApiKey);
-                return InstrumentClient(new TextAnalyticsClient(endpoint, credential, InstrumentClientOptions(options)));
+                nonInstrumentedClient = new TextAnalyticsClient(endpoint, credential, InstrumentClientOptions(options));
             }
+            return InstrumentClient(nonInstrumentedClient);
         }
 
         // This has been added to stop the custom tests to run forever while we

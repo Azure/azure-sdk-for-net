@@ -41,7 +41,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -70,7 +70,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -96,7 +96,7 @@ namespace Azure.DigitalTwins.Core
             return message.Response.Status switch
             {
                 204 => message.Response,
-                _ => throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false),
+                _ => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false),
             };
         }
 
@@ -122,7 +122,7 @@ namespace Azure.DigitalTwins.Core
             return message.Response.Status switch
             {
                 204 => message.Response,
-                _ => throw _clientDiagnostics.CreateRequestFailedException(message.Response),
+                _ => throw ClientDiagnostics.CreateRequestFailedException(message.Response),
             };
         }
 
@@ -134,9 +134,9 @@ namespace Azure.DigitalTwins.Core
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/models", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (digitalTwinModelsAddOptions?.TraceParent != null)
             {
@@ -164,10 +164,10 @@ namespace Azure.DigitalTwins.Core
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/models/", false);
             uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (digitalTwinModelsUpdateOptions?.TraceParent != null)
             {

@@ -131,7 +131,7 @@ namespace Azure.Identity.Tests
             var alwv = new AsyncLockWithValue<int>();
             var firstLock = await alwv.GetLockOrValueAsync(async);
             var tasks = new List<Task>();
-            for (var i = 0; i < 100; i++)
+            for (var i = 0; i < 50; i++)
             {
                 tasks.Add(Task.Run(async () =>
                 {
@@ -150,7 +150,7 @@ namespace Azure.Identity.Tests
             var alwv = new AsyncLockWithValue<int>();
             var firstLock = await alwv.GetLockOrValueAsync(async);
             var tasks = new List<Task>();
-            for (var i = 0; i < 100; i++)
+            for (var i = 0; i < 50; i++)
             {
                 tasks.Add(Task.Run(async () =>
                 {
@@ -182,7 +182,7 @@ namespace Azure.Identity.Tests
             }
 
             await Task.WhenAll(startingTasks);
-            for (var i = 0; i < 90; i++)
+            for (var i = 0; i < 40; i++)
             {
                 var token = i % 2 == 0 ? cts.Token : default;
                 tasks.Add(CreateTask(alwv, default, async, token));

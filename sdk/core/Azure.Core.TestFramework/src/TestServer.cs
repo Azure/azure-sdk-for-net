@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -36,7 +37,7 @@ namespace Azure.Core.TestFramework
                     {
                         if (https)
                         {
-                            listenOptions.UseHttps();
+                            listenOptions.UseHttps(TestEnvironment.DevCertPath, TestEnvironment.DevCertPassword);
                         }
                     });
                 })
@@ -46,7 +47,6 @@ namespace Azure.Core.TestFramework
                 })
                 .UseSetting(WebHostDefaults.ApplicationKey, typeof(TestServer).GetTypeInfo().Assembly.FullName)
                 .Build();
-
             _host.Start();
         }
 

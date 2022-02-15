@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/fct-mock-datastore-1?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL21vY2stYXZzLWZjdC1kb2dmb29kLWNvbnZleW9yLWVhc3R1cy9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2ZjdC1tb2NrLWVhc3R1cy0xNS9jbHVzdGVycy9DbHVzdGVyLTEvZGF0YXN0b3Jlcy9mY3QtbW9jay1kYXRhc3RvcmUtMT9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/fct-mock-datastore-1?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL21vY2stYXZzLWZjdC1kb2dmb29kLWNvbnZleW9yLWVhc3R1cy9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2ZjdC1tb2NrLWVhc3R1cy0xNS9jbHVzdGVycy9DbHVzdGVyLTEvZGF0YXN0b3Jlcy9mY3QtbW9jay1kYXRhc3RvcmUtMT9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"diskPoolVolume\": {\r\n      \"targetId\": \"/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/resourceGroupName/providers/Microsoft.StoragePool/diskPools/diskPoolName/iscsiTargets/targetName\",\r\n      \"lunName\": \"mock-lun-name\",\r\n      \"mountOption\": \"MOUNT\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2b8bf6f2-89b7-444a-9e69-1a1ec067dec1"
+          "731486f5-e7fd-4618-bd95-fa67f67b69ca"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29916.01",
+          "FxVersion/5.0.1221.52207",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.1"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -26,509 +26,125 @@
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
-        ],
-        "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/fct-mock-datastore-1/operationstatuses/45220724-578f-4969-9065-f148f22d9908?api-version=2021-06-01"
-        ],
-        "x-ms-request-id": [
-          "176ccdb6-3ce4-4355-ada9-75f3dd74e72d"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-correlation-request-id": [
-          "590dc39f-472f-408e-99f0-73da66e1dd61"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20210512T021753Z:590dc39f-472f-408e-99f0-73da66e1dd61"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Cache": [
-          "CONFIG_NOCACHE"
-        ],
-        "X-MSEdge-Ref": [
-          "Ref A: C7A0786403C140B4975E8D99E6CA0D37 Ref B: WSTEDGE1107 Ref C: 2021-05-12T02:17:51Z"
+        "Server": [
+          "Rocket"
         ],
         "Date": [
-          "Wed, 12 May 2021 02:17:52 GMT"
-        ],
-        "Content-Length": [
-          "596"
+          "Fri, 12 Nov 2021 17:42:42 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/fct-mock-datastore-1\",\r\n  \"name\": \"fct-mock-datastore-1\",\r\n  \"properties\": {\r\n    \"diskPoolVolume\": {\r\n      \"lunName\": \"mock-lun-name\",\r\n      \"mountOption\": \"Mount\",\r\n      \"targetId\": \"/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/resourceGroupName/providers/Microsoft.StoragePool/diskPools/diskPoolName/iscsiTargets/targetName\"\r\n    },\r\n    \"provisioningState\": \"Pending\"\r\n  },\r\n  \"type\": \"Microsoft.AVS/privateClouds/clusters/datastores\"\r\n}",
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/fct-mock-datastore-1/operationstatuses/45220724-578f-4969-9065-f148f22d9908?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL21vY2stYXZzLWZjdC1kb2dmb29kLWNvbnZleW9yLWVhc3R1cy9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2ZjdC1tb2NrLWVhc3R1cy0xNS9jbHVzdGVycy9DbHVzdGVyLTEvZGF0YXN0b3Jlcy9mY3QtbW9jay1kYXRhc3RvcmUtMS9vcGVyYXRpb25zdGF0dXNlcy80NTIyMDcyNC01NzhmLTQ5NjktOTA2NS1mMTQ4ZjIyZDk5MDg/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.29916.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14994"
-        ],
-        "x-ms-request-id": [
-          "56a92480-fe0a-456b-8eb7-cebc0068460a"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-correlation-request-id": [
-          "61663ad8-6475-4dde-84c0-6a7568b54018"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20210512T021803Z:61663ad8-6475-4dde-84c0-6a7568b54018"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Cache": [
-          "CONFIG_NOCACHE"
-        ],
-        "X-MSEdge-Ref": [
-          "Ref A: 77273B3E3E654A168D78B6B866CDA83E Ref B: WSTEDGE1107 Ref C: 2021-05-12T02:18:03Z"
-        ],
-        "Date": [
-          "Wed, 12 May 2021 02:18:02 GMT"
+          "application/json"
         ],
         "Content-Length": [
-          "1070"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
+          "501"
         ]
       },
-      "ResponseBody": "{\r\n  \"endTime\": \"2021-05-11T19:17:53.9634639-07:00\",\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/fct-mock-datastore-1/operationstatuses/45220724-578f-4969-9065-f148f22d9908\",\r\n  \"name\": \"45220724-578f-4969-9065-f148f22d9908\",\r\n  \"percentComplete\": 100,\r\n  \"properties\": {\r\n    \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/fct-mock-datastore-1\",\r\n    \"name\": \"fct-mock-datastore-1\",\r\n    \"properties\": {\r\n      \"diskPoolVolume\": {\r\n        \"lunName\": \"mock-lun-name\",\r\n        \"mountOption\": \"Mount\",\r\n        \"targetId\": \"/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/resourceGroupName/providers/Microsoft.StoragePool/diskPools/diskPoolName/iscsiTargets/targetName\"\r\n      },\r\n      \"provisioningState\": \"Succeeded\"\r\n    },\r\n    \"type\": \"Microsoft.AVS/privateClouds/clusters/datastores\"\r\n  },\r\n  \"startTime\": \"2021-05-11T19:17:52.5724487-07:00\",\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/clusters/cluster1/datastores/datastore1\",\r\n  \"name\": \"datastore1\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/clusters/datastores\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"netAppVolume\": {\r\n      \"id\": \"/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/ResourceGroup1/providers/Microsoft.NetApp/netAppAccounts/NetAppAccount1/capacityPools/CapacityPool1/volumes/NFSVol1\"\r\n    },\r\n    \"status\": \"Accessible\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/fct-mock-datastore-1?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL21vY2stYXZzLWZjdC1kb2dmb29kLWNvbnZleW9yLWVhc3R1cy9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2ZjdC1tb2NrLWVhc3R1cy0xNS9jbHVzdGVycy9DbHVzdGVyLTEvZGF0YXN0b3Jlcy9mY3QtbW9jay1kYXRhc3RvcmUtMT9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.29916.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14993"
-        ],
-        "x-ms-request-id": [
-          "445bba64-2f4a-4f8c-ab1b-0191dce9880b"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-correlation-request-id": [
-          "cc8b4ff9-1ca7-4f43-8b11-364ce4b568f8"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20210512T021803Z:cc8b4ff9-1ca7-4f43-8b11-364ce4b568f8"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Cache": [
-          "CONFIG_NOCACHE"
-        ],
-        "X-MSEdge-Ref": [
-          "Ref A: B32428D8AE334D8D9756823F39CDD903 Ref B: WSTEDGE1107 Ref C: 2021-05-12T02:18:03Z"
-        ],
-        "Date": [
-          "Wed, 12 May 2021 02:18:03 GMT"
-        ],
-        "Content-Length": [
-          "598"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/fct-mock-datastore-1\",\r\n  \"name\": \"fct-mock-datastore-1\",\r\n  \"properties\": {\r\n    \"diskPoolVolume\": {\r\n      \"lunName\": \"mock-lun-name\",\r\n      \"mountOption\": \"Mount\",\r\n      \"targetId\": \"/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/resourceGroupName/providers/Microsoft.StoragePool/diskPools/diskPoolName/iscsiTargets/targetName\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.AVS/privateClouds/clusters/datastores\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/fct-mock-datastore-1?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL21vY2stYXZzLWZjdC1kb2dmb29kLWNvbnZleW9yLWVhc3R1cy9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2ZjdC1tb2NrLWVhc3R1cy0xNS9jbHVzdGVycy9DbHVzdGVyLTEvZGF0YXN0b3Jlcy9mY3QtbW9jay1kYXRhc3RvcmUtMT9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL21vY2stYXZzLWZjdC1kb2dmb29kLWNvbnZleW9yLWVhc3R1cy9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2ZjdC1tb2NrLWVhc3R1cy0xNS9jbHVzdGVycy9DbHVzdGVyLTEvZGF0YXN0b3Jlcz9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3996da8f-e8d1-4bba-81c8-bf9a644c5c64"
+          "04e5b820-4c8e-4f62-bee5-0446dea2672e"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29916.01",
+          "FxVersion/5.0.1221.52207",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.1"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14991"
-        ],
-        "x-ms-request-id": [
-          "8f7bfa92-747c-4b58-9c74-910207efa95c"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-correlation-request-id": [
-          "f26eb66d-34f0-43c4-bee3-0974bbcfafdb"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20210512T021804Z:f26eb66d-34f0-43c4-bee3-0974bbcfafdb"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Cache": [
-          "CONFIG_NOCACHE"
-        ],
-        "X-MSEdge-Ref": [
-          "Ref A: 30B87CD401FE4590A491A70099B355B8 Ref B: WSTEDGE1107 Ref C: 2021-05-12T02:18:04Z"
+        "Server": [
+          "Rocket"
         ],
         "Date": [
-          "Wed, 12 May 2021 02:18:03 GMT"
-        ],
-        "Content-Length": [
-          "598"
+          "Fri, 12 Nov 2021 17:42:42 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
+          "application/json"
         ],
-        "Expires": [
-          "-1"
+        "Content-Length": [
+          "1095"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/fct-mock-datastore-1\",\r\n  \"name\": \"fct-mock-datastore-1\",\r\n  \"properties\": {\r\n    \"diskPoolVolume\": {\r\n      \"lunName\": \"mock-lun-name\",\r\n      \"mountOption\": \"Mount\",\r\n      \"targetId\": \"/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/resourceGroupName/providers/Microsoft.StoragePool/diskPools/diskPoolName/iscsiTargets/targetName\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.AVS/privateClouds/clusters/datastores\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/clusters/cluster1/datastores/datastore1\",\r\n      \"name\": \"datastore1\",\r\n      \"type\": \"Microsoft.AVS/privateClouds/clusters/datastores\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"netAppVolume\": {\r\n          \"id\": \"/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/ResourceGroup1/providers/Microsoft.NetApp/netAppAccounts/NetAppAccount1/capacityPools/CapacityPool1/volumes/NFSVol1\"\r\n        },\r\n        \"status\": \"Accessible\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/clusters/cluster1/datastores/datastore2\",\r\n      \"name\": \"datastore2\",\r\n      \"type\": \"Microsoft.AVS/privateClouds/clusters/datastores\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskPoolVolume\": {\r\n          \"targetId\": \"/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/ResourceGroup1/providers/Microsoft.StoragePool/diskPools/DiskPool1/targets/Target1\",\r\n          \"lunName\": \"lun0\",\r\n          \"mountOption\": \"MOUNT\",\r\n          \"path\": \"/vmfs/devices/disks/naa.6001405f75f6bdf7f6f49db8b4b21723\"\r\n        },\r\n        \"status\": \"Accessible\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL21vY2stYXZzLWZjdC1kb2dmb29kLWNvbnZleW9yLWVhc3R1cy9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2ZjdC1tb2NrLWVhc3R1cy0xNS9jbHVzdGVycy9DbHVzdGVyLTEvZGF0YXN0b3Jlcz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/fct-mock-datastore-1?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL21vY2stYXZzLWZjdC1kb2dmb29kLWNvbnZleW9yLWVhc3R1cy9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2ZjdC1tb2NrLWVhc3R1cy0xNS9jbHVzdGVycy9DbHVzdGVyLTEvZGF0YXN0b3Jlcy9mY3QtbW9jay1kYXRhc3RvcmUtMT9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ace9ef37-8a54-43f3-a5e1-21f10df77d00"
+          "77d74d0a-567a-45a6-8796-54dba0deb085"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29916.01",
+          "FxVersion/5.0.1221.52207",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.1"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14992"
-        ],
-        "x-ms-request-id": [
-          "393d8031-c28c-4c37-b369-a5890f84999b"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-correlation-request-id": [
-          "da62bbd8-f894-48ce-b73b-fc9c81695101"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20210512T021804Z:da62bbd8-f894-48ce-b73b-fc9c81695101"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Cache": [
-          "CONFIG_NOCACHE"
-        ],
-        "X-MSEdge-Ref": [
-          "Ref A: 1FC3A0B23813463DAB5C6141F12FD3D0 Ref B: WSTEDGE1107 Ref C: 2021-05-12T02:18:04Z"
+        "Server": [
+          "Rocket"
         ],
         "Date": [
-          "Wed, 12 May 2021 02:18:03 GMT"
-        ],
-        "Content-Length": [
-          "2776"
+          "Fri, 12 Nov 2021 17:42:42 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
+          "application/json"
         ],
-        "Expires": [
-          "-1"
+        "Content-Length": [
+          "501"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/DS11\",\r\n      \"name\": \"DS11\",\r\n      \"properties\": {\r\n        \"netAppVolume\": {\r\n          \"id\": \"/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/resourceGroupName/providers/Microsoft.NetApp/netAppAccounts/netAppAccountName/capacityPools/capacityPoolName/volumes/volumeName\"\r\n        },\r\n        \"provisioningState\": \"Updating\"\r\n      },\r\n      \"type\": \"Microsoft.AVS/privateClouds/clusters/datastores\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/DS12\",\r\n      \"name\": \"DS12\",\r\n      \"properties\": {\r\n        \"netAppVolume\": {\r\n          \"id\": \"/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/resourceGroupName/providers/Microsoft.NetApp/netAppAccounts/netAppAccountName/capacityPools/capacityPoolName/volumes/volumeName\"\r\n        },\r\n        \"provisioningState\": \"Updating\"\r\n      },\r\n      \"type\": \"Microsoft.AVS/privateClouds/clusters/datastores\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/DS13\",\r\n      \"name\": \"DS13\",\r\n      \"properties\": {\r\n        \"netAppVolume\": {\r\n          \"id\": \"/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/resourceGroupName/providers/Microsoft.NetApp/netAppAccounts/netAppAccountName/capacityPools/capacityPoolName/volumes/volumeName\"\r\n        },\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"type\": \"Microsoft.AVS/privateClouds/clusters/datastores\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/DS14\",\r\n      \"name\": \"DS14\",\r\n      \"properties\": {\r\n        \"netAppVolume\": {\r\n          \"id\": \"/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/resourceGroupName/providers/Microsoft.NetApp/netAppAccounts/netAppAccountName/capacityPools/capacityPoolName/volumes/volumeName\"\r\n        },\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"type\": \"Microsoft.AVS/privateClouds/clusters/datastores\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/fct-mock-datastore-1\",\r\n      \"name\": \"fct-mock-datastore-1\",\r\n      \"properties\": {\r\n        \"diskPoolVolume\": {\r\n          \"lunName\": \"mock-lun-name\",\r\n          \"mountOption\": \"Mount\",\r\n          \"targetId\": \"/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/resourceGroupName/providers/Microsoft.StoragePool/diskPools/diskPoolName/iscsiTargets/targetName\"\r\n        },\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"type\": \"Microsoft.AVS/privateClouds/clusters/datastores\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/clusters/cluster1/datastores/datastore1\",\r\n  \"name\": \"datastore1\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/clusters/datastores\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"netAppVolume\": {\r\n      \"id\": \"/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/ResourceGroup1/providers/Microsoft.NetApp/netAppAccounts/NetAppAccount1/capacityPools/CapacityPool1/volumes/NFSVol1\"\r\n    },\r\n    \"status\": \"Accessible\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/fct-mock-datastore-1?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL21vY2stYXZzLWZjdC1kb2dmb29kLWNvbnZleW9yLWVhc3R1cy9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2ZjdC1tb2NrLWVhc3R1cy0xNS9jbHVzdGVycy9DbHVzdGVyLTEvZGF0YXN0b3Jlcy9mY3QtbW9jay1kYXRhc3RvcmUtMT9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/fct-mock-datastore-1?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL21vY2stYXZzLWZjdC1kb2dmb29kLWNvbnZleW9yLWVhc3R1cy9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2ZjdC1tb2NrLWVhc3R1cy0xNS9jbHVzdGVycy9DbHVzdGVyLTEvZGF0YXN0b3Jlcy9mY3QtbW9jay1kYXRhc3RvcmUtMT9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "18ca85f1-267b-4cb0-adcf-618b1ef32a68"
+          "b69b775f-7db9-4c66-976c-44f8c3bcae78"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29916.01",
+          "FxVersion/5.0.1221.52207",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.1"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/fct-mock-datastore-1/operationresults/8ecfc59f-3112-4d77-be0e-6efd5a8d537f?api-version=2021-06-01"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14999"
-        ],
-        "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/fct-mock-datastore-1/operationstatuses/8ecfc59f-3112-4d77-be0e-6efd5a8d537f?api-version=2021-06-01"
-        ],
-        "x-ms-request-id": [
-          "8e58c53b-3154-431f-833c-bbe71046a256"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-correlation-request-id": [
-          "b1205fb4-43ed-4020-8be8-d7246996f7c8"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20210512T021805Z:b1205fb4-43ed-4020-8be8-d7246996f7c8"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Cache": [
-          "CONFIG_NOCACHE"
-        ],
-        "X-MSEdge-Ref": [
-          "Ref A: D6B705EC9B7E4552B2B6FDC2105F8CDE Ref B: WSTEDGE1107 Ref C: 2021-05-12T02:18:04Z"
+        "Server": [
+          "Rocket"
         ],
         "Date": [
-          "Wed, 12 May 2021 02:18:04 GMT"
+          "Fri, 12 Nov 2021 17:42:42 GMT"
         ],
         "Content-Length": [
-          "598"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
+          "0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/fct-mock-datastore-1\",\r\n  \"name\": \"fct-mock-datastore-1\",\r\n  \"properties\": {\r\n    \"diskPoolVolume\": {\r\n      \"lunName\": \"mock-lun-name\",\r\n      \"mountOption\": \"Mount\",\r\n      \"targetId\": \"/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/resourceGroupName/providers/Microsoft.StoragePool/diskPools/diskPoolName/iscsiTargets/targetName\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.AVS/privateClouds/clusters/datastores\"\r\n}",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/fct-mock-datastore-1/operationstatuses/8ecfc59f-3112-4d77-be0e-6efd5a8d537f?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL21vY2stYXZzLWZjdC1kb2dmb29kLWNvbnZleW9yLWVhc3R1cy9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2ZjdC1tb2NrLWVhc3R1cy0xNS9jbHVzdGVycy9DbHVzdGVyLTEvZGF0YXN0b3Jlcy9mY3QtbW9jay1kYXRhc3RvcmUtMS9vcGVyYXRpb25zdGF0dXNlcy84ZWNmYzU5Zi0zMTEyLTRkNzctYmUwZS02ZWZkNWE4ZDUzN2Y/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.29916.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14990"
-        ],
-        "x-ms-request-id": [
-          "b8e8524e-047b-4bb9-be46-2ead051087e7"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-correlation-request-id": [
-          "76813134-15ae-4f06-90b5-7b0536fd7d12"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20210512T021815Z:76813134-15ae-4f06-90b5-7b0536fd7d12"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Cache": [
-          "CONFIG_NOCACHE"
-        ],
-        "X-MSEdge-Ref": [
-          "Ref A: 7246FD3F5E8A48688BB9C3551C4CAE31 Ref B: WSTEDGE1107 Ref C: 2021-05-12T02:18:15Z"
-        ],
-        "Date": [
-          "Wed, 12 May 2021 02:18:14 GMT"
-        ],
-        "Content-Length": [
-          "458"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"endTime\": \"2021-05-11T19:18:05.7311045-07:00\",\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/fct-mock-datastore-1/operationstatuses/8ecfc59f-3112-4d77-be0e-6efd5a8d537f\",\r\n  \"name\": \"8ecfc59f-3112-4d77-be0e-6efd5a8d537f\",\r\n  \"percentComplete\": 100,\r\n  \"startTime\": \"2021-05-11T19:18:04.8900448-07:00\",\r\n  \"status\": \"Succeeded\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/mock-avs-fct-dogfood-conveyor-eastus/providers/Microsoft.AVS/privateClouds/fct-mock-eastus-15/clusters/Cluster-1/datastores/fct-mock-datastore-1/operationresults/8ecfc59f-3112-4d77-be0e-6efd5a8d537f?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL21vY2stYXZzLWZjdC1kb2dmb29kLWNvbnZleW9yLWVhc3R1cy9wcm92aWRlcnMvTWljcm9zb2Z0LkFWUy9wcml2YXRlQ2xvdWRzL2ZjdC1tb2NrLWVhc3R1cy0xNS9jbHVzdGVycy9DbHVzdGVyLTEvZGF0YXN0b3Jlcy9mY3QtbW9jay1kYXRhc3RvcmUtMS9vcGVyYXRpb25yZXN1bHRzLzhlY2ZjNTlmLTMxMTItNGQ3Ny1iZTBlLTZlZmQ1YThkNTM3Zj9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.29916.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14989"
-        ],
-        "x-ms-request-id": [
-          "3e3524f1-19ba-447d-aef2-d7bc76647e18"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-correlation-request-id": [
-          "a7b2f754-3eae-4ace-826b-d353640c8776"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20210512T021815Z:a7b2f754-3eae-4ace-826b-d353640c8776"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Cache": [
-          "CONFIG_NOCACHE"
-        ],
-        "X-MSEdge-Ref": [
-          "Ref A: 59C02B2EF9284F46A9884B6F575290BE Ref B: WSTEDGE1107 Ref C: 2021-05-12T02:18:15Z"
-        ],
-        "Date": [
-          "Wed, 12 May 2021 02:18:15 GMT"
-        ],
-        "Content-Length": [
-          "4"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "null",
+      "ResponseBody": "",
       "StatusCode": 200
     }
   ],

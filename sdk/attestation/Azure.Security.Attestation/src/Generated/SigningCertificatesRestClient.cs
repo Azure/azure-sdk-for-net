@@ -17,9 +17,11 @@ namespace Azure.Security.Attestation
 {
     internal partial class SigningCertificatesRestClient
     {
-        private string instanceUrl;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly string _instanceUrl;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of SigningCertificatesRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -28,8 +30,8 @@ namespace Azure.Security.Attestation
         /// <exception cref="ArgumentNullException"> <paramref name="instanceUrl"/> is null. </exception>
         public SigningCertificatesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string instanceUrl)
         {
-            this.instanceUrl = instanceUrl ?? throw new ArgumentNullException(nameof(instanceUrl));
-            _clientDiagnostics = clientDiagnostics;
+            _instanceUrl = instanceUrl ?? throw new ArgumentNullException(nameof(instanceUrl));
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
@@ -39,7 +41,7 @@ namespace Azure.Security.Attestation
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(instanceUrl, false);
+            uri.AppendRaw(_instanceUrl, false);
             uri.AppendPath("/certs", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/jwk+json, application/json");
@@ -62,7 +64,7 @@ namespace Azure.Security.Attestation
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -82,7 +84,7 @@ namespace Azure.Security.Attestation
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

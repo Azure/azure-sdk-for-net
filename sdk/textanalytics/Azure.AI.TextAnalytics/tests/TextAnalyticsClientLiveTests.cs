@@ -65,18 +65,20 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task EntitiesCategories()
         {
             TextAnalyticsClient client = GetClient();
-            const string document = "Bill Gates | Microsoft | New Mexico";
+            const string document = "Bill Gates | Microsoft | New Mexico | 127.0.0.1";
 
             RecognizeEntitiesResultCollection response = await client.RecognizeEntitiesBatchAsync(new List<string>() { document }, "en", new TextAnalyticsRequestOptions() { ModelVersion = "2020-02-01" });
             var entities = response.FirstOrDefault().Entities.ToList();
 
-            Assert.AreEqual(3, entities.Count);
+            Assert.AreEqual(4, entities.Count);
 
             Assert.AreEqual(EntityCategory.Person, entities[0].Category);
 
             Assert.AreEqual(EntityCategory.Organization, entities[1].Category);
 
             Assert.AreEqual(EntityCategory.Location, entities[2].Category);
+
+            Assert.AreEqual(EntityCategory.IPAddress, entities[3].Category);
         }
 
         [RecordedTest]

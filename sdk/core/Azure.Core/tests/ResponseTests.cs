@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Moq;
 
 namespace Azure.Core.Tests
 {
@@ -29,6 +30,17 @@ namespace Azure.Core.Tests
 
             Assert.IsNotNull(value);
             Assert.AreEqual("test_name", value.Name);
+        }
+
+        [Test]
+        public void ImplicitCastFromResponseTToNullFails()
+        {
+            Response<string> response = null;
+            var exception = Assert.Throws<ArgumentNullException>(() =>
+            {
+                string s = response;
+            });
+            StringAssert.StartsWith("The implicit cast from Response<System.String> to System.String failed because the Response<System.String> was null.", exception.Message);
         }
 
         [Test]
@@ -132,6 +144,30 @@ namespace Azure.Core.Tests
 
             Assert.DoesNotThrow(() => { BinaryData d = response.Content; });
             CollectionAssert.AreEqual(responseBody, response.Content.ToArray());
+        }
+
+        [Test]
+        public void CanMockIsError()
+        {
+            var response = new MockResponse(500);
+
+            Assert.IsFalse(response.IsError);
+
+            response.SetIsError(true);
+
+            Assert.IsTrue(response.IsError);
+        }
+
+        [Test]
+        public void CanMoqIsError()
+        {
+            var response = new Mock<Response>();
+
+            Assert.IsFalse(response.Object.IsError);
+
+            response.SetupGet(x => x.IsError).Returns(true);
+
+            Assert.IsTrue(response.Object.IsError);
         }
 
         internal class TestPayload

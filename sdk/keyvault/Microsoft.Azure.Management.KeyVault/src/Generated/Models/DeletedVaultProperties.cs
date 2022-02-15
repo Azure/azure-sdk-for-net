@@ -37,13 +37,16 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <param name="deletionDate">The deleted date.</param>
         /// <param name="scheduledPurgeDate">The scheduled purged date.</param>
         /// <param name="tags">Tags of the original vault.</param>
-        public DeletedVaultProperties(string vaultId = default(string), string location = default(string), System.DateTime? deletionDate = default(System.DateTime?), System.DateTime? scheduledPurgeDate = default(System.DateTime?), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="purgeProtectionEnabled">Purge protection status of the
+        /// original vault.</param>
+        public DeletedVaultProperties(string vaultId = default(string), string location = default(string), System.DateTime? deletionDate = default(System.DateTime?), System.DateTime? scheduledPurgeDate = default(System.DateTime?), IDictionary<string, string> tags = default(IDictionary<string, string>), bool? purgeProtectionEnabled = default(bool?))
         {
             VaultId = vaultId;
             Location = location;
             DeletionDate = deletionDate;
             ScheduledPurgeDate = scheduledPurgeDate;
             Tags = tags;
+            PurgeProtectionEnabled = purgeProtectionEnabled;
             CustomInit();
         }
 
@@ -81,6 +84,12 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; private set; }
+
+        /// <summary>
+        /// Gets purge protection status of the original vault.
+        /// </summary>
+        [JsonProperty(PropertyName = "purgeProtectionEnabled")]
+        public bool? PurgeProtectionEnabled { get; private set; }
 
     }
 }

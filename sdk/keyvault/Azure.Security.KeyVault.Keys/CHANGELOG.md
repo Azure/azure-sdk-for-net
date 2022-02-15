@@ -1,6 +1,6 @@
 # Release History
 
-## 4.3.0-beta.4 (Unreleased)
+## 4.3.0-beta.8 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,39 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.3.0-beta.7 (2022-02-08)
+
+### Features Added
+
+- Added `KeyReleasePolicy.Immutable` property.
+
+### Breaking Changes
+
+- `KeyRotationPolicy.ExpiresIn` was changed from a `TimeSpan?` to a `string` to properly round trip. It must be an ISO 8601 duration like "P30D" for 30 days.
+- `KeyRotationLifetimeAction.TimeAfterCreate` and `TimeBeforeExpiry` were changed from a `TimeSpan?` to a `string` to properly round trip. It must be an ISO 8601 duration like "P30D" for 30 days.
+
+### Other Changes
+
+- `KeyProperties.Version` is no longer required when calling `KeyClient.UpdateKeyProperties` or `UpdateKeyPropertiesAsync`.
+
+## 4.3.0-beta.6 (2022-01-12)
+
+### Other Changes
+
+- Package metadata fixed
+
+## 4.3.0-beta.5 (2022-01-11)
+
+### Other Changes
+
+- Bug fixes
+
+## 4.3.0-beta.4 (2021-11-16)
+
+### Bugs Fixed
+
+- Attempt to cache key locally from `KeyClient.GetCryptographyClient`. ([#25254](https://github.com/Azure/azure-sdk-for-net/issues/25254))
 
 ## 4.3.0-beta.3 (2021-11-09)
 

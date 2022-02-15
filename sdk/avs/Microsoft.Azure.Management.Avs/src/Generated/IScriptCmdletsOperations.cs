@@ -24,8 +24,8 @@ namespace Microsoft.Azure.Management.Avs
     public partial interface IScriptCmdletsOperations
     {
         /// <summary>
-        /// Return script cmdlet resources available for a private cloud to
-        /// create a script execution resource on their Private Cloud
+        /// List script cmdlet resources available for a private cloud to
+        /// create a script execution resource on a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -86,8 +86,8 @@ namespace Microsoft.Azure.Management.Avs
         /// </exception>
         Task<AzureOperationResponse<ScriptCmdlet>> GetWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string scriptPackageName, string scriptCmdletName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Return script cmdlet resources available for a private cloud to
-        /// create a script execution resource on their Private Cloud
+        /// List script cmdlet resources available for a private cloud to
+        /// create a script execution resource on a private cloud
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

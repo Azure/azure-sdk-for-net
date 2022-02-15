@@ -44,7 +44,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             #endregion
 
             #region Snippet:KeysSample6GenerateKey
-            byte[] keyData = AesManaged.Create().Key;
+            byte[] keyData = Aes.Create().Key;
             Debug.WriteLine($"Generated Key: {Convert.ToBase64String(keyData)}");
             #endregion
 

@@ -66,7 +66,9 @@ namespace Azure.Data.Tables.Tests
             { "ValidateAccountSasCredentialsWithPermissions", "SAS for account operations not supported" },
             { "ValidateAccountSasCredentialsWithPermissionsWithSasDuplicatedInUri", "SAS for account operations not supported" },
             { "ValidateAccountSasCredentialsWithResourceTypes", "SAS for account operations not supported" },
-            { "CreateEntityWithETagProperty", "https://github.com/Azure/azure-sdk-for-net/issues/21405" }
+            { "ValidateSasCredentialsWithGenerateSasUri", "https://github.com/Azure/azure-sdk-for-net/issues/13578" },
+            { "CreateEntityWithETagProperty", "https://github.com/Azure/azure-sdk-for-net/issues/21405" },
+            { "ValidateSasCredentialsWithGenerateSasUriAndUpperCaseTableName", "https://github.com/Azure/azure-sdk-for-net/issues/26800" }
         };
 
         private readonly Dictionary<string, string> _AadIgnoreTests = new()

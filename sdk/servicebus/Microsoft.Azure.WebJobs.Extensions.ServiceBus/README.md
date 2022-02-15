@@ -9,7 +9,7 @@ This extension provides functionality for accessing Azure Service Bus from an Az
 Install the Service Bus extension with [NuGet](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.ServiceBus/):
 
 ```dotnetcli
-dotnet add package Microsoft.Azure.WebJobs.Extensions.ServiceBus --version 5.0.0-beta.1
+dotnet add package Microsoft.Azure.WebJobs.Extensions.ServiceBus
 ```
 
 ### Prerequisites
@@ -208,7 +208,7 @@ There may be times when you want to bind to the same `ServiceBusClient` that the
 ```C# Snippet:ServiceBusBindingToClient
 [FunctionName("BindingToClient")]
 public static async Task Run(
-    [ServiceBus("<queue_or_topic_name>", Connection = "<connection_name>")] 
+    [ServiceBus("<queue_or_topic_name>", Connection = "<connection_name>")]
     ServiceBusReceivedMessage message,
     ServiceBusClient client)
 {

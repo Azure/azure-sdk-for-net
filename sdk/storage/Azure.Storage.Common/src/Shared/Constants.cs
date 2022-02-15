@@ -24,8 +24,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        // TODO https://github.com/Azure/azure-sdk-for-net/issues/25140
-        public const string DefaultSasVersion = "2020-12-06";
+        public const string DefaultSasVersion = "2021-04-10";
 
         /// <summary>
         /// The default size of staged blocks when uploading small blobs.
@@ -107,6 +106,8 @@ namespace Azure.Storage
 
         public const string DisableRequestConditionsValidationSwitchName = "Azure.Storage.DisableRequestConditionsValidation";
         public const string DisableRequestConditionsValidationEnvVar = "AZURE_STORAGE_DISABLE_REQUEST_CONDITIONS_VALIDATION";
+
+        public const string DefaultScope = "/.default";
 
         /// <summary>
         /// Storage Connection String constant values.
@@ -582,13 +583,15 @@ namespace Azure.Storage
                 Sas.Permissions.Write,
                 Sas.Permissions.Delete,
                 Sas.Permissions.DeleteBlobVersion,
+                Sas.Permissions.PermanentDelete,
                 Sas.Permissions.List,
                 Sas.Permissions.Tag,
                 Sas.Permissions.Update,
                 Sas.Permissions.Process,
                 Sas.Permissions.FilterByTags,
                 Sas.Permissions.Move,
-                Sas.Permissions.Execute
+                Sas.Permissions.Execute,
+                Sas.Permissions.SetImmutabilityPolicy,
             };
 
             /// <summary>

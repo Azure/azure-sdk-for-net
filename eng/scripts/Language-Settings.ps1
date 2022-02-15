@@ -254,7 +254,10 @@ function GetExistingPackageVersions ($PackageName, $GroupId=$null)
     return $existingVersion.versions
   }
   catch {
-    LogError "Failed to retrieve package versions. `n$_"
+    if ($_.Exception.Response.StatusCode -ne 404) 
+    {
+      LogError "Failed to retrieve package versions for ${PackageName}. $($_.Exception.Message)"
+    }
     return $null
   }
 }

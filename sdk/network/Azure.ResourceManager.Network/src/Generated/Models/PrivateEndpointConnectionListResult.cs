@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PrivateEndpointConnectionListResult. </summary>
         internal PrivateEndpointConnectionListResult()
         {
-            Value = new ChangeTrackingList<PrivateEndpointConnection>();
+            Value = new ChangeTrackingList<PrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionListResult. </summary>
         /// <param name="value"> A list of PrivateEndpointConnection resources for a specific private link service. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal PrivateEndpointConnectionListResult(IReadOnlyList<PrivateEndpointConnection> value, string nextLink)
+        internal PrivateEndpointConnectionListResult(IReadOnlyList<PrivateEndpointConnectionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of PrivateEndpointConnection resources for a specific private link service. </summary>
-        public IReadOnlyList<PrivateEndpointConnection> Value { get; }
+        public IReadOnlyList<PrivateEndpointConnectionData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

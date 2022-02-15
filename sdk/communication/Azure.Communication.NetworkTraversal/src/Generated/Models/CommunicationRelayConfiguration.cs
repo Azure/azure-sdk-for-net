@@ -15,10 +15,10 @@ namespace Azure.Communication.NetworkTraversal
     public partial class CommunicationRelayConfiguration
     {
         /// <summary> Initializes a new instance of CommunicationRelayConfiguration. </summary>
-        /// <param name="expiresOn"> The date for which the username and credentials are not longer valid. </param>
+        /// <param name="expiresOn"> The date for which the username and credentials are not longer valid. Will be 48 hours from request time. </param>
         /// <param name="iceServers"> An array representing the credentials and the STUN/TURN server URLs for use in ICE negotiations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="iceServers"/> is null. </exception>
-        internal CommunicationRelayConfiguration(DateTimeOffset expiresOn, IEnumerable<CommunicationIceServer> iceServers)
+        public CommunicationRelayConfiguration(DateTimeOffset expiresOn, IEnumerable<CommunicationIceServer> iceServers)
         {
             if (iceServers == null)
             {
@@ -30,17 +30,17 @@ namespace Azure.Communication.NetworkTraversal
         }
 
         /// <summary> Initializes a new instance of CommunicationRelayConfiguration. </summary>
-        /// <param name="expiresOn"> The date for which the username and credentials are not longer valid. </param>
+        /// <param name="expiresOn"> The date for which the username and credentials are not longer valid. Will be 48 hours from request time. </param>
         /// <param name="iceServers"> An array representing the credentials and the STUN/TURN server URLs for use in ICE negotiations. </param>
-        internal CommunicationRelayConfiguration(DateTimeOffset expiresOn, IReadOnlyList<CommunicationIceServer> iceServers)
+        internal CommunicationRelayConfiguration(DateTimeOffset expiresOn, IList<CommunicationIceServer> iceServers)
         {
             ExpiresOn = expiresOn;
             IceServers = iceServers;
         }
 
-        /// <summary> The date for which the username and credentials are not longer valid. </summary>
-        public DateTimeOffset ExpiresOn { get; }
+        /// <summary> The date for which the username and credentials are not longer valid. Will be 48 hours from request time. </summary>
+        public DateTimeOffset ExpiresOn { get; set; }
         /// <summary> An array representing the credentials and the STUN/TURN server URLs for use in ICE negotiations. </summary>
-        public IReadOnlyList<CommunicationIceServer> IceServers { get; }
+        public IList<CommunicationIceServer> IceServers { get; }
     }
 }

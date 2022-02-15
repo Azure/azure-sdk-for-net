@@ -19,16 +19,17 @@ namespace Azure.Analytics.Purview.Administration
     /// <summary> The PurviewMetadataPolicy service client. </summary>
     public partial class PurviewMetadataPolicyClient
     {
-        private static readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _collectionName;
 
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of PurviewMetadataPolicyClient for mocking. </summary>
         protected PurviewMetadataPolicyClient()
@@ -38,7 +39,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <summary> Updates a metadata policy. </summary>
         /// <param name="policyId"> Unique policy id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -117,12 +118,14 @@ namespace Azure.Analytics.Purview.Administration
         public virtual async Task<Response> UpdateMetadataPolicyAsync(string policyId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.UpdateMetadataPolicy");
+            Argument.AssertNotNull(policyId, nameof(policyId));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewMetadataPolicyClient.UpdateMetadataPolicy");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateMetadataPolicyRequest(policyId, content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateUpdateMetadataPolicyRequest(policyId, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -134,7 +137,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <summary> Updates a metadata policy. </summary>
         /// <param name="policyId"> Unique policy id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -213,12 +216,14 @@ namespace Azure.Analytics.Purview.Administration
         public virtual Response UpdateMetadataPolicy(string policyId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.UpdateMetadataPolicy");
+            Argument.AssertNotNull(policyId, nameof(policyId));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewMetadataPolicyClient.UpdateMetadataPolicy");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateMetadataPolicyRequest(policyId, content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateUpdateMetadataPolicyRequest(policyId, content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -229,7 +234,7 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Gets a metadata policy. </summary>
         /// <param name="policyId"> Id of an existing policy that needs to be fetched. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -278,12 +283,14 @@ namespace Azure.Analytics.Purview.Administration
         public virtual async Task<Response> GetMetadataPolicyAsync(string policyId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.GetMetadataPolicy");
+            Argument.AssertNotNull(policyId, nameof(policyId));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewMetadataPolicyClient.GetMetadataPolicy");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetMetadataPolicyRequest(policyId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetMetadataPolicyRequest(policyId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -294,7 +301,7 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Gets a metadata policy. </summary>
         /// <param name="policyId"> Id of an existing policy that needs to be fetched. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -343,12 +350,14 @@ namespace Azure.Analytics.Purview.Administration
         public virtual Response GetMetadataPolicy(string policyId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.GetMetadataPolicy");
+            Argument.AssertNotNull(policyId, nameof(policyId));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewMetadataPolicyClient.GetMetadataPolicy");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetMetadataPolicyRequest(policyId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetMetadataPolicyRequest(policyId, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -358,7 +367,7 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> List or Get metadata policies. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -411,15 +420,15 @@ namespace Azure.Analytics.Purview.Administration
         public virtual AsyncPageable<BinaryData> GetMetadataPoliciesAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewMetadataPolicyClient.GetMetadataPolicies");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewMetadataPolicyClient.GetMetadataPolicies");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetMetadataPoliciesRequest()
-                        : CreateGetMetadataPoliciesNextPageRequest(nextLink);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                        ? CreateGetMetadataPoliciesRequest(context)
+                        : CreateGetMetadataPoliciesNextPageRequest(nextLink, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -427,7 +436,7 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> List or Get metadata policies. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -480,24 +489,24 @@ namespace Azure.Analytics.Purview.Administration
         public virtual Pageable<BinaryData> GetMetadataPolicies(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewMetadataPolicyClient.GetMetadataPolicies");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewMetadataPolicyClient.GetMetadataPolicies");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetMetadataPoliciesRequest()
-                        : CreateGetMetadataPoliciesNextPageRequest(nextLink);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                        ? CreateGetMetadataPoliciesRequest(context)
+                        : CreateGetMetadataPoliciesNextPageRequest(nextLink, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
             }
         }
 
-        internal HttpMessage CreateGetMetadataPoliciesRequest()
+        internal HttpMessage CreateGetMetadataPoliciesRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -511,9 +520,9 @@ namespace Azure.Analytics.Purview.Administration
             return message;
         }
 
-        internal HttpMessage CreateUpdateMetadataPolicyRequest(string policyId, RequestContent content)
+        internal HttpMessage CreateUpdateMetadataPolicyRequest(string policyId, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -530,9 +539,9 @@ namespace Azure.Analytics.Purview.Administration
             return message;
         }
 
-        internal HttpMessage CreateGetMetadataPolicyRequest(string policyId)
+        internal HttpMessage CreateGetMetadataPolicyRequest(string policyId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -547,9 +556,9 @@ namespace Azure.Analytics.Purview.Administration
             return message;
         }
 
-        internal HttpMessage CreateGetMetadataPoliciesNextPageRequest(string nextLink)
+        internal HttpMessage CreateGetMetadataPoliciesNextPageRequest(string nextLink, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

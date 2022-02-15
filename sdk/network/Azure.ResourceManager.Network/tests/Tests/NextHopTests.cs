@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Tests
             //Create Network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await networkWatcherCollection.CreateOrUpdateAsync(resourceGroupName, networkWatcherName, properties);
+            //await networkWatcherCollection.CreateOrUpdateAsync(true, resourceGroupName, networkWatcherName, properties);
 
             var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
             string sourceIPAddress = networkInterfaceCollection
@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.Network.Tests
 
             var networkWatcherCollection = resourceGroup.GetNetworkWatchers();
             var networkWatcherResponse = await networkWatcherCollection.GetAsync("NetworkWatcher_westus2");
-            var getNextHop1Operation = await networkWatcherResponse.Value.GetNextHopAsync(nhProperties1);
+            var getNextHop1Operation = await networkWatcherResponse.Value.GetNextHopAsync(true, nhProperties1);
             Response<NextHopResult> getNextHop1 = await getNextHop1Operation.WaitForCompletionAsync();;
 
-            var getNextHop2Operation = await networkWatcherResponse.Value.GetNextHopAsync(nhProperties2);
+            var getNextHop2Operation = await networkWatcherResponse.Value.GetNextHopAsync(true, nhProperties2);
             Response<NextHopResult> getNextHop2 = await getNextHop2Operation.WaitForCompletionAsync();;
 
             Response<RouteTable> routeTable = await resourceGroup.GetRouteTables().GetAsync(resourceGroupName + "RT");

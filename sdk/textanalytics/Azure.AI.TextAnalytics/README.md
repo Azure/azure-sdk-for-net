@@ -25,9 +25,9 @@ This table shows the relationship between SDK versions and supported API version
 |SDK version|Supported API version of service
 |-|- |
 |5.2.0-beta.2 | 3.0, 3.1, 3.2-preview.2 (default)
-|5.1.0  | 3.0, 3.1 (default)
+|5.1.X  | 3.0, 3.1 (default)
 |5.0.0  | 3.0
-|1.0.X | 3.0
+|1.0.X  | 3.0
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
@@ -124,7 +124,7 @@ For each supported operation, `TextAnalyticsClient` provides a method that accep
 Return values, such as `AnalyzeSentimentResult`, is the result of a Text Analytics operation, containing a prediction or predictions about a single document.  An operation's return value also may optionally include information about the document and how it was processed.
 
 ### Return value Collection
-A Return value collection, such as `AnalyzeSentimentResultCollection`, is a collection of operation results, where each corresponds to one of the documents provided in the input batch.  A document and its result will have the same index in the input and result collections. The return value also contains a `HasError` property that allows to identify if an operation executed was succesful or unsuccesful for the given document. It may optionally include information about the document batch and how it was processed.
+A Return value collection, such as `AnalyzeSentimentResultCollection`, is a collection of operation results, where each corresponds to one of the documents provided in the input batch.  A document and its result will have the same index in the input and result collections. The return value also contains a `HasError` property that allows to identify if an operation executed was successful or unsuccessful for the given document. It may optionally include information about the document batch and how it was processed.
 
 ### Long-Running Operations
 

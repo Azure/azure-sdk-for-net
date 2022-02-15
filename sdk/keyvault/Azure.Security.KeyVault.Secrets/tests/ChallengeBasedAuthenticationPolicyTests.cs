@@ -50,7 +50,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             Random rand = new Random();
 
             MockTransportBuilder builder = new MockTransportBuilder();
-            builder.Request += (sender, args) =>
+            builder.Request += async (sender, args) =>
             {
                 int delay;
                 lock (rand)
@@ -59,7 +59,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 }
 
                 Trace.WriteLine($"[{Thread.CurrentThread.ManagedThreadId:x4}] Delaying request [{args.Request.ClientRequestId}] by {delay}ms: {args.Request.Method} {args.Request.Uri}");
-                Thread.Sleep(delay);
+                await Task.Delay(delay);
             };
 
             MockTransport transport = builder.Build();

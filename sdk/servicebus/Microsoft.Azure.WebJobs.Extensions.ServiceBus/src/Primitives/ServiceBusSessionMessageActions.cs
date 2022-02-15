@@ -17,6 +17,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         private readonly ProcessSessionMessageEventArgs _eventArgs;
         private readonly ServiceBusSessionReceiver _receiver;
 
+        internal bool ShouldReleaseSession { get; set; }
+
         internal ServiceBusSessionMessageActions(ProcessSessionMessageEventArgs eventArgs) : base(eventArgs)
         {
             _eventArgs = eventArgs;
@@ -25,6 +27,17 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         internal ServiceBusSessionMessageActions(ServiceBusSessionReceiver receiver) : base(receiver)
         {
             _receiver = receiver;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusSessionMessageActions"/> class for mocking use in testing.
+        /// </summary>
+        /// <remarks>
+        /// This constructor exists only to support mocking. When used, class state is not fully initialized, and
+        /// will not function correctly; virtual members are meant to be mocked.
+        ///</remarks>
+        protected ServiceBusSessionMessageActions()
+        {
         }
 
         /// <inheritdoc cref="ServiceBusSessionReceiver.GetSessionStateAsync(CancellationToken)"/>
@@ -54,6 +67,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             {
                 await _eventArgs.SetSessionStateAsync(sessionState, cancellationToken).ConfigureAwait(false);
             }
+        }
+
+        /// <inheritdoc cref="ProcessSessionMessageEventArgs.ReleaseSession()"/>
+        public virtual void ReleaseSession()
+        {
+            ShouldReleaseSession = true;
         }
     }
 }

@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -19,6 +21,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// The properties that are associated with a scalar function.
     /// </summary>
     [Newtonsoft.Json.JsonObject("Scalar")]
+    [Rest.Serialization.JsonTransformation]
     public partial class ScalarFunctionProperties : FunctionProperties
     {
         /// <summary>
@@ -37,9 +40,18 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// changed between requests. You can also use it in the If-Match or
         /// If-None-Match headers for write operations for optimistic
         /// concurrency.</param>
+        /// <param name="inputs">A list of inputs describing the parameters of
+        /// the function.</param>
+        /// <param name="output">The output of the function.</param>
+        /// <param name="binding">The physical binding of the function. For
+        /// example, in the Azure Machine Learning web service’s case, this
+        /// describes the endpoint.</param>
         public ScalarFunctionProperties(string etag = default(string), IList<FunctionInput> inputs = default(IList<FunctionInput>), FunctionOutput output = default(FunctionOutput), FunctionBinding binding = default(FunctionBinding))
-            : base(etag, inputs, output, binding)
+            : base(etag)
         {
+            Inputs = inputs;
+            Output = output;
+            Binding = binding;
             CustomInit();
         }
 
@@ -47,6 +59,27 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets a list of inputs describing the parameters of the
+        /// function.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.inputs")]
+        public IList<FunctionInput> Inputs { get; set; }
+
+        /// <summary>
+        /// Gets or sets the output of the function.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.output")]
+        public FunctionOutput Output { get; set; }
+
+        /// <summary>
+        /// Gets or sets the physical binding of the function. For example, in
+        /// the Azure Machine Learning web service’s case, this describes the
+        /// endpoint.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.binding")]
+        public FunctionBinding Binding { get; set; }
 
     }
 }

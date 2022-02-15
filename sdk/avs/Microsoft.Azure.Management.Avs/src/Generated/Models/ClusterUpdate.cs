@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Avs.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -33,9 +35,11 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// Initializes a new instance of the ClusterUpdate class.
         /// </summary>
         /// <param name="clusterSize">The cluster size</param>
-        public ClusterUpdate(int? clusterSize = default(int?))
+        /// <param name="hosts">The hosts</param>
+        public ClusterUpdate(int? clusterSize = default(int?), IList<string> hosts = default(IList<string>))
         {
             ClusterSize = clusterSize;
+            Hosts = hosts;
             CustomInit();
         }
 
@@ -49,6 +53,12 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.clusterSize")]
         public int? ClusterSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets the hosts
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hosts")]
+        public IList<string> Hosts { get; set; }
 
     }
 }

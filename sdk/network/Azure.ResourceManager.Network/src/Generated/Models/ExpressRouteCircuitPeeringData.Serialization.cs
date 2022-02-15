@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network
             Optional<Ipv6ExpressRouteCircuitPeeringConfig> ipv6PeeringConfig = default;
             Optional<Resources.Models.SubResource> expressRouteConnection = default;
             Optional<IList<ExpressRouteCircuitConnectionData>> connections = default;
-            Optional<IReadOnlyList<PeerExpressRouteCircuitConnection>> peeredConnections = default;
+            Optional<IReadOnlyList<PeerExpressRouteCircuitConnectionData>> peeredConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -348,10 +348,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PeerExpressRouteCircuitConnection> array = new List<PeerExpressRouteCircuitConnection>();
+                            List<PeerExpressRouteCircuitConnectionData> array = new List<PeerExpressRouteCircuitConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PeerExpressRouteCircuitConnection.DeserializePeerExpressRouteCircuitConnection(item));
+                                array.Add(PeerExpressRouteCircuitConnectionData.DeserializePeerExpressRouteCircuitConnectionData(item));
                             }
                             peeredConnections = array;
                             continue;

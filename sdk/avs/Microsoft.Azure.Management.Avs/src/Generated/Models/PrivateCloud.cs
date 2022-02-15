@@ -50,6 +50,10 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// disabled. Possible values include: 'Enabled', 'Disabled'</param>
         /// <param name="identitySources">vCenter Single Sign On Identity
         /// Sources</param>
+        /// <param name="availability">Properties describing how the cloud is
+        /// distributed across availability zones</param>
+        /// <param name="encryption">Customer managed key encryption, can be
+        /// enabled or disabled</param>
         /// <param name="provisioningState">The provisioning state. Possible
         /// values include: 'Succeeded', 'Failed', 'Cancelled', 'Pending',
         /// 'Building', 'Deleting', 'Updating'</param>
@@ -71,13 +75,20 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// Manager SSL certificate</param>
         /// <param name="externalCloudLinks">Array of cloud link IDs from other
         /// clouds that connect to this one</param>
-        public PrivateCloud(Sku sku, string networkBlock, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagementCluster managementCluster = default(ManagementCluster), string internet = default(string), IList<IdentitySource> identitySources = default(IList<IdentitySource>), string provisioningState = default(string), Circuit circuit = default(Circuit), Endpoints endpoints = default(Endpoints), string managementNetwork = default(string), string provisioningNetwork = default(string), string vmotionNetwork = default(string), string vcenterPassword = default(string), string nsxtPassword = default(string), string vcenterCertificateThumbprint = default(string), string nsxtCertificateThumbprint = default(string), IList<string> externalCloudLinks = default(IList<string>))
+        /// <param name="secondaryCircuit">A secondary expressRoute circuit
+        /// from a separate AZ. Only present in a stretched private
+        /// cloud</param>
+        /// <param name="identity">The identity of the private cloud, if
+        /// configured.</param>
+        public PrivateCloud(Sku sku, string networkBlock, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagementCluster managementCluster = default(ManagementCluster), string internet = default(string), IList<IdentitySource> identitySources = default(IList<IdentitySource>), AvailabilityProperties availability = default(AvailabilityProperties), Encryption encryption = default(Encryption), string provisioningState = default(string), Circuit circuit = default(Circuit), Endpoints endpoints = default(Endpoints), string managementNetwork = default(string), string provisioningNetwork = default(string), string vmotionNetwork = default(string), string vcenterPassword = default(string), string nsxtPassword = default(string), string vcenterCertificateThumbprint = default(string), string nsxtCertificateThumbprint = default(string), IList<string> externalCloudLinks = default(IList<string>), Circuit secondaryCircuit = default(Circuit), PrivateCloudIdentity identity = default(PrivateCloudIdentity))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
             ManagementCluster = managementCluster;
             Internet = internet;
             IdentitySources = identitySources;
+            Availability = availability;
+            Encryption = encryption;
             ProvisioningState = provisioningState;
             Circuit = circuit;
             Endpoints = endpoints;
@@ -90,6 +101,8 @@ namespace Microsoft.Azure.Management.Avs.Models
             VcenterCertificateThumbprint = vcenterCertificateThumbprint;
             NsxtCertificateThumbprint = nsxtCertificateThumbprint;
             ExternalCloudLinks = externalCloudLinks;
+            SecondaryCircuit = secondaryCircuit;
+            Identity = identity;
             CustomInit();
         }
 
@@ -122,6 +135,20 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.identitySources")]
         public IList<IdentitySource> IdentitySources { get; set; }
+
+        /// <summary>
+        /// Gets or sets properties describing how the cloud is distributed
+        /// across availability zones
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.availability")]
+        public AvailabilityProperties Availability { get; set; }
+
+        /// <summary>
+        /// Gets or sets customer managed key encryption, can be enabled or
+        /// disabled
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryption")]
+        public Encryption Encryption { get; set; }
 
         /// <summary>
         /// Gets the provisioning state. Possible values include: 'Succeeded',
@@ -203,6 +230,19 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.externalCloudLinks")]
         public IList<string> ExternalCloudLinks { get; private set; }
+
+        /// <summary>
+        /// Gets or sets a secondary expressRoute circuit from a separate AZ.
+        /// Only present in a stretched private cloud
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.secondaryCircuit")]
+        public Circuit SecondaryCircuit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identity of the private cloud, if configured.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public PrivateCloudIdentity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.

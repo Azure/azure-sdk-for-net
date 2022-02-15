@@ -159,7 +159,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            Uri firstPageUri = new Uri(VaultUri, $"{SecretsPath}{name}/versions?api-version={_pipeline.ApiVersion}");
+            Uri firstPageUri = _pipeline.CreateFirstPageUri($"{SecretsPath}{name}/versions");
 
             return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new SecretProperties(), "SecretClient.GetPropertiesOfSecretVersions", cancellationToken));
         }
@@ -186,7 +186,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            Uri firstPageUri = new Uri(VaultUri, $"{SecretsPath}{name}/versions?api-version={_pipeline.ApiVersion}");
+            Uri firstPageUri = _pipeline.CreateFirstPageUri($"{SecretsPath}{name}/versions");
 
             return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new SecretProperties(), "SecretClient.GetPropertiesOfSecretVersions", cancellationToken));
         }
@@ -204,7 +204,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual AsyncPageable<SecretProperties> GetPropertiesOfSecretsAsync(CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = new Uri(VaultUri, SecretsPath + $"?api-version={_pipeline.ApiVersion}");
+            Uri firstPageUri = _pipeline.CreateFirstPageUri(SecretsPath);
 
             return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new SecretProperties(), "SecretClient.GetPropertiesOfSecrets", cancellationToken));
         }
@@ -222,7 +222,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Pageable<SecretProperties> GetPropertiesOfSecrets(CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = new Uri(VaultUri, SecretsPath + $"?api-version={_pipeline.ApiVersion}");
+            Uri firstPageUri = _pipeline.CreateFirstPageUri(SecretsPath);
 
             return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new SecretProperties(), "SecretClient.GetPropertiesOfSecrets", cancellationToken));
         }
@@ -545,7 +545,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual AsyncPageable<DeletedSecret> GetDeletedSecretsAsync(CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = new Uri(VaultUri, DeletedSecretsPath + $"?api-version={_pipeline.ApiVersion}");
+            Uri firstPageUri = _pipeline.CreateFirstPageUri(DeletedSecretsPath);
 
             return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new DeletedSecret(), "SecretClient.GetDeletedSecrets", cancellationToken));
         }
@@ -562,7 +562,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Pageable<DeletedSecret> GetDeletedSecrets(CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = new Uri(VaultUri, DeletedSecretsPath + $"?api-version={_pipeline.ApiVersion}");
+            Uri firstPageUri = _pipeline.CreateFirstPageUri(DeletedSecretsPath);
 
             return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new DeletedSecret(), "SecretClient.GetDeletedSecrets", cancellationToken));
         }

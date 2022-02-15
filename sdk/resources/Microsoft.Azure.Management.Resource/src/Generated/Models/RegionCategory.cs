@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     public static class RegionCategory
     {
         public const string Recommended = "Recommended";
+        public const string Extended = "Extended";
         public const string Other = "Other";
     }
 }

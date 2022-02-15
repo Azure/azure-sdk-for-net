@@ -9,9 +9,9 @@ namespace Microsoft.Extensions.Azure.Samples
 {
     internal class DependencyInjectionEnabledPolicy : HttpPipelineSynchronousPolicy
     {
-        private readonly IHostingEnvironment _environment;
+        private readonly IWebHostEnvironment _environment;
 
-        public DependencyInjectionEnabledPolicy(IHostingEnvironment environment)
+        public DependencyInjectionEnabledPolicy(IWebHostEnvironment environment)
         {
             this._environment = environment;
         }

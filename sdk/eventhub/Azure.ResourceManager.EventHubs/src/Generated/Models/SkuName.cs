@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="SkuName"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuName"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SkuName(string value)
         {
@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         private const string BasicValue = "Basic";
         private const string StandardValue = "Standard";
+        private const string PremiumValue = "Premium";
 
         /// <summary> Basic. </summary>
         public static SkuName Basic { get; } = new SkuName(BasicValue);
         /// <summary> Standard. </summary>
         public static SkuName Standard { get; } = new SkuName(StandardValue);
+        /// <summary> Premium. </summary>
+        public static SkuName Premium { get; } = new SkuName(PremiumValue);
         /// <summary> Determines if two <see cref="SkuName"/> values are the same. </summary>
         public static bool operator ==(SkuName left, SkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SkuName"/> values are not the same. </summary>

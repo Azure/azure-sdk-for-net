@@ -11,9 +11,6 @@
     <ExcludeFromBuild>true</ExcludeFromBuild>
     <ExcludeFromTest>true</ExcludeFromTest>
   </PropertyGroup>
-  <PropertyGroup>
-    <TargetFrameworks>net5.0</TargetFrameworks>
-  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.Azure.Management.SecurityInsights.csproj" />
   </ItemGroup>

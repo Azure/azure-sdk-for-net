@@ -5,49 +5,47 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 azure-arm: true
 library-name: KeyVault
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/954bf4ebc679ba55a6cacb39dbdacdbb956359f2/specification/keyvault/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/d29e6eb4894005c52e67cb4b5ac3faf031113e7d/specification/keyvault/resource-manager/readme.md
+tag: package-2021-10
 clear-output-folder: true
 skip-csproj: true
 namespace: Azure.ResourceManager.KeyVault
 modelerfour:
-  lenient-model-deduplication: true
+  flatten-payloads: false
 model-namespace: false
-payload-flattening-threshold: 2
-operation-group-to-resource-type:
-    PrivateLinkResources: Microsoft.KeyVault/vaults/privateLinkResources
-    MHSMPrivateLinkResources: Microsoft.KeyVault/managedHSMs/privateLinkResources
-    DeletedVaults: Microsoft.KeyVault/deletedVaults
-operation-group-to-resource:
-    Vaults: Vault
-    DeletedVaults: DeletedVault
-operation-group-to-parent:
-   DeletedVaults: subscriptions
+override-operation-name:
+  Vaults_CheckNameAvailability: CheckKeyVaultNameAvailability
+  MHSMPrivateLinkResources_ListByMhsmResource: GetMhsmPrivateLinkResources
+list-exception:
+- /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}
+- /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedManagedHSMs/{name}
+mgmt-debug:
+  show-request-path: true
 directive:
-    - from: swagger-document
-      where: $.paths
-      transform: delete $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/accessPolicies/{operationKind}']
-    - from: swagger-document
-      where: $.definitions
-      transform: delete $['VaultAccessPolicyParameters']
-    - from: swagger-document
-      where: $.definitions
-      transform: delete $['VaultAccessPolicyProperties']
-    - from: swagger-document
-      where: $.paths
-      transform: delete $['/subscriptions/{subscriptionId}/resources']
-    - from: swagger-document
-      where: $['definitions']['Sku']['properties']['family']
-      transform: delete $['x-ms-client-default']
-    - from: swagger-document
-      where: $['definitions']['ManagedHsmSku']['properties']['family']
-      transform: delete $['x-ms-client-default']
-    - from: swagger-document
-      where: $['paths']['/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults']['get']
-      transform: $.operationId = 'DeletedVaults_ListBySubscription'
-    - from: swagger-document
-      where: $['paths']['/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}']['get']
-      transform: $.operationId = 'DeletedVaults_Get'
-    - from: swagger-document
-      where: $['paths']['/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}/purge']['post']
-      transform: $.operationId = 'DeletedVaults_Purge'
+  - rename-model:
+      from: Attributes
+      to: BaseAttributes
+  - rename-model:
+      from: Permissions
+      to: AccessPermissions
+  - from: swagger-document
+    where: $.paths
+    transform: delete $['/subscriptions/{subscriptionId}/resources']
+  - from: swagger-document
+    where: $['definitions']['Sku']['properties']['family']
+    transform: delete $['x-ms-client-default']
+  - from: swagger-document
+    where: $['definitions']['ManagedHsmSku']['properties']['family']
+    transform: delete $['x-ms-client-default']
+  - from: swagger-document
+    where: "$.definitions.CheckNameAvailabilityResult.properties.reason"
+    transform: >
+      $["x-ms-enum"] = {
+        "modelAsString": false,
+        "name": "NameAvailabilityReason"
+      }
+  - from: swagger-document
+    where: "$.definitions.Resource"
+    transform: >
+      $["x-ms-client-name"] = "KeyVaultResource";
 ```

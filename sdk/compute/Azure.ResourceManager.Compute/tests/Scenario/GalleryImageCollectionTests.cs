@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             var galleryName = Recording.GenerateAssetName("testGallery_");
             var input = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
-            var lro = await _resourceGroup.GetGalleries().CreateOrUpdateAsync(galleryName, input);
+            var lro = await _resourceGroup.GetGalleries().CreateOrUpdateAsync(true, galleryName, input);
             _gallery = lro.Value;
             return _gallery.GetGalleryImages();
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var collection = await GetGalleryImageCollectionAsync();
             var name = Recording.GenerateAssetName("testImage_");
-            var lro = await collection.CreateOrUpdateAsync(name, BasicGalleryImageData);
+            var lro = await collection.CreateOrUpdateAsync(true, name, BasicGalleryImageData);
             GalleryImage image = lro.Value;
             Assert.AreEqual(name, image.Data.Name);
         }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var collection = await GetGalleryImageCollectionAsync();
             var name = Recording.GenerateAssetName("testImage_");
-            var lro = await collection.CreateOrUpdateAsync(name, BasicGalleryImageData);
+            var lro = await collection.CreateOrUpdateAsync(true, name, BasicGalleryImageData);
             GalleryImage image1 = lro.Value;
             GalleryImage image2 = await collection.GetAsync(name);
 
@@ -69,16 +69,16 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task CheckIfExistsAsync()
+        public async Task Exists()
         {
             var collection = await GetGalleryImageCollectionAsync();
             var name = Recording.GenerateAssetName("testImage_");
-            var lro = await collection.CreateOrUpdateAsync(name, BasicGalleryImageData);
+            var lro = await collection.CreateOrUpdateAsync(true, name, BasicGalleryImageData);
             GalleryImage image = lro.Value;
-            Assert.IsTrue(await collection.CheckIfExistsAsync(name));
-            Assert.IsFalse(await collection.CheckIfExistsAsync(name + "1"));
+            Assert.IsTrue(await collection.ExistsAsync(name));
+            Assert.IsFalse(await collection.ExistsAsync(name + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.CheckIfExistsAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 
         [TestCase]
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var name2 = Recording.GenerateAssetName("testImage_");
             var input1 = BasicGalleryImageData;
             var input2 = BasicGalleryImageData;
-            _ = await collection.CreateOrUpdateAsync(name1, input1);
-            _ = await collection.CreateOrUpdateAsync(name2, input2);
+            _ = await collection.CreateOrUpdateAsync(true, name1, input1);
+            _ = await collection.CreateOrUpdateAsync(true, name2, input2);
             int count = 0;
             await foreach (var galleryImage in collection.GetAllAsync())
             {

@@ -1,16 +1,20 @@
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 {
-    public partial class SchemaRegistryAvroObjectSerializer : Azure.Core.Serialization.ObjectSerializer
+    public partial class SchemaRegistryAvroEncoder
     {
-        public SchemaRegistryAvroObjectSerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, string groupName, Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.SchemaRegistryAvroObjectSerializerOptions options = null) { }
-        public override object Deserialize(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public override System.Threading.Tasks.ValueTask<object> DeserializeAsync(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public override void Serialize(System.IO.Stream stream, object value, System.Type inputType, System.Threading.CancellationToken cancellationToken) { }
-        public override System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object value, System.Type inputType, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public SchemaRegistryAvroEncoder(Azure.Data.SchemaRegistry.SchemaRegistryClient client, string groupName, Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.SchemaRegistryAvroEncoderOptions options = null) { }
+        public object DecodeMessageData(Azure.MessageWithMetadata message, System.Type dataType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.ValueTask<object> DecodeMessageDataAsync(Azure.MessageWithMetadata message, System.Type dataType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.ValueTask<TData> DecodeMessageDataAsync<TData>(Azure.MessageWithMetadata message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public TData DecodeMessageData<TData>(Azure.MessageWithMetadata message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public Azure.MessageWithMetadata EncodeMessageData(object data, System.Type dataType = null, System.Type messageType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.ValueTask<Azure.MessageWithMetadata> EncodeMessageDataAsync(object data, System.Type dataType = null, System.Type messageType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.ValueTask<TMessage> EncodeMessageDataAsync<TMessage, TData>(TData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where TMessage : Azure.MessageWithMetadata, new() { throw null; }
+        public TMessage EncodeMessageData<TMessage, TData>(TData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where TMessage : Azure.MessageWithMetadata, new() { throw null; }
     }
-    public partial class SchemaRegistryAvroObjectSerializerOptions
+    public partial class SchemaRegistryAvroEncoderOptions
     {
-        public SchemaRegistryAvroObjectSerializerOptions() { }
+        public SchemaRegistryAvroEncoderOptions() { }
         public bool AutoRegisterSchemas { get { throw null; } set { } }
     }
 }
