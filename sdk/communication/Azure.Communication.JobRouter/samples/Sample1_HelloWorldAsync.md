@@ -19,7 +19,7 @@ var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_CO
 
 Use `RouterClient` to create a [Distribution Policy](https://docs.microsoft.com/en-us/azure/communication-services/concepts/router/concepts#distribution-policy) to control how jobs are to be distributed to workers with associated queue.
 
-For this example, we are going to create a __Longest Idle__ policy with an offer TTL set to 30 seconds.
+For this example, we are going to create a __Longest Idle__ policy with an offer TTL set to 1 day.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL1D_Async
 var distributionPolicy = await routerClient.SetDistributionPolicyAsync(
