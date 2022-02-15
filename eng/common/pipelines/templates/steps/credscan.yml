@@ -12,7 +12,7 @@ steps:
       $visitedPath = @{}
       foreach ($filePath in $changedFiles) {
         $scanPath = $filePath
-        if ($filePath -match [System.IO.Path]::GetInvalidPathChars()) {
+        if (!(Test-Path $filePath)) {
           $parentFolder = Split-Path -Path $filePath
           if ($parentFolder -in $visitedPath) {
             continue
