@@ -42,7 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 Tags[ContextTagKeys.AiLocationIp.ToString()] = GetLocationIp(ref monitorTags.PartBTags);
             }
 
-            this.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
+            Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
         }
 
         public TelemetryItem (LogRecord logRecord)

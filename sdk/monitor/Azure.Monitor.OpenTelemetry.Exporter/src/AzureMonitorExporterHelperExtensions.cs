@@ -4,7 +4,6 @@
 using OpenTelemetry;
 using OpenTelemetry.Trace;
 using System;
-using System.Diagnostics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
