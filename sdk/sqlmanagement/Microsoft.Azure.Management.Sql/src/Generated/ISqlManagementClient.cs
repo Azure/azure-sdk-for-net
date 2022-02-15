@@ -443,11 +443,6 @@ namespace Microsoft.Azure.Management.Sql
         IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the IOperationsHealthOperations.
-        /// </summary>
-        IOperationsHealthOperations OperationsHealth { get; }
-
-        /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
         IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
