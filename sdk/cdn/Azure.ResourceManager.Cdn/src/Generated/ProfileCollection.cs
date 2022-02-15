@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn
         internal ProfileCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _profileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", Profile.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(Profile.ResourceType, out string profileApiVersion);
+            TryGetApiVersion(Profile.ResourceType, out string profileApiVersion);
             _profileRestClient = new ProfilesRestOperations(_profileClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, profileApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

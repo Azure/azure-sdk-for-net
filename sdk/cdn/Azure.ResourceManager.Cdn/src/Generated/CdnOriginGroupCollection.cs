@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn
         internal CdnOriginGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _cdnOriginGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnOriginGroup.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(CdnOriginGroup.ResourceType, out string cdnOriginGroupApiVersion);
+            TryGetApiVersion(CdnOriginGroup.ResourceType, out string cdnOriginGroupApiVersion);
             _cdnOriginGroupRestClient = new CdnOriginGroupsRestOperations(_cdnOriginGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cdnOriginGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

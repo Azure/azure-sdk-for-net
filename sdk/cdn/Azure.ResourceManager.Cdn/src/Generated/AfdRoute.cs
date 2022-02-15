@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn
         internal AfdRoute(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _afdRouteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string afdRouteApiVersion);
+            TryGetApiVersion(ResourceType, out string afdRouteApiVersion);
             _afdRouteRestClient = new AfdRoutesRestOperations(_afdRouteClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdRouteApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

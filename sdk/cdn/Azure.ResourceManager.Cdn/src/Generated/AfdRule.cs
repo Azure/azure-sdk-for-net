@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn
         internal AfdRule(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _afdRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string afdRuleApiVersion);
+            TryGetApiVersion(ResourceType, out string afdRuleApiVersion);
             _afdRuleRestClient = new AfdRulesRestOperations(_afdRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

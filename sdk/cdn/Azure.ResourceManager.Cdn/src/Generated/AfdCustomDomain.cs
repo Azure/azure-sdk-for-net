@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn
         internal AfdCustomDomain(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _afdCustomDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string afdCustomDomainApiVersion);
+            TryGetApiVersion(ResourceType, out string afdCustomDomainApiVersion);
             _afdCustomDomainRestClient = new AfdCustomDomainsRestOperations(_afdCustomDomainClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdCustomDomainApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

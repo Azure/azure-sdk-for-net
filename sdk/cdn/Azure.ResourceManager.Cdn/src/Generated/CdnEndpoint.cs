@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn
         internal CdnEndpoint(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _cdnEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string cdnEndpointApiVersion);
+            TryGetApiVersion(ResourceType, out string cdnEndpointApiVersion);
             _cdnEndpointRestClient = new CdnEndpointsRestOperations(_cdnEndpointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cdnEndpointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
