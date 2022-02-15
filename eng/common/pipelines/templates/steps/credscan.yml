@@ -8,10 +8,9 @@ steps:
 - pwsh: |
     if ("$(Build.Reason)" -eq 'PullRequest') {
       $targetBranch = "origin/$(System.PullRequest.TargetBranch)" -replace "refs/heads/"
-      $changedFiles = git diff $targetBranch HEAD --name-only --diff-filter=d
+      $changedFiles = (git diff $targetBranch HEAD --name-only --diff-filter=d)
       $changedFiles | ForEach-Object { 
-        $_ -replace '"'
-        Add-Content -Path "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$_"
+        Add-Content -Path "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$($_.Trim('"'))"
       }
     }
     else {
