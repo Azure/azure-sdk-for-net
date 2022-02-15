@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.StoragePool
         internal DiskPoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _diskPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StoragePool", DiskPool.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(DiskPool.ResourceType, out string diskPoolApiVersion);
+            TryGetApiVersion(DiskPool.ResourceType, out string diskPoolApiVersion);
             _diskPoolRestClient = new DiskPoolsRestOperations(_diskPoolClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diskPoolApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StoragePool
         internal IscsiTarget(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _iscsiTargetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StoragePool", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string iscsiTargetApiVersion);
+            TryGetApiVersion(ResourceType, out string iscsiTargetApiVersion);
             _iscsiTargetRestClient = new IscsiTargetsRestOperations(_iscsiTargetClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, iscsiTargetApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
