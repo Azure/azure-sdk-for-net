@@ -32,6 +32,19 @@ namespace Azure.ResourceManager.Cdn.Tests
 
         [TestCase]
         [RecordedTest]
+        public async Task Update()
+        {
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            string cdnProfileName = Recording.GenerateAssetName("profile-");
+            Profile cdnProfile = await CreateCdnProfile(rg, cdnProfileName, SkuName.StandardAkamai);
+            var lro = await cdnProfile.AddTagAsync("newTag", "newValue");
+            Profile updatedCdnProfile = lro.Value;
+            ResourceDataHelper.AssertProfileUpdate(updatedCdnProfile, "newTag", "newValue");
+        }
+
+        [TestCase]
+        [RecordedTest]
         public async Task GenerateSsoUri()
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();

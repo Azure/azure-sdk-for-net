@@ -19,6 +19,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
         public bool SkipPhoneNumberLiveTests
             => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_PHONENUMBER_LIVE_TESTS") == "TRUE";
 
+        public bool SkipUpdateCapabilitiesLiveTest
+            => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_UPDATE_CAPABILITIES_LIVE_TESTS") == "TRUE";
+
         /// <summary>
         /// Creates a <see cref="PhoneNumbersClient" /> with the connectionstring via environment
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.7.0-beta.2 (Unreleased)
+## 1.7.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,31 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.7.0-beta.2 (2022-02-14)
+
+### Features Added
+* `SignalRConnectionAttribute` can be used to customize the connection name of strongly typed serverless hub too. Usage:
+    ```cs
+    [SignalRConnection("SignalRConnection")]
+    public class CustomConnectionHub : ServerlessHub<IChatClient>
+    {
+    }
+    ```
+    ```json
+    {
+        "Values":{
+            "SignalRConnection":"Your-Connection-String"
+        }
+    }
+    ```
+* Added built-in string constants for SignalR trigger: `SignalRTriggerCategories.Connections` for "connections", `SignalRTriggerCategories.Messages` for "messages", `SignalRTriggerEvents.Connected` for "connected", `SignalRTriggerEvents.Disconnected` for "disconnected".
+
+### Bugs Fixed
+* Fix a `ServiceEndpoints` binding bug that creating new persistent connections for each request.
+
+### Other Changes
+* Update dependency `Microsoft.Azure.SignalR.Management` version from 1.13.0 to 1.15.1.
 
 ## 1.7.0-beta.1 (2021-12-07)
 ### Features Added

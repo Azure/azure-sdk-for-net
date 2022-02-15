@@ -34,6 +34,19 @@ namespace Azure.ResourceManager.Cdn.Tests
 
         [TestCase]
         [RecordedTest]
+        public async Task Update()
+        {
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
+            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
+            var lro = await afdProfile.AddTagAsync("newTag", "newValue");
+            Profile updatedAfdProfile = lro.Value;
+            ResourceDataHelper.AssertProfileUpdate(updatedAfdProfile, "newTag", "newValue");
+        }
+
+        [TestCase]
+        [RecordedTest]
         public async Task CheckResourceUsage()
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();

@@ -31,5 +31,18 @@ namespace Azure.ResourceManager.Cdn.Tests
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await policy.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task Update()
+        {
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            string policyName = Recording.GenerateAssetName("Policy");
+            CdnWebApplicationFirewallPolicy policy = await CreatePolicy(rg, policyName);
+            var lro = await policy.AddTagAsync("newTag", "newValue");
+            CdnWebApplicationFirewallPolicy updatedPolicy = lro.Value;
+            ResourceDataHelper.AssertPolicyUpdate(updatedPolicy, "newTag", "newValue");
+        }
     }
 }

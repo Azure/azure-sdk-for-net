@@ -77,13 +77,11 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
             }
         }
 
-        public static void AssertInstanceUpdate(DeviceUpdateInstance updatedInstance, DeviceUpdateInstanceUpdateOptions updateParameters)
+        public static void AssertInstanceUpdate(DeviceUpdateInstance updatedInstance, string key, string value)
         {
-            foreach (var kv in updatedInstance.Data.Tags)
-            {
-                Assert.True(updateParameters.Tags.ContainsKey(kv.Key));
-                Assert.AreEqual(kv.Value, updateParameters.Tags[kv.Key]);
-            }
+            Assert.GreaterOrEqual(updatedInstance.Data.Tags.Count, 1);
+            Assert.IsTrue(updatedInstance.Data.Tags.ContainsKey(key));
+            Assert.AreEqual(updatedInstance.Data.Tags[key], value);
         }
     }
 }
