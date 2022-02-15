@@ -14,7 +14,7 @@ steps:
         $scanPath = $filePath
         if ($filePath -match [System.IO.Path]::GetInvalidPathChars()) {
           $parentFolder = Split-Path -Path $filePath
-          if ($parentFolder in $visitedPath) {
+          if ($parentFolder -in $visitedPath) {
             continue
           }
           $scanPath = $parentFolder
