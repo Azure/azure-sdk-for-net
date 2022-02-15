@@ -19,12 +19,10 @@ namespace Azure.AI.TextAnalytics
 {
     internal partial class TextAnalyticsRestClient
     {
-        private readonly HttpPipeline _pipeline;
-        private readonly string _endpoint;
-        private readonly string _apiVersion;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
+        private string endpoint;
+        private string apiVersion;
+        private ClientDiagnostics _clientDiagnostics;
+        private HttpPipeline _pipeline;
 
         /// <summary> Initializes a new instance of TextAnalyticsRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -34,9 +32,9 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public TextAnalyticsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "v3.2-preview.2")
         {
-            _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
-            _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
-            ClientDiagnostics = clientDiagnostics;
+            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
+            _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
@@ -46,9 +44,9 @@ namespace Azure.AI.TextAnalytics
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(_apiVersion, false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/analyze", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
@@ -75,7 +73,7 @@ namespace Azure.AI.TextAnalytics
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -92,7 +90,7 @@ namespace Azure.AI.TextAnalytics
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -102,9 +100,9 @@ namespace Azure.AI.TextAnalytics
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(_apiVersion, false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/analyze/jobs/", false);
             uri.AppendPath(jobId, true);
             if (showStats != null)
@@ -150,7 +148,7 @@ namespace Azure.AI.TextAnalytics
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -180,7 +178,7 @@ namespace Azure.AI.TextAnalytics
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -190,9 +188,9 @@ namespace Azure.AI.TextAnalytics
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(_apiVersion, false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/entities/health/jobs/", false);
             uri.AppendPath(jobId, true);
             if (top != null)
@@ -232,7 +230,7 @@ namespace Azure.AI.TextAnalytics
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -256,7 +254,7 @@ namespace Azure.AI.TextAnalytics
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -266,9 +264,9 @@ namespace Azure.AI.TextAnalytics
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(_apiVersion, false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/entities/health/jobs/", false);
             uri.AppendPath(jobId, true);
             request.Uri = uri;
@@ -289,7 +287,7 @@ namespace Azure.AI.TextAnalytics
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -306,7 +304,7 @@ namespace Azure.AI.TextAnalytics
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -316,9 +314,9 @@ namespace Azure.AI.TextAnalytics
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(_apiVersion, false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/entities/health/jobs", false);
             if (modelVersion != null)
             {
@@ -363,7 +361,7 @@ namespace Azure.AI.TextAnalytics
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -389,7 +387,7 @@ namespace Azure.AI.TextAnalytics
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -399,9 +397,9 @@ namespace Azure.AI.TextAnalytics
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(_apiVersion, false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/entities/recognition/general", false);
             if (modelVersion != null)
             {
@@ -455,7 +453,7 @@ namespace Azure.AI.TextAnalytics
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -486,7 +484,7 @@ namespace Azure.AI.TextAnalytics
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -496,9 +494,9 @@ namespace Azure.AI.TextAnalytics
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(_apiVersion, false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/entities/recognition/pii", false);
             if (modelVersion != null)
             {
@@ -565,7 +563,7 @@ namespace Azure.AI.TextAnalytics
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -601,7 +599,7 @@ namespace Azure.AI.TextAnalytics
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -611,9 +609,9 @@ namespace Azure.AI.TextAnalytics
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(_apiVersion, false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/entities/linking", false);
             if (modelVersion != null)
             {
@@ -667,7 +665,7 @@ namespace Azure.AI.TextAnalytics
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -698,7 +696,7 @@ namespace Azure.AI.TextAnalytics
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -708,9 +706,9 @@ namespace Azure.AI.TextAnalytics
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(_apiVersion, false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/keyPhrases", false);
             if (modelVersion != null)
             {
@@ -759,7 +757,7 @@ namespace Azure.AI.TextAnalytics
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -789,7 +787,7 @@ namespace Azure.AI.TextAnalytics
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -799,9 +797,9 @@ namespace Azure.AI.TextAnalytics
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(_apiVersion, false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/languages", false);
             if (modelVersion != null)
             {
@@ -850,7 +848,7 @@ namespace Azure.AI.TextAnalytics
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -880,7 +878,7 @@ namespace Azure.AI.TextAnalytics
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -890,9 +888,9 @@ namespace Azure.AI.TextAnalytics
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(_apiVersion, false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/sentiment", false);
             if (modelVersion != null)
             {
@@ -951,7 +949,7 @@ namespace Azure.AI.TextAnalytics
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -983,7 +981,7 @@ namespace Azure.AI.TextAnalytics
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -993,9 +991,9 @@ namespace Azure.AI.TextAnalytics
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(_apiVersion, false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/entities/health/jobs/", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -1026,7 +1024,7 @@ namespace Azure.AI.TextAnalytics
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1053,7 +1051,7 @@ namespace Azure.AI.TextAnalytics
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1063,9 +1061,9 @@ namespace Azure.AI.TextAnalytics
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(_apiVersion, false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/analyze/jobs/", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -1096,7 +1094,7 @@ namespace Azure.AI.TextAnalytics
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1123,7 +1121,7 @@ namespace Azure.AI.TextAnalytics
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1133,9 +1131,9 @@ namespace Azure.AI.TextAnalytics
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(_apiVersion, false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
@@ -1165,7 +1163,7 @@ namespace Azure.AI.TextAnalytics
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1192,7 +1190,7 @@ namespace Azure.AI.TextAnalytics
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1202,9 +1200,9 @@ namespace Azure.AI.TextAnalytics
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(_apiVersion, false);
+            uri.AppendRaw(apiVersion, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
@@ -1234,7 +1232,7 @@ namespace Azure.AI.TextAnalytics
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1261,7 +1259,7 @@ namespace Azure.AI.TextAnalytics
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }
