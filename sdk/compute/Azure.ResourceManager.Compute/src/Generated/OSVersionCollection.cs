@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute
         {
             _location = location;
             _oSVersionCloudServiceOperatingSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", OSVersion.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(OSVersion.ResourceType, out string oSVersionCloudServiceOperatingSystemsApiVersion);
+            TryGetApiVersion(OSVersion.ResourceType, out string oSVersionCloudServiceOperatingSystemsApiVersion);
             _oSVersionCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(_oSVersionCloudServiceOperatingSystemsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, oSVersionCloudServiceOperatingSystemsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
