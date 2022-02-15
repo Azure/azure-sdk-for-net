@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         internal DatabaseAutomaticTuning(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _databaseAutomaticTuningClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string databaseAutomaticTuningApiVersion);
+            TryGetApiVersion(ResourceType, out string databaseAutomaticTuningApiVersion);
             _databaseAutomaticTuningRestClient = new DatabaseAutomaticTuningRestOperations(_databaseAutomaticTuningClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseAutomaticTuningApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

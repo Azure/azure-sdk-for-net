@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn
         internal Profile(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _profileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string profileApiVersion);
+            TryGetApiVersion(ResourceType, out string profileApiVersion);
             _profileRestClient = new ProfilesRestOperations(_profileClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, profileApiVersion);
             _afdProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _afdProfilesRestClient = new AfdProfilesRestOperations(_afdProfilesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);

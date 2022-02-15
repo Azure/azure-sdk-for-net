@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KeyVault
         internal ManagedHsmCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managedHsmClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ManagedHsm.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ManagedHsm.ResourceType, out string managedHsmApiVersion);
+            TryGetApiVersion(ManagedHsm.ResourceType, out string managedHsmApiVersion);
             _managedHsmRestClient = new ManagedHsmsRestOperations(_managedHsmClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedHsmApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

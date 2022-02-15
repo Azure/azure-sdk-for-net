@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.StoragePool
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, IscsiTargetUpdate iscsiTargetUpdatePayload)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, IscsiTargetUpdateOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.StoragePool
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(iscsiTargetUpdatePayload);
+            content.JsonWriter.WriteObjectValue(options);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -281,10 +281,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="iscsiTargetName"> The name of the iSCSI Target. </param>
-        /// <param name="iscsiTargetUpdatePayload"> Request payload for iSCSI Target update operation. </param>
+        /// <param name="options"> Request payload for iSCSI Target update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/>, <paramref name="iscsiTargetName"/>, or <paramref name="iscsiTargetUpdatePayload"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, IscsiTargetUpdate iscsiTargetUpdatePayload, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/>, <paramref name="iscsiTargetName"/>, or <paramref name="options"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, IscsiTargetUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -302,12 +302,12 @@ namespace Azure.ResourceManager.StoragePool
             {
                 throw new ArgumentNullException(nameof(iscsiTargetName));
             }
-            if (iscsiTargetUpdatePayload == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(iscsiTargetUpdatePayload));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, diskPoolName, iscsiTargetName, iscsiTargetUpdatePayload);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, diskPoolName, iscsiTargetName, options);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -324,10 +324,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="iscsiTargetName"> The name of the iSCSI Target. </param>
-        /// <param name="iscsiTargetUpdatePayload"> Request payload for iSCSI Target update operation. </param>
+        /// <param name="options"> Request payload for iSCSI Target update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/>, <paramref name="iscsiTargetName"/>, or <paramref name="iscsiTargetUpdatePayload"/> is null. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, IscsiTargetUpdate iscsiTargetUpdatePayload, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/>, <paramref name="iscsiTargetName"/>, or <paramref name="options"/> is null. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, IscsiTargetUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -345,12 +345,12 @@ namespace Azure.ResourceManager.StoragePool
             {
                 throw new ArgumentNullException(nameof(iscsiTargetName));
             }
-            if (iscsiTargetUpdatePayload == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(iscsiTargetUpdatePayload));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, diskPoolName, iscsiTargetName, iscsiTargetUpdatePayload);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, diskPoolName, iscsiTargetName, options);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

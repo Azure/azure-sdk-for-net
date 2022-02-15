@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal DataCenterResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _dataCenterResourceCassandraDataCentersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string dataCenterResourceCassandraDataCentersApiVersion);
+            TryGetApiVersion(ResourceType, out string dataCenterResourceCassandraDataCentersApiVersion);
             _dataCenterResourceCassandraDataCentersRestClient = new CassandraDataCentersRestOperations(_dataCenterResourceCassandraDataCentersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataCenterResourceCassandraDataCentersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

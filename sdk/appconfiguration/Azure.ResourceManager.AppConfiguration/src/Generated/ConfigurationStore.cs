@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppConfiguration
         internal ConfigurationStore(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _configurationStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string configurationStoreApiVersion);
+            TryGetApiVersion(ResourceType, out string configurationStoreApiVersion);
             _configurationStoreRestClient = new ConfigurationStoresRestOperations(_configurationStoreClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, configurationStoreApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -204,22 +204,22 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Operation Id: ConfigurationStores_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="configurationStoreUpdateOptions"> The options for updating a configuration store. </param>
+        /// <param name="options"> The options for updating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationStoreUpdateOptions"/> is null. </exception>
-        public async virtual Task<ArmOperation<ConfigurationStore>> UpdateAsync(bool waitForCompletion, ConfigurationStoreUpdateOptions configurationStoreUpdateOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<ArmOperation<ConfigurationStore>> UpdateAsync(bool waitForCompletion, ConfigurationStoreUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (configurationStoreUpdateOptions == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(configurationStoreUpdateOptions));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStore.Update");
             scope.Start();
             try
             {
-                var response = await _configurationStoreRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationStoreUpdateOptions, cancellationToken).ConfigureAwait(false);
-                var operation = new AppConfigurationArmOperation<ConfigurationStore>(new ConfigurationStoreOperationSource(Client), _configurationStoreClientDiagnostics, Pipeline, _configurationStoreRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationStoreUpdateOptions).Request, response, OperationFinalStateVia.Location);
+                var response = await _configurationStoreRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var operation = new AppConfigurationArmOperation<ConfigurationStore>(new ConfigurationStoreOperationSource(Client), _configurationStoreClientDiagnostics, Pipeline, _configurationStoreRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -237,22 +237,22 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Operation Id: ConfigurationStores_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="configurationStoreUpdateOptions"> The options for updating a configuration store. </param>
+        /// <param name="options"> The options for updating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationStoreUpdateOptions"/> is null. </exception>
-        public virtual ArmOperation<ConfigurationStore> Update(bool waitForCompletion, ConfigurationStoreUpdateOptions configurationStoreUpdateOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual ArmOperation<ConfigurationStore> Update(bool waitForCompletion, ConfigurationStoreUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (configurationStoreUpdateOptions == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(configurationStoreUpdateOptions));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStore.Update");
             scope.Start();
             try
             {
-                var response = _configurationStoreRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationStoreUpdateOptions, cancellationToken);
-                var operation = new AppConfigurationArmOperation<ConfigurationStore>(new ConfigurationStoreOperationSource(Client), _configurationStoreClientDiagnostics, Pipeline, _configurationStoreRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationStoreUpdateOptions).Request, response, OperationFinalStateVia.Location);
+                var response = _configurationStoreRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var operation = new AppConfigurationArmOperation<ConfigurationStore>(new ConfigurationStoreOperationSource(Client), _configurationStoreClientDiagnostics, Pipeline, _configurationStoreRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

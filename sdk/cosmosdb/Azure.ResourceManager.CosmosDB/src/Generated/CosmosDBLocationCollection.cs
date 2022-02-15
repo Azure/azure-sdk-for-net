@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal CosmosDBLocationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _cosmosDBLocationLocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBLocation.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(CosmosDBLocation.ResourceType, out string cosmosDBLocationLocationsApiVersion);
+            TryGetApiVersion(CosmosDBLocation.ResourceType, out string cosmosDBLocationLocationsApiVersion);
             _cosmosDBLocationLocationsRestClient = new LocationsRestOperations(_cosmosDBLocationLocationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cosmosDBLocationLocationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal MigrateMySqlStatus(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _migrateMySqlStatusWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string migrateMySqlStatusWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string migrateMySqlStatusWebAppsApiVersion);
             _migrateMySqlStatusWebAppsRestClient = new WebAppsRestOperations(_migrateMySqlStatusWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, migrateMySqlStatusWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

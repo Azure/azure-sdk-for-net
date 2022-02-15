@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         internal BastionHost(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _bastionHostClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string bastionHostApiVersion);
+            TryGetApiVersion(ResourceType, out string bastionHostApiVersion);
             _bastionHostRestClient = new BastionHostsRestOperations(_bastionHostClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, bastionHostApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

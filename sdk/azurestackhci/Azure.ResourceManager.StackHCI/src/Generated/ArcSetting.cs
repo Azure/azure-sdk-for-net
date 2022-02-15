@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StackHCI
         internal ArcSetting(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _arcSettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StackHCI", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string arcSettingApiVersion);
+            TryGetApiVersion(ResourceType, out string arcSettingApiVersion);
             _arcSettingRestClient = new ArcSettingsRestOperations(_arcSettingClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, arcSettingApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

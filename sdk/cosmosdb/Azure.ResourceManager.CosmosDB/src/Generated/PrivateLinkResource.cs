@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal PrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _privateLinkResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string privateLinkResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string privateLinkResourceApiVersion);
             _privateLinkResourceRestClient = new PrivateLinkResourcesRestOperations(_privateLinkResourceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, privateLinkResourceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

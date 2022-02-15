@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute
         internal Gallery(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _galleryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string galleryApiVersion);
+            TryGetApiVersion(ResourceType, out string galleryApiVersion);
             _galleryRestClient = new GalleriesRestOperations(_galleryClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, galleryApiVersion);
             _gallerySharingProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _gallerySharingProfileRestClient = new GallerySharingProfileRestOperations(_gallerySharingProfileClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
@@ -210,22 +210,22 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: Galleries_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="gallery"> Parameters supplied to the update Shared Image Gallery operation. </param>
+        /// <param name="options"> Parameters supplied to the update Shared Image Gallery operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gallery"/> is null. </exception>
-        public async virtual Task<ArmOperation<Gallery>> UpdateAsync(bool waitForCompletion, GalleryUpdate gallery, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<ArmOperation<Gallery>> UpdateAsync(bool waitForCompletion, GalleryUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (gallery == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(gallery));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _galleryClientDiagnostics.CreateScope("Gallery.Update");
             scope.Start();
             try
             {
-                var response = await _galleryRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gallery, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<Gallery>(new GalleryOperationSource(Client), _galleryClientDiagnostics, Pipeline, _galleryRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gallery).Request, response, OperationFinalStateVia.Location);
+                var response = await _galleryRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation<Gallery>(new GalleryOperationSource(Client), _galleryClientDiagnostics, Pipeline, _galleryRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -243,22 +243,22 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: Galleries_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="gallery"> Parameters supplied to the update Shared Image Gallery operation. </param>
+        /// <param name="options"> Parameters supplied to the update Shared Image Gallery operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gallery"/> is null. </exception>
-        public virtual ArmOperation<Gallery> Update(bool waitForCompletion, GalleryUpdate gallery, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual ArmOperation<Gallery> Update(bool waitForCompletion, GalleryUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (gallery == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(gallery));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _galleryClientDiagnostics.CreateScope("Gallery.Update");
             scope.Start();
             try
             {
-                var response = _galleryRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gallery, cancellationToken);
-                var operation = new ComputeArmOperation<Gallery>(new GalleryOperationSource(Client), _galleryClientDiagnostics, Pipeline, _galleryRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gallery).Request, response, OperationFinalStateVia.Location);
+                var response = _galleryRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var operation = new ComputeArmOperation<Gallery>(new GalleryOperationSource(Client), _galleryClientDiagnostics, Pipeline, _galleryRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

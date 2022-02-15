@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute
         internal SharedGalleryImageVersion(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sharedGalleryImageVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string sharedGalleryImageVersionApiVersion);
+            TryGetApiVersion(ResourceType, out string sharedGalleryImageVersionApiVersion);
             _sharedGalleryImageVersionRestClient = new SharedGalleryImageVersionsRestOperations(_sharedGalleryImageVersionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sharedGalleryImageVersionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

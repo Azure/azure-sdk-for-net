@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A class representing collection of ServiceBusAuthorizationRule and their operations over its parent. </summary>
+    /// <summary> A class representing collection of NamespaceTopicAuthorizationRule and their operations over its parent. </summary>
     public partial class NamespaceTopicAuthorizationRuleCollection : ArmCollection, IEnumerable<NamespaceTopicAuthorizationRule>, IAsyncEnumerable<NamespaceTopicAuthorizationRule>
     {
         private readonly ClientDiagnostics _namespaceTopicAuthorizationRuleTopicAuthorizationRulesClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceBus
         internal NamespaceTopicAuthorizationRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _namespaceTopicAuthorizationRuleTopicAuthorizationRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", NamespaceTopicAuthorizationRule.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(NamespaceTopicAuthorizationRule.ResourceType, out string namespaceTopicAuthorizationRuleTopicAuthorizationRulesApiVersion);
+            TryGetApiVersion(NamespaceTopicAuthorizationRule.ResourceType, out string namespaceTopicAuthorizationRuleTopicAuthorizationRulesApiVersion);
             _namespaceTopicAuthorizationRuleTopicAuthorizationRulesRestClient = new TopicAuthorizationRulesRestOperations(_namespaceTopicAuthorizationRuleTopicAuthorizationRulesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, namespaceTopicAuthorizationRuleTopicAuthorizationRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

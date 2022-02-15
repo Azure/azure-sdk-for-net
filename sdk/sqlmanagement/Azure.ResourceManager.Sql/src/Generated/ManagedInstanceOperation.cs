@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         internal ManagedInstanceOperation(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managedInstanceOperationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string managedInstanceOperationApiVersion);
+            TryGetApiVersion(ResourceType, out string managedInstanceOperationApiVersion);
             _managedInstanceOperationRestClient = new ManagedInstanceRestOperations(_managedInstanceOperationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceOperationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

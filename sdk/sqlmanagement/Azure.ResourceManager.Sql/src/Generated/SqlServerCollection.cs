@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         internal SqlServerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sqlServerServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServer.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SqlServer.ResourceType, out string sqlServerServersApiVersion);
+            TryGetApiVersion(SqlServer.ResourceType, out string sqlServerServersApiVersion);
             _sqlServerServersRestClient = new ServersRestOperations(_sqlServerServersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlServerServersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         internal BackendAddressPoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", BackendAddressPool.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(BackendAddressPool.ResourceType, out string backendAddressPoolLoadBalancerBackendAddressPoolsApiVersion);
+            TryGetApiVersion(BackendAddressPool.ResourceType, out string backendAddressPoolLoadBalancerBackendAddressPoolsApiVersion);
             _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient = new LoadBalancerBackendAddressPoolsRestOperations(_backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, backendAddressPoolLoadBalancerBackendAddressPoolsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

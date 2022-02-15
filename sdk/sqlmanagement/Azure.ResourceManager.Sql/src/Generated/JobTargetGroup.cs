@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         internal JobTargetGroup(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _jobTargetGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string jobTargetGroupApiVersion);
+            TryGetApiVersion(ResourceType, out string jobTargetGroupApiVersion);
             _jobTargetGroupRestClient = new JobTargetGroupsRestOperations(_jobTargetGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jobTargetGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

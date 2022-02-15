@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network
         internal ApplicationGateway(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _applicationGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string applicationGatewayApiVersion);
+            TryGetApiVersion(ResourceType, out string applicationGatewayApiVersion);
             _applicationGatewayRestClient = new ApplicationGatewaysRestOperations(_applicationGatewayClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationGatewayApiVersion);
             _applicationGatewayPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _applicationGatewayPrivateLinkResourcesRestClient = new ApplicationGatewayPrivateLinkResourcesRestOperations(_applicationGatewayPrivateLinkResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);

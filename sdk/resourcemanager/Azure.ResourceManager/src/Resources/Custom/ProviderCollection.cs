@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources
             : base(client, id)
         {
             _providerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Provider.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(Provider.ResourceType, out string providerApiVersion);
+            TryGetApiVersion(Provider.ResourceType, out string providerApiVersion);
             _providerRestClient = new ProvidersRestOperations(_providerClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, providerApiVersion);
 #if DEBUG
             ValidateResourceId(Id);

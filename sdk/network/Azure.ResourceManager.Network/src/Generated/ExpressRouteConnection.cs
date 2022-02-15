@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
         internal ExpressRouteConnection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _expressRouteConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string expressRouteConnectionApiVersion);
+            TryGetApiVersion(ResourceType, out string expressRouteConnectionApiVersion);
             _expressRouteConnectionRestClient = new ExpressRouteConnectionsRestOperations(_expressRouteConnectionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRouteConnectionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

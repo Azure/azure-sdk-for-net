@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources
         internal ScriptLog(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _scriptLogDeploymentScriptsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string scriptLogDeploymentScriptsApiVersion);
+            TryGetApiVersion(ResourceType, out string scriptLogDeploymentScriptsApiVersion);
             _scriptLogDeploymentScriptsRestClient = new DeploymentScriptsRestOperations(_scriptLogDeploymentScriptsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, scriptLogDeploymentScriptsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

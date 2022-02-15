@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotBackup(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotBackupWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteSlotBackupWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string siteSlotBackupWebAppsApiVersion);
             _siteSlotBackupWebAppsRestClient = new WebAppsRestOperations(_siteSlotBackupWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotBackupWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

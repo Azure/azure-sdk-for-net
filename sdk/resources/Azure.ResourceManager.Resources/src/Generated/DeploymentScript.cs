@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.Resources
         internal DeploymentScript(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _deploymentScriptClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string deploymentScriptApiVersion);
+            TryGetApiVersion(ResourceType, out string deploymentScriptApiVersion);
             _deploymentScriptRestClient = new DeploymentScriptsRestOperations(_deploymentScriptClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deploymentScriptApiVersion);
             _scriptLogDeploymentScriptsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ScriptLog.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ScriptLog.ResourceType, out string scriptLogDeploymentScriptsApiVersion);
+            TryGetApiVersion(ScriptLog.ResourceType, out string scriptLogDeploymentScriptsApiVersion);
             _scriptLogDeploymentScriptsRestClient = new DeploymentScriptsRestOperations(_scriptLogDeploymentScriptsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, scriptLogDeploymentScriptsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

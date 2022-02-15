@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string configStoreName, ConfigurationStoreUpdateOptions configurationStoreUpdateOptions)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string configStoreName, ConfigurationStoreUpdateOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.AppConfiguration
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(configurationStoreUpdateOptions);
+            content.JsonWriter.WriteObjectValue(options);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -523,10 +523,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
-        /// <param name="configurationStoreUpdateOptions"> The options for updating a configuration store. </param>
+        /// <param name="options"> The options for updating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="configurationStoreUpdateOptions"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string configStoreName, ConfigurationStoreUpdateOptions configurationStoreUpdateOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="options"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string configStoreName, ConfigurationStoreUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -540,12 +540,12 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 throw new ArgumentNullException(nameof(configStoreName));
             }
-            if (configurationStoreUpdateOptions == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(configurationStoreUpdateOptions));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, configStoreName, configurationStoreUpdateOptions);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, configStoreName, options);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -561,10 +561,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
-        /// <param name="configurationStoreUpdateOptions"> The options for updating a configuration store. </param>
+        /// <param name="options"> The options for updating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="configurationStoreUpdateOptions"/> is null. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string configStoreName, ConfigurationStoreUpdateOptions configurationStoreUpdateOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="options"/> is null. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string configStoreName, ConfigurationStoreUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -578,12 +578,12 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 throw new ArgumentNullException(nameof(configStoreName));
             }
-            if (configurationStoreUpdateOptions == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(configurationStoreUpdateOptions));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, configStoreName, configurationStoreUpdateOptions);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, configStoreName, options);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

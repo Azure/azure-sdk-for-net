@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal MongoDBCollectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _mongoDBCollectionMongoDBResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", MongoDBCollection.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(MongoDBCollection.ResourceType, out string mongoDBCollectionMongoDBResourcesApiVersion);
+            TryGetApiVersion(MongoDBCollection.ResourceType, out string mongoDBCollectionMongoDBResourcesApiVersion);
             _mongoDBCollectionMongoDBResourcesRestClient = new MongoDBResourcesRestOperations(_mongoDBCollectionMongoDBResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, mongoDBCollectionMongoDBResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

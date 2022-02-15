@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         internal FrontendIPConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", FrontendIPConfiguration.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(FrontendIPConfiguration.ResourceType, out string frontendIPConfigurationLoadBalancerFrontendIPConfigurationsApiVersion);
+            TryGetApiVersion(FrontendIPConfiguration.ResourceType, out string frontendIPConfigurationLoadBalancerFrontendIPConfigurationsApiVersion);
             _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient = new LoadBalancerFrontendIPConfigurationsRestOperations(_frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, frontendIPConfigurationLoadBalancerFrontendIPConfigurationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

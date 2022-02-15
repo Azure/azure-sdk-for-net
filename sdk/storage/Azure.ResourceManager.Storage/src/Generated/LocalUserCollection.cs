@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Storage
         internal LocalUserCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _localUserClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", LocalUser.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(LocalUser.ResourceType, out string localUserApiVersion);
+            TryGetApiVersion(LocalUser.ResourceType, out string localUserApiVersion);
             _localUserRestClient = new LocalUsersRestOperations(_localUserClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, localUserApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

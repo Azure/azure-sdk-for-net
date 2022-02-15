@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn
         internal AfdCustomDomain(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _afdCustomDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string afdCustomDomainApiVersion);
+            TryGetApiVersion(ResourceType, out string afdCustomDomainApiVersion);
             _afdCustomDomainRestClient = new AfdCustomDomainsRestOperations(_afdCustomDomainClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdCustomDomainApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -189,22 +189,22 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: AfdCustomDomains_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="customDomainUpdateProperties"> Domain properties. </param>
+        /// <param name="options"> Domain properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customDomainUpdateProperties"/> is null. </exception>
-        public async virtual Task<ArmOperation<AfdCustomDomain>> UpdateAsync(bool waitForCompletion, AfdCustomDomainUpdateOptions customDomainUpdateProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<ArmOperation<AfdCustomDomain>> UpdateAsync(bool waitForCompletion, AfdCustomDomainUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (customDomainUpdateProperties == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(customDomainUpdateProperties));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _afdCustomDomainClientDiagnostics.CreateScope("AfdCustomDomain.Update");
             scope.Start();
             try
             {
-                var response = await _afdCustomDomainRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainUpdateProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<AfdCustomDomain>(new AfdCustomDomainOperationSource(Client), _afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainUpdateProperties).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = await _afdCustomDomainRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<AfdCustomDomain>(new AfdCustomDomainOperationSource(Client), _afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -222,22 +222,22 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: AfdCustomDomains_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="customDomainUpdateProperties"> Domain properties. </param>
+        /// <param name="options"> Domain properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customDomainUpdateProperties"/> is null. </exception>
-        public virtual ArmOperation<AfdCustomDomain> Update(bool waitForCompletion, AfdCustomDomainUpdateOptions customDomainUpdateProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual ArmOperation<AfdCustomDomain> Update(bool waitForCompletion, AfdCustomDomainUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (customDomainUpdateProperties == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(customDomainUpdateProperties));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _afdCustomDomainClientDiagnostics.CreateScope("AfdCustomDomain.Update");
             scope.Start();
             try
             {
-                var response = _afdCustomDomainRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainUpdateProperties, cancellationToken);
-                var operation = new CdnArmOperation<AfdCustomDomain>(new AfdCustomDomainOperationSource(Client), _afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainUpdateProperties).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = _afdCustomDomainRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken);
+                var operation = new CdnArmOperation<AfdCustomDomain>(new AfdCustomDomainOperationSource(Client), _afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

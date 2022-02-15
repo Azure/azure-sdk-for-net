@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkInterfaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _networkInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkInterface.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(NetworkInterface.ResourceType, out string networkInterfaceApiVersion);
+            TryGetApiVersion(NetworkInterface.ResourceType, out string networkInterfaceApiVersion);
             _networkInterfaceRestClient = new NetworkInterfacesRestOperations(_networkInterfaceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkInterfaceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
