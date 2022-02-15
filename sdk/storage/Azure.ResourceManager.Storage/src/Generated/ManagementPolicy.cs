@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage
         internal ManagementPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managementPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string managementPolicyApiVersion);
+            TryGetApiVersion(ResourceType, out string managementPolicyApiVersion);
             _managementPolicyRestClient = new ManagementPoliciesRestOperations(_managementPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managementPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
