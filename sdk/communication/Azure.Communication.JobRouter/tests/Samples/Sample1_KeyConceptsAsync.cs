@@ -27,14 +27,14 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient_Async
 
-            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL30S_Async
+            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL1D_Async
             var distributionPolicy = await routerClient.SetDistributionPolicyAsync(
                 id: "distribution-policy-1",
                 name: "My Distribution Policy",
-                offerTTL: TimeSpan.FromSeconds(30),
+                offerTTL: TimeSpan.FromDays(1),
                 mode: new LongestIdleMode()
             );
-            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL30S_Async
+            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL1D_Async
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateQueue_Async
             var queue = await routerClient.SetQueueAsync(

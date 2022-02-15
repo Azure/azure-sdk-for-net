@@ -9,7 +9,7 @@ using Azure.Communication.JobRouter.Models;
 
 ## Create a client
 
-Create a `RouterClient` and send a request.
+Create a `RouterClient`.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
 var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
@@ -21,11 +21,11 @@ Use `RouterClient` to create a [Distribution Policy](https://docs.microsoft.com/
 
 For this example, we are going to create a __Longest Idle__ policy with an offer TTL set to 30 seconds.
 
-```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL30S
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL1D
 var distributionPolicy = routerClient.SetDistributionPolicy(
     id: "distribution-policy-1",
     name: "My Distribution Policy",
-    offerTTL: TimeSpan.FromSeconds(30),
+    offerTTL: TimeSpan.FromDays(1),
     mode: new LongestIdleMode()
 );
 ```

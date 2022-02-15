@@ -87,11 +87,11 @@ An exception policy controls the behavior of a Job based on a trigger and execut
 ### Distribution Policy
 Before we can create a Queue, we need a Distribution Policy.
 
-```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL30S_Async
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL1D_Async
 var distributionPolicy = await routerClient.SetDistributionPolicyAsync(
     id: "distribution-policy-1",
     name: "My Distribution Policy",
-    offerTTL: TimeSpan.FromSeconds(30),
+    offerTTL: TimeSpan.FromDays(1),
     mode: new LongestIdleMode()
 );
 ```
