@@ -2354,7 +2354,7 @@
           "application/json"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryMasterKey\": \"NLXLTOmnWwITOc2rkDEUfdVFHZqVmP7hpDgVG4GXGX5YOC7Weduvr6s4gHZtezjaDLlmMrAgF7gOLW8UoSfO2w==\",\r\n  \"secondaryMasterKey\": \"bwl3EFyU5kZVoPGIdfP1ho5o1ZwCJjyXQo4wHQSkMhOl3DaDR92dL5sRZ5OXl0FiVG59kDpqnFScCOqUbX3LBA==\",\r\n  \"primaryReadonlyMasterKey\": \"mXwJLdJHwRCPmjYVhdKN3eWgp2tqd7hMTq9BuA9iaehFvU78wJ9VmdJna2yqK2jHdMvTvd6olpEw5WT8RTuiOA==\",\r\n  \"secondaryReadonlyMasterKey\": \"UYOukfRe7QLSqMDdZnroiEFoLGxghaGrBIBFOindHKVRZELwli4yQ3OxEfmuynO8vhIf5H7HtgsCUJ7eXLLoDQ==\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2543,7 +2543,7 @@
           "application/json"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryReadonlyMasterKey\": \"mXwJLdJHwRCPmjYVhdKN3eWgp2tqd7hMTq9BuA9iaehFvU78wJ9VmdJna2yqK2jHdMvTvd6olpEw5WT8RTuiOA==\",\r\n  \"secondaryReadonlyMasterKey\": \"UYOukfRe7QLSqMDdZnroiEFoLGxghaGrBIBFOindHKVRZELwli4yQ3OxEfmuynO8vhIf5H7HtgsCUJ7eXLLoDQ==\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
       "StatusCode": 200
     },
     {
