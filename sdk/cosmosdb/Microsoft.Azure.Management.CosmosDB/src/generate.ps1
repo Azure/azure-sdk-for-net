@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "cosmos-db/resource-manager" -AutoRestVersion "v2" -SpecsRepoBranch main 
+Start-AutoRestCodeGeneration -ResourceProvider "cosmos-db/resource-manager" -AutoRestVersion "v2" -SpecsRepoBranch main --tag=package-preview-2021-10
