@@ -13,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     internal partial class TelemetryItem
     {
         private const string DateTimeFormat = "yyyy-MM-ddTHH:mm:ss.fffffffZ";
-        private static readonly IReadOnlyDictionary<TelemetryType, string> PartA_Name_Mapping = new Dictionary<TelemetryType, string>
+        private static readonly IReadOnlyDictionary<TelemetryType, string> s_partA_Name_Mapping = new Dictionary<TelemetryType, string>
         {
             [TelemetryType.Request] = "Request",
             [TelemetryType.Dependency] = "RemoteDependency",
@@ -21,7 +21,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         public TelemetryItem(Activity activity, ref TagEnumerationState monitorTags)
         {
-            Name = PartA_Name_Mapping[activity.GetTelemetryType()];
+            Name = s_partA_Name_Mapping[activity.GetTelemetryType()];
             Time = FormatUtcTimestamp(activity.StartTimeUtc);
             Tags = new ChangeTrackingDictionary<string, string>();
 
@@ -42,7 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 Tags[ContextTagKeys.AiLocationIp.ToString()] = GetLocationIp(ref monitorTags.PartBTags);
             }
 
-            this.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
+            this.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion;
         }
 
         public TelemetryItem (LogRecord logRecord)
@@ -61,7 +61,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 Tags[ContextTagKeys.AiOperationParentId.ToString()] = logRecord.SpanId.ToHexString();
             }
 
-            Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
+            Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion;
         }
 
         internal void SetResource(string roleName, string roleInstance)
