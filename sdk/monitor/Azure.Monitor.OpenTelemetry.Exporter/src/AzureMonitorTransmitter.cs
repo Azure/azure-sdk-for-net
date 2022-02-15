@@ -20,14 +20,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     /// </summary>
     internal class AzureMonitorTransmitter : ITransmitter
     {
-        private readonly ApplicationInsightsRestClient applicationInsightsRestClient;
-        internal IPersistentStorage storage;
+        private readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
+        internal IPersistentStorage _storage;
 
         public AzureMonitorTransmitter(AzureMonitorExporterOptions options)
         {
             try
             {
-                storage = new FileStorage(options.StorageDirectory);
+                _storage = new FileStorage(options.StorageDirectory);
             }
             catch (Exception)
             {
@@ -40,7 +40,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             ConnectionStringParser.GetValues(options.ConnectionString, out _, out string ingestionEndpoint);
             options.Retry.MaxRetries = 0;
 
-            applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), host: ingestionEndpoint);
+            _applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), host: ingestionEndpoint);
         }
 
         public async ValueTask<int> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken)
@@ -56,12 +56,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             try
             {
                 using var httpMessage = async ?
-                    await this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
-                    this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
+                    await this._applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
+                    this._applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
 
                 if (httpMessage != null)
                 {
-                    if (storage == null && httpMessage.HasResponse && httpMessage.Response.Status == ResponseStatusCodes.Success)
+                    if (_storage == null && httpMessage.HasResponse && httpMessage.Response.Status == ResponseStatusCodes.Success)
                     {
                         result = 1;
                     }
@@ -90,7 +90,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 // HttpRequestException
                 var content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
-                storage.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
+                _storage.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
             }
         }
 
@@ -111,7 +111,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     if (content != null)
                     {
                         retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
-                        storage.SaveTelemetry(content, retryInterval);
+                        _storage.SaveTelemetry(content, retryInterval);
                     }
                     break;
                 case ResponseStatusCodes.RequestTimeout:
@@ -121,7 +121,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     // Send Messages To Storage
                     content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
                     retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
-                    storage.SaveTelemetry(content, retryInterval);
+                    _storage.SaveTelemetry(content, retryInterval);
                     break;
                 case ResponseStatusCodes.InternalServerError:
                 case ResponseStatusCodes.BadGateway:
@@ -129,7 +129,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 case ResponseStatusCodes.GatewayTimeout:
                     // Send Messages To Storage
                     content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
-                    storage.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
+                    _storage.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
                     break;
                 default:
                     // Log Non-Retriable Status and don't retry or store;

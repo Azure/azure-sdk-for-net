@@ -14,7 +14,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn
@@ -175,72 +174,6 @@ namespace Azure.ResourceManager.Cdn
                 var operation = new CdnArmOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update an existing CdnWebApplicationFirewallPolicy with the specified policy name under the specified subscription and resource group
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies/{policyName}
-        /// Operation Id: Policies_Update
-        /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cdnWebApplicationFirewallPolicyPatchParameters"> CdnWebApplicationFirewallPolicy parameters to be patched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cdnWebApplicationFirewallPolicyPatchParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<CdnWebApplicationFirewallPolicy>> UpdateAsync(bool waitForCompletion, CdnWebApplicationFirewallPolicyPatchOptions cdnWebApplicationFirewallPolicyPatchParameters, CancellationToken cancellationToken = default)
-        {
-            if (cdnWebApplicationFirewallPolicyPatchParameters == null)
-            {
-                throw new ArgumentNullException(nameof(cdnWebApplicationFirewallPolicyPatchParameters));
-            }
-
-            using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicy.Update");
-            scope.Start();
-            try
-            {
-                var response = await _cdnWebApplicationFirewallPolicyPoliciesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cdnWebApplicationFirewallPolicyPatchParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CdnWebApplicationFirewallPolicy>(new CdnWebApplicationFirewallPolicyOperationSource(Client), _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, _cdnWebApplicationFirewallPolicyPoliciesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cdnWebApplicationFirewallPolicyPatchParameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update an existing CdnWebApplicationFirewallPolicy with the specified policy name under the specified subscription and resource group
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies/{policyName}
-        /// Operation Id: Policies_Update
-        /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cdnWebApplicationFirewallPolicyPatchParameters"> CdnWebApplicationFirewallPolicy parameters to be patched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cdnWebApplicationFirewallPolicyPatchParameters"/> is null. </exception>
-        public virtual ArmOperation<CdnWebApplicationFirewallPolicy> Update(bool waitForCompletion, CdnWebApplicationFirewallPolicyPatchOptions cdnWebApplicationFirewallPolicyPatchParameters, CancellationToken cancellationToken = default)
-        {
-            if (cdnWebApplicationFirewallPolicyPatchParameters == null)
-            {
-                throw new ArgumentNullException(nameof(cdnWebApplicationFirewallPolicyPatchParameters));
-            }
-
-            using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicy.Update");
-            scope.Start();
-            try
-            {
-                var response = _cdnWebApplicationFirewallPolicyPoliciesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cdnWebApplicationFirewallPolicyPatchParameters, cancellationToken);
-                var operation = new CdnArmOperation<CdnWebApplicationFirewallPolicy>(new CdnWebApplicationFirewallPolicyOperationSource(Client), _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, _cdnWebApplicationFirewallPolicyPoliciesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cdnWebApplicationFirewallPolicyPatchParameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)

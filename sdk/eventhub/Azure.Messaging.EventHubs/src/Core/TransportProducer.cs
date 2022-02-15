@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventHubs.Core
         /// <param name="sendOptions">The set of options to consider when sending this batch.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        public abstract Task SendAsync(IEnumerable<EventData> events,
+        public abstract Task SendAsync(IReadOnlyCollection<EventData> events,
                                        SendEventOptions sendOptions,
                                        CancellationToken cancellationToken);
 
