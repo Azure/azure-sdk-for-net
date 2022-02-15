@@ -279,6 +279,24 @@ namespace Azure.Storage.Blobs
                 SignedIdentifiers = response.Value.ToList()
             };
         }
+
+        internal static BlobContainerAccessPolicy ToBlobContainerAccessPolicy(
+            this Response response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobContainerAccessPolicy
+            {
+                BlobPublicAccess = response.Headers.BlobPublicAccess.GetValueOrDefault(),
+                ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                SignedIdentifiers = response.Value.ToList()
+            };
+        }
+
         #endregion
 
         #region ToBlobContainerInfo

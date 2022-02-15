@@ -400,6 +400,20 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        internal Response GetAccessPolicy(int? timeout = null, string leaseId = null, RequestContext context = default)
+        {
+            using var message = CreateGetAccessPolicyRequest(timeout, leaseId);
+            _pipeline.Send(message, context.CancellationToken);
+
+            if (!message.Response.IsError || context.ErrorOptions == ErrorOptions.NoThrow)
+            {
+                return message.Response;
+            }
+
+            throw new RequestFailedException(message.Response);
+        }
+
+
         internal HttpMessage CreateSetAccessPolicyRequest(int? timeout, string leaseId, PublicAccessType? access, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, IEnumerable<BlobSignedIdentifier> containerAcl)
         {
             var message = _pipeline.CreateMessage();

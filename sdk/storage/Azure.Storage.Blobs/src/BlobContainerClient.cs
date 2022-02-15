@@ -2093,25 +2093,25 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<IReadOnlyList<BlobSignedIdentifier>, ContainerGetAccessPolicyHeaders> response;
+                    Response response;
+
+                    RequestContext context = new RequestContext() { CancellationToken = cancellationToken };
 
                     if (async)
                     {
                         response = await ContainerRestClient.GetAccessPolicyAsync(
                             leaseId: conditions?.LeaseId,
-                            cancellationToken: cancellationToken)
+                            context)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = ContainerRestClient.GetAccessPolicy(
                             leaseId: conditions?.LeaseId,
-                            cancellationToken: cancellationToken);
+                            context);
                     }
 
-                    return Response.FromValue(
-                        response.ToBlobContainerAccessPolicy(),
-                        response.GetRawResponse());
+                    return Response.FromValue(BlobContainerAccessPolicy.FromResponse(response), response);
                 }
                 catch (Exception ex)
                 {

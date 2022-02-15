@@ -4,14 +4,23 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml;
+using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// BlobContainerAccessPolicy
     /// </summary>
-    public class BlobContainerAccessPolicy
+    public class BlobContainerAccessPolicy : IXmlSerializable
     {
+        internal static BlobContainerAccessPolicy FromResponse(Response response)
+        {
+            var document = XDocument.Load(response.ContentStream, LoadOptions.PreserveWhitespace);
+            return DeserializeBlobContainerAccessPolicy(document.Root);
+        }
+
         /// <summary>
         /// Indicated whether data in the container may be accessed publicly and the level of access.
         /// </summary>
@@ -40,6 +49,17 @@ namespace Azure.Storage.Blobs.Models
         public BlobContainerAccessPolicy()
         {
             SignedIdentifiers = new List<BlobSignedIdentifier>();
+        }
+
+        // Add these (what is on generated models in <Model>.Serialization.cs)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static BlobContainerAccessPolicy DeserializeBlobContainerAccessPolicy(XElement element)
+        {
+            throw new NotImplementedException();
         }
     }
 }
