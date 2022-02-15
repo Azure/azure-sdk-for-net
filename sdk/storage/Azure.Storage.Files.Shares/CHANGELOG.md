@@ -1,14 +1,7 @@
 # Release History
 
 ## 12.9.0-beta.4 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Fixed bug where ShareFileClient.StartCopy() and .StartCopyAsync() were not sending the ignoreReadonly parameter correctly.
 
 ## 12.9.0-beta.3 (2022-02-07)
 - Added support for service version 2021-04-10.
