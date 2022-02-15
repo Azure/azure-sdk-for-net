@@ -60,7 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             Thread.Sleep(15000);
 
             //Assert
-            Assert.Empty(transmitter.storage.GetBlobs());
+            Assert.Empty(transmitter._storage.GetBlobs());
         }
 
         [Fact]
@@ -86,10 +86,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             Thread.Sleep(15000);
 
             //Assert
-            Assert.Single(transmitter.storage.GetBlobs());
+            Assert.Single(transmitter._storage.GetBlobs());
 
             // Delete the blob
-            transmitter.storage.GetBlob().Lease(1000).Delete();
+            transmitter._storage.GetBlob().Lease(1000).Delete();
         }
 
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/26783")]
@@ -116,10 +116,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             Thread.Sleep(15000);
 
             //Assert
-            Assert.Single(transmitter.storage.GetBlobs());
+            Assert.Single(transmitter._storage.GetBlobs());
 
             // Delete the blob
-            transmitter.storage.GetBlob().Lease(1000).Delete();
+            transmitter._storage.GetBlob().Lease(1000).Delete();
         }
 
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/26783")]
@@ -152,9 +152,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             Thread.Sleep(15000);
 
             //Assert
-            Assert.Single(transmitter.storage.GetBlobs());
+            Assert.Single(transmitter._storage.GetBlobs());
 
-            var failedData = System.Text.Encoding.UTF8.GetString(transmitter.storage.GetBlob().Read());
+            var failedData = System.Text.Encoding.UTF8.GetString(transmitter._storage.GetBlob().Read());
 
             string[] items = failedData.Split('\n');
 
@@ -162,7 +162,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             Assert.Equal(2, items.Count());
 
             // Delete the blob
-            transmitter.storage.GetBlob().Lease(1000).Delete();
+            transmitter._storage.GetBlob().Lease(1000).Delete();
         }
 
         private static AzureMonitorTransmitter GetTransmitter()
@@ -173,7 +173,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             AzureMonitorTransmitter transmitter = new AzureMonitorTransmitter(options);
 
             // Overwrite storage to reduce maintenance period
-            transmitter.storage = new FileStorage(options.StorageDirectory, 5000, 5000);
+            transmitter._storage = new FileStorage(options.StorageDirectory, 5000, 5000);
 
             return transmitter;
         }

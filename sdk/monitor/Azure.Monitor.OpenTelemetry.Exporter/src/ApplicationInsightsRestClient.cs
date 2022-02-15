@@ -3,12 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
-using OpenTelemetry.Contrib.Extensions.PersistentStorage;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {

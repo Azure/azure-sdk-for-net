@@ -10,17 +10,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal static class StorageHelper
     {
-        private static string defaultStorageDirectory;
-        private const string nonWindowsVarTmp = "/var/tmp/";
+        private static string s_defaultStorageDirectory;
+        private const string NonWindowsVarTmp = "/var/tmp/";
 
         // TODO: investigate if /tmp/ should be used.
-        private const string nonWindowsTmp = "/tmp/";
+        private const string NonWindowsTmp = "/tmp/";
 
         internal static string GetDefaultStorageDirectory()
         {
-            if (defaultStorageDirectory != null)
+            if (s_defaultStorageDirectory != null)
             {
-                return defaultStorageDirectory;
+                return s_defaultStorageDirectory;
             }
             else
             {
@@ -35,8 +35,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         dirPath = CreateTelemetryDirectory(localAppData);
                         if (dirPath != null)
                         {
-                            defaultStorageDirectory = dirPath;
-                            return defaultStorageDirectory;
+                            s_defaultStorageDirectory = dirPath;
+                            return s_defaultStorageDirectory;
                         }
 
                         string temp = environmentVars["TEMP"]?.ToString();
@@ -45,8 +45,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                             dirPath = CreateTelemetryDirectory(temp);
                             if (dirPath != null)
                             {
-                                defaultStorageDirectory = dirPath;
-                                return defaultStorageDirectory;
+                                s_defaultStorageDirectory = dirPath;
+                                return s_defaultStorageDirectory;
                             }
                         }
                     }
@@ -59,27 +59,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         dirPath = CreateTelemetryDirectory(tmpdir);
                         if (dirPath != null)
                         {
-                            defaultStorageDirectory = dirPath;
-                            return defaultStorageDirectory;
+                            s_defaultStorageDirectory = dirPath;
+                            return s_defaultStorageDirectory;
                         }
                     }
 
-                    dirPath = CreateTelemetryDirectory(nonWindowsVarTmp);
+                    dirPath = CreateTelemetryDirectory(NonWindowsVarTmp);
                     if (dirPath != null)
                     {
-                        defaultStorageDirectory = dirPath;
-                        return defaultStorageDirectory;
+                        s_defaultStorageDirectory = dirPath;
+                        return s_defaultStorageDirectory;
                     }
 
-                    dirPath = CreateTelemetryDirectory(nonWindowsTmp);
+                    dirPath = CreateTelemetryDirectory(NonWindowsTmp);
                     if (dirPath != null)
                     {
-                        defaultStorageDirectory = dirPath;
-                        return defaultStorageDirectory;
+                        s_defaultStorageDirectory = dirPath;
+                        return s_defaultStorageDirectory;
                     }
                 }
 
-                return defaultStorageDirectory;
+                return s_defaultStorageDirectory;
             }
         }
 
