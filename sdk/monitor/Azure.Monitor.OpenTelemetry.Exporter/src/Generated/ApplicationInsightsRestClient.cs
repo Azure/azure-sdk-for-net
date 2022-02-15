@@ -19,9 +19,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal partial class ApplicationInsightsRestClient
     {
-        private string host;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly string _host;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of ApplicationInsightsRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -30,8 +32,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public ApplicationInsightsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string host = "https://dc.services.visualstudio.com")
         {
-            this.host = host ?? throw new ArgumentNullException(nameof(host));
-            _clientDiagnostics = clientDiagnostics;
+            _host = host ?? throw new ArgumentNullException(nameof(host));
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
@@ -59,7 +61,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -87,7 +89,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

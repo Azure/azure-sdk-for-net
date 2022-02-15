@@ -160,14 +160,11 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.FrontdoorId, getResult.Data.FrontdoorId);
         }
 
-        public static void AssertProfileUpdate(Profile updatedProfile, ProfileUpdateOptions updateOptions)
+        public static void AssertProfileUpdate(Profile updatedProfile, string key, string value)
         {
-            Assert.AreEqual(updatedProfile.Data.Tags.Count, updateOptions.Tags.Count);
-            foreach (var kv in updatedProfile.Data.Tags)
-            {
-                Assert.True(updateOptions.Tags.ContainsKey(kv.Key));
-                Assert.AreEqual(kv.Value, updateOptions.Tags[kv.Key]);
-            }
+            Assert.GreaterOrEqual(updatedProfile.Data.Tags.Count, 1);
+            Assert.IsTrue(updatedProfile.Data.Tags.ContainsKey(key));
+            Assert.AreEqual(updatedProfile.Data.Tags[key], value);
         }
 
         public static void AssertValidEndpoint(CdnEndpoint model, CdnEndpoint getResult)
@@ -501,14 +498,11 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             //Todo: PolicySettings, RateLimitRules, CustomRules, ManagedRules, EndpointLinks
         }
 
-        public static void AssertPolicyUpdate(CdnWebApplicationFirewallPolicy updatedPolicy, CdnWebApplicationFirewallPolicyPatchOptions updateOptions)
+        public static void AssertPolicyUpdate(CdnWebApplicationFirewallPolicy updatedPolicy, string key, string value)
         {
-            Assert.AreEqual(updatedPolicy.Data.Tags.Count, updateOptions.Tags.Count);
-            foreach (var kv in updatedPolicy.Data.Tags)
-            {
-                Assert.True(updateOptions.Tags.ContainsKey(kv.Key));
-                Assert.AreEqual(kv.Value, updateOptions.Tags[kv.Key]);
-            }
+            Assert.GreaterOrEqual(updatedPolicy.Data.Tags.Count, 1);
+            Assert.IsTrue(updatedPolicy.Data.Tags.ContainsKey(key));
+            Assert.AreEqual(updatedPolicy.Data.Tags[key], value);
         }
 
         public static void AssertValidAfdSecret(AfdSecret model, AfdSecret getResult)
