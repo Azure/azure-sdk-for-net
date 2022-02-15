@@ -637,15 +637,15 @@ namespace Azure.AI.Personalizer
             personalizerServiceProperties = ServiceConfigurationRestClient.Get(cancellationToken);
             personalizerPolicy = PolicyRestClient.Get(cancellationToken);
             //interactions & observations
-            config["interaction.http.api.host"] = stringEndpoint + "personalizer/v1.1-preview.2/logs/interactions";
-            config["observation.http.api.host"] = stringEndpoint + "personalizer/v1.1-preview.2/logs/observations";
+            config["interaction.http.api.host"] = stringEndpoint + "personalizer/v1.1-preview.3/logs/interactions";
+            config["observation.http.api.host"] = stringEndpoint + "personalizer/v1.1-preview.3/logs/observations";
             config["interaction.sender.implementation"] = "INTERACTION_HTTP_API_SENDER";
             config["observation.sender.implementation"] = "OBSERVATION_HTTP_API_SENDER";
             config["interaction.subsample.rate"] = Convert.ToString(this.subsampleRate, CultureInfo.InvariantCulture);
             config["observation.subsample.rate"] = Convert.ToString(this.subsampleRate, CultureInfo.InvariantCulture);
             //model
-            config["model.blob.uri"] = stringEndpoint + "personalizer/v1.1-preview.1/model";
-            config["model.source"] = "AZURE_STORAGE_BLOB";
+            config["model.blob.uri"] = stringEndpoint + "personalizer/v1.1-preview.3/model";
+            config["model.source"] = "HTTP_MODEL_DATA";
 
             config["model.vw.initial_command_line"] = personalizerPolicy.Arguments;
             config["protocol.version"] = "2";
