@@ -8,10 +8,10 @@ steps:
 - pwsh: |
     if ("$(Build.Reason)" -eq 'PullRequest') {
       $targetBranch = "origin/$(System.PullRequest.TargetBranch)" -replace "refs/heads/"
-      git config core.quotepath off
-      # Disable the unix path encoding.
-      git config --unset i18n.logoutputencoding
 
+      # Add config of disable the quote and encoding on unix path. 
+      # Ref: https://github.com/msysgit/msysgit/wiki/Git-for-Windows-Unicode-Support#disable-quoted-file-names
+      # Ref: https://github.com/msysgit/msysgit/wiki/Git-for-Windows-Unicode-Support#disable-commit-message-transcoding
       $changedFiles = git diff -c core.quotepath=off -c i18n.logoutputencoding=utf-8 $targetBranch HEAD --name-only --diff-filter=d
       $changedFiles | ForEach-Object { Add-Content -Path "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$_"}
     }
