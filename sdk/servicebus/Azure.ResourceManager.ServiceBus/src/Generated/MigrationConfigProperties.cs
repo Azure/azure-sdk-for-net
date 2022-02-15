@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceBus
         internal MigrationConfigProperties(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _migrationConfigPropertiesMigrationConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string migrationConfigPropertiesMigrationConfigsApiVersion);
+            TryGetApiVersion(ResourceType, out string migrationConfigPropertiesMigrationConfigsApiVersion);
             _migrationConfigPropertiesMigrationConfigsRestClient = new MigrationConfigsRestOperations(_migrationConfigPropertiesMigrationConfigsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, migrationConfigPropertiesMigrationConfigsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
