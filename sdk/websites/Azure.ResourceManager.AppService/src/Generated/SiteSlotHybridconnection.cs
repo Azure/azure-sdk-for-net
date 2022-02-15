@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotHybridconnection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotHybridconnectionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteSlotHybridconnectionWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string siteSlotHybridconnectionWebAppsApiVersion);
             _siteSlotHybridconnectionWebAppsRestClient = new WebAppsRestOperations(_siteSlotHybridconnectionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotHybridconnectionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         internal InventoryItemCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _inventoryItemClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", InventoryItem.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(InventoryItem.ResourceType, out string inventoryItemApiVersion);
+            TryGetApiVersion(InventoryItem.ResourceType, out string inventoryItemApiVersion);
             _inventoryItemRestClient = new InventoryItemsRestOperations(_inventoryItemClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, inventoryItemApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

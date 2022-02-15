@@ -17,7 +17,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of HybridConnection and their operations over its parent. </summary>
+    /// <summary> A class representing collection of ServerfarmHybridConnectionNamespaceRelay and their operations over its parent. </summary>
     public partial class ServerfarmHybridConnectionNamespaceRelayCollection : ArmCollection
     {
         private readonly ClientDiagnostics _serverfarmHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService
         internal ServerfarmHybridConnectionNamespaceRelayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverfarmHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ServerfarmHybridConnectionNamespaceRelay.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ServerfarmHybridConnectionNamespaceRelay.ResourceType, out string serverfarmHybridConnectionNamespaceRelayAppServicePlansApiVersion);
+            TryGetApiVersion(ServerfarmHybridConnectionNamespaceRelay.ResourceType, out string serverfarmHybridConnectionNamespaceRelayAppServicePlansApiVersion);
             _serverfarmHybridConnectionNamespaceRelayAppServicePlansRestClient = new AppServicePlansRestOperations(_serverfarmHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverfarmHybridConnectionNamespaceRelayAppServicePlansApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

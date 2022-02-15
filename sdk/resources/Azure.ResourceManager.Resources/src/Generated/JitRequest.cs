@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources
         internal JitRequest(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _jitRequestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string jitRequestApiVersion);
+            TryGetApiVersion(ResourceType, out string jitRequestApiVersion);
             _jitRequestRestClient = new JitRequestsRestOperations(_jitRequestClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jitRequestApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

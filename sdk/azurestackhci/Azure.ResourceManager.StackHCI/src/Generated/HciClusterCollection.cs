@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.StackHCI
         internal HciClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _hciClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StackHCI", HciCluster.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(HciCluster.ResourceType, out string hciClusterClustersApiVersion);
+            TryGetApiVersion(HciCluster.ResourceType, out string hciClusterClustersApiVersion);
             _hciClusterClustersRestClient = new ClustersRestOperations(_hciClusterClustersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hciClusterClustersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

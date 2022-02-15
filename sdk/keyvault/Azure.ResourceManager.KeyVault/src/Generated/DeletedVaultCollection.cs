@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.KeyVault
         internal DeletedVaultCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _deletedVaultVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", DeletedVault.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(DeletedVault.ResourceType, out string deletedVaultVaultsApiVersion);
+            TryGetApiVersion(DeletedVault.ResourceType, out string deletedVaultVaultsApiVersion);
             _deletedVaultVaultsRestClient = new VaultsRestOperations(_deletedVaultVaultsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedVaultVaultsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

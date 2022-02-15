@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         internal HostingEnvironmentWorkerPool(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string hostingEnvironmentWorkerPoolAppServiceEnvironmentsApiVersion);
+            TryGetApiVersion(ResourceType, out string hostingEnvironmentWorkerPoolAppServiceEnvironmentsApiVersion);
             _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hostingEnvironmentWorkerPoolAppServiceEnvironmentsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

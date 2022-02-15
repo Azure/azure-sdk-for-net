@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkWatcherCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _networkWatcherClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkWatcher.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(NetworkWatcher.ResourceType, out string networkWatcherApiVersion);
+            TryGetApiVersion(NetworkWatcher.ResourceType, out string networkWatcherApiVersion);
             _networkWatcherRestClient = new NetworkWatchersRestOperations(_networkWatcherClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkWatcherApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

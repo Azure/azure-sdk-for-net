@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources
         internal DeploymentScriptCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _deploymentScriptClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", DeploymentScript.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(DeploymentScript.ResourceType, out string deploymentScriptApiVersion);
+            TryGetApiVersion(DeploymentScript.ResourceType, out string deploymentScriptApiVersion);
             _deploymentScriptRestClient = new DeploymentScriptsRestOperations(_deploymentScriptClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deploymentScriptApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

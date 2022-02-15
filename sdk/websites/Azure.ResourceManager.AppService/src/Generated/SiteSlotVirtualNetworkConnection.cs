@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotVirtualNetworkConnection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteSlotVirtualNetworkConnectionWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string siteSlotVirtualNetworkConnectionWebAppsApiVersion);
             _siteSlotVirtualNetworkConnectionWebAppsRestClient = new WebAppsRestOperations(_siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotVirtualNetworkConnectionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

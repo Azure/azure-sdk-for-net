@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn
         internal AfdOriginCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _afdOriginClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", AfdOrigin.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(AfdOrigin.ResourceType, out string afdOriginApiVersion);
+            TryGetApiVersion(AfdOrigin.ResourceType, out string afdOriginApiVersion);
             _afdOriginRestClient = new AfdOriginsRestOperations(_afdOriginClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdOriginApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         internal PrivateLinkService(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _privateLinkServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string privateLinkServiceApiVersion);
+            TryGetApiVersion(ResourceType, out string privateLinkServiceApiVersion);
             _privateLinkServiceRestClient = new PrivateLinkServicesRestOperations(_privateLinkServiceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, privateLinkServiceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

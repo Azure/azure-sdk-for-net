@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService
         internal AppServiceCertificateOrder(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _appServiceCertificateOrderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string appServiceCertificateOrderApiVersion);
+            TryGetApiVersion(ResourceType, out string appServiceCertificateOrderApiVersion);
             _appServiceCertificateOrderRestClient = new AppServiceCertificateOrdersRestOperations(_appServiceCertificateOrderClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, appServiceCertificateOrderApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -203,21 +203,21 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
         /// Operation Id: AppServiceCertificateOrders_Update
         /// </summary>
-        /// <param name="certificateDistinguishedName"> Distinguished name to use for the certificate order. </param>
+        /// <param name="options"> Distinguished name to use for the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateDistinguishedName"/> is null. </exception>
-        public async virtual Task<Response<AppServiceCertificateOrder>> UpdateAsync(AppServiceCertificateOrderPatch certificateDistinguishedName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<Response<AppServiceCertificateOrder>> UpdateAsync(AppServiceCertificateOrderUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (certificateDistinguishedName == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(certificateDistinguishedName));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrder.Update");
             scope.Start();
             try
             {
-                var response = await _appServiceCertificateOrderRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateDistinguishedName, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceCertificateOrderRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AppServiceCertificateOrder(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -232,21 +232,21 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
         /// Operation Id: AppServiceCertificateOrders_Update
         /// </summary>
-        /// <param name="certificateDistinguishedName"> Distinguished name to use for the certificate order. </param>
+        /// <param name="options"> Distinguished name to use for the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateDistinguishedName"/> is null. </exception>
-        public virtual Response<AppServiceCertificateOrder> Update(AppServiceCertificateOrderPatch certificateDistinguishedName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<AppServiceCertificateOrder> Update(AppServiceCertificateOrderUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (certificateDistinguishedName == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(certificateDistinguishedName));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrder.Update");
             scope.Start();
             try
             {
-                var response = _appServiceCertificateOrderRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateDistinguishedName, cancellationToken);
+                var response = _appServiceCertificateOrderRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
                 return Response.FromValue(new AppServiceCertificateOrder(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

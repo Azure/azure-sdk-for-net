@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A class representing collection of ServiceBusAuthorizationRule and their operations over its parent. </summary>
+    /// <summary> A class representing collection of NamespaceDisasterRecoveryAuthorizationRule and their operations over its parent. </summary>
     public partial class NamespaceDisasterRecoveryAuthorizationRuleCollection : ArmCollection, IEnumerable<NamespaceDisasterRecoveryAuthorizationRule>, IAsyncEnumerable<NamespaceDisasterRecoveryAuthorizationRule>
     {
         private readonly ClientDiagnostics _namespaceDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceBus
         internal NamespaceDisasterRecoveryAuthorizationRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _namespaceDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", NamespaceDisasterRecoveryAuthorizationRule.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(NamespaceDisasterRecoveryAuthorizationRule.ResourceType, out string namespaceDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesApiVersion);
+            TryGetApiVersion(NamespaceDisasterRecoveryAuthorizationRule.ResourceType, out string namespaceDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesApiVersion);
             _namespaceDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesRestClient = new DisasterRecoveryAuthorizationRulesRestOperations(_namespaceDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, namespaceDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

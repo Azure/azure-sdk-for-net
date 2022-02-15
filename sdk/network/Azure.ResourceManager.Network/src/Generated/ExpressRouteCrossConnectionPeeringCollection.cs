@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         internal ExpressRouteCrossConnectionPeeringCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _expressRouteCrossConnectionPeeringClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteCrossConnectionPeering.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ExpressRouteCrossConnectionPeering.ResourceType, out string expressRouteCrossConnectionPeeringApiVersion);
+            TryGetApiVersion(ExpressRouteCrossConnectionPeering.ResourceType, out string expressRouteCrossConnectionPeeringApiVersion);
             _expressRouteCrossConnectionPeeringRestClient = new ExpressRouteCrossConnectionPeeringsRestOperations(_expressRouteCrossConnectionPeeringClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRouteCrossConnectionPeeringApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

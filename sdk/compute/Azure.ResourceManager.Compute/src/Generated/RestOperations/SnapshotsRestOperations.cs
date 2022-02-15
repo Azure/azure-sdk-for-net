@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string snapshotName, SnapshotUpdate snapshot)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string snapshotName, SnapshotUpdateOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(snapshot);
+            content.JsonWriter.WriteObjectValue(options);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -171,10 +171,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The max name length is 80 characters. </param>
-        /// <param name="snapshot"> Snapshot object supplied in the body of the Patch snapshot operation. </param>
+        /// <param name="options"> Snapshot object supplied in the body of the Patch snapshot operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="snapshotName"/>, or <paramref name="snapshot"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string snapshotName, SnapshotUpdate snapshot, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="snapshotName"/>, or <paramref name="options"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string snapshotName, SnapshotUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -188,12 +188,12 @@ namespace Azure.ResourceManager.Compute
             {
                 throw new ArgumentNullException(nameof(snapshotName));
             }
-            if (snapshot == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(snapshot));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, snapshotName, snapshot);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, snapshotName, options);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -209,10 +209,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The max name length is 80 characters. </param>
-        /// <param name="snapshot"> Snapshot object supplied in the body of the Patch snapshot operation. </param>
+        /// <param name="options"> Snapshot object supplied in the body of the Patch snapshot operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="snapshotName"/>, or <paramref name="snapshot"/> is null. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string snapshotName, SnapshotUpdate snapshot, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="snapshotName"/>, or <paramref name="options"/> is null. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string snapshotName, SnapshotUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -226,12 +226,12 @@ namespace Azure.ResourceManager.Compute
             {
                 throw new ArgumentNullException(nameof(snapshotName));
             }
-            if (snapshot == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(snapshot));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, snapshotName, snapshot);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, snapshotName, options);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

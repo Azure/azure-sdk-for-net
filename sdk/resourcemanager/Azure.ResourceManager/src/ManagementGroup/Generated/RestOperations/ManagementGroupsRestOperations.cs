@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Management
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string groupId, PatchManagementGroupOptions patchGroupRequest, string cacheControl)
+        internal HttpMessage CreateUpdateRequest(string groupId, ManagementGroupUpdateOptions options, string cacheControl)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Management
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patchGroupRequest);
+            content.JsonWriter.WriteObjectValue(options);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -347,22 +347,22 @@ namespace Azure.ResourceManager.Management
         /// 
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="patchGroupRequest"> Management group patch parameters. </param>
+        /// <param name="options"> Management group patch parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="patchGroupRequest"/> is null. </exception>
-        public async Task<Response<ManagementGroupData>> UpdateAsync(string groupId, PatchManagementGroupOptions patchGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="options"/> is null. </exception>
+        public async Task<Response<ManagementGroupData>> UpdateAsync(string groupId, ManagementGroupUpdateOptions options, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
                 throw new ArgumentNullException(nameof(groupId));
             }
-            if (patchGroupRequest == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(patchGroupRequest));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(groupId, patchGroupRequest, cacheControl);
+            using var message = CreateUpdateRequest(groupId, options, cacheControl);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -383,22 +383,22 @@ namespace Azure.ResourceManager.Management
         /// 
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="patchGroupRequest"> Management group patch parameters. </param>
+        /// <param name="options"> Management group patch parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="patchGroupRequest"/> is null. </exception>
-        public Response<ManagementGroupData> Update(string groupId, PatchManagementGroupOptions patchGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="options"/> is null. </exception>
+        public Response<ManagementGroupData> Update(string groupId, ManagementGroupUpdateOptions options, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
                 throw new ArgumentNullException(nameof(groupId));
             }
-            if (patchGroupRequest == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(patchGroupRequest));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(groupId, patchGroupRequest, cacheControl);
+            using var message = CreateUpdateRequest(groupId, options, cacheControl);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

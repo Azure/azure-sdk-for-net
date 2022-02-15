@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal VirtualNetworkGatewayConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualNetworkGatewayConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetworkGatewayConnection.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(VirtualNetworkGatewayConnection.ResourceType, out string virtualNetworkGatewayConnectionApiVersion);
+            TryGetApiVersion(VirtualNetworkGatewayConnection.ResourceType, out string virtualNetworkGatewayConnectionApiVersion);
             _virtualNetworkGatewayConnectionRestClient = new VirtualNetworkGatewayConnectionsRestOperations(_virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualNetworkGatewayConnectionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

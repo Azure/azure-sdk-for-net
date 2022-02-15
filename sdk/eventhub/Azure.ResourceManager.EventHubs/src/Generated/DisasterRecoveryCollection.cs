@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.EventHubs
         internal DisasterRecoveryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _disasterRecoveryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", DisasterRecovery.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(DisasterRecovery.ResourceType, out string disasterRecoveryApiVersion);
+            TryGetApiVersion(DisasterRecovery.ResourceType, out string disasterRecoveryApiVersion);
             _disasterRecoveryRestClient = new DisasterRecoveriesRestOperations(_disasterRecoveryClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, disasterRecoveryApiVersion);
             _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", DisasterRecovery.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(DisasterRecovery.ResourceType, out string disasterRecoveryDisasterRecoveryConfigsApiVersion);
+            TryGetApiVersion(DisasterRecovery.ResourceType, out string disasterRecoveryDisasterRecoveryConfigsApiVersion);
             _disasterRecoveryDisasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_disasterRecoveryDisasterRecoveryConfigsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, disasterRecoveryDisasterRecoveryConfigsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

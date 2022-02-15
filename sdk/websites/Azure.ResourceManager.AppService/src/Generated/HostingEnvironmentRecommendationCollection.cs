@@ -17,7 +17,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of RecommendationRule and their operations over its parent. </summary>
+    /// <summary> A class representing collection of HostingEnvironmentRecommendation and their operations over its parent. </summary>
     public partial class HostingEnvironmentRecommendationCollection : ArmCollection
     {
         private readonly ClientDiagnostics _hostingEnvironmentRecommendationRecommendationsClientDiagnostics;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService
         internal HostingEnvironmentRecommendationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _hostingEnvironmentRecommendationRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", HostingEnvironmentRecommendation.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(HostingEnvironmentRecommendation.ResourceType, out string hostingEnvironmentRecommendationRecommendationsApiVersion);
+            TryGetApiVersion(HostingEnvironmentRecommendation.ResourceType, out string hostingEnvironmentRecommendationRecommendationsApiVersion);
             _hostingEnvironmentRecommendationRecommendationsRestClient = new RecommendationsRestOperations(_hostingEnvironmentRecommendationRecommendationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hostingEnvironmentRecommendationRecommendationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

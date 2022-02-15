@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         internal VMwareHostCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _vMwareHostHostsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VMwareHost.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(VMwareHost.ResourceType, out string vMwareHostHostsApiVersion);
+            TryGetApiVersion(VMwareHost.ResourceType, out string vMwareHostHostsApiVersion);
             _vMwareHostHostsRestClient = new HostsRestOperations(_vMwareHostHostsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vMwareHostHostsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

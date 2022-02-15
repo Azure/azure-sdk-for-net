@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql
         {
             _locationName = locationName;
             _sqlTimeZoneTimeZonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlTimeZone.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SqlTimeZone.ResourceType, out string sqlTimeZoneTimeZonesApiVersion);
+            TryGetApiVersion(SqlTimeZone.ResourceType, out string sqlTimeZoneTimeZonesApiVersion);
             _sqlTimeZoneTimeZonesRestClient = new TimeZonesRestOperations(_sqlTimeZoneTimeZonesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlTimeZoneTimeZonesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute
         internal AvailabilitySet(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _availabilitySetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string availabilitySetApiVersion);
+            TryGetApiVersion(ResourceType, out string availabilitySetApiVersion);
             _availabilitySetRestClient = new AvailabilitySetsRestOperations(_availabilitySetClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, availabilitySetApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -189,21 +189,21 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}
         /// Operation Id: AvailabilitySets_Update
         /// </summary>
-        /// <param name="parameters"> Parameters supplied to the Update Availability Set operation. </param>
+        /// <param name="options"> Parameters supplied to the Update Availability Set operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<AvailabilitySet>> UpdateAsync(AvailabilitySetUpdate parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<Response<AvailabilitySet>> UpdateAsync(AvailabilitySetUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _availabilitySetClientDiagnostics.CreateScope("AvailabilitySet.Update");
             scope.Start();
             try
             {
-                var response = await _availabilitySetRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _availabilitySetRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AvailabilitySet(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -218,21 +218,21 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}
         /// Operation Id: AvailabilitySets_Update
         /// </summary>
-        /// <param name="parameters"> Parameters supplied to the Update Availability Set operation. </param>
+        /// <param name="options"> Parameters supplied to the Update Availability Set operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<AvailabilitySet> Update(AvailabilitySetUpdate parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<AvailabilitySet> Update(AvailabilitySetUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _availabilitySetClientDiagnostics.CreateScope("AvailabilitySet.Update");
             scope.Start();
             try
             {
-                var response = _availabilitySetRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var response = _availabilitySetRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
                 return Response.FromValue(new AvailabilitySet(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

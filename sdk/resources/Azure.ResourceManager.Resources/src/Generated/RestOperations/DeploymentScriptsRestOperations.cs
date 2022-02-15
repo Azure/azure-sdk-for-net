@@ -161,15 +161,15 @@ namespace Azure.ResourceManager.Resources
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            DeploymentScriptUpdateParameter deploymentScriptUpdateParameter = new DeploymentScriptUpdateParameter();
+            DeploymentScriptUpdateOptions deploymentScriptUpdateOptions = new DeploymentScriptUpdateOptions();
             if (tags != null)
             {
                 foreach (var value in tags)
                 {
-                    deploymentScriptUpdateParameter.Tags.Add(value);
+                    deploymentScriptUpdateOptions.Tags.Add(value);
                 }
             }
-            var model = deploymentScriptUpdateParameter;
+            var model = deploymentScriptUpdateOptions;
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;

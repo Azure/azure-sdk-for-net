@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn
         internal CdnWebApplicationFirewallPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string cdnWebApplicationFirewallPolicyPoliciesApiVersion);
+            TryGetApiVersion(ResourceType, out string cdnWebApplicationFirewallPolicyPoliciesApiVersion);
             _cdnWebApplicationFirewallPolicyPoliciesRestClient = new PoliciesRestOperations(_cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cdnWebApplicationFirewallPolicyPoliciesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

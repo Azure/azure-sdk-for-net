@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal DdosProtectionPlanCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _ddosProtectionPlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", DdosProtectionPlan.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(DdosProtectionPlan.ResourceType, out string ddosProtectionPlanApiVersion);
+            TryGetApiVersion(DdosProtectionPlan.ResourceType, out string ddosProtectionPlanApiVersion);
             _ddosProtectionPlanRestClient = new DdosProtectionPlansRestOperations(_ddosProtectionPlanClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, ddosProtectionPlanApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

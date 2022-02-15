@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal ApplicationGatewayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _applicationGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationGateway.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ApplicationGateway.ResourceType, out string applicationGatewayApiVersion);
+            TryGetApiVersion(ApplicationGateway.ResourceType, out string applicationGatewayApiVersion);
             _applicationGatewayRestClient = new ApplicationGatewaysRestOperations(_applicationGatewayClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationGatewayApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of ContinuousWebJob and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteContinuousWebJob and their operations over its parent. </summary>
     public partial class SiteContinuousWebJobCollection : ArmCollection, IEnumerable<SiteContinuousWebJob>, IAsyncEnumerable<SiteContinuousWebJob>
     {
         private readonly ClientDiagnostics _siteContinuousWebJobWebAppsClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteContinuousWebJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteContinuousWebJobWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteContinuousWebJob.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteContinuousWebJob.ResourceType, out string siteContinuousWebJobWebAppsApiVersion);
+            TryGetApiVersion(SiteContinuousWebJob.ResourceType, out string siteContinuousWebJobWebAppsApiVersion);
             _siteContinuousWebJobWebAppsRestClient = new WebAppsRestOperations(_siteContinuousWebJobWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteContinuousWebJobWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

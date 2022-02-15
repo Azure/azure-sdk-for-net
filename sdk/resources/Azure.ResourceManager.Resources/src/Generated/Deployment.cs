@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Resources
         internal Deployment(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _deploymentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string deploymentApiVersion);
+            TryGetApiVersion(ResourceType, out string deploymentApiVersion);
             _deploymentRestClient = new DeploymentsRestOperations(_deploymentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deploymentApiVersion);
             _deploymentOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _deploymentOperationsRestClient = new DeploymentRestOperations(_deploymentOperationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);

@@ -17,7 +17,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of RelayServiceConnectionEntity and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteHybridConnection and their operations over its parent. </summary>
     public partial class SiteHybridConnectionCollection : ArmCollection
     {
         private readonly ClientDiagnostics _siteHybridConnectionWebAppsClientDiagnostics;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteHybridConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteHybridConnectionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteHybridConnection.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteHybridConnection.ResourceType, out string siteHybridConnectionWebAppsApiVersion);
+            TryGetApiVersion(SiteHybridConnection.ResourceType, out string siteHybridConnectionWebAppsApiVersion);
             _siteHybridConnectionWebAppsRestClient = new WebAppsRestOperations(_siteHybridConnectionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteHybridConnectionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal ConnectionMonitorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _connectionMonitorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ConnectionMonitor.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ConnectionMonitor.ResourceType, out string connectionMonitorApiVersion);
+            TryGetApiVersion(ConnectionMonitor.ResourceType, out string connectionMonitorApiVersion);
             _connectionMonitorRestClient = new ConnectionMonitorsRestOperations(_connectionMonitorClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, connectionMonitorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

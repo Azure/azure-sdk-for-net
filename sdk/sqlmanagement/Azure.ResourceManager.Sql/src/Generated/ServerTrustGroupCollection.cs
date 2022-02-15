@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql
         {
             _locationName = locationName;
             _serverTrustGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerTrustGroup.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ServerTrustGroup.ResourceType, out string serverTrustGroupApiVersion);
+            TryGetApiVersion(ServerTrustGroup.ResourceType, out string serverTrustGroupApiVersion);
             _serverTrustGroupRestClient = new ServerTrustGroupsRestOperations(_serverTrustGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverTrustGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

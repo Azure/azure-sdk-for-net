@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         internal VirtualHubRouteTableV2Collection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualHubRouteTableV2ClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualHubRouteTableV2.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(VirtualHubRouteTableV2.ResourceType, out string virtualHubRouteTableV2ApiVersion);
+            TryGetApiVersion(VirtualHubRouteTableV2.ResourceType, out string virtualHubRouteTableV2ApiVersion);
             _virtualHubRouteTableV2RestClient = new VirtualHubRouteTableV2SRestOperations(_virtualHubRouteTableV2ClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualHubRouteTableV2ApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

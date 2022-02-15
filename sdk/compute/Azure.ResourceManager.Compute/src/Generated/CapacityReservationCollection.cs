@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute
         internal CapacityReservationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _capacityReservationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", CapacityReservation.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(CapacityReservation.ResourceType, out string capacityReservationApiVersion);
+            TryGetApiVersion(CapacityReservation.ResourceType, out string capacityReservationApiVersion);
             _capacityReservationRestClient = new CapacityReservationsRestOperations(_capacityReservationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, capacityReservationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

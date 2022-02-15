@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.Sql
         internal InstancePool(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _instancePoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string instancePoolApiVersion);
+            TryGetApiVersion(ResourceType, out string instancePoolApiVersion);
             _instancePoolRestClient = new InstancePoolsRestOperations(_instancePoolClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, instancePoolApiVersion);
             _managedInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstance.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ManagedInstance.ResourceType, out string managedInstanceApiVersion);
+            TryGetApiVersion(ManagedInstance.ResourceType, out string managedInstanceApiVersion);
             _managedInstanceRestClient = new ManagedInstancesRestOperations(_managedInstanceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceApiVersion);
             _usagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _usagesRestClient = new UsagesRestOperations(_usagesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);

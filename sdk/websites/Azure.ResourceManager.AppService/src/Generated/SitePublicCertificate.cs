@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal SitePublicCertificate(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sitePublicCertificateWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string sitePublicCertificateWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string sitePublicCertificateWebAppsApiVersion);
             _sitePublicCertificateWebAppsRestClient = new WebAppsRestOperations(_sitePublicCertificateWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sitePublicCertificateWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

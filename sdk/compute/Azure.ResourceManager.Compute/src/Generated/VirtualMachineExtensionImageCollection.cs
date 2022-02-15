@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute
             _location = location;
             _publisherName = publisherName;
             _virtualMachineExtensionImageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineExtensionImage.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(VirtualMachineExtensionImage.ResourceType, out string virtualMachineExtensionImageApiVersion);
+            TryGetApiVersion(VirtualMachineExtensionImage.ResourceType, out string virtualMachineExtensionImageApiVersion);
             _virtualMachineExtensionImageRestClient = new VirtualMachineExtensionImagesRestOperations(_virtualMachineExtensionImageClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualMachineExtensionImageApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

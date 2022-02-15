@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         internal LogicalDatabaseTransparentDataEncryptionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", LogicalDatabaseTransparentDataEncryption.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(LogicalDatabaseTransparentDataEncryption.ResourceType, out string logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsApiVersion);
+            TryGetApiVersion(LogicalDatabaseTransparentDataEncryption.ResourceType, out string logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsApiVersion);
             _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient = new TransparentDataEncryptionsRestOperations(_logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

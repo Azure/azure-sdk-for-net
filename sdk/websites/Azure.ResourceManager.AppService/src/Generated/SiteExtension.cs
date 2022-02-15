@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteExtensionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteExtensionWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string siteExtensionWebAppsApiVersion);
             _siteExtensionWebAppsRestClient = new WebAppsRestOperations(_siteExtensionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteExtensionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

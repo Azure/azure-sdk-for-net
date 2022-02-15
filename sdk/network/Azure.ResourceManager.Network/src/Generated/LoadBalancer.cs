@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network
         internal LoadBalancer(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _loadBalancerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string loadBalancerApiVersion);
+            TryGetApiVersion(ResourceType, out string loadBalancerApiVersion);
             _loadBalancerRestClient = new LoadBalancersRestOperations(_loadBalancerClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, loadBalancerApiVersion);
             _loadBalancerNetworkInterfacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _loadBalancerNetworkInterfacesRestClient = new LoadBalancerNetworkInterfacesRestOperations(_loadBalancerNetworkInterfacesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);

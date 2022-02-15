@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute
         internal SshPublicKeyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sshPublicKeyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", SshPublicKey.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SshPublicKey.ResourceType, out string sshPublicKeyApiVersion);
+            TryGetApiVersion(SshPublicKey.ResourceType, out string sshPublicKeyApiVersion);
             _sshPublicKeyRestClient = new SshPublicKeysRestOperations(_sshPublicKeyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sshPublicKeyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         internal OutboundRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _outboundRuleLoadBalancerOutboundRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", OutboundRule.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(OutboundRule.ResourceType, out string outboundRuleLoadBalancerOutboundRulesApiVersion);
+            TryGetApiVersion(OutboundRule.ResourceType, out string outboundRuleLoadBalancerOutboundRulesApiVersion);
             _outboundRuleLoadBalancerOutboundRulesRestClient = new LoadBalancerOutboundRulesRestOperations(_outboundRuleLoadBalancerOutboundRulesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, outboundRuleLoadBalancerOutboundRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

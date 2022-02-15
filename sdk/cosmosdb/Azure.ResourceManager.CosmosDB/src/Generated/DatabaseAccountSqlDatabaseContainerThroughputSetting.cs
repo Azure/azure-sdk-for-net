@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal DatabaseAccountSqlDatabaseContainerThroughputSetting(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesApiVersion);
+            TryGetApiVersion(ResourceType, out string databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesApiVersion);
             _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesRestClient = new SqlResourcesRestOperations(_databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

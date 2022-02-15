@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources
         internal DataPolicyManifestCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _dataPolicyManifestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", DataPolicyManifest.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(DataPolicyManifest.ResourceType, out string dataPolicyManifestApiVersion);
+            TryGetApiVersion(DataPolicyManifest.ResourceType, out string dataPolicyManifestApiVersion);
             _dataPolicyManifestRestClient = new DataPolicyManifestsRestOperations(_dataPolicyManifestClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataPolicyManifestApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

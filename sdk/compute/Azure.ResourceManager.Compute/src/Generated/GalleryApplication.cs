@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute
         internal GalleryApplication(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _galleryApplicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string galleryApplicationApiVersion);
+            TryGetApiVersion(ResourceType, out string galleryApplicationApiVersion);
             _galleryApplicationRestClient = new GalleryApplicationsRestOperations(_galleryApplicationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, galleryApplicationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -197,22 +197,22 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: GalleryApplications_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="galleryApplication"> Parameters supplied to the update gallery Application operation. </param>
+        /// <param name="options"> Parameters supplied to the update gallery Application operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplication"/> is null. </exception>
-        public async virtual Task<ArmOperation<GalleryApplication>> UpdateAsync(bool waitForCompletion, GalleryApplicationUpdate galleryApplication, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<ArmOperation<GalleryApplication>> UpdateAsync(bool waitForCompletion, GalleryApplicationUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (galleryApplication == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(galleryApplication));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _galleryApplicationClientDiagnostics.CreateScope("GalleryApplication.Update");
             scope.Start();
             try
             {
-                var response = await _galleryApplicationRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplication, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<GalleryApplication>(new GalleryApplicationOperationSource(Client), _galleryApplicationClientDiagnostics, Pipeline, _galleryApplicationRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplication).Request, response, OperationFinalStateVia.Location);
+                var response = await _galleryApplicationRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation<GalleryApplication>(new GalleryApplicationOperationSource(Client), _galleryApplicationClientDiagnostics, Pipeline, _galleryApplicationRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -230,22 +230,22 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: GalleryApplications_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="galleryApplication"> Parameters supplied to the update gallery Application operation. </param>
+        /// <param name="options"> Parameters supplied to the update gallery Application operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplication"/> is null. </exception>
-        public virtual ArmOperation<GalleryApplication> Update(bool waitForCompletion, GalleryApplicationUpdate galleryApplication, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual ArmOperation<GalleryApplication> Update(bool waitForCompletion, GalleryApplicationUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (galleryApplication == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(galleryApplication));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _galleryApplicationClientDiagnostics.CreateScope("GalleryApplication.Update");
             scope.Start();
             try
             {
-                var response = _galleryApplicationRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplication, cancellationToken);
-                var operation = new ComputeArmOperation<GalleryApplication>(new GalleryApplicationOperationSource(Client), _galleryApplicationClientDiagnostics, Pipeline, _galleryApplicationRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplication).Request, response, OperationFinalStateVia.Location);
+                var response = _galleryApplicationRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken);
+                var operation = new ComputeArmOperation<GalleryApplication>(new GalleryApplicationOperationSource(Client), _galleryApplicationClientDiagnostics, Pipeline, _galleryApplicationRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

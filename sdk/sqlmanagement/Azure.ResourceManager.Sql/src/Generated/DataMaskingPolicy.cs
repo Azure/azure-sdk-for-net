@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Sql
         internal DataMaskingPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _dataMaskingPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string dataMaskingPolicyApiVersion);
+            TryGetApiVersion(ResourceType, out string dataMaskingPolicyApiVersion);
             _dataMaskingPolicyRestClient = new DataMaskingPoliciesRestOperations(_dataMaskingPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataMaskingPolicyApiVersion);
             _dataMaskingRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _dataMaskingRulesRestClient = new DataMaskingRulesRestOperations(_dataMaskingRulesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
