@@ -12,7 +12,7 @@ steps:
       # Disable the unix path encoding.
       git config --unset i18n.logoutputencoding
 
-      $changedFiles = git diff $targetBranch HEAD --name-only --diff-filter=d
+      $changedFiles = git diff -c core.quotepath=off -c i18n.logoutputencoding=utf-8 $targetBranch HEAD --name-only --diff-filter=d
       $changedFiles | ForEach-Object { Add-Content -Path "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$_"}
     }
     else {
