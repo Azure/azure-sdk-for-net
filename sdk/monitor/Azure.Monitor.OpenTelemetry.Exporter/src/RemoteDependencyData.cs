@@ -12,7 +12,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     internal partial class RemoteDependencyData
     {
         // https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/semantic_conventions/database.md#connection-level-attributes
-        internal static readonly HashSet<string> SqlDbs = new HashSet<string>() { "mssql" };
+        internal static readonly HashSet<string> s_sqlDbs = new HashSet<string>() { "mssql" };
 
         public RemoteDependencyData(int version, Activity activity, ref TagEnumerationState monitorTags) : base(version)
         {
@@ -46,7 +46,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     var depDataAndType = AzMonList.GetTagValues(ref monitorTags.PartBTags, SemanticConventions.AttributeDbStatement, SemanticConventions.AttributeDbSystem);
                     Data = depDataAndType[0]?.ToString();
                     Target = monitorTags.PartBTags.GetDbDependencyTarget();
-                    Type = SqlDbs.Contains(depDataAndType[1]?.ToString()) ? "SQL" : depDataAndType[1]?.ToString();
+                    Type = s_sqlDbs.Contains(depDataAndType[1]?.ToString()) ? "SQL" : depDataAndType[1]?.ToString();
                     break;
                 case PartBType.Rpc:
                     var depInfo = AzMonList.GetTagValues(ref monitorTags.PartBTags, SemanticConventions.AttributeRpcService, SemanticConventions.AttributeRpcSystem, SemanticConventions.AttributeRpcStatus);
