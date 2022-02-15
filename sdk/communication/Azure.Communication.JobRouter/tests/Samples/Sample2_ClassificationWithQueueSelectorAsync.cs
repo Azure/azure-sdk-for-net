@@ -52,15 +52,23 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 name: "Queue_XBox",
                 distributionPolicyId: distributionPolicy.Value.Id);
 
+            var cp1QueueLabelAttachments = new List<LabelSelectorAttachment>()
+            {
+                new StaticLabelSelector(new LabelSelector("Id", LabelOperator.Equal, queue1.Value.Id))
+            };
             var cp1 = await routerClient.SetClassificationPolicyAsync(
                 id: "classification-policy-o365",
                 name: "Classification_Policy_O365",
-                queueSelector: new QueueIdSelector(new StaticRule(queue1.Value.Id)));
+                queueSelector: new QueueLabelSelector(cp1QueueLabelAttachments));
 
+            var cp2QueueLabelAttachments = new List<LabelSelectorAttachment>()
+            {
+                new StaticLabelSelector(new LabelSelector("Id", LabelOperator.Equal, queue2.Value.Id))
+            };
             var cp2 = await routerClient.SetClassificationPolicyAsync(
                 id: "classification-policy-xbox",
                 name: "Classification_Policy_XBox",
-                queueSelector: new QueueIdSelector(new StaticRule(queue2.Value.Id)));
+                queueSelector: new QueueLabelSelector(cp2QueueLabelAttachments));
 
             var jobO365 = await routerClient.CreateJobWithClassificationPolicyAsync(
                 channelId: "general",
