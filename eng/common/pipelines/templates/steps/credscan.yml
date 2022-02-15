@@ -9,18 +9,9 @@ steps:
     if ("$(Build.Reason)" -eq 'PullRequest') {
       $targetBranch = "origin/$(System.PullRequest.TargetBranch)" -replace "refs/heads/"
       $changedFiles = git diff $targetBranch HEAD --name-only --diff-filter=d
-      $visitedPath = @{}
-      foreach ($filePath in $changedFiles) {
-        $scanPath = $filePath
-        if (!(Test-Path $filePath)) {
-          $parentFolder = Split-Path -Path $filePath
-          if ($parentFolder -in $visitedPath) {
-            continue
-          }
-          $scanPath = $parentFolder
-          $visitedPath[$parentFolder] = $true
-        }
-        Add-Content -Path "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$scanPath"
+      $changedFiles | ForEach-Object { 
+        $_ -replace '"'
+        Add-Content -Path "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$_"
       }
     }
     else {
@@ -32,23 +23,11 @@ steps:
     }
     Get-Content "${{ parameters.SourceDirectory }}/credscan.tsv"
   displayName: CredScan setup
-- pwsh: |
-    Get-Content "${{ parameters.SourceDirectory }}/credscan.tsv" | ForEach-Object {
-      if (Test-Path $_) {
-        Write-Host "Path exists: $_"
-      }
-      else {
-        Write-Host "Path not exists: $_"
-      }
-    }
-  displayName: Check path exist
 - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
   displayName: CredScan running
   inputs:
     scanFolder: "${{ parameters.SourceDirectory }}/credscan.tsv"
     suppressionsFile: ${{ parameters.SuppressionFilePath }}
-    verboseOutput: true
-
 - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
   displayName: CredScan result analysis
   inputs:
