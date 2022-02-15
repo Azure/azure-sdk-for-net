@@ -8,6 +8,10 @@ steps:
 - pwsh: |
     if ("$(Build.Reason)" -eq 'PullRequest') {
       $targetBranch = "origin/$(System.PullRequest.TargetBranch)" -replace "refs/heads/"
+      git config core.quotepath off
+      # Disable the unix path encoding.
+      git config --unset i18n.logoutputencoding
+
       $changedFiles = git diff $targetBranch HEAD --name-only --diff-filter=d
       $changedFiles | ForEach-Object { Add-Content -Path "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$_"}
     }
