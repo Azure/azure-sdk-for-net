@@ -26,7 +26,7 @@ namespace Azure.AI.Personalizer
         /// </summary>
         public static PersonalizerRankResult GenerateRankResult(List<PersonalizerRankableAction> originalActions,
             List<PersonalizerRankableAction> rankableActions, List<PersonalizerRankableAction> excludedActions,
-            RankingResponse rankingResponse, string eventId)
+            RankingResponseWrapper rankingResponse, string eventId)
         {
             var rankedIndices = rankingResponse?.Select(actionProbability => ((int)actionProbability.ActionIndex + 1)).ToArray();
 
@@ -68,28 +68,20 @@ namespace Azure.AI.Personalizer
                 rankingProbabilities = probabilities;
             }
 
-            var personalizerRankResult = new PersonalizerRankResult
-            {
-                EventId = eventId
-            };
             // finalize decision response ranking
-            personalizerRankResult.Ranking = rankedIndices?.Select((index, i) =>
+            var ranking = rankedIndices?.Select((index, i) =>
             {
                 var action = originalActions[index - 1];
-                return new PersonalizerRankedAction()
-                {
-                    Id = action.Id,
-                    Probability = rankingProbabilities[i]
-                };
+                return new PersonalizerRankedAction(action.Id, rankingProbabilities[i]);
             }).ToList();
 
-            //setting RewardActionId to be the VW chosen action.
-            personalizerRankResult.RewardActionId = originalActions.ElementAt(chosenActionIndex)?.Id;
+            // setting RewardActionId to be the VW chosen action.
+            var personalizerRankResult = new PersonalizerRankResult(ranking, eventId, originalActions.ElementAt(chosenActionIndex)?.Id);
 
             return personalizerRankResult;
         }
 
-        public static PersonalizerMultiSlotRankResult GenerateMultiSlotRankResponse(IList<PersonalizerRankableAction> actions, MultiSlotResponseDetailed multiSlotResponse, string eventId)
+        public static PersonalizerMultiSlotRankResult GenerateMultiSlotRankResponse(IList<PersonalizerRankableAction> actions, MultiSlotResponseDetailedWrapper multiSlotResponse, string eventId)
         {
             Dictionary<long, string> actionIndexToActionId = actions
                 .Select((action, index) => new { action, index = (long)index })

@@ -65,7 +65,8 @@ namespace Azure.AI.Personalizer
             {
                 LiveModel liveModel = new LiveModel(configuration);
                 liveModel.Init();
-                _rlNetProcessor = new RlNetProcessor(liveModel);
+                ILiveModel liveModelAdapter = new LiveModelAdapter(liveModel);
+                _rlNetProcessor = new RlNetProcessor(liveModelAdapter);
             }
         }
 
@@ -104,7 +105,8 @@ namespace Azure.AI.Personalizer
             {
                 LiveModel liveModel = new LiveModel(configuration);
                 liveModel.Init();
-                _rlNetProcessor = new RlNetProcessor(liveModel);
+                LiveModelAdapter liveModelAdapter = new LiveModelAdapter(liveModel);
+                _rlNetProcessor = new RlNetProcessor(liveModelAdapter);
             }
 
         }

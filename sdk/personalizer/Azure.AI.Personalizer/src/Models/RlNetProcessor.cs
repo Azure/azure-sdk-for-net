@@ -14,13 +14,13 @@ namespace Azure.AI.Personalizer
     /// <summary> The Rl.Net Processor. </summary>
     internal class RlNetProcessor
     {
-        private readonly LiveModel _liveModel;
+        private readonly ILiveModel liveModel;
         internal PolicyRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of RlNetProcessor. </summary>
-        public RlNetProcessor(LiveModel liveModel)
+        public RlNetProcessor(ILiveModel liveModel)
         {
-            this._liveModel = liveModel;
+            this.liveModel = liveModel;
         }
 
         /// <summary> Submit a Personalizer rank request. Receives a context and a list of actions. Returns which of the provided actions should be used by your application, in rewardActionId. </summary>
@@ -61,10 +61,10 @@ namespace Azure.AI.Personalizer
             ActionFlags flags = options.DeferActivation == true ? ActionFlags.Deferred : ActionFlags.Default;
 
             // Call ChooseRank of local RL.Net
-            RankingResponse rankingResponse = _liveModel.ChooseRank(eventId, contextJson, flags);
+            RankingResponseWrapper rankingResponseWrapper = liveModel.ChooseRank(eventId, contextJson, flags);
 
             // Convert response to PersonalizerRankResult
-             var value = RlObjectConverter.GenerateRankResult(originalActions, rankableActions, excludedActions, rankingResponse, options.EventId);
+            var value = RlObjectConverter.GenerateRankResult(originalActions, rankableActions, excludedActions, rankingResponseWrapper, options.EventId);
 
             return Response.FromValue(value, default);
         }
@@ -93,10 +93,10 @@ namespace Azure.AI.Personalizer
             int[] baselineActions = RlObjectConverter.ExtractBaselineActionsFromRankRequest(options);
 
             // Call ChooseRank of local RL.Net
-            MultiSlotResponseDetailed multiSlotResponse = _liveModel.RequestMultiSlotDecisionDetailed(eventId, contextJson, flags, baselineActions);
+            MultiSlotResponseDetailedWrapper multiSlotResponseDetailedWrapper = liveModel.RequestMultiSlotDecisionDetailed(eventId, contextJson, flags, baselineActions);
 
             // Convert response to PersonalizerRankResult
-            var value = RlObjectConverter.GenerateMultiSlotRankResponse(options.Actions, multiSlotResponse, eventId);
+            var value = RlObjectConverter.GenerateMultiSlotRankResponse(options.Actions, multiSlotResponseDetailedWrapper, eventId);
 
             return Response.FromValue(value, default);
         }
@@ -107,7 +107,7 @@ namespace Azure.AI.Personalizer
         public Response Reward(string eventId, float reward)
         {
             // Call QueueOutcomeEvent of local RL.Net
-            _liveModel.QueueOutcomeEvent(eventId, reward);
+            liveModel.QueueOutcomeEvent(eventId, reward);
 
             // Use 204 as there is no return value
             return new EventResponse(204);
@@ -121,7 +121,7 @@ namespace Azure.AI.Personalizer
             foreach (PersonalizerSlotReward slotReward in slotRewards)
             {
                 // Call QueueOutcomeEvent of local RL.Net
-                _liveModel.QueueOutcomeEvent(eventId, slotReward.SlotId, slotReward.Value);
+                liveModel.QueueOutcomeEvent(eventId, slotReward.SlotId, slotReward.Value);
             }
 
             // Use 204 as there is no return value
@@ -133,7 +133,7 @@ namespace Azure.AI.Personalizer
         public Response Activate(string eventId)
         {
             // Call ReportActionTaken of local RL.Net
-            _liveModel.QueueActionTakenEvent(eventId);
+            liveModel.QueueActionTakenEvent(eventId);
 
             // Use 204 as there is no return value
             return new EventResponse(204);

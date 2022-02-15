@@ -46,7 +46,7 @@ namespace Azure.AI.Personalizer.Tests
                     features:
                     new List<object>() { new { videoType = "documentary", videoLength = 35, director = "CarlSagan" }, new { mostWatchedByAge = "30-35" } }
             ));
-            var request = new PersonalizerRankOptions(actions);
+            var request = new PersonalizerRankOptions(actions, null, null);
             // Action
             PersonalizerRankResult response = await client.RankAsync(request);
             // Assert

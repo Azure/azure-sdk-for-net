@@ -15,7 +15,7 @@ namespace Azure.AI.Personalizer
         /// List of dictionaries containing slot features.
         /// Need to be JSON serializable. https://docs.microsoft.com/azure/cognitive-services/personalizer/concepts-features.
         /// </summary>
-        public IList<object> Features { get; set; }
+        public IList<object> Features { get; }
 
         /// <summary>
         /// Initializes a new instance of the RankRequest class.

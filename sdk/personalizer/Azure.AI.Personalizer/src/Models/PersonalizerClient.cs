@@ -614,7 +614,7 @@ namespace Azure.AI.Personalizer
         }
 
         /// <summary> Gets the rank processor initiated with live model to use </summary>
-        private RlNetProcessor GetConfigurationForRankProcessor(CancellationToken cancellationToken = default)
+        internal virtual RlNetProcessor GetConfigurationForRankProcessor(CancellationToken cancellationToken = default)
         {
             Configuration config = new Configuration();
             // set up the model
@@ -653,8 +653,9 @@ namespace Azure.AI.Personalizer
             config["rank.learning.mode"] = Convert.ToString(personalizerServiceProperties.LearningMode, CultureInfo.InvariantCulture);
             LiveModel liveModel = new LiveModel(config);
             liveModel.Init();
+            ILiveModel liveModelAdapter = new LiveModelAdapter(liveModel);
             liveModelLastRefresh = DateTimeOffset.UtcNow;
-            return new RlNetProcessor(liveModel);
+            return new RlNetProcessor(liveModelAdapter);
         }
 
         /// <summary> Update the config details periodically based on liveModelRefreshTimeInMinutes or when bearer token is expired </summary>

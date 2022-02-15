@@ -44,11 +44,11 @@ namespace Azure.AI.Personalizer
                     List<string> actionFeatures = action.Features.Select(f => JsonSerializer.Serialize(f)).ToList();
 
                     return new DecisionContextDocument(action.Id, actionFeatures, null, null);
-                }).ToArray();
+                }).ToList();
             this.Slots = rankRequest.Slots?
                 .Select(
                     slot => new DecisionContextDocument(null, null, slot.Id, serializeFeatures(slotIdToFeatures[slot.Id]))
-                ).ToArray();
+                ).ToList();
         }
 
         /// <summary> Properties from url </summary>
@@ -59,12 +59,12 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Properties of documents </summary>
         [JsonPropertyName("_multi")]
-        public DecisionContextDocument[] Documents { get; set; }
+        public IList<DecisionContextDocument> Documents { get; }
 
         /// <summary> Properties of slots </summary>
         [JsonPropertyName("_slots")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public DecisionContextDocument[] Slots { get; set; }
+        public IList<DecisionContextDocument> Slots { get; }
 
         private static List<string> serializeFeatures(IList<object> features)
         {

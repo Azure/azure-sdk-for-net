@@ -44,7 +44,6 @@ namespace Azure.AI.Personalizer.Tests
                         "\"weather\":\"sunny\"}}]," +
                 "\"_multi\":[{" +
                     "\"_tag\":\"Person\"," +
-                    "\"i\":{\"constant\":1,\"id\":\"Person\"}," +
                     "\"j\":[{" +
                         "\"videoType\":\"documentary\"," +
                         "\"videoLength\":35," +
