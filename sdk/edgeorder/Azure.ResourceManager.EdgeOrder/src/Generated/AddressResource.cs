@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EdgeOrder
         internal AddressResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _addressResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string addressResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string addressResourceApiVersion);
             _addressResourceRestClient = new EdgeOrderManagementRestOperations(_addressResourceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, addressResourceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
