@@ -7,6 +7,7 @@ using Microsoft.Azure.Management.CosmosDB;
 using Microsoft.Azure.Management.CosmosDB.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 using Location = Microsoft.Azure.Management.CosmosDB.Models.Location;
@@ -30,6 +31,14 @@ namespace CosmosDB.Tests
         public TestFixture()
         {
             this.accounts = new Dictionary<AccountType, string>();
+        }
+
+        static TestFixture()
+        {
+            RecorderUtilities.JsonPathSanitizers.Add("$..primaryMasterKey");
+            RecorderUtilities.JsonPathSanitizers.Add("$..primaryReadonlyMasterKey");
+            RecorderUtilities.JsonPathSanitizers.Add("$..secondaryMasterKey");
+            RecorderUtilities.JsonPathSanitizers.Add("$..secondaryReadonlyMasterKey");
         }
 
         public void Init(MockContext context)
