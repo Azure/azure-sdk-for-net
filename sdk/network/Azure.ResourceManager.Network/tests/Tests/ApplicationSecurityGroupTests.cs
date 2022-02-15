@@ -19,7 +19,8 @@ namespace Azure.ResourceManager.Network.Tests
     {
         private Subscription _subscription;
 
-        public ApplicationSecurityGroupTests(bool isAsync) : base(isAsync)
+        public ApplicationSecurityGroupTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -80,9 +81,9 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(applicationSecurityGroupData.Tags, Does.ContainKey("tag2").WithValue("value2"));
 
             // patch
-            var tags = new TagsObject();
-            tags.Tags.Add("tag2", "value2");
-            applicationSecurityGroupData = (await applicationSecurityGroupResponse.UpdateAsync(tags)).Value.Data;
+            var tags = new Dictionary<string, string>();
+            tags.Add("tag2", "value2");
+            applicationSecurityGroupData = (await applicationSecurityGroupResponse.SetTagsAsync(tags)).Value.Data;
 
             ValidateCommon(applicationSecurityGroupData, name);
             Assert.That(applicationSecurityGroupData.Tags, Has.Count.EqualTo(1));
