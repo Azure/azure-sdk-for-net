@@ -153,6 +153,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     {
                         message = item.Value.ToString();
                     }
+                    else
+                    {
+                        properties.Add("OriginalFormat", item.Value.ToString());
+                    }
                 }
                 else
                 {
