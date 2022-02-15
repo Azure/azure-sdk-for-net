@@ -9,7 +9,7 @@ steps:
     if ("$(Build.Reason)" -eq 'PullRequest') {
       $targetBranch = "origin/$(System.PullRequest.TargetBranch)" -replace "refs/heads/"
 
-      # Add config of disable the quote and encoding on unix path. 
+      # Add config to disable the quote and encoding on file name. 
       # Ref: https://github.com/msysgit/msysgit/wiki/Git-for-Windows-Unicode-Support#disable-quoted-file-names
       # Ref: https://github.com/msysgit/msysgit/wiki/Git-for-Windows-Unicode-Support#disable-commit-message-transcoding
       $changedFiles = git -c core.quotepath=off -c i18n.logoutputencoding=utf-8 diff origin/main HEAD --name-only --diff-filter=d
