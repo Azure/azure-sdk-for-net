@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal RestorableDatabaseAccount(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _restorableDatabaseAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string restorableDatabaseAccountApiVersion);
+            TryGetApiVersion(ResourceType, out string restorableDatabaseAccountApiVersion);
             _restorableDatabaseAccountRestClient = new RestorableDatabaseAccountsRestOperations(_restorableDatabaseAccountClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, restorableDatabaseAccountApiVersion);
             _restorableSqlDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _restorableSqlDatabasesRestClient = new RestorableSqlDatabasesRestOperations(_restorableSqlDatabasesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);

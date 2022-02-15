@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal DatabaseAccount(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _databaseAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string databaseAccountApiVersion);
+            TryGetApiVersion(ResourceType, out string databaseAccountApiVersion);
             _databaseAccountRestClient = new DatabaseAccountsRestOperations(_databaseAccountClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseAccountApiVersion);
             _databaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _databaseRestClient = new DatabaseRestOperations(_databaseClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);

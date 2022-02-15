@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal GremlinGraph(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _gremlinGraphGremlinResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string gremlinGraphGremlinResourcesApiVersion);
+            TryGetApiVersion(ResourceType, out string gremlinGraphGremlinResourcesApiVersion);
             _gremlinGraphGremlinResourcesRestClient = new GremlinResourcesRestOperations(_gremlinGraphGremlinResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, gremlinGraphGremlinResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
