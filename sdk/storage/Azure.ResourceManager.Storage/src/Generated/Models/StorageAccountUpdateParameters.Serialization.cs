@@ -35,13 +35,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                var serializeOptions = new JsonSerializerOptions
-                {
-                    Converters =
-                    {
-                        ManagedServiceIdentityType.ManagedServiceIdentityTypeV3Converter.Default
-                    }
-                };
+                var serializeOptions = new JsonSerializerOptions { Converters = { ManagedServiceIdentityTypeV3Converter.Default } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             if (Optional.IsDefined(Kind))
