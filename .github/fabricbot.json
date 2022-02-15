@@ -1958,6 +1958,49 @@
         {
           "labels": [
             "Service Attention",
+            "IoT"
+          ],
+          "mentionees": [
+            "drwill-ms",
+            "timtay-microsoft",
+            "abhipsaMisra",
+            "azabbasi",
+            "brycewang-microsoft",
+            "aandykwong-ms"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "IoTHub"
+          ],
+          "mentionees": [
+            "drwill-ms",
+            "timtay-microsoft",
+            "abhipsaMisra",
+            "azabbasi",
+            "brycewang-microsoft",
+            "aandykwong-ms"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "IoT Models Repository"
+          ],
+          "mentionees": [
+            "drwill-ms",
+            "timtay-microsoft",
+            "abhipsaMisra",
+            "azabbasi",
+            "digimaun",
+            "brycewang-microsoft",
+            "aandykwong-ms"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
             "KeyVault"
           ],
           "mentionees": [
