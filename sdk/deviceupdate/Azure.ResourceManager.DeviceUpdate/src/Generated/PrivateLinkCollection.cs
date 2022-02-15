@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         internal PrivateLinkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _privateLinkPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceUpdate", PrivateLink.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(PrivateLink.ResourceType, out string privateLinkPrivateLinkResourcesApiVersion);
+            TryGetApiVersion(PrivateLink.ResourceType, out string privateLinkPrivateLinkResourcesApiVersion);
             _privateLinkPrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_privateLinkPrivateLinkResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, privateLinkPrivateLinkResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
