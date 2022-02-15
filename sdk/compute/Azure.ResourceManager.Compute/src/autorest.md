@@ -10,7 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: C:\Users\dapzhang\Documents\workspace\azure-rest-api-specs/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/ac40996ab146d1360a4783665bb6c0b13f345aec/specification/compute/resource-manager/readme.md
 tag: package-2021-08-01
 clear-output-folder: true
 skip-csproj: true
@@ -69,13 +69,17 @@ directive:
   - rename-model:
       from: RestorePointCollection
       to: RestorePointGroup
-  - rename-model:
-      from: VirtualMachineScaleSetVM
-      to: VirtualMachineScaleSetVm
-  - rename-model:
-      from: VirtualMachineScaleSetVMExtension
-      to: VirtualMachineScaleSetVmExtension
   - from: disk.json
     where: $.definitions.PurchasePlan
     transform: $["x-ms-client-name"] = "DiskPurchasePlan"
+# transform enum values
+  - from: swagger-document
+    where: $.definitions.DiskSecurityType["x-ms-enum"].values[1]
+    transform: $["name"] = "ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey"
+  - from: swagger-document
+    where: $.definitions.DiskSecurityType["x-ms-enum"].values[2]
+    transform: $["name"] = "ConfidentialVmDiskEncryptedWithPlatformKey"
+  - from: swagger-document
+    where: $.definitions.DiskSecurityType["x-ms-enum"].values[3]
+    transform: $["name"] = "ConfidentialVmDiskEncryptedWithCustomerKey"
 ```
