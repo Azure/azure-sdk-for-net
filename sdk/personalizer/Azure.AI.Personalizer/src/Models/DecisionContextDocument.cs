@@ -11,15 +11,15 @@ namespace Azure.AI.Personalizer
     {
         /// <summary> Initializes a new instance of DecisionContextDocument. </summary>
         /// <param name="id"> Id of the decision context document </param>
-        /// <param name="actionFeatureJsons"> The json list of action features </param>
+        /// <param name="actionFeatureJsonList"> The json list of action features </param>
         /// <param name="slotId"> The slot Id </param>
-        /// <param name="slotFeatureJsons"> The json list of slot features </param>
-        public DecisionContextDocument(string id, List<string> actionFeatureJsons, string slotId, List<string> slotFeatureJsons)
+        /// <param name="slotFeatureJsonList"> The json list of slot features </param>
+        public DecisionContextDocument(string id, List<string> actionFeatureJsonList, string slotId, List<string> slotFeatureJsonList)
         {
             Id = id;
-            ActionFeatureJsons = actionFeatureJsons;
+            ActionFeatureJsonList = actionFeatureJsonList;
             SlotId = slotId;
-            SlotFeatureJsons = slotFeatureJsons;
+            SlotFeatureJsonList = slotFeatureJsonList;
         }
 
         /// <summary>
@@ -35,14 +35,7 @@ namespace Azure.AI.Personalizer
         [JsonPropertyName("j")]
         [JsonConverter(typeof(JsonRawStringListConverter))]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public List<string> ActionFeatureJsons { get; }
-
-        /// <summary>
-        /// Keep as float[] arrays to improve marshalling speed.
-        /// </summary>
-        [JsonPropertyName("f")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public Dictionary<string, float[]> Features { get; }
+        public List<string> ActionFeatureJsonList { get; }
 
         /// <summary>
         /// Slot ID.
@@ -57,6 +50,6 @@ namespace Azure.AI.Personalizer
         [JsonPropertyName("sj")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [JsonConverter(typeof(JsonRawStringListConverter))]
-        public List<string> SlotFeatureJsons { get; }
+        public List<string> SlotFeatureJsonList { get; }
     }
 }

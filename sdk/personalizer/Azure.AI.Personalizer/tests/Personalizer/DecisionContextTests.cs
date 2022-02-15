@@ -25,9 +25,9 @@ namespace Azure.AI.Personalizer.Tests
             Assert.AreEqual(decisionContext.ContextFeatures.Count, 1);
             Assert.IsTrue(decisionContext.ContextFeatures[0].Equals("{\"Features\":{\"day\":\"Monday\",\"time\":\"morning\",\"weather\":\"sunny\"}}"));
             Assert.AreEqual(decisionContext.Documents.Count, 1);
-            Assert.AreEqual(decisionContext.Documents[0].ActionFeatureJsons.Count, 2);
-            Assert.IsTrue(decisionContext.Documents[0].ActionFeatureJsons[0].Equals("{\"videoType\":\"documentary\",\"videoLength\":35,\"director\":\"CarlSagan\"}"));
-            Assert.IsTrue(decisionContext.Documents[0].ActionFeatureJsons[1].Equals("{\"mostWatchedByAge\":\"30-35\"}"));
+            Assert.AreEqual(decisionContext.Documents[0].ActionFeatureJsonList.Count, 2);
+            Assert.IsTrue(decisionContext.Documents[0].ActionFeatureJsonList[0].Equals("{\"videoType\":\"documentary\",\"videoLength\":35,\"director\":\"CarlSagan\"}"));
+            Assert.IsTrue(decisionContext.Documents[0].ActionFeatureJsonList[1].Equals("{\"mostWatchedByAge\":\"30-35\"}"));
         }
     }
 }
