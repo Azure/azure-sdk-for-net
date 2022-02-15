@@ -148,43 +148,6 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void SettingResponseClassifierReplacesBaseClassifier_PerClientCustomizationMaintained()
-        {
-            var pipeline = HttpPipelineBuilder.Build(
-                ClientOptions.Default,
-                new HttpPipelinePolicy[] { },
-                new HttpPipelinePolicy[] { },
-                new StatusCodeMessageClassifier(404, false));
-
-            var message = pipeline.CreateMessage();
-
-            message.Response = new MockResponse(304);
-            Assert.IsFalse(message.ResponseClassifier.IsError(message));
-
-            message.Response = new MockResponse(404);
-            Assert.IsFalse(message.ResponseClassifier.IsError(message));
-
-            message.ResponseClassifier = new StatusCodeClassifier(304, true);
-
-            message.Response = new MockResponse(304);
-            Assert.IsTrue(message.ResponseClassifier.IsError(message));
-
-            message.Response = new MockResponse(404);
-            Assert.IsFalse(message.ResponseClassifier.IsError(message));
-
-            message.ResponseClassifier = ResponseClassifier.Shared;
-
-            message.Response = new MockResponse(304);
-            Assert.IsFalse(message.ResponseClassifier.IsError(message));
-
-            message.Response = new MockResponse(404);
-            Assert.IsFalse(message.ResponseClassifier.IsError(message));
-
-            message.Response = new MockResponse(500);
-            Assert.IsTrue(message.ResponseClassifier.IsError(message));
-        }
-
-        [Test]
         public void SettingResponseClassifierReplacesBaseClassifier_PerClientCustomizationClobbered()
         {
             var pipeline = HttpPipelineBuilder.Build(

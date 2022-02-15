@@ -136,7 +136,6 @@ namespace Azure.Core
             {
                 CompositeClassifier updated = new CompositeClassifier(classifier);
                 updated.PerCallClassifier = composite.PerCallClassifier;
-                updated.PerClientClassifier = composite.PerClientClassifier;
 
                 return updated;
             }

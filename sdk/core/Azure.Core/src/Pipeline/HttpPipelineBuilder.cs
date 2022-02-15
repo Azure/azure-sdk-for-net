@@ -44,30 +44,6 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/> and client provided per call policies.
-        /// </summary>
-        /// <param name="options">The customer provided client options object.</param>
-        /// <param name="perCallPolicies">Client provided per-call policies.</param>
-        /// <param name="perRetryPolicies">Client provided per-retry policies.</param>
-        /// <param name="messageClassifier">Classifier to be applied during message response classification for every service method on the client.</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="messageClassifier"/> is null.</exception>
-        public static HttpPipeline Build(
-            ClientOptions options,
-            HttpPipelinePolicy[] perCallPolicies,
-            HttpPipelinePolicy[] perRetryPolicies,
-            HttpMessageClassifier messageClassifier)
-        {
-            Argument.AssertNotNull(messageClassifier, nameof(messageClassifier));
-
-            CompositeClassifier classifier = new CompositeClassifier(ResponseClassifier.Shared);
-            classifier.PerClientClassifier = messageClassifier;
-
-            var result = BuildInternal(options, perCallPolicies, perRetryPolicies, null, classifier);
-            return new HttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier);
-        }
-
-        /// <summary>
         /// Creates an instance of <see cref="DisposableHttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/>, client provided per call policies, and the supplied <see cref="HttpPipelineTransportOptions"/>.
         /// </summary>
         /// <param name="options">The customer provided client options object.</param>

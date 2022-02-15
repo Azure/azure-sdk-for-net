@@ -14,19 +14,6 @@ namespace Azure.Core.Tests
         {
             CompositeClassifier classifier = new CompositeClassifier(ResponseClassifier.Shared);
             classifier.PerCallClassifier = new StatusCodeClassifier(404, false);
-            classifier.PerClientClassifier = new StatusCodeClassifier(404, true);
-
-            var message = new HttpMessage(new MockRequest(), classifier);
-            message.Response = new MockResponse(404);
-
-            Assert.IsFalse(message.ResponseClassifier.IsError(message));
-        }
-
-        [Test]
-        public void PerClientClassifierTakesPrecedence()
-        {
-            CompositeClassifier classifier = new CompositeClassifier(ResponseClassifier.Shared);
-            classifier.PerClientClassifier = new StatusCodeClassifier(404, false);
 
             var message = new HttpMessage(new MockRequest(), classifier);
             message.Response = new MockResponse(404);
