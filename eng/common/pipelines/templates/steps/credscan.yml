@@ -32,6 +32,16 @@ steps:
     }
     Get-Content "${{ parameters.SourceDirectory }}/credscan.tsv"
   displayName: CredScan setup
+- pwsh: |
+    Get-Content "${{ parameters.SourceDirectory }}/credscan.tsv" | ForEach-Object {
+      if (Test-Path $_) {
+        Write-Host "Path exists: $_"
+      }
+      else {
+        Write-Host "Path not exists: $_"
+      }
+    }
+  displayName: Check path exist
 - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
   displayName: CredScan running
   inputs:
