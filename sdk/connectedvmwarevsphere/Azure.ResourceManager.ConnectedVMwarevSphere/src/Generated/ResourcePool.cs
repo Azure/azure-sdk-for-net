@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         internal ResourcePool(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _resourcePoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string resourcePoolApiVersion);
+            TryGetApiVersion(ResourceType, out string resourcePoolApiVersion);
             _resourcePoolRestClient = new ResourcePoolsRestOperations(_resourcePoolClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourcePoolApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

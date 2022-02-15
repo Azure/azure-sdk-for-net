@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         internal VMwareDatastoreCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _vMwareDatastoreDatastoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VMwareDatastore.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(VMwareDatastore.ResourceType, out string vMwareDatastoreDatastoresApiVersion);
+            TryGetApiVersion(VMwareDatastore.ResourceType, out string vMwareDatastoreDatastoresApiVersion);
             _vMwareDatastoreDatastoresRestClient = new DatastoresRestOperations(_vMwareDatastoreDatastoresClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vMwareDatastoreDatastoresApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
