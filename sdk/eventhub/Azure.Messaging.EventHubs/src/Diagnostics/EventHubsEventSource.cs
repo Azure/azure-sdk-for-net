@@ -113,7 +113,36 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(4, eventHubName ?? string.Empty, partitionIdOrKey ?? string.Empty, operationId ?? string.Empty, retryCount);
+                EventPublishCompleteCore(eventHubName ?? string.Empty, partitionIdOrKey ?? string.Empty, operationId ?? string.Empty, retryCount);
+            }
+        }
+
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void EventPublishCompleteCore(string eventHubName,
+                                                     string partitionIdOrKey,
+                                                     string operationId,
+                                                     int retryCount)
+        {
+            fixed (char* eventHubNamePtr = eventHubName)
+            fixed (char* partitionIdOrKeyPtr = partitionIdOrKey)
+            fixed (char* operationIdPtr = operationId)
+            {
+                var eventPayload = stackalloc EventData[4];
+
+                eventPayload[0].Size = (eventHubName.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)eventHubNamePtr;
+
+                eventPayload[1].Size = (partitionIdOrKey.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)partitionIdOrKeyPtr;
+
+                eventPayload[2].Size = (operationId.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)operationIdPtr;
+
+                eventPayload[3].Size = Unsafe.SizeOf<int>();
+                eventPayload[3].DataPointer = (IntPtr)Unsafe.AsPointer(ref retryCount);
+
+                WriteEventCore(4, 4, eventPayload);
             }
         }
 
@@ -1717,7 +1746,36 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(86, identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty);
+                BufferedProducerPublishingAwaitStartCore(identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty);
+            }
+        }
+
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void BufferedProducerPublishingAwaitStartCore(string identifier,
+                                                                     string eventHubName,
+                                                                     int totalActiveTasks,
+                                                                     string operationId)
+        {
+            fixed (char* identifierPtr = identifier)
+            fixed (char* eventHubNamePtr = eventHubName)
+            fixed (char* operationIdPtr = operationId)
+            {
+                var eventPayload = stackalloc EventData[4];
+
+                eventPayload[0].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)identifierPtr;
+
+                eventPayload[1].Size = (eventHubName.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)eventHubNamePtr;
+
+                eventPayload[2].Size = Unsafe.SizeOf<int>();
+                eventPayload[2].DataPointer = (IntPtr)Unsafe.AsPointer(ref totalActiveTasks);
+
+                eventPayload[3].Size = (operationId.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)operationIdPtr;
+
+                WriteEventCore(86, 4, eventPayload);
             }
         }
 
@@ -1741,7 +1799,40 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(87, identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty, durationSeconds);
+                BufferedProducerPublishingAwaitCompleteCore(identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty, durationSeconds);
+            }
+        }
+
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void BufferedProducerPublishingAwaitCompleteCore(string identifier,
+                                                                        string eventHubName,
+                                                                        int totalActiveTasks,
+                                                                        string operationId,
+                                                                        double durationSeconds)
+        {
+            fixed (char* identifierPtr = identifier)
+            fixed (char* eventHubNamePtr = eventHubName)
+            fixed (char* operationIdPtr = operationId)
+            {
+                var eventPayload = stackalloc EventData[5];
+
+                eventPayload[0].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)identifierPtr;
+
+                eventPayload[1].Size = (eventHubName.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)eventHubNamePtr;
+
+                eventPayload[2].Size = Unsafe.SizeOf<int>();
+                eventPayload[2].DataPointer = (IntPtr)Unsafe.AsPointer(ref totalActiveTasks);
+
+                eventPayload[3].Size = (operationId.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)operationIdPtr;
+
+                eventPayload[4].Size = Unsafe.SizeOf<double>();
+                eventPayload[4].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
+
+                WriteEventCore(87, 5, eventPayload);
             }
         }
 
@@ -1787,7 +1878,45 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(89, identifier ?? string.Empty, eventHubName ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty, eventCount, durationSeconds);
+                BufferedProducerEventBatchPublishCompleteCore( identifier ?? string.Empty, eventHubName ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty, eventCount, durationSeconds);
+            }
+        }
+
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void BufferedProducerEventBatchPublishCompleteCore(string identifier,
+                                                                          string eventHubName,
+                                                                          string partitionId,
+                                                                          string operationId,
+                                                                          int eventCount,
+                                                                          double durationSeconds)
+        {
+            fixed (char* identifierPtr = identifier)
+            fixed (char* eventHubNamePtr = eventHubName)
+            fixed (char* partitionIdPtr = partitionId)
+            fixed (char* operationIdPtr = operationId)
+            {
+                var eventPayload = stackalloc EventData[6];
+
+                eventPayload[0].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)identifierPtr;
+
+                eventPayload[1].Size = (eventHubName.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)eventHubNamePtr;
+
+                eventPayload[2].Size = (partitionId.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)partitionIdPtr;
+
+                eventPayload[3].Size = (operationId.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)operationIdPtr;
+
+                eventPayload[4].Size = Unsafe.SizeOf<int>();
+                eventPayload[4].DataPointer = (IntPtr)Unsafe.AsPointer(ref eventCount);
+
+                eventPayload[5].Size = Unsafe.SizeOf<double>();
+                eventPayload[5].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
+
+                WriteEventCore(89, 6, eventPayload);
             }
         }
 
@@ -1835,7 +1964,46 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(91, identifier ?? string.Empty, eventHubName ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty, durationSeconds);
+                // TODO: Discuss. Previously eventCount was not used
+                BufferedProducerEventBatchPublishEventAddedCore( identifier ?? string.Empty, eventHubName ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty, eventCount, durationSeconds);
+            }
+        }
+
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void BufferedProducerEventBatchPublishEventAddedCore(string identifier,
+                                                                            string eventHubName,
+                                                                            string partitionId,
+                                                                            string operationId,
+                                                                            int eventCount,
+                                                                            double durationSeconds)
+        {
+            fixed (char* identifierPtr = identifier)
+            fixed (char* eventHubNamePtr = eventHubName)
+            fixed (char* partitionIdPtr = partitionId)
+            fixed (char* operationIdPtr = operationId)
+            {
+                var eventPayload = stackalloc EventData[6];
+
+                eventPayload[0].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)identifierPtr;
+
+                eventPayload[1].Size = (eventHubName.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)eventHubNamePtr;
+
+                eventPayload[2].Size = (partitionId.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)partitionIdPtr;
+
+                eventPayload[3].Size = (operationId.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)operationIdPtr;
+
+                eventPayload[4].Size = Unsafe.SizeOf<int>();
+                eventPayload[4].DataPointer = (IntPtr)Unsafe.AsPointer(ref eventCount);
+
+                eventPayload[5].Size = Unsafe.SizeOf<double>();
+                eventPayload[5].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
+
+                WriteEventCore(91, 6, eventPayload);
             }
         }
 
@@ -1860,7 +2028,45 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(92, identifier ?? string.Empty, eventHubName ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty, delayDurationSeconds, totalDurationSeconds);
+                BufferedProducerEventBatchPublishNoEventReadCore( identifier ?? string.Empty, eventHubName ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty, delayDurationSeconds, totalDurationSeconds);
+            }
+        }
+
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void BufferedProducerEventBatchPublishNoEventReadCore(string identifier,
+                                                                             string eventHubName,
+                                                                             string partitionId,
+                                                                             string operationId,
+                                                                             double delayDurationSeconds,
+                                                                             double totalDurationSeconds)
+        {
+            fixed (char* identifierPtr = identifier)
+            fixed (char* eventHubNamePtr = eventHubName)
+            fixed (char* partitionIdPtr = partitionId)
+            fixed (char* operationIdPtr = operationId)
+            {
+                var eventPayload = stackalloc EventData[6];
+
+                eventPayload[0].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)identifierPtr;
+
+                eventPayload[1].Size = (eventHubName.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)eventHubNamePtr;
+
+                eventPayload[2].Size = (partitionId.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)partitionIdPtr;
+
+                eventPayload[3].Size = (operationId.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)operationIdPtr;
+
+                eventPayload[4].Size = Unsafe.SizeOf<double>();
+                eventPayload[4].DataPointer = (IntPtr)Unsafe.AsPointer(ref delayDurationSeconds);
+
+                eventPayload[5].Size = Unsafe.SizeOf<double>();
+                eventPayload[5].DataPointer = (IntPtr)Unsafe.AsPointer(ref totalDurationSeconds);
+
+                WriteEventCore(92, 6, eventPayload);
             }
         }
 
@@ -2055,7 +2261,35 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(101, identifier ?? string.Empty, eventHubName ?? string.Empty, totalPartitionCount, ownedPartitionCount);
+                EventProcessorLoadBalancingCycleStartCore( identifier ?? string.Empty, eventHubName ?? string.Empty, totalPartitionCount, ownedPartitionCount);
+            }
+        }
+
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void EventProcessorLoadBalancingCycleStartCore(string identifier,
+                                                                      string eventHubName,
+                                                                      int totalPartitionCount,
+                                                                      int ownedPartitionCount)
+        {
+            fixed (char* identifierPtr = identifier)
+            fixed (char* eventHubNamePtr = eventHubName)
+            {
+                var eventPayload = stackalloc EventData[4];
+
+                eventPayload[0].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)identifierPtr;
+
+                eventPayload[1].Size = (eventHubName.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)eventHubNamePtr;
+
+                eventPayload[2].Size = Unsafe.SizeOf<int>();
+                eventPayload[2].DataPointer = (IntPtr)Unsafe.AsPointer(ref totalPartitionCount);
+
+                eventPayload[3].Size = Unsafe.SizeOf<int>();
+                eventPayload[3].DataPointer = (IntPtr)Unsafe.AsPointer(ref ownedPartitionCount);
+
+                WriteEventCore(101, 4, eventPayload);
             }
         }
 
@@ -2081,7 +2315,43 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(102, identifier ?? string.Empty, eventHubName ?? string.Empty, totalPartitionCount, ownedPartitionCount, durationSeconds, delaySeconds);
+                EventProcessorLoadBalancingCycleCompleteCore( identifier ?? string.Empty, eventHubName ?? string.Empty, totalPartitionCount, ownedPartitionCount, durationSeconds, delaySeconds);
+            }
+        }
+
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void EventProcessorLoadBalancingCycleCompleteCore(string identifier,
+                                                                         string eventHubName,
+                                                                         int totalPartitionCount,
+                                                                         int ownedPartitionCount,
+                                                                         double durationSeconds,
+                                                                         double delaySeconds)
+        {
+            fixed (char* identifierPtr = identifier)
+            fixed (char* eventHubNamePtr = eventHubName)
+            {
+                var eventPayload = stackalloc EventData[6];
+
+                eventPayload[0].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)identifierPtr;
+
+                eventPayload[1].Size = (eventHubName.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)eventHubNamePtr;
+
+                eventPayload[2].Size = Unsafe.SizeOf<int>();
+                eventPayload[2].DataPointer = (IntPtr)Unsafe.AsPointer(ref totalPartitionCount);
+
+                eventPayload[3].Size = Unsafe.SizeOf<int>();
+                eventPayload[3].DataPointer = (IntPtr)Unsafe.AsPointer(ref ownedPartitionCount);
+
+                eventPayload[4].Size = Unsafe.SizeOf<double>();
+                eventPayload[4].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
+
+                eventPayload[5].Size = Unsafe.SizeOf<double>();
+                eventPayload[5].DataPointer = (IntPtr)Unsafe.AsPointer(ref delaySeconds);
+
+                WriteEventCore(102, 6, eventPayload);
             }
         }
 
