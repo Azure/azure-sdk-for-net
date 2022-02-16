@@ -22,5 +22,35 @@ namespace Azure.Communication.JobRouter.Models
             Argument.AssertNotNullOrWhiteSpace(id, nameof(id));
             Argument.AssertNotNullOrWhiteSpace(queueId, nameof(queueId));
         }
+
+        /// <summary> Initializes a new instance of ManualReclassifyExceptionAction. </summary>
+        /// <param name="id"> Unique Id of the action within the exception rule. </param>
+        /// <param name="queueId"> Updated QueueId. </param>
+        /// <param name="workerSelectors"> (Optional) Updated WorkerSelectors. </param>
+        public ManualReclassifyExceptionAction(string id, string queueId, IEnumerable<LabelSelector> workerSelectors = default)
+            : this(null, id, queueId, null, (workerSelectors ?? Array.Empty<LabelSelector>()).ToList())
+        {
+            Argument.AssertNotNullOrWhiteSpace(id, nameof(id));
+            Argument.AssertNotNullOrWhiteSpace(queueId, nameof(queueId));
+        }
+
+        /// <summary> Initializes a new instance of ManualReclassifyExceptionAction. </summary>
+        /// <param name="id"> Unique Id of the action within the exception rule. </param>
+        /// <param name="priority"> Updated Priority. </param>
+        /// <param name="workerSelectors"> (Optional) Updated WorkerSelectors. </param>
+        public ManualReclassifyExceptionAction(string id, int priority, IEnumerable<LabelSelector> workerSelectors = default)
+            : this(null, id, null, priority, (workerSelectors ?? Array.Empty<LabelSelector>()).ToList())
+        {
+            Argument.AssertNotNullOrWhiteSpace(id, nameof(id));
+        }
+
+        /// <summary> Initializes a new instance of ManualReclassifyExceptionAction. </summary>
+        /// <param name="id"> Unique Id of the action within the exception rule. </param>
+        /// <param name="workerSelectors"> (Optional) Updated WorkerSelectors. </param>
+        public ManualReclassifyExceptionAction(string id, IEnumerable<LabelSelector> workerSelectors)
+            : this(null, id, null, null, (workerSelectors ?? Array.Empty<LabelSelector>()).ToList())
+        {
+            Argument.AssertNotNullOrWhiteSpace(id, nameof(id));
+        }
     }
 }
