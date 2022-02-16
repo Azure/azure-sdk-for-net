@@ -82,6 +82,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         public async Task StartBuildModelWithNeuralBuildMode()
         {
+            // Test takes too long to finish running, and seems to cause multiple failures in our
+            // live test pipeline. Until we find a way to run it without flakiness, this test will
+            // be ignored when running in Live mode.
+
+            if (Recording.Mode == RecordedTestMode.Live)
+            {
+                Assert.Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27042");
+            }
+
             var client = CreateDocumentModelAdministrationClient();
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             var modelId = Recording.GenerateId();
