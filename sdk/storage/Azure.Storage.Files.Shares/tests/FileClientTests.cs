@@ -1485,6 +1485,122 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        public async Task StartCopyAsync_CopySourceFileCreatedOnError()
+        {
+            // Arrange
+            await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient source = testSource.File;
+            await using DisposingFile testDest = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient dest = testDest.File;
+
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                CopySourceFileCreatedOn = true,
+                SmbProperties = new FileSmbProperties
+                {
+                    FileCreatedOn = Recording.UtcNow
+                }
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                dest.StartCopyAsync(
+                    sourceUri: source.Uri,
+                    options: options),
+                e => Assert.AreEqual($"copySourceFileCreatedOn and {nameof(FileSmbProperties.FileCreatedOn)} cannot both be set.", e.Message));
+        }
+
+        [RecordedTest]
+        public async Task StartCopyAsync_CopySourceFileLastWrittenOnError()
+        {
+            // Arrange
+            await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient source = testSource.File;
+            await using DisposingFile testDest = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient dest = testDest.File;
+
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                CopySourceFileLastWrittenOn = true,
+                SmbProperties = new FileSmbProperties
+                {
+                    FileLastWrittenOn = Recording.UtcNow
+                }
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                dest.StartCopyAsync(
+                    sourceUri: source.Uri,
+                    options: options),
+                e => Assert.AreEqual($"copySourceFileLastWrittenOn and {nameof(FileSmbProperties.FileLastWrittenOn)} cannot both be set.", e.Message));
+        }
+
+        [RecordedTest]
+        public async Task StartCopyAsync_CopySourceFileAttributesError()
+        {
+            // Arrange
+            await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient source = testSource.File;
+            await using DisposingFile testDest = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient dest = testDest.File;
+
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                CopySourceFileAttributes = true,
+                SmbProperties = new FileSmbProperties
+                {
+                    FileAttributes = ShareExtensions.ToFileAttributes("Archive|ReadOnly")
+                }
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                dest.StartCopyAsync(
+                    sourceUri: source.Uri,
+                    options: options),
+                e => Assert.AreEqual($"copySourceFileAttributes and {nameof(FileSmbProperties.FileAttributes)} cannot both be set.", e.Message));
+        }
+
+        [RecordedTest]
+        public async Task StartCopyAsync_CopySourceFileAttributes()
+        {
+            // Arrange
+            await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient source = testSource.File;
+            await using DisposingFile testDest = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient dest = testDest.File;
+
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                CopySourceFileCreatedOn = true,
+                CopySourceFileLastWrittenOn = true,
+                CopySourceFileAttributes = true,
+            };
+
+            // Act
+            await dest.StartCopyAsync(
+                sourceUri: source.Uri,
+                options: options);
+
+            // Assert
+            Response<ShareFileProperties> sourcePropertiesResponse = await source.GetPropertiesAsync();
+            Response<ShareFileProperties> destPropertiesResponse = await dest.GetPropertiesAsync();
+
+            Assert.AreEqual(
+                sourcePropertiesResponse.Value.SmbProperties.FileCreatedOn,
+                destPropertiesResponse.Value.SmbProperties.FileCreatedOn);
+
+            Assert.AreEqual(
+                sourcePropertiesResponse.Value.SmbProperties.FileLastWrittenOn,
+                destPropertiesResponse.Value.SmbProperties.FileLastWrittenOn);
+
+            Assert.AreEqual(
+                sourcePropertiesResponse.Value.SmbProperties.FileAttributes,
+                destPropertiesResponse.Value.SmbProperties.FileAttributes);
+        }
+
+        [RecordedTest]
         public async Task AbortCopyAsync()
         {
             await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
