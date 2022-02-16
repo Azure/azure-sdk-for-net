@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Tests
         {
             var identityJson = File.ReadAllText(Path.Combine(TestAssetPath, "SystemAndUserAssignedValidV3.json"));
 
-            var serializeOptions = new JsonSerializerOptions { Converters = { ManagedServiceIdentityTypeV3Converter.Default } };
+            var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
             ManagedServiceIdentity back = JsonSerializer.Deserialize<ManagedServiceIdentity>(identityJson, serializeOptions);
             Assert.IsTrue("22fdaec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.PrincipalId.ToString()));
             Assert.IsTrue("72f988af-86f1-41af-91ab-2d7cd011db47".Equals(back.TenantId.ToString()));
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Tests
                 "\"userAssignedIdentities\":" +
                 "{" + "\"/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport\":" +
                 user + "}}";
-            var serializeOptions = new JsonSerializerOptions { Converters = { ManagedServiceIdentityTypeV3Converter.Default } };
+            var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
             JsonAsserts.AssertConverterSerialization(expected, identity, serializeOptions);
         }
 
