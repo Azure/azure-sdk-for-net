@@ -1227,11 +1227,16 @@ namespace Azure.Storage.Files.Shares.Tests
                     content: stream);
             }
 
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                IgnoreReadOnly = true,
+                SetArchiveAttribute = true,
+            };
+
             // Act
             Response<ShareFileCopyInfo> response = await dest.StartCopyAsync(
                 sourceUri: source.Uri,
-                ignoreReadOnly: true,
-                setArchiveAttribute: true);
+                options: options);
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -1264,12 +1269,17 @@ namespace Azure.Storage.Files.Shares.Tests
             };
             string filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
 
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                SmbProperties = smbProperties,
+                FilePermission = filePermission,
+                FilePermissionCopyMode = PermissionCopyMode.Override
+            };
+
             // Act
             await dest.StartCopyAsync(
                 sourceUri: source.Uri,
-                smbProperties: smbProperties,
-                filePermission: filePermission,
-                filePermissionCopyMode: PermissionCopyMode.Override);
+                options: options);
 
             Response<ShareFileProperties> propertiesResponse = await dest.GetPropertiesAsync();
 
@@ -1308,11 +1318,16 @@ namespace Azure.Storage.Files.Shares.Tests
                 FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero)
             };
 
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                SmbProperties = smbProperties,
+                FilePermissionCopyMode = PermissionCopyMode.Override
+            };
+
             // Act
             await dest.StartCopyAsync(
                 sourceUri: source.Uri,
-                smbProperties: smbProperties,
-                filePermissionCopyMode: PermissionCopyMode.Override);
+                options: options);
 
             Response<ShareFileProperties> propertiesResponse = await dest.GetPropertiesAsync();
 
@@ -1346,10 +1361,15 @@ namespace Azure.Storage.Files.Shares.Tests
                     content: stream);
             }
 
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                Conditions = conditions
+            };
+
             // Act
             Response<ShareFileCopyInfo> response = await dest.StartCopyAsync(
                 sourceUri: source.Uri,
-                conditions: conditions);
+                options: options);
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -1378,11 +1398,16 @@ namespace Azure.Storage.Files.Shares.Tests
                     content: stream);
             }
 
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                Conditions = conditions
+            };
+
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 dest.StartCopyAsync(
                     sourceUri: source.Uri,
-                    conditions: conditions),
+                    options: options),
                 e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
 
@@ -1406,10 +1431,15 @@ namespace Azure.Storage.Files.Shares.Tests
 
             IDictionary<string, string> metadata = BuildMetadata();
 
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                Metadata = metadata
+            };
+
             // Act
             Response<ShareFileCopyInfo> copyResponse = await dest.StartCopyAsync(
                 sourceUri: source.Uri,
-                metadata: metadata);
+                options: options);
 
             await WaitForCopy(dest);
 
@@ -1521,9 +1551,14 @@ namespace Azure.Storage.Files.Shares.Tests
                 LeaseId = fileLease.LeaseId
             };
 
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                Conditions = conditions
+            };
+
             Response<ShareFileCopyInfo> copyResponse = await dest.StartCopyAsync(
                 sourceUri: source.Uri,
-                conditions: conditions);
+                options: options);
 
             // Act
             try
