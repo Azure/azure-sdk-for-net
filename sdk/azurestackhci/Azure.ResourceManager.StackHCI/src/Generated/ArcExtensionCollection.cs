@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StackHCI
         internal ArcExtensionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _arcExtensionExtensionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StackHCI", ArcExtension.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ArcExtension.ResourceType, out string arcExtensionExtensionsApiVersion);
+            TryGetApiVersion(ArcExtension.ResourceType, out string arcExtensionExtensionsApiVersion);
             _arcExtensionExtensionsRestClient = new ExtensionsRestOperations(_arcExtensionExtensionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, arcExtensionExtensionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal DomainOwnershipIdentifierCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _domainOwnershipIdentifierDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", DomainOwnershipIdentifier.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(DomainOwnershipIdentifier.ResourceType, out string domainOwnershipIdentifierDomainsApiVersion);
+            TryGetApiVersion(DomainOwnershipIdentifier.ResourceType, out string domainOwnershipIdentifierDomainsApiVersion);
             _domainOwnershipIdentifierDomainsRestClient = new DomainsRestOperations(_domainOwnershipIdentifierDomainsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, domainOwnershipIdentifierDomainsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

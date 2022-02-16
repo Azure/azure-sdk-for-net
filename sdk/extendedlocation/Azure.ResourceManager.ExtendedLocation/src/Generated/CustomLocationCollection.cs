@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ExtendedLocation
         internal CustomLocationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _customLocationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ExtendedLocation", CustomLocation.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(CustomLocation.ResourceType, out string customLocationApiVersion);
+            TryGetApiVersion(CustomLocation.ResourceType, out string customLocationApiVersion);
             _customLocationRestClient = new CustomLocationsRestOperations(_customLocationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, customLocationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         internal VMwareCluster(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _vMwareClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string vMwareClusterClustersApiVersion);
+            TryGetApiVersion(ResourceType, out string vMwareClusterClustersApiVersion);
             _vMwareClusterClustersRestClient = new ClustersRestOperations(_vMwareClusterClustersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vMwareClusterClustersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

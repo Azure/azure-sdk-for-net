@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         internal FirewallRule(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _firewallRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string firewallRuleApiVersion);
+            TryGetApiVersion(ResourceType, out string firewallRuleApiVersion);
             _firewallRuleRestClient = new FirewallRulesRestOperations(_firewallRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, firewallRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

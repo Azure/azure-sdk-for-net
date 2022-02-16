@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of SecurityRule and their operations over its parent. </summary>
+    /// <summary> A class representing collection of DefaultSecurityRule and their operations over its parent. </summary>
     public partial class DefaultSecurityRuleCollection : ArmCollection, IEnumerable<DefaultSecurityRule>, IAsyncEnumerable<DefaultSecurityRule>
     {
         private readonly ClientDiagnostics _defaultSecurityRuleClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         internal DefaultSecurityRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _defaultSecurityRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", DefaultSecurityRule.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(DefaultSecurityRule.ResourceType, out string defaultSecurityRuleApiVersion);
+            TryGetApiVersion(DefaultSecurityRule.ResourceType, out string defaultSecurityRuleApiVersion);
             _defaultSecurityRuleRestClient = new DefaultSecurityRulesRestOperations(_defaultSecurityRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, defaultSecurityRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

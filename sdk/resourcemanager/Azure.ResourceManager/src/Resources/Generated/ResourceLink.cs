@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources
         internal ResourceLink(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _resourceLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string resourceLinkApiVersion);
+            TryGetApiVersion(ResourceType, out string resourceLinkApiVersion);
             _resourceLinkRestClient = new ResourceLinksRestOperations(_resourceLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceLinkApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

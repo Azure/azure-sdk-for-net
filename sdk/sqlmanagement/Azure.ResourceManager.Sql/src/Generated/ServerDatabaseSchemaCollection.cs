@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of DatabaseSchema and their operations over its parent. </summary>
+    /// <summary> A class representing collection of ServerDatabaseSchema and their operations over its parent. </summary>
     public partial class ServerDatabaseSchemaCollection : ArmCollection, IEnumerable<ServerDatabaseSchema>, IAsyncEnumerable<ServerDatabaseSchema>
     {
         private readonly ClientDiagnostics _serverDatabaseSchemaDatabaseSchemasClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
         internal ServerDatabaseSchemaCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverDatabaseSchemaDatabaseSchemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerDatabaseSchema.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ServerDatabaseSchema.ResourceType, out string serverDatabaseSchemaDatabaseSchemasApiVersion);
+            TryGetApiVersion(ServerDatabaseSchema.ResourceType, out string serverDatabaseSchemaDatabaseSchemasApiVersion);
             _serverDatabaseSchemaDatabaseSchemasRestClient = new DatabaseSchemasRestOperations(_serverDatabaseSchemaDatabaseSchemasClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDatabaseSchemaDatabaseSchemasApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

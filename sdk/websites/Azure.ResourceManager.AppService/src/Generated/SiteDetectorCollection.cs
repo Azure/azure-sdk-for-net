@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of AppServiceDetector and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteDetector and their operations over its parent. </summary>
     public partial class SiteDetectorCollection : ArmCollection, IEnumerable<SiteDetector>, IAsyncEnumerable<SiteDetector>
     {
         private readonly ClientDiagnostics _siteDetectorDiagnosticsClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteDetectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteDetectorDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteDetector.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteDetector.ResourceType, out string siteDetectorDiagnosticsApiVersion);
+            TryGetApiVersion(SiteDetector.ResourceType, out string siteDetectorDiagnosticsApiVersion);
             _siteDetectorDiagnosticsRestClient = new DiagnosticsRestOperations(_siteDetectorDiagnosticsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteDetectorDiagnosticsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

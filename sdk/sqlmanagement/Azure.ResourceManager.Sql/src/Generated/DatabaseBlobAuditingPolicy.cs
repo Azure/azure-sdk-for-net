@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         internal DatabaseBlobAuditingPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _databaseBlobAuditingPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string databaseBlobAuditingPolicyApiVersion);
+            TryGetApiVersion(ResourceType, out string databaseBlobAuditingPolicyApiVersion);
             _databaseBlobAuditingPolicyRestClient = new DatabaseBlobAuditingPoliciesRestOperations(_databaseBlobAuditingPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseBlobAuditingPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

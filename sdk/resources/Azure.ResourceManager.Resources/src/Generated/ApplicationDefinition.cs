@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources
         internal ApplicationDefinition(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _applicationDefinitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string applicationDefinitionApiVersion);
+            TryGetApiVersion(ResourceType, out string applicationDefinitionApiVersion);
             _applicationDefinitionRestClient = new ApplicationDefinitionsRestOperations(_applicationDefinitionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationDefinitionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

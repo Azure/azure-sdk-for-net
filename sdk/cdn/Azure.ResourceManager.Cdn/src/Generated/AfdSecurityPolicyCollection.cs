@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn
         internal AfdSecurityPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _afdSecurityPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", AfdSecurityPolicy.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(AfdSecurityPolicy.ResourceType, out string afdSecurityPolicyApiVersion);
+            TryGetApiVersion(AfdSecurityPolicy.ResourceType, out string afdSecurityPolicyApiVersion);
             _afdSecurityPolicyRestClient = new AfdSecurityPoliciesRestOperations(_afdSecurityPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdSecurityPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute
         internal VirtualMachineScaleSetVmExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualMachineScaleSetVmExtensionVirtualMachineScaleSetVMExtensionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string virtualMachineScaleSetVmExtensionVirtualMachineScaleSetVMExtensionsApiVersion);
+            TryGetApiVersion(ResourceType, out string virtualMachineScaleSetVmExtensionVirtualMachineScaleSetVMExtensionsApiVersion);
             _virtualMachineScaleSetVmExtensionVirtualMachineScaleSetVMExtensionsRestClient = new VirtualMachineScaleSetVMExtensionsRestOperations(_virtualMachineScaleSetVmExtensionVirtualMachineScaleSetVMExtensionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualMachineScaleSetVmExtensionVirtualMachineScaleSetVMExtensionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -191,22 +191,22 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: VirtualMachineScaleSetVMExtensions_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="extensionParameters"> Parameters supplied to the Update Virtual Machine Extension operation. </param>
+        /// <param name="options"> Parameters supplied to the Update Virtual Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="extensionParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<VirtualMachineScaleSetVmExtension>> UpdateAsync(bool waitForCompletion, VirtualMachineScaleSetVmExtensionUpdateOptions extensionParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<ArmOperation<VirtualMachineScaleSetVmExtension>> UpdateAsync(bool waitForCompletion, VirtualMachineScaleSetVmExtensionUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (extensionParameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(extensionParameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _virtualMachineScaleSetVmExtensionVirtualMachineScaleSetVMExtensionsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmExtension.Update");
             scope.Start();
             try
             {
-                var response = await _virtualMachineScaleSetVmExtensionVirtualMachineScaleSetVMExtensionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, extensionParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<VirtualMachineScaleSetVmExtension>(new VirtualMachineScaleSetVmExtensionOperationSource(Client), _virtualMachineScaleSetVmExtensionVirtualMachineScaleSetVMExtensionsClientDiagnostics, Pipeline, _virtualMachineScaleSetVmExtensionVirtualMachineScaleSetVMExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, extensionParameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _virtualMachineScaleSetVmExtensionVirtualMachineScaleSetVMExtensionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation<VirtualMachineScaleSetVmExtension>(new VirtualMachineScaleSetVmExtensionOperationSource(Client), _virtualMachineScaleSetVmExtensionVirtualMachineScaleSetVMExtensionsClientDiagnostics, Pipeline, _virtualMachineScaleSetVmExtensionVirtualMachineScaleSetVMExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -224,22 +224,22 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: VirtualMachineScaleSetVMExtensions_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="extensionParameters"> Parameters supplied to the Update Virtual Machine Extension operation. </param>
+        /// <param name="options"> Parameters supplied to the Update Virtual Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="extensionParameters"/> is null. </exception>
-        public virtual ArmOperation<VirtualMachineScaleSetVmExtension> Update(bool waitForCompletion, VirtualMachineScaleSetVmExtensionUpdateOptions extensionParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual ArmOperation<VirtualMachineScaleSetVmExtension> Update(bool waitForCompletion, VirtualMachineScaleSetVmExtensionUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (extensionParameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(extensionParameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _virtualMachineScaleSetVmExtensionVirtualMachineScaleSetVMExtensionsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmExtension.Update");
             scope.Start();
             try
             {
-                var response = _virtualMachineScaleSetVmExtensionVirtualMachineScaleSetVMExtensionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, extensionParameters, cancellationToken);
-                var operation = new ComputeArmOperation<VirtualMachineScaleSetVmExtension>(new VirtualMachineScaleSetVmExtensionOperationSource(Client), _virtualMachineScaleSetVmExtensionVirtualMachineScaleSetVMExtensionsClientDiagnostics, Pipeline, _virtualMachineScaleSetVmExtensionVirtualMachineScaleSetVMExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, extensionParameters).Request, response, OperationFinalStateVia.Location);
+                var response = _virtualMachineScaleSetVmExtensionVirtualMachineScaleSetVMExtensionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options, cancellationToken);
+                var operation = new ComputeArmOperation<VirtualMachineScaleSetVmExtension>(new VirtualMachineScaleSetVmExtensionOperationSource(Client), _virtualMachineScaleSetVmExtensionVirtualMachineScaleSetVMExtensionsClientDiagnostics, Pipeline, _virtualMachineScaleSetVmExtensionVirtualMachineScaleSetVMExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

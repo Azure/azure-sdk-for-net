@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string name, AppServicePlanPatchOptions appServicePlan)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string name, AppServicePlanUpdateOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(appServicePlan);
+            content.JsonWriter.WriteObjectValue(options);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -522,10 +522,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
-        /// <param name="appServicePlan"> Details of the App Service plan. </param>
+        /// <param name="options"> Details of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="appServicePlan"/> is null. </exception>
-        public async Task<Response<AppServicePlanData>> UpdateAsync(string subscriptionId, string resourceGroupName, string name, AppServicePlanPatchOptions appServicePlan, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="options"/> is null. </exception>
+        public async Task<Response<AppServicePlanData>> UpdateAsync(string subscriptionId, string resourceGroupName, string name, AppServicePlanUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -539,12 +539,12 @@ namespace Azure.ResourceManager.AppService
             {
                 throw new ArgumentNullException(nameof(name));
             }
-            if (appServicePlan == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(appServicePlan));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, name, appServicePlan);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, name, options);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -565,10 +565,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
-        /// <param name="appServicePlan"> Details of the App Service plan. </param>
+        /// <param name="options"> Details of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="appServicePlan"/> is null. </exception>
-        public Response<AppServicePlanData> Update(string subscriptionId, string resourceGroupName, string name, AppServicePlanPatchOptions appServicePlan, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="options"/> is null. </exception>
+        public Response<AppServicePlanData> Update(string subscriptionId, string resourceGroupName, string name, AppServicePlanUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -582,12 +582,12 @@ namespace Azure.ResourceManager.AppService
             {
                 throw new ArgumentNullException(nameof(name));
             }
-            if (appServicePlan == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(appServicePlan));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, name, appServicePlan);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, name, options);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

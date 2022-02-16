@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql
         {
             _locationName = locationName;
             _deletedServerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", DeletedServer.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(DeletedServer.ResourceType, out string deletedServerApiVersion);
+            TryGetApiVersion(DeletedServer.ResourceType, out string deletedServerApiVersion);
             _deletedServerRestClient = new DeletedServersRestOperations(_deletedServerClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedServerApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

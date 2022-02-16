@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EventHubs
         internal NetworkRuleSet(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _networkRuleSetNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string networkRuleSetNamespacesApiVersion);
+            TryGetApiVersion(ResourceType, out string networkRuleSetNamespacesApiVersion);
             _networkRuleSetNamespacesRestClient = new NamespacesRestOperations(_networkRuleSetNamespacesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkRuleSetNamespacesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

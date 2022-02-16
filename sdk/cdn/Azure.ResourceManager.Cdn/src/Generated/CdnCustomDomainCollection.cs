@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn
         internal CdnCustomDomainCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _cdnCustomDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnCustomDomain.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(CdnCustomDomain.ResourceType, out string cdnCustomDomainApiVersion);
+            TryGetApiVersion(CdnCustomDomain.ResourceType, out string cdnCustomDomainApiVersion);
             _cdnCustomDomainRestClient = new CdnCustomDomainsRestOperations(_cdnCustomDomainClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cdnCustomDomainApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

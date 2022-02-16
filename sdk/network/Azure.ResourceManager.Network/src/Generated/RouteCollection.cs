@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         internal RouteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _routeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", Route.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(Route.ResourceType, out string routeApiVersion);
+            TryGetApiVersion(Route.ResourceType, out string routeApiVersion);
             _routeRestClient = new RoutesRestOperations(_routeClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, routeApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -21,7 +21,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of RemotePrivateEndpointConnectionARMResource and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SitePrivateEndpointConnection and their operations over its parent. </summary>
     public partial class SitePrivateEndpointConnectionCollection : ArmCollection, IEnumerable<SitePrivateEndpointConnection>, IAsyncEnumerable<SitePrivateEndpointConnection>
     {
         private readonly ClientDiagnostics _sitePrivateEndpointConnectionWebAppsClientDiagnostics;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         internal SitePrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sitePrivateEndpointConnectionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SitePrivateEndpointConnection.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SitePrivateEndpointConnection.ResourceType, out string sitePrivateEndpointConnectionWebAppsApiVersion);
+            TryGetApiVersion(SitePrivateEndpointConnection.ResourceType, out string sitePrivateEndpointConnectionWebAppsApiVersion);
             _sitePrivateEndpointConnectionWebAppsRestClient = new WebAppsRestOperations(_sitePrivateEndpointConnectionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sitePrivateEndpointConnectionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

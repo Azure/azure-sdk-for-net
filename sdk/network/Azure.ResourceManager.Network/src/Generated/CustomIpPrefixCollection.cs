@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal CustomIpPrefixCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _customIpPrefixCustomIPPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", CustomIpPrefix.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(CustomIpPrefix.ResourceType, out string customIpPrefixCustomIPPrefixesApiVersion);
+            TryGetApiVersion(CustomIpPrefix.ResourceType, out string customIpPrefixCustomIPPrefixesApiVersion);
             _customIpPrefixCustomIPPrefixesRestClient = new CustomIPPrefixesRestOperations(_customIpPrefixCustomIPPrefixesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, customIpPrefixCustomIPPrefixesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

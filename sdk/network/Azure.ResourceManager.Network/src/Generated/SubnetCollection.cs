@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         internal SubnetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _subnetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", Subnet.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(Subnet.ResourceType, out string subnetApiVersion);
+            TryGetApiVersion(Subnet.ResourceType, out string subnetApiVersion);
             _subnetRestClient = new SubnetsRestOperations(_subnetClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subnetApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

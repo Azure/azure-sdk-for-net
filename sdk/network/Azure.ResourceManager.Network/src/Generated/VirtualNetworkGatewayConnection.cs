@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.Network
         internal VirtualNetworkGatewayConnection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualNetworkGatewayConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string virtualNetworkGatewayConnectionApiVersion);
+            TryGetApiVersion(ResourceType, out string virtualNetworkGatewayConnectionApiVersion);
             _virtualNetworkGatewayConnectionRestClient = new VirtualNetworkGatewayConnectionsRestOperations(_virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualNetworkGatewayConnectionApiVersion);
             _virtualNetworkGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetworkGateway.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(VirtualNetworkGateway.ResourceType, out string virtualNetworkGatewayApiVersion);
+            TryGetApiVersion(VirtualNetworkGateway.ResourceType, out string virtualNetworkGatewayApiVersion);
             _virtualNetworkGatewayRestClient = new VirtualNetworkGatewaysRestOperations(_virtualNetworkGatewayClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualNetworkGatewayApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

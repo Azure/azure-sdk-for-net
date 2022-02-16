@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing collection of AuthorizationRule and their operations over its parent. </summary>
+    /// <summary> A class representing collection of NamespaceAuthorizationRule and their operations over its parent. </summary>
     public partial class NamespaceAuthorizationRuleCollection : ArmCollection, IEnumerable<NamespaceAuthorizationRule>, IAsyncEnumerable<NamespaceAuthorizationRule>
     {
         private readonly ClientDiagnostics _namespaceAuthorizationRuleNamespacesClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.EventHubs
         internal NamespaceAuthorizationRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _namespaceAuthorizationRuleNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", NamespaceAuthorizationRule.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(NamespaceAuthorizationRule.ResourceType, out string namespaceAuthorizationRuleNamespacesApiVersion);
+            TryGetApiVersion(NamespaceAuthorizationRule.ResourceType, out string namespaceAuthorizationRuleNamespacesApiVersion);
             _namespaceAuthorizationRuleNamespacesRestClient = new NamespacesRestOperations(_namespaceAuthorizationRuleNamespacesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, namespaceAuthorizationRuleNamespacesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

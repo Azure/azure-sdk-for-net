@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of TriggeredJobHistory and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteSlotTriggeredWebJobHistory and their operations over its parent. </summary>
     public partial class SiteSlotTriggeredWebJobHistoryCollection : ArmCollection, IEnumerable<SiteSlotTriggeredWebJobHistory>, IAsyncEnumerable<SiteSlotTriggeredWebJobHistory>
     {
         private readonly ClientDiagnostics _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotTriggeredWebJobHistoryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotTriggeredWebJobHistory.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteSlotTriggeredWebJobHistory.ResourceType, out string siteSlotTriggeredWebJobHistoryWebAppsApiVersion);
+            TryGetApiVersion(SiteSlotTriggeredWebJobHistory.ResourceType, out string siteSlotTriggeredWebJobHistoryWebAppsApiVersion);
             _siteSlotTriggeredWebJobHistoryWebAppsRestClient = new WebAppsRestOperations(_siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotTriggeredWebJobHistoryWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

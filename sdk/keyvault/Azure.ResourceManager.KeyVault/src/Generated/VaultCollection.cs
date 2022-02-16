@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KeyVault
         internal VaultCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _vaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", Vault.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(Vault.ResourceType, out string vaultApiVersion);
+            TryGetApiVersion(Vault.ResourceType, out string vaultApiVersion);
             _vaultRestClient = new VaultsRestOperations(_vaultClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vaultApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

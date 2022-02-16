@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         internal LocalNetworkGateway(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _localNetworkGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string localNetworkGatewayApiVersion);
+            TryGetApiVersion(ResourceType, out string localNetworkGatewayApiVersion);
             _localNetworkGatewayRestClient = new LocalNetworkGatewaysRestOperations(_localNetworkGatewayClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, localNetworkGatewayApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

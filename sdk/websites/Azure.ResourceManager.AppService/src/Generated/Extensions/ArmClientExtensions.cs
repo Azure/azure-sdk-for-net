@@ -861,49 +861,49 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region SiteBasicPublishingCredentialsPolicyScm
-        /// <summary> Gets an object representing a SiteBasicPublishingCredentialsPolicyScm along with the instance operations that can be performed on it but with no data. </summary>
+        #region ScmSiteBasicPublishingCredentialsPolicy
+        /// <summary> Gets an object representing a ScmSiteBasicPublishingCredentialsPolicy along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteBasicPublishingCredentialsPolicyScm" /> object. </returns>
-        public static SiteBasicPublishingCredentialsPolicyScm GetSiteBasicPublishingCredentialsPolicyScm(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ScmSiteBasicPublishingCredentialsPolicy" /> object. </returns>
+        public static ScmSiteBasicPublishingCredentialsPolicy GetScmSiteBasicPublishingCredentialsPolicy(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteBasicPublishingCredentialsPolicyScm.ValidateResourceId(id);
-                return new SiteBasicPublishingCredentialsPolicyScm(client, id);
+                ScmSiteBasicPublishingCredentialsPolicy.ValidateResourceId(id);
+                return new ScmSiteBasicPublishingCredentialsPolicy(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotBasicPublishingCredentialsPolicyFtp
-        /// <summary> Gets an object representing a SiteSlotBasicPublishingCredentialsPolicyFtp along with the instance operations that can be performed on it but with no data. </summary>
+        #region FtpSiteSlotBasicPublishingCredentialsPolicy
+        /// <summary> Gets an object representing a FtpSiteSlotBasicPublishingCredentialsPolicy along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotBasicPublishingCredentialsPolicyFtp" /> object. </returns>
-        public static SiteSlotBasicPublishingCredentialsPolicyFtp GetSiteSlotBasicPublishingCredentialsPolicyFtp(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FtpSiteSlotBasicPublishingCredentialsPolicy" /> object. </returns>
+        public static FtpSiteSlotBasicPublishingCredentialsPolicy GetFtpSiteSlotBasicPublishingCredentialsPolicy(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotBasicPublishingCredentialsPolicyFtp.ValidateResourceId(id);
-                return new SiteSlotBasicPublishingCredentialsPolicyFtp(client, id);
+                FtpSiteSlotBasicPublishingCredentialsPolicy.ValidateResourceId(id);
+                return new FtpSiteSlotBasicPublishingCredentialsPolicy(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotBasicPublishingCredentialsPolicyScm
-        /// <summary> Gets an object representing a SiteSlotBasicPublishingCredentialsPolicyScm along with the instance operations that can be performed on it but with no data. </summary>
+        #region ScmSiteSlotBasicPublishingCredentialsPolicy
+        /// <summary> Gets an object representing a ScmSiteSlotBasicPublishingCredentialsPolicy along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotBasicPublishingCredentialsPolicyScm" /> object. </returns>
-        public static SiteSlotBasicPublishingCredentialsPolicyScm GetSiteSlotBasicPublishingCredentialsPolicyScm(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicy" /> object. </returns>
+        public static ScmSiteSlotBasicPublishingCredentialsPolicy GetScmSiteSlotBasicPublishingCredentialsPolicy(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotBasicPublishingCredentialsPolicyScm.ValidateResourceId(id);
-                return new SiteSlotBasicPublishingCredentialsPolicyScm(client, id);
+                ScmSiteSlotBasicPublishingCredentialsPolicy.ValidateResourceId(id);
+                return new ScmSiteSlotBasicPublishingCredentialsPolicy(client, id);
             }
             );
         }
@@ -973,33 +973,33 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region SiteConfigLogs
-        /// <summary> Gets an object representing a SiteConfigLogs along with the instance operations that can be performed on it but with no data. </summary>
+        #region LogsSiteConfig
+        /// <summary> Gets an object representing a LogsSiteConfig along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteConfigLogs" /> object. </returns>
-        public static SiteConfigLogs GetSiteConfigLogs(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogsSiteConfig" /> object. </returns>
+        public static LogsSiteConfig GetLogsSiteConfig(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteConfigLogs.ValidateResourceId(id);
-                return new SiteConfigLogs(client, id);
+                LogsSiteConfig.ValidateResourceId(id);
+                return new LogsSiteConfig(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotConfigLogs
-        /// <summary> Gets an object representing a SiteSlotConfigLogs along with the instance operations that can be performed on it but with no data. </summary>
+        #region LogsSiteSlotConfig
+        /// <summary> Gets an object representing a LogsSiteSlotConfig along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotConfigLogs" /> object. </returns>
-        public static SiteSlotConfigLogs GetSiteSlotConfigLogs(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogsSiteSlotConfig" /> object. </returns>
+        public static LogsSiteSlotConfig GetLogsSiteSlotConfig(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotConfigLogs.ValidateResourceId(id);
-                return new SiteSlotConfigLogs(client, id);
+                LogsSiteSlotConfig.ValidateResourceId(id);
+                return new LogsSiteSlotConfig(client, id);
             }
             );
         }
@@ -1021,17 +1021,17 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region SiteConfigWeb
-        /// <summary> Gets an object representing a SiteConfigWeb along with the instance operations that can be performed on it but with no data. </summary>
+        #region WebSiteConfig
+        /// <summary> Gets an object representing a WebSiteConfig along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteConfigWeb" /> object. </returns>
-        public static SiteConfigWeb GetSiteConfigWeb(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteConfig" /> object. </returns>
+        public static WebSiteConfig GetWebSiteConfig(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteConfigWeb.ValidateResourceId(id);
-                return new SiteConfigWeb(client, id);
+                WebSiteConfig.ValidateResourceId(id);
+                return new WebSiteConfig(client, id);
             }
             );
         }
@@ -1053,17 +1053,17 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region SiteSlotConfigWeb
-        /// <summary> Gets an object representing a SiteSlotConfigWeb along with the instance operations that can be performed on it but with no data. </summary>
+        #region WebSiteSlotConfig
+        /// <summary> Gets an object representing a WebSiteSlotConfig along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotConfigWeb" /> object. </returns>
-        public static SiteSlotConfigWeb GetSiteSlotConfigWeb(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSlotConfig" /> object. </returns>
+        public static WebSiteSlotConfig GetWebSiteSlotConfig(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotConfigWeb.ValidateResourceId(id);
-                return new SiteSlotConfigWeb(client, id);
+                WebSiteSlotConfig.ValidateResourceId(id);
+                return new WebSiteSlotConfig(client, id);
             }
             );
         }

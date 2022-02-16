@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         internal CustomIpPrefix(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _customIpPrefixCustomIPPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string customIpPrefixCustomIPPrefixesApiVersion);
+            TryGetApiVersion(ResourceType, out string customIpPrefixCustomIPPrefixesApiVersion);
             _customIpPrefixCustomIPPrefixesRestClient = new CustomIPPrefixesRestOperations(_customIpPrefixCustomIPPrefixesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, customIpPrefixCustomIPPrefixesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

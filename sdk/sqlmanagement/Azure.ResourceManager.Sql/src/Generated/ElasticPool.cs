@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.Sql
         internal ElasticPool(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _elasticPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string elasticPoolApiVersion);
+            TryGetApiVersion(ResourceType, out string elasticPoolApiVersion);
             _elasticPoolRestClient = new ElasticPoolsRestOperations(_elasticPoolClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, elasticPoolApiVersion);
             _sqlDatabaseDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDatabase.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SqlDatabase.ResourceType, out string sqlDatabaseDatabasesApiVersion);
+            TryGetApiVersion(SqlDatabase.ResourceType, out string sqlDatabaseDatabasesApiVersion);
             _sqlDatabaseDatabasesRestClient = new DatabasesRestOperations(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlDatabaseDatabasesApiVersion);
             _elasticPoolActivitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _elasticPoolActivitiesRestClient = new ElasticPoolActivitiesRestOperations(_elasticPoolActivitiesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
@@ -208,22 +208,22 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ElasticPools_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="parameters"> The elastic pool update parameters. </param>
+        /// <param name="options"> The elastic pool update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<ElasticPool>> UpdateAsync(bool waitForCompletion, ElasticPoolUpdate parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<ArmOperation<ElasticPool>> UpdateAsync(bool waitForCompletion, ElasticPoolUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPool.Update");
             scope.Start();
             try
             {
-                var response = await _elasticPoolRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ElasticPool>(new ElasticPoolOperationSource(Client), _elasticPoolClientDiagnostics, Pipeline, _elasticPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _elasticPoolRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<ElasticPool>(new ElasticPoolOperationSource(Client), _elasticPoolClientDiagnostics, Pipeline, _elasticPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -241,22 +241,22 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ElasticPools_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="parameters"> The elastic pool update parameters. </param>
+        /// <param name="options"> The elastic pool update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ElasticPool> Update(bool waitForCompletion, ElasticPoolUpdate parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual ArmOperation<ElasticPool> Update(bool waitForCompletion, ElasticPoolUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPool.Update");
             scope.Start();
             try
             {
-                var response = _elasticPoolRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new SqlArmOperation<ElasticPool>(new ElasticPoolOperationSource(Client), _elasticPoolClientDiagnostics, Pipeline, _elasticPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _elasticPoolRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken);
+                var operation = new SqlArmOperation<ElasticPool>(new ElasticPoolOperationSource(Client), _elasticPoolClientDiagnostics, Pipeline, _elasticPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

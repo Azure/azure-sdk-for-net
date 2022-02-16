@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         internal ServerSecurityAlertPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverSecurityAlertPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string serverSecurityAlertPolicyApiVersion);
+            TryGetApiVersion(ResourceType, out string serverSecurityAlertPolicyApiVersion);
             _serverSecurityAlertPolicyRestClient = new ServerSecurityAlertPoliciesRestOperations(_serverSecurityAlertPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverSecurityAlertPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

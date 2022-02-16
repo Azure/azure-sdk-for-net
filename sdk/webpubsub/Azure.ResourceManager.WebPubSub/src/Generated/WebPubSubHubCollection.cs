@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.WebPubSub
         internal WebPubSubHubCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _webPubSubHubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSubHub.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(WebPubSubHub.ResourceType, out string webPubSubHubApiVersion);
+            TryGetApiVersion(WebPubSubHub.ResourceType, out string webPubSubHubApiVersion);
             _webPubSubHubRestClient = new WebPubSubHubsRestOperations(_webPubSubHubClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webPubSubHubApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

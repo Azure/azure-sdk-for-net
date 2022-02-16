@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkVirtualApplianceSku(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string networkVirtualApplianceSkuVirtualApplianceSkusApiVersion);
+            TryGetApiVersion(ResourceType, out string networkVirtualApplianceSkuVirtualApplianceSkusApiVersion);
             _networkVirtualApplianceSkuVirtualApplianceSkusRestClient = new VirtualApplianceSkusRestOperations(_networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkVirtualApplianceSkuVirtualApplianceSkusApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

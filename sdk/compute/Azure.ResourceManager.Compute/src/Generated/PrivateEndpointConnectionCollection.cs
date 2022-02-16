@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute
         internal PrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _privateEndpointConnectionDiskAccessesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", PrivateEndpointConnection.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(PrivateEndpointConnection.ResourceType, out string privateEndpointConnectionDiskAccessesApiVersion);
+            TryGetApiVersion(PrivateEndpointConnection.ResourceType, out string privateEndpointConnectionDiskAccessesApiVersion);
             _privateEndpointConnectionDiskAccessesRestClient = new DiskAccessesRestOperations(_privateEndpointConnectionDiskAccessesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, privateEndpointConnectionDiskAccessesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

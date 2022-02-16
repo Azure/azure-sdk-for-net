@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of DatabaseColumn and their operations over its parent. </summary>
+    /// <summary> A class representing collection of ManagedInstanceDatabaseSchemaTableColumn and their operations over its parent. </summary>
     public partial class ManagedInstanceDatabaseSchemaTableColumnCollection : ArmCollection, IEnumerable<ManagedInstanceDatabaseSchemaTableColumn>, IAsyncEnumerable<ManagedInstanceDatabaseSchemaTableColumn>
     {
         private readonly ClientDiagnostics _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
         internal ManagedInstanceDatabaseSchemaTableColumnCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceDatabaseSchemaTableColumn.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ManagedInstanceDatabaseSchemaTableColumn.ResourceType, out string managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsApiVersion);
+            TryGetApiVersion(ManagedInstanceDatabaseSchemaTableColumn.ResourceType, out string managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsApiVersion);
             _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsRestClient = new ManagedDatabaseColumnsRestOperations(_managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

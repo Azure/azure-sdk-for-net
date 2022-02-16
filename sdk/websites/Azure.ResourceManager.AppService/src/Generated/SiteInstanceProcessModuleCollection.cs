@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of ProcessModuleInfo and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteInstanceProcessModule and their operations over its parent. </summary>
     public partial class SiteInstanceProcessModuleCollection : ArmCollection, IEnumerable<SiteInstanceProcessModule>, IAsyncEnumerable<SiteInstanceProcessModule>
     {
         private readonly ClientDiagnostics _siteInstanceProcessModuleWebAppsClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteInstanceProcessModuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteInstanceProcessModuleWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteInstanceProcessModule.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteInstanceProcessModule.ResourceType, out string siteInstanceProcessModuleWebAppsApiVersion);
+            TryGetApiVersion(SiteInstanceProcessModule.ResourceType, out string siteInstanceProcessModuleWebAppsApiVersion);
             _siteInstanceProcessModuleWebAppsRestClient = new WebAppsRestOperations(_siteInstanceProcessModuleWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteInstanceProcessModuleWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

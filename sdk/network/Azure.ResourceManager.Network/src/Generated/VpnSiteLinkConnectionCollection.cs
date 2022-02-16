@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Network
         internal VpnSiteLinkConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _vpnSiteLinkConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnSiteLinkConnection.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(VpnSiteLinkConnection.ResourceType, out string vpnSiteLinkConnectionApiVersion);
+            TryGetApiVersion(VpnSiteLinkConnection.ResourceType, out string vpnSiteLinkConnectionApiVersion);
             _vpnSiteLinkConnectionRestClient = new VpnSiteLinkConnectionsRestOperations(_vpnSiteLinkConnectionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vpnSiteLinkConnectionApiVersion);
             _vpnSiteLinkConnectionVpnLinkConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnSiteLinkConnection.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(VpnSiteLinkConnection.ResourceType, out string vpnSiteLinkConnectionVpnLinkConnectionsApiVersion);
+            TryGetApiVersion(VpnSiteLinkConnection.ResourceType, out string vpnSiteLinkConnectionVpnLinkConnectionsApiVersion);
             _vpnSiteLinkConnectionVpnLinkConnectionsRestClient = new VpnLinkConnectionsRestOperations(_vpnSiteLinkConnectionVpnLinkConnectionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vpnSiteLinkConnectionVpnLinkConnectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage
         internal BlobInventoryPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _blobInventoryPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", BlobInventoryPolicy.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(BlobInventoryPolicy.ResourceType, out string blobInventoryPolicyApiVersion);
+            TryGetApiVersion(BlobInventoryPolicy.ResourceType, out string blobInventoryPolicyApiVersion);
             _blobInventoryPolicyRestClient = new BlobInventoryPoliciesRestOperations(_blobInventoryPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, blobInventoryPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute
         internal DiskAccess(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _diskAccessClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string diskAccessApiVersion);
+            TryGetApiVersion(ResourceType, out string diskAccessApiVersion);
             _diskAccessRestClient = new DiskAccessesRestOperations(_diskAccessClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diskAccessApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

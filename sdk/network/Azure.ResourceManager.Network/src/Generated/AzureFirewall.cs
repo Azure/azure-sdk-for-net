@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         internal AzureFirewall(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _azureFirewallClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string azureFirewallApiVersion);
+            TryGetApiVersion(ResourceType, out string azureFirewallApiVersion);
             _azureFirewallRestClient = new AzureFirewallsRestOperations(_azureFirewallClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, azureFirewallApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

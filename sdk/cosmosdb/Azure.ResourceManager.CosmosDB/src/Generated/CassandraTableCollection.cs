@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal CassandraTableCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _cassandraTableCassandraResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CassandraTable.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(CassandraTable.ResourceType, out string cassandraTableCassandraResourcesApiVersion);
+            TryGetApiVersion(CassandraTable.ResourceType, out string cassandraTableCassandraResourcesApiVersion);
             _cassandraTableCassandraResourcesRestClient = new CassandraResourcesRestOperations(_cassandraTableCassandraResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cassandraTableCassandraResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

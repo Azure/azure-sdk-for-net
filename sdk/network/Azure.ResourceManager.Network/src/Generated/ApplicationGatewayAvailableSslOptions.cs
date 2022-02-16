@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         internal ApplicationGatewayAvailableSslOptions(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _applicationGatewayAvailableSslOptionsApplicationGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string applicationGatewayAvailableSslOptionsApplicationGatewaysApiVersion);
+            TryGetApiVersion(ResourceType, out string applicationGatewayAvailableSslOptionsApplicationGatewaysApiVersion);
             _applicationGatewayAvailableSslOptionsApplicationGatewaysRestClient = new ApplicationGatewaysRestOperations(_applicationGatewayAvailableSslOptionsApplicationGatewaysClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationGatewayAvailableSslOptionsApplicationGatewaysApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

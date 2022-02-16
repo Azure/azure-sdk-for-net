@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal SitePrivateAccess(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sitePrivateAccessWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string sitePrivateAccessWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string sitePrivateAccessWebAppsApiVersion);
             _sitePrivateAccessWebAppsRestClient = new WebAppsRestOperations(_sitePrivateAccessWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sitePrivateAccessWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

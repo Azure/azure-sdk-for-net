@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         internal VirtualNetworkRule(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualNetworkRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string virtualNetworkRuleApiVersion);
+            TryGetApiVersion(ResourceType, out string virtualNetworkRuleApiVersion);
             _virtualNetworkRuleRestClient = new VirtualNetworkRulesRestOperations(_virtualNetworkRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualNetworkRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

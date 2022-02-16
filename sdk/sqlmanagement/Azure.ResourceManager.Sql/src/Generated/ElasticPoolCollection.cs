@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
         internal ElasticPoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _elasticPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ElasticPool.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ElasticPool.ResourceType, out string elasticPoolApiVersion);
+            TryGetApiVersion(ElasticPool.ResourceType, out string elasticPoolApiVersion);
             _elasticPoolRestClient = new ElasticPoolsRestOperations(_elasticPoolClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, elasticPoolApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

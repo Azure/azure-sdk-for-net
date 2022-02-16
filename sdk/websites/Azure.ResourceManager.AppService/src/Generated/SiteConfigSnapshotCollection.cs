@@ -17,7 +17,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteConfig and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteConfigSnapshot and their operations over its parent. </summary>
     public partial class SiteConfigSnapshotCollection : ArmCollection
     {
         private readonly ClientDiagnostics _siteConfigSnapshotWebAppsClientDiagnostics;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteConfigSnapshotCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteConfigSnapshotWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteConfigSnapshot.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteConfigSnapshot.ResourceType, out string siteConfigSnapshotWebAppsApiVersion);
+            TryGetApiVersion(SiteConfigSnapshot.ResourceType, out string siteConfigSnapshotWebAppsApiVersion);
             _siteConfigSnapshotWebAppsRestClient = new WebAppsRestOperations(_siteConfigSnapshotWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteConfigSnapshotWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

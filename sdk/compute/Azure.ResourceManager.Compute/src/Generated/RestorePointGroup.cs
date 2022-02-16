@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute
         internal RestorePointGroup(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _restorePointGroupRestorePointCollectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string restorePointGroupRestorePointCollectionsApiVersion);
+            TryGetApiVersion(ResourceType, out string restorePointGroupRestorePointCollectionsApiVersion);
             _restorePointGroupRestorePointCollectionsRestClient = new RestorePointCollectionsRestOperations(_restorePointGroupRestorePointCollectionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, restorePointGroupRestorePointCollectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -198,21 +198,21 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}
         /// Operation Id: RestorePointCollections_Update
         /// </summary>
-        /// <param name="parameters"> Parameters supplied to the Update restore point collection operation. </param>
+        /// <param name="options"> Parameters supplied to the Update restore point collection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<RestorePointGroup>> UpdateAsync(RestorePointCollectionUpdate parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<Response<RestorePointGroup>> UpdateAsync(RestorePointGroupUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _restorePointGroupRestorePointCollectionsClientDiagnostics.CreateScope("RestorePointGroup.Update");
             scope.Start();
             try
             {
-                var response = await _restorePointGroupRestorePointCollectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _restorePointGroupRestorePointCollectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new RestorePointGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -227,21 +227,21 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}
         /// Operation Id: RestorePointCollections_Update
         /// </summary>
-        /// <param name="parameters"> Parameters supplied to the Update restore point collection operation. </param>
+        /// <param name="options"> Parameters supplied to the Update restore point collection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<RestorePointGroup> Update(RestorePointCollectionUpdate parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<RestorePointGroup> Update(RestorePointGroupUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _restorePointGroupRestorePointCollectionsClientDiagnostics.CreateScope("RestorePointGroup.Update");
             scope.Start();
             try
             {
-                var response = _restorePointGroupRestorePointCollectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var response = _restorePointGroupRestorePointCollectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
                 return Response.FromValue(new RestorePointGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

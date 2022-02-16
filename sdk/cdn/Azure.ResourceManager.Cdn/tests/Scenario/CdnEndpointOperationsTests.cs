@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Profile cdnProfile = await CreateCdnProfile(rg, cdnProfileName, SkuName.StandardMicrosoft);
             string cdnEndpointName = Recording.GenerateAssetName("endpoint-");
             CdnEndpoint cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
-            EndpointUpdateOptions updateOptions = new EndpointUpdateOptions
+            CdnEndpointUpdateOptions updateOptions = new CdnEndpointUpdateOptions
             {
                 IsHttpAllowed = false,
                 OriginPath = "/path/valid",

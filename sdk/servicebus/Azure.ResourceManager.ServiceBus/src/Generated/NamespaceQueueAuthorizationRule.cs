@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceBus
         internal NamespaceQueueAuthorizationRule(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _namespaceQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string namespaceQueueAuthorizationRuleQueueAuthorizationRulesApiVersion);
+            TryGetApiVersion(ResourceType, out string namespaceQueueAuthorizationRuleQueueAuthorizationRulesApiVersion);
             _namespaceQueueAuthorizationRuleQueueAuthorizationRulesRestClient = new QueueAuthorizationRulesRestOperations(_namespaceQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, namespaceQueueAuthorizationRuleQueueAuthorizationRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

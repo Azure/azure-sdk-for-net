@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn
         internal CdnOriginGroup(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _cdnOriginGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string cdnOriginGroupApiVersion);
+            TryGetApiVersion(ResourceType, out string cdnOriginGroupApiVersion);
             _cdnOriginGroupRestClient = new CdnOriginGroupsRestOperations(_cdnOriginGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cdnOriginGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -189,22 +189,22 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: CdnOriginGroups_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="originGroupUpdateProperties"> Origin group properties. </param>
+        /// <param name="options"> Origin group properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="originGroupUpdateProperties"/> is null. </exception>
-        public async virtual Task<ArmOperation<CdnOriginGroup>> UpdateAsync(bool waitForCompletion, OriginGroupUpdateOptions originGroupUpdateProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<ArmOperation<CdnOriginGroup>> UpdateAsync(bool waitForCompletion, CdnOriginGroupUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (originGroupUpdateProperties == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(originGroupUpdateProperties));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _cdnOriginGroupClientDiagnostics.CreateScope("CdnOriginGroup.Update");
             scope.Start();
             try
             {
-                var response = await _cdnOriginGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, originGroupUpdateProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CdnOriginGroup>(new CdnOriginGroupOperationSource(Client), _cdnOriginGroupClientDiagnostics, Pipeline, _cdnOriginGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, originGroupUpdateProperties).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = await _cdnOriginGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<CdnOriginGroup>(new CdnOriginGroupOperationSource(Client), _cdnOriginGroupClientDiagnostics, Pipeline, _cdnOriginGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -222,22 +222,22 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: CdnOriginGroups_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="originGroupUpdateProperties"> Origin group properties. </param>
+        /// <param name="options"> Origin group properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="originGroupUpdateProperties"/> is null. </exception>
-        public virtual ArmOperation<CdnOriginGroup> Update(bool waitForCompletion, OriginGroupUpdateOptions originGroupUpdateProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual ArmOperation<CdnOriginGroup> Update(bool waitForCompletion, CdnOriginGroupUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (originGroupUpdateProperties == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(originGroupUpdateProperties));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _cdnOriginGroupClientDiagnostics.CreateScope("CdnOriginGroup.Update");
             scope.Start();
             try
             {
-                var response = _cdnOriginGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, originGroupUpdateProperties, cancellationToken);
-                var operation = new CdnArmOperation<CdnOriginGroup>(new CdnOriginGroupOperationSource(Client), _cdnOriginGroupClientDiagnostics, Pipeline, _cdnOriginGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, originGroupUpdateProperties).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = _cdnOriginGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options, cancellationToken);
+                var operation = new CdnArmOperation<CdnOriginGroup>(new CdnOriginGroupOperationSource(Client), _cdnOriginGroupClientDiagnostics, Pipeline, _cdnOriginGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

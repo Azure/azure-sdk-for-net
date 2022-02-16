@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         internal VCenterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _vCenterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VCenter.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(VCenter.ResourceType, out string vCenterApiVersion);
+            TryGetApiVersion(VCenter.ResourceType, out string vCenterApiVersion);
             _vCenterRestClient = new VCentersRestOperations(_vCenterClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vCenterApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

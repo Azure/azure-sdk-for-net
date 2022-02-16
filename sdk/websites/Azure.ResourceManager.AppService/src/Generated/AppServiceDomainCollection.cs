@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         internal AppServiceDomainCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _appServiceDomainDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceDomain.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(AppServiceDomain.ResourceType, out string appServiceDomainDomainsApiVersion);
+            TryGetApiVersion(AppServiceDomain.ResourceType, out string appServiceDomainDomainsApiVersion);
             _appServiceDomainDomainsRestClient = new DomainsRestOperations(_appServiceDomainDomainsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, appServiceDomainDomainsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

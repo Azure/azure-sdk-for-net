@@ -524,8 +524,8 @@ namespace Azure.ResourceManager.Storage
         public virtual System.Threading.Tasks.Task<Azure.Response> RevokeUserDelegationKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Storage.StorageAccount> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.StorageAccount>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Storage.StorageAccount> Update(Azure.ResourceManager.Storage.Models.StorageAccountUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.StorageAccount>> UpdateAsync(Azure.ResourceManager.Storage.Models.StorageAccountUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Storage.StorageAccount> Update(Azure.ResourceManager.Storage.Models.StorageAccountUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.StorageAccount>> UpdateAsync(Azure.ResourceManager.Storage.Models.StorageAccountUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class StorageAccountCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Storage.StorageAccount>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.StorageAccount>, System.Collections.IEnumerable
     {
@@ -2421,9 +2421,9 @@ namespace Azure.ResourceManager.Storage.Models
         public StorageAccountRegenerateKeyParameters(string keyName) { }
         public string KeyName { get { throw null; } }
     }
-    public partial class StorageAccountUpdateParameters
+    public partial class StorageAccountUpdateOptions
     {
-        public StorageAccountUpdateParameters() { }
+        public StorageAccountUpdateOptions() { }
         public Azure.ResourceManager.Storage.Models.AccessTier? AccessTier { get { throw null; } set { } }
         public bool? AllowBlobPublicAccess { get { throw null; } set { } }
         public bool? AllowCrossTenantReplication { get { throw null; } set { } }

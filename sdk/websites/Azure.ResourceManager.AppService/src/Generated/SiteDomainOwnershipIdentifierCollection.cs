@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of Identifier and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteDomainOwnershipIdentifier and their operations over its parent. </summary>
     public partial class SiteDomainOwnershipIdentifierCollection : ArmCollection, IEnumerable<SiteDomainOwnershipIdentifier>, IAsyncEnumerable<SiteDomainOwnershipIdentifier>
     {
         private readonly ClientDiagnostics _siteDomainOwnershipIdentifierWebAppsClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteDomainOwnershipIdentifierCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteDomainOwnershipIdentifierWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteDomainOwnershipIdentifier.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteDomainOwnershipIdentifier.ResourceType, out string siteDomainOwnershipIdentifierWebAppsApiVersion);
+            TryGetApiVersion(SiteDomainOwnershipIdentifier.ResourceType, out string siteDomainOwnershipIdentifierWebAppsApiVersion);
             _siteDomainOwnershipIdentifierWebAppsRestClient = new WebAppsRestOperations(_siteDomainOwnershipIdentifierWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteDomainOwnershipIdentifierWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

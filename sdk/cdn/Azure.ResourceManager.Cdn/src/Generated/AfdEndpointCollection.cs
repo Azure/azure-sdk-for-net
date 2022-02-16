@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn
         internal AfdEndpointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _afdEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", AfdEndpoint.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(AfdEndpoint.ResourceType, out string afdEndpointApiVersion);
+            TryGetApiVersion(AfdEndpoint.ResourceType, out string afdEndpointApiVersion);
             _afdEndpointRestClient = new AfdEndpointsRestOperations(_afdEndpointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdEndpointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkVirtualAppliance(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _networkVirtualApplianceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string networkVirtualApplianceApiVersion);
+            TryGetApiVersion(ResourceType, out string networkVirtualApplianceApiVersion);
             _networkVirtualApplianceRestClient = new NetworkVirtualAppliancesRestOperations(_networkVirtualApplianceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkVirtualApplianceApiVersion);
             _inboundSecurityRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _inboundSecurityRuleRestClient = new InboundSecurityRuleRestOperations(_inboundSecurityRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);

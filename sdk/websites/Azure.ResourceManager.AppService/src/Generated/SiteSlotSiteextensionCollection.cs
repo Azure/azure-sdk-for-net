@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteExtensionInfo and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteSlotSiteextension and their operations over its parent. </summary>
     public partial class SiteSlotSiteextensionCollection : ArmCollection, IEnumerable<SiteSlotSiteextension>, IAsyncEnumerable<SiteSlotSiteextension>
     {
         private readonly ClientDiagnostics _siteSlotSiteextensionWebAppsClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotSiteextensionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotSiteextensionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotSiteextension.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteSlotSiteextension.ResourceType, out string siteSlotSiteextensionWebAppsApiVersion);
+            TryGetApiVersion(SiteSlotSiteextension.ResourceType, out string siteSlotSiteextensionWebAppsApiVersion);
             _siteSlotSiteextensionWebAppsRestClient = new WebAppsRestOperations(_siteSlotSiteextensionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotSiteextensionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

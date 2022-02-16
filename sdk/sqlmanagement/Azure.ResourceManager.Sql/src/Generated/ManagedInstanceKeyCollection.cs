@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
         internal ManagedInstanceKeyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managedInstanceKeyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceKey.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ManagedInstanceKey.ResourceType, out string managedInstanceKeyApiVersion);
+            TryGetApiVersion(ManagedInstanceKey.ResourceType, out string managedInstanceKeyApiVersion);
             _managedInstanceKeyRestClient = new ManagedInstanceKeysRestOperations(_managedInstanceKeyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceKeyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

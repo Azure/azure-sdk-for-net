@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Storage.Tests
             VerifyAccountProperties(account1, true);
 
             //update sku
-            StorageAccountUpdateParameters parameters = new StorageAccountUpdateParameters()
+            StorageAccountUpdateOptions parameters = new StorageAccountUpdateOptions()
             {
                 Sku = new Sku(SkuName.StandardLRS),
             };
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account2.Data.Encryption.Services.File.LastEnabledTime);
 
             //update http traffic only and validate
-            parameters = new StorageAccountUpdateParameters()
+            parameters = new StorageAccountUpdateOptions()
             {
                 EnableHttpsTrafficOnly = false
             };
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(account1.Data.EnableHttpsTrafficOnly, false);
             account2 = await storageAccountCollection.GetAsync(accountName);
             Assert.AreEqual(account2.Data.EnableHttpsTrafficOnly, false);
-            parameters = new StorageAccountUpdateParameters()
+            parameters = new StorageAccountUpdateOptions()
             {
                 EnableHttpsTrafficOnly = true
             };
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccount account1 = (await storageAccountCollection.CreateOrUpdateAsync(true, accountName, GetDefaultStorageAccountParameters())).Value;
             VerifyAccountProperties(account1, true);
 
-            var parameters = new StorageAccountUpdateParameters()
+            var parameters = new StorageAccountUpdateOptions()
             {
                 CustomDomain = new CustomDomain("foo.example.com")
                 {
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccount account1 = (await storageAccountCollection.CreateOrUpdateAsync(true, accountName, GetDefaultStorageAccountParameters())).Value;
             VerifyAccountProperties(account1, true);
 
-            var parameters = new StorageAccountUpdateParameters()
+            var parameters = new StorageAccountUpdateOptions()
             {
                 Kind = Kind.StorageV2,
                 EnableHttpsTrafficOnly = true
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsFalse(account1.Data.AllowSharedKeyAccess);
 
             //update
-            var parameter = new StorageAccountUpdateParameters()
+            var parameter = new StorageAccountUpdateOptions()
             {
                 AllowSharedKeyAccess = true,
                 EnableHttpsTrafficOnly = false
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsTrue(account1.Data.AllowSharedKeyAccess);
 
             //update
-            parameter = new StorageAccountUpdateParameters()
+            parameter = new StorageAccountUpdateOptions()
             {
                 AllowSharedKeyAccess = false,
                 EnableHttpsTrafficOnly = false
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Storage.Tests
             VerifyAccountProperties(account1, true);
 
             //update account type and tags
-            var parameters = new StorageAccountUpdateParameters()
+            var parameters = new StorageAccountUpdateOptions()
             {
                 Sku = new Sku(SkuName.StandardLRS)
             };
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.Storage.Tests
             VerifyAccountProperties(account1, true);
 
             //update encryption
-            var parameters = new StorageAccountUpdateParameters
+            var parameters = new StorageAccountUpdateOptions
             {
                 Encryption = new Encryption(KeySource.MicrosoftStorage)
                 {
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account1.Data.Encryption.Services.File.LastEnabledTime);
 
             // 2. Restore storage encryption
-            parameters = new StorageAccountUpdateParameters
+            parameters = new StorageAccountUpdateOptions
             {
                 Encryption = new Encryption(KeySource.MicrosoftStorage)
                 {
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account1.Data.Encryption.Services.File.LastEnabledTime);
 
             // 3. Remove file encryption service field.
-            parameters = new StorageAccountUpdateParameters
+            parameters = new StorageAccountUpdateOptions
             {
                 Encryption = new Encryption(KeySource.MicrosoftStorage)
                 {
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(DefaultAction.Allow.ToString(), accountData.NetworkRuleSet.IpRules[0].Action);
 
             //update network rule
-            StorageAccountUpdateParameters updateParameters = new StorageAccountUpdateParameters()
+            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions()
             {
                 NetworkRuleSet = new NetworkRuleSet(defaultAction: DefaultAction.Deny)
                 {
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(DefaultAction.Allow.ToString(), accountData.NetworkRuleSet.IpRules[1].Action);
 
             //update network rule to allow
-            updateParameters = new StorageAccountUpdateParameters()
+            updateParameters = new StorageAccountUpdateOptions()
             {
                 NetworkRuleSet = new NetworkRuleSet(defaultAction: DefaultAction.Allow)
             };
@@ -1008,7 +1008,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(MinimumTlsVersion.TLS11, account.Data.MinimumTlsVersion);
 
             //update account
-            StorageAccountUpdateParameters udpateParameters = new StorageAccountUpdateParameters();
+            StorageAccountUpdateOptions udpateParameters = new StorageAccountUpdateOptions();
             udpateParameters.MinimumTlsVersion = MinimumTlsVersion.TLS12;
             udpateParameters.AllowBlobPublicAccess = true;
             udpateParameters.EnableHttpsTrafficOnly = true;
@@ -1563,7 +1563,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual("Allow", account.Data.NetworkRuleSet.IpRules[0].Action);
 
             //update vnet
-            StorageAccountUpdateParameters updateParameters = new StorageAccountUpdateParameters
+            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions
             {
                 NetworkRuleSet = new NetworkRuleSet(DefaultAction.Deny)
                 {
@@ -1596,7 +1596,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual("/subscriptions/subID/resourceGroups/RGName/providers/Microsoft.Storage/storageAccounts/testaccount2", account.Data.NetworkRuleSet.ResourceAccessRules[1].ResourceId);
 
             //delete vnet
-            updateParameters = new StorageAccountUpdateParameters
+            updateParameters = new StorageAccountUpdateOptions
             {
                 NetworkRuleSet = new NetworkRuleSet(DefaultAction.Allow) { }
             };
@@ -1625,7 +1625,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual("2.02:03:59", account.Data.SasPolicy.SasExpirationPeriod);
 
             //update storage account type
-            var updateParameters = new StorageAccountUpdateParameters()
+            var updateParameters = new StorageAccountUpdateOptions()
             {
                 Kind = Kind.StorageV2,
                 EnableHttpsTrafficOnly = true,
@@ -1693,7 +1693,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(DirectoryServiceOptions.Aadds, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
 
             //Update storage account
-            var updateParameters = new StorageAccountUpdateParameters
+            var updateParameters = new StorageAccountUpdateOptions
             {
                 AzureFilesIdentityBasedAuthentication = new AzureFilesIdentityBasedAuthentication(DirectoryServiceOptions.None),
                 EnableHttpsTrafficOnly = true

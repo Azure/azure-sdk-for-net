@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.Sql
         internal JobAgent(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _jobAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string jobAgentApiVersion);
+            TryGetApiVersion(ResourceType, out string jobAgentApiVersion);
             _jobAgentRestClient = new JobAgentsRestOperations(_jobAgentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jobAgentApiVersion);
             _serverJobAgentJobExecutionJobExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerJobAgentJobExecution.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ServerJobAgentJobExecution.ResourceType, out string serverJobAgentJobExecutionJobExecutionsApiVersion);
+            TryGetApiVersion(ServerJobAgentJobExecution.ResourceType, out string serverJobAgentJobExecutionJobExecutionsApiVersion);
             _serverJobAgentJobExecutionJobExecutionsRestClient = new JobExecutionsRestOperations(_serverJobAgentJobExecutionJobExecutionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverJobAgentJobExecutionJobExecutionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException("Only resource in a subscription is supported");
             }
             _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Id.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(Id.ResourceType, out string apiVersion);
+            TryGetApiVersion(Id.ResourceType, out string apiVersion);
             _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, apiVersion);
             _providerCollection = new ProviderCollection(Client.GetSubscription(subscription));
         }

@@ -22,7 +22,7 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ManagedInstanceLongTermRetentionBackup and their operations over its parent. </summary>
+    /// <summary> A class representing collection of ResourceGroupLongTermRetentionManagedInstanceBackup and their operations over its parent. </summary>
     public partial class ResourceGroupLongTermRetentionManagedInstanceBackupCollection : ArmCollection, IEnumerable<ResourceGroupLongTermRetentionManagedInstanceBackup>, IAsyncEnumerable<ResourceGroupLongTermRetentionManagedInstanceBackup>
     {
         private readonly ClientDiagnostics _resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql
             _managedInstanceName = managedInstanceName;
             _databaseName = databaseName;
             _resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceGroupLongTermRetentionManagedInstanceBackup.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceGroupLongTermRetentionManagedInstanceBackup.ResourceType, out string resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsApiVersion);
+            TryGetApiVersion(ResourceGroupLongTermRetentionManagedInstanceBackup.ResourceType, out string resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsApiVersion);
             _resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient = new LongTermRetentionManagedInstanceBackupsRestOperations(_resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

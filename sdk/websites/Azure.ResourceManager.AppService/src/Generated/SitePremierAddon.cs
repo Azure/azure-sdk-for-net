@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService
         internal SitePremierAddon(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sitePremierAddonWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string sitePremierAddonWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string sitePremierAddonWebAppsApiVersion);
             _sitePremierAddonWebAppsRestClient = new WebAppsRestOperations(_sitePremierAddonWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sitePremierAddonWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

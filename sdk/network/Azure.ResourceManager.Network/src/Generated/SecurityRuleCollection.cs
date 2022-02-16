@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         internal SecurityRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _securityRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", SecurityRule.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SecurityRule.ResourceType, out string securityRuleApiVersion);
+            TryGetApiVersion(SecurityRule.ResourceType, out string securityRuleApiVersion);
             _securityRuleRestClient = new SecurityRulesRestOperations(_securityRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, securityRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

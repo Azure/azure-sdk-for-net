@@ -21,7 +21,7 @@ using Azure.ResourceManager.KeyVault.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> A class representing collection of Key and their operations over its parent. </summary>
+    /// <summary> A class representing collection of VaultKey and their operations over its parent. </summary>
     public partial class VaultKeyCollection : ArmCollection, IEnumerable<VaultKey>, IAsyncEnumerable<VaultKey>
     {
         private readonly ClientDiagnostics _vaultKeyKeysClientDiagnostics;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KeyVault
         internal VaultKeyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _vaultKeyKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", VaultKey.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(VaultKey.ResourceType, out string vaultKeyKeysApiVersion);
+            TryGetApiVersion(VaultKey.ResourceType, out string vaultKeyKeysApiVersion);
             _vaultKeyKeysRestClient = new KeysRestOperations(_vaultKeyKeysClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vaultKeyKeysApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

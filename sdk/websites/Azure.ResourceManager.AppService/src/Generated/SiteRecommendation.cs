@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteRecommendation(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteRecommendationRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteRecommendationRecommendationsApiVersion);
+            TryGetApiVersion(ResourceType, out string siteRecommendationRecommendationsApiVersion);
             _siteRecommendationRecommendationsRestClient = new RecommendationsRestOperations(_siteRecommendationRecommendationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteRecommendationRecommendationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
