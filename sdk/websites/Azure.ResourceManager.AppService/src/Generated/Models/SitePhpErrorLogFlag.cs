@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -21,12 +22,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="localLogErrors"> Local log_errors setting. </param>
         /// <param name="masterLogErrors"> Master log_errors setting. </param>
         /// <param name="localLogErrorsMaxLength"> Local log_errors_max_len setting. </param>
         /// <param name="masterLogErrorsMaxLength"> Master log_errors_max_len setting. </param>
-        internal SitePhpErrorLogFlag(ResourceIdentifier id, string name, ResourceType type, string kind, string localLogErrors, string masterLogErrors, string localLogErrorsMaxLength, string masterLogErrorsMaxLength) : base(id, name, type, kind)
+        internal SitePhpErrorLogFlag(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string localLogErrors, string masterLogErrors, string localLogErrorsMaxLength, string masterLogErrorsMaxLength) : base(id, name, type, systemData, kind)
         {
             LocalLogErrors = localLogErrors;
             MasterLogErrors = masterLogErrors;

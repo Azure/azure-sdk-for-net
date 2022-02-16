@@ -5,14 +5,14 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
     /// <summary> A class representing the QueueService data model. </summary>
-    public partial class QueueServiceData : Resource
+    public partial class QueueServiceData : ResourceData
     {
         /// <summary> Initializes a new instance of QueueServiceData. </summary>
         public QueueServiceData()
@@ -23,8 +23,9 @@ namespace Azure.ResourceManager.Storage
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="cors"> Specifies CORS rules for the Queue service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Queue service. </param>
-        internal QueueServiceData(ResourceIdentifier id, string name, ResourceType type, CorsRules cors) : base(id, name, type)
+        internal QueueServiceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, CorsRules cors) : base(id, name, type, systemData)
         {
             Cors = cors;
         }

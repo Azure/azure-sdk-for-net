@@ -40,11 +40,18 @@ function Login([string]$subscription, [string]$clusterGroup, [switch]$pushImages
     $cluster = RunOrExitOnFailure az aks list -g $clusterGroup --subscription $subscription -o json
     $clusterName = ($cluster | ConvertFrom-Json).name
 
+    $kubeContext = (RunOrExitOnFailure kubectl config view -o json) | ConvertFrom-Json
+    $defaultNamespace = $kubeContext.contexts.Where({ $_.name -eq $clusterName }).context.namespace
+
     RunOrExitOnFailure az aks get-credentials `
         -n "$clusterName" `
         -g "$clusterGroup" `
         --subscription "$subscription" `
         --overwrite-existing
+
+    if ($defaultNamespace) {
+        RunOrExitOnFailure kubectl config set-context $clusterName --namespace $defaultNamespace
+    }
 
     if ($pushImages) {
         $registry = RunOrExitOnFailure az acr list -g $clusterGroup --subscription $subscription -o json
@@ -77,12 +84,6 @@ function DeployStressTests(
         }
         $clusterGroup = 'rg-stress-cluster-prod'
         $subscription = 'Azure SDK Test Resources'
-    }
-
-    if (!$repository) {
-        $repository = if ($env:USER) { $env:USER } else { "${env:USERNAME}" }
-        # Remove spaces, etc. that may be in $namespace
-        $repository -replace '\W'
     }
 
     if ($login) {
@@ -149,11 +150,34 @@ function DeployStressPackage(
     }
     $imageTag += "/$($pkg.Namespace)/$($pkg.ReleaseName):${deployId}"
 
-    if ($pushImages) {
+    $dockerFilePath = if ($pkg.Dockerfile) {
+        Join-Path $pkg.Directory $pkg.Dockerfile
+    } else {
+        "$($pkg.Directory)/Dockerfile"
+    }
+    $dockerFilePath = [System.IO.Path]::GetFullPath($dockerFilePath)
+
+    if ($pushImages -and (Test-Path $dockerFilePath)) {
         Write-Host "Building and pushing stress test docker image '$imageTag'"
-        $dockerFile = Get-ChildItem "$($pkg.Directory)/Dockerfile"
-        Run docker build -t $imageTag -f $dockerFile.FullName $dockerFile.DirectoryName
+        $dockerFile = Get-ChildItem $dockerFilePath
+        $dockerBuildFolder = if ($pkg.DockerBuildDir) {
+            Join-Path $pkg.Directory $pkg.DockerBuildDir
+        } else {
+            $dockerFile.DirectoryName
+        }
+        $dockerBuildFolder = [System.IO.Path]::GetFullPath($dockerBuildFolder).Trim()
+
+        Run docker build -t $imageTag -f $dockerFile $dockerBuildFolder
         if ($LASTEXITCODE) { return }
+
+        Write-Host "`nContainer image '$imageTag' successfully built. To run commands on the container locally:" -ForegroundColor Blue
+        Write-Host "  docker run -it $imageTag" -ForegroundColor DarkBlue
+        Write-Host "  docker run -it $imageTag <shell, e.g. 'bash' 'pwsh' 'sh'>" -ForegroundColor DarkBlue
+        Write-Host "To show installed container images:" -ForegroundColor Blue
+        Write-Host "  docker image ls" -ForegroundColor DarkBlue
+        Write-Host "To show running containers:" -ForegroundColor Blue
+        Write-Host "  docker ps" -ForegroundColor DarkBlue
+
         Run docker push $imageTag
         if ($LASTEXITCODE) {
             if ($login) {

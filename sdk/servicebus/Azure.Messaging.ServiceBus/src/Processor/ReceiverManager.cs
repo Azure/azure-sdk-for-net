@@ -118,7 +118,7 @@ namespace Azure.Messaging.ServiceBus
         protected async Task ProcessOneMessageWithinScopeAsync(ServiceBusReceivedMessage message, string activityName, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _scopeFactory.CreateScope(activityName, DiagnosticScope.ActivityKind.Consumer);
-            scope.SetMessageData(new ServiceBusReceivedMessage[] { message });
+            scope.SetMessageData(message);
             scope.Start();
             try
             {
@@ -262,7 +262,8 @@ namespace Azure.Messaging.ServiceBus
                     // by the renewLockCancellationToken. This way we prevent a TaskCanceledException.
                     Task delayTask = await Task.Delay(delay, cancellationToken)
                         .ContinueWith(
-                            (t, s) => t,
+                            t => t,
+                            CancellationToken.None,
                             TaskContinuationOptions.ExecuteSynchronously,
                             TaskScheduler.Default)
                         .ConfigureAwait(false);

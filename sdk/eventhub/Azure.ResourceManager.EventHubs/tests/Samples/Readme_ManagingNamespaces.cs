@@ -3,6 +3,7 @@
 #region Snippet:Managing_Namespaces_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Resources;
@@ -22,8 +23,8 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             string rgName = "myRgName";
-            Location location = Location.WestUS2;
-            ResourceGroupCreateOrUpdateOperation operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+            AzureLocation location = AzureLocation.WestUS2;
+            ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = operation.Value;
             #endregion
             this.resourceGroup = resourceGroup;
@@ -36,8 +37,8 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
             #region Snippet:Managing_Namespaces_CreateNamespace
             string namespaceName = "myNamespace";
             EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
-            Location location = Location.EastUS2;
-            EventHubNamespace eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new EventHubNamespaceData(location))).Value;
+            AzureLocation location = AzureLocation.EastUS2;
+            EventHubNamespace eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new EventHubNamespaceData(location))).Value;
             #endregion
         }
 
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
             {
                 Console.WriteLine("namespace 'foo' exists");
             }
-            if (await namespaceCollection.CheckIfExistsAsync("bar"))
+            if (await namespaceCollection.ExistsAsync("bar"))
             {
                 Console.WriteLine("namespace 'bar' exists");
             }
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
             #region Snippet:Managing_Namespaces_DeleteNamespace
             EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
             EventHubNamespace eventHubNamespace = await namespaceCollection.GetAsync("myNamespace");
-            await eventHubNamespace.DeleteAsync();
+            await eventHubNamespace.DeleteAsync(true);
             #endregion
         }
 

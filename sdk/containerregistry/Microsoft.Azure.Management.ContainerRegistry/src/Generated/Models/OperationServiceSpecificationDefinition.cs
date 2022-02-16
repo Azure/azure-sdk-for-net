@@ -35,9 +35,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         /// <param name="metricSpecifications">A list of Azure Monitoring
         /// metrics definition.</param>
-        public OperationServiceSpecificationDefinition(IList<OperationMetricSpecificationDefinition> metricSpecifications = default(IList<OperationMetricSpecificationDefinition>))
+        /// <param name="logSpecifications">A list of Azure Monitoring log
+        /// definitions.</param>
+        public OperationServiceSpecificationDefinition(IList<OperationMetricSpecificationDefinition> metricSpecifications = default(IList<OperationMetricSpecificationDefinition>), IList<OperationLogSpecificationDefinition> logSpecifications = default(IList<OperationLogSpecificationDefinition>))
         {
             MetricSpecifications = metricSpecifications;
+            LogSpecifications = logSpecifications;
             CustomInit();
         }
 
@@ -51,6 +54,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "metricSpecifications")]
         public IList<OperationMetricSpecificationDefinition> MetricSpecifications { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of Azure Monitoring log definitions.
+        /// </summary>
+        [JsonProperty(PropertyName = "logSpecifications")]
+        public IList<OperationLogSpecificationDefinition> LogSpecifications { get; set; }
 
     }
 }

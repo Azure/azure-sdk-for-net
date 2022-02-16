@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,34 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.3 (2022-01-30)
+
+### Features Added
+
+- Bump API version to `2021-08-01`
+
+### Breaking Changes
+
+- `waitForCompletion` is now a required parameter and moved to the first parameter in LRO operations
+
+## 1.0.0-beta.2 (2021-12-28)
+
+### Features Added
+
+- Added `CreateResourceIdentifier` for each resource class
+- Class `RestorableDatabaseAccountCollection` now implements `IEnumerable<T>` and `IAsyncEnumerable<T>`
+
+### Breaking Changes
+
+- Renamed `CheckIfExists` to `Exists` for each resource collection class
+- Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResources` in `SubscriptionExtensions`
+- Constructor of `RestorableDatabaseAccountCollection` no longer accepts `location` as its first parameter.
+- Method `GetRestorableDatabaseAccounts` in `SubscriptionExtensions` now accepts an extra parameter `location`.
+
+### Bugs Fixed
+
+- Fixed comments for `FirstPageFunc` of each pageable resource class
 
 ## 1.0.0-beta.1 (2021-12-07)
 

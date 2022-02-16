@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             CdnEndpoint cdnEndpoint = await CreateCdnEndpointWithOriginGroup(cdnProfile, cdnEndpointName);
             string cdnOriginName = Recording.GenerateAssetName("origin-");
             CdnOrigin cdnOrigin = await CreateCdnOrigin(cdnEndpoint, cdnOriginName);
-            await cdnOrigin.DeleteAsync();
+            await cdnOrigin.DeleteAsync(true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await cdnOrigin.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
@@ -46,14 +46,14 @@ namespace Azure.ResourceManager.Cdn.Tests
             CdnEndpoint cdnEndpoint = await CreateCdnEndpointWithOriginGroup(cdnProfile, cdnEndpointName);
             string cdnOriginName = Recording.GenerateAssetName("origin-");
             CdnOrigin cdnOrigin = await CreateCdnOrigin(cdnEndpoint, cdnOriginName);
-            OriginUpdateOptions updateOptions = new OriginUpdateOptions()
+            CdnOriginUpdateOptions updateOptions = new CdnOriginUpdateOptions()
             {
                 HttpPort = 81,
                 HttpsPort = 442,
                 Priority = 1,
                 Weight = 150
             };
-            var lro = await cdnOrigin.UpdateAsync(updateOptions);
+            var lro = await cdnOrigin.UpdateAsync(true, updateOptions);
             CdnOrigin updatedCdnOrigin = lro.Value;
             ResourceDataHelper.AssertOriginUpdate(updatedCdnOrigin, updateOptions);
         }

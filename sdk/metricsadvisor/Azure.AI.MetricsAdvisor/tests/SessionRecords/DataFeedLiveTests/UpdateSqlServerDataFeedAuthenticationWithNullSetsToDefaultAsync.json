@@ -98,7 +98,7 @@
             "metricName": "cost"
           }
         ],
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "authenticationType": "ServicePrincipal",
         "credentialId": "a72036af-084d-4197-88d7-abc60e36064d"
       },
@@ -151,7 +151,7 @@
           }
         ],
         "dimension": [],
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "dataSourceType": "SqlServer",
         "timestampColumn": "",
         "startOffsetInSeconds": 0,
@@ -204,7 +204,7 @@
         "dataFeedName": "dataFeeddvRwewPI",
         "dataFeedDescription": "",
         "timestampColumn": "",
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "startOffsetInSeconds": 0,
         "maxConcurrency": -1,
         "minRetryIntervalInSeconds": -1,
@@ -247,7 +247,7 @@
           }
         ],
         "dimension": [],
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "dataSourceType": "SqlServer",
         "timestampColumn": "",
         "startOffsetInSeconds": 0,

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var container = await GetAppServicePlanCollectionAsync();
             var name = Recording.GenerateAssetName("testAppServicePlan");
             var input = ResourceDataHelper.GetBasicAppServicePlanData(DefaultLocation);
-            var lro = await container.CreateOrUpdateAsync(name, input);
+            var lro = await container.CreateOrUpdateAsync(true, name, input);
             var appServicePlan = lro.Value;
             Assert.AreEqual(name, appServicePlan.Data.Name);
         }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var container = await GetAppServicePlanCollectionAsync();
             var planName = Recording.GenerateAssetName("testAppServicePlan-");
             var input = ResourceDataHelper.GetBasicAppServicePlanData(DefaultLocation);
-            var lro = await container.CreateOrUpdateAsync(planName, input);
+            var lro = await container.CreateOrUpdateAsync(true, planName, input);
             AppServicePlan plan1 = lro.Value;
             AppServicePlan plan2 = await container.GetAsync(planName);
             ResourceDataHelper.AssertPlan(plan1.Data, plan2.Data);
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         {
             var container = await GetAppServicePlanCollectionAsync();
             var input = ResourceDataHelper.GetBasicAppServicePlanData(DefaultLocation);
-            _ = await container.CreateOrUpdateAsync(Recording.GenerateAssetName("testAppService-"), input);
-            _ = await container.CreateOrUpdateAsync(Recording.GenerateAssetName("testAppService-"), input);
+            _ = await container.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testAppService-"), input);
+            _ = await container.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testAppService-"), input);
             int count = 0;
             await foreach (var appServicePlan in container.GetAllAsync())
             {
@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
 
         [TestCase]
         [RecordedTest]
-        public async Task CheckIfExistsAsync()
+        public async Task Exists()
         {
             var container = await GetAppServicePlanCollectionAsync();
             var planName = Recording.GenerateAssetName("testAppService-");
             var input = ResourceDataHelper.GetBasicAppServicePlanData(DefaultLocation);
-            var lro = await container.CreateOrUpdateAsync(planName, input);
+            var lro = await container.CreateOrUpdateAsync(true, planName, input);
             AppServicePlan plan = lro.Value;
-            Assert.IsTrue(await container.CheckIfExistsAsync(planName));
-            Assert.IsFalse(await container.CheckIfExistsAsync(planName + "1"));
+            Assert.IsTrue(await container.ExistsAsync(planName));
+            Assert.IsFalse(await container.ExistsAsync(planName + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.CheckIfExistsAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.ExistsAsync(null));
         }
     }
 }

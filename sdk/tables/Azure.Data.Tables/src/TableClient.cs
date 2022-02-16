@@ -295,7 +295,11 @@ namespace Azure.Data.Tables
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
             HttpPipelinePolicy authPolicy = sasCredential switch
             {
-                null => policy,
+                // We were not passed an explicit SasCredential nor does one exist in the query string, default to policy
+                null when string.IsNullOrWhiteSpace(_endpoint.Query) => policy,
+                // The endpoint has a query string, so assume it is a SAS token
+                null => new AzureSasCredentialSynchronousPolicy(new AzureSasCredential(_endpoint.Query)),
+                // We were passed an explicit SasCredential, use that
                 _ => new AzureSasCredentialSynchronousPolicy(sasCredential)
             };
             _pipeline = HttpPipelineBuilder.Build(
@@ -322,8 +326,15 @@ namespace Azure.Data.Tables
             TableSharedKeyCredential credential)
         {
             _endpoint = TableUriBuilder.GetEndpointWithoutTableName(endpoint, table);
-            _tableOperations = tableOperations;
-            _tableOperations.endpoint = _endpoint.AbsoluteUri;
+            if (endpoint.AbsoluteUri != _endpoint.AbsoluteUri)
+            {
+                // GetEndpointWithoutTableName produced a different Uri, so construct a new TableRestClient with it.
+                _tableOperations = new TableRestClient(diagnostics, pipeline, _endpoint.AbsoluteUri, version);
+            }
+            else
+            {
+                _tableOperations = tableOperations;
+            }
             _version = version;
             Name = table;
             _accountName = accountName;
@@ -1425,6 +1436,13 @@ namespace Azure.Data.Tables
                 throw new ArgumentException($"The {nameof(builder.TableName)} must match the table name used to initialize this instance of the client");
             }
             TableUriBuilder sasUri = new(_endpoint);
+            if (string.IsNullOrEmpty(sasUri.Tablename))
+            {
+                // The table name is not included in the URI, so add it while preserving the trailing slash, if it exists.
+                var sasUrlbuilder = new UriBuilder(_endpoint);
+                sasUrlbuilder.Path += sasUrlbuilder.Path.EndsWith("/", StringComparison.Ordinal) ? $"{Name}/" : $"/{Name}";
+                sasUri = new(sasUrlbuilder.Uri);
+            }
             sasUri.Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString();
             return sasUri.ToUri();
         }

@@ -17,13 +17,15 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(Apiconfig111))
-            {
-                writer.WritePropertyName("apiconfig111");
-                writer.WriteStringValue(Apiconfig111);
+                if (Id != null)
+                {
+                    writer.WritePropertyName("id");
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNull("id");
+                }
             }
             writer.WriteEndObject();
         }
@@ -31,21 +33,20 @@ namespace Azure.ResourceManager.AppService.Models
         internal static ApiManagementConfig DeserializeApiManagementConfig(JsonElement element)
         {
             Optional<string> id = default;
-            Optional<string> apiconfig111 = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        id = null;
+                        continue;
+                    }
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("apiconfig111"))
-                {
-                    apiconfig111 = property.Value.GetString();
-                    continue;
-                }
             }
-            return new ApiManagementConfig(id.Value, apiconfig111.Value);
+            return new ApiManagementConfig(id.Value);
         }
     }
 }

@@ -20,8 +20,10 @@ namespace Azure.Analytics.Purview.Catalog
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
@@ -161,12 +163,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdate");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdate");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -305,12 +309,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response CreateOrUpdate(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdate");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdate");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -399,12 +405,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetByGuidsAsync(IEnumerable<string> guids, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuids");
+            Argument.AssertNotNull(guids, nameof(guids));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetByGuids");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetByGuidsRequest(guids, minExtInfo, ignoreRelationships, excludeRelationshipTypes, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -493,12 +501,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetByGuids(IEnumerable<string> guids, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuids");
+            Argument.AssertNotNull(guids, nameof(guids));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetByGuids");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetByGuidsRequest(guids, minExtInfo, ignoreRelationships, excludeRelationshipTypes, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -639,12 +649,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> CreateOrUpdateEntitiesAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateEntities");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateEntities");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateEntitiesRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -785,12 +797,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response CreateOrUpdateEntities(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateEntities");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateEntities");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateEntitiesRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -868,12 +882,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteByGuidsAsync(IEnumerable<string> guids, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuids");
+            Argument.AssertNotNull(guids, nameof(guids));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteByGuids");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteByGuidsRequest(guids, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -951,12 +967,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response DeleteByGuids(IEnumerable<string> guids, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuids");
+            Argument.AssertNotNull(guids, nameof(guids));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteByGuids");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteByGuidsRequest(guids, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1005,12 +1023,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> AddClassificationAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassification");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddClassification");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAddClassificationRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1059,12 +1079,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response AddClassification(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassification");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddClassification");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAddClassificationRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1150,12 +1172,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetByGuidAsync(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuid");
+            Argument.AssertNotNull(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetByGuid");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetByGuidRequest(guid, minExtInfo, ignoreRelationships, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1241,12 +1265,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetByGuid(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuid");
+            Argument.AssertNotNull(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetByGuid");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetByGuidRequest(guid, minExtInfo, ignoreRelationships, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1331,12 +1357,16 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> PartialUpdateEntityAttributeByGuidAsync(string guid, string name, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityAttributeByGuid");
+            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityAttributeByGuid");
             scope.Start();
             try
             {
                 using HttpMessage message = CreatePartialUpdateEntityAttributeByGuidRequest(guid, name, content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1421,12 +1451,16 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response PartialUpdateEntityAttributeByGuid(string guid, string name, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityAttributeByGuid");
+            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityAttributeByGuid");
             scope.Start();
             try
             {
                 using HttpMessage message = CreatePartialUpdateEntityAttributeByGuidRequest(guid, name, content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1504,12 +1538,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteByGuidAsync(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuid");
+            Argument.AssertNotNull(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteByGuid");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteByGuidRequest(guid, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1587,12 +1623,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response DeleteByGuid(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuid");
+            Argument.AssertNotNull(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteByGuid");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteByGuidRequest(guid, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1639,12 +1677,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetClassificationAsync(string guid, string classificationName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassification");
+            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNull(classificationName, nameof(classificationName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetClassification");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetClassificationRequest(guid, classificationName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1691,12 +1732,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetClassification(string guid, string classificationName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassification");
+            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNull(classificationName, nameof(classificationName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetClassification");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetClassificationRequest(guid, classificationName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1724,12 +1768,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteClassificationAsync(string guid, string classificationName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassification");
+            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNull(classificationName, nameof(classificationName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteClassification");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteClassificationRequest(guid, classificationName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1757,12 +1804,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response DeleteClassification(string guid, string classificationName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassification");
+            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNull(classificationName, nameof(classificationName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteClassification");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteClassificationRequest(guid, classificationName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1799,12 +1849,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetClassificationsAsync(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassifications");
+            Argument.AssertNotNull(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetClassifications");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetClassificationsRequest(guid, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1841,12 +1893,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetClassifications(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassifications");
+            Argument.AssertNotNull(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetClassifications");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetClassificationsRequest(guid, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1893,12 +1947,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> AddClassificationsAsync(string guid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassifications");
+            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddClassifications");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAddClassificationsRequest(guid, content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1945,12 +2002,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response AddClassifications(string guid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassifications");
+            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddClassifications");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAddClassificationsRequest(guid, content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1997,12 +2057,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> UpdateClassificationsAsync(string guid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassifications");
+            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.UpdateClassifications");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUpdateClassificationsRequest(guid, content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2049,12 +2112,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response UpdateClassifications(string guid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassifications");
+            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.UpdateClassifications");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUpdateClassificationsRequest(guid, content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2148,12 +2214,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetByUniqueAttributesAsync(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByUniqueAttributes");
+            Argument.AssertNotNull(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetByUniqueAttributes");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrQualifiedName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2247,12 +2315,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetByUniqueAttributes(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByUniqueAttributes");
+            Argument.AssertNotNull(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetByUniqueAttributes");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrQualifiedName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2398,12 +2468,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> PartialUpdateEntityByUniqueAttributesAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityByUniqueAttributes");
+            Argument.AssertNotNull(typeName, nameof(typeName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityByUniqueAttributes");
             scope.Start();
             try
             {
                 using HttpMessage message = CreatePartialUpdateEntityByUniqueAttributesRequest(typeName, content, attrQualifiedName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2549,12 +2622,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response PartialUpdateEntityByUniqueAttributes(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityByUniqueAttributes");
+            Argument.AssertNotNull(typeName, nameof(typeName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityByUniqueAttributes");
             scope.Start();
             try
             {
                 using HttpMessage message = CreatePartialUpdateEntityByUniqueAttributesRequest(typeName, content, attrQualifiedName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2640,12 +2716,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteByUniqueAttributeAsync(string typeName, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByUniqueAttribute");
+            Argument.AssertNotNull(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteByUniqueAttribute");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attrQualifiedName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2731,12 +2809,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response DeleteByUniqueAttribute(string typeName, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByUniqueAttribute");
+            Argument.AssertNotNull(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteByUniqueAttribute");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attrQualifiedName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2765,12 +2845,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteClassificationByUniqueAttributeAsync(string typeName, string classificationName, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassificationByUniqueAttribute");
+            Argument.AssertNotNull(typeName, nameof(typeName));
+            Argument.AssertNotNull(classificationName, nameof(classificationName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteClassificationByUniqueAttribute");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteClassificationByUniqueAttributeRequest(typeName, classificationName, attrQualifiedName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2799,12 +2882,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response DeleteClassificationByUniqueAttribute(string typeName, string classificationName, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassificationByUniqueAttribute");
+            Argument.AssertNotNull(typeName, nameof(typeName));
+            Argument.AssertNotNull(classificationName, nameof(classificationName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteClassificationByUniqueAttribute");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteClassificationByUniqueAttributeRequest(typeName, classificationName, attrQualifiedName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2852,12 +2938,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> AddClassificationsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassificationsByUniqueAttribute");
+            Argument.AssertNotNull(typeName, nameof(typeName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2905,12 +2994,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response AddClassificationsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassificationsByUniqueAttribute");
+            Argument.AssertNotNull(typeName, nameof(typeName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2958,12 +3050,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> UpdateClassificationsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassificationsByUniqueAttribute");
+            Argument.AssertNotNull(typeName, nameof(typeName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.UpdateClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUpdateClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3011,12 +3106,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response UpdateClassificationsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassificationsByUniqueAttribute");
+            Argument.AssertNotNull(typeName, nameof(typeName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.UpdateClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUpdateClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -3048,12 +3146,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> SetClassificationsAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.SetClassifications");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.SetClassifications");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateSetClassificationsRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3085,12 +3185,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response SetClassifications(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.SetClassifications");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.SetClassifications");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateSetClassificationsRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -3191,12 +3293,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetEntitiesByUniqueAttributesAsync(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetEntitiesByUniqueAttributes");
+            Argument.AssertNotNull(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetEntitiesByUniqueAttributes");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetEntitiesByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3297,12 +3401,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetEntitiesByUniqueAttributes(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetEntitiesByUniqueAttributes");
+            Argument.AssertNotNull(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetEntitiesByUniqueAttributes");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetEntitiesByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -3374,12 +3480,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetHeaderAsync(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetHeader");
+            Argument.AssertNotNull(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetHeader");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetHeaderRequest(guid, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3451,12 +3559,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetHeader(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetHeader");
+            Argument.AssertNotNull(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetHeader");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetHeaderRequest(guid, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {

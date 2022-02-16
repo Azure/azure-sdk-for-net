@@ -9,7 +9,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal static class TagsExtension
     {
-        private static readonly IReadOnlyDictionary<string, PartBType> Part_B_Mapping = new Dictionary<string, PartBType>()
+        private static readonly IReadOnlyDictionary<string, PartBType> s_part_B_Mapping = new Dictionary<string, PartBType>()
         {
             [SemanticConventions.AttributeDbSystem] = PartBType.Db,
             [SemanticConventions.AttributeDbConnectionString] = PartBType.Db,
@@ -98,7 +98,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 if (entry.Value != null)
                 {
-                    if (!Part_B_Mapping.TryGetValue(entry.Key, out tempActivityType))
+                    if (!s_part_B_Mapping.TryGetValue(entry.Key, out tempActivityType))
                     {
                         partCTags.Add(entry.Key, entry.Value.ToString());
                         continue;

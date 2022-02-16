@@ -9,8 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.CosmosDB
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> accountName = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<DateTimeOffset> deletionTime = default;
@@ -47,6 +48,11 @@ namespace Azure.ResourceManager.CosmosDB
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -112,7 +118,7 @@ namespace Azure.ResourceManager.CosmosDB
                     continue;
                 }
             }
-            return new RestorableDatabaseAccountData(id, name, type, location.Value, accountName.Value, Optional.ToNullable(creationTime), Optional.ToNullable(deletionTime), Optional.ToNullable(apiType), Optional.ToList(restorableLocations));
+            return new RestorableDatabaseAccountData(id, name, type, systemData, location.Value, accountName.Value, Optional.ToNullable(creationTime), Optional.ToNullable(deletionTime), Optional.ToNullable(apiType), Optional.ToList(restorableLocations));
         }
     }
 }

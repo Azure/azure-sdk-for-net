@@ -19,51 +19,53 @@ namespace Azure.ResourceManager.AppService
 {
     internal partial class ProviderRestOperations
     {
-        private Uri endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
         private readonly string _userAgent;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of ProviderRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="options"> The client options used to construct the current client. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public ProviderRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2021-02-01")
+        public ProviderRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
-            _clientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2021-02-01";
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
-            _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
+            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
 
-        internal HttpMessage CreateGetAvailableStacksRequest(OsTypeSelected? osTypeSelected)
+        internal HttpMessage CreateGetAvailableStacksRequest(ProviderOsTypeSelected? osTypeSelected)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Web/availableStacks", false);
             if (osTypeSelected != null)
             {
                 uri.AppendQuery("osTypeSelected", osTypeSelected.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
-        /// <param name="osTypeSelected"> The OsTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ApplicationStackCollection>> GetAvailableStacksAsync(OsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationStackCollection>> GetAvailableStacksAsync(ProviderOsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAvailableStacksRequest(osTypeSelected);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -77,14 +79,14 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
-        /// <param name="osTypeSelected"> The OsTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ApplicationStackCollection> GetAvailableStacks(OsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public Response<ApplicationStackCollection> GetAvailableStacks(ProviderOsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAvailableStacksRequest(osTypeSelected);
             _pipeline.Send(message, cancellationToken);
@@ -98,39 +100,35 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetFunctionAppStacksRequest(Enum9? stackOsType, StackOsType? stackOsType1)
+        internal HttpMessage CreateGetFunctionAppStacksRequest(ProviderStackOsType? stackOsType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Web/functionAppStacks", false);
             if (stackOsType != null)
             {
                 uri.AppendQuery("stackOsType", stackOsType.Value.ToString(), true);
             }
-            if (stackOsType1 != null)
-            {
-                uri.AppendQuery("stackOsType", stackOsType1.Value.ToString(), true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
         /// <summary> Description for Get available Function app frameworks and their versions. </summary>
         /// <param name="stackOsType"> Stack OS Type. </param>
-        /// <param name="stackOsType1"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<FunctionAppStackCollection>> GetFunctionAppStacksAsync(Enum9? stackOsType = null, StackOsType? stackOsType1 = null, CancellationToken cancellationToken = default)
+        public async Task<Response<FunctionAppStackCollection>> GetFunctionAppStacksAsync(ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetFunctionAppStacksRequest(stackOsType, stackOsType1);
+            using var message = CreateGetFunctionAppStacksRequest(stackOsType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -142,17 +140,16 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Description for Get available Function app frameworks and their versions. </summary>
         /// <param name="stackOsType"> Stack OS Type. </param>
-        /// <param name="stackOsType1"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<FunctionAppStackCollection> GetFunctionAppStacks(Enum9? stackOsType = null, StackOsType? stackOsType1 = null, CancellationToken cancellationToken = default)
+        public Response<FunctionAppStackCollection> GetFunctionAppStacks(ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetFunctionAppStacksRequest(stackOsType, stackOsType1);
+            using var message = CreateGetFunctionAppStacksRequest(stackOsType);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -164,17 +161,17 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetFunctionAppStacksForLocationRequest(string location, Enum11? stackOsType)
+        internal HttpMessage CreateGetFunctionAppStacksForLocationRequest(string location, ProviderStackOsType? stackOsType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Web/locations/", false);
             uri.AppendPath(location, true);
             uri.AppendPath("/functionAppStacks", false);
@@ -182,10 +179,10 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("stackOsType", stackOsType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -194,7 +191,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async Task<Response<FunctionAppStackCollection>> GetFunctionAppStacksForLocationAsync(string location, Enum11? stackOsType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<FunctionAppStackCollection>> GetFunctionAppStacksForLocationAsync(string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -213,7 +210,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -222,7 +219,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public Response<FunctionAppStackCollection> GetFunctionAppStacksForLocation(string location, Enum11? stackOsType = null, CancellationToken cancellationToken = default)
+        public Response<FunctionAppStackCollection> GetFunctionAppStacksForLocation(string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -241,17 +238,17 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetWebAppStacksForLocationRequest(string location, Enum12? stackOsType)
+        internal HttpMessage CreateGetWebAppStacksForLocationRequest(string location, ProviderStackOsType? stackOsType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Web/locations/", false);
             uri.AppendPath(location, true);
             uri.AppendPath("/webAppStacks", false);
@@ -259,10 +256,10 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("stackOsType", stackOsType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -271,7 +268,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async Task<Response<WebAppStackCollection>> GetWebAppStacksForLocationAsync(string location, Enum12? stackOsType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppStackCollection>> GetWebAppStacksForLocationAsync(string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -290,7 +287,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -299,7 +296,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public Response<WebAppStackCollection> GetWebAppStacksForLocation(string location, Enum12? stackOsType = null, CancellationToken cancellationToken = default)
+        public Response<WebAppStackCollection> GetWebAppStacksForLocation(string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -318,7 +315,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -328,12 +325,12 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Web/operations", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -353,7 +350,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -373,39 +370,35 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetWebAppStacksRequest(Enum13? stackOsType, StackOsType? stackOsType1)
+        internal HttpMessage CreateGetWebAppStacksRequest(ProviderStackOsType? stackOsType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Web/webAppStacks", false);
             if (stackOsType != null)
             {
                 uri.AppendQuery("stackOsType", stackOsType.Value.ToString(), true);
             }
-            if (stackOsType1 != null)
-            {
-                uri.AppendQuery("stackOsType", stackOsType1.Value.ToString(), true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
         /// <summary> Description for Get available Web app frameworks and their versions. </summary>
         /// <param name="stackOsType"> Stack OS Type. </param>
-        /// <param name="stackOsType1"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<WebAppStackCollection>> GetWebAppStacksAsync(Enum13? stackOsType = null, StackOsType? stackOsType1 = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppStackCollection>> GetWebAppStacksAsync(ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetWebAppStacksRequest(stackOsType, stackOsType1);
+            using var message = CreateGetWebAppStacksRequest(stackOsType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -417,17 +410,16 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Description for Get available Web app frameworks and their versions. </summary>
         /// <param name="stackOsType"> Stack OS Type. </param>
-        /// <param name="stackOsType1"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<WebAppStackCollection> GetWebAppStacks(Enum13? stackOsType = null, StackOsType? stackOsType1 = null, CancellationToken cancellationToken = default)
+        public Response<WebAppStackCollection> GetWebAppStacks(ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetWebAppStacksRequest(stackOsType, stackOsType1);
+            using var message = CreateGetWebAppStacksRequest(stackOsType);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -439,17 +431,17 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetAvailableStacksOnPremRequest(string subscriptionId, OsTypeSelected? osTypeSelected)
+        internal HttpMessage CreateGetAvailableStacksOnPremRequest(string subscriptionId, ProviderOsTypeSelected? osTypeSelected)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Web/availableStacks", false);
@@ -457,19 +449,19 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("osTypeSelected", osTypeSelected.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="osTypeSelected"> The OsTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public async Task<Response<ApplicationStackCollection>> GetAvailableStacksOnPremAsync(string subscriptionId, OsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationStackCollection>> GetAvailableStacksOnPremAsync(string subscriptionId, ProviderOsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -488,16 +480,16 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="osTypeSelected"> The OsTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public Response<ApplicationStackCollection> GetAvailableStacksOnPrem(string subscriptionId, OsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public Response<ApplicationStackCollection> GetAvailableStacksOnPrem(string subscriptionId, ProviderOsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -516,30 +508,30 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetAvailableStacksNextPageRequest(string nextLink, OsTypeSelected? osTypeSelected)
+        internal HttpMessage CreateGetAvailableStacksNextPageRequest(string nextLink, ProviderOsTypeSelected? osTypeSelected)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="osTypeSelected"> The OsTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ApplicationStackCollection>> GetAvailableStacksNextPageAsync(string nextLink, OsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationStackCollection>> GetAvailableStacksNextPageAsync(string nextLink, ProviderOsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -558,16 +550,16 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="osTypeSelected"> The OsTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ApplicationStackCollection> GetAvailableStacksNextPage(string nextLink, OsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public Response<ApplicationStackCollection> GetAvailableStacksNextPage(string nextLink, ProviderOsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -586,38 +578,37 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetFunctionAppStacksNextPageRequest(string nextLink, Enum9? stackOsType, StackOsType? stackOsType1)
+        internal HttpMessage CreateGetFunctionAppStacksNextPageRequest(string nextLink, ProviderStackOsType? stackOsType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
         /// <summary> Description for Get available Function app frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
-        /// <param name="stackOsType1"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<FunctionAppStackCollection>> GetFunctionAppStacksNextPageAsync(string nextLink, Enum9? stackOsType = null, StackOsType? stackOsType1 = null, CancellationToken cancellationToken = default)
+        public async Task<Response<FunctionAppStackCollection>> GetFunctionAppStacksNextPageAsync(string nextLink, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetFunctionAppStacksNextPageRequest(nextLink, stackOsType, stackOsType1);
+            using var message = CreateGetFunctionAppStacksNextPageRequest(nextLink, stackOsType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -629,24 +620,23 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Description for Get available Function app frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
-        /// <param name="stackOsType1"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<FunctionAppStackCollection> GetFunctionAppStacksNextPage(string nextLink, Enum9? stackOsType = null, StackOsType? stackOsType1 = null, CancellationToken cancellationToken = default)
+        public Response<FunctionAppStackCollection> GetFunctionAppStacksNextPage(string nextLink, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetFunctionAppStacksNextPageRequest(nextLink, stackOsType, stackOsType1);
+            using var message = CreateGetFunctionAppStacksNextPageRequest(nextLink, stackOsType);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -658,21 +648,21 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetFunctionAppStacksForLocationNextPageRequest(string nextLink, string location, Enum11? stackOsType)
+        internal HttpMessage CreateGetFunctionAppStacksForLocationNextPageRequest(string nextLink, string location, ProviderStackOsType? stackOsType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -682,7 +672,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public async Task<Response<FunctionAppStackCollection>> GetFunctionAppStacksForLocationNextPageAsync(string nextLink, string location, Enum11? stackOsType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<FunctionAppStackCollection>> GetFunctionAppStacksForLocationNextPageAsync(string nextLink, string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -705,7 +695,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -715,7 +705,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public Response<FunctionAppStackCollection> GetFunctionAppStacksForLocationNextPage(string nextLink, string location, Enum11? stackOsType = null, CancellationToken cancellationToken = default)
+        public Response<FunctionAppStackCollection> GetFunctionAppStacksForLocationNextPage(string nextLink, string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -738,21 +728,21 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetWebAppStacksForLocationNextPageRequest(string nextLink, string location, Enum12? stackOsType)
+        internal HttpMessage CreateGetWebAppStacksForLocationNextPageRequest(string nextLink, string location, ProviderStackOsType? stackOsType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -762,7 +752,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public async Task<Response<WebAppStackCollection>> GetWebAppStacksForLocationNextPageAsync(string nextLink, string location, Enum12? stackOsType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppStackCollection>> GetWebAppStacksForLocationNextPageAsync(string nextLink, string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -785,7 +775,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -795,7 +785,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public Response<WebAppStackCollection> GetWebAppStacksForLocationNextPage(string nextLink, string location, Enum12? stackOsType = null, CancellationToken cancellationToken = default)
+        public Response<WebAppStackCollection> GetWebAppStacksForLocationNextPage(string nextLink, string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -818,7 +808,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -828,11 +818,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -859,7 +849,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -886,38 +876,37 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetWebAppStacksNextPageRequest(string nextLink, Enum13? stackOsType, StackOsType? stackOsType1)
+        internal HttpMessage CreateGetWebAppStacksNextPageRequest(string nextLink, ProviderStackOsType? stackOsType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
         /// <summary> Description for Get available Web app frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
-        /// <param name="stackOsType1"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<WebAppStackCollection>> GetWebAppStacksNextPageAsync(string nextLink, Enum13? stackOsType = null, StackOsType? stackOsType1 = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppStackCollection>> GetWebAppStacksNextPageAsync(string nextLink, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetWebAppStacksNextPageRequest(nextLink, stackOsType, stackOsType1);
+            using var message = CreateGetWebAppStacksNextPageRequest(nextLink, stackOsType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -929,24 +918,23 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Description for Get available Web app frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
-        /// <param name="stackOsType1"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<WebAppStackCollection> GetWebAppStacksNextPage(string nextLink, Enum13? stackOsType = null, StackOsType? stackOsType1 = null, CancellationToken cancellationToken = default)
+        public Response<WebAppStackCollection> GetWebAppStacksNextPage(string nextLink, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetWebAppStacksNextPageRequest(nextLink, stackOsType, stackOsType1);
+            using var message = CreateGetWebAppStacksNextPageRequest(nextLink, stackOsType);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -958,31 +946,31 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetAvailableStacksOnPremNextPageRequest(string nextLink, string subscriptionId, OsTypeSelected? osTypeSelected)
+        internal HttpMessage CreateGetAvailableStacksOnPremNextPageRequest(string nextLink, string subscriptionId, ProviderOsTypeSelected? osTypeSelected)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="osTypeSelected"> The OsTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        public async Task<Response<ApplicationStackCollection>> GetAvailableStacksOnPremNextPageAsync(string nextLink, string subscriptionId, OsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationStackCollection>> GetAvailableStacksOnPremNextPageAsync(string nextLink, string subscriptionId, ProviderOsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1005,17 +993,17 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Description for Get available application frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="osTypeSelected"> The OsTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        public Response<ApplicationStackCollection> GetAvailableStacksOnPremNextPage(string nextLink, string subscriptionId, OsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public Response<ApplicationStackCollection> GetAvailableStacksOnPremNextPage(string nextLink, string subscriptionId, ProviderOsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1038,7 +1026,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

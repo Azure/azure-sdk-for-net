@@ -19,6 +19,8 @@ using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using System.Net.Http.Headers;
 using System.Linq;
 
+#pragma warning disable SA1402  // File may only contain a single type
+
 namespace Azure.Storage.Files.Shares
 {
     /// <summary>
@@ -5962,10 +5964,11 @@ namespace Azure.Storage.Files.Shares
                             renameSource: Uri.AbsoluteUri,
                             replaceIfExists: options?.ReplaceIfExists,
                             ignoreReadOnly: options?.IgnoreReadOnly,
-                            sourceLeaseId: options?.SourceRequestConditions?.LeaseId,
-                            destinationLeaseId: options?.DestinationRequestConditions?.LeaseId,
+                            sourceLeaseId: options?.SourceConditions?.LeaseId,
+                            destinationLeaseId: options?.DestinationConditions?.LeaseId,
                             filePermission: options?.FilePermission,
                             filePermissionKey: options?.SmbProperties?.FilePermissionKey,
+                            metadata: options?.Metadata,
                             copyFileSmbInfo: copyFileSmbInfo,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -5976,10 +5979,11 @@ namespace Azure.Storage.Files.Shares
                             renameSource: Uri.AbsoluteUri,
                             replaceIfExists: options?.ReplaceIfExists,
                             ignoreReadOnly: options?.IgnoreReadOnly,
-                            sourceLeaseId: options?.SourceRequestConditions?.LeaseId,
-                            destinationLeaseId: options?.DestinationRequestConditions?.LeaseId,
+                            sourceLeaseId: options?.SourceConditions?.LeaseId,
+                            destinationLeaseId: options?.DestinationConditions?.LeaseId,
                             filePermission: options?.FilePermission,
                             filePermissionKey: options?.SmbProperties?.FilePermissionKey,
+                            metadata: options?.Metadata,
                             copyFileSmbInfo: copyFileSmbInfo,
                             cancellationToken: cancellationToken);
                     }
@@ -6280,5 +6284,103 @@ namespace Azure.Storage.Files.Shares
             return sasUri.ToUri();
         }
         #endregion
+
+        #region GetParentClientCore
+
+        private ShareClient _parentShareClient;
+        private ShareDirectoryClient _parentShareDirectoryClient;
+
+        /// <summary>
+        /// Create a new <see cref="ShareClient"/> that pointing to this <see cref="ShareFileClient"/>'s parent container.
+        /// The new <see cref="ShareClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="ShareFileClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="ShareFileClient"/> instance.</returns>
+        protected internal virtual ShareClient GetParentShareClientCore()
+        {
+            if (_parentShareClient == null)
+            {
+                ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri)
+                {
+                    // erase parameters unrelated to container
+                    DirectoryOrFilePath = null,
+                    Snapshot = null,
+                };
+
+                _parentShareClient = new ShareClient(
+                    shareUriBuilder.ToUri(),
+                    ClientConfiguration);
+            }
+
+            return _parentShareClient;
+        }
+
+        /// <summary>
+        /// Create a new <see cref="ShareDirectoryClient"/> that pointing to this <see cref="ShareFileClient"/>'s parent container.
+        /// The new <see cref="ShareDirectoryClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="ShareFileClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="ShareFileClient"/> instance.</returns>
+        protected internal virtual ShareDirectoryClient GetParentShareDirectoryClientCore()
+        {
+            if (_parentShareDirectoryClient == null)
+            {
+                ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri)
+                {
+                    Snapshot = null,
+                };
+
+                if (shareUriBuilder.DirectoryOrFilePath == null || shareUriBuilder.LastDirectoryOrFileName == null)
+                {
+                    throw new InvalidOperationException();
+                }
+                shareUriBuilder.DirectoryOrFilePath = shareUriBuilder.DirectoryOrFilePath.GetParentPath();
+
+                _parentShareDirectoryClient = new ShareDirectoryClient(
+                    shareUriBuilder.ToUri(),
+                    ClientConfiguration);
+            }
+
+            return _parentShareDirectoryClient;
+        }
+        #endregion
+    }
+
+    namespace Specialized
+    {
+        /// <summary>
+        /// Add easy to discover methods to <see cref="ShareFileClient"/> for
+        /// creating <see cref="ShareClient"/> instances.
+        /// </summary>
+        public static partial class SpecializedShareExtensions
+        {
+            /// <summary>
+            /// Create a new <see cref="ShareClient"/> that pointing to this <see cref="ShareFileClient"/>'s parent container.
+            /// The new <see cref="ShareClient"/>
+            /// uses the same request policy pipeline as the
+            /// <see cref="ShareFileClient"/>.
+            /// </summary>
+            /// <param name="client">The <see cref="ShareFileClient"/>.</param>
+            /// <returns>A new <see cref="ShareClient"/> instance.</returns>
+            public static ShareClient GetParentShareClient(this ShareFileClient client)
+            {
+                return client.GetParentShareClientCore();
+            }
+
+            /// <summary>
+            /// Create a new <see cref="ShareDirectoryClient"/> that pointing to this <see cref="ShareFileClient"/>'s parent container.
+            /// The new <see cref="ShareDirectoryClient"/>
+            /// uses the same request policy pipeline as the
+            /// <see cref="ShareFileClient"/>.
+            /// </summary>
+            /// <param name="client">The <see cref="ShareFileClient"/>.</param>
+            /// <returns>A new <see cref="ShareDirectoryClient"/> instance.</returns>
+            public static ShareDirectoryClient GetParentShareDirectoryClient(this ShareFileClient client)
+            {
+                return client.GetParentShareDirectoryClientCore();
+            }
+        }
     }
 }

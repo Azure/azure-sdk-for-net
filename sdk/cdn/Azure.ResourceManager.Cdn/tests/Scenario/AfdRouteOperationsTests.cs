@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             AfdRuleSet afdRuleSet = await CreateAfdRuleSet(afdProfile, afdRuleSetName);
             string afdRouteName = Recording.GenerateAssetName("AFDRoute");
             AfdRoute afdRoute = await CreateAfdRoute(afdEndpointInstance, afdRouteName, afdOriginGroupInstance, afdRuleSet);
-            await afdRoute.DeleteAsync();
+            await afdRoute.DeleteAsync(true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await afdRoute.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.Cdn.Tests
             AfdRuleSet afdRuleSet = await CreateAfdRuleSet(afdProfile, afdRuleSetName);
             string afdRouteName = Recording.GenerateAssetName("AFDRoute");
             AfdRoute afdRoute = await CreateAfdRoute(afdEndpointInstance, afdRouteName, afdOriginGroupInstance, afdRuleSet);
-            RouteUpdateOptions updateOptions = new RouteUpdateOptions
+            AfdRouteUpdateOptions updateOptions = new AfdRouteUpdateOptions
             {
                 EnabledState = EnabledState.Disabled
             };
-            var lro = await afdRoute.UpdateAsync(updateOptions);
+            var lro = await afdRoute.UpdateAsync(true, updateOptions);
             AfdRoute updatedAfdRoute = lro.Value;
             ResourceDataHelper.AssertAfdRouteUpdate(updatedAfdRoute, updateOptions);
         }

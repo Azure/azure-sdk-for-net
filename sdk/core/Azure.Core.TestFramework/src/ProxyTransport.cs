@@ -6,6 +6,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Security;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
@@ -72,7 +73,8 @@ namespace Azure.Core.TestFramework
                 {
                     response = streamReader.ReadToEnd();
                 }
-                throw new TestRecordingMismatchException(response);
+                using var doc = JsonDocument.Parse(response);
+                throw new TestRecordingMismatchException(doc.RootElement.GetProperty("Message").GetString());
             }
 
             // revert the original URI - this is important for tests that rely on aspects of the URI in the pipeline
@@ -116,10 +118,11 @@ namespace Azure.Core.TestFramework
                     case EntryRecordModel.Record:
                         break;
                     case EntryRecordModel.RecordWithoutRequestBody:
-                        message.Request.Content = null;
+                        message.Request.Headers.Add("x-recording-skip", "request-body");
                         break;
                     case EntryRecordModel.DoNotRecord:
-                        return;
+                        message.Request.Headers.Add("x-recording-skip", "request-response");
+                        break;
                 }
             }
             else if (_recording.Mode == RecordedTestMode.Playback)

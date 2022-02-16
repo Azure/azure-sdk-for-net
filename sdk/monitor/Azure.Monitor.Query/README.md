@@ -12,6 +12,7 @@ The Azure Monitor Query client library is used to execute read-only queries agai
 - [API reference documentation][msdocs_apiref]
 - [Service documentation][azure_monitor_overview]
 - [Change log][changelog]
+- [Migration guide][migration_guide]
 
 ## Getting started
 
@@ -51,7 +52,7 @@ For examples of Logs and Metrics queries, see the [Examples](#examples) section.
 
 ### Logs query rate limits and throttling
 
-The Log Analytics service applies throttling when the request rate is too high. Limits, such as the maximum number of rows returned, are also applied on the Kusto queries. For more information, see [Rate and query limits](https://dev.loganalytics.io/documentation/Using-the-API/Limits).
+The Log Analytics service applies throttling when the request rate is too high. Limits, such as the maximum number of rows returned, are also applied on the Kusto queries. For more information, see [Query API](https://docs.microsoft.com/azure/azure-monitor/service-limits#la-query-api).
 
 ### Metrics data structure
 
@@ -425,6 +426,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [changelog]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/CHANGELOG.md
 [kusto_query_language]: https://docs.microsoft.com/azure/data-explorer/kusto/query/
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
+[migration_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/MigrationGuide.md
 [monitor_rest_api]: https://docs.microsoft.com/rest/api/monitor/
 [msdocs_apiref]: https://docs.microsoft.com/dotnet/api/overview/azure/monitor/query?view=azure-dotnet
 [package]: https://www.nuget.org/packages/Azure.Monitor.Query

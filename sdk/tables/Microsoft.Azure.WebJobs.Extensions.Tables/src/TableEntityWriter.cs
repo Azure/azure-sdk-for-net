@@ -1,23 +1,20 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Data.Tables;
 using Azure.Data.Tables.Models;
-using Microsoft.Azure.WebJobs.Host.Bindings;
-using Microsoft.Azure.WebJobs.Host.Protocols;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
-    internal class TableEntityWriter<T> : ICollector<T>, IAsyncCollector<T>, IWatcher
-        where T : ITableEntity
+    internal class TableEntityWriter: ICollector<TableEntity>, IAsyncCollector<TableEntity>
     {
         private readonly TableClient _table;
+        private readonly string _partitionKey;
+        private readonly string _rowKey;
 
         /// <summary>
         /// Max batch size is an azure limitation on how many entries can be in each batch.
@@ -32,35 +29,30 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
         private readonly Dictionary<string, Dictionary<string, TableTransactionAction>> _map = new();
 
-        private readonly TableParameterLog _log;
-        private readonly Stopwatch _watch = new Stopwatch();
-
-        public TableEntityWriter(TableClient table, TableParameterLog log)
+        public TableEntityWriter(TableClient table, string partitionKey, string rowKey)
         {
             _table = table;
-            _log = log;
+            _partitionKey = partitionKey;
+            _rowKey = rowKey;
         }
 
-        public TableEntityWriter(TableClient table)
-            : this(table, new TableParameterLog())
+        public void Add(TableEntity item)
         {
-        }
-
-        public void Add(T item)
-        {
-// TODO
 #pragma warning disable AZC0102
             AddAsync(item, CancellationToken.None).GetAwaiter().GetResult();
 #pragma warning restore AZC0102
         }
 
-        public async Task AddAsync(T item, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task AddAsync(TableEntity item, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Careful:
             // 1. even with upsert, all rowkeys within a batch must be unique. If they aren't, the previous items
             // will be flushed.
             // 2. Capture at time of Add, in case item is mutated after add.
             // 3. Validate rowkey on the client so we get a nice error instead of the cryptic 400 from auzre.
+            item.PartitionKey ??= _partitionKey;
+            item.RowKey ??= _rowKey;
+
             string partitionKey = item.PartitionKey;
             string rowKey = item.RowKey;
             TableClientHelpers.ValidateAzureTableKeyValue(partitionKey);
@@ -79,7 +71,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 _map[partitionKey] = partition;
             }
 
-            var itemCopy = Copy(item);
             if (partition.ContainsKey(rowKey))
             {
                 // Replacing item forces a flush to ensure correct eTag behaviour.
@@ -89,18 +80,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 _map[partitionKey] = partition;
             }
 
-            _log.EntitiesWritten++;
-            if (String.IsNullOrEmpty(itemCopy.ETag.ToString()))
+            if (string.IsNullOrEmpty(item.ETag.ToString()))
             {
-                partition.Add(rowKey, new TableTransactionAction(TableTransactionActionType.Add, itemCopy));
+                partition.Add(rowKey, new TableTransactionAction(TableTransactionActionType.Add, item));
             }
-            else if (itemCopy.ETag.Equals("*"))
+            else if (item.ETag.Equals("*"))
             {
-                partition.Add(rowKey, new TableTransactionAction(TableTransactionActionType.UpsertReplace, itemCopy));
+                partition.Add(rowKey, new TableTransactionAction(TableTransactionActionType.UpsertReplace, item));
             }
             else
             {
-                partition.Add(rowKey, new TableTransactionAction(TableTransactionActionType.UpdateReplace, itemCopy, itemCopy.ETag));
+                partition.Add(rowKey, new TableTransactionAction(TableTransactionActionType.UpdateReplace, item, item.ETag));
             }
 
             if (partition.Count >= MaxBatchSize)
@@ -108,21 +98,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 await FlushPartitionAsync(partition, cancellationToken).ConfigureAwait(false);
                 _map.Remove(partitionKey);
             }
-        }
-
-        private static ITableEntity Copy(ITableEntity item)
-        {
-            // TODO: do we need the deep copy?.
-            // var props = TableEntityValueBinder.DeepClone(item.WriteEntity(null));
-            // TableEntity copy = new TableEntity(item.PartitionKey, item.RowKey)
-            // {
-            //     ETag = item.ETag,
-            // };
-
-            // BUG: How do we copy arbitrary ITableEntity ?
-            // return copy;
-
-            return item;
         }
 
         public virtual async Task FlushAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -140,31 +115,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         {
             if (partition.Count > 0)
             {
-                try
-                {
-                    _watch.Start();
-                    await ExecuteBatchAndCreateTableIfNotExistsAsync(partition, cancellationToken).ConfigureAwait(false);
-                }
-                finally
-                {
-                    _watch.Stop();
-                    _log.ElapsedWriteTime = _watch.Elapsed;
-                }
-            }
-        }
-
-        internal virtual async Task ExecuteBatchAndCreateTableIfNotExistsAsync(
-            Dictionary<string, TableTransactionAction> partition, CancellationToken cancellationToken)
-        {
-            if (partition.Count > 0)
-            {
                 RequestFailedException exception = null;
                 try
                 {
                     // Commit the batch
                     await _table.SubmitTransactionAsync(partition.Values, cancellationToken).ConfigureAwait(false);
                 }
-                catch (RequestFailedException e) when (e.Status == 404 && e.ErrorCode == TableErrorCode.TableNotFound)
+                catch (RequestFailedException e) when
+                    (e.Status == 404 && (e.ErrorCode == TableErrorCode.TableNotFound || e.ErrorCode == TableErrorCode.ResourceNotFound))
                 {
                     exception = e;
                 }
@@ -176,18 +134,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                     // Commit the batch
                     await _table.SubmitTransactionAsync(partition.Values, cancellationToken).ConfigureAwait(false);
                 }
-            }
-        }
-
-        public ParameterLog GetStatus()
-        {
-            if (_log.EntitiesWritten > 0)
-            {
-                return _log;
-            }
-            else
-            {
-                return null;
             }
         }
     }

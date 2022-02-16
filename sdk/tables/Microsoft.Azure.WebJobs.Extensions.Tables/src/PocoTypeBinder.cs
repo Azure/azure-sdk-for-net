@@ -12,43 +12,58 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
     internal class PocoTypeBinder: TypeBinder<TableEntity>
     {
+        public const string ETagKeyName = "odata.etag";
         public static PocoTypeBinder Shared { get; } = new();
+
+        public static Type[] ETagTypes = { typeof(string), typeof(ETag) };
+        public static Type[] RowKeyTypes = { typeof(string) };
+        public static Type[] PartitionKeyTypes = { typeof(string) };
+        public static Type[] TimestampTypes = { typeof(DateTimeOffset), typeof(DateTimeOffset?) };
+
         protected override void Set<T>(TableEntity destination, T value, BoundMemberInfo memberInfo)
         {
-            // Remove the ETag and Timestamp properties, as they do not need to be serialized
-            if (memberInfo.Name == TableConstants.PropertyNames.ETag || memberInfo.Name == TableConstants.PropertyNames.Timestamp)
+            var key = memberInfo.Name switch
             {
+                nameof(TableEntity.ETag) => ETagKeyName,
+                _ => memberInfo.Name
+            };
+
+            if (value == null)
+            {
+                destination[key] = null;
                 return;
             }
 
-            if (typeof(T) == typeof(bool) ||
-                typeof(T) == typeof(bool?) ||
-                typeof(T) == typeof(byte[]) ||
-                typeof(T) == typeof(DateTime) ||
-                typeof(T) == typeof(DateTime?) ||
-                typeof(T) == typeof(DateTimeOffset) ||
-                typeof(T) == typeof(DateTimeOffset?) ||
-                typeof(T) == typeof(double) ||
-                typeof(T) == typeof(double?) ||
-                typeof(T) == typeof(Guid) ||
-                typeof(T) == typeof(Guid?) ||
-                typeof(T) == typeof(int) ||
-                typeof(T) == typeof(int?) ||
-                typeof(T) == typeof(long) ||
-                typeof(T) == typeof(long?) ||
-                typeof(T) == typeof(string))
+            var type = typeof(T);
+
+            if (type.IsGenericType &&
+                type.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
-                destination[memberInfo.Name] = value;
+                type = type.GetGenericArguments()[0];
             }
-            else if (typeof(T).IsEnum)
+
+            if (type == typeof(bool) ||
+                type == typeof(byte[]) ||
+                type == typeof(DateTimeOffset) ||
+                type == typeof(double) ||
+                type == typeof(Guid) ||
+                type == typeof(int) ||
+                type == typeof(long) ||
+                type == typeof(string))
             {
-                destination[memberInfo.Name] = value.ToString();
+                destination[key] = value;
+            }
+            else if (type == typeof(DateTime))
+            {
+                destination[key] = new DateTimeOffset((DateTime)(object)value);
+            }
+            else if (type.IsEnum || type == typeof(ETag))
+            {
+                destination[key] = value.ToString();
             }
             else
             {
-                // TODO: this is new. Who handled this before?
-                // TODO: indented?
-                destination[memberInfo.Name] = JsonConvert.SerializeObject(value, Formatting.Indented);
+                destination[key] = JsonConvert.SerializeObject(value, Formatting.Indented);
             }
         }
 
@@ -58,7 +73,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
             var key = memberInfo.Name switch
             {
-                nameof(TableConstants.PropertyNames.ETag) => TableConstants.PropertyNames.EtagOdata,
+                nameof(TableEntity.ETag) => ETagKeyName,
                 _ => memberInfo.Name
             };
 
@@ -81,53 +96,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             {
                 value = (T)(object)source.GetBinaryData(key);
             }
-            else if (typeof(T) == typeof(long))
+            else if (typeof(T) == typeof(long) ||
+                     typeof(T) == typeof(long?) ||
+                     typeof(T) == typeof(double?) ||
+                     typeof(T) == typeof(bool) ||
+                     typeof(T) == typeof(bool?) ||
+                     typeof(T) == typeof(Guid) ||
+                     typeof(T) == typeof(Guid?) ||
+                     typeof(T) == typeof(DateTimeOffset) ||
+                     typeof(T) == typeof(DateTimeOffset?) ||
+                     typeof(T) == typeof(string) ||
+                     typeof(T) == typeof(int) ||
+                     typeof(T) == typeof(int?))
             {
-                value = (T)(object) source.GetInt64(key);
-            }
-            else if (typeof(T) == typeof(long?))
-            {
-                value = (T)(object) source.GetInt64(key);
-            }
-            else if (typeof(T) == typeof(ulong))
-            {
-                value = (T)(object) source.GetInt64(key);
-            }
-            else if (typeof(T) == typeof(ulong?))
-            {
-                value = (T)(object) source.GetInt64(key);
-            }
-            else if (typeof(T) == typeof(double))
-            {
-                value = (T) Convert.ChangeType(propertyValue, typeof(double), CultureInfo.InvariantCulture);
-            }
-            else if (typeof(T) == typeof(double?))
-            {
-                value = (T)(object) source.GetDouble(key);
-            }
-            else if (typeof(T) == typeof(bool))
-            {
-                value = (T)(object) source.GetBoolean(key);
-            }
-            else if (typeof(T) == typeof(bool?))
-            {
-                value = (T)(object) source.GetBoolean(key);
-            }
-            else if (typeof(T) == typeof(Guid))
-            {
-                value = (T)(object) source.GetGuid(key);
-            }
-            else if (typeof(T) == typeof(Guid?))
-            {
-                value = (T)(object) source.GetGuid(key);
-            }
-            else if (typeof(T) == typeof(DateTimeOffset))
-            {
-                value = (T)(object) source.GetDateTimeOffset(key);
-            }
-            else if (typeof(T) == typeof(DateTimeOffset?))
-            {
-                value = (T)(object) source.GetDateTimeOffset(key);
+                value = (T)propertyValue;
             }
             else if (typeof(T) == typeof(DateTime))
             {
@@ -137,17 +119,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             {
                 value = (T)(object) source.GetDateTime(key);
             }
-            else if (typeof(T) == typeof(string))
+            else if (typeof(T) == typeof(double))
             {
-                value = (T)(object) source.GetString(key);
+                value = (T)Convert.ChangeType(propertyValue, typeof(double), CultureInfo.InvariantCulture);
             }
-            else if (typeof(T) == typeof(int))
+            // SDK encodes ulongs as longs but T1 and T2 extension use string
+            // handle both
+            else if (typeof(T) == typeof(ulong) && propertyValue is long l)
             {
-                value = (T)(object) source.GetInt32(key);
+                value = (T)(object) (ulong) l;
             }
-            else if (typeof(T) == typeof(int?))
+            else if (typeof(T) == typeof(ulong?) && propertyValue is long l2)
             {
-                value = (T)(object) source.GetInt32(key);
+                value = (T)(object) (ulong) l2;
             }
             else if (typeof(T).IsEnum)
             {
@@ -160,14 +144,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             {
                 value = (T)Enum.Parse(arguments[0], propertyValue as string );
             }
-            else if (typeof(T) == typeof(ETag))
+            else if (typeof(T) == typeof(ETag) ||
+                     typeof(T) == typeof(ETag?))
             {
                 value = (T)(object) new ETag(source.GetString(key));
             }
-            else if (typeof(T) == typeof(TimeSpan))
+            else
             {
-                // TODO: this is new. Who handled this before?
-                value = (T)JsonConvert.DeserializeObject<T>(source.GetString(key));
+                value = JsonConvert.DeserializeObject<T>(source.GetString(key));
             }
 
             return true;

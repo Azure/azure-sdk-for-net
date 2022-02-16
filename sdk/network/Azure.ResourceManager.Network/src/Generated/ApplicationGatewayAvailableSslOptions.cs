@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -14,15 +15,21 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A Class representing a ApplicationGatewayAvailableSslOptions along with the instance operations that can be performed on it. </summary>
     public partial class ApplicationGatewayAvailableSslOptions : ArmResource
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ApplicationGatewaysRestOperations _applicationGatewaysRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="ApplicationGatewayAvailableSslOptions"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _applicationGatewayAvailableSslOptionsApplicationGatewaysClientDiagnostics;
+        private readonly ApplicationGatewaysRestOperations _applicationGatewayAvailableSslOptionsApplicationGatewaysRestClient;
         private readonly ApplicationGatewayAvailableSslOptionsData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ApplicationGatewayAvailableSslOptions"/> class for mocking. </summary>
@@ -31,44 +38,29 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ApplicationGatewayAvailableSslOptions"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ApplicationGatewayAvailableSslOptions(ArmResource options, ApplicationGatewayAvailableSslOptionsData resource) : base(options, new ResourceIdentifier(resource.Id))
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal ApplicationGatewayAvailableSslOptions(ArmClient client, ApplicationGatewayAvailableSslOptionsData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
-            _data = resource;
-            Parent = options;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _applicationGatewaysRestClient = new ApplicationGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ApplicationGatewayAvailableSslOptions"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ApplicationGatewayAvailableSslOptions(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal ApplicationGatewayAvailableSslOptions(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            Parent = options;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _applicationGatewaysRestClient = new ApplicationGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="ApplicationGatewayAvailableSslOptions"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ApplicationGatewayAvailableSslOptions(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _applicationGatewaysRestClient = new ApplicationGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _applicationGatewayAvailableSslOptionsApplicationGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(ResourceType, out string applicationGatewayAvailableSslOptionsApplicationGatewaysApiVersion);
+            _applicationGatewayAvailableSslOptionsApplicationGatewaysRestClient = new ApplicationGatewaysRestOperations(_applicationGatewayAvailableSslOptionsApplicationGatewaysClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationGatewayAvailableSslOptionsApplicationGatewaysApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/applicationGatewayAvailableSslOptions";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -85,21 +77,35 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the parent resource of this resource. </summary>
-        public ArmResource Parent { get; }
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
 
-        /// <summary> Lists available Ssl options for configuring Ssl policy. </summary>
+        /// <summary> Gets a collection of ApplicationGatewaySslPredefinedPolicies in the ApplicationGatewaySslPredefinedPolicy. </summary>
+        /// <returns> An object representing collection of ApplicationGatewaySslPredefinedPolicies and their operations over a ApplicationGatewaySslPredefinedPolicy. </returns>
+        public virtual ApplicationGatewaySslPredefinedPolicyCollection GetApplicationGatewaySslPredefinedPolicies()
+        {
+            return new ApplicationGatewaySslPredefinedPolicyCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Lists available Ssl options for configuring Ssl policy.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
+        /// Operation Id: ApplicationGateways_ListAvailableSslOptions
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ApplicationGatewayAvailableSslOptions>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayAvailableSslOptions.Get");
+            using var scope = _applicationGatewayAvailableSslOptionsApplicationGatewaysClientDiagnostics.CreateScope("ApplicationGatewayAvailableSslOptions.Get");
             scope.Start();
             try
             {
-                var response = await _applicationGatewaysRestClient.ListAvailableSslOptionsAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                var response = await _applicationGatewayAvailableSslOptionsApplicationGatewaysRestClient.ListAvailableSslOptionsAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ApplicationGatewayAvailableSslOptions(this, response.Value), response.GetRawResponse());
+                    throw await _applicationGatewayAvailableSslOptionsApplicationGatewaysClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ApplicationGatewayAvailableSslOptions(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -108,18 +114,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Lists available Ssl options for configuring Ssl policy. </summary>
+        /// <summary>
+        /// Lists available Ssl options for configuring Ssl policy.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
+        /// Operation Id: ApplicationGateways_ListAvailableSslOptions
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApplicationGatewayAvailableSslOptions> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayAvailableSslOptions.Get");
+            using var scope = _applicationGatewayAvailableSslOptionsApplicationGatewaysClientDiagnostics.CreateScope("ApplicationGatewayAvailableSslOptions.Get");
             scope.Start();
             try
             {
-                var response = _applicationGatewaysRestClient.ListAvailableSslOptions(Id.SubscriptionId, cancellationToken);
+                var response = _applicationGatewayAvailableSslOptionsApplicationGatewaysRestClient.ListAvailableSslOptions(Id.SubscriptionId, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApplicationGatewayAvailableSslOptions(this, response.Value), response.GetRawResponse());
+                    throw _applicationGatewayAvailableSslOptionsApplicationGatewaysClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewayAvailableSslOptions(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -128,30 +138,208 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
+        /// Operation Id: ApplicationGateways_ListAvailableSslOptions
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public async virtual Task<Response<ApplicationGatewayAvailableSslOptions>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            using var scope = _applicationGatewayAvailableSslOptionsApplicationGatewaysClientDiagnostics.CreateScope("ApplicationGatewayAvailableSslOptions.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _applicationGatewayAvailableSslOptionsApplicationGatewaysRestClient.ListAvailableSslOptionsAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ApplicationGatewayAvailableSslOptions(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
+        /// Operation Id: ApplicationGateways_ListAvailableSslOptions
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual Response<ApplicationGatewayAvailableSslOptions> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            using var scope = _applicationGatewayAvailableSslOptionsApplicationGatewaysClientDiagnostics.CreateScope("ApplicationGatewayAvailableSslOptions.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _applicationGatewayAvailableSslOptionsApplicationGatewaysRestClient.ListAvailableSslOptions(Id.SubscriptionId, cancellationToken);
+                return Response.FromValue(new ApplicationGatewayAvailableSslOptions(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        #region ApplicationGatewaySslPredefinedPolicy
-
-        /// <summary> Gets a collection of ApplicationGatewaySslPredefinedPolicies in the ApplicationGatewayAvailableSslOptions. </summary>
-        /// <returns> An object representing collection of ApplicationGatewaySslPredefinedPolicies and their operations over a ApplicationGatewayAvailableSslOptions. </returns>
-        public ApplicationGatewaySslPredefinedPolicyCollection GetApplicationGatewaySslPredefinedPolicies()
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
+        /// Operation Id: ApplicationGateways_ListAvailableSslOptions
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public async virtual Task<Response<ApplicationGatewayAvailableSslOptions>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            return new ApplicationGatewaySslPredefinedPolicyCollection(this);
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
+
+            using var scope = _applicationGatewayAvailableSslOptionsApplicationGatewaysClientDiagnostics.CreateScope("ApplicationGatewayAvailableSslOptions.SetTags");
+            scope.Start();
+            try
+            {
+                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _applicationGatewayAvailableSslOptionsApplicationGatewaysRestClient.ListAvailableSslOptionsAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ApplicationGatewayAvailableSslOptions(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
+
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
+        /// Operation Id: ApplicationGateways_ListAvailableSslOptions
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual Response<ApplicationGatewayAvailableSslOptions> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
+
+            using var scope = _applicationGatewayAvailableSslOptionsApplicationGatewaysClientDiagnostics.CreateScope("ApplicationGatewayAvailableSslOptions.SetTags");
+            scope.Start();
+            try
+            {
+                TagResource.Delete(true, cancellationToken: cancellationToken);
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _applicationGatewayAvailableSslOptionsApplicationGatewaysRestClient.ListAvailableSslOptions(Id.SubscriptionId, cancellationToken);
+                return Response.FromValue(new ApplicationGatewayAvailableSslOptions(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
+        /// Operation Id: ApplicationGateways_ListAvailableSslOptions
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public async virtual Task<Response<ApplicationGatewayAvailableSslOptions>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            using var scope = _applicationGatewayAvailableSslOptionsApplicationGatewaysClientDiagnostics.CreateScope("ApplicationGatewayAvailableSslOptions.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _applicationGatewayAvailableSslOptionsApplicationGatewaysRestClient.ListAvailableSslOptionsAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ApplicationGatewayAvailableSslOptions(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
+        /// Operation Id: ApplicationGateways_ListAvailableSslOptions
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual Response<ApplicationGatewayAvailableSslOptions> RemoveTag(string key, CancellationToken cancellationToken = default)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            using var scope = _applicationGatewayAvailableSslOptionsApplicationGatewaysClientDiagnostics.CreateScope("ApplicationGatewayAvailableSslOptions.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _applicationGatewayAvailableSslOptionsApplicationGatewaysRestClient.ListAvailableSslOptions(Id.SubscriptionId, cancellationToken);
+                return Response.FromValue(new ApplicationGatewayAvailableSslOptions(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

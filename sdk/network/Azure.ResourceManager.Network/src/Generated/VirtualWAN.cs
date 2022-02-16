@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -15,17 +16,26 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A Class representing a VirtualWAN along with the instance operations that can be performed on it. </summary>
     public partial class VirtualWAN : ArmResource
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly VirtualWansRestOperations _virtualWansRestClient;
-        private readonly NetworkManagementRestOperations _restClient;
+        /// <summary> Generate the resource identifier of a <see cref="VirtualWAN"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualWANName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _virtualWANVirtualWansClientDiagnostics;
+        private readonly VirtualWansRestOperations _virtualWANVirtualWansRestClient;
+        private readonly ClientDiagnostics _defaultClientDiagnostics;
+        private readonly NetworkManagementRestOperations _defaultRestClient;
+        private readonly ClientDiagnostics _vpnSitesConfigurationClientDiagnostics;
         private readonly VpnSitesConfigurationRestOperations _vpnSitesConfigurationRestClient;
+        private readonly ClientDiagnostics _vpnServerConfigurationsAssociatedWithVirtualWanClientDiagnostics;
         private readonly VpnServerConfigurationsAssociatedWithVirtualWanRestOperations _vpnServerConfigurationsAssociatedWithVirtualWanRestClient;
         private readonly VirtualWANData _data;
 
@@ -35,51 +45,35 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "VirtualWAN"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal VirtualWAN(ArmResource options, VirtualWANData resource) : base(options, new ResourceIdentifier(resource.Id))
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal VirtualWAN(ArmClient client, VirtualWANData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
-            _data = resource;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualWansRestClient = new VirtualWansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _restClient = new NetworkManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _vpnSitesConfigurationRestClient = new VpnSitesConfigurationRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _vpnServerConfigurationsAssociatedWithVirtualWanRestClient = new VpnServerConfigurationsAssociatedWithVirtualWanRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="VirtualWAN"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VirtualWAN(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal VirtualWAN(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualWansRestClient = new VirtualWansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _restClient = new NetworkManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _vpnSitesConfigurationRestClient = new VpnSitesConfigurationRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _vpnServerConfigurationsAssociatedWithVirtualWanRestClient = new VpnServerConfigurationsAssociatedWithVirtualWanRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="VirtualWAN"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VirtualWAN(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualWansRestClient = new VirtualWansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _restClient = new NetworkManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _vpnSitesConfigurationRestClient = new VpnSitesConfigurationRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _vpnServerConfigurationsAssociatedWithVirtualWanRestClient = new VpnServerConfigurationsAssociatedWithVirtualWanRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _virtualWANVirtualWansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(ResourceType, out string virtualWANVirtualWansApiVersion);
+            _virtualWANVirtualWansRestClient = new VirtualWansRestOperations(_virtualWANVirtualWansClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualWANVirtualWansApiVersion);
+            _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
+            _defaultRestClient = new NetworkManagementRestOperations(_defaultClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _vpnSitesConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
+            _vpnSitesConfigurationRestClient = new VpnSitesConfigurationRestOperations(_vpnSitesConfigurationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _vpnServerConfigurationsAssociatedWithVirtualWanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
+            _vpnServerConfigurationsAssociatedWithVirtualWanRestClient = new VpnServerConfigurationsAssociatedWithVirtualWanRestOperations(_vpnServerConfigurationsAssociatedWithVirtualWanClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/virtualWans";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -96,18 +90,28 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves the details of a VirtualWAN. </summary>
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
+
+        /// <summary>
+        /// Retrieves the details of a VirtualWAN.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Operation Id: VirtualWans_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VirtualWAN>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualWAN.Get");
+            using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWAN.Get");
             scope.Start();
             try
             {
-                var response = await _virtualWansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualWANVirtualWansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualWAN(this, response.Value), response.GetRawResponse());
+                    throw await _virtualWANVirtualWansClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new VirtualWAN(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,18 +120,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves the details of a VirtualWAN. </summary>
+        /// <summary>
+        /// Retrieves the details of a VirtualWAN.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Operation Id: VirtualWans_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VirtualWAN> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualWAN.Get");
+            using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWAN.Get");
             scope.Start();
             try
             {
-                var response = _virtualWansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _virtualWANVirtualWansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualWAN(this, response.Value), response.GetRawResponse());
+                    throw _virtualWANVirtualWansClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VirtualWAN(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -136,33 +144,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            return ListAvailableLocations(ResourceType, cancellationToken);
-        }
-
-        /// <summary> Deletes a VirtualWAN. </summary>
+        /// <summary>
+        /// Deletes a VirtualWAN.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Operation Id: VirtualWans_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualWanDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualWAN.Delete");
+            using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWAN.Delete");
             scope.Start();
             try
             {
-                var response = await _virtualWansRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualWanDeleteOperation(_clientDiagnostics, Pipeline, _virtualWansRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _virtualWANVirtualWansRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation(_virtualWANVirtualWansClientDiagnostics, Pipeline, _virtualWANVirtualWansRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -174,19 +170,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes a VirtualWAN. </summary>
+        /// <summary>
+        /// Deletes a VirtualWAN.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Operation Id: VirtualWans_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualWanDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualWAN.Delete");
+            using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWAN.Delete");
             scope.Start();
             try
             {
-                var response = _virtualWansRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new VirtualWanDeleteOperation(_clientDiagnostics, Pipeline, _virtualWansRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _virtualWANVirtualWansRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new NetworkArmOperation(_virtualWANVirtualWansClientDiagnostics, Pipeline, _virtualWANVirtualWansRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -196,65 +196,19 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates a VirtualWAN tags. </summary>
-        /// <param name="wANParameters"> Parameters supplied to Update VirtualWAN tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="wANParameters"/> is null. </exception>
-        public async virtual Task<Response<VirtualWAN>> UpdateAsync(TagsObject wANParameters, CancellationToken cancellationToken = default)
-        {
-            if (wANParameters == null)
-            {
-                throw new ArgumentNullException(nameof(wANParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VirtualWAN.Update");
-            scope.Start();
-            try
-            {
-                var response = await _virtualWansRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, wANParameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VirtualWAN(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Updates a VirtualWAN tags. </summary>
-        /// <param name="wANParameters"> Parameters supplied to Update VirtualWAN tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="wANParameters"/> is null. </exception>
-        public virtual Response<VirtualWAN> Update(TagsObject wANParameters, CancellationToken cancellationToken = default)
-        {
-            if (wANParameters == null)
-            {
-                throw new ArgumentNullException(nameof(wANParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VirtualWAN.Update");
-            scope.Start();
-            try
-            {
-                var response = _virtualWansRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, wANParameters, cancellationToken);
-                return Response.FromValue(new VirtualWAN(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gives the supported security providers for the virtual wan. </summary>
+        /// <summary>
+        /// Gives the supported security providers for the virtual wan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/supportedSecurityProviders
+        /// Operation Id: SupportedSecurityProviders
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VirtualWanSecurityProviders>> SupportedSecurityProvidersAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualWAN.SupportedSecurityProviders");
+            using var scope = _defaultClientDiagnostics.CreateScope("VirtualWAN.SupportedSecurityProviders");
             scope.Start();
             try
             {
-                var response = await _restClient.SupportedSecurityProvidersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _defaultRestClient.SupportedSecurityProvidersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -264,15 +218,19 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gives the supported security providers for the virtual wan. </summary>
+        /// <summary>
+        /// Gives the supported security providers for the virtual wan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/supportedSecurityProviders
+        /// Operation Id: SupportedSecurityProviders
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VirtualWanSecurityProviders> SupportedSecurityProviders(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualWAN.SupportedSecurityProviders");
+            using var scope = _defaultClientDiagnostics.CreateScope("VirtualWAN.SupportedSecurityProviders");
             scope.Start();
             try
             {
-                var response = _restClient.SupportedSecurityProviders(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _defaultRestClient.SupportedSecurityProviders(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -282,24 +240,28 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group. </summary>
-        /// <param name="vpnClientParams"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
+        /// <summary>
+        /// Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/GenerateVpnProfile
+        /// Operation Id: Generatevirtualwanvpnserverconfigurationvpnprofile
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="vpnClientParams"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnClientParams"/> is null. </exception>
-        public async virtual Task<NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation> GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(VirtualWanVpnProfileParameters vpnClientParams, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<VpnProfileResponse>> GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(bool waitForCompletion, VirtualWanVpnProfileParameters vpnClientParams, CancellationToken cancellationToken = default)
         {
             if (vpnClientParams == null)
             {
                 throw new ArgumentNullException(nameof(vpnClientParams));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualWAN.Generatevirtualwanvpnserverconfigurationvpnprofile");
+            using var scope = _defaultClientDiagnostics.CreateScope("VirtualWAN.Generatevirtualwanvpnserverconfigurationvpnprofile");
             scope.Start();
             try
             {
-                var response = await _restClient.GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnClientParams, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation(_clientDiagnostics, Pipeline, _restClient.CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnClientParams).Request, response);
+                var response = await _defaultRestClient.GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnClientParams, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<VpnProfileResponse>(new VpnProfileResponseOperationSource(), _defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnClientParams).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -311,24 +273,28 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group. </summary>
-        /// <param name="vpnClientParams"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
+        /// <summary>
+        /// Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/GenerateVpnProfile
+        /// Operation Id: Generatevirtualwanvpnserverconfigurationvpnprofile
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="vpnClientParams"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnClientParams"/> is null. </exception>
-        public virtual NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation Generatevirtualwanvpnserverconfigurationvpnprofile(VirtualWanVpnProfileParameters vpnClientParams, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VpnProfileResponse> Generatevirtualwanvpnserverconfigurationvpnprofile(bool waitForCompletion, VirtualWanVpnProfileParameters vpnClientParams, CancellationToken cancellationToken = default)
         {
             if (vpnClientParams == null)
             {
                 throw new ArgumentNullException(nameof(vpnClientParams));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualWAN.Generatevirtualwanvpnserverconfigurationvpnprofile");
+            using var scope = _defaultClientDiagnostics.CreateScope("VirtualWAN.Generatevirtualwanvpnserverconfigurationvpnprofile");
             scope.Start();
             try
             {
-                var response = _restClient.Generatevirtualwanvpnserverconfigurationvpnprofile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnClientParams, cancellationToken);
-                var operation = new NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation(_clientDiagnostics, Pipeline, _restClient.CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnClientParams).Request, response);
+                var response = _defaultRestClient.Generatevirtualwanvpnserverconfigurationvpnprofile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnClientParams, cancellationToken);
+                var operation = new NetworkArmOperation<VpnProfileResponse>(new VpnProfileResponseOperationSource(), _defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnClientParams).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -340,24 +306,28 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gives the sas-url to download the configurations for vpn-sites in a resource group. </summary>
-        /// <param name="request"> Parameters supplied to download vpn-sites configuration. </param>
+        /// <summary>
+        /// Gives the sas-url to download the configurations for vpn-sites in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnConfiguration
+        /// Operation Id: VpnSitesConfiguration_Download
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="request"> Parameters supplied to download vpn-sites configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public async virtual Task<VpnSitesConfigurationDownloadOperation> DownloadVpnSitesConfigurationAsync(GetVpnSitesConfigurationRequest request, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DownloadVpnSitesConfigurationAsync(bool waitForCompletion, GetVpnSitesConfigurationRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
                 throw new ArgumentNullException(nameof(request));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualWAN.DownloadVpnSitesConfiguration");
+            using var scope = _vpnSitesConfigurationClientDiagnostics.CreateScope("VirtualWAN.DownloadVpnSitesConfiguration");
             scope.Start();
             try
             {
                 var response = await _vpnSitesConfigurationRestClient.DownloadAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken).ConfigureAwait(false);
-                var operation = new VpnSitesConfigurationDownloadOperation(_clientDiagnostics, Pipeline, _vpnSitesConfigurationRestClient.CreateDownloadRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response);
+                var operation = new NetworkArmOperation(_vpnSitesConfigurationClientDiagnostics, Pipeline, _vpnSitesConfigurationRestClient.CreateDownloadRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -369,26 +339,30 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gives the sas-url to download the configurations for vpn-sites in a resource group. </summary>
-        /// <param name="request"> Parameters supplied to download vpn-sites configuration. </param>
+        /// <summary>
+        /// Gives the sas-url to download the configurations for vpn-sites in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnConfiguration
+        /// Operation Id: VpnSitesConfiguration_Download
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="request"> Parameters supplied to download vpn-sites configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual VpnSitesConfigurationDownloadOperation DownloadVpnSitesConfiguration(GetVpnSitesConfigurationRequest request, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ArmOperation DownloadVpnSitesConfiguration(bool waitForCompletion, GetVpnSitesConfigurationRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
                 throw new ArgumentNullException(nameof(request));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualWAN.DownloadVpnSitesConfiguration");
+            using var scope = _vpnSitesConfigurationClientDiagnostics.CreateScope("VirtualWAN.DownloadVpnSitesConfiguration");
             scope.Start();
             try
             {
                 var response = _vpnSitesConfigurationRestClient.Download(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken);
-                var operation = new VpnSitesConfigurationDownloadOperation(_clientDiagnostics, Pipeline, _vpnSitesConfigurationRestClient.CreateDownloadRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response);
+                var operation = new NetworkArmOperation(_vpnSitesConfigurationClientDiagnostics, Pipeline, _vpnSitesConfigurationRestClient.CreateDownloadRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -398,17 +372,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group. </summary>
+        /// <summary>
+        /// Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnServerConfigurations
+        /// Operation Id: VpnServerConfigurationsAssociatedWithVirtualWan_List
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VpnServerConfigurationsAssociatedWithVirtualWanListOperation> GetVpnServerConfigurationsAssociatedWithVirtualWanAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<VpnServerConfigurationsResponse>> GetVpnServerConfigurationsAssociatedWithVirtualWanAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualWAN.GetVpnServerConfigurationsAssociatedWithVirtualWan");
+            using var scope = _vpnServerConfigurationsAssociatedWithVirtualWanClientDiagnostics.CreateScope("VirtualWAN.GetVpnServerConfigurationsAssociatedWithVirtualWan");
             scope.Start();
             try
             {
                 var response = await _vpnServerConfigurationsAssociatedWithVirtualWanRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VpnServerConfigurationsAssociatedWithVirtualWanListOperation(_clientDiagnostics, Pipeline, _vpnServerConfigurationsAssociatedWithVirtualWanRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation<VpnServerConfigurationsResponse>(new VpnServerConfigurationsResponseOperationSource(), _vpnServerConfigurationsAssociatedWithVirtualWanClientDiagnostics, Pipeline, _vpnServerConfigurationsAssociatedWithVirtualWanRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -420,20 +398,228 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group. </summary>
+        /// <summary>
+        /// Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnServerConfigurations
+        /// Operation Id: VpnServerConfigurationsAssociatedWithVirtualWan_List
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VpnServerConfigurationsAssociatedWithVirtualWanListOperation GetVpnServerConfigurationsAssociatedWithVirtualWan(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VpnServerConfigurationsResponse> GetVpnServerConfigurationsAssociatedWithVirtualWan(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualWAN.GetVpnServerConfigurationsAssociatedWithVirtualWan");
+            using var scope = _vpnServerConfigurationsAssociatedWithVirtualWanClientDiagnostics.CreateScope("VirtualWAN.GetVpnServerConfigurationsAssociatedWithVirtualWan");
             scope.Start();
             try
             {
                 var response = _vpnServerConfigurationsAssociatedWithVirtualWanRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new VpnServerConfigurationsAssociatedWithVirtualWanListOperation(_clientDiagnostics, Pipeline, _vpnServerConfigurationsAssociatedWithVirtualWanRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation<VpnServerConfigurationsResponse>(new VpnServerConfigurationsResponseOperationSource(), _vpnServerConfigurationsAssociatedWithVirtualWanClientDiagnostics, Pipeline, _vpnServerConfigurationsAssociatedWithVirtualWanRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Operation Id: VirtualWans_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public async virtual Task<Response<VirtualWAN>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWAN.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _virtualWANVirtualWansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VirtualWAN(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Operation Id: VirtualWans_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual Response<VirtualWAN> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWAN.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _virtualWANVirtualWansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new VirtualWAN(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Operation Id: VirtualWans_Get
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public async virtual Task<Response<VirtualWAN>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
+
+            using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWAN.SetTags");
+            scope.Start();
+            try
+            {
+                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _virtualWANVirtualWansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VirtualWAN(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Operation Id: VirtualWans_Get
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual Response<VirtualWAN> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
+
+            using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWAN.SetTags");
+            scope.Start();
+            try
+            {
+                TagResource.Delete(true, cancellationToken: cancellationToken);
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _virtualWANVirtualWansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new VirtualWAN(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Operation Id: VirtualWans_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public async virtual Task<Response<VirtualWAN>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWAN.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _virtualWANVirtualWansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VirtualWAN(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Operation Id: VirtualWans_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual Response<VirtualWAN> RemoveTag(string key, CancellationToken cancellationToken = default)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWAN.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _virtualWANVirtualWansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new VirtualWAN(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
