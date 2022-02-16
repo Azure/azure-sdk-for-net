@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of BackupItem and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteSlotBackup and their operations over its parent. </summary>
     public partial class SiteSlotBackupCollection : ArmCollection, IEnumerable<SiteSlotBackup>, IAsyncEnumerable<SiteSlotBackup>
     {
         private readonly ClientDiagnostics _siteSlotBackupWebAppsClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotBackupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotBackupWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotBackup.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteSlotBackup.ResourceType, out string siteSlotBackupWebAppsApiVersion);
+            TryGetApiVersion(SiteSlotBackup.ResourceType, out string siteSlotBackupWebAppsApiVersion);
             _siteSlotBackupWebAppsRestClient = new WebAppsRestOperations(_siteSlotBackupWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotBackupWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

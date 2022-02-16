@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.KeyVault
         internal Secret(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _secretClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string secretApiVersion);
+            TryGetApiVersion(ResourceType, out string secretApiVersion);
             _secretRestClient = new SecretsRestOperations(_secretClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, secretApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -137,21 +137,21 @@ namespace Azure.ResourceManager.KeyVault
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}
         /// Operation Id: Secrets_Update
         /// </summary>
-        /// <param name="parameters"> Parameters to patch the secret. </param>
+        /// <param name="options"> Parameters to patch the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<Secret>> UpdateAsync(SecretPatchParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<Response<Secret>> UpdateAsync(SecretUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _secretClientDiagnostics.CreateScope("Secret.Update");
             scope.Start();
             try
             {
-                var response = await _secretRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _secretRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Secret(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -166,21 +166,21 @@ namespace Azure.ResourceManager.KeyVault
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}
         /// Operation Id: Secrets_Update
         /// </summary>
-        /// <param name="parameters"> Parameters to patch the secret. </param>
+        /// <param name="options"> Parameters to patch the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<Secret> Update(SecretPatchParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<Secret> Update(SecretUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _secretClientDiagnostics.CreateScope("Secret.Update");
             scope.Start();
             try
             {
-                var response = _secretRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                var response = _secretRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken);
                 return Response.FromValue(new Secret(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

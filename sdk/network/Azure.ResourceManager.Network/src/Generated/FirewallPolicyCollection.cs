@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal FirewallPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _firewallPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", FirewallPolicy.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(FirewallPolicy.ResourceType, out string firewallPolicyApiVersion);
+            TryGetApiVersion(FirewallPolicy.ResourceType, out string firewallPolicyApiVersion);
             _firewallPolicyRestClient = new FirewallPoliciesRestOperations(_firewallPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, firewallPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.Sql
         internal SqlJob(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sqlJobJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string sqlJobJobsApiVersion);
+            TryGetApiVersion(ResourceType, out string sqlJobJobsApiVersion);
             _sqlJobJobsRestClient = new JobsRestOperations(_sqlJobJobsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlJobJobsApiVersion);
             _serverJobAgentJobExecutionJobExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerJobAgentJobExecution.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ServerJobAgentJobExecution.ResourceType, out string serverJobAgentJobExecutionJobExecutionsApiVersion);
+            TryGetApiVersion(ServerJobAgentJobExecution.ResourceType, out string serverJobAgentJobExecutionJobExecutionsApiVersion);
             _serverJobAgentJobExecutionJobExecutionsRestClient = new JobExecutionsRestOperations(_serverJobAgentJobExecutionJobExecutionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverJobAgentJobExecutionJobExecutionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

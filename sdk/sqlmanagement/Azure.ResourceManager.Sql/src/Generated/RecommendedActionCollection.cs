@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
         internal RecommendedActionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _recommendedActionDatabaseRecommendedActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", RecommendedAction.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(RecommendedAction.ResourceType, out string recommendedActionDatabaseRecommendedActionsApiVersion);
+            TryGetApiVersion(RecommendedAction.ResourceType, out string recommendedActionDatabaseRecommendedActionsApiVersion);
             _recommendedActionDatabaseRecommendedActionsRestClient = new DatabaseRecommendedActionsRestOperations(_recommendedActionDatabaseRecommendedActionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, recommendedActionDatabaseRecommendedActionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.KeyVault
         internal Vault(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _vaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string vaultApiVersion);
+            TryGetApiVersion(ResourceType, out string vaultApiVersion);
             _vaultRestClient = new VaultsRestOperations(_vaultClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vaultApiVersion);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_privateLinkResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
@@ -214,21 +214,21 @@ namespace Azure.ResourceManager.KeyVault
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
         /// Operation Id: Vaults_Update
         /// </summary>
-        /// <param name="parameters"> Parameters to patch the vault. </param>
+        /// <param name="options"> Parameters to patch the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<Vault>> UpdateAsync(VaultPatchParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<Response<Vault>> UpdateAsync(VaultUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _vaultClientDiagnostics.CreateScope("Vault.Update");
             scope.Start();
             try
             {
-                var response = await _vaultRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _vaultRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Vault(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,21 +243,21 @@ namespace Azure.ResourceManager.KeyVault
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
         /// Operation Id: Vaults_Update
         /// </summary>
-        /// <param name="parameters"> Parameters to patch the vault. </param>
+        /// <param name="options"> Parameters to patch the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<Vault> Update(VaultPatchParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<Vault> Update(VaultUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _vaultClientDiagnostics.CreateScope("Vault.Update");
             scope.Start();
             try
             {
-                var response = _vaultRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var response = _vaultRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
                 return Response.FromValue(new Vault(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

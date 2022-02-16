@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Storage
         internal QueueService(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _queueServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string queueServiceApiVersion);
+            TryGetApiVersion(ResourceType, out string queueServiceApiVersion);
             _queueServiceRestClient = new QueueServicesRestOperations(_queueServiceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, queueServiceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

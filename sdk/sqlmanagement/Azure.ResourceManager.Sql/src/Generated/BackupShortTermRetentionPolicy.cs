@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         internal BackupShortTermRetentionPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _backupShortTermRetentionPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string backupShortTermRetentionPolicyApiVersion);
+            TryGetApiVersion(ResourceType, out string backupShortTermRetentionPolicyApiVersion);
             _backupShortTermRetentionPolicyRestClient = new BackupShortTermRetentionPoliciesRestOperations(_backupShortTermRetentionPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, backupShortTermRetentionPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

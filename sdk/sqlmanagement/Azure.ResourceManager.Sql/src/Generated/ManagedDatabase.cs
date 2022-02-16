@@ -62,17 +62,17 @@ namespace Azure.ResourceManager.Sql
         internal ManagedDatabase(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managedDatabaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string managedDatabaseApiVersion);
+            TryGetApiVersion(ResourceType, out string managedDatabaseApiVersion);
             _managedDatabaseRestClient = new ManagedDatabasesRestOperations(_managedDatabaseClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedDatabaseApiVersion);
             _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceDatabaseSchemaTableColumn.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ManagedInstanceDatabaseSchemaTableColumn.ResourceType, out string managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsApiVersion);
+            TryGetApiVersion(ManagedInstanceDatabaseSchemaTableColumn.ResourceType, out string managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsApiVersion);
             _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsRestClient = new ManagedDatabaseColumnsRestOperations(_managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsApiVersion);
             _managedDatabaseQueriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _managedDatabaseQueriesRestClient = new ManagedDatabaseQueriesRestOperations(_managedDatabaseQueriesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _managedDatabaseSecurityEventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _managedDatabaseSecurityEventsRestClient = new ManagedDatabaseSecurityEventsRestOperations(_managedDatabaseSecurityEventsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel.ResourceType, out string managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsApiVersion);
+            TryGetApiVersion(ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel.ResourceType, out string managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsApiVersion);
             _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient = new ManagedDatabaseSensitivityLabelsRestOperations(_managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -258,22 +258,22 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ManagedDatabases_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="parameters"> The requested database resource state. </param>
+        /// <param name="options"> The requested database resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<ManagedDatabase>> UpdateAsync(bool waitForCompletion, ManagedDatabaseUpdate parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<ArmOperation<ManagedDatabase>> UpdateAsync(bool waitForCompletion, ManagedDatabaseUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.Update");
             scope.Start();
             try
             {
-                var response = await _managedDatabaseRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedDatabase>(new ManagedDatabaseOperationSource(Client), _managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _managedDatabaseRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<ManagedDatabase>(new ManagedDatabaseOperationSource(Client), _managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -291,22 +291,22 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ManagedDatabases_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="parameters"> The requested database resource state. </param>
+        /// <param name="options"> The requested database resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ManagedDatabase> Update(bool waitForCompletion, ManagedDatabaseUpdate parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual ArmOperation<ManagedDatabase> Update(bool waitForCompletion, ManagedDatabaseUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.Update");
             scope.Start();
             try
             {
-                var response = _managedDatabaseRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new SqlArmOperation<ManagedDatabase>(new ManagedDatabaseOperationSource(Client), _managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _managedDatabaseRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken);
+                var operation = new SqlArmOperation<ManagedDatabase>(new ManagedDatabaseOperationSource(Client), _managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal SecurityPartnerProviderCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _securityPartnerProviderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", SecurityPartnerProvider.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SecurityPartnerProvider.ResourceType, out string securityPartnerProviderApiVersion);
+            TryGetApiVersion(SecurityPartnerProvider.ResourceType, out string securityPartnerProviderApiVersion);
             _securityPartnerProviderRestClient = new SecurityPartnerProvidersRestOperations(_securityPartnerProviderClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, securityPartnerProviderApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

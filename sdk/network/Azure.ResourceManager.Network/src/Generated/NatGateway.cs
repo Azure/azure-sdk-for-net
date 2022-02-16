@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         internal NatGateway(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _natGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string natGatewayApiVersion);
+            TryGetApiVersion(ResourceType, out string natGatewayApiVersion);
             _natGatewayRestClient = new NatGatewaysRestOperations(_natGatewayClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, natGatewayApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

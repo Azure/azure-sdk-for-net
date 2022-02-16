@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal AzureWebCategoryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _azureWebCategoryWebCategoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", AzureWebCategory.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(AzureWebCategory.ResourceType, out string azureWebCategoryWebCategoriesApiVersion);
+            TryGetApiVersion(AzureWebCategory.ResourceType, out string azureWebCategoryWebCategoriesApiVersion);
             _azureWebCategoryWebCategoriesRestClient = new WebCategoriesRestOperations(_azureWebCategoryWebCategoriesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, azureWebCategoryWebCategoriesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

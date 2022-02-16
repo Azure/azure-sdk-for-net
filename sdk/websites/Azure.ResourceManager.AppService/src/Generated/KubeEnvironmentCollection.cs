@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         internal KubeEnvironmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _kubeEnvironmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", KubeEnvironment.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(KubeEnvironment.ResourceType, out string kubeEnvironmentApiVersion);
+            TryGetApiVersion(KubeEnvironment.ResourceType, out string kubeEnvironmentApiVersion);
             _kubeEnvironmentRestClient = new KubeEnvironmentsRestOperations(_kubeEnvironmentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, kubeEnvironmentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

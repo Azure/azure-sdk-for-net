@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute
         internal OSFamily(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _oSFamilyCloudServiceOperatingSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string oSFamilyCloudServiceOperatingSystemsApiVersion);
+            TryGetApiVersion(ResourceType, out string oSFamilyCloudServiceOperatingSystemsApiVersion);
             _oSFamilyCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(_oSFamilyCloudServiceOperatingSystemsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, oSFamilyCloudServiceOperatingSystemsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

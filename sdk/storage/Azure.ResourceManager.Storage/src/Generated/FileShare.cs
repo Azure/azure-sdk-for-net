@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage
         internal FileShare(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _fileShareClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string fileShareApiVersion);
+            TryGetApiVersion(ResourceType, out string fileShareApiVersion);
             _fileShareRestClient = new FileSharesRestOperations(_fileShareClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, fileShareApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

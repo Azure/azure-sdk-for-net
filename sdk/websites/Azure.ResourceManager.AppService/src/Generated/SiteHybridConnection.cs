@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteHybridConnection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteHybridConnectionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteHybridConnectionWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string siteHybridConnectionWebAppsApiVersion);
             _siteHybridConnectionWebAppsRestClient = new WebAppsRestOperations(_siteHybridConnectionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteHybridConnectionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

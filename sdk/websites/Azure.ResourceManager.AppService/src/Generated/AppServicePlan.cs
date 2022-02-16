@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         internal AppServicePlan(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _appServicePlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string appServicePlanApiVersion);
+            TryGetApiVersion(ResourceType, out string appServicePlanApiVersion);
             _appServicePlanRestClient = new AppServicePlansRestOperations(_appServicePlanClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, appServicePlanApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -211,21 +211,21 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
         /// Operation Id: AppServicePlans_Update
         /// </summary>
-        /// <param name="appServicePlan"> Details of the App Service plan. </param>
+        /// <param name="options"> Details of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="appServicePlan"/> is null. </exception>
-        public async virtual Task<Response<AppServicePlan>> UpdateAsync(AppServicePlanPatchOptions appServicePlan, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<Response<AppServicePlan>> UpdateAsync(AppServicePlanUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (appServicePlan == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(appServicePlan));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.Update");
             scope.Start();
             try
             {
-                var response = await _appServicePlanRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appServicePlan, cancellationToken).ConfigureAwait(false);
+                var response = await _appServicePlanRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AppServicePlan(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,21 +240,21 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
         /// Operation Id: AppServicePlans_Update
         /// </summary>
-        /// <param name="appServicePlan"> Details of the App Service plan. </param>
+        /// <param name="options"> Details of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="appServicePlan"/> is null. </exception>
-        public virtual Response<AppServicePlan> Update(AppServicePlanPatchOptions appServicePlan, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<AppServicePlan> Update(AppServicePlanUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (appServicePlan == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(appServicePlan));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.Update");
             scope.Start();
             try
             {
-                var response = _appServicePlanRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appServicePlan, cancellationToken);
+                var response = _appServicePlanRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
                 return Response.FromValue(new AppServicePlan(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -17,7 +17,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of VnetGateway and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteVirtualNetworkConnectionGateway and their operations over its parent. </summary>
     public partial class SiteVirtualNetworkConnectionGatewayCollection : ArmCollection
     {
         private readonly ClientDiagnostics _siteVirtualNetworkConnectionGatewayWebAppsClientDiagnostics;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteVirtualNetworkConnectionGatewayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteVirtualNetworkConnectionGatewayWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteVirtualNetworkConnectionGateway.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteVirtualNetworkConnectionGateway.ResourceType, out string siteVirtualNetworkConnectionGatewayWebAppsApiVersion);
+            TryGetApiVersion(SiteVirtualNetworkConnectionGateway.ResourceType, out string siteVirtualNetworkConnectionGatewayWebAppsApiVersion);
             _siteVirtualNetworkConnectionGatewayWebAppsRestClient = new WebAppsRestOperations(_siteVirtualNetworkConnectionGatewayWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteVirtualNetworkConnectionGatewayWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

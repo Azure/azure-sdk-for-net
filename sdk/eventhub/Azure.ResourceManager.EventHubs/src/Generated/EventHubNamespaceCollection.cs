@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.EventHubs
         internal EventHubNamespaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _eventHubNamespaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubNamespace.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(EventHubNamespace.ResourceType, out string eventHubNamespaceApiVersion);
+            TryGetApiVersion(EventHubNamespace.ResourceType, out string eventHubNamespaceApiVersion);
             _eventHubNamespaceRestClient = new EventHubNamespacesRestOperations(_eventHubNamespaceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubNamespaceApiVersion);
             _eventHubNamespaceNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubNamespace.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(EventHubNamespace.ResourceType, out string eventHubNamespaceNamespacesApiVersion);
+            TryGetApiVersion(EventHubNamespace.ResourceType, out string eventHubNamespaceNamespacesApiVersion);
             _eventHubNamespaceNamespacesRestClient = new NamespacesRestOperations(_eventHubNamespaceNamespacesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubNamespaceNamespacesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

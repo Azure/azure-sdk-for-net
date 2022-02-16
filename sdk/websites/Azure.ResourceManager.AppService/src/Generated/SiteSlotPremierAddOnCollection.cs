@@ -17,7 +17,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of PremierAddOn and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteSlotPremierAddOn and their operations over its parent. </summary>
     public partial class SiteSlotPremierAddOnCollection : ArmCollection
     {
         private readonly ClientDiagnostics _siteSlotPremierAddOnWebAppsClientDiagnostics;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotPremierAddOnCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotPremierAddOnWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotPremierAddOn.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteSlotPremierAddOn.ResourceType, out string siteSlotPremierAddOnWebAppsApiVersion);
+            TryGetApiVersion(SiteSlotPremierAddOn.ResourceType, out string siteSlotPremierAddOnWebAppsApiVersion);
             _siteSlotPremierAddOnWebAppsRestClient = new WebAppsRestOperations(_siteSlotPremierAddOnWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotPremierAddOnWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         internal RouteTable(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _routeTableClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string routeTableApiVersion);
+            TryGetApiVersion(ResourceType, out string routeTableApiVersion);
             _routeTableRestClient = new RouteTablesRestOperations(_routeTableClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, routeTableApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

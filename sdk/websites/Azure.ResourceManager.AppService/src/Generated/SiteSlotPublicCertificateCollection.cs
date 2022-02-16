@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of PublicCertificate and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteSlotPublicCertificate and their operations over its parent. </summary>
     public partial class SiteSlotPublicCertificateCollection : ArmCollection, IEnumerable<SiteSlotPublicCertificate>, IAsyncEnumerable<SiteSlotPublicCertificate>
     {
         private readonly ClientDiagnostics _siteSlotPublicCertificateWebAppsClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotPublicCertificateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotPublicCertificateWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotPublicCertificate.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteSlotPublicCertificate.ResourceType, out string siteSlotPublicCertificateWebAppsApiVersion);
+            TryGetApiVersion(SiteSlotPublicCertificate.ResourceType, out string siteSlotPublicCertificateWebAppsApiVersion);
             _siteSlotPublicCertificateWebAppsRestClient = new WebAppsRestOperations(_siteSlotPublicCertificateWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotPublicCertificateWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

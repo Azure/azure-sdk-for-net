@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         internal ServerJobAgentJobExecution(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverJobAgentJobExecutionJobExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string serverJobAgentJobExecutionJobExecutionsApiVersion);
+            TryGetApiVersion(ResourceType, out string serverJobAgentJobExecutionJobExecutionsApiVersion);
             _serverJobAgentJobExecutionJobExecutionsRestClient = new JobExecutionsRestOperations(_serverJobAgentJobExecutionJobExecutionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverJobAgentJobExecutionJobExecutionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

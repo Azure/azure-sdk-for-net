@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotResourceHealthMetadata(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotResourceHealthMetadataResourceHealthMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteSlotResourceHealthMetadataResourceHealthMetadataApiVersion);
+            TryGetApiVersion(ResourceType, out string siteSlotResourceHealthMetadataResourceHealthMetadataApiVersion);
             _siteSlotResourceHealthMetadataResourceHealthMetadataRestClient = new ResourceHealthMetadataRestOperations(_siteSlotResourceHealthMetadataResourceHealthMetadataClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotResourceHealthMetadataResourceHealthMetadataApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

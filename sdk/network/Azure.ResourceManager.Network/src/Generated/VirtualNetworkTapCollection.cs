@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal VirtualNetworkTapCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualNetworkTapClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetworkTap.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(VirtualNetworkTap.ResourceType, out string virtualNetworkTapApiVersion);
+            TryGetApiVersion(VirtualNetworkTap.ResourceType, out string virtualNetworkTapApiVersion);
             _virtualNetworkTapRestClient = new VirtualNetworkTapsRestOperations(_virtualNetworkTapClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualNetworkTapApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal HostingEnvironmentPrivateEndpointConnection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _hostingEnvironmentPrivateEndpointConnectionAppServiceEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string hostingEnvironmentPrivateEndpointConnectionAppServiceEnvironmentsApiVersion);
+            TryGetApiVersion(ResourceType, out string hostingEnvironmentPrivateEndpointConnectionAppServiceEnvironmentsApiVersion);
             _hostingEnvironmentPrivateEndpointConnectionAppServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_hostingEnvironmentPrivateEndpointConnectionAppServiceEnvironmentsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hostingEnvironmentPrivateEndpointConnectionAppServiceEnvironmentsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

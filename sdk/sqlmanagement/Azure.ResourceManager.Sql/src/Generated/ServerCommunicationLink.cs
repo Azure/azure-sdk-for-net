@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         internal ServerCommunicationLink(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverCommunicationLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string serverCommunicationLinkApiVersion);
+            TryGetApiVersion(ResourceType, out string serverCommunicationLinkApiVersion);
             _serverCommunicationLinkRestClient = new ServerCommunicationLinksRestOperations(_serverCommunicationLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverCommunicationLinkApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

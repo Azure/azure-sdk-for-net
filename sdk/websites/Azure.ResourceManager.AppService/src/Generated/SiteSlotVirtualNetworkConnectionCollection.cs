@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of VnetInfoResource and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteSlotVirtualNetworkConnection and their operations over its parent. </summary>
     public partial class SiteSlotVirtualNetworkConnectionCollection : ArmCollection, IEnumerable<SiteSlotVirtualNetworkConnection>, IAsyncEnumerable<SiteSlotVirtualNetworkConnection>
     {
         private readonly ClientDiagnostics _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotVirtualNetworkConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotVirtualNetworkConnection.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteSlotVirtualNetworkConnection.ResourceType, out string siteSlotVirtualNetworkConnectionWebAppsApiVersion);
+            TryGetApiVersion(SiteSlotVirtualNetworkConnection.ResourceType, out string siteSlotVirtualNetworkConnectionWebAppsApiVersion);
             _siteSlotVirtualNetworkConnectionWebAppsRestClient = new WebAppsRestOperations(_siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotVirtualNetworkConnectionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

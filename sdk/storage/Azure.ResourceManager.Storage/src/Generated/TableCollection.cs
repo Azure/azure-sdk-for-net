@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Storage
         internal TableCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _tableClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", Table.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(Table.ResourceType, out string tableApiVersion);
+            TryGetApiVersion(Table.ResourceType, out string tableApiVersion);
             _tableRestClient = new TableRestOperations(_tableClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tableApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

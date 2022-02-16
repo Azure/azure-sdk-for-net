@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of ProcessModuleInfo and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteSlotInstanceProcessModule and their operations over its parent. </summary>
     public partial class SiteSlotInstanceProcessModuleCollection : ArmCollection, IEnumerable<SiteSlotInstanceProcessModule>, IAsyncEnumerable<SiteSlotInstanceProcessModule>
     {
         private readonly ClientDiagnostics _siteSlotInstanceProcessModuleWebAppsClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotInstanceProcessModuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotInstanceProcessModuleWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotInstanceProcessModule.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteSlotInstanceProcessModule.ResourceType, out string siteSlotInstanceProcessModuleWebAppsApiVersion);
+            TryGetApiVersion(SiteSlotInstanceProcessModule.ResourceType, out string siteSlotInstanceProcessModuleWebAppsApiVersion);
             _siteSlotInstanceProcessModuleWebAppsRestClient = new WebAppsRestOperations(_siteSlotInstanceProcessModuleWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotInstanceProcessModuleWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

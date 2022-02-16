@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Storage
         internal EncryptionScope(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _encryptionScopeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string encryptionScopeApiVersion);
+            TryGetApiVersion(ResourceType, out string encryptionScopeApiVersion);
             _encryptionScopeRestClient = new EncryptionScopesRestOperations(_encryptionScopeClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, encryptionScopeApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

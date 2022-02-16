@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
         internal ReplicationLinkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _replicationLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ReplicationLink.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ReplicationLink.ResourceType, out string replicationLinkApiVersion);
+            TryGetApiVersion(ReplicationLink.ResourceType, out string replicationLinkApiVersion);
             _replicationLinkRestClient = new ReplicationLinksRestOperations(_replicationLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, replicationLinkApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

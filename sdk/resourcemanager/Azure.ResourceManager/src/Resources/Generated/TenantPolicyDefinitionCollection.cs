@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of PolicyDefinition and their operations over its parent. </summary>
+    /// <summary> A class representing collection of TenantPolicyDefinition and their operations over its parent. </summary>
     public partial class TenantPolicyDefinitionCollection : ArmCollection, IEnumerable<TenantPolicyDefinition>, IAsyncEnumerable<TenantPolicyDefinition>
     {
         private readonly ClientDiagnostics _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources
         internal TenantPolicyDefinitionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", TenantPolicyDefinition.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(TenantPolicyDefinition.ResourceType, out string tenantPolicyDefinitionPolicyDefinitionsApiVersion);
+            TryGetApiVersion(TenantPolicyDefinition.ResourceType, out string tenantPolicyDefinitionPolicyDefinitionsApiVersion);
             _tenantPolicyDefinitionPolicyDefinitionsRestClient = new PolicyDefinitionsRestOperations(_tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tenantPolicyDefinitionPolicyDefinitionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

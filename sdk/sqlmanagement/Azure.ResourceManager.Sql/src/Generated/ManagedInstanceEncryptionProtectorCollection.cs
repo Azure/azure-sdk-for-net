@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         internal ManagedInstanceEncryptionProtectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managedInstanceEncryptionProtectorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceEncryptionProtector.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ManagedInstanceEncryptionProtector.ResourceType, out string managedInstanceEncryptionProtectorApiVersion);
+            TryGetApiVersion(ManagedInstanceEncryptionProtector.ResourceType, out string managedInstanceEncryptionProtectorApiVersion);
             _managedInstanceEncryptionProtectorRestClient = new ManagedInstanceEncryptionProtectorsRestOperations(_managedInstanceEncryptionProtectorClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceEncryptionProtectorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

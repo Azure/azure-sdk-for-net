@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network
         internal VirtualWAN(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualWANVirtualWansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string virtualWANVirtualWansApiVersion);
+            TryGetApiVersion(ResourceType, out string virtualWANVirtualWansApiVersion);
             _virtualWANVirtualWansRestClient = new VirtualWansRestOperations(_virtualWANVirtualWansClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualWANVirtualWansApiVersion);
             _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _defaultRestClient = new NetworkManagementRestOperations(_defaultClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);

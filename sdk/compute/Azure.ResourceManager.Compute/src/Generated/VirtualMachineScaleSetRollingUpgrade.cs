@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute
         internal VirtualMachineScaleSetRollingUpgrade(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualMachineScaleSetRollingUpgradeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string virtualMachineScaleSetRollingUpgradeApiVersion);
+            TryGetApiVersion(ResourceType, out string virtualMachineScaleSetRollingUpgradeApiVersion);
             _virtualMachineScaleSetRollingUpgradeRestClient = new VirtualMachineScaleSetRollingUpgradesRestOperations(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualMachineScaleSetRollingUpgradeApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

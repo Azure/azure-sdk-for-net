@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         internal HubRouteTableCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _hubRouteTableClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", HubRouteTable.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(HubRouteTable.ResourceType, out string hubRouteTableApiVersion);
+            TryGetApiVersion(HubRouteTable.ResourceType, out string hubRouteTableApiVersion);
             _hubRouteTableRestClient = new HubRouteTablesRestOperations(_hubRouteTableClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hubRouteTableApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

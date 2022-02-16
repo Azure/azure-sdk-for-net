@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of ApiKeyVaultReference and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteSlotConfigConnectionString and their operations over its parent. </summary>
     public partial class SiteSlotConfigConnectionStringCollection : ArmCollection, IEnumerable<SiteSlotConfigConnectionString>, IAsyncEnumerable<SiteSlotConfigConnectionString>
     {
         private readonly ClientDiagnostics _siteSlotConfigConnectionStringWebAppsClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotConfigConnectionStringCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotConfigConnectionStringWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotConfigConnectionString.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteSlotConfigConnectionString.ResourceType, out string siteSlotConfigConnectionStringWebAppsApiVersion);
+            TryGetApiVersion(SiteSlotConfigConnectionString.ResourceType, out string siteSlotConfigConnectionStringWebAppsApiVersion);
             _siteSlotConfigConnectionStringWebAppsRestClient = new WebAppsRestOperations(_siteSlotConfigConnectionStringWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotConfigConnectionStringWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

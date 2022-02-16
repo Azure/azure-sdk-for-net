@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         internal VirtualNetwork(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualNetworkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string virtualNetworkApiVersion);
+            TryGetApiVersion(ResourceType, out string virtualNetworkApiVersion);
             _virtualNetworkRestClient = new VirtualNetworksRestOperations(_virtualNetworkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualNetworkApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

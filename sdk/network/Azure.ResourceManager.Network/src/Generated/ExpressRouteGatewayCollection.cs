@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal ExpressRouteGatewayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _expressRouteGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteGateway.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ExpressRouteGateway.ResourceType, out string expressRouteGatewayApiVersion);
+            TryGetApiVersion(ExpressRouteGateway.ResourceType, out string expressRouteGatewayApiVersion);
             _expressRouteGatewayRestClient = new ExpressRouteGatewaysRestOperations(_expressRouteGatewayClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRouteGatewayApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

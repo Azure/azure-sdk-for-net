@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of JobExecution and their operations over its parent. </summary>
+    /// <summary> A class representing collection of ServerJobAgentJobExecutionStepTarget and their operations over its parent. </summary>
     public partial class ServerJobAgentJobExecutionStepTargetCollection : ArmCollection, IEnumerable<ServerJobAgentJobExecutionStepTarget>, IAsyncEnumerable<ServerJobAgentJobExecutionStepTarget>
     {
         private readonly ClientDiagnostics _serverJobAgentJobExecutionStepTargetJobTargetExecutionsClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
         internal ServerJobAgentJobExecutionStepTargetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverJobAgentJobExecutionStepTargetJobTargetExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerJobAgentJobExecutionStepTarget.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ServerJobAgentJobExecutionStepTarget.ResourceType, out string serverJobAgentJobExecutionStepTargetJobTargetExecutionsApiVersion);
+            TryGetApiVersion(ServerJobAgentJobExecutionStepTarget.ResourceType, out string serverJobAgentJobExecutionStepTargetJobTargetExecutionsApiVersion);
             _serverJobAgentJobExecutionStepTargetJobTargetExecutionsRestClient = new JobTargetExecutionsRestOperations(_serverJobAgentJobExecutionStepTargetJobTargetExecutionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverJobAgentJobExecutionStepTargetJobTargetExecutionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.ExtendedLocation
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ExtendedLocation.CustomLocation>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ExtendedLocation.CustomLocation> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ExtendedLocation.CustomLocation>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ExtendedLocation.CustomLocation> Update(Azure.ResourceManager.ExtendedLocation.Models.PatchableCustomLocations parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ExtendedLocation.CustomLocation>> UpdateAsync(Azure.ResourceManager.ExtendedLocation.Models.PatchableCustomLocations parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ExtendedLocation.CustomLocation> Update(Azure.ResourceManager.ExtendedLocation.Models.CustomLocationUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ExtendedLocation.CustomLocation>> UpdateAsync(Azure.ResourceManager.ExtendedLocation.Models.CustomLocationUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CustomLocationCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ExtendedLocation.CustomLocation>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ExtendedLocation.CustomLocation>, System.Collections.IEnumerable
     {
@@ -109,6 +109,19 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
         public string Type { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
+    public partial class CustomLocationUpdateOptions
+    {
+        public CustomLocationUpdateOptions() { }
+        public Azure.ResourceManager.ExtendedLocation.Models.CustomLocationPropertiesAuthentication Authentication { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ClusterExtensionIds { get { throw null; } }
+        public string DisplayName { get { throw null; } set { } }
+        public string HostResourceId { get { throw null; } set { } }
+        public Azure.ResourceManager.ExtendedLocation.Models.HostType? HostType { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
+        public string Namespace { get { throw null; } set { } }
+        public string ProvisioningState { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
     public partial class EnabledResourceType : Azure.ResourceManager.Models.ResourceData
     {
         public EnabledResourceType() { }
@@ -139,19 +152,6 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
         public static implicit operator Azure.ResourceManager.ExtendedLocation.Models.HostType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ExtendedLocation.Models.HostType left, Azure.ResourceManager.ExtendedLocation.Models.HostType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class PatchableCustomLocations
-    {
-        public PatchableCustomLocations() { }
-        public Azure.ResourceManager.ExtendedLocation.Models.CustomLocationPropertiesAuthentication Authentication { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ClusterExtensionIds { get { throw null; } }
-        public string DisplayName { get { throw null; } set { } }
-        public string HostResourceId { get { throw null; } set { } }
-        public Azure.ResourceManager.ExtendedLocation.Models.HostType? HostType { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
-        public string Namespace { get { throw null; } set { } }
-        public string ProvisioningState { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResourceIdentityType : System.IEquatable<Azure.ResourceManager.ExtendedLocation.Models.ResourceIdentityType>

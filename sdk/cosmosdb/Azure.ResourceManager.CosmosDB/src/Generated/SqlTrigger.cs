@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal SqlTrigger(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sqlTriggerSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string sqlTriggerSqlResourcesApiVersion);
+            TryGetApiVersion(ResourceType, out string sqlTriggerSqlResourcesApiVersion);
             _sqlTriggerSqlResourcesRestClient = new SqlResourcesRestOperations(_sqlTriggerSqlResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlTriggerSqlResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         internal SqlTimeZone(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sqlTimeZoneTimeZonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string sqlTimeZoneTimeZonesApiVersion);
+            TryGetApiVersion(ResourceType, out string sqlTimeZoneTimeZonesApiVersion);
             _sqlTimeZoneTimeZonesRestClient = new TimeZonesRestOperations(_sqlTimeZoneTimeZonesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlTimeZoneTimeZonesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

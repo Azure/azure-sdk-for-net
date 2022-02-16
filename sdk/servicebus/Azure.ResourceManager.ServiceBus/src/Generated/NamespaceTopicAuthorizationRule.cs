@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceBus
         internal NamespaceTopicAuthorizationRule(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _namespaceTopicAuthorizationRuleTopicAuthorizationRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string namespaceTopicAuthorizationRuleTopicAuthorizationRulesApiVersion);
+            TryGetApiVersion(ResourceType, out string namespaceTopicAuthorizationRuleTopicAuthorizationRulesApiVersion);
             _namespaceTopicAuthorizationRuleTopicAuthorizationRulesRestClient = new TopicAuthorizationRulesRestOperations(_namespaceTopicAuthorizationRuleTopicAuthorizationRulesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, namespaceTopicAuthorizationRuleTopicAuthorizationRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

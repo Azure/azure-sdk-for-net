@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql
         {
             _locationName = locationName;
             _subscriptionUsageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SubscriptionUsage.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SubscriptionUsage.ResourceType, out string subscriptionUsageApiVersion);
+            TryGetApiVersion(SubscriptionUsage.ResourceType, out string subscriptionUsageApiVersion);
             _subscriptionUsageRestClient = new SubscriptionUsagesRestOperations(_subscriptionUsageClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionUsageApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

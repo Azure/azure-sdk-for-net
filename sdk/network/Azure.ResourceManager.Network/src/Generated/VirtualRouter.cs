@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         internal VirtualRouter(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualRouterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string virtualRouterApiVersion);
+            TryGetApiVersion(ResourceType, out string virtualRouterApiVersion);
             _virtualRouterRestClient = new VirtualRoutersRestOperations(_virtualRouterClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualRouterApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

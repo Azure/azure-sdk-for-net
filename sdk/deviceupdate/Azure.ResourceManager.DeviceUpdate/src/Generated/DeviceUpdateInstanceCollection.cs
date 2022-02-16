@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         internal DeviceUpdateInstanceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _deviceUpdateInstanceInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceUpdate", DeviceUpdateInstance.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(DeviceUpdateInstance.ResourceType, out string deviceUpdateInstanceInstancesApiVersion);
+            TryGetApiVersion(DeviceUpdateInstance.ResourceType, out string deviceUpdateInstanceInstancesApiVersion);
             _deviceUpdateInstanceInstancesRestClient = new InstancesRestOperations(_deviceUpdateInstanceInstancesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deviceUpdateInstanceInstancesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

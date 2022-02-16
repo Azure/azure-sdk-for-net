@@ -22,7 +22,7 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of LongTermRetentionBackup and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SubscriptionLongTermRetentionBackup and their operations over its parent. </summary>
     public partial class SubscriptionLongTermRetentionBackupCollection : ArmCollection, IEnumerable<SubscriptionLongTermRetentionBackup>, IAsyncEnumerable<SubscriptionLongTermRetentionBackup>
     {
         private readonly ClientDiagnostics _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql
             _longTermRetentionServerName = longTermRetentionServerName;
             _longTermRetentionDatabaseName = longTermRetentionDatabaseName;
             _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SubscriptionLongTermRetentionBackup.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SubscriptionLongTermRetentionBackup.ResourceType, out string subscriptionLongTermRetentionBackupLongTermRetentionBackupsApiVersion);
+            TryGetApiVersion(SubscriptionLongTermRetentionBackup.ResourceType, out string subscriptionLongTermRetentionBackupLongTermRetentionBackupsApiVersion);
             _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient = new LongTermRetentionBackupsRestOperations(_subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionLongTermRetentionBackupLongTermRetentionBackupsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

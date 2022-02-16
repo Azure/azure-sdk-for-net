@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of Identifier and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteSlotDomainOwnershipIdentifier and their operations over its parent. </summary>
     public partial class SiteSlotDomainOwnershipIdentifierCollection : ArmCollection, IEnumerable<SiteSlotDomainOwnershipIdentifier>, IAsyncEnumerable<SiteSlotDomainOwnershipIdentifier>
     {
         private readonly ClientDiagnostics _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotDomainOwnershipIdentifierCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotDomainOwnershipIdentifier.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteSlotDomainOwnershipIdentifier.ResourceType, out string siteSlotDomainOwnershipIdentifierWebAppsApiVersion);
+            TryGetApiVersion(SiteSlotDomainOwnershipIdentifier.ResourceType, out string siteSlotDomainOwnershipIdentifierWebAppsApiVersion);
             _siteSlotDomainOwnershipIdentifierWebAppsRestClient = new WebAppsRestOperations(_siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotDomainOwnershipIdentifierWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

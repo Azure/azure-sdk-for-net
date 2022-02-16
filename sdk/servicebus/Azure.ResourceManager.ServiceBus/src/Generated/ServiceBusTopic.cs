@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceBus
         internal ServiceBusTopic(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serviceBusTopicTopicsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string serviceBusTopicTopicsApiVersion);
+            TryGetApiVersion(ResourceType, out string serviceBusTopicTopicsApiVersion);
             _serviceBusTopicTopicsRestClient = new TopicsRestOperations(_serviceBusTopicTopicsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serviceBusTopicTopicsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

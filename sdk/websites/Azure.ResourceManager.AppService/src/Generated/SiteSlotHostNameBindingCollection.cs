@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of HostNameBinding and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteSlotHostNameBinding and their operations over its parent. </summary>
     public partial class SiteSlotHostNameBindingCollection : ArmCollection, IEnumerable<SiteSlotHostNameBinding>, IAsyncEnumerable<SiteSlotHostNameBinding>
     {
         private readonly ClientDiagnostics _siteSlotHostNameBindingWebAppsClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotHostNameBindingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotHostNameBindingWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotHostNameBinding.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteSlotHostNameBinding.ResourceType, out string siteSlotHostNameBindingWebAppsApiVersion);
+            TryGetApiVersion(SiteSlotHostNameBinding.ResourceType, out string siteSlotHostNameBindingWebAppsApiVersion);
             _siteSlotHostNameBindingWebAppsRestClient = new WebAppsRestOperations(_siteSlotHostNameBindingWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotHostNameBindingWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

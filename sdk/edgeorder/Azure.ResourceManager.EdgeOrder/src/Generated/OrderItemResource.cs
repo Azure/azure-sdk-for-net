@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EdgeOrder
         internal OrderItemResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _orderItemResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string orderItemResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string orderItemResourceApiVersion);
             _orderItemResourceRestClient = new EdgeOrderManagementRestOperations(_orderItemResourceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, orderItemResourceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -192,23 +192,23 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Operation Id: UpdateOrderItem
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="orderItemUpdateParameter"> order item update parameters from request body. </param>
+        /// <param name="options"> order item update parameters from request body. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the order on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="orderItemUpdateParameter"/> is null. </exception>
-        public async virtual Task<ArmOperation<OrderItemResource>> UpdateAsync(bool waitForCompletion, OrderItemUpdateParameter orderItemUpdateParameter, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<ArmOperation<OrderItemResource>> UpdateAsync(bool waitForCompletion, OrderItemResourceUpdateOptions options, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (orderItemUpdateParameter == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(orderItemUpdateParameter));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _orderItemResourceClientDiagnostics.CreateScope("OrderItemResource.Update");
             scope.Start();
             try
             {
-                var response = await _orderItemResourceRestClient.UpdateOrderItemAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, orderItemUpdateParameter, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeOrderArmOperation<OrderItemResource>(new OrderItemResourceOperationSource(Client), _orderItemResourceClientDiagnostics, Pipeline, _orderItemResourceRestClient.CreateUpdateOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, orderItemUpdateParameter, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var response = await _orderItemResourceRestClient.UpdateOrderItemAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, ifMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new EdgeOrderArmOperation<OrderItemResource>(new OrderItemResourceOperationSource(Client), _orderItemResourceClientDiagnostics, Pipeline, _orderItemResourceRestClient.CreateUpdateOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -226,23 +226,23 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Operation Id: UpdateOrderItem
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="orderItemUpdateParameter"> order item update parameters from request body. </param>
+        /// <param name="options"> order item update parameters from request body. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the order on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="orderItemUpdateParameter"/> is null. </exception>
-        public virtual ArmOperation<OrderItemResource> Update(bool waitForCompletion, OrderItemUpdateParameter orderItemUpdateParameter, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual ArmOperation<OrderItemResource> Update(bool waitForCompletion, OrderItemResourceUpdateOptions options, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (orderItemUpdateParameter == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(orderItemUpdateParameter));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _orderItemResourceClientDiagnostics.CreateScope("OrderItemResource.Update");
             scope.Start();
             try
             {
-                var response = _orderItemResourceRestClient.UpdateOrderItem(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, orderItemUpdateParameter, ifMatch, cancellationToken);
-                var operation = new EdgeOrderArmOperation<OrderItemResource>(new OrderItemResourceOperationSource(Client), _orderItemResourceClientDiagnostics, Pipeline, _orderItemResourceRestClient.CreateUpdateOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, orderItemUpdateParameter, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var response = _orderItemResourceRestClient.UpdateOrderItem(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, ifMatch, cancellationToken);
+                var operation = new EdgeOrderArmOperation<OrderItemResource>(new OrderItemResourceOperationSource(Client), _orderItemResourceClientDiagnostics, Pipeline, _orderItemResourceRestClient.CreateUpdateOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

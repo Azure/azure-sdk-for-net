@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute
         internal ProximityPlacementGroup(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _proximityPlacementGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string proximityPlacementGroupApiVersion);
+            TryGetApiVersion(ResourceType, out string proximityPlacementGroupApiVersion);
             _proximityPlacementGroupRestClient = new ProximityPlacementGroupsRestOperations(_proximityPlacementGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, proximityPlacementGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

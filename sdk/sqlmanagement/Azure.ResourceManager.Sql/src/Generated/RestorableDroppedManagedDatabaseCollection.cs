@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
         internal RestorableDroppedManagedDatabaseCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _restorableDroppedManagedDatabaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", RestorableDroppedManagedDatabase.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(RestorableDroppedManagedDatabase.ResourceType, out string restorableDroppedManagedDatabaseApiVersion);
+            TryGetApiVersion(RestorableDroppedManagedDatabase.ResourceType, out string restorableDroppedManagedDatabaseApiVersion);
             _restorableDroppedManagedDatabaseRestClient = new RestorableDroppedManagedDatabasesRestOperations(_restorableDroppedManagedDatabaseClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, restorableDroppedManagedDatabaseApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

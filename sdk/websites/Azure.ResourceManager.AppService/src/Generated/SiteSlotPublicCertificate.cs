@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotPublicCertificate(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotPublicCertificateWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteSlotPublicCertificateWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string siteSlotPublicCertificateWebAppsApiVersion);
             _siteSlotPublicCertificateWebAppsRestClient = new WebAppsRestOperations(_siteSlotPublicCertificateWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotPublicCertificateWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

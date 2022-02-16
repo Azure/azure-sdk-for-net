@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         internal VirtualClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", VirtualCluster.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(VirtualCluster.ResourceType, out string virtualClusterApiVersion);
+            TryGetApiVersion(VirtualCluster.ResourceType, out string virtualClusterApiVersion);
             _virtualClusterRestClient = new VirtualClustersRestOperations(_virtualClusterClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualClusterApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

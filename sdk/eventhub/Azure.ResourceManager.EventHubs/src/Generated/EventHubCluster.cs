@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.EventHubs
         internal EventHubCluster(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _eventHubClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string eventHubClusterClustersApiVersion);
+            TryGetApiVersion(ResourceType, out string eventHubClusterClustersApiVersion);
             _eventHubClusterClustersRestClient = new ClustersRestOperations(_eventHubClusterClustersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubClusterClustersApiVersion);
             _eventHubClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string eventHubClusterApiVersion);
+            TryGetApiVersion(ResourceType, out string eventHubClusterApiVersion);
             _eventHubClusterRestClient = new EventHubClustersRestOperations(_eventHubClusterClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubClusterApiVersion);
             _configurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _configurationRestClient = new ConfigurationRestOperations(_configurationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);

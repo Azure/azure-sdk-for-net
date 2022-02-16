@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         internal FlowLog(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _flowLogClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string flowLogApiVersion);
+            TryGetApiVersion(ResourceType, out string flowLogApiVersion);
             _flowLogRestClient = new FlowLogsRestOperations(_flowLogClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, flowLogApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

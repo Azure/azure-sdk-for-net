@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal BasicPublishingCredentialsPolicyFtp(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _basicPublishingCredentialsPolicyFtpWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string basicPublishingCredentialsPolicyFtpWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string basicPublishingCredentialsPolicyFtpWebAppsApiVersion);
             _basicPublishingCredentialsPolicyFtpWebAppsRestClient = new WebAppsRestOperations(_basicPublishingCredentialsPolicyFtpWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, basicPublishingCredentialsPolicyFtpWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

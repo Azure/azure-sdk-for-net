@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources
         internal SubscriptionPolicySetDefinition(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string subscriptionPolicySetDefinitionPolicySetDefinitionsApiVersion);
+            TryGetApiVersion(ResourceType, out string subscriptionPolicySetDefinitionPolicySetDefinitionsApiVersion);
             _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient = new PolicySetDefinitionsRestOperations(_subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionPolicySetDefinitionPolicySetDefinitionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
