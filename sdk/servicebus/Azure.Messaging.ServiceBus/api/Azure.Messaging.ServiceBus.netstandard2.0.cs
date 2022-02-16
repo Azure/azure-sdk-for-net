@@ -215,6 +215,7 @@ namespace Azure.Messaging.ServiceBus
         protected ServiceBusProcessor(Azure.Messaging.ServiceBus.ServiceBusClient client, string queueName, Azure.Messaging.ServiceBus.ServiceBusProcessorOptions options) { }
         protected ServiceBusProcessor(Azure.Messaging.ServiceBus.ServiceBusClient client, string topicName, string subscriptionName, Azure.Messaging.ServiceBus.ServiceBusProcessorOptions options) { }
         public virtual bool AutoCompleteMessages { get { throw null; } }
+        public virtual Azure.Messaging.ServiceBus.ServiceBusProcessorDiagnostics Diagnostics { get { throw null; } }
         public virtual string EntityPath { get { throw null; } }
         public virtual string FullyQualifiedNamespace { get { throw null; } }
         public virtual bool IsClosed { get { throw null; } }
@@ -239,10 +240,18 @@ namespace Azure.Messaging.ServiceBus
         public override string ToString() { throw null; }
         public void UpdateConcurrency(int maxConcurrentCalls) { }
     }
+    public partial class ServiceBusProcessorDiagnostics
+    {
+        protected internal ServiceBusProcessorDiagnostics() { }
+        public System.DateTimeOffset? LastReceiveAttemptedTime { get { throw null; } }
+        public System.DateTimeOffset? LastReceiveSucceededTime { get { throw null; } }
+        public int MessagesBeingProcessed { get { throw null; } }
+    }
     public partial class ServiceBusProcessorOptions
     {
         public ServiceBusProcessorOptions() { }
         public bool AutoCompleteMessages { get { throw null; } set { } }
+        public bool EnableDiagnostics { get { throw null; } set { } }
         public System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } set { } }
         public int MaxConcurrentCalls { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
@@ -394,6 +403,7 @@ namespace Azure.Messaging.ServiceBus
         protected ServiceBusSessionProcessor(Azure.Messaging.ServiceBus.ServiceBusClient client, string queueName, Azure.Messaging.ServiceBus.ServiceBusSessionProcessorOptions options) { }
         protected ServiceBusSessionProcessor(Azure.Messaging.ServiceBus.ServiceBusClient client, string topicName, string subscriptionName, Azure.Messaging.ServiceBus.ServiceBusSessionProcessorOptions options) { }
         public virtual bool AutoCompleteMessages { get { throw null; } }
+        public virtual Azure.Messaging.ServiceBus.ServiceBusSessionProcessorDiagnostics Diagnostics { get { throw null; } }
         public virtual string EntityPath { get { throw null; } }
         public virtual string FullyQualifiedNamespace { get { throw null; } }
         protected internal virtual Azure.Messaging.ServiceBus.ServiceBusProcessor InnerProcessor { get { throw null; } }
@@ -425,10 +435,18 @@ namespace Azure.Messaging.ServiceBus
         public override string ToString() { throw null; }
         public void UpdateConcurrency(int maxConcurrentSessions, int maxConcurrentCallsPerSession) { }
     }
+    public partial class ServiceBusSessionProcessorDiagnostics
+    {
+        protected ServiceBusSessionProcessorDiagnostics() { }
+        public System.DateTimeOffset? LastReceiveAttemptedTime { get { throw null; } }
+        public System.DateTimeOffset? LastReceiveSucceededTime { get { throw null; } }
+        public int MessagesBeingProcessed { get { throw null; } }
+    }
     public partial class ServiceBusSessionProcessorOptions
     {
         public ServiceBusSessionProcessorOptions() { }
         public bool AutoCompleteMessages { get { throw null; } set { } }
+        public bool EnableDiagnostics { get { throw null; } set { } }
         public System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } set { } }
         public int MaxConcurrentCallsPerSession { get { throw null; } set { } }
         public int MaxConcurrentSessions { get { throw null; } set { } }

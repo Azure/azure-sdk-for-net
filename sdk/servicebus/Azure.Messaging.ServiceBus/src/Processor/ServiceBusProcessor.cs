@@ -183,6 +183,14 @@ namespace Azure.Messaging.ServiceBus
             private set => _closed = value;
         }
 
+        /// <summary>
+        /// Gets diagnostics information for the processor.
+        /// </summary>
+        public virtual ServiceBusProcessorDiagnostics Diagnostics =>
+            _diagnostics ?? throw new InvalidOperationException("Diagnostics are not enabled. To enable diagnostics, set the EnableDiagnostics property on the ServiceBusProcessorOptions.");
+
+        internal readonly ServiceBusProcessorDiagnostics _diagnostics;
+
         // If the user has listed named sessions, and they
         // have MaxConcurrentSessions greater or equal to the number
         // of sessions, we can leave the sessions open at all times
@@ -249,6 +257,10 @@ namespace Azure.Messaging.ServiceBus
             _maxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
             _sessionIds = sessionIds ?? Array.Empty<string>();
             _sessionProcessor = sessionProcessor;
+            if (Options.EnableDiagnostics)
+            {
+                _diagnostics = new ServiceBusProcessorDiagnostics();
+            }
 
             if (isSessionEntity)
             {

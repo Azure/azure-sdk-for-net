@@ -151,6 +151,12 @@ namespace Azure.Messaging.ServiceBus
         public IList<string> SessionIds { get; } = new List<string>();
 
         /// <summary>
+        /// Gets or sets whether Diagnostics are enabled. When enabled, the <see cref="ServiceBusSessionProcessor.Diagnostics"/> property will
+        /// contain diagnostics information.
+        /// </summary>
+        public bool EnableDiagnostics { get; set; }
+
+        /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
@@ -184,6 +190,7 @@ namespace Azure.Messaging.ServiceBus
                 AutoCompleteMessages = AutoCompleteMessages,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
                 MaxReceiveWaitTime = SessionIdleTimeout,
+                EnableDiagnostics = EnableDiagnostics
             };
     }
 }

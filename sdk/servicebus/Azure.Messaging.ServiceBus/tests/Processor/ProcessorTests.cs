@@ -430,6 +430,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             await mockProcessor.Object.CloseAsync(cts.Token);
             mockProcessor.Verify(p => p.StopProcessingAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));
         }
+
+        [Test]
+        public void CanMockDiagnostics()
+        {
+            var mockProcessor = new Mock<ServiceBusProcessor>();
+            mockProcessor.Setup(
+                p => p.Diagnostics).Returns(new Mock<ServiceBusProcessorDiagnostics>().Object);
+            var diagnostics = mockProcessor.Object.Diagnostics;
+            Assert.IsNotNull(diagnostics);
+        }
     }
 
 #pragma warning disable SA1402 // File may only contain a single type

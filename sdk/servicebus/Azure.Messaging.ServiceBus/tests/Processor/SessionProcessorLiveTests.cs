@@ -1939,6 +1939,69 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             }
         }
 
+        [Test]
+        public async Task DiagnosticsPropertyThrowsWhenDiagnosticsNotEnabled()
+        {
+            var lockDuration = ShortLockDuration;
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true, lockDuration: lockDuration))
+            {
+                await using var client = CreateClient();
+                await using var processor = client.CreateSessionProcessor(scope.QueueName);
+
+                var tcs = new TaskCompletionSource<bool>();
+                Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    return Task.CompletedTask;
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                Assert.That(
+                    () => processor.Diagnostics,
+                    Throws.InstanceOf<InvalidOperationException>());
+                await processor.StopProcessingAsync();
+            }
+        }
+
+        [Test]
+        public async Task DiagnosticsCanBeEnabled()
+        {
+            var lockDuration = ShortLockDuration;
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true, lockDuration: lockDuration))
+            {
+                await using var client = CreateClient();
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions { EnableDiagnostics = true, MaxConcurrentSessions = 1});
+                var sender = client.CreateSender(scope.QueueName);
+
+                int messageCount = 10;
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount, "session"));
+
+                int receivedCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+                var initialTime = DateTimeOffset.UtcNow;
+                Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    Assert.AreEqual(1, processor.Diagnostics.MessagesBeingProcessed);
+                    Assert.Greater(processor.Diagnostics.LastReceiveAttemptedTime, initialTime);
+                    Assert.Greater(processor.Diagnostics.LastReceiveSucceededTime, processor.Diagnostics.LastReceiveAttemptedTime);
+                    initialTime = processor.Diagnostics.LastReceiveAttemptedTime.Value;
+                    var count = Interlocked.Increment(ref receivedCount);
+                    if (count == messageCount)
+                    {
+                        tcs.SetResult(true);
+                    }
+                    return Task.CompletedTask;
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+            }
+        }
+
         private Task SessionErrorHandler(ProcessErrorEventArgs args)
         {
             // If the connection drops due to network flakiness

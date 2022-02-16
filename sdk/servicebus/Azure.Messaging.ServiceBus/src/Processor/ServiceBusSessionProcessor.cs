@@ -90,6 +90,29 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public virtual TimeSpan? SessionIdleTimeout => InnerProcessor.MaxReceiveWaitTime;
 
+        /// <summary>
+        /// Gets diagnostics information for the processor.
+        /// </summary>
+        public virtual ServiceBusSessionProcessorDiagnostics Diagnostics
+        {
+            get
+            {
+                if (_diagnostics == null)
+                {
+                    if (InnerProcessor._diagnostics == null)
+                    {
+                        throw new InvalidOperationException("Diagnostics are not enabled. To enable diagnostics, set the EnableDiagnostics property on the ServiceBusSessionProcessorOptions.");
+                    }
+
+                    _diagnostics = new ServiceBusSessionProcessorDiagnostics(InnerProcessor._diagnostics);
+                }
+
+                return _diagnostics;
+            }
+        }
+
+        private ServiceBusSessionProcessorDiagnostics _diagnostics;
+
         internal ServiceBusSessionProcessor(
             ServiceBusConnection connection,
             string entityPath,

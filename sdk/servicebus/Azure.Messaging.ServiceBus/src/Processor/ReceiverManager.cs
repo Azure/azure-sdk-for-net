@@ -21,10 +21,11 @@ namespace Azure.Messaging.ServiceBus
         protected virtual ServiceBusReceiver Receiver { get; set; }
 
         protected readonly ServiceBusProcessor Processor;
-        protected readonly TimeSpan? _maxReceiveWaitTime;
+        private readonly TimeSpan? _maxReceiveWaitTime;
         private readonly ServiceBusReceiverOptions _receiverOptions;
         protected readonly ServiceBusProcessorOptions ProcessorOptions;
         protected readonly EntityScopeFactory _scopeFactory;
+        private readonly ServiceBusProcessorDiagnostics _diagnostics;
 
         protected bool AutoRenewLock => ProcessorOptions.MaxAutoLockRenewalDuration > TimeSpan.Zero;
 
@@ -50,6 +51,7 @@ namespace Azure.Messaging.ServiceBus
                 isProcessor: true,
                 options: _receiverOptions);
             _scopeFactory = scopeFactory;
+            _diagnostics = processor._diagnostics;
         }
 
         public virtual async Task CloseReceiverIfNeeded(
@@ -79,16 +81,14 @@ namespace Azure.Messaging.ServiceBus
                 while (!cancellationToken.IsCancellationRequested && !Processor.Connection.IsClosed)
                 {
                     errorSource = ServiceBusErrorSource.Receive;
-                    IReadOnlyList<ServiceBusReceivedMessage> messages = await Receiver.ReceiveMessagesAsync(
-                        maxMessages: 1,
-                        maxWaitTime: _maxReceiveWaitTime,
-                        isProcessor: true,
-                        cancellationToken: cancellationToken).ConfigureAwait(false);
-                    ServiceBusReceivedMessage message = messages.Count == 0 ? null : messages[0];
+                    ServiceBusReceivedMessage message = await ReceiveMessageAsync(cancellationToken).ConfigureAwait(false);
                     if (message == null)
                     {
                         continue;
                     }
+
+                    _diagnostics?.UpdateLastReceiveSucceededTime();
+
                     await ProcessOneMessageWithinScopeAsync(
                         message,
                         DiagnosticProperty.ProcessMessageActivityName,
@@ -115,6 +115,24 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
+        protected async Task<ServiceBusReceivedMessage> ReceiveMessageAsync(CancellationToken cancellationToken)
+        {
+            _diagnostics?.UpdateLastReceiveAttemptedTime();
+            IReadOnlyList<ServiceBusReceivedMessage> messages = await Receiver.ReceiveMessagesAsync(
+                maxMessages: 1,
+                maxWaitTime: _maxReceiveWaitTime,
+                isProcessor: true,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
+            ServiceBusReceivedMessage message = messages.Count == 0 ? null : messages[0];
+
+            if (message != null)
+            {
+                _diagnostics?.UpdateLastReceiveSucceededTime();
+            }
+
+            return message;
+        }
+
         protected async Task ProcessOneMessageWithinScopeAsync(ServiceBusReceivedMessage message, string activityName, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _scopeFactory.CreateScope(activityName, DiagnosticScope.ActivityKind.Consumer);
@@ -122,15 +140,21 @@ namespace Azure.Messaging.ServiceBus
             scope.Start();
             try
             {
+                _diagnostics?.IncrementMessageCount();
+
                 await ProcessOneMessage(
-                    message,
-                    cancellationToken)
+                        message,
+                        cancellationToken)
                     .ConfigureAwait(false);
             }
             catch (Exception ex)
             {
                 scope.Failed(ex);
                 throw;
+            }
+            finally
+            {
+                _diagnostics?.DecrementMessageCount();
             }
         }
 

@@ -1003,5 +1003,68 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 }
             }
         }
+
+        [Test]
+        public async Task DiagnosticsPropertyThrowsWhenDiagnosticsNotEnabled()
+        {
+            var lockDuration = ShortLockDuration;
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false, lockDuration: lockDuration))
+            {
+                await using var client = CreateClient();
+                await using var processor = client.CreateProcessor(scope.QueueName);
+
+                var tcs = new TaskCompletionSource<bool>();
+                Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    return Task.CompletedTask;
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                Assert.That(
+                    () => processor.Diagnostics,
+                    Throws.InstanceOf<InvalidOperationException>());
+                await processor.StopProcessingAsync();
+            }
+        }
+
+        [Test]
+        public async Task DiagnosticsCanBeEnabled()
+        {
+            var lockDuration = ShortLockDuration;
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false, lockDuration: lockDuration))
+            {
+                await using var client = CreateClient();
+                await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions { EnableDiagnostics = true, MaxConcurrentCalls = 1});
+                var sender = client.CreateSender(scope.QueueName);
+
+                int messageCount = 10;
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount));
+
+                int receivedCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+                var initialTime = DateTimeOffset.UtcNow;
+                Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    Assert.AreEqual(1, processor.Diagnostics.MessagesBeingProcessed);
+                    Assert.Greater(processor.Diagnostics.LastReceiveAttemptedTime, initialTime);
+                    Assert.Greater(processor.Diagnostics.LastReceiveSucceededTime, processor.Diagnostics.LastReceiveAttemptedTime);
+                    initialTime = processor.Diagnostics.LastReceiveAttemptedTime.Value;
+                    var count = Interlocked.Increment(ref receivedCount);
+                    if (count == messageCount)
+                    {
+                        tcs.SetResult(true);
+                    }
+                    return Task.CompletedTask;
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+            }
+        }
     }
 }

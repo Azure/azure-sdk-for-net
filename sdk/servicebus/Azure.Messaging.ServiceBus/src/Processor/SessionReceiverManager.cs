@@ -277,12 +277,8 @@ namespace Azure.Messaging.ServiceBus
                 while (!linkedTokenSource.Token.IsCancellationRequested)
                 {
                     errorSource = ServiceBusErrorSource.Receive;
-                    IReadOnlyList<ServiceBusReceivedMessage> messages = await Receiver.ReceiveMessagesAsync(
-                        maxMessages: 1,
-                        maxWaitTime: _maxReceiveWaitTime,
-                        isProcessor: true,
-                        cancellationToken: linkedTokenSource.Token).ConfigureAwait(false);
-                    ServiceBusReceivedMessage message = messages.Count == 0 ? null : messages[0];
+                    ServiceBusReceivedMessage message = await ReceiveMessageAsync(linkedTokenSource.Token).ConfigureAwait(false);
+
                     if (message == null)
                     {
                         // Break out of the loop to allow a new session to
