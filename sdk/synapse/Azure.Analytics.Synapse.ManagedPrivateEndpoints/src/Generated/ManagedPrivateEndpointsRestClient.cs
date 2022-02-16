@@ -146,7 +146,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         /// <param name="managedPrivateEndpoint"> Managed private endpoint properties. </param>
         /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/>, <paramref name="managedPrivateEndpoint"/>, or <paramref name="managedVirtualNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/>, <paramref name="managedPrivateEndpoint"/> or <paramref name="managedVirtualNetworkName"/> is null. </exception>
         public async Task<Response<ManagedPrivateEndpoint>> CreateAsync(string managedPrivateEndpointName, ManagedPrivateEndpoint managedPrivateEndpoint, string managedVirtualNetworkName = "default", CancellationToken cancellationToken = default)
         {
             if (managedPrivateEndpointName == null)
@@ -183,7 +183,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         /// <param name="managedPrivateEndpoint"> Managed private endpoint properties. </param>
         /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/>, <paramref name="managedPrivateEndpoint"/>, or <paramref name="managedVirtualNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/>, <paramref name="managedPrivateEndpoint"/> or <paramref name="managedVirtualNetworkName"/> is null. </exception>
         public Response<ManagedPrivateEndpoint> Create(string managedPrivateEndpointName, ManagedPrivateEndpoint managedPrivateEndpoint, string managedVirtualNetworkName = "default", CancellationToken cancellationToken = default)
         {
             if (managedPrivateEndpointName == null)

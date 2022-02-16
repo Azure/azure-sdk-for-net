@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="host"> The URL of the Oracle Service Cloud instance. </param>
         /// <param name="username"> The user name that you use to access Oracle Service Cloud server. </param>
         /// <param name="password"> The password corresponding to the user name that you provided in the username key. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="host"/>, <paramref name="username"/>, or <paramref name="password"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="host"/>, <paramref name="username"/> or <paramref name="password"/> is null. </exception>
         public OracleServiceCloudLinkedService(object host, object username, SecretBase password)
         {
             if (host == null)

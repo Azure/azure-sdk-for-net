@@ -1123,9 +1123,10 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> Initializes a new instance of PurviewCollection. </summary>
         /// <param name="collectionName"> The String to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual PurviewCollection GetPurviewCollectionClient(string collectionName)
         {
-            Argument.AssertNotNull(collectionName, nameof(collectionName));
+            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
 
             return new PurviewCollection(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, collectionName, _apiVersion);
         }

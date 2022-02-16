@@ -1069,6 +1069,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1139,7 +1140,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetGlossaryCategoryAsync(string categoryGuid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategory");
             scope.Start();
@@ -1159,6 +1160,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1229,7 +1231,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetGlossaryCategory(string categoryGuid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategory");
             scope.Start();
@@ -1250,6 +1252,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1376,7 +1379,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> UpdateGlossaryCategoryAsync(string categoryGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryCategory");
@@ -1398,6 +1401,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1524,7 +1528,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response UpdateGlossaryCategory(string categoryGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryCategory");
@@ -1545,6 +1549,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1559,7 +1564,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteGlossaryCategoryAsync(string categoryGuid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryCategory");
             scope.Start();
@@ -1579,6 +1584,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1593,7 +1599,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response DeleteGlossaryCategory(string categoryGuid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryCategory");
             scope.Start();
@@ -1614,6 +1620,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1684,7 +1691,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> PartialUpdateGlossaryCategoryAsync(string categoryGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryCategory");
@@ -1706,6 +1713,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1776,7 +1784,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response PartialUpdateGlossaryCategory(string categoryGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryCategory");
@@ -1800,6 +1808,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1823,7 +1832,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetRelatedCategoriesAsync(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedCategories");
             scope.Start();
@@ -1846,6 +1855,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1869,7 +1879,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetRelatedCategories(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedCategories");
             scope.Start();
@@ -1892,6 +1902,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1918,7 +1929,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetCategoryTermsAsync(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetCategoryTerms");
             scope.Start();
@@ -1941,6 +1952,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1967,7 +1979,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetCategoryTerms(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetCategoryTerms");
             scope.Start();
@@ -2462,6 +2474,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2577,7 +2590,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetGlossaryTermAsync(string termGuid, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerm");
             scope.Start();
@@ -2598,6 +2611,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2713,7 +2727,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetGlossaryTerm(string termGuid, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerm");
             scope.Start();
@@ -2734,6 +2748,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2950,7 +2965,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> UpdateGlossaryTermAsync(string termGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryTerm");
@@ -2972,6 +2987,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -3188,7 +3204,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response UpdateGlossaryTerm(string termGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryTerm");
@@ -3209,6 +3225,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -3223,7 +3240,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteGlossaryTermAsync(string termGuid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryTerm");
             scope.Start();
@@ -3243,6 +3260,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -3257,7 +3275,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response DeleteGlossaryTerm(string termGuid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryTerm");
             scope.Start();
@@ -3279,6 +3297,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3394,7 +3413,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> PartialUpdateGlossaryTermAsync(string termGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryTerm");
@@ -3417,6 +3436,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3532,7 +3552,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response PartialUpdateGlossaryTerm(string termGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryTerm");
@@ -4030,6 +4050,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -4061,7 +4082,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetEntitiesAssignedWithTermAsync(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetEntitiesAssignedWithTerm");
             scope.Start();
@@ -4084,6 +4105,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -4115,7 +4137,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetEntitiesAssignedWithTerm(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetEntitiesAssignedWithTerm");
             scope.Start();
@@ -4136,6 +4158,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4167,7 +4190,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> AssignTermToEntitiesAsync(string termGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.AssignTermToEntities");
@@ -4189,6 +4212,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4220,7 +4244,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response AssignTermToEntities(string termGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.AssignTermToEntities");
@@ -4242,6 +4266,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4273,7 +4298,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> RemoveTermAssignmentFromEntitiesAsync(string termGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.RemoveTermAssignmentFromEntities");
@@ -4295,6 +4320,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4326,7 +4352,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response RemoveTermAssignmentFromEntities(string termGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.RemoveTermAssignmentFromEntities");
@@ -4348,6 +4374,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4379,7 +4406,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteTermAssignmentFromEntitiesAsync(string termGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.DeleteTermAssignmentFromEntities");
@@ -4401,6 +4428,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4432,7 +4460,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response DeleteTermAssignmentFromEntities(string termGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.DeleteTermAssignmentFromEntities");
@@ -4456,6 +4484,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -4482,7 +4511,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetRelatedTermsAsync(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedTerms");
             scope.Start();
@@ -4505,6 +4534,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -4531,7 +4561,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetRelatedTerms(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedTerms");
             scope.Start();
@@ -4551,6 +4581,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -4617,7 +4648,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetGlossaryAsync(string glossaryGuid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossary");
             scope.Start();
@@ -4637,6 +4668,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -4703,7 +4735,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetGlossary(string glossaryGuid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossary");
             scope.Start();
@@ -4724,6 +4756,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4842,7 +4875,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> UpdateGlossaryAsync(string glossaryGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossary");
@@ -4864,6 +4897,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4982,7 +5016,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response UpdateGlossary(string glossaryGuid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossary");
@@ -5003,6 +5037,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -5017,7 +5052,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteGlossaryAsync(string glossaryGuid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossary");
             scope.Start();
@@ -5037,6 +5072,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -5051,7 +5087,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response DeleteGlossary(string glossaryGuid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossary");
             scope.Start();
@@ -5074,6 +5110,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5144,7 +5181,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetGlossaryCategoriesAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategories");
             scope.Start();
@@ -5167,6 +5204,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5237,7 +5275,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetGlossaryCategories(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategories");
             scope.Start();
@@ -5260,6 +5298,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5283,7 +5322,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetGlossaryCategoriesHeadersAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategoriesHeaders");
             scope.Start();
@@ -5306,6 +5345,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5329,7 +5369,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetGlossaryCategoriesHeaders(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategoriesHeaders");
             scope.Start();
@@ -5350,6 +5390,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5418,7 +5459,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetDetailedGlossaryAsync(string glossaryGuid, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetDetailedGlossary");
             scope.Start();
@@ -5439,6 +5480,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5507,7 +5549,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetDetailedGlossary(string glossaryGuid, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetDetailedGlossary");
             scope.Start();
@@ -5529,6 +5571,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5595,7 +5638,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> PartialUpdateGlossaryAsync(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossary");
@@ -5618,6 +5661,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5684,7 +5728,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response PartialUpdateGlossary(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossary");
@@ -5709,6 +5753,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5824,7 +5869,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetGlossaryTermsAsync(string glossaryGuid, bool? includeTermHierarchy = null, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerms");
             scope.Start();
@@ -5848,6 +5893,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5963,7 +6009,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetGlossaryTerms(string glossaryGuid, bool? includeTermHierarchy = null, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerms");
             scope.Start();
@@ -5986,6 +6032,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6012,7 +6059,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetGlossaryTermHeadersAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTermHeaders");
             scope.Start();
@@ -6035,6 +6082,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6061,7 +6109,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetGlossaryTermHeaders(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTermHeaders");
             scope.Start();
@@ -6081,6 +6129,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="operationGuid"> The globally unique identifier for async operation/job. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6111,7 +6160,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetImportCsvOperationStatusAsync(string operationGuid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(operationGuid, nameof(operationGuid));
+            Argument.AssertNotNullOrEmpty(operationGuid, nameof(operationGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetImportCsvOperationStatus");
             scope.Start();
@@ -6131,6 +6180,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="operationGuid"> The globally unique identifier for async operation/job. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6161,7 +6211,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetImportCsvOperationStatus(string operationGuid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(operationGuid, nameof(operationGuid));
+            Argument.AssertNotNullOrEmpty(operationGuid, nameof(operationGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetImportCsvOperationStatus");
             scope.Start();
@@ -6183,11 +6233,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
 #pragma warning disable AZC0002
         public virtual async Task<Response> ExportGlossaryTermsAsCsvAsync(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.ExportGlossaryTermsAsCsv");
@@ -6210,11 +6261,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
 #pragma warning disable AZC0002
         public virtual Response ExportGlossaryTermsAsCsv(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.ExportGlossaryTermsAsCsv");
@@ -6238,6 +6290,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6353,7 +6406,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetTermsByGlossaryNameAsync(string glossaryName, int? limit = null, int? offset = null, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryName, nameof(glossaryName));
+            Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetTermsByGlossaryName");
             scope.Start();
@@ -6376,6 +6429,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6491,7 +6545,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetTermsByGlossaryName(string glossaryName, int? limit = null, int? offset = null, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryName, nameof(glossaryName));
+            Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetTermsByGlossaryName");
             scope.Start();
@@ -6514,6 +6568,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6544,7 +6599,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvAsync(bool waitForCompletion, string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsv");
@@ -6568,6 +6623,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6598,7 +6654,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Operation<BinaryData> ImportGlossaryTermsViaCsv(bool waitForCompletion, string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsv");
@@ -6622,6 +6678,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6652,7 +6709,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvByGlossaryNameAsync(bool waitForCompletion, string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryName, nameof(glossaryName));
+            Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
@@ -6676,6 +6733,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6706,7 +6764,7 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Operation<BinaryData> ImportGlossaryTermsViaCsvByGlossaryName(bool waitForCompletion, string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryName, nameof(glossaryName));
+            Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");

@@ -194,10 +194,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOn"/> is null. </exception>
         public async virtual Task<Response<SitePremierAddon>> UpdateAsync(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
-            if (premierAddOn == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOn));
-            }
+            Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
 
             using var scope = _sitePremierAddonWebAppsClientDiagnostics.CreateScope("SitePremierAddon.Update");
             scope.Start();
@@ -223,10 +220,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOn"/> is null. </exception>
         public virtual Response<SitePremierAddon> Update(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
-            if (premierAddOn == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOn));
-            }
+            Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
 
             using var scope = _sitePremierAddonWebAppsClientDiagnostics.CreateScope("SitePremierAddon.Update");
             scope.Start();
@@ -253,14 +247,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<SitePremierAddon>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _sitePremierAddonWebAppsClientDiagnostics.CreateScope("SitePremierAddon.AddTag");
             scope.Start();
@@ -290,14 +278,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<SitePremierAddon> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _sitePremierAddonWebAppsClientDiagnostics.CreateScope("SitePremierAddon.AddTag");
             scope.Start();
@@ -326,10 +308,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<SitePremierAddon>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _sitePremierAddonWebAppsClientDiagnostics.CreateScope("SitePremierAddon.SetTags");
             scope.Start();
@@ -359,10 +338,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<SitePremierAddon> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _sitePremierAddonWebAppsClientDiagnostics.CreateScope("SitePremierAddon.SetTags");
             scope.Start();
@@ -392,10 +368,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<SitePremierAddon>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _sitePremierAddonWebAppsClientDiagnostics.CreateScope("SitePremierAddon.RemoveTag");
             scope.Start();
@@ -424,10 +397,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<SitePremierAddon> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _sitePremierAddonWebAppsClientDiagnostics.CreateScope("SitePremierAddon.RemoveTag");
             scope.Start();

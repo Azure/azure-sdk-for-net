@@ -141,10 +141,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteLogsConfig"/> is null. </exception>
         public async virtual Task<ArmOperation<LogsSiteConfig>> CreateOrUpdateAsync(bool waitForCompletion, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
         {
-            if (siteLogsConfig == null)
-            {
-                throw new ArgumentNullException(nameof(siteLogsConfig));
-            }
+            Argument.AssertNotNull(siteLogsConfig, nameof(siteLogsConfig));
 
             using var scope = _logsSiteConfigWebAppsClientDiagnostics.CreateScope("LogsSiteConfig.CreateOrUpdate");
             scope.Start();
@@ -174,10 +171,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteLogsConfig"/> is null. </exception>
         public virtual ArmOperation<LogsSiteConfig> CreateOrUpdate(bool waitForCompletion, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
         {
-            if (siteLogsConfig == null)
-            {
-                throw new ArgumentNullException(nameof(siteLogsConfig));
-            }
+            Argument.AssertNotNull(siteLogsConfig, nameof(siteLogsConfig));
 
             using var scope = _logsSiteConfigWebAppsClientDiagnostics.CreateScope("LogsSiteConfig.CreateOrUpdate");
             scope.Start();

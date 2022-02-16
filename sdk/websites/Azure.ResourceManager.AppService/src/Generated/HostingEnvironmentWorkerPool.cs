@@ -141,10 +141,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="workerPoolEnvelope"/> is null. </exception>
         public async virtual Task<Response<HostingEnvironmentWorkerPool>> UpdateAsync(WorkerPoolResourceData workerPoolEnvelope, CancellationToken cancellationToken = default)
         {
-            if (workerPoolEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolEnvelope));
-            }
+            Argument.AssertNotNull(workerPoolEnvelope, nameof(workerPoolEnvelope));
 
             using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPool.Update");
             scope.Start();
@@ -170,10 +167,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="workerPoolEnvelope"/> is null. </exception>
         public virtual Response<HostingEnvironmentWorkerPool> Update(WorkerPoolResourceData workerPoolEnvelope, CancellationToken cancellationToken = default)
         {
-            if (workerPoolEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolEnvelope));
-            }
+            Argument.AssertNotNull(workerPoolEnvelope, nameof(workerPoolEnvelope));
 
             using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPool.Update");
             scope.Start();
@@ -196,7 +190,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="instance"> Name of the instance in the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instance"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instance"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instance"/> is null. </exception>
         /// <returns> An async collection of <see cref="ResourceMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceMetricDefinition> GetWorkerPoolInstanceMetricDefinitionsAsync(string instance, CancellationToken cancellationToken = default)
@@ -243,7 +237,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="instance"> Name of the instance in the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instance"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instance"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instance"/> is null. </exception>
         /// <returns> A collection of <see cref="ResourceMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceMetricDefinition> GetWorkerPoolInstanceMetricDefinitions(string instance, CancellationToken cancellationToken = default)

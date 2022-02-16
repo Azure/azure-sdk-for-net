@@ -291,7 +291,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="from"> Name of the source repository. </param>
         /// <param name="mount"> Digest of blob to mount from the source repository. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="from"/>, or <paramref name="mount"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="from"/> or <paramref name="mount"/> is null. </exception>
         public async Task<ResponseWithHeaders<ContainerRegistryBlobMountBlobHeaders>> MountBlobAsync(string name, string @from, string mount, CancellationToken cancellationToken = default)
         {
             if (name == null)
@@ -324,7 +324,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="from"> Name of the source repository. </param>
         /// <param name="mount"> Digest of blob to mount from the source repository. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="from"/>, or <paramref name="mount"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="from"/> or <paramref name="mount"/> is null. </exception>
         public ResponseWithHeaders<ContainerRegistryBlobMountBlobHeaders> MountBlob(string name, string @from, string mount, CancellationToken cancellationToken = default)
         {
             if (name == null)
@@ -703,7 +703,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="range"> Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying blob chunk. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="digest"/>, or <paramref name="range"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="digest"/> or <paramref name="range"/> is null. </exception>
         public async Task<ResponseWithHeaders<Stream, ContainerRegistryBlobGetChunkHeaders>> GetChunkAsync(string name, string digest, string range, CancellationToken cancellationToken = default)
         {
             if (name == null)
@@ -739,7 +739,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="range"> Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying blob chunk. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="digest"/>, or <paramref name="range"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="digest"/> or <paramref name="range"/> is null. </exception>
         public ResponseWithHeaders<Stream, ContainerRegistryBlobGetChunkHeaders> GetChunk(string name, string digest, string range, CancellationToken cancellationToken = default)
         {
             if (name == null)
@@ -792,7 +792,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="range"> Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying blob chunk. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="digest"/>, or <paramref name="range"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="digest"/> or <paramref name="range"/> is null. </exception>
         public async Task<ResponseWithHeaders<ContainerRegistryBlobCheckChunkExistsHeaders>> CheckChunkExistsAsync(string name, string digest, string range, CancellationToken cancellationToken = default)
         {
             if (name == null)
@@ -825,7 +825,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="range"> Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying blob chunk. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="digest"/>, or <paramref name="range"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="digest"/> or <paramref name="range"/> is null. </exception>
         public ResponseWithHeaders<ContainerRegistryBlobCheckChunkExistsHeaders> CheckChunkExists(string name, string digest, string range, CancellationToken cancellationToken = default)
         {
             if (name == null)

@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="gitHubClientId"> The GitHub Client Id. </param>
         /// <param name="gitHubAccessCode"> The GitHub Access code. </param>
         /// <param name="gitHubAccessTokenBaseUrl"> The GitHub access token base URL. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gitHubClientId"/>, <paramref name="gitHubAccessCode"/>, or <paramref name="gitHubAccessTokenBaseUrl"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="gitHubClientId"/>, <paramref name="gitHubAccessCode"/> or <paramref name="gitHubAccessTokenBaseUrl"/> is null. </exception>
         public GitHubAccessTokenRequest(string gitHubClientId, string gitHubAccessCode, string gitHubAccessTokenBaseUrl)
         {
             if (gitHubClientId == null)

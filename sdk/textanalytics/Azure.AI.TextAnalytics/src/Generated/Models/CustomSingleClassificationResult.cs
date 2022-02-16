@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="documents"/>, <paramref name="errors"/>, <paramref name="projectName"/>, or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="documents"/>, <paramref name="errors"/>, <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         internal CustomSingleClassificationResult(IEnumerable<SingleClassificationDocument> documents, IEnumerable<DocumentError> errors, string projectName, string deploymentName)
         {
             if (documents == null)

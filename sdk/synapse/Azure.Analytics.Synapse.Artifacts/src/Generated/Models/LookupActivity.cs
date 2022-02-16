@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="source"> Dataset-specific source properties, same as copy activity source. </param>
         /// <param name="dataset"> Lookup activity dataset reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="source"/>, or <paramref name="dataset"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="source"/> or <paramref name="dataset"/> is null. </exception>
         public LookupActivity(string name, CopySource source, DatasetReference dataset) : base(name)
         {
             if (name == null)

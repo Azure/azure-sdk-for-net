@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="startTime"> The snapshot create timestamp after which snapshots need to be listed. </param>
         /// <param name="endTime"> The snapshot create timestamp before which snapshots need to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="instanceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="instanceId"/> is null. </exception>
         public async Task<Response<RestorableSqlContainersList>> ListAsync(string subscriptionId, string location, string instanceId, string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="startTime"> The snapshot create timestamp after which snapshots need to be listed. </param>
         /// <param name="endTime"> The snapshot create timestamp before which snapshots need to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="instanceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="instanceId"/> is null. </exception>
         public Response<RestorableSqlContainersList> List(string subscriptionId, string location, string instanceId, string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
