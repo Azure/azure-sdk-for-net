@@ -134,18 +134,6 @@ Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");
 Console.WriteLine($"Vnet: {id.Parent.Name}");
 Console.WriteLine($"Subnet: {id.Name}");
 ```
-However, keep in mind that some of those properties could be null. You can usually tell by the id string itself which type a resource ID is, but if you are unsure, check if the properties are null or use the Try methods to retrieve the values as it's shown below:
-
-### Example: ResourceIdentifier TryGet methods 
-```C# Snippet:Readme_CastToBaseResourceIdentifier
-ResourceIdentifier id = new ResourceIdentifier("/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet");
-Console.WriteLine($"Subscription: {id.SubscriptionId}");
-Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");
-// Parent is only null when we reach the top of the chain which is a Tenant
-Console.WriteLine($"Vnet: {id.Parent.Name}");
-// Name will never be null
-Console.WriteLine($"Subnet: {id.Name}");
-```
 
 ## Managing Existing Resources By Id
 Performing operations on resources that already exist is a common use case when using the management client libraries. In this scenario you usually have the identifier of the resource you want to work on as a string. Although the new object hierarchy is great for provisioning and working within the scope of a given parent, it is not the most efficient when it comes to this specific scenario.  

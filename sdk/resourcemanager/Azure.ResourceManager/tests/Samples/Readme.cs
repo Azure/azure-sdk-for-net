@@ -40,21 +40,6 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public void CastingToBaseResourceIdentifier()
-        {
-            #region Snippet:Readme_CastToBaseResourceIdentifier
-            ResourceIdentifier id = new ResourceIdentifier("/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet");
-            Console.WriteLine($"Subscription: {id.SubscriptionId}");
-            Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");
-            // Parent is only null when we reach the top of the chain which is a Tenant
-            Console.WriteLine($"Vnet: {id.Parent.Name}");
-            // Name will never be null
-            Console.WriteLine($"Subnet: {id.Name}");
-            #endregion Snippet:Readme_CastToBaseResourceIdentifier
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
         public async Task CheckIfResourceGroupExists()
         {
             #region Snippet:Readme_ExistsRG
