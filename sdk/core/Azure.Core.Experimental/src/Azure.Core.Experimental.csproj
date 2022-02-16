@@ -26,7 +26,7 @@
     <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" />
-    <Compile Include="$(AzureCoreSharedSources)IOperationPollingStrategy.cs" />
+    <Compile Include="$(AzureCoreSharedSources)OperationPollingStrategy.cs" />
     <Compile Include="$(AzureCoreSharedSources)ConstantPollingStrategy.cs" />
     <Compile Include="$(AzureCoreSharedSources)ExponentialPollingStrategy.cs" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" />

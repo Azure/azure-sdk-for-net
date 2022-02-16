@@ -62,7 +62,7 @@ namespace Azure.Core.Tests
         {
             var operationInternal = CreateOperation(isOfT, UpdateResult.Success);
             Assert.IsInstanceOf(typeof(ConstantPollingStrategy), operationInternal.PollingStrategy);
-            Assert.AreEqual(TimeSpan.FromSeconds(1), operationInternal.PollingStrategy.PollingInterval);
+            Assert.AreEqual(TimeSpan.FromSeconds(1), ((ConstantPollingStrategy)(operationInternal.PollingStrategy)).PollingInterval);
 
             Assert.IsNull(operationInternal.RawResponse);
             Assert.False(operationInternal.HasCompleted);
@@ -77,7 +77,7 @@ namespace Azure.Core.Tests
         public void RawResponseInitialization()
         {
             var operationInternal = CreateOperation(isOfT, UpdateResult.Pending, mockResponseFactory);
-            Assert.AreEqual(TimeSpan.FromSeconds(1), operationInternal.PollingStrategy.PollingInterval);
+            Assert.AreEqual(TimeSpan.FromSeconds(1), operationInternal.PollingStrategy.GetNextWait(mockResponse));
 
             Assert.AreEqual(mockResponse, operationInternal.RawResponse);
             Assert.False(operationInternal.HasCompleted);
@@ -393,12 +393,14 @@ namespace Azure.Core.Tests
 
         [TestCase(1, 0)]
         [TestCase(2, 1)]
-        [TestCase(3, 3)]
-        [TestCase(4, 7)]
-        [TestCase(5, 15)]
-        [TestCase(6, 31)]
-        [TestCase(7, 63)]
-        [TestCase(8, 95)]
+        [TestCase(3, 2)]
+        [TestCase(4, 3)]
+        [TestCase(5, 5)]
+        [TestCase(6, 9)]
+        [TestCase(7, 17)]
+        [TestCase(8, 33)]
+        [TestCase(9, 65)]
+        [TestCase(10, 97)]
         public async Task WaitForCompletionUsesExponentialPollingStrategy(int count, int totalDelay)
         {
             var operationInternal = CreateOperation(isOfT, UpdateResult.Pending, mockResponseFactory, callsToComplete: count);

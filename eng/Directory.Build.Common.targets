@@ -209,7 +209,7 @@
     <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)IOperationPollingStrategy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationPollingStrategy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ConstantPollingStrategy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ExponentialPollingStrategy.cs" LinkBase="Shared" />
   </ItemGroup>

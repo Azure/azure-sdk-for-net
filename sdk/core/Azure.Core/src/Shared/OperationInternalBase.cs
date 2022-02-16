@@ -17,9 +17,6 @@ namespace Azure.Core
         private readonly ClientDiagnostics _diagnostics;
         private readonly string _updateStatusScopeName;
         private readonly IReadOnlyDictionary<string, string>? _scopeAttributes;
-        private const string RetryAfterHeaderName = "Retry-After";
-        private const string RetryAfterMsHeaderName = "retry-after-ms";
-        private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
 
         protected OperationInternalBase(ClientDiagnostics clientDiagnostics, Response rawResponse, string operationTypeName, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null)
         {
@@ -56,12 +53,7 @@ namespace Azure.Core
         /// Gets or sets the polling strategy of <see cref="OperationInternalBase"/>.
         /// Default to <see cref="ConstantPollingStrategy"/> with 1 second constant polling interval.
         /// </summary>
-        public IOperationPollingStrategy PollingStrategy { get; set; }
-
-        /// <summary>
-        /// Gets the polling interval.
-        /// </summary>
-        protected TimeSpan PollingInterval { get => PollingStrategy.PollingInterval; }
+        public OperationPollingStrategy PollingStrategy { get; set; }
 
         protected RequestFailedException? OperationFailedException { get; private set; }
 
@@ -119,21 +111,8 @@ namespace Azure.Core
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
-        public virtual async ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken)
-        {
-            while (true)
-            {
-                Response response = await UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
-
-                if (HasCompleted)
-                {
-                    return response;
-                }
-
-                TimeSpan delay = GetServerDelay(response, PollingInterval);
-                await WaitAsync(delay, cancellationToken).ConfigureAwait(false);
-            }
-        }
+        public virtual async ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken) =>
+            await PollingResponseAsync(PollingStrategy, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Periodically calls <see cref="UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
@@ -153,7 +132,16 @@ namespace Azure.Core
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
-        public virtual async ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
+        public virtual async ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
+            await PollingResponseAsync(new ConstantPollingStrategy(pollingInterval), cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Polling response according to the given polling strategy.
+        /// </summary>
+        /// <param name="pollingStrategy">Strategy to poll the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns></returns>
+        protected async ValueTask<Response> PollingResponseAsync(OperationPollingStrategy pollingStrategy, CancellationToken cancellationToken)
         {
             while (true)
             {
@@ -164,8 +152,7 @@ namespace Azure.Core
                     return response;
                 }
 
-                TimeSpan delay = GetServerDelay(response, pollingInterval);
-                await WaitAsync(delay, cancellationToken).ConfigureAwait(false);
+                await WaitAsync(pollingStrategy.GetNextWait(response), cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -223,30 +210,6 @@ namespace Azure.Core
             }
 
             return response;
-        }
-
-        protected static TimeSpan GetServerDelay(Response response, TimeSpan pollingInterval)
-        {
-            TimeSpan serverDelay = pollingInterval;
-            if (response.Headers.TryGetValue(RetryAfterMsHeaderName, out string? retryAfterValue) ||
-                response.Headers.TryGetValue(XRetryAfterMsHeaderName, out retryAfterValue))
-            {
-                if (int.TryParse(retryAfterValue, out int serverDelayInMilliseconds))
-                {
-                    serverDelay = TimeSpan.FromMilliseconds(serverDelayInMilliseconds);
-                }
-            }
-            else if (response.Headers.TryGetValue(RetryAfterHeaderName, out retryAfterValue))
-            {
-                if (int.TryParse(retryAfterValue, out int serverDelayInSeconds))
-                {
-                    serverDelay = TimeSpan.FromSeconds(serverDelayInSeconds);
-                }
-            }
-
-            return serverDelay > pollingInterval
-                ? serverDelay
-                : pollingInterval;
         }
 
         protected abstract ValueTask<Response> UpdateStateAsync(bool async, CancellationToken cancellationToken);

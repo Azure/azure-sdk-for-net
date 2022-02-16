@@ -2,34 +2,45 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 
 #nullable enable
 
 namespace Azure.Core
 {
     /// <summary>
-    /// Implementation of an exponential polling strategy. Starting from 1 second, up to 32 seconds.
+    /// Implementation of an exponential polling strategy. Polling interval changes according to
+    /// the sequence {1, 1, 1, 2, 4, ...32}, unless interval is returned in server response header.
+    /// In such cases, the max value will be adopted.
     /// </summary>
-    internal class ExponentialPollingStrategy : IOperationPollingStrategy
+    internal class ExponentialPollingStrategy : OperationPollingStrategy
     {
-        private static readonly TimeSpan maxPollingInterval = TimeSpan.FromSeconds(32);
-
-        private TimeSpan _pollingInterval = TimeSpan.FromSeconds(1);
-
-        /// <summary>
-        /// Gets the polling interval. Starting from 1 second, up to 32 seconds.
-        /// </summary>
-        public TimeSpan PollingInterval
-        {
-            get
+        private static readonly TimeSpan[] pollingSequence = new TimeSpan[]
             {
-                var returnValue = _pollingInterval;
-                if (_pollingInterval < maxPollingInterval)
-                {
-                    _pollingInterval += _pollingInterval;
-                }
-                return returnValue;
+                TimeSpan.FromSeconds(1),
+                TimeSpan.FromSeconds(1),
+                TimeSpan.FromSeconds(1),
+                TimeSpan.FromSeconds(2),
+                TimeSpan.FromSeconds(4),
+                TimeSpan.FromSeconds(8),
+                TimeSpan.FromSeconds(16),
+                TimeSpan.FromSeconds(32)
+            };
+
+        private int _index;
+
+        private TimeSpan GetNextInterval()
+        {
+            if (_index >= pollingSequence.Length)
+            {
+                return pollingSequence.Last();
             }
+            return pollingSequence[_index++];
+        }
+
+        public override TimeSpan GetNextWait(Response response)
+        {
+            return GetMaxIntervalFromResponseAndIntrinsic(response, GetNextInterval());
         }
     }
 }
