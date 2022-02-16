@@ -3,7 +3,6 @@ parameters:
   BaselineFilePath: ''
   SourceDirectory: $(Build.SourcesDirectory)
   ServiceDirectory: ''
-
 steps:
 - pwsh: |
     if ("$(Build.Reason)" -eq 'PullRequest') {
@@ -38,8 +37,8 @@ steps:
     GdnBreakGdnToolCredScanSeverity: Error
     GdnBreakBaselines: baseline
     # Used for generating baseline file.
-    # GdnBreakOutputBaselineFile: dotnet
-    # GdnBreakOutputBaseline: baseline
+    GdnBreakOutputBaselineFile: $(Language)
+    GdnBreakOutputBaseline: baseline
   condition: succeededOrFailed()
 - pwsh: |
     Write-Host "Please check https://aka.ms/azsdk/credscan for more information about the cred scan failure."
