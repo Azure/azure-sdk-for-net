@@ -59,6 +59,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             var cp1 = await routerClient.SetClassificationPolicyAsync(
                 id: "classification-policy-o365",
                 name: "Classification_Policy_O365",
+                queueSelector: new QueueLabelSelector(cp1QueueLabelAttachments));
 
             var cp2QueueLabelAttachments = new List<LabelSelectorAttachment>()
             {
