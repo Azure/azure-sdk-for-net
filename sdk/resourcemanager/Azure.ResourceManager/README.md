@@ -99,7 +99,7 @@ Imagine that our company requires all virtual machines to be tagged with the own
 
  ```C# Snippet:Readme_PuttingItAllTogether
 // First we construct our armClient
-var armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 
 // Next we get a resource group object
 // ResourceGroup is a [Resource] object from above
