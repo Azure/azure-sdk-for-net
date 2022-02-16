@@ -26,8 +26,8 @@ namespace Azure.Core
         public HttpMessage(Request request, ResponseClassifier responseClassifier)
         {
             Request = request;
+            ResponseClassifier = responseClassifier;
             BufferResponse = true;
-            _classifier = responseClassifier;
         }
 
         /// <summary>
@@ -64,22 +64,10 @@ namespace Azure.Core
         /// </summary>
         public CancellationToken CancellationToken { get; internal set; }
 
-        private ResponseClassifier _classifier;
-
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
-        public ResponseClassifier ResponseClassifier
-        {
-            get
-            {
-                return _classifier;
-            }
-            set
-            {
-                _classifier = ComposeClassifier(value);
-            }
-        }
+        public ResponseClassifier ResponseClassifier { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating if response would be buffered as part of the pipeline. Defaults to true.
@@ -104,43 +92,6 @@ namespace Azure.Core
                 Policies ??= new(context.Policies.Count);
                 Policies.AddRange(context.Policies);
             }
-
-            if (context.Classifier != null)
-            {
-                var classifier = ResponseClassifier as CompositeClassifier;
-
-                if (classifier?.PerCallClassifier != null)
-                {
-                    // don't set the per-call classifier twice
-                    return;
-                }
-
-                if (classifier != null)
-                {
-                    classifier.PerCallClassifier = context.Classifier;
-                }
-                else
-                {
-                    classifier = new CompositeClassifier(ResponseClassifier);
-                    classifier.PerCallClassifier = context.Classifier;
-                }
-
-                _classifier = classifier;
-            }
-        }
-
-        private ResponseClassifier ComposeClassifier(ResponseClassifier classifier)
-        {
-            var composite = ResponseClassifier as CompositeClassifier;
-            if (composite != null)
-            {
-                CompositeClassifier updated = new CompositeClassifier(classifier);
-                updated.PerCallClassifier = composite.PerCallClassifier;
-
-                return updated;
-            }
-
-            return classifier;
         }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }

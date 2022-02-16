@@ -1529,7 +1529,18 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
+
+            if (!context.HasClassifiers)
+            {
+                message.ResponseClassifier = ResponseClassifier200.Instance;
+            }
+            else
+            {
+                var classifier = new ResponseClassifier200();
+                classifier.AddClassifiers(context);
+                message.ResponseClassifier = classifier;
+            }
+
             return message;
         }
 
@@ -2060,57 +2071,40 @@ namespace Azure.Messaging.WebPubSub
             return message;
         }
 
-        private sealed class ResponseClassifier200 : ResponseClassifier
+        private sealed class ResponseClassifier200 : StatusCodeClassifier
         {
             private static ResponseClassifier _instance;
             public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-            public override bool IsErrorResponse(HttpMessage message)
+
+            public ResponseClassifier200() : base(new int[] { 200 })
             {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    _ => true
-                };
             }
         }
-        private sealed class ResponseClassifier204 : ResponseClassifier
+        private sealed class ResponseClassifier204 : StatusCodeClassifier
         {
             private static ResponseClassifier _instance;
             public static ResponseClassifier Instance => _instance ??= new ResponseClassifier204();
-            public override bool IsErrorResponse(HttpMessage message)
+
+            public ResponseClassifier204() : base(new int[] { 204 })
             {
-                return message.Response.Status switch
-                {
-                    204 => false,
-                    _ => true
-                };
             }
         }
-        private sealed class ResponseClassifier202 : ResponseClassifier
+        private sealed class ResponseClassifier202 : StatusCodeClassifier
         {
             private static ResponseClassifier _instance;
             public static ResponseClassifier Instance => _instance ??= new ResponseClassifier202();
-            public override bool IsErrorResponse(HttpMessage message)
+
+            public ResponseClassifier202() : base(new int[] { 202 })
             {
-                return message.Response.Status switch
-                {
-                    202 => false,
-                    _ => true
-                };
             }
         }
-        private sealed class ResponseClassifier200404 : ResponseClassifier
+        private sealed class ResponseClassifier200404 : StatusCodeClassifier
         {
             private static ResponseClassifier _instance;
             public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200404();
-            public override bool IsErrorResponse(HttpMessage message)
+
+            public ResponseClassifier200404() : base(new int[] { 200, 404 })
             {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    404 => false,
-                    _ => true
-                };
             }
         }
     }

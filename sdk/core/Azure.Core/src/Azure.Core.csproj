@@ -56,6 +56,7 @@
     <Compile Include="Shared\HashCodeBuilder.cs" />
     <Compile Include="Shared\HttpMessageSanitizer.cs" />
     <Compile Include="Shared\NullableAttributes.cs" />
+    <Compile Include="Shared\StatusCodeClassifier.cs" />
     <Compile Include="Shared\TaskExtensions.cs" />
     <Compile Include="Shared\CancellationHelper.cs" />
   </ItemGroup>

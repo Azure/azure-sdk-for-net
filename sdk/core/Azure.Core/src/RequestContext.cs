@@ -14,18 +14,14 @@ namespace Azure
     /// </summary>
     public class RequestContext
     {
-        private HttpMessageClassifier[]? _classifiers;
-
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
 
-        private HttpMessageClassifier? _classifier;
-        internal HttpMessageClassifier? Classifier
+        internal List<(int Status, bool IsError)>? StatusCodes { get; private set; }
+
+        private HttpMessageClassifier[]? _classifiers;
+        internal HttpMessageClassifier[]? MessageClassifiers
         {
-            get
-            {
-                return _classifiers != null ?
-                    _classifier ??= new AggregateClassifier(_classifiers) : null;
-            }
+            get { return _classifiers; }
         }
 
         /// <summary>
@@ -77,9 +73,8 @@ namespace Azure
         /// <param name="isError">Whether the passed-in status code should be classified as an error.</param>
         public void AddClassifier(int statusCode, bool isError)
         {
-            int length = _classifiers == null ? 0 : _classifiers.Length;
-            Array.Resize(ref _classifiers, length + 1);
-            _classifiers[length] = new StatusCodeClassifier(statusCode, isError);
+            StatusCodes ??= new();
+            StatusCodes.Add((statusCode, isError));
         }
 
         /// <summary>
@@ -96,58 +91,6 @@ namespace Azure
             int length = _classifiers == null ? 0 : _classifiers.Length;
             Array.Resize(ref _classifiers, length + 1);
             _classifiers[length] = classifier;
-        }
-
-        private class StatusCodeClassifier : HttpMessageClassifier
-        {
-            private readonly int _statusCode;
-            private readonly bool _isError;
-
-            public StatusCodeClassifier(int statusCode, bool isError)
-            {
-                _statusCode = statusCode;
-                _isError = isError;
-            }
-
-            public override bool TryClassify(HttpMessage message, out bool isError)
-            {
-                if (message.Response.Status == _statusCode)
-                {
-                    isError = _isError;
-                    return true;
-                }
-
-                isError = false;
-                return false;
-            }
-        }
-
-        private class AggregateClassifier : HttpMessageClassifier
-        {
-            private readonly HttpMessageClassifier[] _classifiers;
-
-            /// <summary>
-            /// MessageClassifier composed of multiple classifiers.
-            /// </summary>
-            /// <param name="classifiers"></param>
-            public AggregateClassifier(HttpMessageClassifier[] classifiers)
-            {
-                _classifiers = classifiers;
-            }
-
-            public override bool TryClassify(HttpMessage message, out bool isError)
-            {
-                for (int i = _classifiers.Length - 1; i >= 0; i--)
-                {
-                    if (_classifiers[i].TryClassify(message, out isError))
-                    {
-                        return true;
-                    }
-                }
-
-                isError = false;
-                return false;
-            }
         }
     }
 }
