@@ -26,7 +26,7 @@ namespace Azure.Core
         public HttpMessage(Request request, ResponseClassifier responseClassifier)
         {
             Request = request;
-            ResponseClassifier = responseClassifier;
+            _responseClassifier = responseClassifier;
             BufferResponse = true;
         }
 
