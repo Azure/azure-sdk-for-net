@@ -300,11 +300,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public static bool operator !=(Azure.ResourceManager.DeviceUpdate.Models.CreatedByType left, Azure.ResourceManager.DeviceUpdate.Models.CreatedByType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DeviceUpdateAccountUpdateOptions : Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateInstanceUpdateOptions
+    public partial class DeviceUpdateAccountUpdateOptions
     {
         public DeviceUpdateAccountUpdateOptions() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Location { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class DeviceUpdateInstanceUpdateOptions
     {
