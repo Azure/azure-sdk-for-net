@@ -43,8 +43,8 @@ namespace Azure.Messaging.ServiceBus
 
         internal void DecrementMessageCount() => Interlocked.Decrement(ref _messagesBeingProcessed);
 
-        internal void UpdateLastReceiveSucceededTime() => _lastReceiveSucceededTime = DateTimeOffset.Now;
+        internal void UpdateLastReceiveSucceededTime() => _lastReceiveSucceededTime = DateTimeOffset.UtcNow;
 
-        internal void UpdateLastReceiveAttemptedTime() => _lastReceiveAttemptedTime = DateTimeOffset.Now;
+        internal void UpdateLastReceiveAttemptedTime() => _lastReceiveAttemptedTime = DateTimeOffset.UtcNow;
     }
 }
