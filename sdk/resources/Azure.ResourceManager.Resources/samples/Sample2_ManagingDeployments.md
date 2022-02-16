@@ -13,6 +13,7 @@ using NUnit.Framework;
 using System.Text.Json;
 using System.IO;
 using JsonObject = System.Collections.Generic.Dictionary<string, object>;
+using System.Security.Policy;
 ```
 
 When you first create your ARM client, choose the subscription you're going to work in. You can use the `GetDefaultSubscription`/`GetDefaultSubscriptionAsync` methods to return the default subscription configured for your user:
@@ -46,7 +47,7 @@ var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremen
 {
     TemplateLink = new TemplateLink()
     {
-        Uri = "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json"
+        Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json")
     },
     Parameters = new JsonObject()
     {
@@ -94,7 +95,7 @@ var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremen
 {
     TemplateLink = new TemplateLink()
     {
-        Uri = "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json"
+        Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json")
     },
     Parameters = parameters
 });

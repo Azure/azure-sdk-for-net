@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Sql
         public Azure.ResourceManager.Sql.Models.ServerKeyType? ServerKeyType { get { throw null; } set { } }
         public string Subregion { get { throw null; } }
         public string Thumbprint { get { throw null; } }
-        public string Uri { get { throw null; } }
+        public System.Uri Uri { get { throw null; } }
     }
     public partial class ExtendedDatabaseBlobAuditingPolicy : Azure.ResourceManager.Core.ArmResource
     {
@@ -1683,7 +1683,7 @@ namespace Azure.ResourceManager.Sql
         public string ServerKeyName { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ServerKeyType? ServerKeyType { get { throw null; } set { } }
         public string Thumbprint { get { throw null; } }
-        public string Uri { get { throw null; } }
+        public System.Uri Uri { get { throw null; } }
     }
     public partial class ManagedInstanceKey : Azure.ResourceManager.Core.ArmResource
     {
@@ -1722,7 +1722,7 @@ namespace Azure.ResourceManager.Sql
         public string Kind { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.ServerKeyType? ServerKeyType { get { throw null; } set { } }
         public string Thumbprint { get { throw null; } }
-        public string Uri { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
     }
     public partial class ManagedInstanceLongTermRetentionBackupData : Azure.ResourceManager.Models.ResourceData
     {
@@ -3194,7 +3194,7 @@ namespace Azure.ResourceManager.Sql
         public Azure.ResourceManager.Sql.Models.ServerKeyType? ServerKeyType { get { throw null; } set { } }
         public string Subregion { get { throw null; } }
         public string Thumbprint { get { throw null; } }
-        public string Uri { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
     }
     public partial class ServerSecurityAlertPolicy : Azure.ResourceManager.Core.ArmResource
     {
