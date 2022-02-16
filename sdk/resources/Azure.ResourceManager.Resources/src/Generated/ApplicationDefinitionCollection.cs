@@ -15,8 +15,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -32,11 +32,12 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref="ApplicationDefinitionCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ApplicationDefinitionCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal ApplicationDefinitionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _applicationDefinitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ApplicationDefinition.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ApplicationDefinition.ResourceType, out string applicationDefinitionApiVersion);
+            TryGetApiVersion(ApplicationDefinition.ResourceType, out string applicationDefinitionApiVersion);
             _applicationDefinitionRestClient = new ApplicationDefinitionsRestOperations(_applicationDefinitionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationDefinitionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -49,48 +50,18 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// <summary> Creates a new managed application definition. </summary>
+        /// <summary>
+        /// Creates a new managed application definition.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}
+        /// Operation Id: ApplicationDefinitions_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="parameters"> Parameters supplied to the create or update an managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ApplicationDefinitionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string applicationDefinitionName, ApplicationDefinitionData parameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _applicationDefinitionClientDiagnostics.CreateScope("ApplicationDefinitionCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _applicationDefinitionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, parameters, cancellationToken);
-                var operation = new ApplicationDefinitionCreateOrUpdateOperation(ArmClient, _applicationDefinitionClientDiagnostics, Pipeline, _applicationDefinitionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, parameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a new managed application definition. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update an managed application definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ApplicationDefinitionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string applicationDefinitionName, ApplicationDefinitionData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ApplicationDefinition>> CreateOrUpdateAsync(bool waitForCompletion, string applicationDefinitionName, ApplicationDefinitionData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
             if (parameters == null)
@@ -103,7 +74,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _applicationDefinitionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationDefinitionCreateOrUpdateOperation(ArmClient, _applicationDefinitionClientDiagnostics, Pipeline, _applicationDefinitionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, parameters).Request, response);
+                var operation = new ResourcesArmOperation<ApplicationDefinition>(new ApplicationDefinitionOperationSource(Client), _applicationDefinitionClientDiagnostics, Pipeline, _applicationDefinitionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -115,23 +86,34 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets the managed application definition. </summary>
+        /// <summary>
+        /// Creates a new managed application definition.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}
+        /// Operation Id: ApplicationDefinitions_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
+        /// <param name="parameters"> Parameters supplied to the create or update an managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
-        public virtual Response<ApplicationDefinition> Get(string applicationDefinitionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual ArmOperation<ApplicationDefinition> CreateOrUpdate(bool waitForCompletion, string applicationDefinitionName, ApplicationDefinitionData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var scope = _applicationDefinitionClientDiagnostics.CreateScope("ApplicationDefinitionCollection.Get");
+            using var scope = _applicationDefinitionClientDiagnostics.CreateScope("ApplicationDefinitionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _applicationDefinitionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, cancellationToken);
-                if (response.Value == null)
-                    throw _applicationDefinitionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApplicationDefinition(ArmClient, response.Value), response.GetRawResponse());
+                var response = _applicationDefinitionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, parameters, cancellationToken);
+                var operation = new ResourcesArmOperation<ApplicationDefinition>(new ApplicationDefinitionOperationSource(Client), _applicationDefinitionClientDiagnostics, Pipeline, _applicationDefinitionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, parameters).Request, response, OperationFinalStateVia.Location);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -140,7 +122,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets the managed application definition. </summary>
+        /// <summary>
+        /// Gets the managed application definition.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}
+        /// Operation Id: ApplicationDefinitions_Get
+        /// </summary>
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is empty. </exception>
@@ -156,7 +142,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _applicationDefinitionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _applicationDefinitionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ApplicationDefinition(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApplicationDefinition(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,23 +151,27 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets the managed application definition.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}
+        /// Operation Id: ApplicationDefinitions_Get
+        /// </summary>
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
-        public virtual Response<ApplicationDefinition> GetIfExists(string applicationDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationDefinition> Get(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
 
-            using var scope = _applicationDefinitionClientDiagnostics.CreateScope("ApplicationDefinitionCollection.GetIfExists");
+            using var scope = _applicationDefinitionClientDiagnostics.CreateScope("ApplicationDefinitionCollection.Get");
             scope.Start();
             try
             {
-                var response = _applicationDefinitionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, cancellationToken: cancellationToken);
+                var response = _applicationDefinitionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ApplicationDefinition>(null, response.GetRawResponse());
-                return Response.FromValue(new ApplicationDefinition(ArmClient, response.Value), response.GetRawResponse());
+                    throw _applicationDefinitionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ApplicationDefinition(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,55 +180,95 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
+        /// <summary>
+        /// Lists the managed application definitions in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions
+        /// Operation Id: ApplicationDefinitions_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
-        public async virtual Task<Response<ApplicationDefinition>> GetIfExistsAsync(string applicationDefinitionName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApplicationDefinition" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApplicationDefinition> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
-
-            using var scope = _applicationDefinitionClientDiagnostics.CreateScope("ApplicationDefinitionCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<ApplicationDefinition>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _applicationDefinitionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ApplicationDefinition>(null, response.GetRawResponse());
-                return Response.FromValue(new ApplicationDefinition(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _applicationDefinitionClientDiagnostics.CreateScope("ApplicationDefinitionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _applicationDefinitionRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationDefinition(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<ApplicationDefinition>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _applicationDefinitionClientDiagnostics.CreateScope("ApplicationDefinitionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _applicationDefinitionRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationDefinition(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
+        /// <summary>
+        /// Lists the managed application definitions in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions
+        /// Operation Id: ApplicationDefinitions_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
-        public virtual Response<bool> Exists(string applicationDefinitionName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApplicationDefinition" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApplicationDefinition> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
-
-            using var scope = _applicationDefinitionClientDiagnostics.CreateScope("ApplicationDefinitionCollection.Exists");
-            scope.Start();
-            try
+            Page<ApplicationDefinition> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(applicationDefinitionName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _applicationDefinitionClientDiagnostics.CreateScope("ApplicationDefinitionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _applicationDefinitionRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationDefinition(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<ApplicationDefinition> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _applicationDefinitionClientDiagnostics.CreateScope("ApplicationDefinitionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _applicationDefinitionRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationDefinition(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}
+        /// Operation Id: ApplicationDefinitions_Get
+        /// </summary>
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is empty. </exception>
@@ -261,80 +291,89 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Lists the managed application definitions in a resource group. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}
+        /// Operation Id: ApplicationDefinitions_Get
+        /// </summary>
+        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationDefinition> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
+        public virtual Response<bool> Exists(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
-            Page<ApplicationDefinition> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
+
+            using var scope = _applicationDefinitionClientDiagnostics.CreateScope("ApplicationDefinitionCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _applicationDefinitionClientDiagnostics.CreateScope("ApplicationDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _applicationDefinitionRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationDefinition(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(applicationDefinitionName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<ApplicationDefinition> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _applicationDefinitionClientDiagnostics.CreateScope("ApplicationDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _applicationDefinitionRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationDefinition(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists the managed application definitions in a resource group. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}
+        /// Operation Id: ApplicationDefinitions_Get
+        /// </summary>
+        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationDefinition> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
+        public async virtual Task<Response<ApplicationDefinition>> GetIfExistsAsync(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApplicationDefinition>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
+
+            using var scope = _applicationDefinitionClientDiagnostics.CreateScope("ApplicationDefinitionCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _applicationDefinitionClientDiagnostics.CreateScope("ApplicationDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _applicationDefinitionRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationDefinition(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _applicationDefinitionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<ApplicationDefinition>(null, response.GetRawResponse());
+                return Response.FromValue(new ApplicationDefinition(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<ApplicationDefinition>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _applicationDefinitionClientDiagnostics.CreateScope("ApplicationDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _applicationDefinitionRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationDefinition(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}
+        /// Operation Id: ApplicationDefinitions_Get
+        /// </summary>
+        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
+        public virtual Response<ApplicationDefinition> GetIfExists(string applicationDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
+
+            using var scope = _applicationDefinitionClientDiagnostics.CreateScope("ApplicationDefinitionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _applicationDefinitionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<ApplicationDefinition>(null, response.GetRawResponse());
+                return Response.FromValue(new ApplicationDefinition(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<ApplicationDefinition> IEnumerable<ApplicationDefinition>.GetEnumerator()

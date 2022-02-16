@@ -18,7 +18,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> An internal class to add extension methods to. </summary>
+    /// <summary> A class to add extension methods to Subscription. </summary>
     internal partial class SubscriptionExtensionClient : ArmResource
     {
         private ClientDiagnostics _applicationClientDiagnostics;
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionExtensionClient"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionExtensionClient(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SubscriptionExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -53,11 +53,22 @@ namespace Azure.ResourceManager.Resources
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            ArmClient.TryGetApiVersion(resourceType, out string apiVersion);
+            TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
-        /// <summary> Gets all the applications within a subscription. </summary>
+        /// <summary> Gets a collection of Deployments in the Deployment. </summary>
+        /// <returns> An object representing collection of Deployments and their operations over a Deployment. </returns>
+        public virtual DeploymentCollection GetDeployments()
+        {
+            return new DeploymentCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Gets all the applications within a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Solutions/applications
+        /// Operation Id: Applications_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Application" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Application> GetApplicationsAsync(CancellationToken cancellationToken = default)
@@ -69,7 +80,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await ApplicationRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Application(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Application(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -84,7 +95,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await ApplicationRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Application(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Application(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -95,7 +106,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the applications within a subscription. </summary>
+        /// <summary>
+        /// Gets all the applications within a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Solutions/applications
+        /// Operation Id: Applications_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Application" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Application> GetApplications(CancellationToken cancellationToken = default)
@@ -107,7 +122,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = ApplicationRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Application(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Application(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -122,7 +137,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = ApplicationRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Application(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Application(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -133,7 +148,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Retrieves all JIT requests within the subscription. </summary>
+        /// <summary>
+        /// Retrieves all JIT requests within the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Solutions/jitRequests
+        /// Operation Id: JitRequests_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="JitRequest" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<JitRequest> GetJitRequestDefinitionsAsync(CancellationToken cancellationToken = default)
@@ -145,7 +164,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await JitRequestRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JitRequest(ArmClient, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new JitRequest(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -156,7 +175,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves all JIT requests within the subscription. </summary>
+        /// <summary>
+        /// Retrieves all JIT requests within the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Solutions/jitRequests
+        /// Operation Id: JitRequests_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="JitRequest" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<JitRequest> GetJitRequestDefinitions(CancellationToken cancellationToken = default)
@@ -168,7 +191,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = JitRequestRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JitRequest(ArmClient, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new JitRequest(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -179,7 +202,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Lists all deployment scripts for a given subscription. </summary>
+        /// <summary>
+        /// Lists all deployment scripts for a given subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentScripts
+        /// Operation Id: DeploymentScripts_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeploymentScript" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeploymentScript> GetDeploymentScriptsAsync(CancellationToken cancellationToken = default)
@@ -191,7 +218,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await DeploymentScriptRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -206,7 +233,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await DeploymentScriptRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -217,7 +244,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all deployment scripts for a given subscription. </summary>
+        /// <summary>
+        /// Lists all deployment scripts for a given subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentScripts
+        /// Operation Id: DeploymentScripts_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeploymentScript" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeploymentScript> GetDeploymentScripts(CancellationToken cancellationToken = default)
@@ -229,7 +260,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = DeploymentScriptRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -244,7 +275,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = DeploymentScriptRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -255,7 +286,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the Template Specs within the specified subscriptions. </summary>
+        /// <summary>
+        /// Lists all the Template Specs within the specified subscriptions.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/templateSpecs
+        /// Operation Id: TemplateSpecs_ListBySubscription
+        /// </summary>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TemplateSpec" /> that may take multiple service requests to iterate over. </returns>
@@ -268,7 +303,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await TemplateSpecRestClient.ListBySubscriptionAsync(Id.SubscriptionId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpec(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpec(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -283,7 +318,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await TemplateSpecRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpec(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpec(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -294,7 +329,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the Template Specs within the specified subscriptions. </summary>
+        /// <summary>
+        /// Lists all the Template Specs within the specified subscriptions.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/templateSpecs
+        /// Operation Id: TemplateSpecs_ListBySubscription
+        /// </summary>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TemplateSpec" /> that may take multiple service requests to iterate over. </returns>
@@ -307,7 +346,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = TemplateSpecRestClient.ListBySubscription(Id.SubscriptionId, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpec(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpec(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -322,7 +361,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = TemplateSpecRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpec(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpec(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

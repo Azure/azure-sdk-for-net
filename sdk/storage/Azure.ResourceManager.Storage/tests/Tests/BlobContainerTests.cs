@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.False(containerData.HasImmutabilityPolicy);
 
             //delete blob container
-            BlobContainerDeleteOperation blobContainerDeleteOperation = await container1.DeleteAsync(true);
+            ArmOperation blobContainerDeleteOperation = await container1.DeleteAsync(true);
             await blobContainerDeleteOperation.WaitForCompletionResponseAsync();
 
             //validate if deleted successfully
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.Data.State);
 
             //delete immutability policy
-            immutabilityPolicyModel = (await immutabilityPolicy.DeleteAsync(true, immutabilityPolicy.Data.Etag)).Value;
+            immutabilityPolicyModel = (await immutabilityPolicy.DeleteAsync(true, immutabilityPolicy.Data.Etag)).Value.Data;
 
             //validate
             Assert.NotNull(immutabilityPolicyModel.Type);
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task LockImmutabilityPolicy()
         {
             //update storage account to v2
-            StorageAccountUpdateParameters updateParameters = new StorageAccountUpdateParameters()
+            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions()
             {
                 Kind = Kind.StorageV2
             };
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task ExtendImmutabilityPolicy()
         {
             //update storage account to v2
-            StorageAccountUpdateParameters updateParameters = new StorageAccountUpdateParameters()
+            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions()
             {
                 Kind = Kind.StorageV2
             };
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccount destAccount = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(true, accountName2, createParameters)).Value;
 
             //update 2 accounts properties
-            var updateparameter = new StorageAccountUpdateParameters
+            var updateparameter = new StorageAccountUpdateOptions
             {
                 AllowCrossTenantReplication = true,
                 EnableHttpsTrafficOnly = true
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task BlobContainerSoftDelete()
         {
             //update storage account to v2
-            StorageAccountUpdateParameters updateParameters = new StorageAccountUpdateParameters()
+            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions()
             {
                 Kind = Kind.StorageV2
             };
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task PITR()
         {
             //update storage account to v2
-            StorageAccountUpdateParameters updateParameters = new StorageAccountUpdateParameters()
+            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions()
             {
                 Kind = Kind.StorageV2
             };
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //start restore
             Models.BlobRestoreParameters parameters = new Models.BlobRestoreParameters(Recording.Now.AddSeconds(-1).ToUniversalTime(), ranges);
-            StorageAccountRestoreBlobRangesOperation restoreOperation = _storageAccount.RestoreBlobRanges(false, parameters);
+            ArmOperation<BlobRestoreStatus> restoreOperation = _storageAccount.RestoreBlobRanges(false, parameters);
 
             //wait for restore completion
             Models.BlobRestoreStatus restoreStatus = await restoreOperation.WaitForCompletionAsync();
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task BlobContainersVLW()
         {
             //update storage account to v2
-            StorageAccountUpdateParameters updateParameters = new StorageAccountUpdateParameters()
+            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions()
             {
                 Kind = Kind.StorageV2
             };

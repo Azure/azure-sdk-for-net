@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,21 +37,21 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ServerAutomaticTuning"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServerAutomaticTuning(ArmClient armClient, ServerAutomaticTuningData data) : this(armClient, data.Id)
+        internal ServerAutomaticTuning(ArmClient client, ServerAutomaticTuningData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ServerAutomaticTuning"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ServerAutomaticTuning(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal ServerAutomaticTuning(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverAutomaticTuningClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string serverAutomaticTuningApiVersion);
+            TryGetApiVersion(ResourceType, out string serverAutomaticTuningApiVersion);
             _serverAutomaticTuningRestClient = new ServerAutomaticTuningRestOperations(_serverAutomaticTuningClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverAutomaticTuningApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -83,10 +82,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current
-        /// OperationId: ServerAutomaticTuning_Get
-        /// <summary> Retrieves server automatic tuning options. </summary>
+        /// <summary>
+        /// Retrieves server automatic tuning options.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current
+        /// Operation Id: ServerAutomaticTuning_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ServerAutomaticTuning>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _serverAutomaticTuningRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _serverAutomaticTuningClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerAutomaticTuning(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerAutomaticTuning(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,10 +106,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current
-        /// OperationId: ServerAutomaticTuning_Get
-        /// <summary> Retrieves server automatic tuning options. </summary>
+        /// <summary>
+        /// Retrieves server automatic tuning options.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current
+        /// Operation Id: ServerAutomaticTuning_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServerAutomaticTuning> Get(CancellationToken cancellationToken = default)
         {
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _serverAutomaticTuningRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw _serverAutomaticTuningClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerAutomaticTuning(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerAutomaticTuning(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -129,46 +130,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _serverAutomaticTuningClientDiagnostics.CreateScope("ServerAutomaticTuning.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _serverAutomaticTuningClientDiagnostics.CreateScope("ServerAutomaticTuning.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current
-        /// OperationId: ServerAutomaticTuning_Update
-        /// <summary> Update automatic tuning options on server. </summary>
+        /// <summary>
+        /// Update automatic tuning options on server.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current
+        /// Operation Id: ServerAutomaticTuning_Update
+        /// </summary>
         /// <param name="parameters"> The requested automatic tuning resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
@@ -184,7 +150,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _serverAutomaticTuningRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ServerAutomaticTuning(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerAutomaticTuning(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -193,10 +159,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current
-        /// OperationId: ServerAutomaticTuning_Update
-        /// <summary> Update automatic tuning options on server. </summary>
+        /// <summary>
+        /// Update automatic tuning options on server.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current
+        /// Operation Id: ServerAutomaticTuning_Update
+        /// </summary>
         /// <param name="parameters"> The requested automatic tuning resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
@@ -212,7 +179,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _serverAutomaticTuningRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken);
-                return Response.FromValue(new ServerAutomaticTuning(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerAutomaticTuning(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

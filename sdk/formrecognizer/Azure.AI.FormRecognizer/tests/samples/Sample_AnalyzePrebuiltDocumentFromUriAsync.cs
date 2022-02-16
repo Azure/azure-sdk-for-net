@@ -36,7 +36,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
             {
-                if (kvp.Value.Content == null)
+                if (kvp.Value == null)
                 {
                     Console.WriteLine($"  Found key with no value: '{kvp.Key.Content}'");
                 }

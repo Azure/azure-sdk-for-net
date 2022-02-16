@@ -18,7 +18,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> An internal class to add extension methods to. </summary>
+    /// <summary> A class to add extension methods to Subscription. </summary>
     internal partial class SubscriptionExtensionClient : ArmResource
     {
         private ClientDiagnostics _profileClientDiagnostics;
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionExtensionClient"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionExtensionClient(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SubscriptionExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -53,11 +53,15 @@ namespace Azure.ResourceManager.Cdn
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            ArmClient.TryGetApiVersion(resourceType, out string apiVersion);
+            TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
-        /// <summary> Lists all of the CDN profiles within an Azure subscription. </summary>
+        /// <summary>
+        /// Lists all of the CDN profiles within an Azure subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/profiles
+        /// Operation Id: Profiles_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Profile" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Profile> GetProfilesAsync(CancellationToken cancellationToken = default)
@@ -69,7 +73,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     var response = await ProfileRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Profile(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Profile(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -84,7 +88,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     var response = await ProfileRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Profile(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Profile(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -95,7 +99,11 @@ namespace Azure.ResourceManager.Cdn
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all of the CDN profiles within an Azure subscription. </summary>
+        /// <summary>
+        /// Lists all of the CDN profiles within an Azure subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/profiles
+        /// Operation Id: Profiles_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Profile" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Profile> GetProfiles(CancellationToken cancellationToken = default)
@@ -107,7 +115,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     var response = ProfileRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Profile(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Profile(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -122,7 +130,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     var response = ProfileRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Profile(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Profile(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -133,17 +141,15 @@ namespace Azure.ResourceManager.Cdn
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint. </summary>
+        /// <summary>
+        /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkNameAvailability
+        /// Operation Id: CheckNameAvailabilityWithSubscription
+        /// </summary>
         /// <param name="checkNameAvailabilityInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
         public async virtual Task<Response<CheckNameAvailabilityOutput>> CheckCdnNameAvailabilityWithSubscriptionAsync(CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
         {
-            if (checkNameAvailabilityInput == null)
-            {
-                throw new ArgumentNullException(nameof(checkNameAvailabilityInput));
-            }
-
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckCdnNameAvailabilityWithSubscription");
             scope.Start();
             try
@@ -158,17 +164,15 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint. </summary>
+        /// <summary>
+        /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkNameAvailability
+        /// Operation Id: CheckNameAvailabilityWithSubscription
+        /// </summary>
         /// <param name="checkNameAvailabilityInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
         public virtual Response<CheckNameAvailabilityOutput> CheckCdnNameAvailabilityWithSubscription(CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
         {
-            if (checkNameAvailabilityInput == null)
-            {
-                throw new ArgumentNullException(nameof(checkNameAvailabilityInput));
-            }
-
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckCdnNameAvailabilityWithSubscription");
             scope.Start();
             try
@@ -183,17 +187,15 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Check if the probe path is a valid path and the file can be accessed. Probe path is the path to a file hosted on the origin server to help accelerate the delivery of dynamic content via the CDN endpoint. This path is relative to the origin path specified in the endpoint configuration. </summary>
+        /// <summary>
+        /// Check if the probe path is a valid path and the file can be accessed. Probe path is the path to a file hosted on the origin server to help accelerate the delivery of dynamic content via the CDN endpoint. This path is relative to the origin path specified in the endpoint configuration.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateProbe
+        /// Operation Id: ValidateProbe
+        /// </summary>
         /// <param name="validateProbeInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="validateProbeInput"/> is null. </exception>
         public async virtual Task<Response<ValidateProbeOutput>> ValidateProbeAsync(ValidateProbeInput validateProbeInput, CancellationToken cancellationToken = default)
         {
-            if (validateProbeInput == null)
-            {
-                throw new ArgumentNullException(nameof(validateProbeInput));
-            }
-
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionExtensionClient.ValidateProbe");
             scope.Start();
             try
@@ -208,17 +210,15 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Check if the probe path is a valid path and the file can be accessed. Probe path is the path to a file hosted on the origin server to help accelerate the delivery of dynamic content via the CDN endpoint. This path is relative to the origin path specified in the endpoint configuration. </summary>
+        /// <summary>
+        /// Check if the probe path is a valid path and the file can be accessed. Probe path is the path to a file hosted on the origin server to help accelerate the delivery of dynamic content via the CDN endpoint. This path is relative to the origin path specified in the endpoint configuration.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateProbe
+        /// Operation Id: ValidateProbe
+        /// </summary>
         /// <param name="validateProbeInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="validateProbeInput"/> is null. </exception>
         public virtual Response<ValidateProbeOutput> ValidateProbe(ValidateProbeInput validateProbeInput, CancellationToken cancellationToken = default)
         {
-            if (validateProbeInput == null)
-            {
-                throw new ArgumentNullException(nameof(validateProbeInput));
-            }
-
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionExtensionClient.ValidateProbe");
             scope.Start();
             try
@@ -233,7 +233,11 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Check the quota and actual usage of the CDN profiles under the given subscription. </summary>
+        /// <summary>
+        /// Check the quota and actual usage of the CDN profiles under the given subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkResourceUsage
+        /// Operation Id: ResourceUsage_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceUsage> GetResourceUsagesAsync(CancellationToken cancellationToken = default)
@@ -271,7 +275,11 @@ namespace Azure.ResourceManager.Cdn
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Check the quota and actual usage of the CDN profiles under the given subscription. </summary>
+        /// <summary>
+        /// Check the quota and actual usage of the CDN profiles under the given subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkResourceUsage
+        /// Operation Id: ResourceUsage_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceUsage> GetResourceUsages(CancellationToken cancellationToken = default)
@@ -309,7 +317,11 @@ namespace Azure.ResourceManager.Cdn
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all available managed rule sets. </summary>
+        /// <summary>
+        /// Lists all available managed rule sets.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/CdnWebApplicationFirewallManagedRuleSets
+        /// Operation Id: ManagedRuleSets_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedRuleSetDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedRuleSetDefinition> GetManagedRuleSetsAsync(CancellationToken cancellationToken = default)
@@ -347,7 +359,11 @@ namespace Azure.ResourceManager.Cdn
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all available managed rule sets. </summary>
+        /// <summary>
+        /// Lists all available managed rule sets.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/CdnWebApplicationFirewallManagedRuleSets
+        /// Operation Id: ManagedRuleSets_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedRuleSetDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedRuleSetDefinition> GetManagedRuleSets(CancellationToken cancellationToken = default)

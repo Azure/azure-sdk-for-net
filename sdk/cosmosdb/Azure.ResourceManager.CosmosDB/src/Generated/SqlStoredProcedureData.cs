@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> A class representing the SqlStoredProcedure data model. </summary>
-    public partial class SqlStoredProcedureData : TrackedResource
+    public partial class SqlStoredProcedureData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SqlStoredProcedureData. </summary>
         /// <param name="location"> The location. </param>

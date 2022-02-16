@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the DeploymentScript data model. </summary>
-    public partial class DeploymentScriptData : Resource
+    public partial class DeploymentScriptData : ResourceData
     {
         /// <summary> Initializes a new instance of DeploymentScriptData. </summary>
         /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>

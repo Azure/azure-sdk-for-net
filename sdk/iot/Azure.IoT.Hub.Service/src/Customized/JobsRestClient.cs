@@ -40,7 +40,7 @@ namespace Azure.IoT.Hub.Service
                     return Response.FromValue<string>(null, message.Response);
 
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -73,7 +73,7 @@ namespace Azure.IoT.Hub.Service
                     return Response.FromValue<string>(null, message.Response);
 
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -83,10 +83,10 @@ namespace Azure.IoT.Hub.Service
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             return message;
         }

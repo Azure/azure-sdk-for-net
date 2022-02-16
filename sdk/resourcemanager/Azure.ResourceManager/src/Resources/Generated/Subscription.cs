@@ -48,33 +48,33 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref = "Subscription"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal Subscription(ArmClient armClient, SubscriptionData data) : this(armClient, data.Id)
+        internal Subscription(ArmClient client, SubscriptionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="Subscription"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Subscription(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal Subscription(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _subscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string subscriptionApiVersion);
+            TryGetApiVersion(ResourceType, out string subscriptionApiVersion);
             _subscriptionRestClient = new SubscriptionsRestOperations(_subscriptionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionApiVersion);
             _subscriptionResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string subscriptionResourcesApiVersion);
+            TryGetApiVersion(ResourceType, out string subscriptionResourcesApiVersion);
             _subscriptionResourcesRestClient = new ResourcesRestOperations(_subscriptionResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionResourcesApiVersion);
             _subscriptionTagsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string subscriptionTagsApiVersion);
+            TryGetApiVersion(ResourceType, out string subscriptionTagsApiVersion);
             _subscriptionTagsRestClient = new TagsRestOperations(_subscriptionTagsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionTagsApiVersion);
             _resourceLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceLink.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceLink.ResourceType, out string resourceLinkApiVersion);
+            TryGetApiVersion(ResourceLink.ResourceType, out string resourceLinkApiVersion);
             _resourceLinkRestClient = new ResourceLinksRestOperations(_resourceLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceLinkApiVersion);
             _featureClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Feature.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(Feature.ResourceType, out string featureApiVersion);
+            TryGetApiVersion(Feature.ResourceType, out string featureApiVersion);
             _featureRestClient = new FeaturesRestOperations(_featureClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, featureApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -105,10 +105,39 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Subscriptions_Get
-        /// <summary> Gets details about a specified subscription. </summary>
+        /// <summary> Gets a collection of Providers in the Provider. </summary>
+        /// <returns> An object representing collection of Providers and their operations over a Provider. </returns>
+        public virtual ProviderCollection GetProviders()
+        {
+            return new ProviderCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of ResourceGroups in the ResourceGroup. </summary>
+        /// <returns> An object representing collection of ResourceGroups and their operations over a ResourceGroup. </returns>
+        public virtual ResourceGroupCollection GetResourceGroups()
+        {
+            return new ResourceGroupCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of SubscriptionPolicyDefinitions in the SubscriptionPolicyDefinition. </summary>
+        /// <returns> An object representing collection of SubscriptionPolicyDefinitions and their operations over a SubscriptionPolicyDefinition. </returns>
+        public virtual SubscriptionPolicyDefinitionCollection GetSubscriptionPolicyDefinitions()
+        {
+            return new SubscriptionPolicyDefinitionCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of SubscriptionPolicySetDefinitions in the SubscriptionPolicySetDefinition. </summary>
+        /// <returns> An object representing collection of SubscriptionPolicySetDefinitions and their operations over a SubscriptionPolicySetDefinition. </returns>
+        public virtual SubscriptionPolicySetDefinitionCollection GetSubscriptionPolicySetDefinitions()
+        {
+            return new SubscriptionPolicySetDefinitionCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Gets details about a specified subscription.
+        /// Request Path: /subscriptions/{subscriptionId}
+        /// Operation Id: Subscriptions_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<Subscription>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -119,7 +148,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _subscriptionRestClient.GetAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _subscriptionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Subscription(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Subscription(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -128,10 +157,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Subscriptions_Get
-        /// <summary> Gets details about a specified subscription. </summary>
+        /// <summary>
+        /// Gets details about a specified subscription.
+        /// Request Path: /subscriptions/{subscriptionId}
+        /// Operation Id: Subscriptions_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Subscription> Get(CancellationToken cancellationToken = default)
         {
@@ -142,7 +172,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _subscriptionRestClient.Get(Id.SubscriptionId, cancellationToken);
                 if (response.Value == null)
                     throw _subscriptionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Subscription(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Subscription(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,46 +181,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Tags_DeleteValue
-        /// <summary> This operation allows deleting a value from the list of predefined values for an existing predefined tag name. The value being deleted must not be in use as a tag value for the given tag name for any resource. </summary>
+        /// <summary>
+        /// This operation allows deleting a value from the list of predefined values for an existing predefined tag name. The value being deleted must not be in use as a tag value for the given tag name for any resource.
+        /// Request Path: /subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}
+        /// Operation Id: Tags_DeleteValue
+        /// </summary>
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -215,10 +210,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Tags_DeleteValue
-        /// <summary> This operation allows deleting a value from the list of predefined values for an existing predefined tag name. The value being deleted must not be in use as a tag value for the given tag name for any resource. </summary>
+        /// <summary>
+        /// This operation allows deleting a value from the list of predefined values for an existing predefined tag name. The value being deleted must not be in use as a tag value for the given tag name for any resource.
+        /// Request Path: /subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}
+        /// Operation Id: Tags_DeleteValue
+        /// </summary>
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -243,10 +239,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Tags_CreateOrUpdateValue
-        /// <summary> This operation allows adding a value to the list of predefined values for an existing predefined tag name. A tag value can have a maximum of 256 characters. </summary>
+        /// <summary>
+        /// This operation allows adding a value to the list of predefined values for an existing predefined tag name. A tag value can have a maximum of 256 characters.
+        /// Request Path: /subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}
+        /// Operation Id: Tags_CreateOrUpdateValue
+        /// </summary>
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -271,10 +268,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Tags_CreateOrUpdateValue
-        /// <summary> This operation allows adding a value to the list of predefined values for an existing predefined tag name. A tag value can have a maximum of 256 characters. </summary>
+        /// <summary>
+        /// This operation allows adding a value to the list of predefined values for an existing predefined tag name. A tag value can have a maximum of 256 characters.
+        /// Request Path: /subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}
+        /// Operation Id: Tags_CreateOrUpdateValue
+        /// </summary>
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -299,10 +297,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/tagNames/{tagName}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Tags_CreateOrUpdate
-        /// <summary> This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;. </summary>
+        /// <summary>
+        /// This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;.
+        /// Request Path: /subscriptions/{subscriptionId}/tagNames/{tagName}
+        /// Operation Id: Tags_CreateOrUpdate
+        /// </summary>
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tagName"/> is empty. </exception>
@@ -325,10 +324,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/tagNames/{tagName}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Tags_CreateOrUpdate
-        /// <summary> This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;. </summary>
+        /// <summary>
+        /// This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;.
+        /// Request Path: /subscriptions/{subscriptionId}/tagNames/{tagName}
+        /// Operation Id: Tags_CreateOrUpdate
+        /// </summary>
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tagName"/> is empty. </exception>
@@ -351,10 +351,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/tagNames/{tagName}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Tags_Delete
-        /// <summary> This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted. </summary>
+        /// <summary>
+        /// This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted.
+        /// Request Path: /subscriptions/{subscriptionId}/tagNames/{tagName}
+        /// Operation Id: Tags_Delete
+        /// </summary>
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tagName"/> is empty. </exception>
@@ -377,10 +378,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/tagNames/{tagName}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Tags_Delete
-        /// <summary> This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted. </summary>
+        /// <summary>
+        /// This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted.
+        /// Request Path: /subscriptions/{subscriptionId}/tagNames/{tagName}
+        /// Operation Id: Tags_Delete
+        /// </summary>
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tagName"/> is empty. </exception>
@@ -403,10 +405,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/tagNames
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Tags_List
-        /// <summary> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </summary>
+        /// <summary>
+        /// This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result.
+        /// Request Path: /subscriptions/{subscriptionId}/tagNames
+        /// Operation Id: Tags_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PredefinedTag" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PredefinedTag> GetAllPredefinedTagsAsync(CancellationToken cancellationToken = default)
@@ -444,10 +447,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/tagNames
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Tags_List
-        /// <summary> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </summary>
+        /// <summary>
+        /// This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result.
+        /// Request Path: /subscriptions/{subscriptionId}/tagNames
+        /// Operation Id: Tags_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PredefinedTag" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PredefinedTag> GetAllPredefinedTags(CancellationToken cancellationToken = default)
@@ -485,10 +489,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/links
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ResourceLinks_ListAtSubscription
-        /// <summary> Gets all the linked resources for the subscription. </summary>
+        /// <summary>
+        /// Gets all the linked resources for the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/links
+        /// Operation Id: ResourceLinks_ListAtSubscription
+        /// </summary>
         /// <param name="filter"> The filter to apply on the list resource links operation. The supported filter for list resource links is targetId. For example, $filter=targetId eq {value}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceLink" /> that may take multiple service requests to iterate over. </returns>
@@ -501,7 +506,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _resourceLinkRestClient.ListAtSubscriptionAsync(Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -516,7 +521,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _resourceLinkRestClient.ListAtSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -527,10 +532,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/links
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ResourceLinks_ListAtSubscription
-        /// <summary> Gets all the linked resources for the subscription. </summary>
+        /// <summary>
+        /// Gets all the linked resources for the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/links
+        /// Operation Id: ResourceLinks_ListAtSubscription
+        /// </summary>
         /// <param name="filter"> The filter to apply on the list resource links operation. The supported filter for list resource links is targetId. For example, $filter=targetId eq {value}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceLink" /> that may take multiple service requests to iterate over. </returns>
@@ -543,7 +549,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _resourceLinkRestClient.ListAtSubscription(Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -558,7 +564,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _resourceLinkRestClient.ListAtSubscriptionNextPage(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -569,10 +575,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/locations
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Subscriptions_ListLocations
-        /// <summary> This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list. </summary>
+        /// <summary>
+        /// This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list.
+        /// Request Path: /subscriptions/{subscriptionId}/locations
+        /// Operation Id: Subscriptions_ListLocations
+        /// </summary>
         /// <param name="includeExtendedLocations"> Whether to include extended locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LocationExpanded" /> that may take multiple service requests to iterate over. </returns>
@@ -596,10 +603,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/locations
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Subscriptions_ListLocations
-        /// <summary> This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list. </summary>
+        /// <summary>
+        /// This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list.
+        /// Request Path: /subscriptions/{subscriptionId}/locations
+        /// Operation Id: Subscriptions_ListLocations
+        /// </summary>
         /// <param name="includeExtendedLocations"> Whether to include extended locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LocationExpanded" /> that may take multiple service requests to iterate over. </returns>
@@ -623,10 +631,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/features
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Features_ListAll
-        /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
+        /// <summary>
+        /// Gets all the preview features that are available through AFEC for the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/features
+        /// Operation Id: Features_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Feature" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Feature> GetFeaturesAsync(CancellationToken cancellationToken = default)
@@ -638,7 +647,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _featureRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Feature(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Feature(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -653,7 +662,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _featureRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Feature(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Feature(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -664,10 +673,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/features
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Features_ListAll
-        /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
+        /// <summary>
+        /// Gets all the preview features that are available through AFEC for the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/features
+        /// Operation Id: Features_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Feature" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Feature> GetFeatures(CancellationToken cancellationToken = default)
@@ -679,7 +689,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _featureRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Feature(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Feature(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -694,7 +704,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _featureRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Feature(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Feature(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -705,44 +715,208 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        #region Provider
-
-        /// <summary> Gets a collection of Providers in the Subscription. </summary>
-        /// <returns> An object representing collection of Providers and their operations over a Subscription. </returns>
-        public virtual ProviderCollection GetProviders()
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}
+        /// Operation Id: Subscriptions_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public async virtual Task<Response<Subscription>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            return new ProviderCollection(this);
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _subscriptionRestClient.GetAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Subscription(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region ResourceGroup
-
-        /// <summary> Gets a collection of ResourceGroups in the Subscription. </summary>
-        /// <returns> An object representing collection of ResourceGroups and their operations over a Subscription. </returns>
-        public virtual ResourceGroupCollection GetResourceGroups()
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}
+        /// Operation Id: Subscriptions_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual Response<Subscription> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            return new ResourceGroupCollection(this);
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _subscriptionRestClient.Get(Id.SubscriptionId, cancellationToken);
+                return Response.FromValue(new Subscription(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region SubscriptionPolicyDefinition
-
-        /// <summary> Gets a collection of SubscriptionPolicyDefinitions in the Subscription. </summary>
-        /// <returns> An object representing collection of SubscriptionPolicyDefinitions and their operations over a Subscription. </returns>
-        public virtual SubscriptionPolicyDefinitionCollection GetSubscriptionPolicyDefinitions()
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}
+        /// Operation Id: Subscriptions_Get
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public async virtual Task<Response<Subscription>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            return new SubscriptionPolicyDefinitionCollection(this);
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
+
+            using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.SetTags");
+            scope.Start();
+            try
+            {
+                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _subscriptionRestClient.GetAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Subscription(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region SubscriptionPolicySetDefinition
-
-        /// <summary> Gets a collection of SubscriptionPolicySetDefinitions in the Subscription. </summary>
-        /// <returns> An object representing collection of SubscriptionPolicySetDefinitions and their operations over a Subscription. </returns>
-        public virtual SubscriptionPolicySetDefinitionCollection GetSubscriptionPolicySetDefinitions()
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}
+        /// Operation Id: Subscriptions_Get
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual Response<Subscription> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            return new SubscriptionPolicySetDefinitionCollection(this);
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
+
+            using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.SetTags");
+            scope.Start();
+            try
+            {
+                TagResource.Delete(true, cancellationToken: cancellationToken);
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _subscriptionRestClient.Get(Id.SubscriptionId, cancellationToken);
+                return Response.FromValue(new Subscription(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
+
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}
+        /// Operation Id: Subscriptions_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public async virtual Task<Response<Subscription>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _subscriptionRestClient.GetAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Subscription(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}
+        /// Operation Id: Subscriptions_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual Response<Subscription> RemoveTag(string key, CancellationToken cancellationToken = default)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _subscriptionRestClient.Get(Id.SubscriptionId, cancellationToken);
+                return Response.FromValue(new Subscription(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

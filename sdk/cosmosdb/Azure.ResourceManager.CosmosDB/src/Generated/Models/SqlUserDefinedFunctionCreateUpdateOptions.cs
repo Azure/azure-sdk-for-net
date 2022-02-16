@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to create and update Cosmos DB userDefinedFunction. </summary>
-    public partial class SqlUserDefinedFunctionCreateUpdateOptions : TrackedResource
+    public partial class SqlUserDefinedFunctionCreateUpdateOptions : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SqlUserDefinedFunctionCreateUpdateOptions. </summary>
         /// <param name="location"> The location. </param>

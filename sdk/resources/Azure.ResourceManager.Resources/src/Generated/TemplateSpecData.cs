@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the TemplateSpec data model. </summary>
-    public partial class TemplateSpecData : Resource
+    public partial class TemplateSpecData : ResourceData
     {
         /// <summary> Initializes a new instance of TemplateSpecData. </summary>
         /// <param name="location"> The location of the Template Spec. It cannot be changed after Template Spec creation. It must be one of the supported Azure locations. </param>

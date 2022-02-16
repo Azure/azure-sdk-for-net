@@ -14,7 +14,7 @@ using Azure.ResourceManager.StoragePool.Models;
 namespace Azure.ResourceManager.StoragePool
 {
     /// <summary> A class representing the IscsiTarget data model. </summary>
-    public partial class IscsiTargetData : Resource
+    public partial class IscsiTargetData : ResourceData
     {
         /// <summary> Initializes a new instance of IscsiTargetData. </summary>
         /// <param name="aclMode"> Mode for Target connectivity. </param>

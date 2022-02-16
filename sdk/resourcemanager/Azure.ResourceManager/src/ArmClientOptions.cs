@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,9 +17,9 @@ namespace Azure.ResourceManager
         internal IDictionary<ResourceType, string> ResourceApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
 
         /// <summary>
-        /// Gets the ApiVersions object
+        /// Gets or sets Azure cloud environment.
         /// </summary>
-        public string Scope { get; set; } = "https://management.core.windows.net/.default";
+        public ArmEnvironment Environment { get; set; } = ArmEnvironment.AzureCloud;
 
         /// <summary>
         /// Sets the api version to use for a given resource type.
@@ -30,16 +31,6 @@ namespace Azure.ResourceManager
             Argument.AssertNotNullOrEmpty(apiVersion, nameof(apiVersion));
 
             ResourceApiVersionOverrides[resourceType] = apiVersion;
-        }
-
-        /// <summary>
-        /// Gets the api version override if it has been set for the current client options.
-        /// </summary>
-        /// <param name="resourceType"> The resource type to get the version for. </param>
-        /// <param name="apiVersion"> The api version to variable to set. </param>
-        public bool TryGetApiVersion(ResourceType resourceType, out string apiVersion)
-        {
-            return ResourceApiVersionOverrides.TryGetValue(resourceType, out apiVersion);
         }
     }
 }

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Private link resource. </summary>
-    public partial class PrivateLink : Resource
+    public partial class PrivateLink : ResourceData
     {
         /// <summary> Initializes a new instance of PrivateLink. </summary>
         public PrivateLink()

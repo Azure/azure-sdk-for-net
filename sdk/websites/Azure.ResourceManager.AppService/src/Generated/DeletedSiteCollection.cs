@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -34,14 +35,15 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref="DeletedSiteCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal DeletedSiteCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal DeletedSiteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _deletedSiteGlobalClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSite.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(DeletedSite.ResourceType, out string deletedSiteGlobalApiVersion);
+            TryGetApiVersion(DeletedSite.ResourceType, out string deletedSiteGlobalApiVersion);
             _deletedSiteGlobalRestClient = new GlobalRestOperations(_deletedSiteGlobalClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedSiteGlobalApiVersion);
             _deletedSiteDeletedWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSite.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(DeletedSite.ResourceType, out string deletedSiteDeletedWebAppsApiVersion);
+            TryGetApiVersion(DeletedSite.ResourceType, out string deletedSiteDeletedWebAppsApiVersion);
             _deletedSiteDeletedWebAppsRestClient = new DeletedWebAppsRestOperations(_deletedSiteDeletedWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedSiteDeletedWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -54,40 +56,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Global_GetDeletedWebApp
-        /// <summary> Description for Get deleted app for a subscription. </summary>
-        /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
-        public virtual Response<DeletedSite> Get(string deletedSiteId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
-
-            using var scope = _deletedSiteGlobalClientDiagnostics.CreateScope("DeletedSiteCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = _deletedSiteGlobalRestClient.GetDeletedWebApp(Id.SubscriptionId, deletedSiteId, cancellationToken);
-                if (response.Value == null)
-                    throw _deletedSiteGlobalClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeletedSite(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Global_GetDeletedWebApp
-        /// <summary> Description for Get deleted app for a subscription. </summary>
+        /// <summary>
+        /// Description for Get deleted app for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
+        /// Operation Id: Global_GetDeletedWebApp
+        /// </summary>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is empty. </exception>
@@ -103,7 +76,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _deletedSiteGlobalRestClient.GetDeletedWebAppAsync(Id.SubscriptionId, deletedSiteId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _deletedSiteGlobalClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DeletedSite(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedSite(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,23 +85,27 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Description for Get deleted app for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
+        /// Operation Id: Global_GetDeletedWebApp
+        /// </summary>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
-        public virtual Response<DeletedSite> GetIfExists(string deletedSiteId, CancellationToken cancellationToken = default)
+        public virtual Response<DeletedSite> Get(string deletedSiteId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
 
-            using var scope = _deletedSiteGlobalClientDiagnostics.CreateScope("DeletedSiteCollection.GetIfExists");
+            using var scope = _deletedSiteGlobalClientDiagnostics.CreateScope("DeletedSiteCollection.Get");
             scope.Start();
             try
             {
-                var response = _deletedSiteGlobalRestClient.GetDeletedWebApp(Id.SubscriptionId, deletedSiteId, cancellationToken: cancellationToken);
+                var response = _deletedSiteGlobalRestClient.GetDeletedWebApp(Id.SubscriptionId, deletedSiteId, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<DeletedSite>(null, response.GetRawResponse());
-                return Response.FromValue(new DeletedSite(ArmClient, response.Value), response.GetRawResponse());
+                    throw _deletedSiteGlobalClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DeletedSite(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -137,55 +114,95 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
+        /// <summary>
+        /// Description for Get all deleted apps for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites
+        /// Operation Id: DeletedWebApps_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
-        public async virtual Task<Response<DeletedSite>> GetIfExistsAsync(string deletedSiteId, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DeletedSite" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeletedSite> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
-
-            using var scope = _deletedSiteGlobalClientDiagnostics.CreateScope("DeletedSiteCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<DeletedSite>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _deletedSiteGlobalRestClient.GetDeletedWebAppAsync(Id.SubscriptionId, deletedSiteId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<DeletedSite>(null, response.GetRawResponse());
-                return Response.FromValue(new DeletedSite(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _deletedSiteDeletedWebAppsClientDiagnostics.CreateScope("DeletedSiteCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _deletedSiteDeletedWebAppsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedSite(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<DeletedSite>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _deletedSiteDeletedWebAppsClientDiagnostics.CreateScope("DeletedSiteCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _deletedSiteDeletedWebAppsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedSite(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
+        /// <summary>
+        /// Description for Get all deleted apps for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites
+        /// Operation Id: DeletedWebApps_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
-        public virtual Response<bool> Exists(string deletedSiteId, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DeletedSite" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeletedSite> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
-
-            using var scope = _deletedSiteGlobalClientDiagnostics.CreateScope("DeletedSiteCollection.Exists");
-            scope.Start();
-            try
+            Page<DeletedSite> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(deletedSiteId, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _deletedSiteDeletedWebAppsClientDiagnostics.CreateScope("DeletedSiteCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _deletedSiteDeletedWebAppsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedSite(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<DeletedSite> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _deletedSiteDeletedWebAppsClientDiagnostics.CreateScope("DeletedSiteCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _deletedSiteDeletedWebAppsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedSite(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
+        /// Operation Id: Global_GetDeletedWebApp
+        /// </summary>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is empty. </exception>
@@ -208,86 +225,89 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DeletedWebApps_List
-        /// <summary> Description for Get all deleted apps for a subscription. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
+        /// Operation Id: Global_GetDeletedWebApp
+        /// </summary>
+        /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedSite" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeletedSite> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
+        public virtual Response<bool> Exists(string deletedSiteId, CancellationToken cancellationToken = default)
         {
-            Page<DeletedSite> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
+
+            using var scope = _deletedSiteGlobalClientDiagnostics.CreateScope("DeletedSiteCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _deletedSiteDeletedWebAppsClientDiagnostics.CreateScope("DeletedSiteCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _deletedSiteDeletedWebAppsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedSite(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(deletedSiteId, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<DeletedSite> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _deletedSiteDeletedWebAppsClientDiagnostics.CreateScope("DeletedSiteCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _deletedSiteDeletedWebAppsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedSite(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DeletedWebApps_List
-        /// <summary> Description for Get all deleted apps for a subscription. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
+        /// Operation Id: Global_GetDeletedWebApp
+        /// </summary>
+        /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeletedSite" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeletedSite> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
+        public async virtual Task<Response<DeletedSite>> GetIfExistsAsync(string deletedSiteId, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DeletedSite>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
+
+            using var scope = _deletedSiteGlobalClientDiagnostics.CreateScope("DeletedSiteCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _deletedSiteDeletedWebAppsClientDiagnostics.CreateScope("DeletedSiteCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _deletedSiteDeletedWebAppsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedSite(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _deletedSiteGlobalRestClient.GetDeletedWebAppAsync(Id.SubscriptionId, deletedSiteId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<DeletedSite>(null, response.GetRawResponse());
+                return Response.FromValue(new DeletedSite(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<DeletedSite>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _deletedSiteDeletedWebAppsClientDiagnostics.CreateScope("DeletedSiteCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _deletedSiteDeletedWebAppsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedSite(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
+        /// Operation Id: Global_GetDeletedWebApp
+        /// </summary>
+        /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
+        public virtual Response<DeletedSite> GetIfExists(string deletedSiteId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
+
+            using var scope = _deletedSiteGlobalClientDiagnostics.CreateScope("DeletedSiteCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _deletedSiteGlobalRestClient.GetDeletedWebApp(Id.SubscriptionId, deletedSiteId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<DeletedSite>(null, response.GetRawResponse());
+                return Response.FromValue(new DeletedSite(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<DeletedSite> IEnumerable<DeletedSite>.GetEnumerator()

@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -33,15 +34,16 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionUsageCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        internal SubscriptionUsageCollection(ArmResource parent, string locationName) : base(parent)
+        internal SubscriptionUsageCollection(ArmClient client, ResourceIdentifier id, string locationName) : base(client, id)
         {
-            _subscriptionUsageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SubscriptionUsage.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(SubscriptionUsage.ResourceType, out string subscriptionUsageApiVersion);
-            _subscriptionUsageRestClient = new SubscriptionUsagesRestOperations(_subscriptionUsageClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionUsageApiVersion);
             _locationName = locationName;
+            _subscriptionUsageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SubscriptionUsage.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(SubscriptionUsage.ResourceType, out string subscriptionUsageApiVersion);
+            _subscriptionUsageRestClient = new SubscriptionUsagesRestOperations(_subscriptionUsageClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionUsageApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -53,40 +55,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: SubscriptionUsages_Get
-        /// <summary> Gets a subscription usage metric. </summary>
-        /// <param name="usageName"> Name of usage metric to return. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
-        public virtual Response<SubscriptionUsage> Get(string usageName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
-
-            using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = _subscriptionUsageRestClient.Get(Id.SubscriptionId, _locationName, usageName, cancellationToken);
-                if (response.Value == null)
-                    throw _subscriptionUsageClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionUsage(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: SubscriptionUsages_Get
-        /// <summary> Gets a subscription usage metric. </summary>
+        /// <summary>
+        /// Gets a subscription usage metric.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}
+        /// Operation Id: SubscriptionUsages_Get
+        /// </summary>
         /// <param name="usageName"> Name of usage metric to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="usageName"/> is empty. </exception>
@@ -102,7 +75,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _subscriptionUsageRestClient.GetAsync(Id.SubscriptionId, _locationName, usageName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _subscriptionUsageClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SubscriptionUsage(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionUsage(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -111,23 +84,27 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets a subscription usage metric.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}
+        /// Operation Id: SubscriptionUsages_Get
+        /// </summary>
         /// <param name="usageName"> Name of usage metric to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="usageName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
-        public virtual Response<SubscriptionUsage> GetIfExists(string usageName, CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionUsage> Get(string usageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
 
-            using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.GetIfExists");
+            using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.Get");
             scope.Start();
             try
             {
-                var response = _subscriptionUsageRestClient.Get(Id.SubscriptionId, _locationName, usageName, cancellationToken: cancellationToken);
+                var response = _subscriptionUsageRestClient.Get(Id.SubscriptionId, _locationName, usageName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<SubscriptionUsage>(null, response.GetRawResponse());
-                return Response.FromValue(new SubscriptionUsage(ArmClient, response.Value), response.GetRawResponse());
+                    throw _subscriptionUsageClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SubscriptionUsage(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -136,55 +113,95 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="usageName"> Name of usage metric to return. </param>
+        /// <summary>
+        /// Gets all subscription usage metrics in a given location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages
+        /// Operation Id: SubscriptionUsages_ListByLocation
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
-        public async virtual Task<Response<SubscriptionUsage>> GetIfExistsAsync(string usageName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SubscriptionUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SubscriptionUsage> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
-
-            using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<SubscriptionUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _subscriptionUsageRestClient.GetAsync(Id.SubscriptionId, _locationName, usageName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SubscriptionUsage>(null, response.GetRawResponse());
-                return Response.FromValue(new SubscriptionUsage(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _subscriptionUsageRestClient.ListByLocationAsync(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionUsage(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<SubscriptionUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _subscriptionUsageRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionUsage(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="usageName"> Name of usage metric to return. </param>
+        /// <summary>
+        /// Gets all subscription usage metrics in a given location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages
+        /// Operation Id: SubscriptionUsages_ListByLocation
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
-        public virtual Response<bool> Exists(string usageName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubscriptionUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SubscriptionUsage> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
-
-            using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.Exists");
-            scope.Start();
-            try
+            Page<SubscriptionUsage> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(usageName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _subscriptionUsageRestClient.ListByLocation(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionUsage(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<SubscriptionUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _subscriptionUsageRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionUsage(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}
+        /// Operation Id: SubscriptionUsages_Get
+        /// </summary>
         /// <param name="usageName"> Name of usage metric to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="usageName"/> is empty. </exception>
@@ -207,86 +224,89 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: SubscriptionUsages_ListByLocation
-        /// <summary> Gets all subscription usage metrics in a given location. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}
+        /// Operation Id: SubscriptionUsages_Get
+        /// </summary>
+        /// <param name="usageName"> Name of usage metric to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubscriptionUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionUsage> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
+        public virtual Response<bool> Exists(string usageName, CancellationToken cancellationToken = default)
         {
-            Page<SubscriptionUsage> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
+
+            using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _subscriptionUsageRestClient.ListByLocation(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionUsage(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(usageName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<SubscriptionUsage> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _subscriptionUsageRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionUsage(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: SubscriptionUsages_ListByLocation
-        /// <summary> Gets all subscription usage metrics in a given location. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}
+        /// Operation Id: SubscriptionUsages_Get
+        /// </summary>
+        /// <param name="usageName"> Name of usage metric to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubscriptionUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionUsage> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
+        public async virtual Task<Response<SubscriptionUsage>> GetIfExistsAsync(string usageName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SubscriptionUsage>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
+
+            using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _subscriptionUsageRestClient.ListByLocationAsync(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionUsage(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _subscriptionUsageRestClient.GetAsync(Id.SubscriptionId, _locationName, usageName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<SubscriptionUsage>(null, response.GetRawResponse());
+                return Response.FromValue(new SubscriptionUsage(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<SubscriptionUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _subscriptionUsageRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionUsage(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}
+        /// Operation Id: SubscriptionUsages_Get
+        /// </summary>
+        /// <param name="usageName"> Name of usage metric to return. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
+        public virtual Response<SubscriptionUsage> GetIfExists(string usageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
+
+            using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _subscriptionUsageRestClient.Get(Id.SubscriptionId, _locationName, usageName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<SubscriptionUsage>(null, response.GetRawResponse());
+                return Response.FromValue(new SubscriptionUsage(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<SubscriptionUsage> IEnumerable<SubscriptionUsage>.GetEnumerator()

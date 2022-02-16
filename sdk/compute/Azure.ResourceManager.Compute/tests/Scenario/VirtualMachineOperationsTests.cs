@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Tests
             //var ppg = ppgLRO.Value;
             // update PPG requires the VM to be deallocated
             await vm.DeallocateAsync(true);
-            var update = new VirtualMachineUpdate()
+            var update = new VirtualMachineUpdateOptions()
             {
                 HardwareProfile = new HardwareProfile
                 {

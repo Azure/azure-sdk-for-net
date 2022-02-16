@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the PolicySetDefinition data model. </summary>
-    public partial class PolicySetDefinitionData : Resource
+    public partial class PolicySetDefinitionData : ResourceData
     {
         /// <summary> Initializes a new instance of PolicySetDefinitionData. </summary>
         public PolicySetDefinitionData()

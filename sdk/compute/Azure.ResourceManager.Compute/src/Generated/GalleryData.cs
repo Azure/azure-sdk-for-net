@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the Gallery data model. </summary>
-    public partial class GalleryData : TrackedResource
+    public partial class GalleryData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of GalleryData. </summary>
         /// <param name="location"> The location. </param>

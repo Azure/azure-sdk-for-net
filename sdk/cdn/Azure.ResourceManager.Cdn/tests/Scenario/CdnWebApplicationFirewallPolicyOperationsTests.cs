@@ -40,11 +40,9 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string policyName = Recording.GenerateAssetName("Policy");
             CdnWebApplicationFirewallPolicy policy = await CreatePolicy(rg, policyName);
-            CdnWebApplicationFirewallPolicyPatchOptions updateOptions = new CdnWebApplicationFirewallPolicyPatchOptions();
-            updateOptions.Tags.Add("newTag", "newValue");
-            var lro = await policy.UpdateAsync(true, updateOptions);
+            var lro = await policy.AddTagAsync("newTag", "newValue");
             CdnWebApplicationFirewallPolicy updatedPolicy = lro.Value;
-            ResourceDataHelper.AssertPolicyUpdate(updatedPolicy, updateOptions);
+            ResourceDataHelper.AssertPolicyUpdate(updatedPolicy, "newTag", "newValue");
         }
     }
 }

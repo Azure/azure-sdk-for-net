@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         {
             string sqlServerName = Recording.GenerateAssetName("sqlserver-");
             await CreateOrUpdateSqlServer(sqlServerName);
-            Assert.AreEqual(true, _resourceGroup.GetSqlServers().Exists(sqlServerName).Value);
+            Assert.AreEqual(true, (await _resourceGroup.GetSqlServers().ExistsAsync(sqlServerName)).Value);
         }
 
         [Test]

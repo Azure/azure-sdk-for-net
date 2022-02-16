@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Azure proxy only resource. This resource is not tracked by Azure Resource Manager. </summary>
-    public partial class ProxyOnlyResource : Resource
+    public partial class ProxyOnlyResource : ResourceData
     {
         /// <summary> Initializes a new instance of ProxyOnlyResource. </summary>
         public ProxyOnlyResource()

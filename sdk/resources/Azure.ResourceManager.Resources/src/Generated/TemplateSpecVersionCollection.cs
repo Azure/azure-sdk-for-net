@@ -15,8 +15,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -32,11 +32,12 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref="TemplateSpecVersionCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal TemplateSpecVersionCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal TemplateSpecVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _templateSpecVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", TemplateSpecVersion.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(TemplateSpecVersion.ResourceType, out string templateSpecVersionApiVersion);
+            TryGetApiVersion(TemplateSpecVersion.ResourceType, out string templateSpecVersionApiVersion);
             _templateSpecVersionRestClient = new TemplateSpecVersionsRestOperations(_templateSpecVersionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, templateSpecVersionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -49,48 +50,18 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, TemplateSpec.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// <summary> Creates or updates a Template Spec version. </summary>
+        /// <summary>
+        /// Creates or updates a Template Spec version.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}/versions/{templateSpecVersion}
+        /// Operation Id: TemplateSpecVersions_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
         /// <param name="templateSpecVersionModel"> Template Spec Version supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> or <paramref name="templateSpecVersionModel"/> is null. </exception>
-        public virtual TemplateSpecVersionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string templateSpecVersion, TemplateSpecVersionData templateSpecVersionModel, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
-            if (templateSpecVersionModel == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecVersionModel));
-            }
-
-            using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _templateSpecVersionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateSpecVersion, templateSpecVersionModel, cancellationToken);
-                var operation = new TemplateSpecVersionCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a Template Spec version. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
-        /// <param name="templateSpecVersionModel"> Template Spec Version supplied to the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> or <paramref name="templateSpecVersionModel"/> is null. </exception>
-        public async virtual Task<TemplateSpecVersionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string templateSpecVersion, TemplateSpecVersionData templateSpecVersionModel, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<TemplateSpecVersion>> CreateOrUpdateAsync(bool waitForCompletion, string templateSpecVersion, TemplateSpecVersionData templateSpecVersionModel, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
             if (templateSpecVersionModel == null)
@@ -103,7 +74,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _templateSpecVersionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateSpecVersion, templateSpecVersionModel, cancellationToken).ConfigureAwait(false);
-                var operation = new TemplateSpecVersionCreateOrUpdateOperation(ArmClient, response);
+                var operation = new ResourcesArmOperation<TemplateSpecVersion>(Response.FromValue(new TemplateSpecVersion(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -115,23 +86,34 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets a Template Spec version from a specific Template Spec. </summary>
+        /// <summary>
+        /// Creates or updates a Template Spec version.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}/versions/{templateSpecVersion}
+        /// Operation Id: TemplateSpecVersions_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
+        /// <param name="templateSpecVersionModel"> Template Spec Version supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> is null. </exception>
-        public virtual Response<TemplateSpecVersion> Get(string templateSpecVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> or <paramref name="templateSpecVersionModel"/> is null. </exception>
+        public virtual ArmOperation<TemplateSpecVersion> CreateOrUpdate(bool waitForCompletion, string templateSpecVersion, TemplateSpecVersionData templateSpecVersionModel, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
+            if (templateSpecVersionModel == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecVersionModel));
+            }
 
-            using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.Get");
+            using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _templateSpecVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateSpecVersion, cancellationToken);
-                if (response.Value == null)
-                    throw _templateSpecVersionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TemplateSpecVersion(ArmClient, response.Value), response.GetRawResponse());
+                var response = _templateSpecVersionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateSpecVersion, templateSpecVersionModel, cancellationToken);
+                var operation = new ResourcesArmOperation<TemplateSpecVersion>(Response.FromValue(new TemplateSpecVersion(Client, response), response.GetRawResponse()));
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -140,7 +122,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets a Template Spec version from a specific Template Spec. </summary>
+        /// <summary>
+        /// Gets a Template Spec version from a specific Template Spec.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}/versions/{templateSpecVersion}
+        /// Operation Id: TemplateSpecVersions_Get
+        /// </summary>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is empty. </exception>
@@ -156,7 +142,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _templateSpecVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateSpecVersion, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _templateSpecVersionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new TemplateSpecVersion(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TemplateSpecVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,23 +151,27 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets a Template Spec version from a specific Template Spec.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}/versions/{templateSpecVersion}
+        /// Operation Id: TemplateSpecVersions_Get
+        /// </summary>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> is null. </exception>
-        public virtual Response<TemplateSpecVersion> GetIfExists(string templateSpecVersion, CancellationToken cancellationToken = default)
+        public virtual Response<TemplateSpecVersion> Get(string templateSpecVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
 
-            using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.GetIfExists");
+            using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = _templateSpecVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateSpecVersion, cancellationToken: cancellationToken);
+                var response = _templateSpecVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateSpecVersion, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<TemplateSpecVersion>(null, response.GetRawResponse());
-                return Response.FromValue(new TemplateSpecVersion(ArmClient, response.Value), response.GetRawResponse());
+                    throw _templateSpecVersionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new TemplateSpecVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,55 +180,95 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
+        /// <summary>
+        /// Lists all the Template Spec versions in the specified Template Spec.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}/versions
+        /// Operation Id: TemplateSpecVersions_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> is null. </exception>
-        public async virtual Task<Response<TemplateSpecVersion>> GetIfExistsAsync(string templateSpecVersion, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="TemplateSpecVersion" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<TemplateSpecVersion> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
-
-            using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<TemplateSpecVersion>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _templateSpecVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateSpecVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<TemplateSpecVersion>(null, response.GetRawResponse());
-                return Response.FromValue(new TemplateSpecVersion(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _templateSpecVersionRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpecVersion(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<TemplateSpecVersion>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _templateSpecVersionRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpecVersion(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
+        /// <summary>
+        /// Lists all the Template Spec versions in the specified Template Spec.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}/versions
+        /// Operation Id: TemplateSpecVersions_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> is null. </exception>
-        public virtual Response<bool> Exists(string templateSpecVersion, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TemplateSpecVersion" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TemplateSpecVersion> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
-
-            using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.Exists");
-            scope.Start();
-            try
+            Page<TemplateSpecVersion> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(templateSpecVersion, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _templateSpecVersionRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpecVersion(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<TemplateSpecVersion> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _templateSpecVersionRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpecVersion(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}/versions/{templateSpecVersion}
+        /// Operation Id: TemplateSpecVersions_Get
+        /// </summary>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is empty. </exception>
@@ -261,80 +291,89 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Lists all the Template Spec versions in the specified Template Spec. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}/versions/{templateSpecVersion}
+        /// Operation Id: TemplateSpecVersions_Get
+        /// </summary>
+        /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TemplateSpecVersion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TemplateSpecVersion> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> is null. </exception>
+        public virtual Response<bool> Exists(string templateSpecVersion, CancellationToken cancellationToken = default)
         {
-            Page<TemplateSpecVersion> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
+
+            using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _templateSpecVersionRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpecVersion(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(templateSpecVersion, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<TemplateSpecVersion> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _templateSpecVersionRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpecVersion(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the Template Spec versions in the specified Template Spec. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}/versions/{templateSpecVersion}
+        /// Operation Id: TemplateSpecVersions_Get
+        /// </summary>
+        /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TemplateSpecVersion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TemplateSpecVersion> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> is null. </exception>
+        public async virtual Task<Response<TemplateSpecVersion>> GetIfExistsAsync(string templateSpecVersion, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TemplateSpecVersion>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
+
+            using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _templateSpecVersionRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpecVersion(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _templateSpecVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateSpecVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<TemplateSpecVersion>(null, response.GetRawResponse());
+                return Response.FromValue(new TemplateSpecVersion(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<TemplateSpecVersion>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _templateSpecVersionRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpecVersion(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}/versions/{templateSpecVersion}
+        /// Operation Id: TemplateSpecVersions_Get
+        /// </summary>
+        /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> is null. </exception>
+        public virtual Response<TemplateSpecVersion> GetIfExists(string templateSpecVersion, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
+
+            using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _templateSpecVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateSpecVersion, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<TemplateSpecVersion>(null, response.GetRawResponse());
+                return Response.FromValue(new TemplateSpecVersion(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<TemplateSpecVersion> IEnumerable<TemplateSpecVersion>.GetEnumerator()

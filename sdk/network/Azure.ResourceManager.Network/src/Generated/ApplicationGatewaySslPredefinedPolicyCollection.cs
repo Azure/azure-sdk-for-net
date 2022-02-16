@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network
@@ -31,11 +32,12 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref="ApplicationGatewaySslPredefinedPolicyCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ApplicationGatewaySslPredefinedPolicyCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal ApplicationGatewaySslPredefinedPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationGatewaySslPredefinedPolicy.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ApplicationGatewaySslPredefinedPolicy.ResourceType, out string applicationGatewaySslPredefinedPolicyApplicationGatewaysApiVersion);
+            TryGetApiVersion(ApplicationGatewaySslPredefinedPolicy.ResourceType, out string applicationGatewaySslPredefinedPolicyApplicationGatewaysApiVersion);
             _applicationGatewaySslPredefinedPolicyApplicationGatewaysRestClient = new ApplicationGatewaysRestOperations(_applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationGatewaySslPredefinedPolicyApplicationGatewaysApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -48,34 +50,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ApplicationGatewayAvailableSslOptions.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// <summary> Gets Ssl predefined policy with the specified policy name. </summary>
-        /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
-        public virtual Response<ApplicationGatewaySslPredefinedPolicy> Get(string predefinedPolicyName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(predefinedPolicyName, nameof(predefinedPolicyName));
-
-            using var scope = _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics.CreateScope("ApplicationGatewaySslPredefinedPolicyCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = _applicationGatewaySslPredefinedPolicyApplicationGatewaysRestClient.GetSslPredefinedPolicy(Id.SubscriptionId, predefinedPolicyName, cancellationToken);
-                if (response.Value == null)
-                    throw _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApplicationGatewaySslPredefinedPolicy(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets Ssl predefined policy with the specified policy name. </summary>
+        /// <summary>
+        /// Gets Ssl predefined policy with the specified policy name.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
+        /// Operation Id: ApplicationGateways_GetSslPredefinedPolicy
+        /// </summary>
         /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is empty. </exception>
@@ -91,7 +70,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _applicationGatewaySslPredefinedPolicyApplicationGatewaysRestClient.GetSslPredefinedPolicyAsync(Id.SubscriptionId, predefinedPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ApplicationGatewaySslPredefinedPolicy(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewaySslPredefinedPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -100,23 +79,27 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets Ssl predefined policy with the specified policy name.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
+        /// Operation Id: ApplicationGateways_GetSslPredefinedPolicy
+        /// </summary>
         /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
-        public virtual Response<ApplicationGatewaySslPredefinedPolicy> GetIfExists(string predefinedPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationGatewaySslPredefinedPolicy> Get(string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(predefinedPolicyName, nameof(predefinedPolicyName));
 
-            using var scope = _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics.CreateScope("ApplicationGatewaySslPredefinedPolicyCollection.GetIfExists");
+            using var scope = _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics.CreateScope("ApplicationGatewaySslPredefinedPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = _applicationGatewaySslPredefinedPolicyApplicationGatewaysRestClient.GetSslPredefinedPolicy(Id.SubscriptionId, predefinedPolicyName, cancellationToken: cancellationToken);
+                var response = _applicationGatewaySslPredefinedPolicyApplicationGatewaysRestClient.GetSslPredefinedPolicy(Id.SubscriptionId, predefinedPolicyName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ApplicationGatewaySslPredefinedPolicy>(null, response.GetRawResponse());
-                return Response.FromValue(new ApplicationGatewaySslPredefinedPolicy(ArmClient, response.Value), response.GetRawResponse());
+                    throw _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewaySslPredefinedPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -125,55 +108,95 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
+        /// <summary>
+        /// Lists all SSL predefined policies for configuring Ssl policy.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies
+        /// Operation Id: ApplicationGateways_ListAvailableSslPredefinedPolicies
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
-        public async virtual Task<Response<ApplicationGatewaySslPredefinedPolicy>> GetIfExistsAsync(string predefinedPolicyName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApplicationGatewaySslPredefinedPolicy" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApplicationGatewaySslPredefinedPolicy> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(predefinedPolicyName, nameof(predefinedPolicyName));
-
-            using var scope = _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics.CreateScope("ApplicationGatewaySslPredefinedPolicyCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<ApplicationGatewaySslPredefinedPolicy>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _applicationGatewaySslPredefinedPolicyApplicationGatewaysRestClient.GetSslPredefinedPolicyAsync(Id.SubscriptionId, predefinedPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ApplicationGatewaySslPredefinedPolicy>(null, response.GetRawResponse());
-                return Response.FromValue(new ApplicationGatewaySslPredefinedPolicy(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics.CreateScope("ApplicationGatewaySslPredefinedPolicyCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _applicationGatewaySslPredefinedPolicyApplicationGatewaysRestClient.ListAvailableSslPredefinedPoliciesAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGatewaySslPredefinedPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<ApplicationGatewaySslPredefinedPolicy>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics.CreateScope("ApplicationGatewaySslPredefinedPolicyCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _applicationGatewaySslPredefinedPolicyApplicationGatewaysRestClient.ListAvailableSslPredefinedPoliciesNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGatewaySslPredefinedPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
+        /// <summary>
+        /// Lists all SSL predefined policies for configuring Ssl policy.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies
+        /// Operation Id: ApplicationGateways_ListAvailableSslPredefinedPolicies
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
-        public virtual Response<bool> Exists(string predefinedPolicyName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApplicationGatewaySslPredefinedPolicy" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApplicationGatewaySslPredefinedPolicy> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(predefinedPolicyName, nameof(predefinedPolicyName));
-
-            using var scope = _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics.CreateScope("ApplicationGatewaySslPredefinedPolicyCollection.Exists");
-            scope.Start();
-            try
+            Page<ApplicationGatewaySslPredefinedPolicy> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(predefinedPolicyName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics.CreateScope("ApplicationGatewaySslPredefinedPolicyCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _applicationGatewaySslPredefinedPolicyApplicationGatewaysRestClient.ListAvailableSslPredefinedPolicies(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGatewaySslPredefinedPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<ApplicationGatewaySslPredefinedPolicy> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics.CreateScope("ApplicationGatewaySslPredefinedPolicyCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _applicationGatewaySslPredefinedPolicyApplicationGatewaysRestClient.ListAvailableSslPredefinedPoliciesNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGatewaySslPredefinedPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
+        /// Operation Id: ApplicationGateways_GetSslPredefinedPolicy
+        /// </summary>
         /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is empty. </exception>
@@ -196,80 +219,89 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Lists all SSL predefined policies for configuring Ssl policy. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
+        /// Operation Id: ApplicationGateways_GetSslPredefinedPolicy
+        /// </summary>
+        /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationGatewaySslPredefinedPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationGatewaySslPredefinedPolicy> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
+        public virtual Response<bool> Exists(string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
-            Page<ApplicationGatewaySslPredefinedPolicy> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(predefinedPolicyName, nameof(predefinedPolicyName));
+
+            using var scope = _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics.CreateScope("ApplicationGatewaySslPredefinedPolicyCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics.CreateScope("ApplicationGatewaySslPredefinedPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _applicationGatewaySslPredefinedPolicyApplicationGatewaysRestClient.ListAvailableSslPredefinedPolicies(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGatewaySslPredefinedPolicy(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(predefinedPolicyName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<ApplicationGatewaySslPredefinedPolicy> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics.CreateScope("ApplicationGatewaySslPredefinedPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _applicationGatewaySslPredefinedPolicyApplicationGatewaysRestClient.ListAvailableSslPredefinedPoliciesNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGatewaySslPredefinedPolicy(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all SSL predefined policies for configuring Ssl policy. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
+        /// Operation Id: ApplicationGateways_GetSslPredefinedPolicy
+        /// </summary>
+        /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationGatewaySslPredefinedPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationGatewaySslPredefinedPolicy> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
+        public async virtual Task<Response<ApplicationGatewaySslPredefinedPolicy>> GetIfExistsAsync(string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApplicationGatewaySslPredefinedPolicy>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(predefinedPolicyName, nameof(predefinedPolicyName));
+
+            using var scope = _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics.CreateScope("ApplicationGatewaySslPredefinedPolicyCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics.CreateScope("ApplicationGatewaySslPredefinedPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _applicationGatewaySslPredefinedPolicyApplicationGatewaysRestClient.ListAvailableSslPredefinedPoliciesAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGatewaySslPredefinedPolicy(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _applicationGatewaySslPredefinedPolicyApplicationGatewaysRestClient.GetSslPredefinedPolicyAsync(Id.SubscriptionId, predefinedPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<ApplicationGatewaySslPredefinedPolicy>(null, response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewaySslPredefinedPolicy(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<ApplicationGatewaySslPredefinedPolicy>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics.CreateScope("ApplicationGatewaySslPredefinedPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _applicationGatewaySslPredefinedPolicyApplicationGatewaysRestClient.ListAvailableSslPredefinedPoliciesNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGatewaySslPredefinedPolicy(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
+        /// Operation Id: ApplicationGateways_GetSslPredefinedPolicy
+        /// </summary>
+        /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
+        public virtual Response<ApplicationGatewaySslPredefinedPolicy> GetIfExists(string predefinedPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(predefinedPolicyName, nameof(predefinedPolicyName));
+
+            using var scope = _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics.CreateScope("ApplicationGatewaySslPredefinedPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _applicationGatewaySslPredefinedPolicyApplicationGatewaysRestClient.GetSslPredefinedPolicy(Id.SubscriptionId, predefinedPolicyName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<ApplicationGatewaySslPredefinedPolicy>(null, response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewaySslPredefinedPolicy(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<ApplicationGatewaySslPredefinedPolicy> IEnumerable<ApplicationGatewaySslPredefinedPolicy>.GetEnumerator()

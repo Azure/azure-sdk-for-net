@@ -15,11 +15,12 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of JobStep and their operations over its parent. </summary>
+    /// <summary> A class representing collection of ServerJobAgentJobVersionStep and their operations over its parent. </summary>
     public partial class ServerJobAgentJobVersionStepCollection : ArmCollection, IEnumerable<ServerJobAgentJobVersionStep>, IAsyncEnumerable<ServerJobAgentJobVersionStep>
     {
         private readonly ClientDiagnostics _serverJobAgentJobVersionStepJobStepsClientDiagnostics;
@@ -31,11 +32,12 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref="ServerJobAgentJobVersionStepCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ServerJobAgentJobVersionStepCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal ServerJobAgentJobVersionStepCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverJobAgentJobVersionStepJobStepsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerJobAgentJobVersionStep.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ServerJobAgentJobVersionStep.ResourceType, out string serverJobAgentJobVersionStepJobStepsApiVersion);
+            TryGetApiVersion(ServerJobAgentJobVersionStep.ResourceType, out string serverJobAgentJobVersionStepJobStepsApiVersion);
             _serverJobAgentJobVersionStepJobStepsRestClient = new JobStepsRestOperations(_serverJobAgentJobVersionStepJobStepsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverJobAgentJobVersionStepJobStepsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -48,40 +50,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, JobVersion.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}/steps/{stepName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}
-        /// OperationId: JobSteps_GetByVersion
-        /// <summary> Gets the specified version of a job step. </summary>
-        /// <param name="stepName"> The name of the job step. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
-        public virtual Response<ServerJobAgentJobVersionStep> Get(string stepName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
-
-            using var scope = _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateScope("ServerJobAgentJobVersionStepCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = _serverJobAgentJobVersionStepJobStepsRestClient.GetByVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), stepName, cancellationToken);
-                if (response.Value == null)
-                    throw _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerJobAgentJobVersionStep(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}/steps/{stepName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}
-        /// OperationId: JobSteps_GetByVersion
-        /// <summary> Gets the specified version of a job step. </summary>
+        /// <summary>
+        /// Gets the specified version of a job step.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}/steps/{stepName}
+        /// Operation Id: JobSteps_GetByVersion
+        /// </summary>
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="stepName"/> is empty. </exception>
@@ -97,7 +70,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _serverJobAgentJobVersionStepJobStepsRestClient.GetByVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), stepName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerJobAgentJobVersionStep(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobVersionStep(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,23 +79,27 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets the specified version of a job step.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}/steps/{stepName}
+        /// Operation Id: JobSteps_GetByVersion
+        /// </summary>
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="stepName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
-        public virtual Response<ServerJobAgentJobVersionStep> GetIfExists(string stepName, CancellationToken cancellationToken = default)
+        public virtual Response<ServerJobAgentJobVersionStep> Get(string stepName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
 
-            using var scope = _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateScope("ServerJobAgentJobVersionStepCollection.GetIfExists");
+            using var scope = _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateScope("ServerJobAgentJobVersionStepCollection.Get");
             scope.Start();
             try
             {
-                var response = _serverJobAgentJobVersionStepJobStepsRestClient.GetByVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), stepName, cancellationToken: cancellationToken);
+                var response = _serverJobAgentJobVersionStepJobStepsRestClient.GetByVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), stepName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ServerJobAgentJobVersionStep>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerJobAgentJobVersionStep(ArmClient, response.Value), response.GetRawResponse());
+                    throw _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobVersionStep(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -131,55 +108,95 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="stepName"> The name of the job step. </param>
+        /// <summary>
+        /// Gets all job steps in the specified job version.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}/steps
+        /// Operation Id: JobSteps_ListByVersion
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
-        public async virtual Task<Response<ServerJobAgentJobVersionStep>> GetIfExistsAsync(string stepName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServerJobAgentJobVersionStep" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServerJobAgentJobVersionStep> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
-
-            using var scope = _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateScope("ServerJobAgentJobVersionStepCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<ServerJobAgentJobVersionStep>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _serverJobAgentJobVersionStepJobStepsRestClient.GetByVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), stepName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ServerJobAgentJobVersionStep>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerJobAgentJobVersionStep(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateScope("ServerJobAgentJobVersionStepCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _serverJobAgentJobVersionStepJobStepsRestClient.ListByVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobVersionStep(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<ServerJobAgentJobVersionStep>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateScope("ServerJobAgentJobVersionStepCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _serverJobAgentJobVersionStepJobStepsRestClient.ListByVersionNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobVersionStep(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="stepName"> The name of the job step. </param>
+        /// <summary>
+        /// Gets all job steps in the specified job version.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}/steps
+        /// Operation Id: JobSteps_ListByVersion
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
-        public virtual Response<bool> Exists(string stepName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServerJobAgentJobVersionStep" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServerJobAgentJobVersionStep> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
-
-            using var scope = _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateScope("ServerJobAgentJobVersionStepCollection.Exists");
-            scope.Start();
-            try
+            Page<ServerJobAgentJobVersionStep> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(stepName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateScope("ServerJobAgentJobVersionStepCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _serverJobAgentJobVersionStepJobStepsRestClient.ListByVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobVersionStep(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<ServerJobAgentJobVersionStep> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateScope("ServerJobAgentJobVersionStepCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _serverJobAgentJobVersionStepJobStepsRestClient.ListByVersionNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobVersionStep(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}/steps/{stepName}
+        /// Operation Id: JobSteps_GetByVersion
+        /// </summary>
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="stepName"/> is empty. </exception>
@@ -202,86 +219,89 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}/steps
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}
-        /// OperationId: JobSteps_ListByVersion
-        /// <summary> Gets all job steps in the specified job version. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}/steps/{stepName}
+        /// Operation Id: JobSteps_GetByVersion
+        /// </summary>
+        /// <param name="stepName"> The name of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerJobAgentJobVersionStep" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerJobAgentJobVersionStep> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
+        public virtual Response<bool> Exists(string stepName, CancellationToken cancellationToken = default)
         {
-            Page<ServerJobAgentJobVersionStep> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
+
+            using var scope = _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateScope("ServerJobAgentJobVersionStepCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateScope("ServerJobAgentJobVersionStepCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _serverJobAgentJobVersionStepJobStepsRestClient.ListByVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobVersionStep(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(stepName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<ServerJobAgentJobVersionStep> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateScope("ServerJobAgentJobVersionStepCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _serverJobAgentJobVersionStepJobStepsRestClient.ListByVersionNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobVersionStep(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}/steps
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}
-        /// OperationId: JobSteps_ListByVersion
-        /// <summary> Gets all job steps in the specified job version. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}/steps/{stepName}
+        /// Operation Id: JobSteps_GetByVersion
+        /// </summary>
+        /// <param name="stepName"> The name of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerJobAgentJobVersionStep" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerJobAgentJobVersionStep> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
+        public async virtual Task<Response<ServerJobAgentJobVersionStep>> GetIfExistsAsync(string stepName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServerJobAgentJobVersionStep>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
+
+            using var scope = _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateScope("ServerJobAgentJobVersionStepCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateScope("ServerJobAgentJobVersionStepCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serverJobAgentJobVersionStepJobStepsRestClient.ListByVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobVersionStep(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _serverJobAgentJobVersionStepJobStepsRestClient.GetByVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), stepName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<ServerJobAgentJobVersionStep>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobVersionStep(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<ServerJobAgentJobVersionStep>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateScope("ServerJobAgentJobVersionStepCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serverJobAgentJobVersionStepJobStepsRestClient.ListByVersionNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobVersionStep(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}/steps/{stepName}
+        /// Operation Id: JobSteps_GetByVersion
+        /// </summary>
+        /// <param name="stepName"> The name of the job step. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
+        public virtual Response<ServerJobAgentJobVersionStep> GetIfExists(string stepName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
+
+            using var scope = _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateScope("ServerJobAgentJobVersionStepCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _serverJobAgentJobVersionStepJobStepsRestClient.GetByVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), stepName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<ServerJobAgentJobVersionStep>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobVersionStep(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<ServerJobAgentJobVersionStep> IEnumerable<ServerJobAgentJobVersionStep>.GetEnumerator()

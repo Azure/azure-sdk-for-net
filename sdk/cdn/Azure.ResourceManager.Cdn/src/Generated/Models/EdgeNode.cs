@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Edgenode is a global Point of Presence (POP) location used to deliver CDN content to end users. </summary>
-    public partial class EdgeNode : Resource
+    public partial class EdgeNode : ResourceData
     {
         /// <summary> Initializes a new instance of EdgeNode. </summary>
         public EdgeNode()

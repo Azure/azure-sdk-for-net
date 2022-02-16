@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the VirtualCluster data model. </summary>
-    public partial class VirtualClusterData : TrackedResource
+    public partial class VirtualClusterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualClusterData. </summary>
         /// <param name="location"> The location. </param>

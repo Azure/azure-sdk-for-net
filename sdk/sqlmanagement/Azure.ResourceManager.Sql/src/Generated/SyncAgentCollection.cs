@@ -15,8 +15,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -32,11 +32,12 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref="SyncAgentCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SyncAgentCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal SyncAgentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _syncAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SyncAgent.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(SyncAgent.ResourceType, out string syncAgentApiVersion);
+            TryGetApiVersion(SyncAgent.ResourceType, out string syncAgentApiVersion);
             _syncAgentRestClient = new SyncAgentsRestOperations(_syncAgentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, syncAgentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -49,54 +50,18 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlServer.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: SyncAgents_CreateOrUpdate
-        /// <summary> Creates or updates a sync agent. </summary>
+        /// <summary>
+        /// Creates or updates a sync agent.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}
+        /// Operation Id: SyncAgents_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="syncAgentName"> The name of the sync agent. </param>
         /// <param name="parameters"> The requested sync agent resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual SyncAgentCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string syncAgentName, SyncAgentData parameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _syncAgentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, parameters, cancellationToken);
-                var operation = new SyncAgentCreateOrUpdateOperation(ArmClient, _syncAgentClientDiagnostics, Pipeline, _syncAgentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, parameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: SyncAgents_CreateOrUpdate
-        /// <summary> Creates or updates a sync agent. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="syncAgentName"> The name of the sync agent. </param>
-        /// <param name="parameters"> The requested sync agent resource state. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<SyncAgentCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string syncAgentName, SyncAgentData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SyncAgent>> CreateOrUpdateAsync(bool waitForCompletion, string syncAgentName, SyncAgentData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
             if (parameters == null)
@@ -109,7 +74,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _syncAgentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SyncAgentCreateOrUpdateOperation(ArmClient, _syncAgentClientDiagnostics, Pipeline, _syncAgentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, parameters).Request, response);
+                var operation = new SqlArmOperation<SyncAgent>(new SyncAgentOperationSource(Client), _syncAgentClientDiagnostics, Pipeline, _syncAgentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,26 +86,34 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: SyncAgents_Get
-        /// <summary> Gets a sync agent. </summary>
+        /// <summary>
+        /// Creates or updates a sync agent.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}
+        /// Operation Id: SyncAgents_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="syncAgentName"> The name of the sync agent. </param>
+        /// <param name="parameters"> The requested sync agent resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
-        public virtual Response<SyncAgent> Get(string syncAgentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual ArmOperation<SyncAgent> CreateOrUpdate(bool waitForCompletion, string syncAgentName, SyncAgentData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.Get");
+            using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _syncAgentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, cancellationToken);
-                if (response.Value == null)
-                    throw _syncAgentClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SyncAgent(ArmClient, response.Value), response.GetRawResponse());
+                var response = _syncAgentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, parameters, cancellationToken);
+                var operation = new SqlArmOperation<SyncAgent>(new SyncAgentOperationSource(Client), _syncAgentClientDiagnostics, Pipeline, _syncAgentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, parameters).Request, response, OperationFinalStateVia.Location);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -149,10 +122,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: SyncAgents_Get
-        /// <summary> Gets a sync agent. </summary>
+        /// <summary>
+        /// Gets a sync agent.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}
+        /// Operation Id: SyncAgents_Get
+        /// </summary>
         /// <param name="syncAgentName"> The name of the sync agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is empty. </exception>
@@ -168,7 +142,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _syncAgentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _syncAgentClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SyncAgent(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SyncAgent(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,23 +151,27 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets a sync agent.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}
+        /// Operation Id: SyncAgents_Get
+        /// </summary>
         /// <param name="syncAgentName"> The name of the sync agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
-        public virtual Response<SyncAgent> GetIfExists(string syncAgentName, CancellationToken cancellationToken = default)
+        public virtual Response<SyncAgent> Get(string syncAgentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
 
-            using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.GetIfExists");
+            using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.Get");
             scope.Start();
             try
             {
-                var response = _syncAgentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, cancellationToken: cancellationToken);
+                var response = _syncAgentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<SyncAgent>(null, response.GetRawResponse());
-                return Response.FromValue(new SyncAgent(ArmClient, response.Value), response.GetRawResponse());
+                    throw _syncAgentClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SyncAgent(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,55 +180,95 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="syncAgentName"> The name of the sync agent. </param>
+        /// <summary>
+        /// Lists sync agents in a server.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents
+        /// Operation Id: SyncAgents_ListByServer
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
-        public async virtual Task<Response<SyncAgent>> GetIfExistsAsync(string syncAgentName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SyncAgent" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SyncAgent> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
-
-            using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<SyncAgent>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _syncAgentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SyncAgent>(null, response.GetRawResponse());
-                return Response.FromValue(new SyncAgent(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _syncAgentRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SyncAgent(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<SyncAgent>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _syncAgentRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SyncAgent(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="syncAgentName"> The name of the sync agent. </param>
+        /// <summary>
+        /// Lists sync agents in a server.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents
+        /// Operation Id: SyncAgents_ListByServer
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
-        public virtual Response<bool> Exists(string syncAgentName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SyncAgent" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SyncAgent> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
-
-            using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.Exists");
-            scope.Start();
-            try
+            Page<SyncAgent> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(syncAgentName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _syncAgentRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SyncAgent(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<SyncAgent> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _syncAgentRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SyncAgent(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}
+        /// Operation Id: SyncAgents_Get
+        /// </summary>
         /// <param name="syncAgentName"> The name of the sync agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is empty. </exception>
@@ -273,86 +291,89 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: SyncAgents_ListByServer
-        /// <summary> Lists sync agents in a server. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}
+        /// Operation Id: SyncAgents_Get
+        /// </summary>
+        /// <param name="syncAgentName"> The name of the sync agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SyncAgent" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SyncAgent> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
+        public virtual Response<bool> Exists(string syncAgentName, CancellationToken cancellationToken = default)
         {
-            Page<SyncAgent> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
+
+            using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _syncAgentRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SyncAgent(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(syncAgentName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<SyncAgent> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _syncAgentRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SyncAgent(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: SyncAgents_ListByServer
-        /// <summary> Lists sync agents in a server. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}
+        /// Operation Id: SyncAgents_Get
+        /// </summary>
+        /// <param name="syncAgentName"> The name of the sync agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SyncAgent" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SyncAgent> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
+        public async virtual Task<Response<SyncAgent>> GetIfExistsAsync(string syncAgentName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SyncAgent>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
+
+            using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _syncAgentRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SyncAgent(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _syncAgentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<SyncAgent>(null, response.GetRawResponse());
+                return Response.FromValue(new SyncAgent(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<SyncAgent>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _syncAgentRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SyncAgent(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}
+        /// Operation Id: SyncAgents_Get
+        /// </summary>
+        /// <param name="syncAgentName"> The name of the sync agent. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
+        public virtual Response<SyncAgent> GetIfExists(string syncAgentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
+
+            using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _syncAgentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<SyncAgent>(null, response.GetRawResponse());
+                return Response.FromValue(new SyncAgent(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<SyncAgent> IEnumerable<SyncAgent>.GetEnumerator()

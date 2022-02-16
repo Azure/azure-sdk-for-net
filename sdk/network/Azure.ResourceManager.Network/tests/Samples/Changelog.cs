@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
                 AddressPrefix = "10.0.0.0/24",
             });
 
-            VirtualNetworkCreateOrUpdateOperation vnetOperation = await virtualNetworkContainer.CreateOrUpdateAsync(true, "_vent", vnet);
+            ArmOperation<VirtualNetwork> vnetOperation = await virtualNetworkContainer.CreateOrUpdateAsync(true, "_vent", vnet);
             VirtualNetwork virtualNetwork = vnetOperation.Value;
             #endregion
         }

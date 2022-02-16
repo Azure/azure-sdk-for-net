@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the GeoBackupPolicy data model. </summary>
-    public partial class GeoBackupPolicyData : Resource
+    public partial class GeoBackupPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of GeoBackupPolicyData. </summary>
         /// <param name="state"> The state of the geo backup policy. </param>

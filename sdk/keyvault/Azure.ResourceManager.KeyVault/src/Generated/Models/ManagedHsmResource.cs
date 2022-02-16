@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Managed HSM resource. </summary>
-    public partial class ManagedHsmResource : TrackedResource
+    public partial class ManagedHsmResource : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ManagedHsmResource. </summary>
         /// <param name="location"> The location. </param>
