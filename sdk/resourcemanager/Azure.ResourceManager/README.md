@@ -128,8 +128,7 @@ Resource IDs contain useful information about the resource itself, but they are 
 
 ### Example: Parsing an ID using a ResourceIdentifier object 
 ```C# Snippet:Readme_CastToSpecificType
-string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
-ResourceIdentifier id = new ResourceIdentifier(resourceId);
+ResourceIdentifier id = new ResourceIdentifier("/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet");
 Console.WriteLine($"Subscription: {id.SubscriptionId}");
 Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");
 Console.WriteLine($"Vnet: {id.Parent.Name}");
@@ -139,8 +138,7 @@ However, keep in mind that some of those properties could be null. You can usual
 
 ### Example: ResourceIdentifier TryGet methods 
 ```C# Snippet:Readme_CastToBaseResourceIdentifier
-string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
-ResourceIdentifier id = new ResourceIdentifier(resourceId);
+ResourceIdentifier id = new ResourceIdentifier("/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet");
 Console.WriteLine($"Subscription: {id.SubscriptionId}");
 Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");
 // Parent is only null when we reach the top of the chain which is a Tenant
