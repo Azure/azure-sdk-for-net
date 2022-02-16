@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
         internal OutboundFirewallRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _outboundFirewallRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", OutboundFirewallRule.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(OutboundFirewallRule.ResourceType, out string outboundFirewallRuleApiVersion);
+            TryGetApiVersion(OutboundFirewallRule.ResourceType, out string outboundFirewallRuleApiVersion);
             _outboundFirewallRuleRestClient = new OutboundFirewallRulesRestOperations(_outboundFirewallRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, outboundFirewallRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

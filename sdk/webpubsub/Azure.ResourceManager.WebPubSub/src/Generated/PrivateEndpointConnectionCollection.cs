@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.WebPubSub
         internal PrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _privateEndpointConnectionWebPubSubPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", PrivateEndpointConnection.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(PrivateEndpointConnection.ResourceType, out string privateEndpointConnectionWebPubSubPrivateEndpointConnectionsApiVersion);
+            TryGetApiVersion(PrivateEndpointConnection.ResourceType, out string privateEndpointConnectionWebPubSubPrivateEndpointConnectionsApiVersion);
             _privateEndpointConnectionWebPubSubPrivateEndpointConnectionsRestClient = new WebPubSubPrivateEndpointConnectionsRestOperations(_privateEndpointConnectionWebPubSubPrivateEndpointConnectionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, privateEndpointConnectionWebPubSubPrivateEndpointConnectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

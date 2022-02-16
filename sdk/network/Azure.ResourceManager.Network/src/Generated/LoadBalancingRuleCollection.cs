@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         internal LoadBalancingRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", LoadBalancingRule.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(LoadBalancingRule.ResourceType, out string loadBalancingRuleLoadBalancerLoadBalancingRulesApiVersion);
+            TryGetApiVersion(LoadBalancingRule.ResourceType, out string loadBalancingRuleLoadBalancerLoadBalancingRulesApiVersion);
             _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient = new LoadBalancerLoadBalancingRulesRestOperations(_loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, loadBalancingRuleLoadBalancerLoadBalancingRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

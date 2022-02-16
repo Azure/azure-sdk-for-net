@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.KeyVault
         internal DeletedManagedHsm(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _deletedManagedHsmManagedHsmsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string deletedManagedHsmManagedHsmsApiVersion);
+            TryGetApiVersion(ResourceType, out string deletedManagedHsmManagedHsmsApiVersion);
             _deletedManagedHsmManagedHsmsRestClient = new ManagedHsmsRestOperations(_deletedManagedHsmManagedHsmsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedManagedHsmManagedHsmsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

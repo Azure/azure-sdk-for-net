@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
         internal WorkloadClassifierCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _workloadClassifierClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", WorkloadClassifier.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(WorkloadClassifier.ResourceType, out string workloadClassifierApiVersion);
+            TryGetApiVersion(WorkloadClassifier.ResourceType, out string workloadClassifierApiVersion);
             _workloadClassifierRestClient = new WorkloadClassifiersRestOperations(_workloadClassifierClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, workloadClassifierApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         internal TopLevelDomainCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _topLevelDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", TopLevelDomain.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(TopLevelDomain.ResourceType, out string topLevelDomainApiVersion);
+            TryGetApiVersion(TopLevelDomain.ResourceType, out string topLevelDomainApiVersion);
             _topLevelDomainRestClient = new TopLevelDomainsRestOperations(_topLevelDomainClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, topLevelDomainApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

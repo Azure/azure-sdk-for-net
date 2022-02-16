@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network
         internal Subnet(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _subnetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string subnetApiVersion);
+            TryGetApiVersion(ResourceType, out string subnetApiVersion);
             _subnetRestClient = new SubnetsRestOperations(_subnetClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subnetApiVersion);
             _resourceNavigationLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _resourceNavigationLinksRestClient = new ResourceNavigationLinksRestOperations(_resourceNavigationLinksClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);

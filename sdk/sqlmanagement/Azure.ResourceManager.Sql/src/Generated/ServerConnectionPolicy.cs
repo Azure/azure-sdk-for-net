@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         internal ServerConnectionPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverConnectionPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string serverConnectionPolicyApiVersion);
+            TryGetApiVersion(ResourceType, out string serverConnectionPolicyApiVersion);
             _serverConnectionPolicyRestClient = new ServerConnectionPoliciesRestOperations(_serverConnectionPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverConnectionPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

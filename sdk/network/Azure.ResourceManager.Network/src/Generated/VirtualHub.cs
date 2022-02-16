@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         internal VirtualHub(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualHubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string virtualHubApiVersion);
+            TryGetApiVersion(ResourceType, out string virtualHubApiVersion);
             _virtualHubRestClient = new VirtualHubsRestOperations(_virtualHubClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualHubApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

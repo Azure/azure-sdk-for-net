@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources
         internal DeploymentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _deploymentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Deployment.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(Deployment.ResourceType, out string deploymentApiVersion);
+            TryGetApiVersion(Deployment.ResourceType, out string deploymentApiVersion);
             _deploymentRestClient = new DeploymentsRestOperations(_deploymentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deploymentApiVersion);
         }
 

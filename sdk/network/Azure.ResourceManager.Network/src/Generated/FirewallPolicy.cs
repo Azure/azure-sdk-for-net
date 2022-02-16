@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         internal FirewallPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _firewallPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string firewallPolicyApiVersion);
+            TryGetApiVersion(ResourceType, out string firewallPolicyApiVersion);
             _firewallPolicyRestClient = new FirewallPoliciesRestOperations(_firewallPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, firewallPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

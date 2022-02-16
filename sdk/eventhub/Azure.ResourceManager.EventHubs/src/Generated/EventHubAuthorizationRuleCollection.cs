@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing collection of AuthorizationRule and their operations over its parent. </summary>
+    /// <summary> A class representing collection of EventHubAuthorizationRule and their operations over its parent. </summary>
     public partial class EventHubAuthorizationRuleCollection : ArmCollection, IEnumerable<EventHubAuthorizationRule>, IAsyncEnumerable<EventHubAuthorizationRule>
     {
         private readonly ClientDiagnostics _eventHubAuthorizationRuleEventHubsClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.EventHubs
         internal EventHubAuthorizationRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _eventHubAuthorizationRuleEventHubsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubAuthorizationRule.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(EventHubAuthorizationRule.ResourceType, out string eventHubAuthorizationRuleEventHubsApiVersion);
+            TryGetApiVersion(EventHubAuthorizationRule.ResourceType, out string eventHubAuthorizationRuleEventHubsApiVersion);
             _eventHubAuthorizationRuleEventHubsRestClient = new EventHubsRestOperations(_eventHubAuthorizationRuleEventHubsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubAuthorizationRuleEventHubsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

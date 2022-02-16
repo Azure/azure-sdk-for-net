@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal StaticSiteBuildARMResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _staticSiteBuildARMResourceStaticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteBuildARMResource.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(StaticSiteBuildARMResource.ResourceType, out string staticSiteBuildARMResourceStaticSitesApiVersion);
+            TryGetApiVersion(StaticSiteBuildARMResource.ResourceType, out string staticSiteBuildARMResourceStaticSitesApiVersion);
             _staticSiteBuildARMResourceStaticSitesRestClient = new StaticSitesRestOperations(_staticSiteBuildARMResourceStaticSitesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, staticSiteBuildARMResourceStaticSitesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

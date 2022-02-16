@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of StaticSiteUserProvidedFunctionAppARMResource and their operations over its parent. </summary>
+    /// <summary> A class representing collection of StaticSiteUserProvidedFunctionApp and their operations over its parent. </summary>
     public partial class StaticSiteUserProvidedFunctionAppCollection : ArmCollection, IEnumerable<StaticSiteUserProvidedFunctionApp>, IAsyncEnumerable<StaticSiteUserProvidedFunctionApp>
     {
         private readonly ClientDiagnostics _staticSiteUserProvidedFunctionAppStaticSitesClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal StaticSiteUserProvidedFunctionAppCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _staticSiteUserProvidedFunctionAppStaticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteUserProvidedFunctionApp.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(StaticSiteUserProvidedFunctionApp.ResourceType, out string staticSiteUserProvidedFunctionAppStaticSitesApiVersion);
+            TryGetApiVersion(StaticSiteUserProvidedFunctionApp.ResourceType, out string staticSiteUserProvidedFunctionAppStaticSitesApiVersion);
             _staticSiteUserProvidedFunctionAppStaticSitesRestClient = new StaticSitesRestOperations(_staticSiteUserProvidedFunctionAppStaticSitesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, staticSiteUserProvidedFunctionAppStaticSitesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

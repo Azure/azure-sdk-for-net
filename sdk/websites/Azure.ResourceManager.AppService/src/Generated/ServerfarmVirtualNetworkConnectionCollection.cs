@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of VnetInfoResource and their operations over its parent. </summary>
+    /// <summary> A class representing collection of ServerfarmVirtualNetworkConnection and their operations over its parent. </summary>
     public partial class ServerfarmVirtualNetworkConnectionCollection : ArmCollection, IEnumerable<ServerfarmVirtualNetworkConnection>, IAsyncEnumerable<ServerfarmVirtualNetworkConnection>
     {
         private readonly ClientDiagnostics _serverfarmVirtualNetworkConnectionAppServicePlansClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal ServerfarmVirtualNetworkConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverfarmVirtualNetworkConnectionAppServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ServerfarmVirtualNetworkConnection.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ServerfarmVirtualNetworkConnection.ResourceType, out string serverfarmVirtualNetworkConnectionAppServicePlansApiVersion);
+            TryGetApiVersion(ServerfarmVirtualNetworkConnection.ResourceType, out string serverfarmVirtualNetworkConnectionAppServicePlansApiVersion);
             _serverfarmVirtualNetworkConnectionAppServicePlansRestClient = new AppServicePlansRestOperations(_serverfarmVirtualNetworkConnectionAppServicePlansClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverfarmVirtualNetworkConnectionAppServicePlansApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteDiagnosticAnalysis(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteDiagnosticAnalysisDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteDiagnosticAnalysisDiagnosticsApiVersion);
+            TryGetApiVersion(ResourceType, out string siteDiagnosticAnalysisDiagnosticsApiVersion);
             _siteDiagnosticAnalysisDiagnosticsRestClient = new DiagnosticsRestOperations(_siteDiagnosticAnalysisDiagnosticsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteDiagnosticAnalysisDiagnosticsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

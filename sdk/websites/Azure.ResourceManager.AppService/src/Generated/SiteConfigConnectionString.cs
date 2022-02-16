@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteConfigConnectionString(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteConfigConnectionStringWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteConfigConnectionStringWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string siteConfigConnectionStringWebAppsApiVersion);
             _siteConfigConnectionStringWebAppsRestClient = new WebAppsRestOperations(_siteConfigConnectionStringWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteConfigConnectionStringWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

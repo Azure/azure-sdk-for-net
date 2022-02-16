@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.ResourceManager
     /// <summary>
     /// PrivateLinkAssociationOperations operations.
     /// </summary>
-    internal partial class PrivateLinkAssociationOperations : IServiceOperations<PolicyClient>, IPrivateLinkAssociationOperations
+    internal partial class PrivateLinkAssociationOperations : IServiceOperations<ResourcePrivateLinkClient>, IPrivateLinkAssociationOperations
     {
         /// <summary>
         /// Initializes a new instance of the PrivateLinkAssociationOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal PrivateLinkAssociationOperations(PolicyClient client)
+        internal PrivateLinkAssociationOperations(ResourcePrivateLinkClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets a reference to the PolicyClient
+        /// Gets a reference to the ResourcePrivateLinkClient
         /// </summary>
-        public PolicyClient Client { get; private set; }
+        public ResourcePrivateLinkClient Client { get; private set; }
 
         /// <summary>
         /// Create a PrivateLinkAssociation
@@ -85,6 +85,10 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </return>
         public async Task<AzureOperationResponse<PrivateLinkAssociation>> PutWithHttpMessagesAsync(string groupId, string plaId, PrivateLinkAssociationProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (groupId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "groupId");
@@ -108,7 +112,6 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2020-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -128,9 +131,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             _url = _url.Replace("{groupId}", System.Uri.EscapeDataString(groupId));
             _url = _url.Replace("{plaId}", System.Uri.EscapeDataString(plaId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -292,6 +295,10 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </return>
         public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string groupId, string plaId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (groupId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "groupId");
@@ -311,7 +318,6 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "plaId");
             }
-            string apiVersion = "2020-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -330,9 +336,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             _url = _url.Replace("{groupId}", System.Uri.EscapeDataString(groupId));
             _url = _url.Replace("{plaId}", System.Uri.EscapeDataString(plaId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -470,6 +476,10 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </return>
         public async Task<AzureOperationResponse<PrivateLinkAssociationGetResult>> GetWithHttpMessagesAsync(string groupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (groupId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "groupId");
@@ -485,7 +495,6 @@ namespace Microsoft.Azure.Management.ResourceManager
                     throw new ValidationException(ValidationRules.MinLength, "groupId", 1);
                 }
             }
-            string apiVersion = "2020-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -502,9 +511,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Authorization/privateLinkAssociations").ToString();
             _url = _url.Replace("{groupId}", System.Uri.EscapeDataString(groupId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

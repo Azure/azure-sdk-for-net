@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.AppService
         internal DeletedSiteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _deletedSiteGlobalClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSite.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(DeletedSite.ResourceType, out string deletedSiteGlobalApiVersion);
+            TryGetApiVersion(DeletedSite.ResourceType, out string deletedSiteGlobalApiVersion);
             _deletedSiteGlobalRestClient = new GlobalRestOperations(_deletedSiteGlobalClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedSiteGlobalApiVersion);
             _deletedSiteDeletedWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSite.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(DeletedSite.ResourceType, out string deletedSiteDeletedWebAppsApiVersion);
+            TryGetApiVersion(DeletedSite.ResourceType, out string deletedSiteDeletedWebAppsApiVersion);
             _deletedSiteDeletedWebAppsRestClient = new DeletedWebAppsRestOperations(_deletedSiteDeletedWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedSiteDeletedWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

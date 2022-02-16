@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
         internal PrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _privateLinkResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", PrivateLinkResource.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(PrivateLinkResource.ResourceType, out string privateLinkResourceApiVersion);
+            TryGetApiVersion(PrivateLinkResource.ResourceType, out string privateLinkResourceApiVersion);
             _privateLinkResourceRestClient = new PrivateLinkResourcesRestOperations(_privateLinkResourceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, privateLinkResourceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

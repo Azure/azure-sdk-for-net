@@ -185,15 +185,15 @@ namespace Azure.ResourceManager.Resources
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            TemplateSpecVersionUpdateModel templateSpecVersionUpdateModel = new TemplateSpecVersionUpdateModel();
+            TemplateSpecVersionUpdateOptions templateSpecVersionUpdateOptions = new TemplateSpecVersionUpdateOptions();
             if (tags != null)
             {
                 foreach (var value in tags)
                 {
-                    templateSpecVersionUpdateModel.Tags.Add(value);
+                    templateSpecVersionUpdateOptions.Tags.Add(value);
                 }
             }
-            var model = templateSpecVersionUpdateModel;
+            var model = templateSpecVersionUpdateOptions;
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;

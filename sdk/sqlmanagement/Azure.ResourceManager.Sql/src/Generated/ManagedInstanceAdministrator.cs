@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         internal ManagedInstanceAdministrator(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managedInstanceAdministratorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string managedInstanceAdministratorApiVersion);
+            TryGetApiVersion(ResourceType, out string managedInstanceAdministratorApiVersion);
             _managedInstanceAdministratorRestClient = new ManagedInstanceAdministratorsRestOperations(_managedInstanceAdministratorClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceAdministratorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

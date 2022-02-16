@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal VirtualNetworkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualNetworkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetwork.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(VirtualNetwork.ResourceType, out string virtualNetworkApiVersion);
+            TryGetApiVersion(VirtualNetwork.ResourceType, out string virtualNetworkApiVersion);
             _virtualNetworkRestClient = new VirtualNetworksRestOperations(_virtualNetworkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualNetworkApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

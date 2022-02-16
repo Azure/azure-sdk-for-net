@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         internal ResourceGroupLongTermRetentionBackup(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string resourceGroupLongTermRetentionBackupLongTermRetentionBackupsApiVersion);
+            TryGetApiVersion(ResourceType, out string resourceGroupLongTermRetentionBackupLongTermRetentionBackupsApiVersion);
             _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsRestClient = new LongTermRetentionBackupsRestOperations(_resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceGroupLongTermRetentionBackupLongTermRetentionBackupsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

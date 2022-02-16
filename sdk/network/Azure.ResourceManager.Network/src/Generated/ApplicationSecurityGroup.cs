@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         internal ApplicationSecurityGroup(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _applicationSecurityGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string applicationSecurityGroupApiVersion);
+            TryGetApiVersion(ResourceType, out string applicationSecurityGroupApiVersion);
             _applicationSecurityGroupRestClient = new ApplicationSecurityGroupsRestOperations(_applicationSecurityGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationSecurityGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

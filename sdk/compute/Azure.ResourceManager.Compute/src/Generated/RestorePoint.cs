@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute
         internal RestorePoint(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _restorePointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string restorePointApiVersion);
+            TryGetApiVersion(ResourceType, out string restorePointApiVersion);
             _restorePointRestClient = new RestorePointsRestOperations(_restorePointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, restorePointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

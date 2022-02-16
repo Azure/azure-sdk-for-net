@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         internal ApplicationGatewaySslPredefinedPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationGatewaySslPredefinedPolicy.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ApplicationGatewaySslPredefinedPolicy.ResourceType, out string applicationGatewaySslPredefinedPolicyApplicationGatewaysApiVersion);
+            TryGetApiVersion(ApplicationGatewaySslPredefinedPolicy.ResourceType, out string applicationGatewaySslPredefinedPolicyApplicationGatewaysApiVersion);
             _applicationGatewaySslPredefinedPolicyApplicationGatewaysRestClient = new ApplicationGatewaysRestOperations(_applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationGatewaySslPredefinedPolicyApplicationGatewaysApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

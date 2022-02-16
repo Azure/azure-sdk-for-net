@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn
         internal AfdEndpoint(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _afdEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string afdEndpointApiVersion);
+            TryGetApiVersion(ResourceType, out string afdEndpointApiVersion);
             _afdEndpointRestClient = new AfdEndpointsRestOperations(_afdEndpointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdEndpointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -197,22 +197,22 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: AfdEndpoints_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="endpointUpdateProperties"> Endpoint update properties. </param>
+        /// <param name="options"> Endpoint update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointUpdateProperties"/> is null. </exception>
-        public async virtual Task<ArmOperation<AfdEndpoint>> UpdateAsync(bool waitForCompletion, AfdEndpointUpdateOptions endpointUpdateProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<ArmOperation<AfdEndpoint>> UpdateAsync(bool waitForCompletion, AfdEndpointUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (endpointUpdateProperties == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(endpointUpdateProperties));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpoint.Update");
             scope.Start();
             try
             {
-                var response = await _afdEndpointRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<AfdEndpoint>(new AfdEndpointOperationSource(Client), _afdEndpointClientDiagnostics, Pipeline, _afdEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = await _afdEndpointRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<AfdEndpoint>(new AfdEndpointOperationSource(Client), _afdEndpointClientDiagnostics, Pipeline, _afdEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -230,22 +230,22 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: AfdEndpoints_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="endpointUpdateProperties"> Endpoint update properties. </param>
+        /// <param name="options"> Endpoint update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointUpdateProperties"/> is null. </exception>
-        public virtual ArmOperation<AfdEndpoint> Update(bool waitForCompletion, AfdEndpointUpdateOptions endpointUpdateProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual ArmOperation<AfdEndpoint> Update(bool waitForCompletion, AfdEndpointUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (endpointUpdateProperties == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(endpointUpdateProperties));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpoint.Update");
             scope.Start();
             try
             {
-                var response = _afdEndpointRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties, cancellationToken);
-                var operation = new CdnArmOperation<AfdEndpoint>(new AfdEndpointOperationSource(Client), _afdEndpointClientDiagnostics, Pipeline, _afdEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = _afdEndpointRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken);
+                var operation = new CdnArmOperation<AfdEndpoint>(new AfdEndpointOperationSource(Client), _afdEndpointClientDiagnostics, Pipeline, _afdEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

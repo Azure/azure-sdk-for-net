@@ -17,7 +17,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of RecommendationRule and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteRecommendation and their operations over its parent. </summary>
     public partial class SiteRecommendationCollection : ArmCollection
     {
         private readonly ClientDiagnostics _siteRecommendationRecommendationsClientDiagnostics;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteRecommendationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteRecommendationRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteRecommendation.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteRecommendation.ResourceType, out string siteRecommendationRecommendationsApiVersion);
+            TryGetApiVersion(SiteRecommendation.ResourceType, out string siteRecommendationRecommendationsApiVersion);
             _siteRecommendationRecommendationsRestClient = new RecommendationsRestOperations(_siteRecommendationRecommendationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteRecommendationRecommendationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

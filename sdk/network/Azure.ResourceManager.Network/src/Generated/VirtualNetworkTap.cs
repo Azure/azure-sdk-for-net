@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         internal VirtualNetworkTap(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualNetworkTapClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string virtualNetworkTapApiVersion);
+            TryGetApiVersion(ResourceType, out string virtualNetworkTapApiVersion);
             _virtualNetworkTapRestClient = new VirtualNetworkTapsRestOperations(_virtualNetworkTapClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualNetworkTapApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

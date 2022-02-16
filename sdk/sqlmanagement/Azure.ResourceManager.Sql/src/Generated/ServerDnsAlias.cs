@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         internal ServerDnsAlias(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverDnsAliasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string serverDnsAliasApiVersion);
+            TryGetApiVersion(ResourceType, out string serverDnsAliasApiVersion);
             _serverDnsAliasRestClient = new ServerDnsAliasesRestOperations(_serverDnsAliasClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDnsAliasApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

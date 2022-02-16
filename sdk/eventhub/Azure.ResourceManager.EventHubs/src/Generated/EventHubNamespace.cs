@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.EventHubs
         internal EventHubNamespace(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _eventHubNamespaceNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string eventHubNamespaceNamespacesApiVersion);
+            TryGetApiVersion(ResourceType, out string eventHubNamespaceNamespacesApiVersion);
             _eventHubNamespaceNamespacesRestClient = new NamespacesRestOperations(_eventHubNamespaceNamespacesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubNamespaceNamespacesApiVersion);
             _eventHubNamespaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string eventHubNamespaceApiVersion);
+            TryGetApiVersion(ResourceType, out string eventHubNamespaceApiVersion);
             _eventHubNamespaceRestClient = new EventHubNamespacesRestOperations(_eventHubNamespaceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubNamespaceApiVersion);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_privateLinkResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);

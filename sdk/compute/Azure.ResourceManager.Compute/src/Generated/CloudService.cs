@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute
         internal CloudService(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _cloudServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string cloudServiceApiVersion);
+            TryGetApiVersion(ResourceType, out string cloudServiceApiVersion);
             _cloudServiceRestClient = new CloudServicesRestOperations(_cloudServiceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cloudServiceApiVersion);
             _cloudServicesUpdateDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _cloudServicesUpdateDomainRestClient = new CloudServicesUpdateDomainRestOperations(_cloudServicesUpdateDomainClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         internal MaintenanceWindows(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _maintenanceWindowsMaintenanceWindowsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string maintenanceWindowsMaintenanceWindowsApiVersion);
+            TryGetApiVersion(ResourceType, out string maintenanceWindowsMaintenanceWindowsApiVersion);
             _maintenanceWindowsMaintenanceWindowsRestClient = new MaintenanceWindowsRestOperations(_maintenanceWindowsMaintenanceWindowsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, maintenanceWindowsMaintenanceWindowsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

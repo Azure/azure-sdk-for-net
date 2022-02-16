@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.WebPubSub
         internal SharedPrivateLink(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sharedPrivateLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string sharedPrivateLinkApiVersion);
+            TryGetApiVersion(ResourceType, out string sharedPrivateLinkApiVersion);
             _sharedPrivateLinkRestClient = new SharedPrivateLinksRestOperations(_sharedPrivateLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sharedPrivateLinkApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

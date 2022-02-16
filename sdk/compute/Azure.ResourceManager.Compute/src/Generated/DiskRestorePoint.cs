@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute
         internal DiskRestorePoint(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _diskRestorePointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string diskRestorePointApiVersion);
+            TryGetApiVersion(ResourceType, out string diskRestorePointApiVersion);
             _diskRestorePointRestClient = new DiskRestorePointRestOperations(_diskRestorePointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diskRestorePointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

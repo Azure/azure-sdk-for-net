@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         internal MachineExtensionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _machineExtensionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", MachineExtension.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(MachineExtension.ResourceType, out string machineExtensionApiVersion);
+            TryGetApiVersion(MachineExtension.ResourceType, out string machineExtensionApiVersion);
             _machineExtensionRestClient = new MachineExtensionsRestOperations(_machineExtensionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, machineExtensionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

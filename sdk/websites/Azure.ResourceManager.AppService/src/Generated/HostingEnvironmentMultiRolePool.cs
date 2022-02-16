@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         internal HostingEnvironmentMultiRolePool(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string hostingEnvironmentMultiRolePoolAppServiceEnvironmentsApiVersion);
+            TryGetApiVersion(ResourceType, out string hostingEnvironmentMultiRolePoolAppServiceEnvironmentsApiVersion);
             _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hostingEnvironmentMultiRolePoolAppServiceEnvironmentsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
