@@ -444,8 +444,8 @@ namespace Sql.Tests
         public static void ValidateIPv6FirewallRule(IPv6FirewallRule expected, IPv6FirewallRule actual, string name)
         {
             Assert.NotNull(actual.Id);
-            Assert.Equal(expected.StartIpv6Address, actual.StartIpv6Address);
-            Assert.Equal(expected.EndIv6Address, actual.EndIpv6Address);
+            Assert.Equal(expected.StartIPv6Address, actual.StartIPv6Address);
+            Assert.Equal(expected.EndIPv6Address, actual.EndIPv6Address);
         }
 
 

@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ElasticPool>>> ListByServerWithHttpMessagesAsync(string resourceGroupName, string serverName, int? skip = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ElasticPool>>> ListByServerWithHttpMessagesAsync(string resourceGroupName, string serverName, long? skip = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets an elastic pool.
         /// </summary>

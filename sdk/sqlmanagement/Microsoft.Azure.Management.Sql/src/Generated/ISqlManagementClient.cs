@@ -657,5 +657,20 @@ namespace Microsoft.Azure.Management.Sql
         /// </summary>
         IServerConnectionPoliciesOperations ServerConnectionPolicies { get; }
 
+        /// <summary>
+        /// Gets the IDistributedAvailabilityGroupsOperations.
+        /// </summary>
+        IDistributedAvailabilityGroupsOperations DistributedAvailabilityGroups { get; }
+
+        /// <summary>
+        /// Gets the IServerTrustCertificatesOperations.
+        /// </summary>
+        IServerTrustCertificatesOperations ServerTrustCertificates { get; }
+
+        /// <summary>
+        /// Gets the IIPv6FirewallRulesOperations.
+        /// </summary>
+        IIPv6FirewallRulesOperations IPv6FirewallRules { get; }
+
     }
 }

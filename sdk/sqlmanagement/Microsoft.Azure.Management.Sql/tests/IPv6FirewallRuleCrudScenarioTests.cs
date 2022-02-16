@@ -34,8 +34,8 @@ namespace Sql.Tests
                     string ipv6FirewallRuleName = SqlManagementTestUtilities.GenerateName(testPrefix);
                     IPv6FirewallRule rule = new IPv6FirewallRule()
                     {
-                        StartIpv6Address = string.Format("0000:0000:0000:0000:0000:ffff:0000:{0000}", i),
-                        EndIpv6Address = string.Format("0000:0000:0000:0000:0000:ffff:0000:{0000}", i)
+                        StartIPv6Address = string.Format("0000:0000:0000:0000:0000:ffff:0000:000{0}", i),
+                        EndIPv6Address = string.Format("0000:0000:0000:0000:0000:ffff:0000:000{0}", i)
                     };
                     sqlClient.IPv6FirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, ipv6FirewallRuleName, rule);
                     rules.Add(ipv6FirewallRuleName, rule);
@@ -63,7 +63,7 @@ namespace Sql.Tests
         }
 
         [Fact]
-        public void TestCreateUpdateDropFirewallRule()
+        public void TestCreateUpdateDropIPv6FirewallRule()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
@@ -77,8 +77,8 @@ namespace Sql.Tests
 
                 IPv6FirewallRule toCreate = new IPv6FirewallRule()
                 {
-                    StartIpv6Address = "0000:0000:0000:0000:0000:ffff:0000:0000",
-                    EndIpv6Address = "0000:0000:0000:0000:0000:ffff:0000:0000" 
+                    StartIPv6Address = "0000:0000:0000:0000:0000:ffff:0000:0000",
+                    EndIPv6Address = "0000:0000:0000:0000:0000:ffff:0000:0000" 
                 };
                 var fr1 = sqlClient.IPv6FirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, ipv6FirewallRuleName, toCreate);
                 SqlManagementTestUtilities.ValidateIPv6FirewallRule(toCreate, fr1, ipv6FirewallRuleName);
@@ -88,8 +88,8 @@ namespace Sql.Tests
                 ipv6FirewallRuleName = SqlManagementTestUtilities.GenerateName();
                 toCreate = new IPv6FirewallRule()
                 {
-                    StartIpv6Address = "0000:0000:0000:0000:0000:ffff:0101:0101",
-                    EndIpv6Address = "0000:0000:0000:0000:0000:ffff:0101:0202"
+                    StartIPv6Address = "0000:0000:0000:0000:0000:ffff:0101:0101",
+                    EndIPv6Address = "0000:0000:0000:0000:0000:ffff:0101:0202"
                 };
                 var fr2 = sqlClient.IPv6FirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, ipv6FirewallRuleName, toCreate);
                 SqlManagementTestUtilities.ValidateIPv6FirewallRule(toCreate, fr2, ipv6FirewallRuleName);
@@ -99,8 +99,8 @@ namespace Sql.Tests
                 ipv6FirewallRuleName = SqlManagementTestUtilities.GenerateName();
                 toCreate = new IPv6FirewallRule()
                 {
-                    StartIpv6Address = "0000:0000:0000:0000:0000:ffff:0000:0000",
-                    EndIpv6Address = "0000:0000:0000:0000:0000:ffff:ffff:ffff"
+                    StartIPv6Address = "0000:0000:0000:0000:0000:ffff:0000:0000",
+                    EndIPv6Address = "0000:0000:0000:0000:0000:ffff:ffff:ffff"
                 };
                 var fr3 = sqlClient.IPv6FirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, ipv6FirewallRuleName, toCreate);
                 SqlManagementTestUtilities.ValidateIPv6FirewallRule(toCreate, fr3, ipv6FirewallRuleName);
@@ -112,7 +112,7 @@ namespace Sql.Tests
         }
 
         [Fact]
-        public void TestCreateAndUpdateFirewallRule()
+        public void TestCreateAndUpdateIPv6FirewallRule()
         {
             string testPrefix = "ipv6firewallrulecrudtest-";
 
@@ -123,22 +123,21 @@ namespace Sql.Tests
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
 
                 // Create IPv6 Firewall Rule and Validate
-                //
                 string ipv6FirewallRuleName = SqlManagementTestUtilities.GenerateName(testPrefix);
 
                 IPv6FirewallRule toCreate = new IPv6FirewallRule()
                 {
-                    StartIpv6Address = "0000:0000:0000:0000:0000:ffff:0000:0000",
-                    EndIpv6Address = "0000:0000:0000:0000:0000:ffff:0000:0000"
+                    StartIPv6Address = "0000:0000:0000:0000:0000:ffff:0000:0000",
+                    EndIPv6Address = "0000:0000:0000:0000:0000:ffff:0000:0000"
                 };
                 var fr1 = sqlClient.IPv6FirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, ipv6FirewallRuleName, toCreate);
                 SqlManagementTestUtilities.ValidateIPv6FirewallRule(toCreate, fr1, ipv6FirewallRuleName);
 
                 // Update Firewall Rule and Validate
-                toCreate = new FirewallRule()
+                toCreate = new IPv6FirewallRule()
                 {
-                    StartIpv6Address = "0000:0000:0000:0000:0000:ffff:0101:0101",
-                    EndIpv6Address = "0000:0000:0000:0000:0000:ffff:ffff:ffff"
+                    StartIPv6Address = "0000:0000:0000:0000:0000:ffff:0101:0101",
+                    EndIPv6Address = "0000:0000:0000:0000:0000:ffff:ffff:ffff"
                 };
                 fr1 = sqlClient.IPv6FirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, ipv6FirewallRuleName, toCreate);
                 SqlManagementTestUtilities.ValidateIPv6FirewallRule(toCreate, fr1, ipv6FirewallRuleName);
