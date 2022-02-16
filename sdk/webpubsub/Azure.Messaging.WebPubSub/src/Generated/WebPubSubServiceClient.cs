@@ -1530,16 +1530,7 @@ namespace Azure.Messaging.WebPubSub
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
 
-            if (!context.HasClassifiers)
-            {
-                message.ResponseClassifier = ResponseClassifier200.Instance;
-            }
-            else
-            {
-                var classifier = new ResponseClassifier200();
-                classifier.AddClassifiers(context);
-                message.ResponseClassifier = classifier;
-            }
+            message.ResponseClassifier = ResponseClassifier200.Instance;
 
             return message;
         }

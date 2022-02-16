@@ -3,7 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
+
+#nullable enable
 
 namespace Azure.Core
 {
@@ -21,6 +24,12 @@ namespace Azure.Core
             }
         }
 
+        private StatusCodeClassifier(ulong[] nonErrors)
+        {
+            Debug.Assert(nonErrors?.Length == 10);
+            Array.Copy(nonErrors, _nonErrors, _nonErrors.Length);
+        }
+
         public override bool IsErrorResponse(HttpMessage message)
         {
             if (TryClassify(message, out var isError))
@@ -28,7 +37,23 @@ namespace Azure.Core
                 return isError;
             }
 
+            if (MessageClassifiers != null)
+            {
+                for (int i = MessageClassifiers.Length; i >= 0; i--)
+                {
+                    if (MessageClassifiers[i].TryClassify(message, out isError))
+                    {
+                        return isError;
+                    }
+                }
+            }
+
             return !IsNonError(message.Response.Status);
+        }
+
+        public virtual StatusCodeClassifier Clone()
+        {
+            return new StatusCodeClassifier(_nonErrors);
         }
 
         internal void AddClassifier(int code, bool isNonError)
@@ -58,28 +83,6 @@ namespace Azure.Core
 
             ulong value = _nonErrors[index];
             return (value & mask) != 0;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="context"></param>
-        public void AddClassifiers(RequestContext context)
-        {
-            if (context.StatusCodes?.Count > 0)
-            {
-                foreach (var classification in context.StatusCodes)
-                {
-                    AddClassifier(classification.Status, classification.IsError);
-                }
-            }
-
-            if (context.MessageClassifiers != null)
-            {
-                var length = context.MessageClassifiers.Length;
-                HttpMessageClassifier[] classifiers = new HttpMessageClassifier[length];
-                Array.Copy(context.MessageClassifiers, classifiers, length);
-                MessageClassifiers = classifiers;
-            }
         }
     }
 }

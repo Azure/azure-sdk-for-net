@@ -64,10 +64,26 @@ namespace Azure.Core
         /// </summary>
         public CancellationToken CancellationToken { get; internal set; }
 
+        private ResponseClassifier _responseClassifier;
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
-        public ResponseClassifier ResponseClassifier { get; set; }
+        public ResponseClassifier ResponseClassifier
+        {
+            get
+            {
+                return _responseClassifier;
+            }
+            set
+            {
+                _responseClassifier = value;
+
+                if (TryCustomizeClassifier(out var classifier))
+                {
+                    _responseClassifier = classifier;
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the value indicating if response would be buffered as part of the pipeline. Defaults to true.
@@ -92,9 +108,60 @@ namespace Azure.Core
                 Policies ??= new(context.Policies.Count);
                 Policies.AddRange(context.Policies);
             }
+
+            if (context.StatusCodes != null || context.MessageClassifiers != null)
+            {
+                _statusCodes = context.StatusCodes;
+                _messageClassifiers = context.MessageClassifiers;
+
+                if (TryCustomizeClassifier(out ResponseClassifier classifier))
+                {
+                    _responseClassifier = classifier;
+                }
+            }
         }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
+
+        private List<(int Status, bool IsError)>? _statusCodes { get; set; }
+
+        private HttpMessageClassifier[]? _messageClassifiers { get; set; }
+
+        private bool TryCustomizeClassifier(out ResponseClassifier classifier)
+        {
+            classifier = ResponseClassifier;
+
+            // only customize if we have customizations from RequestContext
+            if (_statusCodes == null && _messageClassifiers == null)
+            {
+                return false;
+            }
+
+            StatusCodeClassifier? scc = ResponseClassifier as StatusCodeClassifier;
+            if (scc != null)
+            {
+                // don't make modifications to a static shared classifier.
+                var custom = scc.Clone();
+
+                if (_statusCodes?.Count > 0)
+                {
+                    foreach (var classification in _statusCodes)
+                    {
+                        custom.AddClassifier(classification.Status, classification.IsError);
+                    }
+                }
+
+                if (_messageClassifiers != null)
+                {
+                    custom.MessageClassifiers = _messageClassifiers;
+                }
+
+                classifier = custom;
+                return true;
+            }
+
+            return false;
+        }
 
         /// <summary>
         /// Gets a property that modifies the pipeline behavior. Please refer to individual policies documentation on what properties it supports.
