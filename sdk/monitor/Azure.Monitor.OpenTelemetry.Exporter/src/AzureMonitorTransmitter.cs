@@ -58,7 +58,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     await _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
                     _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
 
-                result = GetRequestStatus(httpMessage);
+                result = IsSuccess(httpMessage);
 
                 if (result == ExportResult.Failure && _storage != null)
                 {
@@ -73,49 +73,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return result;
         }
 
-        public async ValueTask TransmitFromStorage(int numberOfFilesToTransmit, bool async, CancellationToken cancellationToken)
-        {
-            if (cancellationToken.IsCancellationRequested)
-            {
-                return;
-            }
-
-            try
-            {
-                int files = numberOfFilesToTransmit;
-                while (files > 0)
-                {
-                    var blob = _storage.GetBlob()?.Lease(10000);
-                    if (blob == null)
-                    {
-                        // no files to transmit
-                        return;
-                    }
-                    else
-                    {
-                        var data = blob.Read();
-                        using var httpMessage = async ?
-                            await _applicationInsightsRestClient.InternalTrackAsync(data, cancellationToken).ConfigureAwait(false) :
-                            _applicationInsightsRestClient.InternalTrackAsync(data, cancellationToken).Result;
-
-                        var result = GetRequestStatus(httpMessage);
-
-                        if (result == ExportResult.Failure)
-                        {
-                            HandleFailures(httpMessage, blob);
-                        }
-                    }
-
-                    files--;
-                }
-            }
-            catch (Exception ex)
-            {
-                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmit{EventLevelSuffix.Error}", ex.LogAsyncException());
-            }
-        }
-
-        private static ExportResult GetRequestStatus(HttpMessage httpMessage)
+        private static ExportResult IsSuccess(HttpMessage httpMessage)
         {
             if (httpMessage.HasResponse && httpMessage.Response.Status == ResponseStatusCodes.Success)
             {
@@ -176,53 +134,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             return result;
-        }
-
-        private void HandleFailures(HttpMessage httpMessage, IPersistentBlob blob)
-        {
-            int retryInterval;
-
-            if (!httpMessage.HasResponse)
-            {
-                // HttpRequestException
-                blob?.Lease(HttpPipelineHelper.MinimumRetryInterval);
-            }
-            else
-            {
-                switch (httpMessage.Response.Status)
-                {
-                    case ResponseStatusCodes.PartialSuccess:
-                        // Parse retry-after header
-                        // Send Failed Messages To Storage
-                        TrackResponse trackResponse = HttpPipelineHelper.GetTrackResponse(httpMessage);
-                        var content = HttpPipelineHelper.GetPartialContentForRetry(trackResponse, httpMessage.Request.Content);
-                        if (content != null)
-                        {
-                            retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
-                            blob?.Delete();
-                            _storage.SaveTelemetry(content, retryInterval);
-                        }
-                        break;
-                    case ResponseStatusCodes.RequestTimeout:
-                    case ResponseStatusCodes.ResponseCodeTooManyRequests:
-                    case ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache:
-                        // Parse retry-after header
-                        // Send Messages To Storage
-                        retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
-                        blob?.Lease(retryInterval);
-                        break;
-                    case ResponseStatusCodes.InternalServerError:
-                    case ResponseStatusCodes.BadGateway:
-                    case ResponseStatusCodes.ServiceUnavailable:
-                    case ResponseStatusCodes.GatewayTimeout:
-                        // Send Messages To Storage
-                        blob?.Lease(HttpPipelineHelper.MinimumRetryInterval);
-                        break;
-                    default:
-                        // Log Non-Retriable Status and don't retry or store;
-                        break;
-                }
-            }
         }
     }
 }
