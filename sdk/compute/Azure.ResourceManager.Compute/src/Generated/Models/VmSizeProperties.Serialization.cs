@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VmSizeProperties DeserializeVmSizeProperties(JsonElement element)
         {
-            Optional<int> vCPUsAvailable = default;
-            Optional<int> vCPUsPerCore = default;
+            Optional<int> vcpUsAvailable = default;
+            Optional<int> vcpUsPerCore = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vCPUsAvailable"))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vCPUsAvailable = property.Value.GetInt32();
+                    vcpUsAvailable = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("vCPUsPerCore"))
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vCPUsPerCore = property.Value.GetInt32();
+                    vcpUsPerCore = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new VmSizeProperties(Optional.ToNullable(vCPUsAvailable), Optional.ToNullable(vCPUsPerCore));
+            return new VmSizeProperties(Optional.ToNullable(vcpUsAvailable), Optional.ToNullable(vcpUsPerCore));
         }
     }
 }

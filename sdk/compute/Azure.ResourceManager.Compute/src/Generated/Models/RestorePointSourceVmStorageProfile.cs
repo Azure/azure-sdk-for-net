@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of RestorePointSourceVmStorageProfile. </summary>
-        /// <param name="oSDisk"> Gets the OS disk of the VM captured at the time of the restore point creation. </param>
+        /// <param name="osDisk"> Gets the OS disk of the VM captured at the time of the restore point creation. </param>
         /// <param name="dataDisks"> Gets the data disks of the VM captured at the time of the restore point creation. </param>
-        internal RestorePointSourceVmStorageProfile(RestorePointSourceVmOSDisk oSDisk, IReadOnlyList<RestorePointSourceVmDataDisk> dataDisks)
+        internal RestorePointSourceVmStorageProfile(RestorePointSourceVmOSDisk osDisk, IReadOnlyList<RestorePointSourceVmDataDisk> dataDisks)
         {
-            OSDisk = oSDisk;
+            OSDisk = osDisk;
             DataDisks = dataDisks;
         }
 
