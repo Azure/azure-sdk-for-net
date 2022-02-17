@@ -33,7 +33,7 @@ Debug.WriteLine($"{cloudRsaKey.KeyType} key is returned with name {cloudRsaKey.N
 ## Set key rotation policy
 
 To set a key rotation policy, you create a new `KeyRotationPolicy` with 1 or more lifetime actions and an expiration date
-for the key that will be created when rotated.
+for the key that will be created when rotated. Note, the date format used by ExpiresIn and TimeBeforeExpiry is ISO 8601.
 
 ```C# Snippet:KeysSample8UpdateRotationPolicy
 KeyRotationPolicy policy = new KeyRotationPolicy()
