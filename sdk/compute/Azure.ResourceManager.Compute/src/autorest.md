@@ -24,6 +24,10 @@ rename-rules:
   VM: Vm
   VMs: Vms
   VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
 
 #TODO: remove after we resolve why RestorePoint has no list
 list-exception:
