@@ -8,8 +8,8 @@ using System;
 namespace Azure.Core
 {
     /// <summary>
-    /// Implementation of a constant polling interval strategy. Polling interval is always equal to the given polling interval,
-    /// unless interval is returned in server response header. In such cases, the max value will be adopted.
+    /// Implementation of a <see cref="OperationPollingStrategy"/> with constant polling interval.
+    /// Polling interval is always equal to the given polling interval.
     /// </summary>
     internal class ConstantPollingStrategy : OperationPollingStrategy
     {
@@ -29,9 +29,6 @@ namespace Azure.Core
             PollingInterval = interval;
         }
 
-        public override TimeSpan GetNextWait(Response response)
-        {
-            return GetMaxIntervalFromResponseAndIntrinsic(response, PollingInterval);
-        }
+        public override TimeSpan GetNextWait(Response response) => PollingInterval;
     }
 }

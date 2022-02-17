@@ -14,17 +14,28 @@ namespace Azure.Core
 {
     internal abstract class OperationInternalBase
     {
+        private static readonly OperationPollingStrategy DefaultPollingStrategy = new ConstantPollingStrategy();
+
         private readonly ClientDiagnostics _diagnostics;
         private readonly string _updateStatusScopeName;
         private readonly IReadOnlyDictionary<string, string>? _scopeAttributes;
 
-        protected OperationInternalBase(ClientDiagnostics clientDiagnostics, Response rawResponse, string operationTypeName, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null)
+        protected OperationInternalBase(ClientDiagnostics clientDiagnostics, Response rawResponse, string operationTypeName, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null, OperationPollingStrategy? defaultPollingStrategy = null)
         {
             _diagnostics = clientDiagnostics;
             _updateStatusScopeName = $"{operationTypeName}.UpdateStatus";
             _scopeAttributes = scopeAttributes?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             RawResponse = rawResponse;
-            PollingStrategy = new ConstantPollingStrategy();
+            PollingStrategy = ChoosePollingStrategy(rawResponse, defaultPollingStrategy);
+        }
+
+        private static OperationPollingStrategy ChoosePollingStrategy(Response rawResponse, OperationPollingStrategy? defaultPollingStrategy)
+        {
+            if (RetryAfterPollingStrategy.TryParseAndBuild(rawResponse, out RetryAfterPollingStrategy? pollingStrategy))
+            {
+                return pollingStrategy!;
+            }
+            return defaultPollingStrategy ?? DefaultPollingStrategy;
         }
 
         /// <summary>
@@ -112,7 +123,7 @@ namespace Azure.Core
         /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
         public virtual async ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken) =>
-            await PollingResponseAsync(PollingStrategy, cancellationToken).ConfigureAwait(false);
+            await PollingResponseAsync(PollingStrategy, TimeSpan.MinValue, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Periodically calls <see cref="UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
@@ -128,20 +139,23 @@ namespace Azure.Core
         /// </code>
         /// </example>
         /// </summary>
-        /// <param name="pollingInterval">The interval between status requests to the server.</param>
+        /// <param name="pollingInterval">The interval between status requests to the server. <strong></strong></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
+        /// <remarks>At runtime, the max value of <paramref name="pollingInterval"/> and return value of <see cref="OperationPollingStrategy.GetNextWait(Response)"/> will be used.</remarks>
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
         public virtual async ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
-            await PollingResponseAsync(new ConstantPollingStrategy(pollingInterval), cancellationToken).ConfigureAwait(false);
+            await PollingResponseAsync(PollingStrategy, pollingInterval, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Polling response according to the given polling strategy.
         /// </summary>
         /// <param name="pollingStrategy">Strategy to poll the response.</param>
+        /// <param name="userSpecifiedInterval">Polling interval specified by user.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        protected async ValueTask<Response> PollingResponseAsync(OperationPollingStrategy pollingStrategy, CancellationToken cancellationToken)
+        /// <remarks>At runtime, the max value of <paramref name="pollingStrategy.GetNextWait(Response)"/> and <paramref name="userSpecifiedInterval"/> will be used.</remarks>
+        protected async ValueTask<Response> PollingResponseAsync(OperationPollingStrategy pollingStrategy, TimeSpan userSpecifiedInterval, CancellationToken cancellationToken)
         {
             while (true)
             {
@@ -152,7 +166,8 @@ namespace Azure.Core
                     return response;
                 }
 
-                await WaitAsync(pollingStrategy.GetNextWait(response), cancellationToken).ConfigureAwait(false);
+                TimeSpan strategyInterval = pollingStrategy.GetNextWait(response);
+                await WaitAsync((strategyInterval > userSpecifiedInterval ? strategyInterval : userSpecifiedInterval), cancellationToken).ConfigureAwait(false);
             }
         }
 

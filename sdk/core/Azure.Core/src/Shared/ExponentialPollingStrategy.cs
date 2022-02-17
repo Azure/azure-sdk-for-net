@@ -9,9 +9,8 @@ using System.Linq;
 namespace Azure.Core
 {
     /// <summary>
-    /// Implementation of an exponential polling strategy. Polling interval changes according to
-    /// the sequence {1, 1, 1, 2, 4, ...32}, unless interval is returned in server response header.
-    /// In such cases, the max value will be adopted.
+    /// Implementation of a <see cref="OperationPollingStrategy"/>. Polling interval changes according to
+    /// the sequence {1, 1, 1, 2, 4, ...32}.
     /// </summary>
     internal class ExponentialPollingStrategy : OperationPollingStrategy
     {
@@ -29,18 +28,13 @@ namespace Azure.Core
 
         private int _index;
 
-        private TimeSpan GetNextInterval()
+        public override TimeSpan GetNextWait(Response response)
         {
             if (_index >= pollingSequence.Length)
             {
                 return pollingSequence.Last();
             }
             return pollingSequence[_index++];
-        }
-
-        public override TimeSpan GetNextWait(Response response)
-        {
-            return GetMaxIntervalFromResponseAndIntrinsic(response, GetNextInterval());
         }
     }
 }

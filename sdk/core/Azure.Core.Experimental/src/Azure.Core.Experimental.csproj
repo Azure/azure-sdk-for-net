@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Experimental types that might eventually move to Azure.Core</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline Experimental Extensions</AssemblyTitle>
@@ -29,6 +29,8 @@
     <Compile Include="$(AzureCoreSharedSources)OperationPollingStrategy.cs" />
     <Compile Include="$(AzureCoreSharedSources)ConstantPollingStrategy.cs" />
     <Compile Include="$(AzureCoreSharedSources)ExponentialPollingStrategy.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ZeroPollingStrategy.cs" />
+    <Compile Include="$(AzureCoreSharedSources)RetryAfterPollingStrategy.cs" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" />
     <Compile Include="$(AzureCoreSharedSources)NullableAttributes.cs" />
   </ItemGroup>
