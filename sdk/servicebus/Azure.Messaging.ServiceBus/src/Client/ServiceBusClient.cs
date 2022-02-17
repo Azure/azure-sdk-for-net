@@ -691,7 +691,7 @@ namespace Azure.Messaging.ServiceBus
                 return;
             }
 
-            // If the entity name is specified in both the connection string,
+            // If the entity name is specified in the connection string,
             // validate that it is the same as the passed in entity name.
 
             if (string.Equals(entityName, Connection.EntityPath, StringComparison.InvariantCultureIgnoreCase))
