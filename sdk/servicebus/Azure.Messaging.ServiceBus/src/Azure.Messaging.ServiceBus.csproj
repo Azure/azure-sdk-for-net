@@ -11,6 +11,7 @@
       <!-- TODO: Investigate and remove suppressions https://github.com/Azure/azure-sdk-for-net/issues/17154 -->
       $(NoWarn);CA2213
     </NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
