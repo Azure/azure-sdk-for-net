@@ -16,6 +16,12 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The provider consent. </summary>
-        public ProviderConsentDefinition ThirdPartyProviderConsent { get; set; }
+        internal ProviderConsentDefinition ThirdPartyProviderConsent { get; set; }
+        /// <summary> A value indicating whether authorization is consented or not. </summary>
+        public bool? ConsentToAuthorization
+        {
+            get => ThirdPartyProviderConsent.ConsentToAuthorization;
+            set => ThirdPartyProviderConsent.ConsentToAuthorization = value;
+        }
     }
 }

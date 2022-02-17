@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Wrapper resource for tags patch API request only. </summary>
@@ -18,6 +20,11 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The operation type for the patch API. </summary>
         public TagsPatchOperation? Operation { get; set; }
         /// <summary> The set of tags. </summary>
-        public Tag Properties { get; set; }
+        internal Tag Properties { get; set; }
+        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        public IDictionary<string, string> TagValues
+        {
+            get => Properties.TagValues;
+        }
     }
 }

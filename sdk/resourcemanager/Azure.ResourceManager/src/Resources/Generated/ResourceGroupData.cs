@@ -37,7 +37,13 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> The resource group properties. </summary>
-        public ResourceGroupProperties Properties { get; set; }
+        internal ResourceGroupProperties Properties { get; set; }
+        /// <summary> The provisioning state. </summary>
+        public string ResourceGroupProvisioningState
+        {
+            get => Properties.ProvisioningState;
+        }
+
         /// <summary> The ID of the resource that manages this resource group. </summary>
         public string ManagedBy { get; set; }
     }

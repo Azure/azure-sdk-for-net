@@ -97,8 +97,7 @@ namespace Azure.ResourceManager.Tests.Samples
             vmData.OSProfile.AdminUsername = "admin-username";
             vmData.OSProfile.AdminPassword = "admin-p4$$w0rd";
             vmData.OSProfile.ComputerName = "computer-name";
-            vmData.AvailabilitySet = new WritableSubResource();
-            vmData.AvailabilitySet.Id = aset.Id;
+            vmData.AvailabilitySetId = aset.Id;
             NetworkInterfaceReference nicReference = new NetworkInterfaceReference();
             nicReference.Id = nic.Id;
             vmData.NetworkProfile.NetworkInterfaces.Add(nicReference);
