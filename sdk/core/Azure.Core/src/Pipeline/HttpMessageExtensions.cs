@@ -1,14 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Reflection;
-
 namespace Azure.Core.Pipeline
 {
     /// <summary>
     ///
     /// </summary>
-    public static class HttpMessageEtensions
+    public static class HttpMessageExtensions
     {
         /// <summary>
         /// Sets the package name and version portion of the UserAgent telemetry value.
