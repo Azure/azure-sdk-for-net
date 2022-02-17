@@ -67,7 +67,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491?api-version=2021-10-15-preview",
+      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491?api-version=2021-11-15-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTIwNTNiOGYtY2FiNS00ZjVjLTljMWEtODcwNTgwMTQyYWJkL3Jlc291cmNlR3JvdXBzL0Nvc21vc0RCRG90TmV0U0RLVGVzdHNSRzg4MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5Eb2N1bWVudERCL2RhdGFiYXNlQWNjb3VudHMvZGF0YWJhc2VhY2NvdW50MzQ5MT9hcGktdmVyc2lvbj0yMDIxLTEwLTE1LXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"kind\": \"GlobalDocumentDB\",\r\n  \"properties\": {\r\n    \"locations\": [\r\n      {\r\n        \"locationName\": \"central us\"\r\n      }\r\n    ],\r\n    \"isVirtualNetworkFilterEnabled\": true,\r\n    \"enableAutomaticFailover\": false,\r\n    \"enableMultipleWriteLocations\": false,\r\n    \"disableKeyBasedMetadataWriteAccess\": false,\r\n    \"createMode\": \"Default\",\r\n    \"networkAclBypass\": \"AzureServices\",\r\n    \"databaseAccountOfferType\": \"Standard\"\r\n  },\r\n  \"location\": \"central us\"\r\n}",
@@ -99,13 +99,13 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/operationResults/58b15c71-29e3-424c-b320-b94ee1386a9b?api-version=2021-10-15-preview"
+          "https://management.azure.com/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/operationResults/58b15c71-29e3-424c-b320-b94ee1386a9b?api-version=2021-11-15-preview"
         ],
         "x-ms-request-id": [
           "58b15c71-29e3-424c-b320-b94ee1386a9b"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/providers/Microsoft.DocumentDB/locations/centralus/operationsStatus/58b15c71-29e3-424c-b320-b94ee1386a9b?api-version=2021-10-15-preview"
+          "https://management.azure.com/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/providers/Microsoft.DocumentDB/locations/centralus/operationsStatus/58b15c71-29e3-424c-b320-b94ee1386a9b?api-version=2021-11-15-preview"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -142,7 +142,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/providers/Microsoft.DocumentDB/locations/centralus/operationsStatus/58b15c71-29e3-424c-b320-b94ee1386a9b?api-version=2021-10-15-preview",
+      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/providers/Microsoft.DocumentDB/locations/centralus/operationsStatus/58b15c71-29e3-424c-b320-b94ee1386a9b?api-version=2021-11-15-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTIwNTNiOGYtY2FiNS00ZjVjLTljMWEtODcwNTgwMTQyYWJkL3Byb3ZpZGVycy9NaWNyb3NvZnQuRG9jdW1lbnREQi9sb2NhdGlvbnMvY2VudHJhbHVzL29wZXJhdGlvbnNTdGF0dXMvNThiMTVjNzEtMjllMy00MjRjLWIzMjAtYjk0ZWUxMzg2YTliP2FwaS12ZXJzaW9uPTIwMjEtMTAtMTUtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -199,7 +199,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/providers/Microsoft.DocumentDB/locations/centralus/operationsStatus/58b15c71-29e3-424c-b320-b94ee1386a9b?api-version=2021-10-15-preview",
+      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/providers/Microsoft.DocumentDB/locations/centralus/operationsStatus/58b15c71-29e3-424c-b320-b94ee1386a9b?api-version=2021-11-15-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTIwNTNiOGYtY2FiNS00ZjVjLTljMWEtODcwNTgwMTQyYWJkL3Byb3ZpZGVycy9NaWNyb3NvZnQuRG9jdW1lbnREQi9sb2NhdGlvbnMvY2VudHJhbHVzL29wZXJhdGlvbnNTdGF0dXMvNThiMTVjNzEtMjllMy00MjRjLWIzMjAtYjk0ZWUxMzg2YTliP2FwaS12ZXJzaW9uPTIwMjEtMTAtMTUtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -256,7 +256,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/providers/Microsoft.DocumentDB/locations/centralus/operationsStatus/58b15c71-29e3-424c-b320-b94ee1386a9b?api-version=2021-10-15-preview",
+      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/providers/Microsoft.DocumentDB/locations/centralus/operationsStatus/58b15c71-29e3-424c-b320-b94ee1386a9b?api-version=2021-11-15-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTIwNTNiOGYtY2FiNS00ZjVjLTljMWEtODcwNTgwMTQyYWJkL3Byb3ZpZGVycy9NaWNyb3NvZnQuRG9jdW1lbnREQi9sb2NhdGlvbnMvY2VudHJhbHVzL29wZXJhdGlvbnNTdGF0dXMvNThiMTVjNzEtMjllMy00MjRjLWIzMjAtYjk0ZWUxMzg2YTliP2FwaS12ZXJzaW9uPTIwMjEtMTAtMTUtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -313,7 +313,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/providers/Microsoft.DocumentDB/locations/centralus/operationsStatus/58b15c71-29e3-424c-b320-b94ee1386a9b?api-version=2021-10-15-preview",
+      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/providers/Microsoft.DocumentDB/locations/centralus/operationsStatus/58b15c71-29e3-424c-b320-b94ee1386a9b?api-version=2021-11-15-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTIwNTNiOGYtY2FiNS00ZjVjLTljMWEtODcwNTgwMTQyYWJkL3Byb3ZpZGVycy9NaWNyb3NvZnQuRG9jdW1lbnREQi9sb2NhdGlvbnMvY2VudHJhbHVzL29wZXJhdGlvbnNTdGF0dXMvNThiMTVjNzEtMjllMy00MjRjLWIzMjAtYjk0ZWUxMzg2YTliP2FwaS12ZXJzaW9uPTIwMjEtMTAtMTUtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -370,7 +370,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491?api-version=2021-10-15-preview",
+      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491?api-version=2021-11-15-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTIwNTNiOGYtY2FiNS00ZjVjLTljMWEtODcwNTgwMTQyYWJkL3Jlc291cmNlR3JvdXBzL0Nvc21vc0RCRG90TmV0U0RLVGVzdHNSRzg4MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5Eb2N1bWVudERCL2RhdGFiYXNlQWNjb3VudHMvZGF0YWJhc2VhY2NvdW50MzQ5MT9hcGktdmVyc2lvbj0yMDIxLTEwLTE1LXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -427,7 +427,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362?api-version=2021-10-15-preview",
+      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362?api-version=2021-11-15-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTIwNTNiOGYtY2FiNS00ZjVjLTljMWEtODcwNTgwMTQyYWJkL3Jlc291cmNlR3JvdXBzL0Nvc21vc0RCRG90TmV0U0RLVGVzdHNSRzg4MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5Eb2N1bWVudERCL2RhdGFiYXNlQWNjb3VudHMvZGF0YWJhc2VhY2NvdW50MzQ5MS9zcWxEYXRhYmFzZXMvZGF0YWJhc2U4MzYyP2FwaS12ZXJzaW9uPTIwMjEtMTAtMTUtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"resource\": {\r\n      \"id\": \"database8362\"\r\n    },\r\n    \"options\": {}\r\n  }\r\n}",
@@ -459,10 +459,10 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362/operationResults/edeae7c8-ab56-4eef-84d5-fe1155c73227?api-version=2021-10-15-preview"
+          "https://management.azure.com/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362/operationResults/edeae7c8-ab56-4eef-84d5-fe1155c73227?api-version=2021-11-15-preview"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/providers/Microsoft.DocumentDB/locations/centralus/operationsStatus/edeae7c8-ab56-4eef-84d5-fe1155c73227?api-version=2021-10-15-preview"
+          "https://management.azure.com/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/providers/Microsoft.DocumentDB/locations/centralus/operationsStatus/edeae7c8-ab56-4eef-84d5-fe1155c73227?api-version=2021-11-15-preview"
         ],
         "x-ms-request-id": [
           "edeae7c8-ab56-4eef-84d5-fe1155c73227"
@@ -502,7 +502,7 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/providers/Microsoft.DocumentDB/locations/centralus/operationsStatus/edeae7c8-ab56-4eef-84d5-fe1155c73227?api-version=2021-10-15-preview",
+      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/providers/Microsoft.DocumentDB/locations/centralus/operationsStatus/edeae7c8-ab56-4eef-84d5-fe1155c73227?api-version=2021-11-15-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTIwNTNiOGYtY2FiNS00ZjVjLTljMWEtODcwNTgwMTQyYWJkL3Byb3ZpZGVycy9NaWNyb3NvZnQuRG9jdW1lbnREQi9sb2NhdGlvbnMvY2VudHJhbHVzL29wZXJhdGlvbnNTdGF0dXMvZWRlYWU3YzgtYWI1Ni00ZWVmLTg0ZDUtZmUxMTU1YzczMjI3P2FwaS12ZXJzaW9uPTIwMjEtMTAtMTUtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -559,7 +559,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362?api-version=2021-10-15-preview",
+      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362?api-version=2021-11-15-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTIwNTNiOGYtY2FiNS00ZjVjLTljMWEtODcwNTgwMTQyYWJkL3Jlc291cmNlR3JvdXBzL0Nvc21vc0RCRG90TmV0U0RLVGVzdHNSRzg4MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5Eb2N1bWVudERCL2RhdGFiYXNlQWNjb3VudHMvZGF0YWJhc2VhY2NvdW50MzQ5MS9zcWxEYXRhYmFzZXMvZGF0YWJhc2U4MzYyP2FwaS12ZXJzaW9uPTIwMjEtMTAtMTUtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -616,7 +616,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362/clientEncryptionKeys/clientEncryptionKey6551?api-version=2021-10-15-preview",
+      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362/clientEncryptionKeys/clientEncryptionKey6551?api-version=2021-11-15-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTIwNTNiOGYtY2FiNS00ZjVjLTljMWEtODcwNTgwMTQyYWJkL3Jlc291cmNlR3JvdXBzL0Nvc21vc0RCRG90TmV0U0RLVGVzdHNSRzg4MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5Eb2N1bWVudERCL2RhdGFiYXNlQWNjb3VudHMvZGF0YWJhc2VhY2NvdW50MzQ5MS9zcWxEYXRhYmFzZXMvZGF0YWJhc2U4MzYyL2NsaWVudEVuY3J5cHRpb25LZXlzL2NsaWVudEVuY3J5cHRpb25LZXk2NTUxP2FwaS12ZXJzaW9uPTIwMjEtMTAtMTUtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"resource\": {\r\n      \"id\": \"clientEncryptionKey6551\",\r\n      \"encryptionAlgorithm\": \"AEAD_AES_256_CBC_HMAC_SHA256\",\r\n      \"wrappedDataEncryptionKey\": \"q1cF6Z/i\",\r\n      \"keyWrapMetadata\": {\r\n        \"name\": \"cmk\",\r\n        \"type\": \"akv\",\r\n        \"value\": \"akvPath\"\r\n      }\r\n    }\r\n  }\r\n}",
@@ -648,10 +648,10 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362/clientEncryptionKeys/clientEncryptionKey6551/operationResults/cee87c56-665e-4a9e-a1c3-e642ddf316d3?api-version=2021-10-15-preview"
+          "https://management.azure.com/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362/clientEncryptionKeys/clientEncryptionKey6551/operationResults/cee87c56-665e-4a9e-a1c3-e642ddf316d3?api-version=2021-11-15-preview"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/providers/Microsoft.DocumentDB/locations/centralus/operationsStatus/cee87c56-665e-4a9e-a1c3-e642ddf316d3?api-version=2021-10-15-preview"
+          "https://management.azure.com/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/providers/Microsoft.DocumentDB/locations/centralus/operationsStatus/cee87c56-665e-4a9e-a1c3-e642ddf316d3?api-version=2021-11-15-preview"
         ],
         "x-ms-request-id": [
           "cee87c56-665e-4a9e-a1c3-e642ddf316d3"
@@ -691,7 +691,7 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362/clientEncryptionKeys/clientEncryptionKey6551?api-version=2021-10-15-preview",
+      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362/clientEncryptionKeys/clientEncryptionKey6551?api-version=2021-11-15-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTIwNTNiOGYtY2FiNS00ZjVjLTljMWEtODcwNTgwMTQyYWJkL3Jlc291cmNlR3JvdXBzL0Nvc21vc0RCRG90TmV0U0RLVGVzdHNSRzg4MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5Eb2N1bWVudERCL2RhdGFiYXNlQWNjb3VudHMvZGF0YWJhc2VhY2NvdW50MzQ5MS9zcWxEYXRhYmFzZXMvZGF0YWJhc2U4MzYyL2NsaWVudEVuY3J5cHRpb25LZXlzL2NsaWVudEVuY3J5cHRpb25LZXk2NTUxP2FwaS12ZXJzaW9uPTIwMjEtMTAtMTUtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"resource\": {\r\n      \"id\": \"clientEncryptionKey6551\",\r\n      \"encryptionAlgorithm\": \"AEAD_AES_256_CBC_HMAC_SHA256\",\r\n      \"wrappedDataEncryptionKey\": \"rBU=\",\r\n      \"keyWrapMetadata\": {\r\n        \"name\": \"cmk\",\r\n        \"type\": \"akv\",\r\n        \"value\": \"akvPath\"\r\n      }\r\n    }\r\n  }\r\n}",
@@ -723,10 +723,10 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362/clientEncryptionKeys/clientEncryptionKey6551/operationResults/3bb8f031-7e90-4da1-9450-3e78b7831437?api-version=2021-10-15-preview"
+          "https://management.azure.com/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362/clientEncryptionKeys/clientEncryptionKey6551/operationResults/3bb8f031-7e90-4da1-9450-3e78b7831437?api-version=2021-11-15-preview"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/providers/Microsoft.DocumentDB/locations/centralus/operationsStatus/3bb8f031-7e90-4da1-9450-3e78b7831437?api-version=2021-10-15-preview"
+          "https://management.azure.com/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/providers/Microsoft.DocumentDB/locations/centralus/operationsStatus/3bb8f031-7e90-4da1-9450-3e78b7831437?api-version=2021-11-15-preview"
         ],
         "x-ms-request-id": [
           "3bb8f031-7e90-4da1-9450-3e78b7831437"
@@ -766,7 +766,7 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362/clientEncryptionKeys/clientEncryptionKey6551?api-version=2021-10-15-preview",
+      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362/clientEncryptionKeys/clientEncryptionKey6551?api-version=2021-11-15-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTIwNTNiOGYtY2FiNS00ZjVjLTljMWEtODcwNTgwMTQyYWJkL3Jlc291cmNlR3JvdXBzL0Nvc21vc0RCRG90TmV0U0RLVGVzdHNSRzg4MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5Eb2N1bWVudERCL2RhdGFiYXNlQWNjb3VudHMvZGF0YWJhc2VhY2NvdW50MzQ5MS9zcWxEYXRhYmFzZXMvZGF0YWJhc2U4MzYyL2NsaWVudEVuY3J5cHRpb25LZXlzL2NsaWVudEVuY3J5cHRpb25LZXk2NTUxP2FwaS12ZXJzaW9uPTIwMjEtMTAtMTUtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -829,7 +829,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362/clientEncryptionKeys/clientEncryptionKey6551?api-version=2021-10-15-preview",
+      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362/clientEncryptionKeys/clientEncryptionKey6551?api-version=2021-11-15-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTIwNTNiOGYtY2FiNS00ZjVjLTljMWEtODcwNTgwMTQyYWJkL3Jlc291cmNlR3JvdXBzL0Nvc21vc0RCRG90TmV0U0RLVGVzdHNSRzg4MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5Eb2N1bWVudERCL2RhdGFiYXNlQWNjb3VudHMvZGF0YWJhc2VhY2NvdW50MzQ5MS9zcWxEYXRhYmFzZXMvZGF0YWJhc2U4MzYyL2NsaWVudEVuY3J5cHRpb25LZXlzL2NsaWVudEVuY3J5cHRpb25LZXk2NTUxP2FwaS12ZXJzaW9uPTIwMjEtMTAtMTUtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -892,7 +892,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362/clientEncryptionKeys/clientEncryptionKey6551?api-version=2021-10-15-preview",
+      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362/clientEncryptionKeys/clientEncryptionKey6551?api-version=2021-11-15-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTIwNTNiOGYtY2FiNS00ZjVjLTljMWEtODcwNTgwMTQyYWJkL3Jlc291cmNlR3JvdXBzL0Nvc21vc0RCRG90TmV0U0RLVGVzdHNSRzg4MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5Eb2N1bWVudERCL2RhdGFiYXNlQWNjb3VudHMvZGF0YWJhc2VhY2NvdW50MzQ5MS9zcWxEYXRhYmFzZXMvZGF0YWJhc2U4MzYyL2NsaWVudEVuY3J5cHRpb25LZXlzL2NsaWVudEVuY3J5cHRpb25LZXk2NTUxP2FwaS12ZXJzaW9uPTIwMjEtMTAtMTUtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -949,7 +949,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362/clientEncryptionKeys/clientEncryptionKey9030?api-version=2021-10-15-preview",
+      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362/clientEncryptionKeys/clientEncryptionKey9030?api-version=2021-11-15-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTIwNTNiOGYtY2FiNS00ZjVjLTljMWEtODcwNTgwMTQyYWJkL3Jlc291cmNlR3JvdXBzL0Nvc21vc0RCRG90TmV0U0RLVGVzdHNSRzg4MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5Eb2N1bWVudERCL2RhdGFiYXNlQWNjb3VudHMvZGF0YWJhc2VhY2NvdW50MzQ5MS9zcWxEYXRhYmFzZXMvZGF0YWJhc2U4MzYyL2NsaWVudEVuY3J5cHRpb25LZXlzL2NsaWVudEVuY3J5cHRpb25LZXk5MDMwP2FwaS12ZXJzaW9uPTIwMjEtMTAtMTUtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"resource\": {\r\n      \"id\": \"clientEncryptionKey9030\",\r\n      \"encryptionAlgorithm\": \"AEAD_AES_256_CBC_HMAC_SHA256\",\r\n      \"wrappedDataEncryptionKey\": \"EVQQqR8k\",\r\n      \"keyWrapMetadata\": {\r\n        \"name\": \"cmk\",\r\n        \"type\": \"akv\",\r\n        \"value\": \"akvPath2\"\r\n      }\r\n    }\r\n  }\r\n}",
@@ -981,10 +981,10 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362/clientEncryptionKeys/clientEncryptionKey9030/operationResults/448015a6-2e47-4eff-b85a-29f694653059?api-version=2021-10-15-preview"
+          "https://management.azure.com/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362/clientEncryptionKeys/clientEncryptionKey9030/operationResults/448015a6-2e47-4eff-b85a-29f694653059?api-version=2021-11-15-preview"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/providers/Microsoft.DocumentDB/locations/centralus/operationsStatus/448015a6-2e47-4eff-b85a-29f694653059?api-version=2021-10-15-preview"
+          "https://management.azure.com/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/providers/Microsoft.DocumentDB/locations/centralus/operationsStatus/448015a6-2e47-4eff-b85a-29f694653059?api-version=2021-11-15-preview"
         ],
         "x-ms-request-id": [
           "448015a6-2e47-4eff-b85a-29f694653059"
@@ -1024,7 +1024,7 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/providers/Microsoft.DocumentDB/locations/centralus/operationsStatus/cee87c56-665e-4a9e-a1c3-e642ddf316d3?api-version=2021-10-15-preview",
+      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/providers/Microsoft.DocumentDB/locations/centralus/operationsStatus/cee87c56-665e-4a9e-a1c3-e642ddf316d3?api-version=2021-11-15-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTIwNTNiOGYtY2FiNS00ZjVjLTljMWEtODcwNTgwMTQyYWJkL3Byb3ZpZGVycy9NaWNyb3NvZnQuRG9jdW1lbnREQi9sb2NhdGlvbnMvY2VudHJhbHVzL29wZXJhdGlvbnNTdGF0dXMvY2VlODdjNTYtNjY1ZS00YTllLWExYzMtZTY0MmRkZjMxNmQzP2FwaS12ZXJzaW9uPTIwMjEtMTAtMTUtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1081,7 +1081,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362/clientEncryptionKeys?api-version=2021-10-15-preview",
+      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362/clientEncryptionKeys?api-version=2021-11-15-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTIwNTNiOGYtY2FiNS00ZjVjLTljMWEtODcwNTgwMTQyYWJkL3Jlc291cmNlR3JvdXBzL0Nvc21vc0RCRG90TmV0U0RLVGVzdHNSRzg4MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5Eb2N1bWVudERCL2RhdGFiYXNlQWNjb3VudHMvZGF0YWJhc2VhY2NvdW50MzQ5MS9zcWxEYXRhYmFzZXMvZGF0YWJhc2U4MzYyL2NsaWVudEVuY3J5cHRpb25LZXlzP2FwaS12ZXJzaW9uPTIwMjEtMTAtMTUtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1144,7 +1144,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362?api-version=2021-10-15-preview",
+      "RequestUri": "/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362?api-version=2021-11-15-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTIwNTNiOGYtY2FiNS00ZjVjLTljMWEtODcwNTgwMTQyYWJkL3Jlc291cmNlR3JvdXBzL0Nvc21vc0RCRG90TmV0U0RLVGVzdHNSRzg4MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5Eb2N1bWVudERCL2RhdGFiYXNlQWNjb3VudHMvZGF0YWJhc2VhY2NvdW50MzQ5MS9zcWxEYXRhYmFzZXMvZGF0YWJhc2U4MzYyP2FwaS12ZXJzaW9uPTIwMjEtMTAtMTUtcHJldmlldw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
@@ -1170,10 +1170,10 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362/operationResults/e1397830-6157-4d03-8820-2483b68c0a64?api-version=2021-10-15-preview"
+          "https://management.azure.com/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/resourceGroups/CosmosDBDotNetSDKTestsRG8833/providers/Microsoft.DocumentDB/databaseAccounts/databaseaccount3491/sqlDatabases/database8362/operationResults/e1397830-6157-4d03-8820-2483b68c0a64?api-version=2021-11-15-preview"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/providers/Microsoft.DocumentDB/locations/centralus/operationsStatus/e1397830-6157-4d03-8820-2483b68c0a64?api-version=2021-10-15-preview"
+          "https://management.azure.com/subscriptions/12053b8f-cab5-4f5c-9c1a-870580142abd/providers/Microsoft.DocumentDB/locations/centralus/operationsStatus/e1397830-6157-4d03-8820-2483b68c0a64?api-version=2021-11-15-preview"
         ],
         "x-ms-request-id": [
           "e1397830-6157-4d03-8820-2483b68c0a64"
