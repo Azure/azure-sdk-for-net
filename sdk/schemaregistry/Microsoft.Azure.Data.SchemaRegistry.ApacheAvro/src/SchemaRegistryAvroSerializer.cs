@@ -62,12 +62,12 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         /// </summary>
         /// <param name="data">The data to serialize to Avro and encode into the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        /// <typeparam name="TBinaryContent">The <see cref="BinaryContent"/> type to encode the data into.</typeparam>
+        /// <typeparam name="TEnvelope">The <see cref="BinaryContent"/> type to encode the data into.</typeparam>
         /// <typeparam name="TData">The type of the data to encode.</typeparam>
-        public TBinaryContent Serialize<TBinaryContent, TData>(
+        public TEnvelope Serialize<TEnvelope, TData>(
             TData data,
-            CancellationToken cancellationToken = default) where TBinaryContent : BinaryContent, new()
-            => (TBinaryContent) SerializeInternalAsync(data, typeof(TData), typeof(TBinaryContent), false, cancellationToken).EnsureCompleted();
+            CancellationToken cancellationToken = default) where TEnvelope : BinaryContent, new()
+            => (TEnvelope) SerializeInternalAsync(data, typeof(TData), typeof(TEnvelope), false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Encodes the message data as Avro and stores it in <see cref="BinaryContent.Data"/>. The <see cref="BinaryContent.ContentType"/>
@@ -75,12 +75,12 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         /// </summary>
         /// <param name="data">The data to serialize to Avro and encode into the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        /// <typeparam name="TBinaryContent">The <see cref="BinaryContent"/> type to encode the data into.</typeparam>
+        /// <typeparam name="TEnvelope">The <see cref="BinaryContent"/> type to encode the data into.</typeparam>
         /// <typeparam name="TData">The type of the data to encode.</typeparam>
-        public async ValueTask<TBinaryContent> SerializeAsync<TBinaryContent, TData>(
+        public async ValueTask<TEnvelope> SerializeAsync<TEnvelope, TData>(
             TData data,
-            CancellationToken cancellationToken = default) where TBinaryContent : BinaryContent, new()
-            => (TBinaryContent) await SerializeInternalAsync(data, typeof(TData), typeof(TBinaryContent), true, cancellationToken).ConfigureAwait(false);
+            CancellationToken cancellationToken = default) where TEnvelope : BinaryContent, new()
+            => (TEnvelope) await SerializeInternalAsync(data, typeof(TData), typeof(TEnvelope), true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Encodes the message data as Avro and stores it in <see cref="BinaryContent.Data"/>. The <see cref="BinaryContent.ContentType"/>

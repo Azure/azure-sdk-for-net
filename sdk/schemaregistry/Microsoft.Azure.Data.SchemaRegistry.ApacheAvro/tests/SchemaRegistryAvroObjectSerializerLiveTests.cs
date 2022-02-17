@@ -231,7 +231,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             Assert.IsNotEmpty(contentType[1]);
 
             #region Snippet:SchemaRegistryAvroDecodeEventDataGenerics
-            Employee deserialized = (Employee) await serializer.DeserializeAsync<Employee>(eventData);
+            Employee deserialized = await serializer.DeserializeAsync<Employee>(eventData);
 #if SNIPPET
             Console.WriteLine(deserialized.Age);
             Console.WriteLine(deserialized.Name);
