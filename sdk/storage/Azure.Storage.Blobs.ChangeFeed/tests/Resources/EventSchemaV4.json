@@ -13,21 +13,54 @@
         "contentType": "application/octet-stream",
         "contentLength": 128,
         "blobType": "BlockBlob",
-        "blobVersion": null,
+        "blobVersion" : {
+            "string" : "2022-02-17T16:11:52.5901564Z"
+        },
         "containerVersion": {
             "string": "0000000000000001"
         },
-        "blobTier": null,
-        "url": "",
+        "blobTier": "Archive",
+        "url": "https://www.myurl.com",
         "sequencer": "00000000000000010000000000000002000000000000001d",
         "previousInfo": {
             "map": {
                 "SoftDeleteSnapshot": "2022-02-17T13:08:42.4825913Z"
             }
         },
-        "snapshot": null,
-        "blobPropertiesUpdated": null,
-        "asyncOperationInfo": null,
+        "snapshot" : {
+            "string" : "2022-02-17T16:09:16.7261278Z"
+        },  
+        "blobPropertiesUpdated" : {
+            "map" : {
+                "ContentLanguage" : {
+                    "current" : "pl-Pl",
+                    "previous" : "nl-NL"
+                },
+                "CacheControl" : {
+                    "current" : "max-age=100",
+                    "previous" : ""
+                },
+                "ContentEncoding" : {
+                    "current" : "gzip, identity",
+                    "previous" : ""
+                },
+                "ContentMD5" : {
+                    "current" : "Q2h1Y2sgSW51ZwDIAXR5IQ==",
+                    "previous" : ""
+                },
+                "ContentDisposition" : {
+                    "current" : "attachment",
+                    "previous" : ""
+                },
+                "ContentType" : {
+                    "current" : "application/json",
+                    "previous" : "application/octet-stream"
+                }
+            }
+        },
+        "asyncOperationInfo": {
+            "DestinationTier": "Hot"
+        },
         "storageDiagnostics": {
             "bid": "9d72687f-8006-0000-00ff-233467000000",
             "seq": "(2,18446744073709551615,29,29)",

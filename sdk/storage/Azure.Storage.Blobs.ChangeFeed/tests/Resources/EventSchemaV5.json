@@ -1,23 +1,30 @@
 {
-    "schemaVersion": 3,
+    "schemaVersion": 5,
     "topic": "/subscriptions/dd40261b-437d-43d0-86cf-ef222b78fd15/resourceGroups/haambaga/providers/Microsoft.Storage/storageAccounts/HAAMBAGA-DEV",
-    "subject": "/blobServices/default/containers/apitestcontainerver/blobs/20220217_130510699_Blob_oaG6iu7ImEB1cX8M",
+    "subject": "/blobServices/default/containers/apitestcontainerver/blobs/20220217_131202494_Blob_oaG6iu7ImEB1cX8M",
     "eventType": "BlobCreated",
-    "eventTime": "2022-02-17T13:05:19.6798242Z",
-    "id": "eefe8fc8-8020-0000-00fe-23346706daaa",
+    "eventTime": "2022-02-17T13:12:11.5746587Z",
+    "id": "62616073-8020-0000-00ff-233467060cc0",
     "data": {
         "api": "PutBlob",
-        "clientRequestId": "00c0b6b7-bb67-4748-a3dc-86464863d267",
-        "requestId": "eefe8fc8-8020-0000-00fe-233467000000",
-        "etag": "0x8D9F216266170DC",
+        "clientRequestId": "b3f9b39a-ae5a-45ac-afad-95ac9e9f2791",
+        "requestId": "62616073-8020-0000-00ff-233467000000",
+        "etag": "0x8D9F2171BE32588",
         "contentType": "application/octet-stream",
         "contentLength": 128,
         "blobType": "BlockBlob",
+        "blobVersion" : {
+            "string" : "2022-02-17T16:11:52.5901564Z"
+        },
+        "containerVersion": {
+            "string": "0000000000000001"
+        },
+        "blobTier": "Archive",
         "url": "https://www.myurl.com",
         "sequencer": "00000000000000010000000000000002000000000000001d",
         "previousInfo": {
             "map": {
-                "SoftDeleteSnapshot": "2022-02-17T13:05:19.6788227Z"
+                "SoftDeleteSnapshot": "2022-02-17T13:12:11.5726507Z"
             }
         },
         "snapshot" : {
@@ -51,8 +58,31 @@
                 }
             }
         },
+        "asyncOperationInfo": {
+            "DestinationTier": "Hot"
+        },
+        "blobTagsUpdated": {
+            "map": {
+                "previous": {
+                    "Tag1": "Value1_3",
+                    "Tag2": "Value2_3"
+                },
+                "current": {
+                    "Tag1": "Value1_4",
+                    "Tag2": "Value2_4"
+                }
+            }
+        },
+        "restorePointMarker": {
+            "map": {
+                "rpi": "cbd73e3d-f650-4700-b90c-2f067bce639c",
+                "rpp": "cbd73e3d-f650-4700-b90c-2f067bce639c",
+                "rpl": "test-restore-label",
+                "rpt": "2022-02-17T13:56:09.3559772Z"
+            }
+        },
         "storageDiagnostics": {
-            "bid": "9d726370-8006-0000-00ff-233467000000",
+            "bid": "9d726db1-8006-0000-00ff-233467000000",
             "seq": "(2,18446744073709551615,29,29)",
             "sid": "4cc94e71-f6be-75bf-e7b2-f9ac41458e5a"
         }
