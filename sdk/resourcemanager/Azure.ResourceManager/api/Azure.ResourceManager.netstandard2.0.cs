@@ -1100,6 +1100,7 @@ namespace Azure.ResourceManager.Resources
     {
         public TagResourceData(Azure.ResourceManager.Resources.Models.Tag properties) { }
         public Azure.ResourceManager.Resources.Models.Tag Properties { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> TagValues { get { throw null; } }
     }
     public partial class Tenant : Azure.ResourceManager.Core.ArmResource
     {
