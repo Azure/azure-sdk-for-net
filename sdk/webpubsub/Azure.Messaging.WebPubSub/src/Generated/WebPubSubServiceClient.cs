@@ -2097,7 +2097,7 @@ namespace Azure.Messaging.WebPubSub
             private static ResponseClassifier _instance;
             public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
 
-            public ResponseClassifier200() : base(new int[] { 200 })
+            public ResponseClassifier200() : base(stackalloc int[]{ 200 })
             {
             }
         }
@@ -2106,7 +2106,7 @@ namespace Azure.Messaging.WebPubSub
             private static ResponseClassifier _instance;
             public static ResponseClassifier Instance => _instance ??= new ResponseClassifier204();
 
-            public ResponseClassifier204() : base(new int[] { 204 })
+            public ResponseClassifier204() : base(stackalloc int[]{ 204 })
             {
             }
         }
@@ -2115,7 +2115,7 @@ namespace Azure.Messaging.WebPubSub
             private static ResponseClassifier _instance;
             public static ResponseClassifier Instance => _instance ??= new ResponseClassifier202();
 
-            public ResponseClassifier202() : base(new int[] { 202 })
+            public ResponseClassifier202() : base(stackalloc int[]{ 202 })
             {
             }
         }
@@ -2124,7 +2124,7 @@ namespace Azure.Messaging.WebPubSub
             private static ResponseClassifier _instance;
             public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200404();
 
-            public ResponseClassifier200404() : base(new int[] { 200, 404 })
+            public ResponseClassifier200404() : base(stackalloc int[]{ 200, 404 })
             {
             }
         }

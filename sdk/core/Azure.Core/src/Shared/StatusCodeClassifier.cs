@@ -10,28 +10,36 @@ namespace Azure.Core
 {
     internal class StatusCodeClassifier : ResponseClassifier
     {
-        private ulong[] _nonErrors = new ulong[10];
+        // We need 10 ulongs to represent status codes 100 - 599.
+        private const int Length = 10;
+        private ulong[] _nonErrors;
 
         internal HttpMessageClassifier[]? TryClassifiers { get; set; }
 
-        public StatusCodeClassifier(int[] nonErrors)
+        public StatusCodeClassifier(ReadOnlySpan<int> nonErrors)
         {
-            for (int i = 0; i < nonErrors.Length; i++)
+            _nonErrors = new ulong[Length];
+
+            foreach (int statusCode in nonErrors)
             {
-                AddClassifier(nonErrors[i], isError: false);
+                AddClassifier(statusCode, isError: false);
             }
         }
 
         private StatusCodeClassifier(ulong[] nonErrors, HttpMessageClassifier[]? tryClassifiers)
         {
-            Debug.Assert(nonErrors?.Length == 10);
-            Array.Copy(nonErrors, _nonErrors, _nonErrors.Length);
+            Debug.Assert(nonErrors?.Length == Length);
+
+            _nonErrors = nonErrors!;
             TryClassifiers = tryClassifiers;
         }
 
         public virtual StatusCodeClassifier Clone()
         {
-            return new StatusCodeClassifier(_nonErrors, TryClassifiers);
+            ulong[] nonErrors = new ulong[Length];
+            Array.Copy(_nonErrors, nonErrors, Length);
+
+            return new StatusCodeClassifier(nonErrors, TryClassifiers);
         }
 
         public override bool IsErrorResponse(HttpMessage message)

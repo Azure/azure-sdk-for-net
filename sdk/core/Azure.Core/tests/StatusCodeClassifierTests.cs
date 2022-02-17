@@ -43,7 +43,7 @@ namespace Azure.Core.Tests
         [TestCase(502, true)]
         public void ClassifiesMultipleCodesAsNonErrors(int code, bool isError)
         {
-            StatusCodeClassifier classifier = new StatusCodeClassifier(new int[] { 200, 404 });
+            StatusCodeClassifier classifier = new StatusCodeClassifier(stackalloc int[] { 200, 404 });
 
             HttpMessage message = new HttpMessage(new MockRequest(), classifier);
 

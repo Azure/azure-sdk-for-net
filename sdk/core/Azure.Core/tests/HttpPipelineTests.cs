@@ -288,7 +288,8 @@ namespace Azure.Core.Tests
             var mockTransport = new MockTransport(
                 new MockResponse(404));
 
-            var pipeline = new HttpPipeline(mockTransport);
+            var pipeline = new HttpPipeline(mockTransport, responseClassifier: DpgClassifier.Instance);
+
             var context = new RequestContext();
             context.AddClassifier(404, isError: false);
 
@@ -301,25 +302,6 @@ namespace Azure.Core.Tests
 
             Assert.IsFalse(response.IsError);
         }
-
-        //[Test]
-        //public async Task RequestContextClassifierTakesPrecedence()
-        //{
-        //    var mockTransport = new MockTransport(new MockResponse(404));
-        //    var pipeline = new HttpPipeline(mockTransport, responseClassifier: ResponseClassifier.Shared);
-
-        //    var context = new RequestContext();
-        //    context.AddClassifier(404, isError: false);
-
-        //    HttpMessage message = pipeline.CreateMessage(context);
-        //    Request request = message.Request;
-        //    request.Method = RequestMethod.Get;
-        //    request.Uri.Reset(new Uri("https://contoso.a.io"));
-        //    await pipeline.SendAsync(message, CancellationToken.None);
-        //    Response response = message.Response;
-
-        //    Assert.IsFalse(response.IsError);
-        //}
 
         #region Helpers
         public class AddHeaderPolicy : HttpPipelineSynchronousPolicy
@@ -358,6 +340,19 @@ namespace Azure.Core.Tests
             public override bool IsErrorResponse(HttpMessage message)
             {
                 return IsRetriableResponse(message);
+            }
+        }
+
+        /// <summary>
+        /// Example DPG classifier for testing purposes.
+        /// </summary>
+        private sealed class DpgClassifier : StatusCodeClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new DpgClassifier();
+
+            public DpgClassifier() : base(stackalloc int[] { 200, 204, 304 })
+            {
             }
         }
         #endregion

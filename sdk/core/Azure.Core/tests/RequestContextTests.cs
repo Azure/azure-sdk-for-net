@@ -218,7 +218,8 @@ namespace Azure.Core.Tests
             var response = new MockResponse(404);
             var mockTransport = new MockTransport(response);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, HttpMessageSanitizer.Default, "Test SDK") });
+            var classifier = new StatusCodeClassifier(stackalloc int[] { 200, 204, 304 });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, HttpMessageSanitizer.Default, "Test SDK") }, classifier);
             var context = new RequestContext();
             context.AddClassifier(404, isError: false);
             var message = pipeline.CreateMessage(context);
@@ -250,7 +251,8 @@ namespace Azure.Core.Tests
                 return mockResponse;
             });
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new RequestActivityPolicy(true, "Azure.Core.Tests", HttpMessageSanitizer.Default) });
+            var classifier = new StatusCodeClassifier(stackalloc int[] { 200, 204, 304 });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new RequestActivityPolicy(true, "Azure.Core.Tests", HttpMessageSanitizer.Default) }, classifier);
             var context = new RequestContext();
             context.AddClassifier(409, isError: false);
             var message = pipeline.CreateMessage(context);

@@ -130,7 +130,7 @@ namespace Azure.Core
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
 
-        private List<(int Status, bool IsError)>? _statusCodes { get; set; }
+        private (int Status, bool IsError)[]? _statusCodes { get; set; }
 
         private HttpMessageClassifier[]? _messageClassifiers { get; set; }
 
@@ -150,7 +150,7 @@ namespace Azure.Core
                 // don't make modifications to a static shared classifier.
                 var custom = scc.Clone();
 
-                if (_statusCodes?.Count > 0)
+                if (_statusCodes != null)
                 {
                     foreach (var classification in _statusCodes)
                     {

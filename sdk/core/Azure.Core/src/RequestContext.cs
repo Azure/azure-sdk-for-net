@@ -14,17 +14,15 @@ namespace Azure
     /// </summary>
     public class RequestContext
     {
-        private HttpMessageClassifier[]? _classifiers;
         private bool _frozen;
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
 
-        internal List<(int Status, bool IsError)>? StatusCodes { get; private set; }
+        private (int Status, bool IsError)[]? _statusCodes;
+        internal (int Status, bool IsError)[]? StatusCodes => _statusCodes;
 
-        internal HttpMessageClassifier[]? MessageClassifiers
-        {
-            get { return _classifiers; }
-        }
+        private HttpMessageClassifier[]? _classifiers;
+        internal HttpMessageClassifier[]? MessageClassifiers => _classifiers;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestContext"/> class.
@@ -80,8 +78,9 @@ namespace Azure
                 throw new InvalidOperationException("Cannot modify this RequestContext after it has been used in a method call.");
             }
 
-            StatusCodes ??= new();
-            StatusCodes.Add((statusCode, isError));
+            int length = _statusCodes == null ? 0 : _statusCodes.Length;
+            Array.Resize(ref _statusCodes, length + 1);
+            _statusCodes[length] = (statusCode, isError);
         }
 
         /// <summary>
