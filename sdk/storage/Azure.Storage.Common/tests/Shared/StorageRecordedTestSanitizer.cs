@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 
 namespace Azure.Storage.Test.Shared
 {
@@ -22,100 +23,31 @@ namespace Azure.Storage.Test.Shared
 
         public StorageRecordedTestSanitizer()
         {
-            SanitizedHeaders.Add("x-ms-encryption-key");
-        }
+            UriRegexSanitizers.Add(UriRegexSanitizer.CreateWithQueryParameter(SignatureQueryName, SanitizeValue));
 
-        public override string SanitizeUri(string uri)
-        {
-            var builder = new UriBuilder(base.SanitizeUri(uri));
-            var query = new UriQueryParamsCollection(builder.Query);
-            if (query.ContainsKey(SignatureQueryName))
+#if NETFRAMEWORK
+            // Uri uses different escaping for some special characters between .NET Framework and Core. Because the Test Proxy runs on .NET
+            // Core, we need to normalize to the .NET Core escaping when matching and storing the recordings when running tests on NetFramework.
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\(", "%28"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\)", "%29"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\!", "%21"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\'", "%27"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\*", "%2A"));
+            // Encode any colons in the Uri except for the one in the scheme
+            UriRegexSanitizers.Add(new UriRegexSanitizer("(?<group>:)[^//]", "%3A") {GroupForReplace = "group"});
+#endif
+
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("x-ms-encryption-key", SanitizeValue));
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(CopySourceAuthorization, SanitizeValue));
+            HeaderRegexSanitizers.Add(HeaderRegexSanitizer.CreateWithQueryParameter(CopySourceName, SignatureQueryName, SanitizeValue));
+            HeaderRegexSanitizers.Add(HeaderRegexSanitizer.CreateWithQueryParameter(RenameSource, SignatureQueryName, SanitizeValue));
+            HeaderRegexSanitizers.Add(HeaderRegexSanitizer.CreateWithQueryParameter(PreviousSnapshotUrl, SignatureQueryName, SanitizeValue));
+            HeaderRegexSanitizers.Add(HeaderRegexSanitizer.CreateWithQueryParameter(FileRenameSource, SignatureQueryName, SanitizeValue));
+
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"client_secret=(?<group>.*?)(?=&|$)", SanitizeValue)
             {
-                query[SignatureQueryName] = SanitizeValue;
-                builder.Query = query.ToString();
-            }
-            return builder.Uri.AbsoluteUri;
-        }
-
-        public string SanitizeQueryParameters(string queryParameters)
-        {
-            var query = new UriQueryParamsCollection(queryParameters);
-            if (query.ContainsKey(SignatureQueryName))
-            {
-                query[SignatureQueryName] = SanitizeValue;
-            }
-            return query.ToString();
-        }
-
-        public override void SanitizeHeaders(IDictionary<string, string[]> headers)
-        {
-            // Remove the Auth header
-            base.SanitizeHeaders(headers);
-
-            // Remote copy source authorization header
-            if (headers.ContainsKey(CopySourceAuthorization))
-            {
-                headers[CopySourceAuthorization] = new string[] { SanitizeValue };
-            }
-
-            // Santize any copy source
-            if (headers.TryGetValue(CopySourceName, out var copySource))
-            {
-                headers[CopySourceName] = copySource.Select(c => SanitizeUri(c)).ToArray();
-            }
-
-            if (headers.TryGetValue(RenameSource, out var renameSource))
-            {
-                headers[RenameSource] = renameSource.Select(c => SanitizeQueryParameters(c)).ToArray();
-            }
-
-            if (headers.TryGetValue(PreviousSnapshotUrl, out var snapshotUri))
-            {
-                headers[PreviousSnapshotUrl] = snapshotUri.Select(c => SanitizeUri(c)).ToArray();
-            }
-
-            if (headers.TryGetValue(FileRenameSource, out var fileRenameSource))
-            {
-                headers[FileRenameSource] = fileRenameSource.Select(c => SanitizeQueryParameters(c)).ToArray();
-            }
-        }
-
-        public override string SanitizeTextBody(string contentType, string body)
-        {
-            if (contentType.Contains("urlencoded"))
-            {
-                try
-                {
-                    // If it's been URL encoded, make sure it doesn't contain
-                    // a client_secret
-                    var builder = new UriBuilder() { Query = body };
-                    var query = new UriQueryParamsCollection(body);
-                    if (query.ContainsKey("client_secret"))
-                    {
-                        query["client_secret"] = SanitizeValue;
-                    }
-                    return query.ToString();
-                }
-                catch
-                {
-                }
-            }
-
-            // If anything goes wrong, don't sanitize
-            return body;
-        }
-
-        public override string SanitizeVariable(string variableName, string environmentVariableValue) =>
-            variableName switch
-            {
-                "Storage_TestConfigDefault" => SanitizeConnectionString(environmentVariableValue),
-                _ => base.SanitizeVariable(variableName, environmentVariableValue)
-            };
-
-        private static string SanitizeConnectionString(string connectionString)
-        {
-            connectionString = connectionString.Replace("AccountKey=Sanitized", "AccountKey=Kg==;");
-            return connectionString;
+                GroupForReplace = "group"
+            });
         }
     }
 }

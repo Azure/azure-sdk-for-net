@@ -1,4 +1,4 @@
-﻿{
+{
   "Entries": [
     {
       "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-0e14c8ec-6704-ede3-3824-c00d5dac8512?restype=container",
@@ -79,7 +79,7 @@
         ],
         "x-ms-client-request-id": "8d1cca69-b636-b9f7-4cb4-c7396082db90",
         "x-ms-date": "Fri, 19 Feb 2021 19:03:52 GMT",
-        "x-ms-rename-source": "%2Ftest-filesystem-0e14c8ec-6704-ede3-3824-c00d5dac8512%2Ftest-directory-84fb17da-03cb-b7bd-712b-9db06a1f4699=",
+        "x-ms-rename-source": "/test-filesystem-0e14c8ec-6704-ede3-3824-c00d5dac8512/test-directory-84fb17da-03cb-b7bd-712b-9db06a1f4699",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2021-04-10"
       },

@@ -279,6 +279,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId"> The connection Id. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -298,7 +299,7 @@ namespace Azure.Messaging.WebPubSub
         internal virtual async Task<Response> ConnectionExistsImplAsync(string connectionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.ConnectionExistsImpl");
             scope.Start();
@@ -318,6 +319,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId"> The connection Id. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -337,7 +339,7 @@ namespace Azure.Messaging.WebPubSub
         internal virtual Response ConnectionExistsImpl(string connectionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.ConnectionExistsImpl");
             scope.Start();
@@ -358,6 +360,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="reason"> The reason closing the client connection. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -377,7 +380,7 @@ namespace Azure.Messaging.WebPubSub
         public virtual async Task<Response> CloseConnectionAsync(string connectionId, string reason = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseConnection");
             scope.Start();
@@ -398,6 +401,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="reason"> The reason closing the client connection. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -417,7 +421,7 @@ namespace Azure.Messaging.WebPubSub
         public virtual Response CloseConnection(string connectionId, string reason = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseConnection");
             scope.Start();
@@ -439,6 +443,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -458,7 +463,7 @@ namespace Azure.Messaging.WebPubSub
         public virtual async Task<Response> SendToConnectionAsync(string connectionId, RequestContent content, ContentType contentType, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToConnection");
@@ -481,6 +486,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -500,7 +506,7 @@ namespace Azure.Messaging.WebPubSub
         public virtual Response SendToConnection(string connectionId, RequestContent content, ContentType contentType, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToConnection");
@@ -521,6 +527,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -540,7 +547,7 @@ namespace Azure.Messaging.WebPubSub
         internal virtual async Task<Response> GroupExistsImplAsync(string group, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(group, nameof(group));
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.GroupExistsImpl");
             scope.Start();
@@ -560,6 +567,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -579,7 +587,7 @@ namespace Azure.Messaging.WebPubSub
         internal virtual Response GroupExistsImpl(string group, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(group, nameof(group));
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.GroupExistsImpl");
             scope.Start();
@@ -601,6 +609,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="reason"> The reason closing the client connection. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -620,7 +629,7 @@ namespace Azure.Messaging.WebPubSub
         public virtual async Task<Response> CloseGroupConnectionsAsync(string group, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(group, nameof(group));
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseGroupConnections");
             scope.Start();
@@ -642,6 +651,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="reason"> The reason closing the client connection. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -661,7 +671,7 @@ namespace Azure.Messaging.WebPubSub
         public virtual Response CloseGroupConnections(string group, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(group, nameof(group));
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseGroupConnections");
             scope.Start();
@@ -684,6 +694,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -703,7 +714,7 @@ namespace Azure.Messaging.WebPubSub
         public virtual async Task<Response> SendToGroupAsync(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(group, nameof(group));
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToGroup");
@@ -727,6 +738,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -746,7 +758,7 @@ namespace Azure.Messaging.WebPubSub
         public virtual Response SendToGroup(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(group, nameof(group));
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToGroup");
@@ -768,6 +780,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -787,8 +800,8 @@ namespace Azure.Messaging.WebPubSub
         public virtual async Task<Response> AddConnectionToGroupAsync(string group, string connectionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(group, nameof(group));
-            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionToGroup");
             scope.Start();
@@ -809,6 +822,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -828,8 +842,8 @@ namespace Azure.Messaging.WebPubSub
         public virtual Response AddConnectionToGroup(string group, string connectionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(group, nameof(group));
-            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionToGroup");
             scope.Start();
@@ -850,6 +864,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -869,8 +884,8 @@ namespace Azure.Messaging.WebPubSub
         public virtual async Task<Response> RemoveConnectionFromGroupAsync(string group, string connectionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(group, nameof(group));
-            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromGroup");
             scope.Start();
@@ -891,6 +906,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -910,8 +926,8 @@ namespace Azure.Messaging.WebPubSub
         public virtual Response RemoveConnectionFromGroup(string group, string connectionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(group, nameof(group));
-            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromGroup");
             scope.Start();
@@ -931,6 +947,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="userId"> Target user Id. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -950,7 +967,7 @@ namespace Azure.Messaging.WebPubSub
         internal virtual async Task<Response> UserExistsImplAsync(string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.UserExistsImpl");
             scope.Start();
@@ -970,6 +987,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="userId"> Target user Id. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -989,7 +1007,7 @@ namespace Azure.Messaging.WebPubSub
         internal virtual Response UserExistsImpl(string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.UserExistsImpl");
             scope.Start();
@@ -1011,6 +1029,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="reason"> The reason closing the client connection. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1030,7 +1049,7 @@ namespace Azure.Messaging.WebPubSub
         public virtual async Task<Response> CloseUserConnectionsAsync(string userId, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseUserConnections");
             scope.Start();
@@ -1052,6 +1071,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="reason"> The reason closing the client connection. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1071,7 +1091,7 @@ namespace Azure.Messaging.WebPubSub
         public virtual Response CloseUserConnections(string userId, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseUserConnections");
             scope.Start();
@@ -1093,6 +1113,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1112,7 +1133,7 @@ namespace Azure.Messaging.WebPubSub
         public virtual async Task<Response> SendToUserAsync(string userId, RequestContent content, ContentType contentType, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToUser");
@@ -1135,6 +1156,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1154,7 +1176,7 @@ namespace Azure.Messaging.WebPubSub
         public virtual Response SendToUser(string userId, RequestContent content, ContentType contentType, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToUser");
@@ -1175,6 +1197,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="userId"> Target user Id. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1194,7 +1217,7 @@ namespace Azure.Messaging.WebPubSub
         public virtual async Task<Response> RemoveUserFromAllGroupsAsync(string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromAllGroups");
             scope.Start();
@@ -1214,6 +1237,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="userId"> Target user Id. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1233,7 +1257,7 @@ namespace Azure.Messaging.WebPubSub
         public virtual Response RemoveUserFromAllGroups(string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromAllGroups");
             scope.Start();
@@ -1255,6 +1279,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1274,8 +1299,8 @@ namespace Azure.Messaging.WebPubSub
         internal virtual async Task<Response> GrantPermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(permission, nameof(permission));
-            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            Argument.AssertNotNullOrEmpty(permission, nameof(permission));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.GrantPermission");
             scope.Start();
@@ -1297,6 +1322,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1316,8 +1342,8 @@ namespace Azure.Messaging.WebPubSub
         internal virtual Response GrantPermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(permission, nameof(permission));
-            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            Argument.AssertNotNullOrEmpty(permission, nameof(permission));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.GrantPermission");
             scope.Start();
@@ -1339,6 +1365,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1358,8 +1385,8 @@ namespace Azure.Messaging.WebPubSub
         internal virtual async Task<Response> RevokePermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(permission, nameof(permission));
-            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            Argument.AssertNotNullOrEmpty(permission, nameof(permission));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RevokePermission");
             scope.Start();
@@ -1381,6 +1408,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1400,8 +1428,8 @@ namespace Azure.Messaging.WebPubSub
         internal virtual Response RevokePermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(permission, nameof(permission));
-            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            Argument.AssertNotNullOrEmpty(permission, nameof(permission));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RevokePermission");
             scope.Start();
@@ -1423,6 +1451,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1442,8 +1471,8 @@ namespace Azure.Messaging.WebPubSub
         internal virtual async Task<Response> CheckPermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(permission, nameof(permission));
-            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            Argument.AssertNotNullOrEmpty(permission, nameof(permission));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CheckPermission");
             scope.Start();
@@ -1465,6 +1494,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1484,8 +1514,8 @@ namespace Azure.Messaging.WebPubSub
         internal virtual Response CheckPermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(permission, nameof(permission));
-            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            Argument.AssertNotNullOrEmpty(permission, nameof(permission));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CheckPermission");
             scope.Start();

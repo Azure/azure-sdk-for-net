@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> The plan ID. </param>
         /// <param name="publisher"> The publisher ID. </param>
         /// <param name="product"> Specifies the product of the image from the marketplace. This is the same value as Offer under the imageReference element. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="publisher"/>, or <paramref name="product"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="publisher"/> or <paramref name="product"/> is null. </exception>
         public DiskPurchasePlan(string name, string publisher, string product)
         {
             if (name == null)

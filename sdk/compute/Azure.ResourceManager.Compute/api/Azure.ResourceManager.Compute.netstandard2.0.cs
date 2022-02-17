@@ -3101,7 +3101,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public GalleryArtifactVersionSource() { }
         public string Id { get { throw null; } set { } }
-        public string Uri { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
     }
     public partial class GalleryDataDiskImage : Azure.ResourceManager.Compute.Models.GalleryDiskImage
     {
@@ -4956,7 +4956,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualHardDisk
     {
         public VirtualHardDisk() { }
-        public string Uri { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
     }
     public partial class VirtualMachineAgentInstanceView
     {

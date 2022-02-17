@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="advisorName"> The name of the Database Advisor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="advisorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="advisorName"/> is null. </exception>
         public async Task<Response<IReadOnlyList<RecommendedActionData>>> ListByDatabaseAdvisorAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="advisorName"> The name of the Database Advisor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="advisorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="advisorName"/> is null. </exception>
         public Response<IReadOnlyList<RecommendedActionData>> ListByDatabaseAdvisor(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="advisorName"> The name of the Database Advisor. </param>
         /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="advisorName"/>, or <paramref name="recommendedActionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="advisorName"/> or <paramref name="recommendedActionName"/> is null. </exception>
         public async Task<Response<RecommendedActionData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName, string recommendedActionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="advisorName"> The name of the Database Advisor. </param>
         /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="advisorName"/>, or <paramref name="recommendedActionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="advisorName"/> or <paramref name="recommendedActionName"/> is null. </exception>
         public Response<RecommendedActionData> Get(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName, string recommendedActionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
         /// <param name="parameters"> The requested recommended action resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="advisorName"/>, <paramref name="recommendedActionName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="advisorName"/>, <paramref name="recommendedActionName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<RecommendedActionData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName, string recommendedActionName, RecommendedActionData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
         /// <param name="parameters"> The requested recommended action resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="advisorName"/>, <paramref name="recommendedActionName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="advisorName"/>, <paramref name="recommendedActionName"/> or <paramref name="parameters"/> is null. </exception>
         public Response<RecommendedActionData> Update(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName, string recommendedActionName, RecommendedActionData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)

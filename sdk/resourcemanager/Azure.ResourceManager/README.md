@@ -34,12 +34,13 @@ The default option to create an authenticated client is to use `DefaultAzureCred
 To authenticate to Azure and create an `ArmClient`, do the following:
 
 ```C# Snippet:Readme_AuthClient
-using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Identity;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Resources;
 
 // Code omitted for brevity
 
@@ -61,16 +62,16 @@ This represents a full resource client object which contains a **Data** property
 It also has access to all of the operations on that resource without needing to pass in scope parameters such as subscription ID or resource name.  This makes it very convenient to directly execute operations on the result of list calls
 since everything is returned as a full resource client now.
 
-```C#
+```C# Snippet:Readme_LoopVms
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 string rgName = "myResourceGroup";
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroup rg = await subscription.GetResourceGroups().GetAsync(rgName);
-await foreach (VirtualMachine vm in rg.GetVirtualMachines().GetAllAsync())
+await foreach (VirtualMachine vm in rg.GetVirtualMachines())
 {
     //previously we would have to take the resourceGroupName and the vmName from the vm object
     //and pass those into the powerOff method as well as we would need to execute that on a separate compute client
-    await vm.StartPowerOff().WaitForCompletionAsync();
+    await vm.PowerOffAsync(true);
 }
 ```
 
@@ -96,9 +97,9 @@ For most things, the parent will be a **ResourceGroup**. However, each parent / 
 ## Putting it all together
 Imagine that our company requires all virtual machines to be tagged with the owner. We're tasked with writing a program to add the tag to any missing virtual machines in a given resource group.
 
- ```C#
+ ```C# Snippet:Readme_PuttingItAllTogether
 // First we construct our armClient
-var armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 
 // Next we get a resource group object
 // ResourceGroup is a [Resource] object from above
@@ -111,40 +112,26 @@ VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
 
 // Next we loop over all vms in the collection
 // Each vm is a [Resource] object from above
-await foreach(VirtualMachine vm in vmCollection)
+await foreach (VirtualMachine vm in vmCollection)
 {
     // We access the [Resource]Data properties from vm.Data
-    if(!vm.Data.Tags.ContainsKey("owner"))
+    if (!vm.Data.Tags.ContainsKey("owner"))
     {
         // We can also access all operations from vm since it is already scoped for us
-        await vm.StartAddTag("owner", GetOwner()).WaitForCompletionAsync();
+        await vm.AddTagAsync("owner", "tagValue");
     }
 }
- ```
+```
 
 ## Structured Resource Identifier
 Resource IDs contain useful information about the resource itself, but they are plain strings that have to be parsed. Instead of implementing your own parsing logic, you can use a `ResourceIdentifier` object which will do the parsing for you: `new ResourceIdentifer("myid");`.
 
 ### Example: Parsing an ID using a ResourceIdentifier object 
 ```C# Snippet:Readme_CastToSpecificType
-string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
-ResourceIdentifier id = new ResourceIdentifier(resourceId);
+ResourceIdentifier id = new ResourceIdentifier("/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet");
 Console.WriteLine($"Subscription: {id.SubscriptionId}");
 Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");
 Console.WriteLine($"Vnet: {id.Parent.Name}");
-Console.WriteLine($"Subnet: {id.Name}");
-```
-However, keep in mind that some of those properties could be null. You can usually tell by the id string itself which type a resource ID is, but if you are unsure, check if the properties are null or use the Try methods to retrieve the values as it's shown below:
-
-### Example: ResourceIdentifier TryGet methods 
-```C# Snippet:Readme_CastToBaseResourceIdentifier
-string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
-ResourceIdentifier id = new ResourceIdentifier(resourceId);
-Console.WriteLine($"Subscription: {id.SubscriptionId}");
-Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");
-// Parent is only null when we reach the top of the chain which is a Tenant
-Console.WriteLine($"Vnet: {id.Parent.Name}");
-// Name will never be null
 Console.WriteLine($"Subnet: {id.Name}");
 ```
 
@@ -152,18 +139,8 @@ Console.WriteLine($"Subnet: {id.Name}");
 Performing operations on resources that already exist is a common use case when using the management client libraries. In this scenario you usually have the identifier of the resource you want to work on as a string. Although the new object hierarchy is great for provisioning and working within the scope of a given parent, it is not the most efficient when it comes to this specific scenario.  
 
 Here is an example how you to access an `AvailabilitySet` object and manage it directly with its id: 
-```C#
-using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Compute;
-using System;
-using System.Threading.Tasks;
-
-// Code omitted for brevity
-
-string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Compute/availabilitySets/ws2021availSet";
-ResourceIdentifier id = new ResourceIdentifier(resourceId);
+```C# Snippet:Readme_ManageAvailabilitySetOld
+ResourceIdentifier id = new ResourceIdentifier("/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Compute/availabilitySets/ws2021availSet");
 // We construct a new armClient to work with
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 // Next we get the specific subscription this resource belongs to
@@ -179,8 +156,27 @@ This approach required a lot of code and 3 API calls to Azure. The same can be d
 
 So, the previous example would end up looking like this:
 
-```C#
-string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Compute/availabilitySets/ws2021availSet";
+```C# Snippet:Readme_ManageAvailabilitySetNow
+ResourceIdentifier resourceId = new ResourceIdentifier("/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Compute/availabilitySets/ws2021availSet");
+// We construct a new armClient to work with
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+// Next we get the AvailabilitySet resource client from the armClient
+// The method takes in a ResourceIdentifier but we can use the implicit cast from string
+AvailabilitySet availabilitySet = armClient.GetAvailabilitySet(resourceId);
+// At this point availabilitySet.Data will be null and trying to access it will throw
+// If we want to retrieve the objects data we can simply call get
+availabilitySet = await availabilitySet.GetAsync();
+// we now have the data representing the availabilitySet
+Console.WriteLine(availabilitySet.Data.Name);
+```
+
+We also provide an option that if you only know the pieces that make up the `ResourceIdentifier` each resource provides a static method to construct the full string from those pieces.
+The above example would then look like this.
+```C# Snippet:Readme_ManageAvailabilitySetPieces
+string subscriptionId = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee";
+string resourceGroupName = "workshop2021-rg";
+string availabilitySetName = "ws2021availSet";
+ResourceIdentifier resourceId = AvailabilitySet.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
 // We construct a new armClient to work with
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 // Next we get the AvailabilitySet resource client from the armClient
@@ -284,8 +280,8 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 // Now we get a ResourceGroup collection for that subscription
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
-// With GetAllAsync(), we can get a list of the resources in the collection
-await foreach (ResourceGroup rg in rgCollection.GetAllAsync())
+// We can then iterate over this collection to get the resources in the collection
+await foreach (ResourceGroup rg in rgCollection)
 {
     Console.WriteLine(rg.Data.Name);
 }

@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal ApplicationArtifact() { }
         public Azure.ResourceManager.Resources.Models.ApplicationArtifactName Name { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ApplicationArtifactType Type { get { throw null; } }
-        public string Uri { get { throw null; } }
+        public System.Uri Uri { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ApplicationArtifactName : System.IEquatable<Azure.ResourceManager.Resources.Models.ApplicationArtifactName>
@@ -473,10 +473,10 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class ApplicationDefinitionArtifact
     {
-        public ApplicationDefinitionArtifact(Azure.ResourceManager.Resources.Models.ApplicationDefinitionArtifactName name, string uri, Azure.ResourceManager.Resources.Models.ApplicationArtifactType type) { }
+        public ApplicationDefinitionArtifact(Azure.ResourceManager.Resources.Models.ApplicationDefinitionArtifactName name, System.Uri uri, Azure.ResourceManager.Resources.Models.ApplicationArtifactType type) { }
         public Azure.ResourceManager.Resources.Models.ApplicationDefinitionArtifactName Name { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ApplicationArtifactType Type { get { throw null; } set { } }
-        public string Uri { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ApplicationDefinitionArtifactName : System.IEquatable<Azure.ResourceManager.Resources.Models.ApplicationDefinitionArtifactName>
@@ -558,8 +558,8 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class ApplicationNotificationEndpoint
     {
-        public ApplicationNotificationEndpoint(string uri) { }
-        public string Uri { get { throw null; } set { } }
+        public ApplicationNotificationEndpoint(System.Uri uri) { }
+        public System.Uri Uri { get { throw null; } set { } }
     }
     public partial class ApplicationNotificationPolicy
     {
@@ -1039,9 +1039,9 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class ParametersLink
     {
-        public ParametersLink(string uri) { }
+        public ParametersLink(System.Uri uri) { }
         public string ContentVersion { get { throw null; } set { } }
-        public string Uri { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
     }
     public enum PropertyChangeType
     {
@@ -1179,7 +1179,7 @@ namespace Azure.ResourceManager.Resources.Models
         public string Id { get { throw null; } set { } }
         public string QueryString { get { throw null; } set { } }
         public string RelativePath { get { throw null; } set { } }
-        public string Uri { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TemplateSpecExpandKind : System.IEquatable<Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind>

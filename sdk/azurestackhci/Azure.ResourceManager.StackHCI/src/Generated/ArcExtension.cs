@@ -193,10 +193,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <exception cref="ArgumentNullException"> <paramref name="extension"/> is null. </exception>
         public async virtual Task<ArmOperation<ArcExtension>> UpdateAsync(bool waitForCompletion, ArcExtensionData extension, CancellationToken cancellationToken = default)
         {
-            if (extension == null)
-            {
-                throw new ArgumentNullException(nameof(extension));
-            }
+            Argument.AssertNotNull(extension, nameof(extension));
 
             using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtension.Update");
             scope.Start();
@@ -226,10 +223,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <exception cref="ArgumentNullException"> <paramref name="extension"/> is null. </exception>
         public virtual ArmOperation<ArcExtension> Update(bool waitForCompletion, ArcExtensionData extension, CancellationToken cancellationToken = default)
         {
-            if (extension == null)
-            {
-                throw new ArgumentNullException(nameof(extension));
-            }
+            Argument.AssertNotNull(extension, nameof(extension));
 
             using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtension.Update");
             scope.Start();

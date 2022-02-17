@@ -114,7 +114,7 @@
         ],
         "x-ms-client-request-id": "54981549-b8d5-e45f-6a94-1edc91babf94",
         "x-ms-date": "Wed, 04 Aug 2021 00:35:14 GMT",
-        "x-ms-rename-source": "%2Ftest-filesystem-eabc2c51-8b49-ce8b-a15d-744126e612f4%2Ftest-file-45fb099e-c428-4373-a77b-e9dc42685c4f=",
+        "x-ms-rename-source": "/test-filesystem-eabc2c51-8b49-ce8b-a15d-744126e612f4/test-file-45fb099e-c428-4373-a77b-e9dc42685c4f",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2021-04-10"
       },

@@ -19,7 +19,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="baseDirectoryPath"> Absolute directory path where media files will be stored. </param>
         /// <param name="fileNamePattern"> File name pattern for creating new files when performing event based recording. The pattern must include at least one system variable. </param>
         /// <param name="maximumSizeMiB"> Maximum amount of disk space that can be used for storing files from this sink. Once this limit is reached, the oldest files from this sink will be automatically deleted. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, <paramref name="baseDirectoryPath"/>, <paramref name="fileNamePattern"/>, or <paramref name="maximumSizeMiB"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, <paramref name="baseDirectoryPath"/>, <paramref name="fileNamePattern"/> or <paramref name="maximumSizeMiB"/> is null. </exception>
         public FileSink(string name, IEnumerable<NodeInput> inputs, string baseDirectoryPath, string fileNamePattern, string maximumSizeMiB) : base(name, inputs)
         {
             if (name == null)
