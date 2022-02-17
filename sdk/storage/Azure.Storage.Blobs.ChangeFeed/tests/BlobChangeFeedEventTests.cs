@@ -4,9 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Azure.Storage.Blobs.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.ChangeFeed.Tests
@@ -25,11 +27,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             string rawText = File.ReadAllText(
                 $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}{"EventSchemaV1.json"}");
 
-            JsonSerializerSettings settings = new JsonSerializerSettings()
-            {
-                DateParseHandling = DateParseHandling.None
-            };
-            Dictionary<string, object> rawDictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(rawText, settings);
+            Dictionary<string, object> rawDictionary = DeserializeEvent(rawText);
 
             // Act
             BlobChangeFeedEvent changeFeedEvent = new BlobChangeFeedEvent(rawDictionary);
@@ -80,6 +78,29 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual(
                 "00000000000000010000000000000002000000000000001d",
                 changeFeedEvent.EventData.Sequencer);
+        }
+
+        private Dictionary<string, object> DeserializeEvent(string rawText)
+        {
+            JsonSerializerSettings settings = new JsonSerializerSettings()
+            {
+                DateParseHandling = DateParseHandling.None
+            };
+            Dictionary<string, object> rawDictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(rawText, settings);
+            ConvertChildOJObjectsToDictionaries(rawDictionary);
+            return rawDictionary;
+        }
+
+        private void ConvertChildOJObjectsToDictionaries(Dictionary<string, object> dictionary)
+        {
+            foreach (string key in dictionary.Keys.ToList())
+            {
+                if (dictionary[key].GetType() == typeof(JObject))
+                {
+                    dictionary[key] = ((JObject)dictionary[key]).ToObject<Dictionary<string, object>>();
+                    ConvertChildOJObjectsToDictionaries((Dictionary<string, object>)dictionary[key]);
+                }
+            }
         }
     }
 }
