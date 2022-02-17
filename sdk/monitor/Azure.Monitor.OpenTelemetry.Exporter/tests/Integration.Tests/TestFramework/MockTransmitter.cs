@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework
 {
@@ -15,14 +16,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework
     {
         public ConcurrentBag<TelemetryItem> TelemetryItems = new ConcurrentBag<TelemetryItem>();
 
-        public ValueTask<int> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken)
+        public ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken)
         {
             foreach (var telemetryItem in telemetryItems)
             {
                 this.TelemetryItems.Add(telemetryItem);
             }
 
-            return new ValueTask<int>(Task.FromResult(telemetryItems.Count()));
+            return new ValueTask<ExportResult>(Task.FromResult(ExportResult.Success));
         }
     }
 }
