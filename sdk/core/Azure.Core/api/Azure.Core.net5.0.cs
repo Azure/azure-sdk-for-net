@@ -872,9 +872,9 @@ namespace Azure.Core.Pipeline
         public override void Process(Azure.Core.HttpMessage message) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }
     }
-    public static partial class HttpMessageExtensions
+    public static partial class HttpMessageOptions
     {
-        public static void SetTelemetryPackageInfo(this Azure.Core.HttpMessage message, Azure.Core.Pipeline.TelemetryPackageInfo packageInfo) { }
+        public static void SetTelemetryPackage(Azure.Core.HttpMessage message, Azure.Core.Pipeline.TelemetryPackageInfo packageInfo) { }
     }
     public partial class HttpPipeline
     {
@@ -935,7 +935,7 @@ namespace Azure.Core.Pipeline
     {
         internal TelemetryPackageInfo() { }
         public string UserAgentValue { get { throw null; } }
-        public static Azure.Core.Pipeline.TelemetryPackageInfo Create<T>(string? applicationId = null) { throw null; }
+        public static Azure.Core.Pipeline.TelemetryPackageInfo FromType<T>(string? applicationId = null) { throw null; }
     }
 }
 namespace Azure.Core.Serialization

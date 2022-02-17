@@ -132,7 +132,7 @@ namespace Azure.Core.Tests
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
 
             var message = pipeline.CreateMessage();
-            message.SetTelemetryPackageInfo(TelemetryPackageInfo.Create<string>());
+            HttpMessageOptions.SetTelemetryPackage(message, TelemetryPackageInfo.FromType<string>());
             using Request request = message.Request;
             request.Method = RequestMethod.Get;
             request.Uri.Reset(new Uri("http://example.com"));
@@ -147,7 +147,11 @@ namespace Azure.Core.Tests
             }
 
             Assert.True(request.Headers.TryGetValue("User-Agent", out string value));
+#if NETFRAMEWORK
+            StringAssert.StartsWith($"azsdk-net-mscorlib/{informationalVersion} ", value);
+#else
             StringAssert.StartsWith($"azsdk-net-System.Private.CoreLib/{informationalVersion} ", value);
+#endif
         }
 
         [Test]

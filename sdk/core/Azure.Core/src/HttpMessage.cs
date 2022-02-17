@@ -14,7 +14,6 @@ namespace Azure.Core
     /// </summary>
     public sealed class HttpMessage : IDisposable
     {
-        private Dictionary<string, object>? _properties;
         private Dictionary<Type, object>? _typeProperties;
 
         private Response? _response;
@@ -103,7 +102,12 @@ namespace Azure.Core
         public bool TryGetProperty(string name, out object? value)
         {
             value = null;
-            return _properties?.TryGetValue(name, out value) == true;
+            if (_typeProperties == null || !_typeProperties.TryGetValue(typeof(PropertyKey), out var rawValue))
+            {
+                return false;
+            }
+            var properties = (Dictionary<string, object>)rawValue!;
+            return properties.TryGetValue(name, out value);
         }
 
         /// <summary>
@@ -113,9 +117,18 @@ namespace Azure.Core
         /// <param name="value">The property value.</param>
         public void SetProperty(string name, object value)
         {
-            _properties ??= new Dictionary<string, object>();
-
-            _properties[name] = value;
+            _typeProperties ??= new Dictionary<Type, object>();
+            Dictionary<string, object> properties;
+            if (!_typeProperties.TryGetValue(typeof(PropertyKey), out var rawValue))
+            {
+                properties = new Dictionary<string, object>();
+                _typeProperties[typeof(PropertyKey)] = properties;
+            }
+            else
+            {
+                properties = (Dictionary<string, object>)rawValue!;
+            }
+            properties[name] = value;
         }
 
         /// <summary>
@@ -218,5 +231,10 @@ namespace Azure.Core
                 set => throw CreateException();
             }
         }
+
+        /// <summary>
+        /// Exists as a private key entry into the <see cref="HttpMessage._typeProperties"/> dictionary for stashing string keyed entries in the Type keyed dictionary.
+        /// </summary>
+        private class PropertyKey {}
     }
 }

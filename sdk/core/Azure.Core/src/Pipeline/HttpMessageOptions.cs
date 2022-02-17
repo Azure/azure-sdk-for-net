@@ -6,7 +6,7 @@ namespace Azure.Core.Pipeline
     /// <summary>
     ///
     /// </summary>
-    public static class HttpMessageExtensions
+    public static class HttpMessageOptions
     {
         /// <summary>
         /// Sets the package name and version portion of the UserAgent telemetry value.
@@ -14,7 +14,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="message">The message to set this info on.</param>
         /// <param name="packageInfo"> </param>
-        public static void SetTelemetryPackageInfo(this HttpMessage message, TelemetryPackageInfo packageInfo)
+        public static void SetTelemetryPackage(HttpMessage message, TelemetryPackageInfo packageInfo)
         {
             message.SetInternalProperty(packageInfo);
         }
