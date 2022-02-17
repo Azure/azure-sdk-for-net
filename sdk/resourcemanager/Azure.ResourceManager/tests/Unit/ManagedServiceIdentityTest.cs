@@ -295,25 +295,6 @@ namespace Azure.ResourceManager.Tests
         }
 
         [TestCase]
-        public void TestSerializerValidUserEmptySystem()
-        {
-            UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity(new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47"), new Guid("de29bab1-49e1-4705-819b-4dfddceaaa98"));
-            var dict1 = new Dictionary<string, UserAssignedIdentity>();
-            dict1["/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity"] = userAssignedIdentity;
-            ManagedServiceIdentity identity = new ManagedServiceIdentity(null, null, ManagedServiceIdentityType.UserAssigned, dict1);
-            string system = "\"principalId\":\"null\",\"tenantId\":\"null\"";
-            string user = "{}";
-            string expected = "{" +
-                system + "," +
-                "\"type\":\"SystemAssigned, UserAssigned\"," +
-                "\"userAssignedIdentities\":" +
-                "{" + "\"/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity\":" +
-                user + "}}";
-
-            JsonAsserts.AssertConverterSerialization(expected, identity);
-        }
-
-        [TestCase]
         public void TestSerializerValidUserNullSystem()
         {
             UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity(new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47"), new Guid("de29bab1-49e1-4705-819b-4dfddceaaa98"));
@@ -321,30 +302,12 @@ namespace Azure.ResourceManager.Tests
             dict1["/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity"] = userAssignedIdentity;
             ManagedServiceIdentity identity = new ManagedServiceIdentity(null, null, ManagedServiceIdentityType.UserAssigned, dict1);
             string user = "{}";
-            string expected = "{" +
-                "\"type\":\"UserAssigned\"," +
+            string expected = "{\"type\":\"UserAssigned\"," +
                 "\"userAssignedIdentities\":" +
                 "{" + "\"/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity\":" +
                 user + "}}";
 
             JsonAsserts.AssertConverterSerialization(expected, identity);
         }
-
-        //[TestCase]
-        //public void TestSerializerInvalidNullWriter()
-        //{
-        //    ResourceIdentity identity = new ResourceIdentity();
-        //    var serializable = identity as IUtf8JsonSerializable;
-        //    Assert.Throws<ArgumentNullException>(delegate
-        //    { serializable.Write(null); });
-        //}
-
-        //[TestCase]
-        //public void TestSerializerInvalidNullIdentity()
-        //{
-        //    ManagedServiceIdentity identity = null;
-        //    Assert.Throws<NullReferenceException>(delegate
-        //    { JsonAsserts.AssertSerializes(identity); });
-        //}
     }
 }
