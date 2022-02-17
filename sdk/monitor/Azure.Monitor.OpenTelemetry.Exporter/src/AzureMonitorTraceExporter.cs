@@ -18,7 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private readonly string _instrumentationKey;
         private readonly ResourceParser _resourceParser;
         private readonly StorageTransmissionEvaluator _storageTransmissionEvaluator;
-        private readonly const int SampleSize = 10;
+        private const int SampleSize = 10;
 
         public AzureMonitorTraceExporter(AzureMonitorExporterOptions options) : this(options, new AzureMonitorTransmitter(options))
         {
@@ -32,8 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             _resourceParser = new ResourceParser();
 
             // Todo: Add check if offline storage is enabled by user via options
-            // then only initialize.
-            _storageTransmissionEvaluator = new StorageTransmissionEvaluator(sampleSize: 10);
+            _storageTransmissionEvaluator = new StorageTransmissionEvaluator(SampleSize);
         }
 
         /// <inheritdoc/>
@@ -65,9 +64,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 _storageTransmissionEvaluator.UpdateExportDuration(currentExportDuration);
 
-                long maxFileToTransmit = _storageTransmissionEvaluator.MaxFilesToTransmitFromStorage();
+                long maxFilesToTransmit = _storageTransmissionEvaluator.MaxFilesToTransmitFromStorage();
 
-                _transmitter.TransmitFromStorage(maxFileToTransmit);
+                _transmitter.TransmitFromStorage(maxFilesToTransmit, false, CancellationToken.None);
 
                 return ExportResult.Success;
             }
