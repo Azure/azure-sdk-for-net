@@ -109,6 +109,8 @@ namespace Azure.Core
                 Policies.AddRange(context.Policies);
             }
 
+            context.Freeze();
+
             if (context.StatusCodes != null || context.MessageClassifiers != null)
             {
                 _statusCodes = context.StatusCodes;

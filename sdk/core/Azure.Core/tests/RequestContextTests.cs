@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
@@ -194,6 +195,15 @@ namespace Azure.Core.Tests
             Assert.AreEqual(2, beforeTransportValues.Count());
             Assert.AreEqual("ClientOptions", beforeTransportValues.ElementAt(0));
             Assert.AreEqual("RequestContext", beforeTransportValues.ElementAt(1));
+        }
+
+        [Test]
+        public void ThrowsWhenFrozen()
+        {
+            RequestContext context = new RequestContext();
+            context.AddClassifier(404, false);
+            context.Freeze();
+            Assert.Throws<InvalidOperationException>(() => context.AddClassifier(304, true));
         }
 
         [Test]

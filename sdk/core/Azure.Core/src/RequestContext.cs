@@ -14,11 +14,13 @@ namespace Azure
     /// </summary>
     public class RequestContext
     {
+        private HttpMessageClassifier[]? _classifiers;
+        private bool _frozen;
+
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
 
         internal List<(int Status, bool IsError)>? StatusCodes { get; private set; }
 
-        private HttpMessageClassifier[]? _classifiers;
         internal HttpMessageClassifier[]? MessageClassifiers
         {
             get { return _classifiers; }
@@ -73,6 +75,11 @@ namespace Azure
         /// <param name="isError">Whether the passed-in status code should be classified as an error.</param>
         public void AddClassifier(int statusCode, bool isError)
         {
+            if (_frozen)
+            {
+                throw new InvalidOperationException("Cannot modify this RequestContext after it has been used in a method call.");
+            }
+
             StatusCodes ??= new();
             StatusCodes.Add((statusCode, isError));
         }
@@ -88,9 +95,19 @@ namespace Azure
         /// <param name="classifier">The custom classifier.</param>
         public void AddClassifier(HttpMessageClassifier classifier)
         {
+            if (_frozen)
+            {
+                throw new InvalidOperationException("Cannot modify this RequestContext after it has been used in a method call.");
+            }
+
             int length = _classifiers == null ? 0 : _classifiers.Length;
             Array.Resize(ref _classifiers, length + 1);
             _classifiers[length] = classifier;
+        }
+
+        internal void Freeze()
+        {
+            _frozen = true;
         }
     }
 }
