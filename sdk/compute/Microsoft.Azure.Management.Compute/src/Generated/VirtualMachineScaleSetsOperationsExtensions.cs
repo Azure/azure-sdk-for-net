@@ -1061,12 +1061,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set to create or update.
             /// </param>
-            /// <param name='parameters'>
-            /// The input object for SetOrchestrationServiceState API.
+            /// <param name='action'>
+            /// The action to be performed. Possible values include: 'Resume', 'Suspend'
             /// </param>
-            public static void SetOrchestrationServiceState(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, OrchestrationServiceStateInput parameters)
+            public static void SetOrchestrationServiceState(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, string action)
             {
-                operations.SetOrchestrationServiceStateAsync(resourceGroupName, vmScaleSetName, parameters).GetAwaiter().GetResult();
+                operations.SetOrchestrationServiceStateAsync(resourceGroupName, vmScaleSetName, action).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1081,15 +1081,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set to create or update.
             /// </param>
-            /// <param name='parameters'>
-            /// The input object for SetOrchestrationServiceState API.
+            /// <param name='action'>
+            /// The action to be performed. Possible values include: 'Resume', 'Suspend'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task SetOrchestrationServiceStateAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, OrchestrationServiceStateInput parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task SetOrchestrationServiceStateAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, string action, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.SetOrchestrationServiceStateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.SetOrchestrationServiceStateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, action, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -1739,12 +1739,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set to create or update.
             /// </param>
-            /// <param name='parameters'>
-            /// The input object for SetOrchestrationServiceState API.
+            /// <param name='action'>
+            /// The action to be performed. Possible values include: 'Resume', 'Suspend'
             /// </param>
-            public static void BeginSetOrchestrationServiceState(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, OrchestrationServiceStateInput parameters)
+            public static void BeginSetOrchestrationServiceState(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, string action)
             {
-                operations.BeginSetOrchestrationServiceStateAsync(resourceGroupName, vmScaleSetName, parameters).GetAwaiter().GetResult();
+                operations.BeginSetOrchestrationServiceStateAsync(resourceGroupName, vmScaleSetName, action).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1759,15 +1759,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set to create or update.
             /// </param>
-            /// <param name='parameters'>
-            /// The input object for SetOrchestrationServiceState API.
+            /// <param name='action'>
+            /// The action to be performed. Possible values include: 'Resume', 'Suspend'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginSetOrchestrationServiceStateAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, OrchestrationServiceStateInput parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginSetOrchestrationServiceStateAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, string action, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginSetOrchestrationServiceStateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginSetOrchestrationServiceStateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, action, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
