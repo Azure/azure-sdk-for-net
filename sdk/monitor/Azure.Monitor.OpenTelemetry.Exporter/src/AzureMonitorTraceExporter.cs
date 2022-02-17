@@ -38,6 +38,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <inheritdoc/>
         public override ExportResult Export(in Batch<Activity> batch)
         {
+            // Add export time interval to data sample
             _storageTransmissionEvaluator?.UpdateExportInterval();
 
             // Prevent Azure Monitor's HTTP operations from being instrumented.
@@ -45,8 +46,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                // Get timestamp in ticks before export
-                long timeStampInTicksBeforeExport =  Stopwatch.GetTimestamp();
+                // Get number ticks before export
+                long ticksBeforeExport =  Stopwatch.GetTimestamp();
 
                 var resource = ParentProvider.GetResource();
                 _resourceParser.UpdateRoleNameAndInstance(resource);
@@ -56,16 +57,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 // TODO: Validate CancellationToken and async pattern here.
                 _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
-                // Get timestamp in ticks After export
-                long timeStampInTicksAfterExport = Stopwatch.GetTimestamp();
+                // Get number of ticks after export
+                long ticksAfterExport = Stopwatch.GetTimestamp();
 
-                // Calculate duration
-                double currentExportDuration = TimeSpan.FromTicks(timeStampInTicksAfterExport - timeStampInTicksBeforeExport).TotalSeconds;
-
+                // Calculate duration and add it to data sample
+                double currentExportDuration = TimeSpan.FromTicks(ticksAfterExport - ticksBeforeExport).TotalSeconds;
                 _storageTransmissionEvaluator.UpdateExportDuration(currentExportDuration);
 
+                // Get max number of files we can transmit in this export and start transmitting
                 long maxFilesToTransmit = _storageTransmissionEvaluator.MaxFilesToTransmitFromStorage();
-
                 _transmitter.TransmitFromStorage(maxFilesToTransmit, false, CancellationToken.None);
 
                 return ExportResult.Success;
