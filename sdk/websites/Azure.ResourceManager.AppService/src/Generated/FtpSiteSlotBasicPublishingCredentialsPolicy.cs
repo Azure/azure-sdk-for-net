@@ -141,10 +141,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
         public async virtual Task<ArmOperation<FtpSiteSlotBasicPublishingCredentialsPolicy>> CreateOrUpdateAsync(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
         {
-            if (csmPublishingAccessPoliciesEntity == null)
-            {
-                throw new ArgumentNullException(nameof(csmPublishingAccessPoliciesEntity));
-            }
+            Argument.AssertNotNull(csmPublishingAccessPoliciesEntity, nameof(csmPublishingAccessPoliciesEntity));
 
             using var scope = _ftpSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateScope("FtpSiteSlotBasicPublishingCredentialsPolicy.CreateOrUpdate");
             scope.Start();
@@ -174,10 +171,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
         public virtual ArmOperation<FtpSiteSlotBasicPublishingCredentialsPolicy> CreateOrUpdate(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
         {
-            if (csmPublishingAccessPoliciesEntity == null)
-            {
-                throw new ArgumentNullException(nameof(csmPublishingAccessPoliciesEntity));
-            }
+            Argument.AssertNotNull(csmPublishingAccessPoliciesEntity, nameof(csmPublishingAccessPoliciesEntity));
 
             using var scope = _ftpSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateScope("FtpSiteSlotBasicPublishingCredentialsPolicy.CreateOrUpdate");
             scope.Start();

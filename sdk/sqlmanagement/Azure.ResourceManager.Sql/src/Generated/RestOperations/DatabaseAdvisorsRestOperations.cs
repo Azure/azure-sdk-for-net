@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
         public async Task<Response<IReadOnlyList<AdvisorData>>> ListByDatabaseAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
         public Response<IReadOnlyList<AdvisorData>> ListByDatabase(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="advisorName"> The name of the Database Advisor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="advisorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="advisorName"/> is null. </exception>
         public async Task<Response<AdvisorData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="advisorName"> The name of the Database Advisor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="advisorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="advisorName"/> is null. </exception>
         public Response<AdvisorData> Get(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="advisorName"> The name of the Database Advisor. </param>
         /// <param name="parameters"> The requested advisor resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="advisorName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="advisorName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<AdvisorData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName, AdvisorData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="advisorName"> The name of the Database Advisor. </param>
         /// <param name="parameters"> The requested advisor resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="advisorName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="advisorName"/> or <paramref name="parameters"/> is null. </exception>
         public Response<AdvisorData> Update(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName, AdvisorData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)

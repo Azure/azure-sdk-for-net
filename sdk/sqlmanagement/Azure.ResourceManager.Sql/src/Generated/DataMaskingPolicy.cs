@@ -146,10 +146,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<DataMaskingPolicy>> CreateOrUpdateAsync(bool waitForCompletion, DataMaskingPolicyData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _dataMaskingPolicyClientDiagnostics.CreateScope("DataMaskingPolicy.CreateOrUpdate");
             scope.Start();
@@ -179,10 +176,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<DataMaskingPolicy> CreateOrUpdate(bool waitForCompletion, DataMaskingPolicyData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _dataMaskingPolicyClientDiagnostics.CreateScope("DataMaskingPolicy.CreateOrUpdate");
             scope.Start();
@@ -209,15 +203,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="dataMaskingRuleName"> The name of the data masking rule. </param>
         /// <param name="parameters"> The required parameters for creating or updating a data masking rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataMaskingRuleName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataMaskingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataMaskingRuleName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<Response<DataMaskingRule>> CreateOrUpdateDataMaskingRuleAsync(string dataMaskingRuleName, DataMaskingRule parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataMaskingRuleName, nameof(dataMaskingRuleName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _dataMaskingRulesClientDiagnostics.CreateScope("DataMaskingPolicy.CreateOrUpdateDataMaskingRule");
             scope.Start();
@@ -241,15 +232,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="dataMaskingRuleName"> The name of the data masking rule. </param>
         /// <param name="parameters"> The required parameters for creating or updating a data masking rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataMaskingRuleName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataMaskingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataMaskingRuleName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual Response<DataMaskingRule> CreateOrUpdateDataMaskingRule(string dataMaskingRuleName, DataMaskingRule parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataMaskingRuleName, nameof(dataMaskingRuleName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _dataMaskingRulesClientDiagnostics.CreateScope("DataMaskingPolicy.CreateOrUpdateDataMaskingRule");
             scope.Start();

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="targetResourceId"> The resource identifier of the target resource against which the action is to be performed. </param>
         /// <param name="sourceIPAddress"> The source IP address. </param>
         /// <param name="destinationIPAddress"> The destination IP address. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="sourceIPAddress"/>, or <paramref name="destinationIPAddress"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="sourceIPAddress"/> or <paramref name="destinationIPAddress"/> is null. </exception>
         public NextHopParameters(string targetResourceId, string sourceIPAddress, string destinationIPAddress)
         {
             if (targetResourceId == null)

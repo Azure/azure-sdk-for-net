@@ -11,6 +11,7 @@ using Azure.Core.Pipeline;
 
 using Azure.Monitor.OpenTelemetry.Exporter.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using OpenTelemetry;
 using OpenTelemetry.Contrib.Extensions.PersistentStorage;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
@@ -43,11 +44,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             _applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), host: ingestionEndpoint);
         }
 
-        public async ValueTask<int> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken)
+        public async ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken)
         {
-            // TODO
-            // Change return type of this function to ExportResult
-            int result = 0;
+            ExportResult result = ExportResult.Failure;
             if (cancellationToken.IsCancellationRequested)
             {
                 return result;
@@ -56,20 +55,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             try
             {
                 using var httpMessage = async ?
-                    await this._applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
-                    this._applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
+                    await _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
+                    _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
 
-                if (httpMessage != null)
+                result = IsSuccess(httpMessage);
+
+                if (result == ExportResult.Failure && _storage != null)
                 {
-                    if (_storage == null && httpMessage.HasResponse && httpMessage.Response.Status == ResponseStatusCodes.Success)
-                    {
-                        result = 1;
-                    }
-                    else
-                    {
-                        HandleFailures(httpMessage);
-                        result = 1;
-                    }
+                    result = HandleFailures(httpMessage);
                 }
             }
             catch (Exception ex)
@@ -80,61 +73,67 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return result;
         }
 
-        private void HandleFailures(HttpMessage httpMessage)
+        private static ExportResult IsSuccess(HttpMessage httpMessage)
         {
-            if (httpMessage.HasResponse)
+            if (httpMessage.HasResponse && httpMessage.Response.Status == ResponseStatusCodes.Success)
             {
-                HandleFailureResponseCodes(httpMessage);
+                return ExportResult.Success;
+            }
+
+            return ExportResult.Failure;
+        }
+
+        private ExportResult HandleFailures(HttpMessage httpMessage)
+        {
+            ExportResult result = ExportResult.Failure;
+            byte[] content;
+            int retryInterval;
+
+            if (!httpMessage.HasResponse)
+            {
+                // HttpRequestException
+                content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
+                result = _storage.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
             }
             else
             {
-                // HttpRequestException
-                var content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
-                _storage.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
-            }
-        }
-
-        private void HandleFailureResponseCodes(HttpMessage httpMessage)
-        {
-            byte[] content;
-            int retryInterval;
-            switch (httpMessage.Response.Status)
-            {
-                case ResponseStatusCodes.Success:
-                    // log successful message
-                    break;
-                case ResponseStatusCodes.PartialSuccess:
-                    // Parse retry-after header
-                    // Send Failed Messages To Storage
-                    TrackResponse trackResponse = HttpPipelineHelper.GetTrackResponse(httpMessage);
-                    content = HttpPipelineHelper.GetPartialContentForRetry(trackResponse, httpMessage.Request.Content);
-                    if (content != null)
-                    {
+                switch (httpMessage.Response.Status)
+                {
+                    case ResponseStatusCodes.PartialSuccess:
+                        // Parse retry-after header
+                        // Send Failed Messages To Storage
+                        TrackResponse trackResponse = HttpPipelineHelper.GetTrackResponse(httpMessage);
+                        content = HttpPipelineHelper.GetPartialContentForRetry(trackResponse, httpMessage.Request.Content);
+                        if (content != null)
+                        {
+                            retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
+                            result = _storage.SaveTelemetry(content, retryInterval);
+                        }
+                        break;
+                    case ResponseStatusCodes.RequestTimeout:
+                    case ResponseStatusCodes.ResponseCodeTooManyRequests:
+                    case ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache:
+                        // Parse retry-after header
+                        // Send Messages To Storage
+                        content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
                         retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
-                        _storage.SaveTelemetry(content, retryInterval);
-                    }
-                    break;
-                case ResponseStatusCodes.RequestTimeout:
-                case ResponseStatusCodes.ResponseCodeTooManyRequests:
-                case ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache:
-                    // Parse retry-after header
-                    // Send Messages To Storage
-                    content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
-                    retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
-                    _storage.SaveTelemetry(content, retryInterval);
-                    break;
-                case ResponseStatusCodes.InternalServerError:
-                case ResponseStatusCodes.BadGateway:
-                case ResponseStatusCodes.ServiceUnavailable:
-                case ResponseStatusCodes.GatewayTimeout:
-                    // Send Messages To Storage
-                    content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
-                    _storage.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
-                    break;
-                default:
-                    // Log Non-Retriable Status and don't retry or store;
-                    break;
+                        result = _storage.SaveTelemetry(content, retryInterval);
+                        break;
+                    case ResponseStatusCodes.InternalServerError:
+                    case ResponseStatusCodes.BadGateway:
+                    case ResponseStatusCodes.ServiceUnavailable:
+                    case ResponseStatusCodes.GatewayTimeout:
+                        // Send Messages To Storage
+                        content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
+                        result =_storage.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
+                        break;
+                    default:
+                        // Log Non-Retriable Status and don't retry or store;
+                        break;
+                }
             }
+
+            return result;
         }
     }
 }

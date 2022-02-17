@@ -9,6 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Resources;
 
@@ -127,10 +128,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
         public async static Task<Response> MoveAsync(this ResourceGroup resourceGroup, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
-            if (moveResourceEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(moveResourceEnvelope));
-            }
+            Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
 
             return await GetExtensionClient(resourceGroup).MoveAsync(moveResourceEnvelope, cancellationToken).ConfigureAwait(false);
         }
@@ -146,10 +144,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
         public static Response Move(this ResourceGroup resourceGroup, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
-            if (moveResourceEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(moveResourceEnvelope));
-            }
+            Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
 
             return GetExtensionClient(resourceGroup).Move(moveResourceEnvelope, cancellationToken);
         }
@@ -165,10 +160,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="validateRequest"/> is null. </exception>
         public async static Task<Response<ValidateResponse>> ValidateAsync(this ResourceGroup resourceGroup, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
         {
-            if (validateRequest == null)
-            {
-                throw new ArgumentNullException(nameof(validateRequest));
-            }
+            Argument.AssertNotNull(validateRequest, nameof(validateRequest));
 
             return await GetExtensionClient(resourceGroup).ValidateAsync(validateRequest, cancellationToken).ConfigureAwait(false);
         }
@@ -184,10 +176,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="validateRequest"/> is null. </exception>
         public static Response<ValidateResponse> Validate(this ResourceGroup resourceGroup, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
         {
-            if (validateRequest == null)
-            {
-                throw new ArgumentNullException(nameof(validateRequest));
-            }
+            Argument.AssertNotNull(validateRequest, nameof(validateRequest));
 
             return GetExtensionClient(resourceGroup).Validate(validateRequest, cancellationToken);
         }
@@ -203,10 +192,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
         public async static Task<Response> ValidateMoveAsync(this ResourceGroup resourceGroup, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
-            if (moveResourceEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(moveResourceEnvelope));
-            }
+            Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
 
             return await GetExtensionClient(resourceGroup).ValidateMoveAsync(moveResourceEnvelope, cancellationToken).ConfigureAwait(false);
         }
@@ -222,10 +208,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
         public static Response ValidateMove(this ResourceGroup resourceGroup, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
-            if (moveResourceEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(moveResourceEnvelope));
-            }
+            Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
 
             return GetExtensionClient(resourceGroup).ValidateMove(moveResourceEnvelope, cancellationToken);
         }

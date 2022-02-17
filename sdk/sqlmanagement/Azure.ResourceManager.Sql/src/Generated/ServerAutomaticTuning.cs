@@ -140,10 +140,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<Response<ServerAutomaticTuning>> UpdateAsync(ServerAutomaticTuningData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _serverAutomaticTuningClientDiagnostics.CreateScope("ServerAutomaticTuning.Update");
             scope.Start();
@@ -169,10 +166,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual Response<ServerAutomaticTuning> Update(ServerAutomaticTuningData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _serverAutomaticTuningClientDiagnostics.CreateScope("ServerAutomaticTuning.Update");
             scope.Start();
