@@ -872,7 +872,7 @@ namespace Azure.Core.Pipeline
         public override void Process(Azure.Core.HttpMessage message) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }
     }
-    public static partial class HttpMessageEtensions
+    public static partial class HttpMessageExtensions
     {
         public static void SetTelemetryPackageInfo(this Azure.Core.HttpMessage message, Azure.Core.Pipeline.TelemetryPackageInfo packageInfo) { }
     }
