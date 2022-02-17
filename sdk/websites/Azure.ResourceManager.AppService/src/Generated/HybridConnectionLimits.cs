@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal HybridConnectionLimits(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _hybridConnectionLimitsAppServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string hybridConnectionLimitsAppServicePlansApiVersion);
+            TryGetApiVersion(ResourceType, out string hybridConnectionLimitsAppServicePlansApiVersion);
             _hybridConnectionLimitsAppServicePlansRestClient = new AppServicePlansRestOperations(_hybridConnectionLimitsAppServicePlansClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hybridConnectionLimitsAppServicePlansApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

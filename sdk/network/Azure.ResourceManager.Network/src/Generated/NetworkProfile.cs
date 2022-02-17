@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkProfile(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _networkProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string networkProfileApiVersion);
+            TryGetApiVersion(ResourceType, out string networkProfileApiVersion);
             _networkProfileRestClient = new NetworkProfilesRestOperations(_networkProfileClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkProfileApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of PolicySetDefinition and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SubscriptionPolicySetDefinition and their operations over its parent. </summary>
     public partial class SubscriptionPolicySetDefinitionCollection : ArmCollection, IEnumerable<SubscriptionPolicySetDefinition>, IAsyncEnumerable<SubscriptionPolicySetDefinition>
     {
         private readonly ClientDiagnostics _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources
         internal SubscriptionPolicySetDefinitionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", SubscriptionPolicySetDefinition.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SubscriptionPolicySetDefinition.ResourceType, out string subscriptionPolicySetDefinitionPolicySetDefinitionsApiVersion);
+            TryGetApiVersion(SubscriptionPolicySetDefinition.ResourceType, out string subscriptionPolicySetDefinitionPolicySetDefinitionsApiVersion);
             _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient = new PolicySetDefinitionsRestOperations(_subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionPolicySetDefinitionPolicySetDefinitionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

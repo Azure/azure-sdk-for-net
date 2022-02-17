@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute
         internal VirtualMachineExtensionImage(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualMachineExtensionImageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string virtualMachineExtensionImageApiVersion);
+            TryGetApiVersion(ResourceType, out string virtualMachineExtensionImageApiVersion);
             _virtualMachineExtensionImageRestClient = new VirtualMachineExtensionImagesRestOperations(_virtualMachineExtensionImageClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualMachineExtensionImageApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

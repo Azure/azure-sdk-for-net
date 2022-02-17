@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         internal SyncAgent(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _syncAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string syncAgentApiVersion);
+            TryGetApiVersion(ResourceType, out string syncAgentApiVersion);
             _syncAgentRestClient = new SyncAgentsRestOperations(_syncAgentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, syncAgentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

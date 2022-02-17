@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql
         {
             _locationName = locationName;
             _instanceFailoverGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", InstanceFailoverGroup.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(InstanceFailoverGroup.ResourceType, out string instanceFailoverGroupApiVersion);
+            TryGetApiVersion(InstanceFailoverGroup.ResourceType, out string instanceFailoverGroupApiVersion);
             _instanceFailoverGroupRestClient = new InstanceFailoverGroupsRestOperations(_instanceFailoverGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, instanceFailoverGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

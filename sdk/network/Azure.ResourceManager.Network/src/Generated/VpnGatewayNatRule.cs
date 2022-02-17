@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
         internal VpnGatewayNatRule(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _vpnGatewayNatRuleNatRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string vpnGatewayNatRuleNatRulesApiVersion);
+            TryGetApiVersion(ResourceType, out string vpnGatewayNatRuleNatRulesApiVersion);
             _vpnGatewayNatRuleNatRulesRestClient = new NatRulesRestOperations(_vpnGatewayNatRuleNatRulesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vpnGatewayNatRuleNatRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

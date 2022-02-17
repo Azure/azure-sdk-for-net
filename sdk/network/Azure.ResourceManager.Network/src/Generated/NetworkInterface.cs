@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkInterface(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _networkInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string networkInterfaceApiVersion);
+            TryGetApiVersion(ResourceType, out string networkInterfaceApiVersion);
             _networkInterfaceRestClient = new NetworkInterfacesRestOperations(_networkInterfaceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkInterfaceApiVersion);
             _networkInterfaceLoadBalancersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _networkInterfaceLoadBalancersRestClient = new NetworkInterfaceLoadBalancersRestOperations(_networkInterfaceLoadBalancersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);

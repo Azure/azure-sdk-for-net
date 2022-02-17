@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute
         internal GalleryApplicationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _galleryApplicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", GalleryApplication.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(GalleryApplication.ResourceType, out string galleryApplicationApiVersion);
+            TryGetApiVersion(GalleryApplication.ResourceType, out string galleryApplicationApiVersion);
             _galleryApplicationRestClient = new GalleryApplicationsRestOperations(_galleryApplicationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, galleryApplicationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

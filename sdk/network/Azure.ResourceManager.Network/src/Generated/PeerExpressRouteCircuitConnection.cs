@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
         internal PeerExpressRouteCircuitConnection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _peerExpressRouteCircuitConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string peerExpressRouteCircuitConnectionApiVersion);
+            TryGetApiVersion(ResourceType, out string peerExpressRouteCircuitConnectionApiVersion);
             _peerExpressRouteCircuitConnectionRestClient = new PeerExpressRouteCircuitConnectionsRestOperations(_peerExpressRouteCircuitConnectionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, peerExpressRouteCircuitConnectionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

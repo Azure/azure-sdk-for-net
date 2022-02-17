@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Management
         internal ManagementGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managementGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Management", ManagementGroup.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ManagementGroup.ResourceType, out string managementGroupApiVersion);
+            TryGetApiVersion(ManagementGroup.ResourceType, out string managementGroupApiVersion);
             _managementGroupRestClient = new ManagementGroupsRestOperations(_managementGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managementGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

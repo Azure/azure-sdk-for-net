@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         internal DeletedServer(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _deletedServerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string deletedServerApiVersion);
+            TryGetApiVersion(ResourceType, out string deletedServerApiVersion);
             _deletedServerRestClient = new DeletedServersRestOperations(_deletedServerClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedServerApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

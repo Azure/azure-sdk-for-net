@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn
         internal AfdSecret(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _afdSecretClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string afdSecretApiVersion);
+            TryGetApiVersion(ResourceType, out string afdSecretApiVersion);
             _afdSecretRestClient = new AfdSecretsRestOperations(_afdSecretClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdSecretApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

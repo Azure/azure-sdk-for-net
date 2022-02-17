@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of AppServiceDetector and their operations over its parent. </summary>
+    /// <summary> A class representing collection of CertificateOrderDetector and their operations over its parent. </summary>
     public partial class CertificateOrderDetectorCollection : ArmCollection, IEnumerable<CertificateOrderDetector>, IAsyncEnumerable<CertificateOrderDetector>
     {
         private readonly ClientDiagnostics _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal CertificateOrderDetectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", CertificateOrderDetector.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(CertificateOrderDetector.ResourceType, out string certificateOrderDetectorCertificateOrdersDiagnosticsApiVersion);
+            TryGetApiVersion(CertificateOrderDetector.ResourceType, out string certificateOrderDetectorCertificateOrdersDiagnosticsApiVersion);
             _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient = new CertificateOrdersDiagnosticsRestOperations(_certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, certificateOrderDetectorCertificateOrdersDiagnosticsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal AseV3NetworkingConfiguration(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _aseV3NetworkingConfigurationAppServiceEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string aseV3NetworkingConfigurationAppServiceEnvironmentsApiVersion);
+            TryGetApiVersion(ResourceType, out string aseV3NetworkingConfigurationAppServiceEnvironmentsApiVersion);
             _aseV3NetworkingConfigurationAppServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_aseV3NetworkingConfigurationAppServiceEnvironmentsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, aseV3NetworkingConfigurationAppServiceEnvironmentsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

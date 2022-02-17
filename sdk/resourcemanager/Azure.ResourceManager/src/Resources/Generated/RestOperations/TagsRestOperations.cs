@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateUpdateAtScopeRequest(string scope, TagPatchResource parameters)
+        internal HttpMessage CreateUpdateAtScopeRequest(string scope, TagResourceUpdateOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(options);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -562,21 +562,21 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </summary>
         /// <param name="scope"> The resource scope. </param>
-        /// <param name="parameters"> The TagPatchResource to use. </param>
+        /// <param name="options"> The TagResourceUpdateOptions to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<TagResourceData>> UpdateAtScopeAsync(string scope, TagPatchResource parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="options"/> is null. </exception>
+        public async Task<Response<TagResourceData>> UpdateAtScopeAsync(string scope, TagResourceUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
                 throw new ArgumentNullException(nameof(scope));
             }
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateAtScopeRequest(scope, parameters);
+            using var message = CreateUpdateAtScopeRequest(scope, options);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -594,21 +594,21 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </summary>
         /// <param name="scope"> The resource scope. </param>
-        /// <param name="parameters"> The TagPatchResource to use. </param>
+        /// <param name="options"> The TagResourceUpdateOptions to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="parameters"/> is null. </exception>
-        public Response<TagResourceData> UpdateAtScope(string scope, TagPatchResource parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="options"/> is null. </exception>
+        public Response<TagResourceData> UpdateAtScope(string scope, TagResourceUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
                 throw new ArgumentNullException(nameof(scope));
             }
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateAtScopeRequest(scope, parameters);
+            using var message = CreateUpdateAtScopeRequest(scope, options);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Storage
         internal StorageQueueCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _storageQueueQueueClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", StorageQueue.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(StorageQueue.ResourceType, out string storageQueueQueueApiVersion);
+            TryGetApiVersion(StorageQueue.ResourceType, out string storageQueueQueueApiVersion);
             _storageQueueQueueRestClient = new QueueRestOperations(_storageQueueQueueClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, storageQueueQueueApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

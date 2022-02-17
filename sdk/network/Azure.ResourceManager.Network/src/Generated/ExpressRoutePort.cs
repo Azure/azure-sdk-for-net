@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         internal ExpressRoutePort(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _expressRoutePortClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string expressRoutePortApiVersion);
+            TryGetApiVersion(ResourceType, out string expressRoutePortApiVersion);
             _expressRoutePortRestClient = new ExpressRoutePortsRestOperations(_expressRoutePortClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRoutePortApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

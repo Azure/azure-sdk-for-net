@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal AzureFirewallCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _azureFirewallClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", AzureFirewall.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(AzureFirewall.ResourceType, out string azureFirewallApiVersion);
+            TryGetApiVersion(AzureFirewall.ResourceType, out string azureFirewallApiVersion);
             _azureFirewallRestClient = new AzureFirewallsRestOperations(_azureFirewallClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, azureFirewallApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

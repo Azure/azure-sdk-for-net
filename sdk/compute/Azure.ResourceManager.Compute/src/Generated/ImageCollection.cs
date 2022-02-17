@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute
         internal ImageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _imageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", Image.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(Image.ResourceType, out string imageApiVersion);
+            TryGetApiVersion(Image.ResourceType, out string imageApiVersion);
             _imageRestClient = new ImagesRestOperations(_imageClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, imageApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

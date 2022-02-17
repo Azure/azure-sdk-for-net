@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal VpnSiteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _vpnSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnSite.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(VpnSite.ResourceType, out string vpnSiteApiVersion);
+            TryGetApiVersion(VpnSite.ResourceType, out string vpnSiteApiVersion);
             _vpnSiteRestClient = new VpnSitesRestOperations(_vpnSiteClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vpnSiteApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.EdgeOrder
         internal OrderResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _orderResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", OrderResource.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(OrderResource.ResourceType, out string orderResourceApiVersion);
+            TryGetApiVersion(OrderResource.ResourceType, out string orderResourceApiVersion);
             _orderResourceRestClient = new EdgeOrderManagementRestOperations(_orderResourceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, orderResourceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

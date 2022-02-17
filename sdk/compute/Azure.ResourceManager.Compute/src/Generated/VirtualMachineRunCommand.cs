@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute
         internal VirtualMachineRunCommand(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualMachineRunCommandClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string virtualMachineRunCommandApiVersion);
+            TryGetApiVersion(ResourceType, out string virtualMachineRunCommandApiVersion);
             _virtualMachineRunCommandRestClient = new VirtualMachineRunCommandsRestOperations(_virtualMachineRunCommandClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualMachineRunCommandApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

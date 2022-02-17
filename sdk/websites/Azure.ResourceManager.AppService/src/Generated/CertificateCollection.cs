@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         internal CertificateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _certificateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", Certificate.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(Certificate.ResourceType, out string certificateApiVersion);
+            TryGetApiVersion(Certificate.ResourceType, out string certificateApiVersion);
             _certificateRestClient = new CertificatesRestOperations(_certificateClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, certificateApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute
         internal OSVersion(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _oSVersionCloudServiceOperatingSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string oSVersionCloudServiceOperatingSystemsApiVersion);
+            TryGetApiVersion(ResourceType, out string oSVersionCloudServiceOperatingSystemsApiVersion);
             _oSVersionCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(_oSVersionCloudServiceOperatingSystemsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, oSVersionCloudServiceOperatingSystemsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

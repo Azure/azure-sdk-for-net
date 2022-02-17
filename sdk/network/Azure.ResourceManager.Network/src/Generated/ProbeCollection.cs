@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         internal ProbeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _probeLoadBalancerProbesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", Probe.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(Probe.ResourceType, out string probeLoadBalancerProbesApiVersion);
+            TryGetApiVersion(Probe.ResourceType, out string probeLoadBalancerProbesApiVersion);
             _probeLoadBalancerProbesRestClient = new LoadBalancerProbesRestOperations(_probeLoadBalancerProbesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, probeLoadBalancerProbesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal PacketCaptureCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _packetCaptureClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", PacketCapture.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(PacketCapture.ResourceType, out string packetCaptureApiVersion);
+            TryGetApiVersion(PacketCapture.ResourceType, out string packetCaptureApiVersion);
             _packetCaptureRestClient = new PacketCapturesRestOperations(_packetCaptureClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, packetCaptureApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

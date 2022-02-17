@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Storage
         internal DeletedAccountCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _deletedAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", DeletedAccount.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(DeletedAccount.ResourceType, out string deletedAccountApiVersion);
+            TryGetApiVersion(DeletedAccount.ResourceType, out string deletedAccountApiVersion);
             _deletedAccountRestClient = new DeletedAccountsRestOperations(_deletedAccountClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedAccountApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Storage
         internal BlobService(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _blobServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string blobServiceApiVersion);
+            TryGetApiVersion(ResourceType, out string blobServiceApiVersion);
             _blobServiceRestClient = new BlobServicesRestOperations(_blobServiceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, blobServiceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

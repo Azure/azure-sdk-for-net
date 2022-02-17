@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StoragePool
         internal DiskPool(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _diskPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StoragePool", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string diskPoolApiVersion);
+            TryGetApiVersion(ResourceType, out string diskPoolApiVersion);
             _diskPoolRestClient = new DiskPoolsRestOperations(_diskPoolClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diskPoolApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -197,22 +197,22 @@ namespace Azure.ResourceManager.StoragePool
         /// Operation Id: DiskPools_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="diskPoolUpdatePayload"> Request payload for Disk Pool update operation. </param>
+        /// <param name="options"> Request payload for Disk Pool update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolUpdatePayload"/> is null. </exception>
-        public async virtual Task<ArmOperation<DiskPool>> UpdateAsync(bool waitForCompletion, DiskPoolUpdate diskPoolUpdatePayload, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<ArmOperation<DiskPool>> UpdateAsync(bool waitForCompletion, DiskPoolUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (diskPoolUpdatePayload == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(diskPoolUpdatePayload));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPool.Update");
             scope.Start();
             try
             {
-                var response = await _diskPoolRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diskPoolUpdatePayload, cancellationToken).ConfigureAwait(false);
-                var operation = new StoragePoolArmOperation<DiskPool>(new DiskPoolOperationSource(Client), _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diskPoolUpdatePayload).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _diskPoolRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var operation = new StoragePoolArmOperation<DiskPool>(new DiskPoolOperationSource(Client), _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -230,22 +230,22 @@ namespace Azure.ResourceManager.StoragePool
         /// Operation Id: DiskPools_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="diskPoolUpdatePayload"> Request payload for Disk Pool update operation. </param>
+        /// <param name="options"> Request payload for Disk Pool update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolUpdatePayload"/> is null. </exception>
-        public virtual ArmOperation<DiskPool> Update(bool waitForCompletion, DiskPoolUpdate diskPoolUpdatePayload, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual ArmOperation<DiskPool> Update(bool waitForCompletion, DiskPoolUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (diskPoolUpdatePayload == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(diskPoolUpdatePayload));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPool.Update");
             scope.Start();
             try
             {
-                var response = _diskPoolRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diskPoolUpdatePayload, cancellationToken);
-                var operation = new StoragePoolArmOperation<DiskPool>(new DiskPoolOperationSource(Client), _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diskPoolUpdatePayload).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _diskPoolRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var operation = new StoragePoolArmOperation<DiskPool>(new DiskPoolOperationSource(Client), _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

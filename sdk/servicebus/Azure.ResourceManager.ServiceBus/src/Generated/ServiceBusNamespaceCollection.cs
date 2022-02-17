@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceBus
         internal ServiceBusNamespaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serviceBusNamespaceNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusNamespace.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ServiceBusNamespace.ResourceType, out string serviceBusNamespaceNamespacesApiVersion);
+            TryGetApiVersion(ServiceBusNamespace.ResourceType, out string serviceBusNamespaceNamespacesApiVersion);
             _serviceBusNamespaceNamespacesRestClient = new NamespacesRestOperations(_serviceBusNamespaceNamespacesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serviceBusNamespaceNamespacesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

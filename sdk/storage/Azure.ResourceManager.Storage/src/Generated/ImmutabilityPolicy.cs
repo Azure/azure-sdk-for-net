@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Storage
         internal ImmutabilityPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _immutabilityPolicyBlobContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string immutabilityPolicyBlobContainersApiVersion);
+            TryGetApiVersion(ResourceType, out string immutabilityPolicyBlobContainersApiVersion);
             _immutabilityPolicyBlobContainersRestClient = new BlobContainersRestOperations(_immutabilityPolicyBlobContainersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, immutabilityPolicyBlobContainersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

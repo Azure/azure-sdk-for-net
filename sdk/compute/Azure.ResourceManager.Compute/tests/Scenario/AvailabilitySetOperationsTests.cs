@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var setName = Recording.GenerateAssetName("testAS-");
             var set = await CreateAvailabilitySetAsync(setName);
             var updatedPlatformFaultDomainCount = 3;
-            var update = new AvailabilitySetUpdate()
+            var update = new AvailabilitySetUpdateOptions()
             {
                 PlatformFaultDomainCount = updatedPlatformFaultDomainCount
             };

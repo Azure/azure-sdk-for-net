@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.MachineExtension>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.MachineExtension> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.MachineExtension>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConnectedVMwarevSphere.MachineExtension> Update(bool waitForCompletion, Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionUpdate extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConnectedVMwarevSphere.MachineExtension>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionUpdate extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConnectedVMwarevSphere.MachineExtension> Update(bool waitForCompletion, Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConnectedVMwarevSphere.MachineExtension>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MachineExtensionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.MachineExtension>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.MachineExtension>, System.Collections.IEnumerable
     {
@@ -344,8 +344,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Stop(bool waitForCompletion, Azure.ResourceManager.ConnectedVMwarevSphere.Models.StopVirtualMachineOptions body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StopAsync(bool waitForCompletion, Azure.ResourceManager.ConnectedVMwarevSphere.Models.StopVirtualMachineOptions body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachine> Update(bool waitForCompletion, Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualMachineUpdate body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachine>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualMachineUpdate body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachine> Update(bool waitForCompletion, Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualMachineUpdateOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachine>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualMachineUpdateOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualMachineCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachine>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachine>, System.Collections.IEnumerable
     {
@@ -862,9 +862,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     {
         public MachineExtensionPropertiesInstanceView() { }
     }
-    public partial class MachineExtensionUpdate : Azure.ResourceManager.ConnectedVMwarevSphere.Models.ResourcePatch
+    public partial class MachineExtensionUpdateOptions : Azure.ResourceManager.ConnectedVMwarevSphere.Models.ResourcePatch
     {
-        public MachineExtensionUpdate() { }
+        public MachineExtensionUpdateOptions() { }
         public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
         public string ForceUpdateTag { get { throw null; } set { } }
         public object ProtectedSettings { get { throw null; } set { } }
@@ -1169,9 +1169,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public string Name { get { throw null; } set { } }
         public int? UnitNumber { get { throw null; } set { } }
     }
-    public partial class VirtualMachineUpdate
+    public partial class VirtualMachineUpdateOptions
     {
-        public VirtualMachineUpdate() { }
+        public VirtualMachineUpdateOptions() { }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.HardwareProfile HardwareProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.NetworkProfileUpdate NetworkProfile { get { throw null; } set { } }
