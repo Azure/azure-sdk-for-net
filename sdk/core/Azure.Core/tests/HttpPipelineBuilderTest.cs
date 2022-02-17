@@ -121,6 +121,36 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task UsesAssemblyNameAndInformationalVersionForTelemetryPolicySettingsWithSetTelemetryPackageInfo()
+        {
+            var transport = new MockTransport(new MockResponse(503), new MockResponse(200));
+            var options = new TestOptions
+            {
+                Transport = transport
+            };
+
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
+
+            var message = pipeline.CreateMessage();
+            message.SetTelemetryPackageInfo(TelemetryPackageInfo.Create<string>());
+            using Request request = message.Request;
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(new Uri("http://example.com"));
+
+            await pipeline.SendAsync(message, CancellationToken.None);
+
+            var informationalVersion = typeof(string).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+            var i = informationalVersion.IndexOf('+');
+            if (i > 0)
+            {
+                informationalVersion = informationalVersion.Substring(0, i);
+            }
+
+            Assert.True(request.Headers.TryGetValue("User-Agent", out string value));
+            StringAssert.StartsWith($"azsdk-net-System.Private.CoreLib/{informationalVersion} ", value);
+        }
+
+        [Test]
         public async Task VersionDoesntHaveCommitHash()
         {
             var transport = new MockTransport(new MockResponse(200));

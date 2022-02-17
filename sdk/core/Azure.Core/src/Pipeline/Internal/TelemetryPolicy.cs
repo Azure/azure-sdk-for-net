@@ -7,24 +7,23 @@ namespace Azure.Core.Pipeline
 {
     internal class TelemetryPolicy : HttpPipelineSynchronousPolicy
     {
-        private readonly string _header;
+        private readonly string _defaultHeader;
 
-        public TelemetryPolicy(string componentName, string componentVersion, string? applicationId)
+        public TelemetryPolicy(TelemetryPackageInfo packageInfo)
         {
-            var platformInformation = $"({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})";
-            if (applicationId != null)
-            {
-                _header = $"{applicationId} azsdk-net-{componentName}/{componentVersion} {platformInformation}";
-            }
-            else
-            {
-                _header = $"azsdk-net-{componentName}/{componentVersion} {platformInformation}";
-            }
+            _defaultHeader = packageInfo.UserAgentValue;
         }
 
         public override void OnSendingRequest(HttpMessage message)
         {
-            message.Request.Headers.Add(HttpHeader.Names.UserAgent, _header);
+            if (message.TryGetInternalProperty(typeof(TelemetryPackageInfo), out var userAgent))
+            {
+                message.Request.Headers.Add(HttpHeader.Names.UserAgent, ((TelemetryPackageInfo)userAgent!).UserAgentValue);
+            }
+            else
+            {
+                message.Request.Headers.Add(HttpHeader.Names.UserAgent, _defaultHeader);
+            }
         }
     }
 }

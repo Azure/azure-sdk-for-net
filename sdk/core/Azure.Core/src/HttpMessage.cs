@@ -15,6 +15,7 @@ namespace Azure.Core
     public sealed class HttpMessage : IDisposable
     {
         private Dictionary<string, object>? _properties;
+        private Dictionary<Type, object>? _typeProperties;
 
         private Response? _response;
 
@@ -115,6 +116,29 @@ namespace Azure.Core
             _properties ??= new Dictionary<string, object>();
 
             _properties[name] = value;
+        }
+
+        /// <summary>
+        /// Gets a property that modifies the pipeline behavior. Please refer to individual policies documentation on what properties it supports.
+        /// </summary>
+        /// <param name="type">The property type.</param>
+        /// <param name="value">The property value.</param>
+        /// <returns><c>true</c> if property exists, otherwise. <c>false</c>.</returns>
+        internal bool TryGetInternalProperty(Type type, out object? value)
+        {
+            value = null;
+            return _typeProperties?.TryGetValue(type, out value) == true;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="value">The property value.</param>
+        internal void SetInternalProperty(object value)
+        {
+            _typeProperties ??= new Dictionary<Type, object>();
+
+            _typeProperties[value.GetType()] = value;
         }
 
         /// <summary>

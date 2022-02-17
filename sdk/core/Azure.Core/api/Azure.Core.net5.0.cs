@@ -872,6 +872,10 @@ namespace Azure.Core.Pipeline
         public override void Process(Azure.Core.HttpMessage message) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }
     }
+    public static partial class HttpMessageEtensions
+    {
+        public static void SetTelemetryPackageInfo(this Azure.Core.HttpMessage message, Azure.Core.Pipeline.TelemetryPackageInfo packageInfo) { }
+    }
     public partial class HttpPipeline
     {
         public HttpPipeline(Azure.Core.Pipeline.HttpPipelineTransport transport, Azure.Core.Pipeline.HttpPipelinePolicy[]? policies = null, Azure.Core.ResponseClassifier? responseClassifier = null) { }
@@ -926,6 +930,12 @@ namespace Azure.Core.Pipeline
         public System.Security.Cryptography.X509Certificates.X509Certificate2? Certificate { get { throw null; } }
         public System.Security.Cryptography.X509Certificates.X509Chain? CertificateAuthorityChain { get { throw null; } }
         public System.Net.Security.SslPolicyErrors SslPolicyErrors { get { throw null; } }
+    }
+    public partial class TelemetryPackageInfo
+    {
+        internal TelemetryPackageInfo() { }
+        public string UserAgentValue { get { throw null; } }
+        public static Azure.Core.Pipeline.TelemetryPackageInfo Create<T>(string? applicationId = null) { throw null; }
     }
 }
 namespace Azure.Core.Serialization
