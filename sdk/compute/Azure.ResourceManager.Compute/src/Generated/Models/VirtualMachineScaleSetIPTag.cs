@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetIPTag. </summary>
-        /// <param name="iPTagType"> IP tag type. Example: FirstPartyUsage. </param>
+        /// <param name="ipTagType"> IP tag type. Example: FirstPartyUsage. </param>
         /// <param name="tag"> IP tag associated with the public IP. Example: SQL, Storage etc. </param>
-        internal VirtualMachineScaleSetIPTag(string iPTagType, string tag)
+        internal VirtualMachineScaleSetIPTag(string ipTagType, string tag)
         {
-            IPTagType = iPTagType;
+            IPTagType = ipTagType;
             Tag = tag;
         }
 

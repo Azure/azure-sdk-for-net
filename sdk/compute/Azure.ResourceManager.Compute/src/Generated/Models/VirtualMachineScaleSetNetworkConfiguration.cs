@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="enableFpga"> Specifies whether the network interface is FPGA networking-enabled. </param>
         /// <param name="networkSecurityGroup"> The network security group. </param>
         /// <param name="dnsSettings"> The dns settings to be applied on the network interfaces. </param>
-        /// <param name="iPConfigurations"> Specifies the IP configurations of the network interface. </param>
+        /// <param name="ipConfigurations"> Specifies the IP configurations of the network interface. </param>
         /// <param name="enableIPForwarding"> Whether IP forwarding enabled on this NIC. </param>
         /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
-        internal VirtualMachineScaleSetNetworkConfiguration(string id, string name, bool? primary, bool? enableAcceleratedNetworking, bool? enableFpga, WritableSubResource networkSecurityGroup, VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetIPConfiguration> iPConfigurations, bool? enableIPForwarding, DeleteOptions? deleteOption) : base(id)
+        internal VirtualMachineScaleSetNetworkConfiguration(string id, string name, bool? primary, bool? enableAcceleratedNetworking, bool? enableFpga, WritableSubResource networkSecurityGroup, VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations, bool? enableIPForwarding, DeleteOptions? deleteOption) : base(id)
         {
             Name = name;
             Primary = primary;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
             EnableFpga = enableFpga;
             NetworkSecurityGroup = networkSecurityGroup;
             DnsSettings = dnsSettings;
-            IPConfigurations = iPConfigurations;
+            IPConfigurations = ipConfigurations;
             EnableIPForwarding = enableIPForwarding;
             DeleteOption = deleteOption;
         }

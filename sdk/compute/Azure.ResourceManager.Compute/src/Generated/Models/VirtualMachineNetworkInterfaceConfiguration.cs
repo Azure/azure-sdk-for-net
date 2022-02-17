@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="enableIPForwarding"> Whether IP forwarding enabled on this NIC. </param>
         /// <param name="networkSecurityGroup"> The network security group. </param>
         /// <param name="dnsSettings"> The dns settings to be applied on the network interfaces. </param>
-        /// <param name="iPConfigurations"> Specifies the IP configurations of the network interface. </param>
+        /// <param name="ipConfigurations"> Specifies the IP configurations of the network interface. </param>
         /// <param name="dscpConfiguration"></param>
-        internal VirtualMachineNetworkInterfaceConfiguration(string name, bool? primary, DeleteOptions? deleteOption, bool? enableAcceleratedNetworking, bool? enableFpga, bool? enableIPForwarding, WritableSubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> iPConfigurations, WritableSubResource dscpConfiguration)
+        internal VirtualMachineNetworkInterfaceConfiguration(string name, bool? primary, DeleteOptions? deleteOption, bool? enableAcceleratedNetworking, bool? enableFpga, bool? enableIPForwarding, WritableSubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, WritableSubResource dscpConfiguration)
         {
             Name = name;
             Primary = primary;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
             EnableIPForwarding = enableIPForwarding;
             NetworkSecurityGroup = networkSecurityGroup;
             DnsSettings = dnsSettings;
-            IPConfigurations = iPConfigurations;
+            IPConfigurations = ipConfigurations;
             DscpConfiguration = dscpConfiguration;
         }
 
