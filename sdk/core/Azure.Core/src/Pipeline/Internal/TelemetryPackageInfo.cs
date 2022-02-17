@@ -28,7 +28,7 @@ namespace Azure.Core.Pipeline
         /// <param name="applicationId"></param>
         /// <typeparam name="T">The type contained by the Assembly used to generate package name and version information.</typeparam>
         /// <returns></returns>
-        public static TelemetryPackageInfo Create<T>(string? applicationId = null)
+        public static TelemetryPackageInfo FromType<T>(string? applicationId = null)
         {
             var assembly = Assembly.GetAssembly(typeof(T));
             return new TelemetryPackageInfo(assembly!, applicationId);
