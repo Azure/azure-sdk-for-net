@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of RestorePointSourceMetadata. </summary>
         /// <param name="hardwareProfile"> Gets the hardware profile. </param>
         /// <param name="storageProfile"> Gets the storage profile. </param>
-        /// <param name="oSProfile"> Gets the OS profile. </param>
+        /// <param name="osProfile"> Gets the OS profile. </param>
         /// <param name="diagnosticsProfile"> Gets the diagnostics profile. </param>
         /// <param name="licenseType"> Gets the license type, which is for bring your own license scenario. </param>
         /// <param name="vmId"> Gets the virtual machine unique id. </param>
         /// <param name="securityProfile"> Gets the security profile. </param>
         /// <param name="location"> Location of the VM from which the restore point was created. </param>
-        internal RestorePointSourceMetadata(HardwareProfile hardwareProfile, RestorePointSourceVmStorageProfile storageProfile, OSProfile oSProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string vmId, SecurityProfile securityProfile, string location)
+        internal RestorePointSourceMetadata(HardwareProfile hardwareProfile, RestorePointSourceVmStorageProfile storageProfile, OSProfile osProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string vmId, SecurityProfile securityProfile, string location)
         {
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
-            OSProfile = oSProfile;
+            OSProfile = osProfile;
             DiagnosticsProfile = diagnosticsProfile;
             LicenseType = licenseType;
             VmId = vmId;
