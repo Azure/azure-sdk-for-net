@@ -25,5 +25,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework
 
             return new ValueTask<ExportResult>(Task.FromResult(ExportResult.Success));
         }
+
+        public ValueTask TransmitFromStorage(long maxFileToTransmit, bool aysnc, CancellationToken cancellationToken)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
