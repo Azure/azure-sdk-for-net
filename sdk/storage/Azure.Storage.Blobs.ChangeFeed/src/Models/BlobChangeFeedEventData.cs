@@ -34,6 +34,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 Constants.ChangeFeed.EventData.AppendBlob => BlobType.Append,
                 _ => default
             };
+            BlobVersion = ExtractBlobVersion(record);
+            ContainerVersion = ExtractContainerVersion(record);
+            BlobAccessTier = ExtractBlobAccessTier(record);
             record.TryGetValue(Constants.ChangeFeed.EventData.ContentOffset, out object contentOffset);
             ContentOffset = (long?)contentOffset;
             record.TryGetValue(Constants.ChangeFeed.EventData.DestinationUrl, out object destinationUrl);
@@ -48,6 +51,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             PreviousInfo = ExtractPreviousInfo(record);
             Snapshot = ExtractSnapshot(record);
             UpdatedBlobProperties = ExtractBlobProperties(record);
+            AsyncOperationInfo = ExtractAsyncOperationInfo(record);
         }
 
         /// <summary>
@@ -88,6 +92,21 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// The type of blob. Valid values are either BlockBlob or PageBlob.
         /// </summary>
         public BlobType BlobType { get; internal set; }
+
+        /// <summary>
+        /// Version of the blob.
+        /// </summary>
+        public string BlobVersion { get; internal set; }
+
+        /// <summary>
+        /// Version of the container the blob is in.
+        /// </summary>
+        public string ContainerVersion { get; internal set; }
+
+        /// <summary>
+        /// Access Tier of the blob.
+        /// </summary>
+        public AccessTier? BlobAccessTier { get; internal set; }
 
         /// <summary>
         /// The offset in bytes of a write operation taken at the point where the event-triggering application completed
@@ -146,6 +165,46 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         public Dictionary<string, BlobChangeFeedEventUpdatedBlobProperty> UpdatedBlobProperties { get; internal set; }
 
+        /// <summary>
+        /// AsyncOperationInfo.
+        /// </summary>
+        public ChangeFeedEventAsyncOperationInfo AsyncOperationInfo { get; internal set; }
+
+        private static string ExtractBlobVersion(Dictionary<string, object> recordDictionary)
+        {
+            if (recordDictionary.TryGetValue(
+                Constants.ChangeFeed.EventData.BlobVersion,
+                out object blobVersionObject))
+            {
+                Dictionary<string, object> blobVersionDictionary = (Dictionary<string, object>)blobVersionObject;
+                return (string)blobVersionDictionary[Constants.ChangeFeed.EventData.String];
+            }
+                return null;
+        }
+
+        private static string ExtractContainerVersion(Dictionary<string, object> recordDictionary)
+        {
+            if (recordDictionary.TryGetValue(
+                Constants.ChangeFeed.EventData.ContainerVersion,
+                out object containerVersionObject))
+            {
+                Dictionary<string, object> containerVersionDictionary = (Dictionary<string, object>)containerVersionObject;
+                return (string)containerVersionDictionary[Constants.ChangeFeed.EventData.String];
+            }
+            return null;
+        }
+
+        private static AccessTier? ExtractBlobAccessTier(Dictionary<string, object> recordDictionary)
+        {
+            if (recordDictionary.TryGetValue(
+                Constants.ChangeFeed.EventData.BlobTier,
+                out object blobTierString))
+            {
+                return new AccessTier((string)blobTierString);
+            }
+            return null;
+        }
+
         private static Dictionary<string, object> ExtractPreviousInfo(Dictionary<string, object> recordDictionary)
         {
             if (recordDictionary.TryGetValue(
@@ -197,6 +256,22 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 }
 
                 return result;
+            }
+            return null;
+        }
+
+        private static ChangeFeedEventAsyncOperationInfo ExtractAsyncOperationInfo(Dictionary<string, object> recordDictionary)
+        {
+            if (recordDictionary.TryGetValue(
+                Constants.ChangeFeed.EventData.AsyncOperationInfo,
+                out object asyncOperationInfoObject))
+            {
+                Dictionary<string, object> asyncOperationInfoDictionary = (Dictionary<string, object>)asyncOperationInfoObject;
+
+                return new ChangeFeedEventAsyncOperationInfo
+                {
+                    DestinationAccessTier = new AccessTier((string)asyncOperationInfoDictionary[Constants.ChangeFeed.EventData.DestinationTier])
+                };
             }
             return null;
         }

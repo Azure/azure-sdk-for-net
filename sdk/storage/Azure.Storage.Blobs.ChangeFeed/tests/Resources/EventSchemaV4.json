@@ -39,15 +39,15 @@
                 },
                 "CacheControl" : {
                     "current" : "max-age=100",
-                    "previous" : ""
+                    "previous" : "max-age=99"
                 },
                 "ContentEncoding" : {
                     "current" : "gzip, identity",
-                    "previous" : ""
+                    "previous" : "gzip"
                 },
                 "ContentMD5" : {
                     "current" : "Q2h1Y2sgSW51ZwDIAXR5IQ==",
-                    "previous" : ""
+                    "previous" : "Q2h1Y2sgSW="
                 },
                 "ContentDisposition" : {
                     "current" : "attachment",
