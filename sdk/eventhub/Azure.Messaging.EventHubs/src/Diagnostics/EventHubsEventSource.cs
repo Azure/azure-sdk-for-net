@@ -2456,11 +2456,11 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private unsafe void EventProcessorLoadBalancingCycleCompleteCore(string identifier,
-            string eventHubName,
-            int totalPartitionCount,
-            int ownedPartitionCount,
-            double durationSeconds,
-            double delaySeconds)
+                                                                         string eventHubName,
+                                                                         int totalPartitionCount,
+                                                                         int ownedPartitionCount,
+                                                                         double durationSeconds,
+                                                                         double delaySeconds)
         {
             fixed (char* identifierPtr = identifier)
             fixed (char* eventHubNamePtr = eventHubName)
@@ -2492,9 +2492,9 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private unsafe void BufferedProducerPublishingAwaitAllStartCore(string identifier,
-            string eventHubName,
-            int totalActiveTasks,
-            string operationId)
+                                                                        string eventHubName,
+                                                                        int totalActiveTasks,
+                                                                        string operationId)
         {
             fixed (char* identifierPtr = identifier)
             fixed (char* eventHubNamePtr = eventHubName)
@@ -2521,10 +2521,10 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private unsafe void BufferedProducerPublishingAwaitCompleteCore(string identifier,
-            string eventHubName,
-            int totalActiveTasks,
-            string operationId,
-            double durationSeconds)
+                                                                        string eventHubName,
+                                                                        int totalActiveTasks,
+                                                                        string operationId,
+                                                                        double durationSeconds)
         {
             fixed (char* identifierPtr = identifier)
             fixed (char* eventHubNamePtr = eventHubName)
@@ -2554,9 +2554,9 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private unsafe void BufferedProducerPublishingAwaitStartCore(string identifier,
-            string eventHubName,
-            int totalActiveTasks,
-            string operationId)
+                                                                     string eventHubName,
+                                                                     int totalActiveTasks,
+                                                                     string operationId)
         {
             fixed (char* identifierPtr = identifier)
             fixed (char* eventHubNamePtr = eventHubName)
@@ -2583,11 +2583,11 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private unsafe void BufferedProducerEventEnqueuedCore(string identifier,
-            string eventHubName,
-            string requestedPartitionIdOrKey,
-            string assignedPartitionId,
-            string operationId,
-            int totalBufferedEventCount)
+                                                              string eventHubName,
+                                                              string requestedPartitionIdOrKey,
+                                                              string assignedPartitionId,
+                                                              string operationId,
+                                                              int totalBufferedEventCount)
         {
             fixed (char* identifierPtr = identifier)
             fixed (char* eventHubNamePtr = eventHubName)
@@ -2622,9 +2622,9 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private unsafe void EventPublishCompleteCore(string eventHubName,
-            string partitionIdOrKey,
-            string operationId,
-            int retryCount)
+                                                     string partitionIdOrKey,
+                                                     string operationId,
+                                                     int retryCount)
         {
             fixed (char* eventHubNamePtr = eventHubName)
             fixed (char* partitionIdOrKeyPtr = partitionIdOrKey)
@@ -2651,10 +2651,10 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private unsafe void BufferedProducerPublishingAwaitAllCompleteCore(string identifier,
-            string eventHubName,
-            int totalActiveTasks,
-            string operationId,
-            double durationSeconds)
+                                                                           string eventHubName,
+                                                                           int totalActiveTasks,
+                                                                           string operationId,
+                                                                           double durationSeconds)
         {
             fixed (char* identifierPtr = identifier)
             fixed (char* eventHubNamePtr = eventHubName)
