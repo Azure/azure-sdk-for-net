@@ -72,6 +72,66 @@ namespace Microsoft.Azure.Management.Compute
         IOperations Operations { get; }
 
         /// <summary>
+        /// Gets the IUsageOperations.
+        /// </summary>
+        IUsageOperations Usage { get; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineSizesOperations.
+        /// </summary>
+        IVirtualMachineSizesOperations VirtualMachineSizes { get; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineScaleSetsOperations.
+        /// </summary>
+        IVirtualMachineScaleSetsOperations VirtualMachineScaleSets { get; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineScaleSetExtensionsOperations.
+        /// </summary>
+        IVirtualMachineScaleSetExtensionsOperations VirtualMachineScaleSetExtensions { get; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineScaleSetRollingUpgradesOperations.
+        /// </summary>
+        IVirtualMachineScaleSetRollingUpgradesOperations VirtualMachineScaleSetRollingUpgrades { get; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineScaleSetVMExtensionsOperations.
+        /// </summary>
+        IVirtualMachineScaleSetVMExtensionsOperations VirtualMachineScaleSetVMExtensions { get; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineScaleSetVMsOperations.
+        /// </summary>
+        IVirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs { get; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineExtensionsOperations.
+        /// </summary>
+        IVirtualMachineExtensionsOperations VirtualMachineExtensions { get; }
+
+        /// <summary>
+        /// Gets the IVirtualMachinesOperations.
+        /// </summary>
+        IVirtualMachinesOperations VirtualMachines { get; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineImagesOperations.
+        /// </summary>
+        IVirtualMachineImagesOperations VirtualMachineImages { get; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineImagesEdgeZoneOperations.
+        /// </summary>
+        IVirtualMachineImagesEdgeZoneOperations VirtualMachineImagesEdgeZone { get; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineExtensionImagesOperations.
+        /// </summary>
+        IVirtualMachineExtensionImagesOperations VirtualMachineExtensionImages { get; }
+
+        /// <summary>
         /// Gets the IAvailabilitySetsOperations.
         /// </summary>
         IAvailabilitySetsOperations AvailabilitySets { get; }
@@ -97,46 +157,6 @@ namespace Microsoft.Azure.Management.Compute
         ISshPublicKeysOperations SshPublicKeys { get; }
 
         /// <summary>
-        /// Gets the IVirtualMachineExtensionImagesOperations.
-        /// </summary>
-        IVirtualMachineExtensionImagesOperations VirtualMachineExtensionImages { get; }
-
-        /// <summary>
-        /// Gets the IVirtualMachineExtensionsOperations.
-        /// </summary>
-        IVirtualMachineExtensionsOperations VirtualMachineExtensions { get; }
-
-        /// <summary>
-        /// Gets the IVirtualMachineImagesOperations.
-        /// </summary>
-        IVirtualMachineImagesOperations VirtualMachineImages { get; }
-
-        /// <summary>
-        /// Gets the IVirtualMachineImagesEdgeZoneOperations.
-        /// </summary>
-        IVirtualMachineImagesEdgeZoneOperations VirtualMachineImagesEdgeZone { get; }
-
-        /// <summary>
-        /// Gets the IUsageOperations.
-        /// </summary>
-        IUsageOperations Usage { get; }
-
-        /// <summary>
-        /// Gets the IVirtualMachinesOperations.
-        /// </summary>
-        IVirtualMachinesOperations VirtualMachines { get; }
-
-        /// <summary>
-        /// Gets the IVirtualMachineScaleSetsOperations.
-        /// </summary>
-        IVirtualMachineScaleSetsOperations VirtualMachineScaleSets { get; }
-
-        /// <summary>
-        /// Gets the IVirtualMachineSizesOperations.
-        /// </summary>
-        IVirtualMachineSizesOperations VirtualMachineSizes { get; }
-
-        /// <summary>
         /// Gets the IImagesOperations.
         /// </summary>
         IImagesOperations Images { get; }
@@ -160,26 +180,6 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the ICapacityReservationsOperations.
         /// </summary>
         ICapacityReservationsOperations CapacityReservations { get; }
-
-        /// <summary>
-        /// Gets the IVirtualMachineScaleSetExtensionsOperations.
-        /// </summary>
-        IVirtualMachineScaleSetExtensionsOperations VirtualMachineScaleSetExtensions { get; }
-
-        /// <summary>
-        /// Gets the IVirtualMachineScaleSetRollingUpgradesOperations.
-        /// </summary>
-        IVirtualMachineScaleSetRollingUpgradesOperations VirtualMachineScaleSetRollingUpgrades { get; }
-
-        /// <summary>
-        /// Gets the IVirtualMachineScaleSetVMExtensionsOperations.
-        /// </summary>
-        IVirtualMachineScaleSetVMExtensionsOperations VirtualMachineScaleSetVMExtensions { get; }
-
-        /// <summary>
-        /// Gets the IVirtualMachineScaleSetVMsOperations.
-        /// </summary>
-        IVirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs { get; }
 
         /// <summary>
         /// Gets the ILogAnalyticsOperations.

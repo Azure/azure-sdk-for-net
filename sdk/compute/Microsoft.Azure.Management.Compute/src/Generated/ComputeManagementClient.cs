@@ -77,6 +77,66 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
+        /// Gets the IUsageOperations.
+        /// </summary>
+        public virtual IUsageOperations Usage { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineSizesOperations.
+        /// </summary>
+        public virtual IVirtualMachineSizesOperations VirtualMachineSizes { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineScaleSetsOperations.
+        /// </summary>
+        public virtual IVirtualMachineScaleSetsOperations VirtualMachineScaleSets { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineScaleSetExtensionsOperations.
+        /// </summary>
+        public virtual IVirtualMachineScaleSetExtensionsOperations VirtualMachineScaleSetExtensions { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineScaleSetRollingUpgradesOperations.
+        /// </summary>
+        public virtual IVirtualMachineScaleSetRollingUpgradesOperations VirtualMachineScaleSetRollingUpgrades { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineScaleSetVMExtensionsOperations.
+        /// </summary>
+        public virtual IVirtualMachineScaleSetVMExtensionsOperations VirtualMachineScaleSetVMExtensions { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineScaleSetVMsOperations.
+        /// </summary>
+        public virtual IVirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineExtensionsOperations.
+        /// </summary>
+        public virtual IVirtualMachineExtensionsOperations VirtualMachineExtensions { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualMachinesOperations.
+        /// </summary>
+        public virtual IVirtualMachinesOperations VirtualMachines { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineImagesOperations.
+        /// </summary>
+        public virtual IVirtualMachineImagesOperations VirtualMachineImages { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineImagesEdgeZoneOperations.
+        /// </summary>
+        public virtual IVirtualMachineImagesEdgeZoneOperations VirtualMachineImagesEdgeZone { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineExtensionImagesOperations.
+        /// </summary>
+        public virtual IVirtualMachineExtensionImagesOperations VirtualMachineExtensionImages { get; private set; }
+
+        /// <summary>
         /// Gets the IAvailabilitySetsOperations.
         /// </summary>
         public virtual IAvailabilitySetsOperations AvailabilitySets { get; private set; }
@@ -102,46 +162,6 @@ namespace Microsoft.Azure.Management.Compute
         public virtual ISshPublicKeysOperations SshPublicKeys { get; private set; }
 
         /// <summary>
-        /// Gets the IVirtualMachineExtensionImagesOperations.
-        /// </summary>
-        public virtual IVirtualMachineExtensionImagesOperations VirtualMachineExtensionImages { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualMachineExtensionsOperations.
-        /// </summary>
-        public virtual IVirtualMachineExtensionsOperations VirtualMachineExtensions { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualMachineImagesOperations.
-        /// </summary>
-        public virtual IVirtualMachineImagesOperations VirtualMachineImages { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualMachineImagesEdgeZoneOperations.
-        /// </summary>
-        public virtual IVirtualMachineImagesEdgeZoneOperations VirtualMachineImagesEdgeZone { get; private set; }
-
-        /// <summary>
-        /// Gets the IUsageOperations.
-        /// </summary>
-        public virtual IUsageOperations Usage { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualMachinesOperations.
-        /// </summary>
-        public virtual IVirtualMachinesOperations VirtualMachines { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualMachineScaleSetsOperations.
-        /// </summary>
-        public virtual IVirtualMachineScaleSetsOperations VirtualMachineScaleSets { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualMachineSizesOperations.
-        /// </summary>
-        public virtual IVirtualMachineSizesOperations VirtualMachineSizes { get; private set; }
-
-        /// <summary>
         /// Gets the IImagesOperations.
         /// </summary>
         public virtual IImagesOperations Images { get; private set; }
@@ -165,26 +185,6 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the ICapacityReservationsOperations.
         /// </summary>
         public virtual ICapacityReservationsOperations CapacityReservations { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualMachineScaleSetExtensionsOperations.
-        /// </summary>
-        public virtual IVirtualMachineScaleSetExtensionsOperations VirtualMachineScaleSetExtensions { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualMachineScaleSetRollingUpgradesOperations.
-        /// </summary>
-        public virtual IVirtualMachineScaleSetRollingUpgradesOperations VirtualMachineScaleSetRollingUpgrades { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualMachineScaleSetVMExtensionsOperations.
-        /// </summary>
-        public virtual IVirtualMachineScaleSetVMExtensionsOperations VirtualMachineScaleSetVMExtensions { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualMachineScaleSetVMsOperations.
-        /// </summary>
-        public virtual IVirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs { get; private set; }
 
         /// <summary>
         /// Gets the ILogAnalyticsOperations.
@@ -558,28 +558,28 @@ namespace Microsoft.Azure.Management.Compute
         private void Initialize()
         {
             Operations = new Operations(this);
+            Usage = new UsageOperations(this);
+            VirtualMachineSizes = new VirtualMachineSizesOperations(this);
+            VirtualMachineScaleSets = new VirtualMachineScaleSetsOperations(this);
+            VirtualMachineScaleSetExtensions = new VirtualMachineScaleSetExtensionsOperations(this);
+            VirtualMachineScaleSetRollingUpgrades = new VirtualMachineScaleSetRollingUpgradesOperations(this);
+            VirtualMachineScaleSetVMExtensions = new VirtualMachineScaleSetVMExtensionsOperations(this);
+            VirtualMachineScaleSetVMs = new VirtualMachineScaleSetVMsOperations(this);
+            VirtualMachineExtensions = new VirtualMachineExtensionsOperations(this);
+            VirtualMachines = new VirtualMachinesOperations(this);
+            VirtualMachineImages = new VirtualMachineImagesOperations(this);
+            VirtualMachineImagesEdgeZone = new VirtualMachineImagesEdgeZoneOperations(this);
+            VirtualMachineExtensionImages = new VirtualMachineExtensionImagesOperations(this);
             AvailabilitySets = new AvailabilitySetsOperations(this);
             ProximityPlacementGroups = new ProximityPlacementGroupsOperations(this);
             DedicatedHostGroups = new DedicatedHostGroupsOperations(this);
             DedicatedHosts = new DedicatedHostsOperations(this);
             SshPublicKeys = new SshPublicKeysOperations(this);
-            VirtualMachineExtensionImages = new VirtualMachineExtensionImagesOperations(this);
-            VirtualMachineExtensions = new VirtualMachineExtensionsOperations(this);
-            VirtualMachineImages = new VirtualMachineImagesOperations(this);
-            VirtualMachineImagesEdgeZone = new VirtualMachineImagesEdgeZoneOperations(this);
-            Usage = new UsageOperations(this);
-            VirtualMachines = new VirtualMachinesOperations(this);
-            VirtualMachineScaleSets = new VirtualMachineScaleSetsOperations(this);
-            VirtualMachineSizes = new VirtualMachineSizesOperations(this);
             Images = new ImagesOperations(this);
             RestorePointCollections = new RestorePointCollectionsOperations(this);
             RestorePoints = new RestorePointsOperations(this);
             CapacityReservationGroups = new CapacityReservationGroupsOperations(this);
             CapacityReservations = new CapacityReservationsOperations(this);
-            VirtualMachineScaleSetExtensions = new VirtualMachineScaleSetExtensionsOperations(this);
-            VirtualMachineScaleSetRollingUpgrades = new VirtualMachineScaleSetRollingUpgradesOperations(this);
-            VirtualMachineScaleSetVMExtensions = new VirtualMachineScaleSetVMExtensionsOperations(this);
-            VirtualMachineScaleSetVMs = new VirtualMachineScaleSetVMsOperations(this);
             LogAnalytics = new LogAnalyticsOperations(this);
             VirtualMachineRunCommands = new VirtualMachineRunCommandsOperations(this);
             VirtualMachineScaleSetVMRunCommands = new VirtualMachineScaleSetVMRunCommandsOperations(this);

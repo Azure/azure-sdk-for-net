@@ -647,8 +647,9 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set to create or update.
         /// </param>
-        /// <param name='parameters'>
-        /// The input object for SetOrchestrationServiceState API.
+        /// <param name='action'>
+        /// The action to be performed. Possible values include: 'Resume',
+        /// 'Suspend'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -662,7 +663,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> SetOrchestrationServiceStateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, OrchestrationServiceStateInput parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> SetOrchestrationServiceStateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string action, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update a VM scale set.
         /// </summary>
@@ -1044,8 +1045,9 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the virtual machine scale set to create or update.
         /// </param>
-        /// <param name='parameters'>
-        /// The input object for SetOrchestrationServiceState API.
+        /// <param name='action'>
+        /// The action to be performed. Possible values include: 'Resume',
+        /// 'Suspend'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1059,7 +1061,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginSetOrchestrationServiceStateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, OrchestrationServiceStateInput parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginSetOrchestrationServiceStateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string action, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all the VM scale sets under the specified subscription for the
         /// specified location.
