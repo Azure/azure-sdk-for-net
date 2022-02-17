@@ -7,6 +7,7 @@ using Microsoft.Azure.Management.CosmosDB;
 using Microsoft.Azure.Management.CosmosDB.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 using Location = Microsoft.Azure.Management.CosmosDB.Models.Location;
@@ -23,13 +24,21 @@ namespace CosmosDB.Tests
         public CosmosDBManagementClient CosmosDBManagementClient;
         public ResourceManagementClient ResourceManagementClient;
         public string ResourceGroupName;
-        public string Location = "central us euap";
+        public string Location = "west us 2";
 
         public Dictionary<AccountType, string> accounts;
 
         public TestFixture()
         {
             this.accounts = new Dictionary<AccountType, string>();
+        }
+
+        static TestFixture()
+        {
+            RecorderUtilities.JsonPathSanitizers.Add("$..primaryMasterKey");
+            RecorderUtilities.JsonPathSanitizers.Add("$..primaryReadonlyMasterKey");
+            RecorderUtilities.JsonPathSanitizers.Add("$..secondaryMasterKey");
+            RecorderUtilities.JsonPathSanitizers.Add("$..secondaryReadonlyMasterKey");
         }
 
         public void Init(MockContext context)
@@ -98,7 +107,8 @@ namespace CosmosDB.Tests
                     accountName = CreateDatabaseAccount(
                         kind: DatabaseAccountKind.MongoDB,
                         serverVersion: "3.6",
-                        enablePitr: true
+                        enablePitr: true,
+                        capabilities: new List<Capability> { new Capability("EnableMongo"), new Capability("EnableMongoRoleBasedAccessControl") }
                     );
                 }
                 else if (accountType == AccountType.Table)

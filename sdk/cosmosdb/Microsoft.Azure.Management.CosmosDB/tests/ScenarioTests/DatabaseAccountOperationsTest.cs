@@ -51,7 +51,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     },
                     IsVirtualNetworkFilterEnabled = true,
                     EnableAutomaticFailover = false,
-                    EnableMultipleWriteLocations = true,
+                    EnableMultipleWriteLocations = false,
                     DisableKeyBasedMetadataWriteAccess = false,
                     NetworkAclBypass = NetworkAclBypass.AzureServices,
                     NetworkAclBypassResourceIds = new List<string>
