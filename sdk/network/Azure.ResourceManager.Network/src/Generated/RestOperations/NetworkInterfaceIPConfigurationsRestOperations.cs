@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkInterfaceName"/> is null. </exception>
         public async Task<Response<NetworkInterfaceIPConfigurationListResult>> ListAsync(string subscriptionId, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkInterfaceName"/> is null. </exception>
         public Response<NetworkInterfaceIPConfigurationListResult> List(string subscriptionId, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkInterfaceName"/>, or <paramref name="ipConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkInterfaceName"/> or <paramref name="ipConfigurationName"/> is null. </exception>
         public async Task<Response<NetworkInterfaceIPConfigurationData>> GetAsync(string subscriptionId, string resourceGroupName, string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkInterfaceName"/>, or <paramref name="ipConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkInterfaceName"/> or <paramref name="ipConfigurationName"/> is null. </exception>
         public Response<NetworkInterfaceIPConfigurationData> Get(string subscriptionId, string resourceGroupName, string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkInterfaceName"/> is null. </exception>
         public async Task<Response<NetworkInterfaceIPConfigurationListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkInterfaceName"/> is null. </exception>
         public Response<NetworkInterfaceIPConfigurationListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

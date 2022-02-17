@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
         public async Task<Response> RefreshHubSchemaAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
         public Response RefreshHubSchema(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
         public async Task<Response<SyncFullSchemaPropertiesListResult>> ListHubSchemasAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
         public Response<SyncFullSchemaPropertiesListResult> ListHubSchemas(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="type"> The types of logs to retrieve. </param>
         /// <param name="continuationToken"> The continuation token for this operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/>, <paramref name="startTime"/>, or <paramref name="endTime"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/>, <paramref name="startTime"/> or <paramref name="endTime"/> is null. </exception>
         public async Task<Response<SyncGroupLogListResult>> ListLogsAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, SyncGroupLogType type, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="type"> The types of logs to retrieve. </param>
         /// <param name="continuationToken"> The continuation token for this operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/>, <paramref name="startTime"/>, or <paramref name="endTime"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/>, <paramref name="startTime"/> or <paramref name="endTime"/> is null. </exception>
         public Response<SyncGroupLogListResult> ListLogs(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, SyncGroupLogType type, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
         public async Task<Response> CancelSyncAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
         public Response CancelSync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
         public async Task<Response> TriggerSyncAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
         public Response TriggerSync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
         public async Task<Response<SyncGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
         public Response<SyncGroupData> Get(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -879,7 +879,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="parameters"> The requested sync group resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, SyncGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -928,7 +928,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="parameters"> The requested sync group resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, SyncGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -999,7 +999,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1043,7 +1043,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1116,7 +1116,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="parameters"> The requested sync group resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, SyncGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1164,7 +1164,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="parameters"> The requested sync group resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, SyncGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1233,7 +1233,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
         public async Task<Response<SyncGroupListResult>> ListByDatabaseAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1275,7 +1275,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
         public Response<SyncGroupListResult> ListByDatabase(string subscriptionId, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1330,7 +1330,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="locationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
         public async Task<Response<SyncDatabaseIdListResult>> ListSyncDatabaseIdsNextPageAsync(string nextLink, string subscriptionId, string locationName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1367,7 +1367,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="locationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
         public Response<SyncDatabaseIdListResult> ListSyncDatabaseIdsNextPage(string nextLink, string subscriptionId, string locationName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1421,7 +1421,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
         public async Task<Response<SyncFullSchemaPropertiesListResult>> ListHubSchemasNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1473,7 +1473,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
         public Response<SyncFullSchemaPropertiesListResult> ListHubSchemasNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1543,7 +1543,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="type"> The types of logs to retrieve. </param>
         /// <param name="continuationToken"> The continuation token for this operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/>, <paramref name="startTime"/>, or <paramref name="endTime"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/>, <paramref name="startTime"/> or <paramref name="endTime"/> is null. </exception>
         public async Task<Response<SyncGroupLogListResult>> ListLogsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, SyncGroupLogType type, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1607,7 +1607,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="type"> The types of logs to retrieve. </param>
         /// <param name="continuationToken"> The continuation token for this operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/>, <paramref name="startTime"/>, or <paramref name="endTime"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/>, <paramref name="startTime"/> or <paramref name="endTime"/> is null. </exception>
         public Response<SyncGroupLogListResult> ListLogsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, SyncGroupLogType type, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1680,7 +1680,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
         public async Task<Response<SyncGroupListResult>> ListByDatabaseNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1727,7 +1727,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
         public Response<SyncGroupListResult> ListByDatabaseNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

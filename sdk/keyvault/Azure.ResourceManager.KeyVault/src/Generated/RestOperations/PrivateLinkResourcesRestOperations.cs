@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="resourceGroupName"> Name of the resource group that contains the key vault. </param>
         /// <param name="vaultName"> The name of the key vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         public async Task<Response<PrivateLinkResourceListResult>> ListByVaultAsync(string subscriptionId, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="resourceGroupName"> Name of the resource group that contains the key vault. </param>
         /// <param name="vaultName"> The name of the key vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         public Response<PrivateLinkResourceListResult> ListByVault(string subscriptionId, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)

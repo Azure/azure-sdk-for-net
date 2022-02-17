@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="capacityReservationName"> The name of the capacity reservation. </param>
         /// <param name="parameters"> Parameters supplied to the Create capacity reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/>, <paramref name="capacityReservationName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/>, <paramref name="capacityReservationName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, CapacityReservationData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="capacityReservationName"> The name of the capacity reservation. </param>
         /// <param name="parameters"> Parameters supplied to the Create capacity reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/>, <paramref name="capacityReservationName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/>, <paramref name="capacityReservationName"/> or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, CapacityReservationData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="capacityReservationName"> The name of the capacity reservation. </param>
         /// <param name="options"> Parameters supplied to the Update capacity reservation operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/>, <paramref name="capacityReservationName"/>, or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/>, <paramref name="capacityReservationName"/> or <paramref name="options"/> is null. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, CapacityReservationUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="capacityReservationName"> The name of the capacity reservation. </param>
         /// <param name="options"> Parameters supplied to the Update capacity reservation operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/>, <paramref name="capacityReservationName"/>, or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/>, <paramref name="capacityReservationName"/> or <paramref name="options"/> is null. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, CapacityReservationUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
         /// <param name="capacityReservationName"> The name of the capacity reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/>, or <paramref name="capacityReservationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/> or <paramref name="capacityReservationName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
         /// <param name="capacityReservationName"> The name of the capacity reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/>, or <paramref name="capacityReservationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/> or <paramref name="capacityReservationName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="capacityReservationName"> The name of the capacity reservation. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves a snapshot of the runtime properties of the capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/>, or <paramref name="capacityReservationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/> or <paramref name="capacityReservationName"/> is null. </exception>
         public async Task<Response<CapacityReservationData>> GetAsync(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, CapacityReservationInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="capacityReservationName"> The name of the capacity reservation. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves a snapshot of the runtime properties of the capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/>, or <paramref name="capacityReservationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/> or <paramref name="capacityReservationName"/> is null. </exception>
         public Response<CapacityReservationData> Get(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, CapacityReservationInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="capacityReservationGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityReservationGroupName"/> is null. </exception>
         public async Task<Response<CapacityReservationListResult>> ListByCapacityReservationGroupAsync(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="capacityReservationGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityReservationGroupName"/> is null. </exception>
         public Response<CapacityReservationListResult> ListByCapacityReservationGroup(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="capacityReservationGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityReservationGroupName"/> is null. </exception>
         public async Task<Response<CapacityReservationListResult>> ListByCapacityReservationGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string capacityReservationGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="capacityReservationGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityReservationGroupName"/> is null. </exception>
         public Response<CapacityReservationListResult> ListByCapacityReservationGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string capacityReservationGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

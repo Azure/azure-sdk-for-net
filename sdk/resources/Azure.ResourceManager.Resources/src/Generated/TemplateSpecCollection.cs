@@ -60,15 +60,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpec"> Template Spec supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> or <paramref name="templateSpec"/> is null. </exception>
         public async virtual Task<ArmOperation<TemplateSpec>> CreateOrUpdateAsync(bool waitForCompletion, string templateSpecName, TemplateSpecData templateSpec, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
-            if (templateSpec == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpec));
-            }
+            Argument.AssertNotNull(templateSpec, nameof(templateSpec));
 
             using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpecCollection.CreateOrUpdate");
             scope.Start();
@@ -96,15 +93,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpec"> Template Spec supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> or <paramref name="templateSpec"/> is null. </exception>
         public virtual ArmOperation<TemplateSpec> CreateOrUpdate(bool waitForCompletion, string templateSpecName, TemplateSpecData templateSpec, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
-            if (templateSpec == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpec));
-            }
+            Argument.AssertNotNull(templateSpec, nameof(templateSpec));
 
             using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpecCollection.CreateOrUpdate");
             scope.Start();
@@ -131,7 +125,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
         public async virtual Task<Response<TemplateSpec>> GetAsync(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
@@ -161,7 +155,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
         public virtual Response<TemplateSpec> Get(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
@@ -277,7 +271,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
@@ -305,7 +299,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
         public virtual Response<bool> Exists(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
@@ -333,7 +327,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
         public async virtual Task<Response<TemplateSpec>> GetIfExistsAsync(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
@@ -363,7 +357,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
         public virtual Response<TemplateSpec> GetIfExists(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {

@@ -59,15 +59,12 @@ namespace Azure.ResourceManager.Storage
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="properties"> The local user associated with a storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> or <paramref name="properties"/> is null. </exception>
         public async virtual Task<ArmOperation<LocalUser>> CreateOrUpdateAsync(bool waitForCompletion, string username, LocalUserData properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(username, nameof(username));
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             using var scope = _localUserClientDiagnostics.CreateScope("LocalUserCollection.CreateOrUpdate");
             scope.Start();
@@ -95,15 +92,12 @@ namespace Azure.ResourceManager.Storage
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="properties"> The local user associated with a storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> or <paramref name="properties"/> is null. </exception>
         public virtual ArmOperation<LocalUser> CreateOrUpdate(bool waitForCompletion, string username, LocalUserData properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(username, nameof(username));
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             using var scope = _localUserClientDiagnostics.CreateScope("LocalUserCollection.CreateOrUpdate");
             scope.Start();
@@ -129,7 +123,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public async virtual Task<Response<LocalUser>> GetAsync(string username, CancellationToken cancellationToken = default)
         {
@@ -158,7 +152,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public virtual Response<LocalUser> Get(string username, CancellationToken cancellationToken = default)
         {
@@ -241,7 +235,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string username, CancellationToken cancellationToken = default)
         {
@@ -268,7 +262,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public virtual Response<bool> Exists(string username, CancellationToken cancellationToken = default)
         {
@@ -295,7 +289,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public async virtual Task<Response<LocalUser>> GetIfExistsAsync(string username, CancellationToken cancellationToken = default)
         {
@@ -324,7 +318,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public virtual Response<LocalUser> GetIfExists(string username, CancellationToken cancellationToken = default)
         {

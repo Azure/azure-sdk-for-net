@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="originGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="originGroupName"/> is null. </exception>
         public async Task<Response<AfdOriginListResult>> ListByOriginGroupAsync(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="originGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="originGroupName"/> is null. </exception>
         public Response<AfdOriginListResult> ListByOriginGroup(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
         /// <param name="originName"> Name of the origin which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, or <paramref name="originName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/> or <paramref name="originName"/> is null. </exception>
         public async Task<Response<AfdOriginData>> GetAsync(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, string originName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
         /// <param name="originName"> Name of the origin which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, or <paramref name="originName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/> or <paramref name="originName"/> is null. </exception>
         public Response<AfdOriginData> Get(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, string originName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originName"> Name of the origin that is unique within the profile. </param>
         /// <param name="origin"> Origin properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, <paramref name="originName"/>, or <paramref name="origin"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, <paramref name="originName"/> or <paramref name="origin"/> is null. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, string originName, AfdOriginData origin, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originName"> Name of the origin that is unique within the profile. </param>
         /// <param name="origin"> Origin properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, <paramref name="originName"/>, or <paramref name="origin"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, <paramref name="originName"/> or <paramref name="origin"/> is null. </exception>
         public Response Create(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, string originName, AfdOriginData origin, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originName"> Name of the origin which is unique within the profile. </param>
         /// <param name="options"> Origin properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, <paramref name="originName"/>, or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, <paramref name="originName"/> or <paramref name="options"/> is null. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, string originName, AfdOriginUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originName"> Name of the origin which is unique within the profile. </param>
         /// <param name="options"> Origin properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, <paramref name="originName"/>, or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, <paramref name="originName"/> or <paramref name="options"/> is null. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, string originName, AfdOriginUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
         /// <param name="originName"> Name of the origin which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, or <paramref name="originName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/> or <paramref name="originName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, string originName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
         /// <param name="originName"> Name of the origin which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/>, or <paramref name="originName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/> or <paramref name="originName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, string originName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="originGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="originGroupName"/> is null. </exception>
         public async Task<Response<AfdOriginListResult>> ListByOriginGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, or <paramref name="originGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="originGroupName"/> is null. </exception>
         public Response<AfdOriginListResult> ListByOriginGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

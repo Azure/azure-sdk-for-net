@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <param name="sku"> Determines the SKU of the Disk Pool. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="subnetId"> Azure Resource ID of a Subnet for the Disk Pool. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/>, <paramref name="location"/>, or <paramref name="subnetId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/>, <paramref name="location"/> or <paramref name="subnetId"/> is null. </exception>
         public DiskPoolCreate(Sku sku, string location, string subnetId)
         {
             if (sku == null)

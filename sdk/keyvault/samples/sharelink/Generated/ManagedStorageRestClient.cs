@@ -680,7 +680,7 @@ namespace Azure.Security.KeyVault.Storage
         /// <param name="storageAccountAttributes"> The attributes of the storage account. </param>
         /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="resourceId"/>, or <paramref name="activeKeyName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="resourceId"/> or <paramref name="activeKeyName"/> is null. </exception>
         public async Task<Response<StorageBundle>> SetStorageAccountAsync(string storageAccountName, string resourceId, string activeKeyName, bool autoRegenerateKey, string regenerationPeriod = null, StorageAccountAttributes storageAccountAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -721,7 +721,7 @@ namespace Azure.Security.KeyVault.Storage
         /// <param name="storageAccountAttributes"> The attributes of the storage account. </param>
         /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="resourceId"/>, or <paramref name="activeKeyName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="resourceId"/> or <paramref name="activeKeyName"/> is null. </exception>
         public Response<StorageBundle> SetStorageAccount(string storageAccountName, string resourceId, string activeKeyName, bool autoRegenerateKey, string regenerationPeriod = null, StorageAccountAttributes storageAccountAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -1455,7 +1455,7 @@ namespace Azure.Security.KeyVault.Storage
         /// <param name="sasDefinitionAttributes"> The attributes of the SAS definition. </param>
         /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="sasDefinitionName"/>, <paramref name="templateUri"/>, or <paramref name="validityPeriod"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="sasDefinitionName"/>, <paramref name="templateUri"/> or <paramref name="validityPeriod"/> is null. </exception>
         public async Task<Response<SasDefinitionBundle>> SetSasDefinitionAsync(string storageAccountName, string sasDefinitionName, string templateUri, SasTokenType sasType, string validityPeriod, SasDefinitionAttributes sasDefinitionAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -1500,7 +1500,7 @@ namespace Azure.Security.KeyVault.Storage
         /// <param name="sasDefinitionAttributes"> The attributes of the SAS definition. </param>
         /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="sasDefinitionName"/>, <paramref name="templateUri"/>, or <paramref name="validityPeriod"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="sasDefinitionName"/>, <paramref name="templateUri"/> or <paramref name="validityPeriod"/> is null. </exception>
         public Response<SasDefinitionBundle> SetSasDefinition(string storageAccountName, string sasDefinitionName, string templateUri, SasTokenType sasType, string validityPeriod, SasDefinitionAttributes sasDefinitionAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)

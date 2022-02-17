@@ -369,6 +369,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -395,7 +396,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> GetLedgerEntryAsync(string transactionId, string subLedgerId = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
             scope.Start();
@@ -416,6 +417,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -442,7 +444,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response GetLedgerEntry(string transactionId, string subLedgerId = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
             scope.Start();
@@ -462,6 +464,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -496,7 +499,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> GetReceiptAsync(string transactionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
             scope.Start();
@@ -516,6 +519,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -550,7 +554,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response GetReceipt(string transactionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
             scope.Start();
@@ -570,6 +574,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -592,7 +597,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> GetTransactionStatusAsync(string transactionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
             scope.Start();
@@ -612,6 +617,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -634,7 +640,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response GetTransactionStatus(string transactionId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
             scope.Start();
@@ -734,6 +740,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -750,7 +757,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> DeleteUserAsync(string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
             scope.Start();
@@ -770,6 +777,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -786,7 +794,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response DeleteUser(string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
             scope.Start();
@@ -806,6 +814,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -828,7 +837,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> GetUserAsync(string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
             scope.Start();
@@ -848,6 +857,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -870,7 +880,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response GetUser(string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
             scope.Start();
@@ -891,6 +901,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -919,7 +930,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> CreateOrUpdateUserAsync(string userId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
@@ -941,6 +952,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -969,7 +981,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response CreateOrUpdateUser(string userId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");

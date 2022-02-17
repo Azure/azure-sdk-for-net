@@ -58,6 +58,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="oauthProviderId"> ID of the oauthProvider resource. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="oauthProviderId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="oauthProviderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -95,7 +96,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> GetOAuthProviderAsync(string oauthProviderId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(oauthProviderId, nameof(oauthProviderId));
+            Argument.AssertNotNullOrEmpty(oauthProviderId, nameof(oauthProviderId));
 
             using var scope = ClientDiagnostics.CreateScope("OAuthProvidersClient.GetOAuthProvider");
             scope.Start();
@@ -115,6 +116,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="oauthProviderId"> ID of the oauthProvider resource. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="oauthProviderId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="oauthProviderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -152,7 +154,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response GetOAuthProvider(string oauthProviderId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(oauthProviderId, nameof(oauthProviderId));
+            Argument.AssertNotNullOrEmpty(oauthProviderId, nameof(oauthProviderId));
 
             using var scope = ClientDiagnostics.CreateScope("OAuthProvidersClient.GetOAuthProvider");
             scope.Start();
@@ -173,6 +175,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="oauthProviderId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="oauthProviderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -225,7 +228,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> CreateOrUpdateAsync(string oauthProviderId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(oauthProviderId, nameof(oauthProviderId));
+            Argument.AssertNotNullOrEmpty(oauthProviderId, nameof(oauthProviderId));
 
             using var scope = ClientDiagnostics.CreateScope("OAuthProvidersClient.CreateOrUpdate");
             scope.Start();
@@ -246,6 +249,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="oauthProviderId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="oauthProviderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -298,7 +302,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response CreateOrUpdate(string oauthProviderId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(oauthProviderId, nameof(oauthProviderId));
+            Argument.AssertNotNullOrEmpty(oauthProviderId, nameof(oauthProviderId));
 
             using var scope = ClientDiagnostics.CreateScope("OAuthProvidersClient.CreateOrUpdate");
             scope.Start();
@@ -318,6 +322,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="oauthProviderId"> ID of oauthProvider. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="oauthProviderId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="oauthProviderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -340,7 +345,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> DeleteAsync(string oauthProviderId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(oauthProviderId, nameof(oauthProviderId));
+            Argument.AssertNotNullOrEmpty(oauthProviderId, nameof(oauthProviderId));
 
             using var scope = ClientDiagnostics.CreateScope("OAuthProvidersClient.Delete");
             scope.Start();
@@ -360,6 +365,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="oauthProviderId"> ID of oauthProvider. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="oauthProviderId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="oauthProviderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -382,7 +388,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response Delete(string oauthProviderId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(oauthProviderId, nameof(oauthProviderId));
+            Argument.AssertNotNullOrEmpty(oauthProviderId, nameof(oauthProviderId));
 
             using var scope = ClientDiagnostics.CreateScope("OAuthProvidersClient.Delete");
             scope.Start();

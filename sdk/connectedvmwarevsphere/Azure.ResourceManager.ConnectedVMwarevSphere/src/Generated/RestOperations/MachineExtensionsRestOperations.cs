@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="extensionParameters"> Parameters supplied to the Create Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="extensionName"/>, or <paramref name="extensionParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="extensionName"/> or <paramref name="extensionParameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string name, string extensionName, MachineExtensionData extensionParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="extensionParameters"> Parameters supplied to the Create Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="extensionName"/>, or <paramref name="extensionParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="extensionName"/> or <paramref name="extensionParameters"/> is null. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string name, string extensionName, MachineExtensionData extensionParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="options"> Parameters supplied to the Create Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="extensionName"/>, or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="extensionName"/> or <paramref name="options"/> is null. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string name, string extensionName, MachineExtensionUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="options"> Parameters supplied to the Create Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="extensionName"/>, or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="extensionName"/> or <paramref name="options"/> is null. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string name, string extensionName, MachineExtensionUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="name"> The name of the machine where the extension should be deleted. </param>
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="extensionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="extensionName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string name, string extensionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="name"> The name of the machine where the extension should be deleted. </param>
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="extensionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="extensionName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string name, string extensionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="name"> The name of the machine containing the extension. </param>
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="extensionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="extensionName"/> is null. </exception>
         public async Task<Response<MachineExtensionData>> GetAsync(string subscriptionId, string resourceGroupName, string name, string extensionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="name"> The name of the machine containing the extension. </param>
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="extensionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="extensionName"/> is null. </exception>
         public Response<MachineExtensionData> Get(string subscriptionId, string resourceGroupName, string name, string extensionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="name"> The name of the machine containing the extension. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<MachineExtensionsListResult>> ListAsync(string subscriptionId, string resourceGroupName, string name, string expand = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="name"> The name of the machine containing the extension. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<MachineExtensionsListResult> List(string subscriptionId, string resourceGroupName, string name, string expand = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="name"> The name of the machine containing the extension. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<MachineExtensionsListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="name"> The name of the machine containing the extension. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<MachineExtensionsListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

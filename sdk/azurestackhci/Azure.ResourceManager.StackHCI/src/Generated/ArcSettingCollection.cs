@@ -59,15 +59,12 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
         /// <param name="arcSetting"> Parameters supplied to the Create ArcSetting resource for this HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> or <paramref name="arcSetting"/> is null. </exception>
         public async virtual Task<ArmOperation<ArcSetting>> CreateOrUpdateAsync(bool waitForCompletion, string arcSettingName, ArcSettingData arcSetting, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
-            if (arcSetting == null)
-            {
-                throw new ArgumentNullException(nameof(arcSetting));
-            }
+            Argument.AssertNotNull(arcSetting, nameof(arcSetting));
 
             using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingCollection.CreateOrUpdate");
             scope.Start();
@@ -95,15 +92,12 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
         /// <param name="arcSetting"> Parameters supplied to the Create ArcSetting resource for this HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> or <paramref name="arcSetting"/> is null. </exception>
         public virtual ArmOperation<ArcSetting> CreateOrUpdate(bool waitForCompletion, string arcSettingName, ArcSettingData arcSetting, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
-            if (arcSetting == null)
-            {
-                throw new ArgumentNullException(nameof(arcSetting));
-            }
+            Argument.AssertNotNull(arcSetting, nameof(arcSetting));
 
             using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingCollection.CreateOrUpdate");
             scope.Start();
@@ -129,7 +123,7 @@ namespace Azure.ResourceManager.StackHCI
         /// </summary>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
         public async virtual Task<Response<ArcSetting>> GetAsync(string arcSettingName, CancellationToken cancellationToken = default)
         {
@@ -158,7 +152,7 @@ namespace Azure.ResourceManager.StackHCI
         /// </summary>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
         public virtual Response<ArcSetting> Get(string arcSettingName, CancellationToken cancellationToken = default)
         {
@@ -271,7 +265,7 @@ namespace Azure.ResourceManager.StackHCI
         /// </summary>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string arcSettingName, CancellationToken cancellationToken = default)
         {
@@ -298,7 +292,7 @@ namespace Azure.ResourceManager.StackHCI
         /// </summary>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
         public virtual Response<bool> Exists(string arcSettingName, CancellationToken cancellationToken = default)
         {
@@ -325,7 +319,7 @@ namespace Azure.ResourceManager.StackHCI
         /// </summary>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
         public async virtual Task<Response<ArcSetting>> GetIfExistsAsync(string arcSettingName, CancellationToken cancellationToken = default)
         {
@@ -354,7 +348,7 @@ namespace Azure.ResourceManager.StackHCI
         /// </summary>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
         public virtual Response<ArcSetting> GetIfExists(string arcSettingName, CancellationToken cancellationToken = default)
         {

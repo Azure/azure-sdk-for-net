@@ -58,6 +58,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="cropId"> ID of the crop. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -93,7 +94,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> GetCropAsync(string cropId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(cropId, nameof(cropId));
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
 
             using var scope = ClientDiagnostics.CreateScope("CropsClient.GetCrop");
             scope.Start();
@@ -113,6 +114,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="cropId"> ID of the crop. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -148,7 +150,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response GetCrop(string cropId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(cropId, nameof(cropId));
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
 
             using var scope = ClientDiagnostics.CreateScope("CropsClient.GetCrop");
             scope.Start();
@@ -169,6 +171,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -217,7 +220,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> CreateOrUpdateAsync(string cropId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(cropId, nameof(cropId));
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
 
             using var scope = ClientDiagnostics.CreateScope("CropsClient.CreateOrUpdate");
             scope.Start();
@@ -238,6 +241,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -286,7 +290,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response CreateOrUpdate(string cropId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(cropId, nameof(cropId));
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
 
             using var scope = ClientDiagnostics.CreateScope("CropsClient.CreateOrUpdate");
             scope.Start();
@@ -306,6 +310,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="cropId"> ID of crop to be deleted. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -328,7 +333,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> DeleteAsync(string cropId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(cropId, nameof(cropId));
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
 
             using var scope = ClientDiagnostics.CreateScope("CropsClient.Delete");
             scope.Start();
@@ -348,6 +353,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="cropId"> ID of crop to be deleted. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -370,7 +376,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response Delete(string cropId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(cropId, nameof(cropId));
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
 
             using var scope = ClientDiagnostics.CreateScope("CropsClient.Delete");
             scope.Start();

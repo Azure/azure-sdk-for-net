@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// <param name="locationName"> The String to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         internal SqlTimeZoneCollection(ArmClient client, ResourceIdentifier id, string locationName) : base(client, id)
         {
             _locationName = locationName;
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
         public async virtual Task<Response<SqlTimeZone>> GetAsync(string timeZoneId, CancellationToken cancellationToken = default)
         {
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
         public virtual Response<SqlTimeZone> Get(string timeZoneId, CancellationToken cancellationToken = default)
         {
@@ -204,7 +205,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string timeZoneId, CancellationToken cancellationToken = default)
         {
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
         public virtual Response<bool> Exists(string timeZoneId, CancellationToken cancellationToken = default)
         {
@@ -258,7 +259,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
         public async virtual Task<Response<SqlTimeZone>> GetIfExistsAsync(string timeZoneId, CancellationToken cancellationToken = default)
         {
@@ -287,7 +288,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
         public virtual Response<SqlTimeZone> GetIfExists(string timeZoneId, CancellationToken cancellationToken = default)
         {

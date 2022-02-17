@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="location"/> is null. </exception>
         public async Task<Response<ResourceSkuListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="location"/> is null. </exception>
         public Response<ResourceSkuListResult> ListNextPage(string nextLink, string subscriptionId, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

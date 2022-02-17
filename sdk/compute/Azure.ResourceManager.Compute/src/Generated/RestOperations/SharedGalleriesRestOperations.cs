@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Resource location. </param>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="galleryUniqueName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="galleryUniqueName"/> is null. </exception>
         public async Task<Response<SharedGalleryData>> GetAsync(string subscriptionId, string location, string galleryUniqueName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Resource location. </param>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="galleryUniqueName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="galleryUniqueName"/> is null. </exception>
         public Response<SharedGalleryData> Get(string subscriptionId, string location, string galleryUniqueName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Resource location. </param>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="location"/> is null. </exception>
         public async Task<Response<SharedGalleryList>> ListNextPageAsync(string nextLink, string subscriptionId, string location, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Resource location. </param>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="location"/> is null. </exception>
         public Response<SharedGalleryList> ListNextPage(string nextLink, string subscriptionId, string location, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

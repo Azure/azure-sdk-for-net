@@ -41,6 +41,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -118,7 +119,7 @@ namespace Azure.Analytics.Purview.Administration
         public virtual async Task<Response> UpdateMetadataPolicyAsync(string policyId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(policyId, nameof(policyId));
+            Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewMetadataPolicyClient.UpdateMetadataPolicy");
             scope.Start();
@@ -139,6 +140,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -216,7 +218,7 @@ namespace Azure.Analytics.Purview.Administration
         public virtual Response UpdateMetadataPolicy(string policyId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(policyId, nameof(policyId));
+            Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewMetadataPolicyClient.UpdateMetadataPolicy");
             scope.Start();
@@ -236,6 +238,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="policyId"> Id of an existing policy that needs to be fetched. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -283,7 +286,7 @@ namespace Azure.Analytics.Purview.Administration
         public virtual async Task<Response> GetMetadataPolicyAsync(string policyId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(policyId, nameof(policyId));
+            Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewMetadataPolicyClient.GetMetadataPolicy");
             scope.Start();
@@ -303,6 +306,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="policyId"> Id of an existing policy that needs to be fetched. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -350,7 +354,7 @@ namespace Azure.Analytics.Purview.Administration
         public virtual Response GetMetadataPolicy(string policyId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(policyId, nameof(policyId));
+            Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewMetadataPolicyClient.GetMetadataPolicy");
             scope.Start();

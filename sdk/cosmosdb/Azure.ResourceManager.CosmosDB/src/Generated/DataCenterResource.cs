@@ -193,10 +193,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public async virtual Task<ArmOperation<DataCenterResource>> UpdateAsync(bool waitForCompletion, DataCenterResourceData body, CancellationToken cancellationToken = default)
         {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
+            Argument.AssertNotNull(body, nameof(body));
 
             using var scope = _dataCenterResourceCassandraDataCentersClientDiagnostics.CreateScope("DataCenterResource.Update");
             scope.Start();
@@ -226,10 +223,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual ArmOperation<DataCenterResource> Update(bool waitForCompletion, DataCenterResourceData body, CancellationToken cancellationToken = default)
         {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
+            Argument.AssertNotNull(body, nameof(body));
 
             using var scope = _dataCenterResourceCassandraDataCentersClientDiagnostics.CreateScope("DataCenterResource.Update");
             scope.Start();
