@@ -55,7 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 // TODO: Handle return value, it can be converted as metrics.
                 // TODO: Validate CancellationToken and async pattern here.
-                _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
+                var exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
                 // Get number of ticks after export
                 long ticksAfterExport = Stopwatch.GetTimestamp();
@@ -68,7 +68,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 long maxFilesToTransmit = _storageTransmissionEvaluator.MaxFilesToTransmitFromStorage();
                 _transmitter.TransmitFromStorage(maxFilesToTransmit, false, CancellationToken.None);
 
-                return ExportResult.Success;
+                return exportResult;
             }
             catch (Exception ex)
             {
