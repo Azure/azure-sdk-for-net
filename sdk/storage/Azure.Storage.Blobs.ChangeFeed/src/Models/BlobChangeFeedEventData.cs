@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Storage.Blobs.ChangeFeed.Models;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
@@ -44,6 +45,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
             record.TryGetValue(Constants.ChangeFeed.EventData.Recursive, out object recursive);
             Recursive = (bool?)recursive;
             Sequencer = (string)record[Constants.ChangeFeed.EventData.Sequencer];
+            Snapshot = ExtractSnapshot(record);
+            UpdatedBlobProperties = BuildUpdatedBlobProperties(record);
         }
 
         /// <summary>
@@ -126,5 +129,59 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// Users can use standard string comparison to understand the relative sequence of two events on the same blob name.
         /// </summary>
         public string Sequencer { get; internal set; }
+
+        // TODO previous info.
+
+        /// <summary>
+        /// The Snapshot associated with the event.
+        /// </summary>
+        public string Snapshot { get; internal set; }
+
+        /// <summary>
+        /// Blob properties that were updated during this event.
+        /// </summary>
+        public Dictionary<string, BlobChangeFeedEventUpdatedBlobProperty> UpdatedBlobProperties { get; internal set; }
+
+        private static string ExtractSnapshot(Dictionary<string, object> recordDictionary)
+        {
+            if (recordDictionary.TryGetValue(
+                Constants.ChangeFeed.EventData.Snapshot,
+                out object snapshotObject))
+            {
+                Dictionary<string, object> snapshotDictionary = (Dictionary<string, object>)snapshotObject;
+                return (string)snapshotDictionary[Constants.ChangeFeed.EventData.String];
+            }
+            return null;
+        }
+
+        private static Dictionary<string, BlobChangeFeedEventUpdatedBlobProperty> BuildUpdatedBlobProperties(
+            Dictionary<string, object> recordDictionary)
+        {
+            if (recordDictionary.TryGetValue(
+                Constants.ChangeFeed.EventData.BlobPropertiesUpdated,
+                out object blobPropertiesUpdatedObject))
+            {
+                Dictionary<string, object> updatedPropertiesDictionary = (Dictionary<string, object>)blobPropertiesUpdatedObject;
+                Dictionary<string, object> mapDictionary = (Dictionary<string, object>)updatedPropertiesDictionary[Constants.ChangeFeed.EventData.Map];
+
+                Dictionary<string, BlobChangeFeedEventUpdatedBlobProperty> result = new Dictionary<string, BlobChangeFeedEventUpdatedBlobProperty>();
+
+                foreach (KeyValuePair<string, object> kvp in mapDictionary)
+                {
+                    Dictionary<string, object> propertyMap = (Dictionary<string, object>)kvp.Value;
+                    result.Add(
+                        kvp.Key,
+                        new BlobChangeFeedEventUpdatedBlobProperty
+                        {
+                            PropertyName = kvp.Key,
+                            PreviousValue = (string)propertyMap[Constants.ChangeFeed.EventData.Previous],
+                            NewValue = (string)propertyMap[Constants.ChangeFeed.EventData.Current]
+                        });
+                }
+
+                return result;
+            }
+            return null;
+        }
     }
 }
