@@ -2965,7 +2965,7 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ExpandTypesForGetCapacityReservationGroups(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.ExpandTypesForGetCapacityReservationGroups VirtualMachineScaleSetVMsRef { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ExpandTypesForGetCapacityReservationGroups VirtualMachineScaleSetVmsRef { get { throw null; } }
         public static Azure.ResourceManager.Compute.Models.ExpandTypesForGetCapacityReservationGroups VirtualMachinesRef { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.ExpandTypesForGetCapacityReservationGroups other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -4396,9 +4396,9 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.ManagedDiskParameters ManagedDisk { get { throw null; } }
         public string Name { get { throw null; } }
     }
-    public partial class RestorePointSourceVmosDisk
+    public partial class RestorePointSourceVmOSDisk
     {
-        internal RestorePointSourceVmosDisk() { }
+        internal RestorePointSourceVmOSDisk() { }
         public Azure.ResourceManager.Compute.Models.CachingTypes? Caching { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.WritableSubResource DiskRestorePoint { get { throw null; } }
         public int? DiskSizeGB { get { throw null; } }
@@ -4411,7 +4411,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal RestorePointSourceVmStorageProfile() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.RestorePointSourceVmDataDisk> DataDisks { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.RestorePointSourceVmosDisk OSDisk { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.RestorePointSourceVmOSDisk OSDisk { get { throw null; } }
     }
     public partial class RetrieveBootDiagnosticsDataResult
     {
@@ -5391,8 +5391,8 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly int _dummyPrimitive;
         public VirtualMachineScaleSetScaleInRules(string value) { throw null; }
         public static Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleInRules Default { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleInRules NewestVM { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleInRules OldestVM { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleInRules NewestVm { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleInRules OldestVm { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleInRules other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
