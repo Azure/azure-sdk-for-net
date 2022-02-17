@@ -146,12 +146,12 @@ namespace Azure.Core
         /// <summary>
         ///
         /// </summary>
+        /// <param name="type">The key for the value.</param>
         /// <param name="value">The property value.</param>
-        internal void SetInternalProperty(object value)
+        internal void SetInternalProperty(Type type, object value)
         {
             _typeProperties ??= new Dictionary<Type, object>();
-
-            _typeProperties[value.GetType()] = value;
+            _typeProperties[type] = value;
         }
 
         /// <summary>
