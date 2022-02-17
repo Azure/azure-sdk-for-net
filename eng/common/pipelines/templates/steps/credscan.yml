@@ -39,7 +39,7 @@ steps:
     GdnBreakGdnToolCredScanSeverity: Error
     GdnBreakBaselines: baseline
     # Used for generating baseline file.
-    # GdnBreakOutputBaselineFile: $(Language)
+    # GdnBreakOutputBaselineFile: $(baseline)
     # GdnBreakOutputBaseline: baseline
   condition: succeededOrFailed()
 - pwsh: |
