@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="mode"> The Source NAT direction of a VPN NAT. </param>
         /// <param name="internalMappings"> The private IP address internal mapping for NAT. </param>
         /// <param name="externalMappings"> The private IP address external mapping for NAT. </param>
-        /// <param name="iPConfigurationId"> The IP Configuration ID this NAT rule applies to. </param>
-        internal VirtualNetworkGatewayNatRuleData(string id, string name, string etag, string type, ProvisioningState? provisioningState, VpnNatRuleType? typePropertiesType, VpnNatRuleMode? mode, IList<VpnNatRuleMapping> internalMappings, IList<VpnNatRuleMapping> externalMappings, string iPConfigurationId) : base(id)
+        /// <param name="ipConfigurationId"> The IP Configuration ID this NAT rule applies to. </param>
+        internal VirtualNetworkGatewayNatRuleData(string id, string name, string etag, string type, ProvisioningState? provisioningState, VpnNatRuleType? typePropertiesType, VpnNatRuleMode? mode, IList<VpnNatRuleMapping> internalMappings, IList<VpnNatRuleMapping> externalMappings, string ipConfigurationId) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network
             Mode = mode;
             InternalMappings = internalMappings;
             ExternalMappings = externalMappings;
-            IPConfigurationId = iPConfigurationId;
+            IPConfigurationId = ipConfigurationId;
         }
 
         /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>

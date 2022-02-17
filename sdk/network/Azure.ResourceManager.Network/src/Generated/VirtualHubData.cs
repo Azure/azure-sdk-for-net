@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="sku"> The sku of this VirtualHub. </param>
         /// <param name="routingState"> The routing state. </param>
         /// <param name="bgpConnections"> List of references to Bgp Connections. </param>
-        /// <param name="iPConfigurations"> List of references to IpConfigurations. </param>
+        /// <param name="ipConfigurations"> List of references to IpConfigurations. </param>
         /// <param name="virtualRouterAsn"> VirtualRouter ASN. </param>
         /// <param name="virtualRouterIPs"> VirtualRouter IPs. </param>
         /// <param name="allowBranchToBranchTraffic"> Flag to control transit for VirtualRouter hub. </param>
         /// <param name="preferredRoutingGateway"> The preferred gateway to route on-prem traffic. </param>
-        internal VirtualHubData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, WritableSubResource virtualWan, WritableSubResource vpnGateway, WritableSubResource p2SVpnGateway, WritableSubResource expressRouteGateway, WritableSubResource azureFirewall, WritableSubResource securityPartnerProvider, string addressPrefix, VirtualHubRouteTable routeTable, ProvisioningState? provisioningState, string securityProviderName, IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2S, string sku, RoutingState? routingState, IReadOnlyList<WritableSubResource> bgpConnections, IReadOnlyList<WritableSubResource> iPConfigurations, long? virtualRouterAsn, IList<string> virtualRouterIPs, bool? allowBranchToBranchTraffic, PreferredRoutingGateway? preferredRoutingGateway) : base(id, name, type, location, tags)
+        internal VirtualHubData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, WritableSubResource virtualWan, WritableSubResource vpnGateway, WritableSubResource p2SVpnGateway, WritableSubResource expressRouteGateway, WritableSubResource azureFirewall, WritableSubResource securityPartnerProvider, string addressPrefix, VirtualHubRouteTable routeTable, ProvisioningState? provisioningState, string securityProviderName, IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2S, string sku, RoutingState? routingState, IReadOnlyList<WritableSubResource> bgpConnections, IReadOnlyList<WritableSubResource> ipConfigurations, long? virtualRouterAsn, IList<string> virtualRouterIPs, bool? allowBranchToBranchTraffic, PreferredRoutingGateway? preferredRoutingGateway) : base(id, name, type, location, tags)
         {
             Etag = etag;
             VirtualWan = virtualWan;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
             Sku = sku;
             RoutingState = routingState;
             BgpConnections = bgpConnections;
-            IPConfigurations = iPConfigurations;
+            IPConfigurations = ipConfigurations;
             VirtualRouterAsn = virtualRouterAsn;
             VirtualRouterIPs = virtualRouterIPs;
             AllowBranchToBranchTraffic = allowBranchToBranchTraffic;

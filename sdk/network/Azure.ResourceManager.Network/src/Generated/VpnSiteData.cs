@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="virtualWan"> The VirtualWAN to which the vpnSite belongs. </param>
         /// <param name="deviceProperties"> The device properties. </param>
-        /// <param name="iPAddress"> The ip-address for the vpn-site. </param>
+        /// <param name="ipAddress"> The ip-address for the vpn-site. </param>
         /// <param name="siteKey"> The key for vpn-site that can be used for connections. </param>
         /// <param name="addressSpace"> The AddressSpace that contains an array of IP address ranges. </param>
         /// <param name="bgpProperties"> The set of bgp properties. </param>
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="isSecuritySite"> IsSecuritySite flag. </param>
         /// <param name="vpnSiteLinks"> List of all vpn site links. </param>
         /// <param name="o365Policy"> Office365 Policy. </param>
-        internal VpnSiteData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, WritableSubResource virtualWan, DeviceProperties deviceProperties, string iPAddress, string siteKey, AddressSpace addressSpace, BgpSettings bgpProperties, ProvisioningState? provisioningState, bool? isSecuritySite, IList<VpnSiteLinkData> vpnSiteLinks, O365PolicyProperties o365Policy) : base(id, name, type, location, tags)
+        internal VpnSiteData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, WritableSubResource virtualWan, DeviceProperties deviceProperties, string ipAddress, string siteKey, AddressSpace addressSpace, BgpSettings bgpProperties, ProvisioningState? provisioningState, bool? isSecuritySite, IList<VpnSiteLinkData> vpnSiteLinks, O365PolicyProperties o365Policy) : base(id, name, type, location, tags)
         {
             Etag = etag;
             VirtualWan = virtualWan;
             DeviceProperties = deviceProperties;
-            IPAddress = iPAddress;
+            IPAddress = ipAddress;
             SiteKey = siteKey;
             AddressSpace = addressSpace;
             BgpProperties = bgpProperties;

@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceEndpoints"> An array of service endpoints. </param>
         /// <param name="serviceEndpointPolicies"> An array of service endpoint policies. </param>
         /// <param name="privateEndpoints"> An array of references to private endpoints. </param>
-        /// <param name="iPConfigurations"> An array of references to the network interface IP configurations using subnet. </param>
-        /// <param name="iPConfigurationProfiles"> Array of IP configuration profiles which reference this subnet. </param>
-        /// <param name="iPAllocations"> Array of IpAllocation which reference this subnet. </param>
+        /// <param name="ipConfigurations"> An array of references to the network interface IP configurations using subnet. </param>
+        /// <param name="ipConfigurationProfiles"> Array of IP configuration profiles which reference this subnet. </param>
+        /// <param name="ipAllocations"> Array of IpAllocation which reference this subnet. </param>
         /// <param name="resourceNavigationLinks"> An array of references to the external resources using subnet. </param>
         /// <param name="serviceAssociationLinks"> An array of references to services injecting into this subnet. </param>
         /// <param name="delegations"> An array of references to the delegations on the subnet. </param>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateEndpointNetworkPolicies"> Enable or Disable apply network policies on private end point in the subnet. </param>
         /// <param name="privateLinkServiceNetworkPolicies"> Enable or Disable apply network policies on private link service in the subnet. </param>
         /// <param name="applicationGatewayIPConfigurations"> Application gateway IP configurations of virtual network resource. </param>
-        internal SubnetData(string id, string name, string etag, string type, string addressPrefix, IList<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, WritableSubResource natGateway, IList<ServiceEndpointPropertiesFormat> serviceEndpoints, IList<ServiceEndpointPolicyData> serviceEndpointPolicies, IReadOnlyList<PrivateEndpointData> privateEndpoints, IReadOnlyList<IPConfiguration> iPConfigurations, IReadOnlyList<IPConfigurationProfile> iPConfigurationProfiles, IList<WritableSubResource> iPAllocations, IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks, IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks, IList<Delegation> delegations, string purpose, ProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicies? privateEndpointNetworkPolicies, VirtualNetworkPrivateLinkServiceNetworkPolicies? privateLinkServiceNetworkPolicies, IList<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations) : base(id)
+        internal SubnetData(string id, string name, string etag, string type, string addressPrefix, IList<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, WritableSubResource natGateway, IList<ServiceEndpointPropertiesFormat> serviceEndpoints, IList<ServiceEndpointPolicyData> serviceEndpointPolicies, IReadOnlyList<PrivateEndpointData> privateEndpoints, IReadOnlyList<IPConfiguration> ipConfigurations, IReadOnlyList<IPConfigurationProfile> ipConfigurationProfiles, IList<WritableSubResource> ipAllocations, IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks, IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks, IList<Delegation> delegations, string purpose, ProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicies? privateEndpointNetworkPolicies, VirtualNetworkPrivateLinkServiceNetworkPolicies? privateLinkServiceNetworkPolicies, IList<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.Network
             ServiceEndpoints = serviceEndpoints;
             ServiceEndpointPolicies = serviceEndpointPolicies;
             PrivateEndpoints = privateEndpoints;
-            IPConfigurations = iPConfigurations;
-            IPConfigurationProfiles = iPConfigurationProfiles;
-            IPAllocations = iPAllocations;
+            IPConfigurations = ipConfigurations;
+            IPConfigurationProfiles = ipConfigurationProfiles;
+            IPAllocations = ipAllocations;
             ResourceNavigationLinks = resourceNavigationLinks;
             ServiceAssociationLinks = serviceAssociationLinks;
             Delegations = delegations;

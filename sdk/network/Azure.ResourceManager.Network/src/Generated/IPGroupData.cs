@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="provisioningState"> The provisioning state of the IpGroups resource. </param>
-        /// <param name="iPAddresses"> IpAddresses/IpAddressPrefixes in the IpGroups resource. </param>
+        /// <param name="ipAddresses"> IpAddresses/IpAddressPrefixes in the IpGroups resource. </param>
         /// <param name="firewalls"> List of references to Firewall resources that this IpGroups is associated with. </param>
         /// <param name="firewallPolicies"> List of references to Firewall Policies resources that this IpGroups is associated with. </param>
-        internal IPGroupData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ProvisioningState? provisioningState, IList<string> iPAddresses, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> firewallPolicies) : base(id, name, type, location, tags)
+        internal IPGroupData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ProvisioningState? provisioningState, IList<string> ipAddresses, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> firewallPolicies) : base(id, name, type, location, tags)
         {
             Etag = etag;
             ProvisioningState = provisioningState;
-            IPAddresses = iPAddresses;
+            IPAddresses = ipAddresses;
             Firewalls = firewalls;
             FirewallPolicies = firewallPolicies;
         }

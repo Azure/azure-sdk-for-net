@@ -21,15 +21,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> Name of the backend address. </param>
         /// <param name="virtualNetwork"> Reference to an existing virtual network. </param>
         /// <param name="subnet"> Reference to an existing subnet. </param>
-        /// <param name="iPAddress"> IP Address belonging to the referenced virtual network. </param>
+        /// <param name="ipAddress"> IP Address belonging to the referenced virtual network. </param>
         /// <param name="networkInterfaceIPConfiguration"> Reference to IP address defined in network interfaces. </param>
         /// <param name="loadBalancerFrontendIPConfiguration"> Reference to the frontend ip address configuration defined in regional loadbalancer. </param>
-        internal LoadBalancerBackendAddress(string name, WritableSubResource virtualNetwork, WritableSubResource subnet, string iPAddress, WritableSubResource networkInterfaceIPConfiguration, WritableSubResource loadBalancerFrontendIPConfiguration)
+        internal LoadBalancerBackendAddress(string name, WritableSubResource virtualNetwork, WritableSubResource subnet, string ipAddress, WritableSubResource networkInterfaceIPConfiguration, WritableSubResource loadBalancerFrontendIPConfiguration)
         {
             Name = name;
             VirtualNetwork = virtualNetwork;
             Subnet = subnet;
-            IPAddress = iPAddress;
+            IPAddress = ipAddress;
             NetworkInterfaceIPConfiguration = networkInterfaceIPConfiguration;
             LoadBalancerFrontendIPConfiguration = loadBalancerFrontendIPConfiguration;
         }

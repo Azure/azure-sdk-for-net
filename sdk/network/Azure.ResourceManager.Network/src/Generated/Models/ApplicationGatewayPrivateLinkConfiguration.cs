@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> Name of the private link configuration that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Type of the resource. </param>
-        /// <param name="iPConfigurations"> An array of application gateway private link ip configurations. </param>
+        /// <param name="ipConfigurations"> An array of application gateway private link ip configurations. </param>
         /// <param name="provisioningState"> The provisioning state of the application gateway private link configuration. </param>
-        internal ApplicationGatewayPrivateLinkConfiguration(string id, string name, string etag, string type, IList<ApplicationGatewayPrivateLinkIPConfiguration> iPConfigurations, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayPrivateLinkConfiguration(string id, string name, string etag, string type, IList<ApplicationGatewayPrivateLinkIPConfiguration> ipConfigurations, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
             Type = type;
-            IPConfigurations = iPConfigurations;
+            IPConfigurations = ipConfigurations;
             ProvisioningState = provisioningState;
         }
 

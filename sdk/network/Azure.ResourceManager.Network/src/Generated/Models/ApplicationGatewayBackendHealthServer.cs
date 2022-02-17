@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of ApplicationGatewayBackendHealthServer. </summary>
         /// <param name="address"> IP address or FQDN of backend server. </param>
-        /// <param name="iPConfiguration"> Reference to IP configuration of backend server. </param>
+        /// <param name="ipConfiguration"> Reference to IP configuration of backend server. </param>
         /// <param name="health"> Health of backend server. </param>
         /// <param name="healthProbeLog"> Health Probe Log. </param>
-        internal ApplicationGatewayBackendHealthServer(string address, NetworkInterfaceIPConfigurationData iPConfiguration, ApplicationGatewayBackendHealthServerHealth? health, string healthProbeLog)
+        internal ApplicationGatewayBackendHealthServer(string address, NetworkInterfaceIPConfigurationData ipConfiguration, ApplicationGatewayBackendHealthServerHealth? health, string healthProbeLog)
         {
             Address = address;
-            IPConfiguration = iPConfiguration;
+            IPConfiguration = ipConfiguration;
             Health = health;
             HealthProbeLog = healthProbeLog;
         }

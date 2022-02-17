@@ -23,17 +23,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="linkProperties"> The link provider properties. </param>
-        /// <param name="iPAddress"> The ip-address for the vpn-site-link. </param>
+        /// <param name="ipAddress"> The ip-address for the vpn-site-link. </param>
         /// <param name="fqdn"> FQDN of vpn-site-link. </param>
         /// <param name="bgpProperties"> The set of bgp properties. </param>
         /// <param name="provisioningState"> The provisioning state of the VPN site link resource. </param>
-        internal VpnSiteLinkData(string id, string etag, string name, string type, VpnLinkProviderProperties linkProperties, string iPAddress, string fqdn, VpnLinkBgpSettings bgpProperties, ProvisioningState? provisioningState) : base(id)
+        internal VpnSiteLinkData(string id, string etag, string name, string type, VpnLinkProviderProperties linkProperties, string ipAddress, string fqdn, VpnLinkBgpSettings bgpProperties, ProvisioningState? provisioningState) : base(id)
         {
             Etag = etag;
             Name = name;
             Type = type;
             LinkProperties = linkProperties;
-            IPAddress = iPAddress;
+            IPAddress = ipAddress;
             Fqdn = fqdn;
             BgpProperties = bgpProperties;
             ProvisioningState = provisioningState;

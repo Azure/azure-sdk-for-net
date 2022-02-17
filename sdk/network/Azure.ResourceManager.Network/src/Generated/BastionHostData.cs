@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="sku"> The sku of this Bastion Host. </param>
-        /// <param name="iPConfigurations"> IP configuration of the Bastion Host resource. </param>
+        /// <param name="ipConfigurations"> IP configuration of the Bastion Host resource. </param>
         /// <param name="dnsName"> FQDN for the endpoint on which bastion host is accessible. </param>
         /// <param name="provisioningState"> The provisioning state of the bastion host resource. </param>
-        internal BastionHostData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, Sku sku, IList<BastionHostIPConfiguration> iPConfigurations, string dnsName, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal BastionHostData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, Sku sku, IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
         {
             Etag = etag;
             Sku = sku;
-            IPConfigurations = iPConfigurations;
+            IPConfigurations = ipConfigurations;
             DnsName = dnsName;
             ProvisioningState = provisioningState;
         }

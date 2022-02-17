@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of ApplicationGatewayBackendAddress. </summary>
         /// <param name="fqdn"> Fully qualified domain name (FQDN). </param>
-        /// <param name="iPAddress"> IP address. </param>
-        internal ApplicationGatewayBackendAddress(string fqdn, string iPAddress)
+        /// <param name="ipAddress"> IP address. </param>
+        internal ApplicationGatewayBackendAddress(string fqdn, string ipAddress)
         {
             Fqdn = fqdn;
-            IPAddress = iPAddress;
+            IPAddress = ipAddress;
         }
 
         /// <summary> Fully qualified domain name (FQDN). </summary>

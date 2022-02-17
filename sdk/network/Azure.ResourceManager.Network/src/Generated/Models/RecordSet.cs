@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="fqdn"> Fqdn that resolves to private endpoint ip address. </param>
         /// <param name="provisioningState"> The provisioning state of the recordset. </param>
         /// <param name="ttl"> Recordset time to live. </param>
-        /// <param name="iPAddresses"> The private ip address of the private endpoint. </param>
-        internal RecordSet(string recordType, string recordSetName, string fqdn, ProvisioningState? provisioningState, int? ttl, IReadOnlyList<string> iPAddresses)
+        /// <param name="ipAddresses"> The private ip address of the private endpoint. </param>
+        internal RecordSet(string recordType, string recordSetName, string fqdn, ProvisioningState? provisioningState, int? ttl, IReadOnlyList<string> ipAddresses)
         {
             RecordType = recordType;
             RecordSetName = recordSetName;
             Fqdn = fqdn;
             ProvisioningState = provisioningState;
             Ttl = ttl;
-            IPAddresses = iPAddresses;
+            IPAddresses = ipAddresses;
         }
 
         /// <summary> Resource record type. </summary>

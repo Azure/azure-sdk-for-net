@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyThreatIntelWhitelist. </summary>
-        /// <param name="iPAddresses"> List of IP addresses for the ThreatIntel Whitelist. </param>
+        /// <param name="ipAddresses"> List of IP addresses for the ThreatIntel Whitelist. </param>
         /// <param name="fqdns"> List of FQDNs for the ThreatIntel Whitelist. </param>
-        internal FirewallPolicyThreatIntelWhitelist(IList<string> iPAddresses, IList<string> fqdns)
+        internal FirewallPolicyThreatIntelWhitelist(IList<string> ipAddresses, IList<string> fqdns)
         {
-            IPAddresses = iPAddresses;
+            IPAddresses = ipAddresses;
             Fqdns = fqdns;
         }
 

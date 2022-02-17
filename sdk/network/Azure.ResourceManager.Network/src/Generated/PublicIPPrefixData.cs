@@ -34,25 +34,25 @@ namespace Azure.ResourceManager.Network
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="zones"> A list of availability zones denoting the IP allocated for the resource needs to come from. </param>
         /// <param name="publicIPAddressVersion"> The public IP address version. </param>
-        /// <param name="iPTags"> The list of tags associated with the public IP prefix. </param>
+        /// <param name="ipTags"> The list of tags associated with the public IP prefix. </param>
         /// <param name="prefixLength"> The Length of the Public IP Prefix. </param>
-        /// <param name="iPPrefix"> The allocated Prefix. </param>
+        /// <param name="ipPrefix"> The allocated Prefix. </param>
         /// <param name="publicIPAddresses"> The list of all referenced PublicIPAddresses. </param>
         /// <param name="loadBalancerFrontendIPConfiguration"> The reference to load balancer frontend IP configuration associated with the public IP prefix. </param>
         /// <param name="customIPPrefix"> The customIpPrefix that this prefix is associated with. </param>
         /// <param name="resourceGuid"> The resource GUID property of the public IP prefix resource. </param>
         /// <param name="provisioningState"> The provisioning state of the public IP prefix resource. </param>
         /// <param name="natGateway"> NatGateway of Public IP Prefix. </param>
-        internal PublicIPPrefixData(string id, string name, string type, string location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, PublicIPPrefixSku sku, string etag, IList<string> zones, IPVersion? publicIPAddressVersion, IList<IPTag> iPTags, int? prefixLength, string iPPrefix, IReadOnlyList<Resources.Models.SubResource> publicIPAddresses, WritableSubResource loadBalancerFrontendIPConfiguration, WritableSubResource customIPPrefix, string resourceGuid, ProvisioningState? provisioningState, NatGatewayData natGateway) : base(id, name, type, location, tags)
+        internal PublicIPPrefixData(string id, string name, string type, string location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, PublicIPPrefixSku sku, string etag, IList<string> zones, IPVersion? publicIPAddressVersion, IList<IPTag> ipTags, int? prefixLength, string ipPrefix, IReadOnlyList<Resources.Models.SubResource> publicIPAddresses, WritableSubResource loadBalancerFrontendIPConfiguration, WritableSubResource customIPPrefix, string resourceGuid, ProvisioningState? provisioningState, NatGatewayData natGateway) : base(id, name, type, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Sku = sku;
             Etag = etag;
             Zones = zones;
             PublicIPAddressVersion = publicIPAddressVersion;
-            IPTags = iPTags;
+            IPTags = ipTags;
             PrefixLength = prefixLength;
-            IPPrefix = iPPrefix;
+            IPPrefix = ipPrefix;
             PublicIPAddresses = publicIPAddresses;
             LoadBalancerFrontendIPConfiguration = loadBalancerFrontendIPConfiguration;
             CustomIPPrefix = customIPPrefix;

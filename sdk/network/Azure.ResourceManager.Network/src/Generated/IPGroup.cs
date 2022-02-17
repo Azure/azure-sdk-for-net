@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Network
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _iPGroupIpGroupsClientDiagnostics;
-        private readonly IpGroupsRestOperations _iPGroupIpGroupsRestClient;
+        private readonly ClientDiagnostics _ipGroupIpGroupsClientDiagnostics;
+        private readonly IpGroupsRestOperations _ipGroupIpGroupsRestClient;
         private readonly IPGroupData _data;
 
         /// <summary> Initializes a new instance of the <see cref="IPGroup"/> class for mocking. </summary>
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal IPGroup(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _iPGroupIpGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ResourceType, out string iPGroupIpGroupsApiVersion);
-            _iPGroupIpGroupsRestClient = new IpGroupsRestOperations(_iPGroupIpGroupsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, iPGroupIpGroupsApiVersion);
+            _ipGroupIpGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(ResourceType, out string ipGroupIpGroupsApiVersion);
+            _ipGroupIpGroupsRestClient = new IpGroupsRestOperations(_ipGroupIpGroupsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, ipGroupIpGroupsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -92,13 +92,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<IPGroup>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _iPGroupIpGroupsClientDiagnostics.CreateScope("IPGroup.Get");
+            using var scope = _ipGroupIpGroupsClientDiagnostics.CreateScope("IPGroup.Get");
             scope.Start();
             try
             {
-                var response = await _iPGroupIpGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _ipGroupIpGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _iPGroupIpGroupsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw await _ipGroupIpGroupsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new IPGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -117,13 +117,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<IPGroup> Get(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _iPGroupIpGroupsClientDiagnostics.CreateScope("IPGroup.Get");
+            using var scope = _ipGroupIpGroupsClientDiagnostics.CreateScope("IPGroup.Get");
             scope.Start();
             try
             {
-                var response = _iPGroupIpGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                var response = _ipGroupIpGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _iPGroupIpGroupsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw _ipGroupIpGroupsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new IPGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -142,12 +142,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _iPGroupIpGroupsClientDiagnostics.CreateScope("IPGroup.Delete");
+            using var scope = _ipGroupIpGroupsClientDiagnostics.CreateScope("IPGroup.Delete");
             scope.Start();
             try
             {
-                var response = await _iPGroupIpGroupsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_iPGroupIpGroupsClientDiagnostics, Pipeline, _iPGroupIpGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _ipGroupIpGroupsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation(_ipGroupIpGroupsClientDiagnostics, Pipeline, _ipGroupIpGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -168,12 +168,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _iPGroupIpGroupsClientDiagnostics.CreateScope("IPGroup.Delete");
+            using var scope = _ipGroupIpGroupsClientDiagnostics.CreateScope("IPGroup.Delete");
             scope.Start();
             try
             {
-                var response = _iPGroupIpGroupsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation(_iPGroupIpGroupsClientDiagnostics, Pipeline, _iPGroupIpGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _ipGroupIpGroupsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new NetworkArmOperation(_ipGroupIpGroupsClientDiagnostics, Pipeline, _ipGroupIpGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _iPGroupIpGroupsClientDiagnostics.CreateScope("IPGroup.AddTag");
+            using var scope = _ipGroupIpGroupsClientDiagnostics.CreateScope("IPGroup.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _iPGroupIpGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _ipGroupIpGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new IPGroup(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -230,14 +230,14 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _iPGroupIpGroupsClientDiagnostics.CreateScope("IPGroup.AddTag");
+            using var scope = _ipGroupIpGroupsClientDiagnostics.CreateScope("IPGroup.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _iPGroupIpGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                var originalResponse = _ipGroupIpGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new IPGroup(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _iPGroupIpGroupsClientDiagnostics.CreateScope("IPGroup.SetTags");
+            using var scope = _ipGroupIpGroupsClientDiagnostics.CreateScope("IPGroup.SetTags");
             scope.Start();
             try
             {
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Network
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _iPGroupIpGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _ipGroupIpGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new IPGroup(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _iPGroupIpGroupsClientDiagnostics.CreateScope("IPGroup.SetTags");
+            using var scope = _ipGroupIpGroupsClientDiagnostics.CreateScope("IPGroup.SetTags");
             scope.Start();
             try
             {
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Network
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _iPGroupIpGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                var originalResponse = _ipGroupIpGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new IPGroup(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -319,14 +319,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _iPGroupIpGroupsClientDiagnostics.CreateScope("IPGroup.RemoveTag");
+            using var scope = _ipGroupIpGroupsClientDiagnostics.CreateScope("IPGroup.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _iPGroupIpGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _ipGroupIpGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new IPGroup(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -348,14 +348,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _iPGroupIpGroupsClientDiagnostics.CreateScope("IPGroup.RemoveTag");
+            using var scope = _ipGroupIpGroupsClientDiagnostics.CreateScope("IPGroup.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _iPGroupIpGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                var originalResponse = _ipGroupIpGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new IPGroup(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)

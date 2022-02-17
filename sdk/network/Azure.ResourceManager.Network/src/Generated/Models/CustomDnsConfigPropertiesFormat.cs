@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of CustomDnsConfigPropertiesFormat. </summary>
         /// <param name="fqdn"> Fqdn that resolves to private endpoint ip address. </param>
-        /// <param name="iPAddresses"> A list of private ip addresses of the private endpoint. </param>
-        internal CustomDnsConfigPropertiesFormat(string fqdn, IList<string> iPAddresses)
+        /// <param name="ipAddresses"> A list of private ip addresses of the private endpoint. </param>
+        internal CustomDnsConfigPropertiesFormat(string fqdn, IList<string> ipAddresses)
         {
             Fqdn = fqdn;
-            IPAddresses = iPAddresses;
+            IPAddresses = ipAddresses;
         }
 
         /// <summary> Fqdn that resolves to private endpoint ip address. </summary>

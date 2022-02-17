@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of IPTag. </summary>
-        /// <param name="iPTagType"> The IP tag type. Example: FirstPartyUsage. </param>
+        /// <param name="ipTagType"> The IP tag type. Example: FirstPartyUsage. </param>
         /// <param name="tag"> The value of the IP tag associated with the public IP. Example: SQL. </param>
-        internal IPTag(string iPTagType, string tag)
+        internal IPTag(string ipTagType, string tag)
         {
-            IPTagType = iPTagType;
+            IPTagType = ipTagType;
             Tag = tag;
         }
 

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> Resource tags. </param>
         /// <param name="extendedLocation"> The extended location of type local virtual network gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="iPConfigurations"> IP configurations for virtual network gateway. </param>
+        /// <param name="ipConfigurations"> IP configurations for virtual network gateway. </param>
         /// <param name="gatewayType"> The type of this virtual network gateway. </param>
         /// <param name="vpnType"> The type of this virtual network gateway. </param>
         /// <param name="vpnGatewayGeneration"> The generation for this VirtualNetworkGateway. Must be None if gatewayType is not VPN. </param>
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="vNetExtendedLocationResourceId"> Customer vnet resource id. VirtualNetworkGateway of type local gateway is associated with the customer vnet. </param>
         /// <param name="natRules"> NatRules for virtual network gateway. </param>
         /// <param name="enableBgpRouteTranslationForNat"> EnableBgpRouteTranslationForNat flag. </param>
-        internal VirtualNetworkGatewayData(string id, string name, string type, string location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, string etag, IList<VirtualNetworkGatewayIPConfiguration> iPConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, bool? active, WritableSubResource gatewayDefaultSite, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, BgpSettings bgpSettings, AddressSpace customRoutes, string resourceGuid, ProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, string vNetExtendedLocationResourceId, IList<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat) : base(id, name, type, location, tags)
+        internal VirtualNetworkGatewayData(string id, string name, string type, string location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, string etag, IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, bool? active, WritableSubResource gatewayDefaultSite, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, BgpSettings bgpSettings, AddressSpace customRoutes, string resourceGuid, ProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, string vNetExtendedLocationResourceId, IList<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat) : base(id, name, type, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Etag = etag;
-            IPConfigurations = iPConfigurations;
+            IPConfigurations = ipConfigurations;
             GatewayType = gatewayType;
             VpnType = vpnType;
             VpnGatewayGeneration = vpnGatewayGeneration;

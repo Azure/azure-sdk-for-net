@@ -58,21 +58,21 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="virtualWANName"> The name of the VirtualWAN being created or updated. </param>
-        /// <param name="wANParameters"> Parameters supplied to create or update VirtualWAN. </param>
+        /// <param name="wanParameters"> Parameters supplied to create or update VirtualWAN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualWANName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> or <paramref name="wANParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<VirtualWan>> CreateOrUpdateAsync(bool waitForCompletion, string virtualWANName, VirtualWanData wANParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> or <paramref name="wanParameters"/> is null. </exception>
+        public async virtual Task<ArmOperation<VirtualWan>> CreateOrUpdateAsync(bool waitForCompletion, string virtualWANName, VirtualWanData wanParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualWANName, nameof(virtualWANName));
-            Argument.AssertNotNull(wANParameters, nameof(wANParameters));
+            Argument.AssertNotNull(wanParameters, nameof(wanParameters));
 
             using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _virtualWanRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, wANParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<VirtualWan>(new VirtualWanOperationSource(Client), _virtualWanClientDiagnostics, Pipeline, _virtualWanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, wANParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _virtualWanRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, wanParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<VirtualWan>(new VirtualWanOperationSource(Client), _virtualWanClientDiagnostics, Pipeline, _virtualWanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, wanParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -91,21 +91,21 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="virtualWANName"> The name of the VirtualWAN being created or updated. </param>
-        /// <param name="wANParameters"> Parameters supplied to create or update VirtualWAN. </param>
+        /// <param name="wanParameters"> Parameters supplied to create or update VirtualWAN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualWANName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> or <paramref name="wANParameters"/> is null. </exception>
-        public virtual ArmOperation<VirtualWan> CreateOrUpdate(bool waitForCompletion, string virtualWANName, VirtualWanData wANParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> or <paramref name="wanParameters"/> is null. </exception>
+        public virtual ArmOperation<VirtualWan> CreateOrUpdate(bool waitForCompletion, string virtualWANName, VirtualWanData wanParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualWANName, nameof(virtualWANName));
-            Argument.AssertNotNull(wANParameters, nameof(wANParameters));
+            Argument.AssertNotNull(wanParameters, nameof(wanParameters));
 
             using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _virtualWanRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, wANParameters, cancellationToken);
-                var operation = new NetworkArmOperation<VirtualWan>(new VirtualWanOperationSource(Client), _virtualWanClientDiagnostics, Pipeline, _virtualWanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, wANParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _virtualWanRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, wanParameters, cancellationToken);
+                var operation = new NetworkArmOperation<VirtualWan>(new VirtualWanOperationSource(Client), _virtualWanClientDiagnostics, Pipeline, _virtualWanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, wanParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

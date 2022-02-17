@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ExpressRouteCircuitArpTable. </summary>
         /// <param name="age"> Entry age in minutes. </param>
         /// <param name="interface"> Interface address. </param>
-        /// <param name="iPAddress"> The IP address. </param>
+        /// <param name="ipAddress"> The IP address. </param>
         /// <param name="macAddress"> The MAC address. </param>
-        internal ExpressRouteCircuitArpTable(int? age, string @interface, string iPAddress, string macAddress)
+        internal ExpressRouteCircuitArpTable(int? age, string @interface, string ipAddress, string macAddress)
         {
             Age = age;
             Interface = @interface;
-            IPAddress = iPAddress;
+            IPAddress = ipAddress;
             MacAddress = macAddress;
         }
 

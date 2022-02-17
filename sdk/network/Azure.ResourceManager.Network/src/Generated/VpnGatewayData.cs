@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="bgpSettings"> Local network gateway&apos;s BGP speaker settings. </param>
         /// <param name="provisioningState"> The provisioning state of the VPN gateway resource. </param>
         /// <param name="vpnGatewayScaleUnit"> The scale unit for this vpn gateway. </param>
-        /// <param name="iPConfigurations"> List of all IPs configured on the gateway. </param>
+        /// <param name="ipConfigurations"> List of all IPs configured on the gateway. </param>
         /// <param name="isRoutingPreferenceInternet"> Enable Routing Preference property for the Public IP Interface of the VpnGateway. </param>
         /// <param name="natRules"> List of all the nat Rules associated with the gateway. </param>
-        internal VpnGatewayData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, WritableSubResource virtualHub, IList<VpnConnectionData> connections, BgpSettings bgpSettings, ProvisioningState? provisioningState, int? vpnGatewayScaleUnit, IReadOnlyList<VpnGatewayIPConfiguration> iPConfigurations, bool? isRoutingPreferenceInternet, IList<VpnGatewayNatRuleData> natRules) : base(id, name, type, location, tags)
+        internal VpnGatewayData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, WritableSubResource virtualHub, IList<VpnConnectionData> connections, BgpSettings bgpSettings, ProvisioningState? provisioningState, int? vpnGatewayScaleUnit, IReadOnlyList<VpnGatewayIPConfiguration> ipConfigurations, bool? isRoutingPreferenceInternet, IList<VpnGatewayNatRuleData> natRules) : base(id, name, type, location, tags)
         {
             Etag = etag;
             VirtualHub = virtualHub;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
             BgpSettings = bgpSettings;
             ProvisioningState = provisioningState;
             VpnGatewayScaleUnit = vpnGatewayScaleUnit;
-            IPConfigurations = iPConfigurations;
+            IPConfigurations = ipConfigurations;
             IsRoutingPreferenceInternet = isRoutingPreferenceInternet;
             NatRules = natRules;
         }

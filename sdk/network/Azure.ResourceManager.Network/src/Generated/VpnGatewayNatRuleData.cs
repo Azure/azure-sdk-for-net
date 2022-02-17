@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="mode"> The Source NAT direction of a VPN NAT. </param>
         /// <param name="internalMappings"> The private IP address internal mapping for NAT. </param>
         /// <param name="externalMappings"> The private IP address external mapping for NAT. </param>
-        /// <param name="iPConfigurationId"> The IP Configuration ID this NAT rule applies to. </param>
+        /// <param name="ipConfigurationId"> The IP Configuration ID this NAT rule applies to. </param>
         /// <param name="egressVpnSiteLinkConnections"> List of egress VpnSiteLinkConnections. </param>
         /// <param name="ingressVpnSiteLinkConnections"> List of ingress VpnSiteLinkConnections. </param>
-        internal VpnGatewayNatRuleData(string id, string name, string etag, string type, ProvisioningState? provisioningState, VpnNatRuleType? typePropertiesType, VpnNatRuleMode? mode, IList<VpnNatRuleMapping> internalMappings, IList<VpnNatRuleMapping> externalMappings, string iPConfigurationId, IReadOnlyList<WritableSubResource> egressVpnSiteLinkConnections, IReadOnlyList<WritableSubResource> ingressVpnSiteLinkConnections) : base(id)
+        internal VpnGatewayNatRuleData(string id, string name, string etag, string type, ProvisioningState? provisioningState, VpnNatRuleType? typePropertiesType, VpnNatRuleMode? mode, IList<VpnNatRuleMapping> internalMappings, IList<VpnNatRuleMapping> externalMappings, string ipConfigurationId, IReadOnlyList<WritableSubResource> egressVpnSiteLinkConnections, IReadOnlyList<WritableSubResource> ingressVpnSiteLinkConnections) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
             Mode = mode;
             InternalMappings = internalMappings;
             ExternalMappings = externalMappings;
-            IPConfigurationId = iPConfigurationId;
+            IPConfigurationId = ipConfigurationId;
             EgressVpnSiteLinkConnections = egressVpnSiteLinkConnections;
             IngressVpnSiteLinkConnections = ingressVpnSiteLinkConnections;
         }
