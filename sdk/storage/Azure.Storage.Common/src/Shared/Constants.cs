@@ -434,6 +434,7 @@ namespace Azure.Storage
                 public const string Url = "url";
                 public const string Recursive = "recursive";
                 public const string Sequencer = "sequencer";
+                public const string PreviousInfo = "previousInfo";
                 public const string Snapshot = "snapshot";
                 public const string BlobPropertiesUpdated = "blobPropertiesUpdated";
 

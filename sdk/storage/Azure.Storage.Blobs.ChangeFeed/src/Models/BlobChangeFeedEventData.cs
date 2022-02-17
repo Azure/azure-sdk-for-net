@@ -45,8 +45,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
             record.TryGetValue(Constants.ChangeFeed.EventData.Recursive, out object recursive);
             Recursive = (bool?)recursive;
             Sequencer = (string)record[Constants.ChangeFeed.EventData.Sequencer];
+            PreviousInfo = ExtractPreviousInfo(record);
             Snapshot = ExtractSnapshot(record);
-            UpdatedBlobProperties = BuildUpdatedBlobProperties(record);
+            UpdatedBlobProperties = ExtractBlobProperties(record);
         }
 
         /// <summary>
@@ -130,7 +131,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         public string Sequencer { get; internal set; }
 
-        // TODO previous info.
+        /// <summary>
+        /// Previous info for the blob.
+        /// </summary>
+        public Dictionary<string, object> PreviousInfo { get; internal set; }
 
         /// <summary>
         /// The Snapshot associated with the event.
@@ -141,6 +145,19 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// Blob properties that were updated during this event.
         /// </summary>
         public Dictionary<string, BlobChangeFeedEventUpdatedBlobProperty> UpdatedBlobProperties { get; internal set; }
+
+        private static Dictionary<string, object> ExtractPreviousInfo(Dictionary<string, object> recordDictionary)
+        {
+            if (recordDictionary.TryGetValue(
+                Constants.ChangeFeed.EventData.PreviousInfo,
+                out object previousInfoObject))
+            {
+                Dictionary<string, object> previousInfoDictionary = (Dictionary<string, object>)previousInfoObject;
+
+                 return (Dictionary<string, object>)previousInfoDictionary[Constants.ChangeFeed.EventData.Map];
+            }
+            return null;
+        }
 
         private static string ExtractSnapshot(Dictionary<string, object> recordDictionary)
         {
@@ -154,7 +171,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             return null;
         }
 
-        private static Dictionary<string, BlobChangeFeedEventUpdatedBlobProperty> BuildUpdatedBlobProperties(
+        private static Dictionary<string, BlobChangeFeedEventUpdatedBlobProperty> ExtractBlobProperties(
             Dictionary<string, object> recordDictionary)
         {
             if (recordDictionary.TryGetValue(
