@@ -58,6 +58,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="jobId"> ID of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -106,7 +107,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> GetSatelliteDataIngestionJobDetailsAsync(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ScenesClient.GetSatelliteDataIngestionJobDetails");
             scope.Start();
@@ -126,6 +127,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="jobId"> ID of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -174,7 +176,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response GetSatelliteDataIngestionJobDetails(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ScenesClient.GetSatelliteDataIngestionJobDetails");
             scope.Start();
@@ -292,7 +294,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="farmerId"/>, or <paramref name="boundaryId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -381,7 +383,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="farmerId"/>, or <paramref name="boundaryId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -458,6 +460,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -532,7 +535,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Operation<BinaryData>> CreateSatelliteDataIngestionJobAsync(bool waitForCompletion, string jobId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ScenesClient.CreateSatelliteDataIngestionJob");
             scope.Start();
@@ -554,6 +557,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -628,7 +632,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Operation<BinaryData> CreateSatelliteDataIngestionJob(bool waitForCompletion, string jobId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ScenesClient.CreateSatelliteDataIngestionJob");
             scope.Start();

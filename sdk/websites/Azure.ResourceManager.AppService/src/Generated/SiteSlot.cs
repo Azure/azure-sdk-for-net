@@ -424,10 +424,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteEnvelope"/> is null. </exception>
         public async virtual Task<Response<SiteSlot>> UpdateAsync(SitePatchResource siteEnvelope, CancellationToken cancellationToken = default)
         {
-            if (siteEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(siteEnvelope));
-            }
+            Argument.AssertNotNull(siteEnvelope, nameof(siteEnvelope));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.Update");
             scope.Start();
@@ -453,10 +450,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteEnvelope"/> is null. </exception>
         public virtual Response<SiteSlot> Update(SitePatchResource siteEnvelope, CancellationToken cancellationToken = default)
         {
-            if (siteEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(siteEnvelope));
-            }
+            Argument.AssertNotNull(siteEnvelope, nameof(siteEnvelope));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.Update");
             scope.Start();
@@ -528,10 +522,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
         public async virtual Task<Response> ApplySlotConfigurationSlotAsync(CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
-            if (slotSwapEntity == null)
-            {
-                throw new ArgumentNullException(nameof(slotSwapEntity));
-            }
+            Argument.AssertNotNull(slotSwapEntity, nameof(slotSwapEntity));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.ApplySlotConfigurationSlot");
             scope.Start();
@@ -557,10 +548,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
         public virtual Response ApplySlotConfigurationSlot(CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
-            if (slotSwapEntity == null)
-            {
-                throw new ArgumentNullException(nameof(slotSwapEntity));
-            }
+            Argument.AssertNotNull(slotSwapEntity, nameof(slotSwapEntity));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.ApplySlotConfigurationSlot");
             scope.Start();
@@ -586,10 +574,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public async virtual Task<Response<SiteBackup>> BackupSlotAsync(BackupRequest request, CancellationToken cancellationToken = default)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
+            Argument.AssertNotNull(request, nameof(request));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.BackupSlot");
             scope.Start();
@@ -615,10 +600,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public virtual Response<SiteBackup> BackupSlot(BackupRequest request, CancellationToken cancellationToken = default)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
+            Argument.AssertNotNull(request, nameof(request));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.BackupSlot");
             scope.Start();
@@ -728,10 +710,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="appSettings"/> is null. </exception>
         public async virtual Task<Response<StringDictionary>> UpdateApplicationSettingsSlotAsync(StringDictionary appSettings, CancellationToken cancellationToken = default)
         {
-            if (appSettings == null)
-            {
-                throw new ArgumentNullException(nameof(appSettings));
-            }
+            Argument.AssertNotNull(appSettings, nameof(appSettings));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.UpdateApplicationSettingsSlot");
             scope.Start();
@@ -757,10 +736,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="appSettings"/> is null. </exception>
         public virtual Response<StringDictionary> UpdateApplicationSettingsSlot(StringDictionary appSettings, CancellationToken cancellationToken = default)
         {
-            if (appSettings == null)
-            {
-                throw new ArgumentNullException(nameof(appSettings));
-            }
+            Argument.AssertNotNull(appSettings, nameof(appSettings));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.UpdateApplicationSettingsSlot");
             scope.Start();
@@ -830,10 +806,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteAuthSettings"/> is null. </exception>
         public async virtual Task<Response<SiteAuthSettings>> UpdateAuthSettingsSlotAsync(SiteAuthSettings siteAuthSettings, CancellationToken cancellationToken = default)
         {
-            if (siteAuthSettings == null)
-            {
-                throw new ArgumentNullException(nameof(siteAuthSettings));
-            }
+            Argument.AssertNotNull(siteAuthSettings, nameof(siteAuthSettings));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.UpdateAuthSettingsSlot");
             scope.Start();
@@ -859,10 +832,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteAuthSettings"/> is null. </exception>
         public virtual Response<SiteAuthSettings> UpdateAuthSettingsSlot(SiteAuthSettings siteAuthSettings, CancellationToken cancellationToken = default)
         {
-            if (siteAuthSettings == null)
-            {
-                throw new ArgumentNullException(nameof(siteAuthSettings));
-            }
+            Argument.AssertNotNull(siteAuthSettings, nameof(siteAuthSettings));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.UpdateAuthSettingsSlot");
             scope.Start();
@@ -932,10 +902,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteAuthSettingsV2"/> is null. </exception>
         public async virtual Task<Response<SiteAuthSettingsV2>> UpdateAuthSettingsV2SlotAsync(SiteAuthSettingsV2 siteAuthSettingsV2, CancellationToken cancellationToken = default)
         {
-            if (siteAuthSettingsV2 == null)
-            {
-                throw new ArgumentNullException(nameof(siteAuthSettingsV2));
-            }
+            Argument.AssertNotNull(siteAuthSettingsV2, nameof(siteAuthSettingsV2));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.UpdateAuthSettingsV2Slot");
             scope.Start();
@@ -961,10 +928,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteAuthSettingsV2"/> is null. </exception>
         public virtual Response<SiteAuthSettingsV2> UpdateAuthSettingsV2Slot(SiteAuthSettingsV2 siteAuthSettingsV2, CancellationToken cancellationToken = default)
         {
-            if (siteAuthSettingsV2 == null)
-            {
-                throw new ArgumentNullException(nameof(siteAuthSettingsV2));
-            }
+            Argument.AssertNotNull(siteAuthSettingsV2, nameof(siteAuthSettingsV2));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.UpdateAuthSettingsV2Slot");
             scope.Start();
@@ -1034,10 +998,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="azureStorageAccounts"/> is null. </exception>
         public async virtual Task<Response<AzureStoragePropertyDictionaryResource>> UpdateAzureStorageAccountsSlotAsync(AzureStoragePropertyDictionaryResource azureStorageAccounts, CancellationToken cancellationToken = default)
         {
-            if (azureStorageAccounts == null)
-            {
-                throw new ArgumentNullException(nameof(azureStorageAccounts));
-            }
+            Argument.AssertNotNull(azureStorageAccounts, nameof(azureStorageAccounts));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.UpdateAzureStorageAccountsSlot");
             scope.Start();
@@ -1063,10 +1024,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="azureStorageAccounts"/> is null. </exception>
         public virtual Response<AzureStoragePropertyDictionaryResource> UpdateAzureStorageAccountsSlot(AzureStoragePropertyDictionaryResource azureStorageAccounts, CancellationToken cancellationToken = default)
         {
-            if (azureStorageAccounts == null)
-            {
-                throw new ArgumentNullException(nameof(azureStorageAccounts));
-            }
+            Argument.AssertNotNull(azureStorageAccounts, nameof(azureStorageAccounts));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.UpdateAzureStorageAccountsSlot");
             scope.Start();
@@ -1136,10 +1094,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public async virtual Task<Response<BackupRequest>> UpdateBackupConfigurationSlotAsync(BackupRequest request, CancellationToken cancellationToken = default)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
+            Argument.AssertNotNull(request, nameof(request));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.UpdateBackupConfigurationSlot");
             scope.Start();
@@ -1165,10 +1120,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public virtual Response<BackupRequest> UpdateBackupConfigurationSlot(BackupRequest request, CancellationToken cancellationToken = default)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
+            Argument.AssertNotNull(request, nameof(request));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.UpdateBackupConfigurationSlot");
             scope.Start();
@@ -1282,10 +1234,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStrings"/> is null. </exception>
         public async virtual Task<Response<ConnectionStringDictionary>> UpdateConnectionStringsSlotAsync(ConnectionStringDictionary connectionStrings, CancellationToken cancellationToken = default)
         {
-            if (connectionStrings == null)
-            {
-                throw new ArgumentNullException(nameof(connectionStrings));
-            }
+            Argument.AssertNotNull(connectionStrings, nameof(connectionStrings));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.UpdateConnectionStringsSlot");
             scope.Start();
@@ -1311,10 +1260,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStrings"/> is null. </exception>
         public virtual Response<ConnectionStringDictionary> UpdateConnectionStringsSlot(ConnectionStringDictionary connectionStrings, CancellationToken cancellationToken = default)
         {
-            if (connectionStrings == null)
-            {
-                throw new ArgumentNullException(nameof(connectionStrings));
-            }
+            Argument.AssertNotNull(connectionStrings, nameof(connectionStrings));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.UpdateConnectionStringsSlot");
             scope.Start();
@@ -1384,10 +1330,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> is null. </exception>
         public async virtual Task<Response<StringDictionary>> UpdateMetadataSlotAsync(StringDictionary metadata, CancellationToken cancellationToken = default)
         {
-            if (metadata == null)
-            {
-                throw new ArgumentNullException(nameof(metadata));
-            }
+            Argument.AssertNotNull(metadata, nameof(metadata));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.UpdateMetadataSlot");
             scope.Start();
@@ -1413,10 +1356,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> is null. </exception>
         public virtual Response<StringDictionary> UpdateMetadataSlot(StringDictionary metadata, CancellationToken cancellationToken = default)
         {
-            if (metadata == null)
-            {
-                throw new ArgumentNullException(nameof(metadata));
-            }
+            Argument.AssertNotNull(metadata, nameof(metadata));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.UpdateMetadataSlot");
             scope.Start();
@@ -1538,10 +1478,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="pushSettings"/> is null. </exception>
         public async virtual Task<Response<PushSettings>> UpdateSitePushSettingsSlotAsync(PushSettings pushSettings, CancellationToken cancellationToken = default)
         {
-            if (pushSettings == null)
-            {
-                throw new ArgumentNullException(nameof(pushSettings));
-            }
+            Argument.AssertNotNull(pushSettings, nameof(pushSettings));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.UpdateSitePushSettingsSlot");
             scope.Start();
@@ -1567,10 +1504,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="pushSettings"/> is null. </exception>
         public virtual Response<PushSettings> UpdateSitePushSettingsSlot(PushSettings pushSettings, CancellationToken cancellationToken = default)
         {
-            if (pushSettings == null)
-            {
-                throw new ArgumentNullException(nameof(pushSettings));
-            }
+            Argument.AssertNotNull(pushSettings, nameof(pushSettings));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.UpdateSitePushSettingsSlot");
             scope.Start();
@@ -1728,10 +1662,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public async virtual Task<Response<RestoreRequest>> DiscoverBackupSlotAsync(RestoreRequest request, CancellationToken cancellationToken = default)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
+            Argument.AssertNotNull(request, nameof(request));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.DiscoverBackupSlot");
             scope.Start();
@@ -1757,10 +1688,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public virtual Response<RestoreRequest> DiscoverBackupSlot(RestoreRequest request, CancellationToken cancellationToken = default)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
+            Argument.AssertNotNull(request, nameof(request));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.DiscoverBackupSlot");
             scope.Start();
@@ -1961,16 +1889,13 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="key"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyType"/> or <paramref name="keyName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyType"/>, <paramref name="keyName"/>, or <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyType"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<KeyInfo>> CreateOrUpdateHostSecretSlotAsync(string keyType, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.CreateOrUpdateHostSecretSlot");
             scope.Start();
@@ -1995,16 +1920,13 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="key"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyType"/> or <paramref name="keyName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyType"/>, <paramref name="keyName"/>, or <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyType"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
         public virtual Response<KeyInfo> CreateOrUpdateHostSecretSlot(string keyType, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.CreateOrUpdateHostSecretSlot");
             scope.Start();
@@ -2028,7 +1950,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyType"> The type of host key. </param>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyType"/> or <paramref name="keyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyType"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyType"/> or <paramref name="keyName"/> is null. </exception>
         public async virtual Task<Response> DeleteHostSecretSlotAsync(string keyType, string keyName, CancellationToken cancellationToken = default)
         {
@@ -2057,7 +1979,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyType"> The type of host key. </param>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyType"/> or <paramref name="keyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyType"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyType"/> or <paramref name="keyName"/> is null. </exception>
         public virtual Response DeleteHostSecretSlot(string keyType, string keyName, CancellationToken cancellationToken = default)
         {
@@ -2345,7 +2267,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <returns> An async collection of <see cref="NetworkTrace" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkTrace> GetNetworkTraceOperationSlotAsync(string operationId, CancellationToken cancellationToken = default)
@@ -2377,7 +2299,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <returns> A collection of <see cref="NetworkTrace" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkTrace> GetNetworkTraceOperationSlot(string operationId, CancellationToken cancellationToken = default)
@@ -2561,7 +2483,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <returns> An async collection of <see cref="NetworkTrace" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkTrace> GetNetworkTracesSlotAsync(string operationId, CancellationToken cancellationToken = default)
@@ -2593,7 +2515,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <returns> A collection of <see cref="NetworkTrace" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkTrace> GetNetworkTracesSlot(string operationId, CancellationToken cancellationToken = default)
@@ -2625,7 +2547,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <returns> An async collection of <see cref="NetworkTrace" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkTrace> GetNetworkTraceOperationSlotV2Async(string operationId, CancellationToken cancellationToken = default)
@@ -2657,7 +2579,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <returns> A collection of <see cref="NetworkTrace" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkTrace> GetNetworkTraceOperationSlotV2(string operationId, CancellationToken cancellationToken = default)
@@ -2689,7 +2611,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <returns> An async collection of <see cref="NetworkTrace" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkTrace> GetNetworkTracesSlotV2Async(string operationId, CancellationToken cancellationToken = default)
@@ -2721,7 +2643,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <returns> A collection of <see cref="NetworkTrace" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkTrace> GetNetworkTracesSlotV2(string operationId, CancellationToken cancellationToken = default)
@@ -3028,10 +2950,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="publishingProfileOptions"/> is null. </exception>
         public async virtual Task<Response<Stream>> GetPublishingProfileXmlWithSecretsSlotAsync(CsmPublishingProfileOptions publishingProfileOptions, CancellationToken cancellationToken = default)
         {
-            if (publishingProfileOptions == null)
-            {
-                throw new ArgumentNullException(nameof(publishingProfileOptions));
-            }
+            Argument.AssertNotNull(publishingProfileOptions, nameof(publishingProfileOptions));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.GetPublishingProfileXmlWithSecretsSlot");
             scope.Start();
@@ -3057,10 +2976,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="publishingProfileOptions"/> is null. </exception>
         public virtual Response<Stream> GetPublishingProfileXmlWithSecretsSlot(CsmPublishingProfileOptions publishingProfileOptions, CancellationToken cancellationToken = default)
         {
-            if (publishingProfileOptions == null)
-            {
-                throw new ArgumentNullException(nameof(publishingProfileOptions));
-            }
+            Argument.AssertNotNull(publishingProfileOptions, nameof(publishingProfileOptions));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.GetPublishingProfileXmlWithSecretsSlot");
             scope.Start();
@@ -3179,10 +3095,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public async virtual Task<ArmOperation> RestoreFromBackupBlobSlotAsync(bool waitForCompletion, RestoreRequest request, CancellationToken cancellationToken = default)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
+            Argument.AssertNotNull(request, nameof(request));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.RestoreFromBackupBlobSlot");
             scope.Start();
@@ -3212,10 +3125,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public virtual ArmOperation RestoreFromBackupBlobSlot(bool waitForCompletion, RestoreRequest request, CancellationToken cancellationToken = default)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
+            Argument.AssertNotNull(request, nameof(request));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.RestoreFromBackupBlobSlot");
             scope.Start();
@@ -3245,10 +3155,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequest"/> is null. </exception>
         public async virtual Task<ArmOperation> RestoreFromDeletedAppSlotAsync(bool waitForCompletion, DeletedAppRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
-            if (restoreRequest == null)
-            {
-                throw new ArgumentNullException(nameof(restoreRequest));
-            }
+            Argument.AssertNotNull(restoreRequest, nameof(restoreRequest));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.RestoreFromDeletedAppSlot");
             scope.Start();
@@ -3278,10 +3185,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequest"/> is null. </exception>
         public virtual ArmOperation RestoreFromDeletedAppSlot(bool waitForCompletion, DeletedAppRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
-            if (restoreRequest == null)
-            {
-                throw new ArgumentNullException(nameof(restoreRequest));
-            }
+            Argument.AssertNotNull(restoreRequest, nameof(restoreRequest));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.RestoreFromDeletedAppSlot");
             scope.Start();
@@ -3311,10 +3215,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequest"/> is null. </exception>
         public async virtual Task<ArmOperation> RestoreSnapshotSlotAsync(bool waitForCompletion, SnapshotRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
-            if (restoreRequest == null)
-            {
-                throw new ArgumentNullException(nameof(restoreRequest));
-            }
+            Argument.AssertNotNull(restoreRequest, nameof(restoreRequest));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.RestoreSnapshotSlot");
             scope.Start();
@@ -3344,10 +3245,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequest"/> is null. </exception>
         public virtual ArmOperation RestoreSnapshotSlot(bool waitForCompletion, SnapshotRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
-            if (restoreRequest == null)
-            {
-                throw new ArgumentNullException(nameof(restoreRequest));
-            }
+            Argument.AssertNotNull(restoreRequest, nameof(restoreRequest));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.RestoreSnapshotSlot");
             scope.Start();
@@ -3377,10 +3275,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="SlotDifference" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SlotDifference> GetSlotDifferencesSlotAsync(CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
-            if (slotSwapEntity == null)
-            {
-                throw new ArgumentNullException(nameof(slotSwapEntity));
-            }
+            Argument.AssertNotNull(slotSwapEntity, nameof(slotSwapEntity));
 
             async Task<Page<SlotDifference>> FirstPageFunc(int? pageSizeHint)
             {
@@ -3426,10 +3321,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="SlotDifference" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SlotDifference> GetSlotDifferencesSlot(CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
-            if (slotSwapEntity == null)
-            {
-                throw new ArgumentNullException(nameof(slotSwapEntity));
-            }
+            Argument.AssertNotNull(slotSwapEntity, nameof(slotSwapEntity));
 
             Page<SlotDifference> FirstPageFunc(int? pageSizeHint)
             {
@@ -3475,10 +3367,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
         public async virtual Task<ArmOperation> SwapSlotAsync(bool waitForCompletion, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
-            if (slotSwapEntity == null)
-            {
-                throw new ArgumentNullException(nameof(slotSwapEntity));
-            }
+            Argument.AssertNotNull(slotSwapEntity, nameof(slotSwapEntity));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.SwapSlot");
             scope.Start();
@@ -3508,10 +3397,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
         public virtual ArmOperation SwapSlot(bool waitForCompletion, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
-            if (slotSwapEntity == null)
-            {
-                throw new ArgumentNullException(nameof(slotSwapEntity));
-            }
+            Argument.AssertNotNull(slotSwapEntity, nameof(slotSwapEntity));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.SwapSlot");
             scope.Start();
@@ -4073,14 +3959,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<SiteSlot>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.AddTag");
             scope.Start();
@@ -4110,14 +3990,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<SiteSlot> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.AddTag");
             scope.Start();
@@ -4146,10 +4020,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<SiteSlot>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.SetTags");
             scope.Start();
@@ -4179,10 +4050,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<SiteSlot> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.SetTags");
             scope.Start();
@@ -4212,10 +4080,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<SiteSlot>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.RemoveTag");
             scope.Start();
@@ -4244,10 +4109,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<SiteSlot> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlot.RemoveTag");
             scope.Start();

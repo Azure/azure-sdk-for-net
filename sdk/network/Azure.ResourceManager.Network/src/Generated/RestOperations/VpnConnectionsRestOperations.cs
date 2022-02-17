@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="connectionName"/> is null. </exception>
         public async Task<Response<VpnConnectionData>> GetAsync(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="connectionName"/> is null. </exception>
         public Response<VpnConnectionData> Get(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionName"> The name of the connection. </param>
         /// <param name="vpnConnectionParameters"> Parameters supplied to create or Update a VPN Connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/>, or <paramref name="vpnConnectionParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="vpnConnectionParameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, VpnConnectionData vpnConnectionParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionName"> The name of the connection. </param>
         /// <param name="vpnConnectionParameters"> Parameters supplied to create or Update a VPN Connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/>, or <paramref name="vpnConnectionParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="vpnConnectionParameters"/> is null. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, VpnConnectionData vpnConnectionParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="connectionName"> The name of the connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="connectionName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="connectionName"> The name of the connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="connectionName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnConnectionName"> The name of the vpn connection. </param>
         /// <param name="parameters"> Vpn Connection packet capture parameters supplied to start packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="vpnConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="vpnConnectionName"/> is null. </exception>
         public async Task<Response> StartPacketCaptureAsync(string subscriptionId, string resourceGroupName, string gatewayName, string vpnConnectionName, VpnConnectionPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnConnectionName"> The name of the vpn connection. </param>
         /// <param name="parameters"> Vpn Connection packet capture parameters supplied to start packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="vpnConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="vpnConnectionName"/> is null. </exception>
         public Response StartPacketCapture(string subscriptionId, string resourceGroupName, string gatewayName, string vpnConnectionName, VpnConnectionPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnConnectionName"> The name of the vpn connection. </param>
         /// <param name="parameters"> Vpn Connection packet capture parameters supplied to stop packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="vpnConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="vpnConnectionName"/> is null. </exception>
         public async Task<Response> StopPacketCaptureAsync(string subscriptionId, string resourceGroupName, string gatewayName, string vpnConnectionName, VpnConnectionPacketCaptureStopParameters parameters = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnConnectionName"> The name of the vpn connection. </param>
         /// <param name="parameters"> Vpn Connection packet capture parameters supplied to stop packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="vpnConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="vpnConnectionName"/> is null. </exception>
         public Response StopPacketCapture(string subscriptionId, string resourceGroupName, string gatewayName, string vpnConnectionName, VpnConnectionPacketCaptureStopParameters parameters = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnGateway. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is null. </exception>
         public async Task<Response<ListVpnConnectionsResult>> ListByVpnGatewayAsync(string subscriptionId, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnGateway. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is null. </exception>
         public Response<ListVpnConnectionsResult> ListByVpnGateway(string subscriptionId, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnGateway. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is null. </exception>
         public async Task<Response<ListVpnConnectionsResult>> ListByVpnGatewayNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnGateway. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is null. </exception>
         public Response<ListVpnConnectionsResult> ListByVpnGatewayNextPage(string nextLink, string subscriptionId, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

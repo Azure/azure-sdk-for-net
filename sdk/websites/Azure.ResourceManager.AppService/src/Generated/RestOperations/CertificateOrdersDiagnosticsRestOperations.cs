@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> The certificate order name for which the response is needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="certificateOrderName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is null. </exception>
         public async Task<Response<DetectorResponseCollection>> ListAppServiceCertificateOrderDetectorResponseAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> The certificate order name for which the response is needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="certificateOrderName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is null. </exception>
         public Response<DetectorResponseCollection> ListAppServiceCertificateOrderDetectorResponse(string subscriptionId, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> The end time for the detector response. </param>
         /// <param name="timeGrain"> The time grain for the detector response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/> or <paramref name="detectorName"/> is null. </exception>
         public async Task<Response<AppServiceDetectorData>> GetAppServiceCertificateOrderDetectorResponseAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> The end time for the detector response. </param>
         /// <param name="timeGrain"> The time grain for the detector response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, or <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/> or <paramref name="detectorName"/> is null. </exception>
         public Response<AppServiceDetectorData> GetAppServiceCertificateOrderDetectorResponse(string subscriptionId, string resourceGroupName, string certificateOrderName, string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> The certificate order name for which the response is needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="certificateOrderName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is null. </exception>
         public async Task<Response<DetectorResponseCollection>> ListAppServiceCertificateOrderDetectorResponseNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> The certificate order name for which the response is needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="certificateOrderName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is null. </exception>
         public Response<DetectorResponseCollection> ListAppServiceCertificateOrderDetectorResponseNextPage(string nextLink, string subscriptionId, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

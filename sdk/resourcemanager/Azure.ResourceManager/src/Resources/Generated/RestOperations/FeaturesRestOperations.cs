@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceProviderNamespace"> The resource provider namespace for the feature. </param>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/>, or <paramref name="featureName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
         public async Task<Response<FeatureData>> GetAsync(string subscriptionId, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceProviderNamespace"> The resource provider namespace for the feature. </param>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/>, or <paramref name="featureName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
         public Response<FeatureData> Get(string subscriptionId, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="featureName"> The name of the feature to register. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/>, or <paramref name="featureName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
         public async Task<Response<FeatureData>> RegisterAsync(string subscriptionId, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="featureName"> The name of the feature to register. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/>, or <paramref name="featureName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
         public Response<FeatureData> Register(string subscriptionId, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="featureName"> The name of the feature to unregister. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/>, or <paramref name="featureName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
         public async Task<Response<FeatureData>> UnregisterAsync(string subscriptionId, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="featureName"> The name of the feature to unregister. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/>, or <paramref name="featureName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
         public Response<FeatureData> Unregister(string subscriptionId, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider for getting features. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceProviderNamespace"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is null. </exception>
         public async Task<Response<FeatureOperationsListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider for getting features. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceProviderNamespace"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is null. </exception>
         public Response<FeatureOperationsListResult> ListNextPage(string nextLink, string subscriptionId, string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

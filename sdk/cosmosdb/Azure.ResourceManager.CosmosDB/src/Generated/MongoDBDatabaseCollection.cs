@@ -60,15 +60,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="createUpdateMongoDBDatabaseParameters"> The parameters to provide for the current MongoDB database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="createUpdateMongoDBDatabaseParameters"/> is null. </exception>
         public async virtual Task<ArmOperation<MongoDBDatabase>> CreateOrUpdateAsync(bool waitForCompletion, string databaseName, MongoDBDatabaseCreateUpdateOptions createUpdateMongoDBDatabaseParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            if (createUpdateMongoDBDatabaseParameters == null)
-            {
-                throw new ArgumentNullException(nameof(createUpdateMongoDBDatabaseParameters));
-            }
+            Argument.AssertNotNull(createUpdateMongoDBDatabaseParameters, nameof(createUpdateMongoDBDatabaseParameters));
 
             using var scope = _mongoDBDatabaseMongoDBResourcesClientDiagnostics.CreateScope("MongoDBDatabaseCollection.CreateOrUpdate");
             scope.Start();
@@ -96,15 +93,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="createUpdateMongoDBDatabaseParameters"> The parameters to provide for the current MongoDB database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="createUpdateMongoDBDatabaseParameters"/> is null. </exception>
         public virtual ArmOperation<MongoDBDatabase> CreateOrUpdate(bool waitForCompletion, string databaseName, MongoDBDatabaseCreateUpdateOptions createUpdateMongoDBDatabaseParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            if (createUpdateMongoDBDatabaseParameters == null)
-            {
-                throw new ArgumentNullException(nameof(createUpdateMongoDBDatabaseParameters));
-            }
+            Argument.AssertNotNull(createUpdateMongoDBDatabaseParameters, nameof(createUpdateMongoDBDatabaseParameters));
 
             using var scope = _mongoDBDatabaseMongoDBResourcesClientDiagnostics.CreateScope("MongoDBDatabaseCollection.CreateOrUpdate");
             scope.Start();
@@ -130,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public async virtual Task<Response<MongoDBDatabase>> GetAsync(string databaseName, CancellationToken cancellationToken = default)
         {
@@ -159,7 +153,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual Response<MongoDBDatabase> Get(string databaseName, CancellationToken cancellationToken = default)
         {
@@ -242,7 +236,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string databaseName, CancellationToken cancellationToken = default)
         {
@@ -269,7 +263,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual Response<bool> Exists(string databaseName, CancellationToken cancellationToken = default)
         {
@@ -296,7 +290,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public async virtual Task<Response<MongoDBDatabase>> GetIfExistsAsync(string databaseName, CancellationToken cancellationToken = default)
         {
@@ -325,7 +319,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual Response<MongoDBDatabase> GetIfExists(string databaseName, CancellationToken cancellationToken = default)
         {

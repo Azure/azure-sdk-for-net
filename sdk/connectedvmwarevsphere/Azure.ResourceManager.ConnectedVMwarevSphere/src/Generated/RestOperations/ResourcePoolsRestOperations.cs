@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="resourcePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourcePoolName"/> is null. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string resourcePoolName, ResourcePoolData body = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="resourcePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourcePoolName"/> is null. </exception>
         public Response Create(string subscriptionId, string resourceGroupName, string resourcePoolName, ResourcePoolData body = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="resourcePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourcePoolName"/> is null. </exception>
         public async Task<Response<ResourcePoolData>> GetAsync(string subscriptionId, string resourceGroupName, string resourcePoolName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="resourcePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourcePoolName"/> is null. </exception>
         public Response<ResourcePoolData> Get(string subscriptionId, string resourceGroupName, string resourcePoolName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="body"> Resource properties to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="resourcePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourcePoolName"/> is null. </exception>
         public async Task<Response<ResourcePoolData>> UpdateAsync(string subscriptionId, string resourceGroupName, string resourcePoolName, ResourcePatch body = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="body"> Resource properties to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="resourcePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourcePoolName"/> is null. </exception>
         public Response<ResourcePoolData> Update(string subscriptionId, string resourceGroupName, string resourcePoolName, ResourcePatch body = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="force"> Whether force delete was specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="resourcePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourcePoolName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string resourcePoolName, bool? force = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="force"> Whether force delete was specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="resourcePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourcePoolName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string resourcePoolName, bool? force = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ResourcePoolsList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ResourcePoolsList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be created or updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="galleryApplication"> Parameters supplied to the create or update gallery Application operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, or <paramref name="galleryApplication"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/> or <paramref name="galleryApplication"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, GalleryApplicationData galleryApplication, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be created or updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="galleryApplication"> Parameters supplied to the create or update gallery Application operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, or <paramref name="galleryApplication"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/> or <paramref name="galleryApplication"/> is null. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, GalleryApplicationData galleryApplication, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="options"> Parameters supplied to the update gallery Application operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/> or <paramref name="options"/> is null. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, GalleryApplicationUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="options"> Parameters supplied to the update gallery Application operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/> or <paramref name="options"/> is null. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, GalleryApplicationUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Application Gallery from which the Application Definitions are to be retrieved. </param>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryApplicationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="galleryApplicationName"/> is null. </exception>
         public async Task<Response<GalleryApplicationData>> GetAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Application Gallery from which the Application Definitions are to be retrieved. </param>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryApplicationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="galleryApplicationName"/> is null. </exception>
         public Response<GalleryApplicationData> Get(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition is to be deleted. </param>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryApplicationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="galleryApplicationName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition is to be deleted. </param>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryApplicationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="galleryApplicationName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Application Gallery from which Application Definitions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="galleryName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is null. </exception>
         public async Task<Response<GalleryApplicationList>> ListByGalleryAsync(string subscriptionId, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Application Gallery from which Application Definitions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="galleryName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is null. </exception>
         public Response<GalleryApplicationList> ListByGallery(string subscriptionId, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Application Gallery from which Application Definitions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="galleryName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is null. </exception>
         public async Task<Response<GalleryApplicationList>> ListByGalleryNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Application Gallery from which Application Definitions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="galleryName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is null. </exception>
         public Response<GalleryApplicationList> ListByGalleryNextPage(string nextLink, string subscriptionId, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

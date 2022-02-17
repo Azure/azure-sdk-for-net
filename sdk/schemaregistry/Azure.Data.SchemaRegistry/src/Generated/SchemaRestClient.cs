@@ -218,7 +218,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="contentType"> Content type of the schema. </param>
         /// <param name="schemaContent"> String representation (UTF-8) of the registered schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, <paramref name="contentType"/>, or <paramref name="schemaContent"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, <paramref name="contentType"/> or <paramref name="schemaContent"/> is null. </exception>
         public async Task<ResponseWithHeaders<SchemaQueryIdByContentHeaders>> QueryIdByContentAsync(string groupName, string schemaName, string contentType, Stream schemaContent, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
@@ -256,7 +256,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="contentType"> Content type of the schema. </param>
         /// <param name="schemaContent"> String representation (UTF-8) of the registered schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, <paramref name="contentType"/>, or <paramref name="schemaContent"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, <paramref name="contentType"/> or <paramref name="schemaContent"/> is null. </exception>
         public ResponseWithHeaders<SchemaQueryIdByContentHeaders> QueryIdByContent(string groupName, string schemaName, string contentType, Stream schemaContent, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
@@ -317,7 +317,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="contentType"> Content type of the schema. </param>
         /// <param name="schemaContent"> String representation (UTF-8) of the schema being registered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, <paramref name="contentType"/>, or <paramref name="schemaContent"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, <paramref name="contentType"/> or <paramref name="schemaContent"/> is null. </exception>
         public async Task<ResponseWithHeaders<SchemaRegisterHeaders>> RegisterAsync(string groupName, string schemaName, string contentType, Stream schemaContent, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
@@ -358,7 +358,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="contentType"> Content type of the schema. </param>
         /// <param name="schemaContent"> String representation (UTF-8) of the schema being registered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, <paramref name="contentType"/>, or <paramref name="schemaContent"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, <paramref name="contentType"/> or <paramref name="schemaContent"/> is null. </exception>
         public ResponseWithHeaders<SchemaRegisterHeaders> Register(string groupName, string schemaName, string contentType, Stream schemaContent, CancellationToken cancellationToken = default)
         {
             if (groupName == null)

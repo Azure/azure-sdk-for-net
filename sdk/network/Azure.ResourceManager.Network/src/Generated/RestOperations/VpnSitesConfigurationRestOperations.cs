@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualWANName"> The name of the VirtualWAN for which configuration of all vpn-sites is needed. </param>
         /// <param name="request"> Parameters supplied to download vpn-sites configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualWANName"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualWANName"/> or <paramref name="request"/> is null. </exception>
         public async Task<Response> DownloadAsync(string subscriptionId, string resourceGroupName, string virtualWANName, GetVpnSitesConfigurationRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualWANName"> The name of the VirtualWAN for which configuration of all vpn-sites is needed. </param>
         /// <param name="request"> Parameters supplied to download vpn-sites configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualWANName"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualWANName"/> or <paramref name="request"/> is null. </exception>
         public Response Download(string subscriptionId, string resourceGroupName, string virtualWANName, GetVpnSitesConfigurationRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)

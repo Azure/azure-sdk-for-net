@@ -192,7 +192,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="payload"> Manifest body, can take v1 or v2 values depending on accept header. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="reference"/>, or <paramref name="payload"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="reference"/> or <paramref name="payload"/> is null. </exception>
         public async Task<ResponseWithHeaders<object, ContainerRegistryCreateManifestHeaders>> CreateManifestAsync(string name, string reference, Manifest payload, CancellationToken cancellationToken = default)
         {
             if (name == null)
@@ -230,7 +230,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="payload"> Manifest body, can take v1 or v2 values depending on accept header. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="reference"/>, or <paramref name="payload"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="reference"/> or <paramref name="payload"/> is null. </exception>
         public ResponseWithHeaders<object, ContainerRegistryCreateManifestHeaders> CreateManifest(string name, string reference, Manifest payload, CancellationToken cancellationToken = default)
         {
             if (name == null)

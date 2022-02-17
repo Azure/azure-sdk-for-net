@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skip"> The number of elements in the collection to skip. </param>
         /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is null. </exception>
         public async Task<Response<JobExecutionListResult>> ListByJobExecutionAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skip"> The number of elements in the collection to skip. </param>
         /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is null. </exception>
         public Response<JobExecutionListResult> ListByJobExecution(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skip"> The number of elements in the collection to skip. </param>
         /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/>, or <paramref name="stepName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/> or <paramref name="stepName"/> is null. </exception>
         public async Task<Response<JobExecutionListResult>> ListByStepAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, string stepName, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skip"> The number of elements in the collection to skip. </param>
         /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/>, or <paramref name="stepName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/> or <paramref name="stepName"/> is null. </exception>
         public Response<JobExecutionListResult> ListByStep(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, string stepName, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="stepName"> The name of the step. </param>
         /// <param name="targetId"> The target id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/>, or <paramref name="stepName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/> or <paramref name="stepName"/> is null. </exception>
         public async Task<Response<JobExecutionData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, string stepName, Guid targetId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="stepName"> The name of the step. </param>
         /// <param name="targetId"> The target id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/>, or <paramref name="stepName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/> or <paramref name="stepName"/> is null. </exception>
         public Response<JobExecutionData> Get(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, string stepName, Guid targetId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skip"> The number of elements in the collection to skip. </param>
         /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is null. </exception>
         public async Task<Response<JobExecutionListResult>> ListByJobExecutionNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skip"> The number of elements in the collection to skip. </param>
         /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is null. </exception>
         public Response<JobExecutionListResult> ListByJobExecutionNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skip"> The number of elements in the collection to skip. </param>
         /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/>, or <paramref name="stepName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/> or <paramref name="stepName"/> is null. </exception>
         public async Task<Response<JobExecutionListResult>> ListByStepNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, string stepName, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -757,7 +757,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skip"> The number of elements in the collection to skip. </param>
         /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/>, or <paramref name="stepName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/> or <paramref name="stepName"/> is null. </exception>
         public Response<JobExecutionListResult> ListByStepNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, string stepName, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, or <paramref name="failoverGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/> or <paramref name="failoverGroupName"/> is null. </exception>
         public async Task<Response<InstanceFailoverGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string locationName, string failoverGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, or <paramref name="failoverGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/> or <paramref name="failoverGroupName"/> is null. </exception>
         public Response<InstanceFailoverGroupData> Get(string subscriptionId, string resourceGroupName, string locationName, string failoverGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="parameters"> The failover group parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, <paramref name="failoverGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, <paramref name="failoverGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string locationName, string failoverGroupName, InstanceFailoverGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="parameters"> The failover group parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, <paramref name="failoverGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, <paramref name="failoverGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string locationName, string failoverGroupName, InstanceFailoverGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, or <paramref name="failoverGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/> or <paramref name="failoverGroupName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string locationName, string failoverGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, or <paramref name="failoverGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/> or <paramref name="failoverGroupName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string locationName, string failoverGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="locationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="locationName"/> is null. </exception>
         public async Task<Response<InstanceFailoverGroupListResult>> ListByLocationAsync(string subscriptionId, string resourceGroupName, string locationName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="locationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="locationName"/> is null. </exception>
         public Response<InstanceFailoverGroupListResult> ListByLocation(string subscriptionId, string resourceGroupName, string locationName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, or <paramref name="failoverGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/> or <paramref name="failoverGroupName"/> is null. </exception>
         public async Task<Response> FailoverAsync(string subscriptionId, string resourceGroupName, string locationName, string failoverGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, or <paramref name="failoverGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/> or <paramref name="failoverGroupName"/> is null. </exception>
         public Response Failover(string subscriptionId, string resourceGroupName, string locationName, string failoverGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, or <paramref name="failoverGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/> or <paramref name="failoverGroupName"/> is null. </exception>
         public async Task<Response> ForceFailoverAllowDataLossAsync(string subscriptionId, string resourceGroupName, string locationName, string failoverGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, or <paramref name="failoverGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/> or <paramref name="failoverGroupName"/> is null. </exception>
         public Response ForceFailoverAllowDataLoss(string subscriptionId, string resourceGroupName, string locationName, string failoverGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="locationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="locationName"/> is null. </exception>
         public async Task<Response<InstanceFailoverGroupListResult>> ListByLocationNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string locationName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="locationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="locationName"/> is null. </exception>
         public Response<InstanceFailoverGroupListResult> ListByLocationNextPage(string nextLink, string subscriptionId, string resourceGroupName, string locationName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

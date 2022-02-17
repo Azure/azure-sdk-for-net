@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public async virtual Task<ArmOperation<VMwareCluster>> CreateOrUpdateAsync(bool waitForCompletion, string clusterName, VMwareClusterData body = null, CancellationToken cancellationToken = default)
         {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual ArmOperation<VMwareCluster> CreateOrUpdate(bool waitForCompletion, string clusterName, VMwareClusterData body = null, CancellationToken cancellationToken = default)
         {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public async virtual Task<Response<VMwareCluster>> GetAsync(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<VMwareCluster> Get(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<bool> Exists(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public async virtual Task<Response<VMwareCluster>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<VMwareCluster> GetIfExists(string clusterName, CancellationToken cancellationToken = default)
         {

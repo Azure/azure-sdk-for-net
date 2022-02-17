@@ -59,15 +59,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="dataCenterName"> Data center name in a managed Cassandra cluster. </param>
         /// <param name="body"> Parameters specifying the managed Cassandra data center. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> or <paramref name="body"/> is null. </exception>
         public async virtual Task<ArmOperation<DataCenterResource>> CreateOrUpdateAsync(bool waitForCompletion, string dataCenterName, DataCenterResourceData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataCenterName, nameof(dataCenterName));
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
+            Argument.AssertNotNull(body, nameof(body));
 
             using var scope = _dataCenterResourceCassandraDataCentersClientDiagnostics.CreateScope("DataCenterResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -95,15 +92,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="dataCenterName"> Data center name in a managed Cassandra cluster. </param>
         /// <param name="body"> Parameters specifying the managed Cassandra data center. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> or <paramref name="body"/> is null. </exception>
         public virtual ArmOperation<DataCenterResource> CreateOrUpdate(bool waitForCompletion, string dataCenterName, DataCenterResourceData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataCenterName, nameof(dataCenterName));
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
+            Argument.AssertNotNull(body, nameof(body));
 
             using var scope = _dataCenterResourceCassandraDataCentersClientDiagnostics.CreateScope("DataCenterResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -129,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="dataCenterName"> Data center name in a managed Cassandra cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> is null. </exception>
         public async virtual Task<Response<DataCenterResource>> GetAsync(string dataCenterName, CancellationToken cancellationToken = default)
         {
@@ -158,7 +152,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="dataCenterName"> Data center name in a managed Cassandra cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> is null. </exception>
         public virtual Response<DataCenterResource> Get(string dataCenterName, CancellationToken cancellationToken = default)
         {
@@ -241,7 +235,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="dataCenterName"> Data center name in a managed Cassandra cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string dataCenterName, CancellationToken cancellationToken = default)
         {
@@ -268,7 +262,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="dataCenterName"> Data center name in a managed Cassandra cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> is null. </exception>
         public virtual Response<bool> Exists(string dataCenterName, CancellationToken cancellationToken = default)
         {
@@ -295,7 +289,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="dataCenterName"> Data center name in a managed Cassandra cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> is null. </exception>
         public async virtual Task<Response<DataCenterResource>> GetIfExistsAsync(string dataCenterName, CancellationToken cancellationToken = default)
         {
@@ -324,7 +318,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="dataCenterName"> Data center name in a managed Cassandra cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> is null. </exception>
         public virtual Response<DataCenterResource> GetIfExists(string dataCenterName, CancellationToken cancellationToken = default)
         {

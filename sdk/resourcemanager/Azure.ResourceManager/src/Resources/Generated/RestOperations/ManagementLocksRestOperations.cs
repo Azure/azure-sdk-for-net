@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="parameters"> Create or update management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="lockName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="lockName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<ManagementLockData>> CreateOrUpdateByScopeAsync(string scope, string lockName, ManagementLockData parameters, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="parameters"> Create or update management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="lockName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="lockName"/> or <paramref name="parameters"/> is null. </exception>
         public Response<ManagementLockData> CreateOrUpdateByScope(string scope, string lockName, ManagementLockData parameters, CancellationToken cancellationToken = default)
         {
             if (scope == null)

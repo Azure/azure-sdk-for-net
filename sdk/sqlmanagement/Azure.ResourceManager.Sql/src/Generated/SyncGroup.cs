@@ -201,10 +201,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<SyncGroup>> UpdateAsync(bool waitForCompletion, SyncGroupData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroup.Update");
             scope.Start();
@@ -234,10 +231,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<SyncGroup> Update(bool waitForCompletion, SyncGroupData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroup.Update");
             scope.Start();
@@ -406,14 +400,8 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SyncGroupLogProperties" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SyncGroupLogProperties> GetLogsAsync(string startTime, string endTime, SyncGroupLogType type, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            if (startTime == null)
-            {
-                throw new ArgumentNullException(nameof(startTime));
-            }
-            if (endTime == null)
-            {
-                throw new ArgumentNullException(nameof(endTime));
-            }
+            Argument.AssertNotNull(startTime, nameof(startTime));
+            Argument.AssertNotNull(endTime, nameof(endTime));
 
             async Task<Page<SyncGroupLogProperties>> FirstPageFunc(int? pageSizeHint)
             {
@@ -462,14 +450,8 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SyncGroupLogProperties" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SyncGroupLogProperties> GetLogs(string startTime, string endTime, SyncGroupLogType type, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            if (startTime == null)
-            {
-                throw new ArgumentNullException(nameof(startTime));
-            }
-            if (endTime == null)
-            {
-                throw new ArgumentNullException(nameof(endTime));
-            }
+            Argument.AssertNotNull(startTime, nameof(startTime));
+            Argument.AssertNotNull(endTime, nameof(endTime));
 
             Page<SyncGroupLogProperties> FirstPageFunc(int? pageSizeHint)
             {

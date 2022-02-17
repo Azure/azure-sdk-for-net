@@ -193,10 +193,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public async virtual Task<Response<SiteSlotBackup>> GetBackupStatusSecretsSlotAsync(BackupRequest request, CancellationToken cancellationToken = default)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
+            Argument.AssertNotNull(request, nameof(request));
 
             using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackup.GetBackupStatusSecretsSlot");
             scope.Start();
@@ -222,10 +219,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public virtual Response<SiteSlotBackup> GetBackupStatusSecretsSlot(BackupRequest request, CancellationToken cancellationToken = default)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
+            Argument.AssertNotNull(request, nameof(request));
 
             using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackup.GetBackupStatusSecretsSlot");
             scope.Start();
@@ -252,10 +246,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public async virtual Task<ArmOperation> RestoreSlotAsync(bool waitForCompletion, RestoreRequest request, CancellationToken cancellationToken = default)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
+            Argument.AssertNotNull(request, nameof(request));
 
             using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackup.RestoreSlot");
             scope.Start();
@@ -285,10 +276,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public virtual ArmOperation RestoreSlot(bool waitForCompletion, RestoreRequest request, CancellationToken cancellationToken = default)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
+            Argument.AssertNotNull(request, nameof(request));
 
             using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackup.RestoreSlot");
             scope.Start();

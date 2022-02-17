@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devicePath"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devicePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
         public async virtual Task<ArmOperation<ExpressRouteCircuitsArpTableListResult>> GetArpTableExpressRouteCircuitAsync(bool waitForCompletion, string devicePath, CancellationToken cancellationToken = default)
         {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devicePath"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devicePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
         public virtual ArmOperation<ExpressRouteCircuitsArpTableListResult> GetArpTableExpressRouteCircuit(bool waitForCompletion, string devicePath, CancellationToken cancellationToken = default)
         {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devicePath"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devicePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
         public async virtual Task<ArmOperation<ExpressRouteCircuitsRoutesTableListResult>> GetRoutesTableExpressRouteCircuitAsync(bool waitForCompletion, string devicePath, CancellationToken cancellationToken = default)
         {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devicePath"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devicePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
         public virtual ArmOperation<ExpressRouteCircuitsRoutesTableListResult> GetRoutesTableExpressRouteCircuit(bool waitForCompletion, string devicePath, CancellationToken cancellationToken = default)
         {
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devicePath"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devicePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
         public async virtual Task<ArmOperation<ExpressRouteCircuitsRoutesTableSummaryListResult>> GetRoutesTableSummaryExpressRouteCircuitAsync(bool waitForCompletion, string devicePath, CancellationToken cancellationToken = default)
         {
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devicePath"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devicePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
         public virtual ArmOperation<ExpressRouteCircuitsRoutesTableSummaryListResult> GetRoutesTableSummaryExpressRouteCircuit(bool waitForCompletion, string devicePath, CancellationToken cancellationToken = default)
         {

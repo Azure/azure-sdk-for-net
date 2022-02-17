@@ -204,7 +204,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="filterParameters"> Parameters to filter the activity runs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/>, <paramref name="runId"/>, or <paramref name="filterParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/>, <paramref name="runId"/> or <paramref name="filterParameters"/> is null. </exception>
         public async Task<Response<ActivityRunsQueryResponse>> QueryActivityRunsAsync(string pipelineName, string runId, RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
         {
             if (pipelineName == null)
@@ -241,7 +241,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="filterParameters"> Parameters to filter the activity runs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/>, <paramref name="runId"/>, or <paramref name="filterParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/>, <paramref name="runId"/> or <paramref name="filterParameters"/> is null. </exception>
         public Response<ActivityRunsQueryResponse> QueryActivityRuns(string pipelineName, string runId, RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
         {
             if (pipelineName == null)

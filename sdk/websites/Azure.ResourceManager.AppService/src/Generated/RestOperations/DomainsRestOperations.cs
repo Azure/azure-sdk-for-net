@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is null. </exception>
         public async Task<Response<AppServiceDomainData>> GetAsync(string subscriptionId, string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is null. </exception>
         public Response<AppServiceDomainData> Get(string subscriptionId, string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainName"> Name of the domain. </param>
         /// <param name="domain"> Domain registration information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, or <paramref name="domain"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="domain"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string domainName, AppServiceDomainData domain, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainName"> Name of the domain. </param>
         /// <param name="domain"> Domain registration information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, or <paramref name="domain"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="domain"/> is null. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string domainName, AppServiceDomainData domain, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainName"> Name of the domain. </param>
         /// <param name="forceHardDeleteDomain"> Specify &lt;code&gt;true&lt;/code&gt; to delete the domain immediately. The default is &lt;code&gt;false&lt;/code&gt; which deletes the domain after 24 hours. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string domainName, bool? forceHardDeleteDomain = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainName"> Name of the domain. </param>
         /// <param name="forceHardDeleteDomain"> Specify &lt;code&gt;true&lt;/code&gt; to delete the domain immediately. The default is &lt;code&gt;false&lt;/code&gt; which deletes the domain after 24 hours. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string domainName, bool? forceHardDeleteDomain = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -758,7 +758,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainName"> Name of the domain. </param>
         /// <param name="options"> Domain registration information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="options"/> is null. </exception>
         public async Task<Response<AppServiceDomainData>> UpdateAsync(string subscriptionId, string resourceGroupName, string domainName, AppServiceDomainUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainName"> Name of the domain. </param>
         /// <param name="options"> Domain registration information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="options"/> is null. </exception>
         public Response<AppServiceDomainData> Update(string subscriptionId, string resourceGroupName, string domainName, AppServiceDomainUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is null. </exception>
         public async Task<Response<Models.DomainOwnershipIdentifierCollection>> ListOwnershipIdentifiersAsync(string subscriptionId, string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is null. </exception>
         public Response<Models.DomainOwnershipIdentifierCollection> ListOwnershipIdentifiers(string subscriptionId, string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -961,7 +961,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainName"> Name of domain. </param>
         /// <param name="name"> Name of identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<DomainOwnershipIdentifierData>> GetOwnershipIdentifierAsync(string subscriptionId, string resourceGroupName, string domainName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1005,7 +1005,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainName"> Name of domain. </param>
         /// <param name="name"> Name of identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="name"/> is null. </exception>
         public Response<DomainOwnershipIdentifierData> GetOwnershipIdentifier(string subscriptionId, string resourceGroupName, string domainName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1076,7 +1076,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of identifier. </param>
         /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="name"/>, or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="name"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
         public async Task<Response<DomainOwnershipIdentifierData>> CreateOrUpdateOwnershipIdentifierAsync(string subscriptionId, string resourceGroupName, string domainName, string name, DomainOwnershipIdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1123,7 +1123,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of identifier. </param>
         /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="name"/>, or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="name"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
         public Response<DomainOwnershipIdentifierData> CreateOrUpdateOwnershipIdentifier(string subscriptionId, string resourceGroupName, string domainName, string name, DomainOwnershipIdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1191,7 +1191,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainName"> Name of domain. </param>
         /// <param name="name"> Name of identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response> DeleteOwnershipIdentifierAsync(string subscriptionId, string resourceGroupName, string domainName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1229,7 +1229,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainName"> Name of domain. </param>
         /// <param name="name"> Name of identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="name"/> is null. </exception>
         public Response DeleteOwnershipIdentifier(string subscriptionId, string resourceGroupName, string domainName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1294,7 +1294,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of identifier. </param>
         /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="name"/>, or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="name"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
         public async Task<Response<DomainOwnershipIdentifierData>> UpdateOwnershipIdentifierAsync(string subscriptionId, string resourceGroupName, string domainName, string name, DomainOwnershipIdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1341,7 +1341,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of identifier. </param>
         /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="name"/>, or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="name"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
         public Response<DomainOwnershipIdentifierData> UpdateOwnershipIdentifier(string subscriptionId, string resourceGroupName, string domainName, string name, DomainOwnershipIdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1407,7 +1407,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is null. </exception>
         public async Task<Response> RenewAsync(string subscriptionId, string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1441,7 +1441,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is null. </exception>
         public Response Renew(string subscriptionId, string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1567,7 +1567,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="parameters"> Search parameters for domain name recommendations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<NameIdentifierCollection>> ListRecommendationsNextPageAsync(string nextLink, string subscriptionId, DomainRecommendationSearchParameters parameters, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1604,7 +1604,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="parameters"> Search parameters for domain name recommendations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="parameters"/> is null. </exception>
         public Response<NameIdentifierCollection> ListRecommendationsNextPage(string nextLink, string subscriptionId, DomainRecommendationSearchParameters parameters, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1655,7 +1655,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<DomainCollection>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1692,7 +1692,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<DomainCollection> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1744,7 +1744,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is null. </exception>
         public async Task<Response<Models.DomainOwnershipIdentifierCollection>> ListOwnershipIdentifiersNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1786,7 +1786,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is null. </exception>
         public Response<Models.DomainOwnershipIdentifierCollection> ListOwnershipIdentifiersNextPage(string nextLink, string subscriptionId, string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

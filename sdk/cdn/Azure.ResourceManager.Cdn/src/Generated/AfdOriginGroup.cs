@@ -201,10 +201,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public async virtual Task<ArmOperation<AfdOriginGroup>> UpdateAsync(bool waitForCompletion, AfdOriginGroupUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _afdOriginGroupClientDiagnostics.CreateScope("AfdOriginGroup.Update");
             scope.Start();
@@ -234,10 +231,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual ArmOperation<AfdOriginGroup> Update(bool waitForCompletion, AfdOriginGroupUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _afdOriginGroupClientDiagnostics.CreateScope("AfdOriginGroup.Update");
             scope.Start();

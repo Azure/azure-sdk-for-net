@@ -141,10 +141,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="aseNetworkingConfiguration"/> is null. </exception>
         public async virtual Task<ArmOperation<AseV3NetworkingConfiguration>> CreateOrUpdateAsync(bool waitForCompletion, AseV3NetworkingConfigurationData aseNetworkingConfiguration, CancellationToken cancellationToken = default)
         {
-            if (aseNetworkingConfiguration == null)
-            {
-                throw new ArgumentNullException(nameof(aseNetworkingConfiguration));
-            }
+            Argument.AssertNotNull(aseNetworkingConfiguration, nameof(aseNetworkingConfiguration));
 
             using var scope = _aseV3NetworkingConfigurationAppServiceEnvironmentsClientDiagnostics.CreateScope("AseV3NetworkingConfiguration.CreateOrUpdate");
             scope.Start();
@@ -174,10 +171,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="aseNetworkingConfiguration"/> is null. </exception>
         public virtual ArmOperation<AseV3NetworkingConfiguration> CreateOrUpdate(bool waitForCompletion, AseV3NetworkingConfigurationData aseNetworkingConfiguration, CancellationToken cancellationToken = default)
         {
-            if (aseNetworkingConfiguration == null)
-            {
-                throw new ArgumentNullException(nameof(aseNetworkingConfiguration));
-            }
+            Argument.AssertNotNull(aseNetworkingConfiguration, nameof(aseNetworkingConfiguration));
 
             using var scope = _aseV3NetworkingConfigurationAppServiceEnvironmentsClientDiagnostics.CreateScope("AseV3NetworkingConfiguration.CreateOrUpdate");
             scope.Start();

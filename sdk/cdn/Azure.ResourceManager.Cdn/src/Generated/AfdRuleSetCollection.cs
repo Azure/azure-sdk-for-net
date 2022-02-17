@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public async virtual Task<ArmOperation<AfdRuleSet>> CreateOrUpdateAsync(bool waitForCompletion, string ruleSetName, CancellationToken cancellationToken = default)
         {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual ArmOperation<AfdRuleSet> CreateOrUpdate(bool waitForCompletion, string ruleSetName, CancellationToken cancellationToken = default)
         {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public async virtual Task<Response<AfdRuleSet>> GetAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual Response<AfdRuleSet> Get(string ruleSetName, CancellationToken cancellationToken = default)
         {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual Response<bool> Exists(string ruleSetName, CancellationToken cancellationToken = default)
         {
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public async virtual Task<Response<AfdRuleSet>> GetIfExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual Response<AfdRuleSet> GetIfExists(string ruleSetName, CancellationToken cancellationToken = default)
         {

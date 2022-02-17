@@ -59,15 +59,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="topicName"> The topic name. </param>
         /// <param name="parameters"> Parameters supplied to create a topic resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<ServiceBusTopic>> CreateOrUpdateAsync(bool waitForCompletion, string topicName, ServiceBusTopicData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.CreateOrUpdate");
             scope.Start();
@@ -95,15 +92,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="topicName"> The topic name. </param>
         /// <param name="parameters"> Parameters supplied to create a topic resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<ServiceBusTopic> CreateOrUpdate(bool waitForCompletion, string topicName, ServiceBusTopicData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.CreateOrUpdate");
             scope.Start();
@@ -129,7 +123,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         public async virtual Task<Response<ServiceBusTopic>> GetAsync(string topicName, CancellationToken cancellationToken = default)
         {
@@ -158,7 +152,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         public virtual Response<ServiceBusTopic> Get(string topicName, CancellationToken cancellationToken = default)
         {
@@ -275,7 +269,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string topicName, CancellationToken cancellationToken = default)
         {
@@ -302,7 +296,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         public virtual Response<bool> Exists(string topicName, CancellationToken cancellationToken = default)
         {
@@ -329,7 +323,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         public async virtual Task<Response<ServiceBusTopic>> GetIfExistsAsync(string topicName, CancellationToken cancellationToken = default)
         {
@@ -358,7 +352,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         public virtual Response<ServiceBusTopic> GetIfExists(string topicName, CancellationToken cancellationToken = default)
         {

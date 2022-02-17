@@ -248,10 +248,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public async virtual Task<Response<AppServiceEnvironment>> UpdateAsync(AppServiceEnvironmentUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.Update");
             scope.Start();
@@ -277,10 +274,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual Response<AppServiceEnvironment> Update(AppServiceEnvironmentUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.Update");
             scope.Start();
@@ -485,7 +479,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="diagnosticsName"> Name of the diagnostics item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticsName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsName"/> is null. </exception>
         public async virtual Task<Response<HostingEnvironmentDiagnostics>> GetDiagnosticsItemAsync(string diagnosticsName, CancellationToken cancellationToken = default)
         {
@@ -512,7 +506,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="diagnosticsName"> Name of the diagnostics item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticsName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsName"/> is null. </exception>
         public virtual Response<HostingEnvironmentDiagnostics> GetDiagnosticsItem(string diagnosticsName, CancellationToken cancellationToken = default)
         {
@@ -1294,10 +1288,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         public async virtual Task<Response> DisableAllForHostingEnvironmentRecommendationAsync(string environmentName, CancellationToken cancellationToken = default)
         {
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
+            Argument.AssertNotNull(environmentName, nameof(environmentName));
 
             using var scope = _recommendationsClientDiagnostics.CreateScope("AppServiceEnvironment.DisableAllForHostingEnvironmentRecommendation");
             scope.Start();
@@ -1323,10 +1314,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         public virtual Response DisableAllForHostingEnvironmentRecommendation(string environmentName, CancellationToken cancellationToken = default)
         {
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
+            Argument.AssertNotNull(environmentName, nameof(environmentName));
 
             using var scope = _recommendationsClientDiagnostics.CreateScope("AppServiceEnvironment.DisableAllForHostingEnvironmentRecommendation");
             scope.Start();
@@ -1352,10 +1340,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         public async virtual Task<Response> ResetAllFiltersForHostingEnvironmentRecommendationAsync(string environmentName, CancellationToken cancellationToken = default)
         {
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
+            Argument.AssertNotNull(environmentName, nameof(environmentName));
 
             using var scope = _recommendationsClientDiagnostics.CreateScope("AppServiceEnvironment.ResetAllFiltersForHostingEnvironmentRecommendation");
             scope.Start();
@@ -1381,10 +1366,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         public virtual Response ResetAllFiltersForHostingEnvironmentRecommendation(string environmentName, CancellationToken cancellationToken = default)
         {
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
+            Argument.AssertNotNull(environmentName, nameof(environmentName));
 
             using var scope = _recommendationsClientDiagnostics.CreateScope("AppServiceEnvironment.ResetAllFiltersForHostingEnvironmentRecommendation");
             scope.Start();
@@ -1411,14 +1393,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<AppServiceEnvironment>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.AddTag");
             scope.Start();
@@ -1448,14 +1424,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<AppServiceEnvironment> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.AddTag");
             scope.Start();
@@ -1484,10 +1454,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<AppServiceEnvironment>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.SetTags");
             scope.Start();
@@ -1517,10 +1484,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<AppServiceEnvironment> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.SetTags");
             scope.Start();
@@ -1550,10 +1514,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<AppServiceEnvironment>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.RemoveTag");
             scope.Start();
@@ -1582,10 +1543,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<AppServiceEnvironment> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.RemoveTag");
             scope.Start();

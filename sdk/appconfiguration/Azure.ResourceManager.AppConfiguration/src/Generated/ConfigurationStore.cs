@@ -209,10 +209,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public async virtual Task<ArmOperation<ConfigurationStore>> UpdateAsync(bool waitForCompletion, ConfigurationStoreUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStore.Update");
             scope.Start();
@@ -242,10 +239,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual ArmOperation<ConfigurationStore> Update(bool waitForCompletion, ConfigurationStoreUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStore.Update");
             scope.Start();
@@ -360,10 +354,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="regenerateKeyOptions"/> is null. </exception>
         public async virtual Task<Response<ApiKey>> RegenerateKeyAsync(RegenerateKeyOptions regenerateKeyOptions, CancellationToken cancellationToken = default)
         {
-            if (regenerateKeyOptions == null)
-            {
-                throw new ArgumentNullException(nameof(regenerateKeyOptions));
-            }
+            Argument.AssertNotNull(regenerateKeyOptions, nameof(regenerateKeyOptions));
 
             using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStore.RegenerateKey");
             scope.Start();
@@ -389,10 +380,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="regenerateKeyOptions"/> is null. </exception>
         public virtual Response<ApiKey> RegenerateKey(RegenerateKeyOptions regenerateKeyOptions, CancellationToken cancellationToken = default)
         {
-            if (regenerateKeyOptions == null)
-            {
-                throw new ArgumentNullException(nameof(regenerateKeyOptions));
-            }
+            Argument.AssertNotNull(regenerateKeyOptions, nameof(regenerateKeyOptions));
 
             using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStore.RegenerateKey");
             scope.Start();
@@ -418,10 +406,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="listKeyValueOptions"/> is null. </exception>
         public async virtual Task<Response<KeyValue>> GetKeyValueAsync(ListKeyValueOptions listKeyValueOptions, CancellationToken cancellationToken = default)
         {
-            if (listKeyValueOptions == null)
-            {
-                throw new ArgumentNullException(nameof(listKeyValueOptions));
-            }
+            Argument.AssertNotNull(listKeyValueOptions, nameof(listKeyValueOptions));
 
             using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStore.GetKeyValue");
             scope.Start();
@@ -447,10 +432,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="listKeyValueOptions"/> is null. </exception>
         public virtual Response<KeyValue> GetKeyValue(ListKeyValueOptions listKeyValueOptions, CancellationToken cancellationToken = default)
         {
-            if (listKeyValueOptions == null)
-            {
-                throw new ArgumentNullException(nameof(listKeyValueOptions));
-            }
+            Argument.AssertNotNull(listKeyValueOptions, nameof(listKeyValueOptions));
 
             using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStore.GetKeyValue");
             scope.Start();
@@ -477,14 +459,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<ConfigurationStore>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStore.AddTag");
             scope.Start();
@@ -514,14 +490,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ConfigurationStore> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStore.AddTag");
             scope.Start();
@@ -550,10 +520,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<ConfigurationStore>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStore.SetTags");
             scope.Start();
@@ -583,10 +550,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ConfigurationStore> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStore.SetTags");
             scope.Start();
@@ -616,10 +580,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<ConfigurationStore>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStore.RemoveTag");
             scope.Start();
@@ -648,10 +609,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ConfigurationStore> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStore.RemoveTag");
             scope.Start();

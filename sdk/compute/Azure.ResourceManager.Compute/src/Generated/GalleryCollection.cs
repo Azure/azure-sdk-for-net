@@ -61,15 +61,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery. The allowed characters are alphabets and numbers with dots and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="gallery"> Parameters supplied to the create or update Shared Image Gallery operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> or <paramref name="gallery"/> is null. </exception>
         public async virtual Task<ArmOperation<Gallery>> CreateOrUpdateAsync(bool waitForCompletion, string galleryName, GalleryData gallery, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
-            if (gallery == null)
-            {
-                throw new ArgumentNullException(nameof(gallery));
-            }
+            Argument.AssertNotNull(gallery, nameof(gallery));
 
             using var scope = _galleryClientDiagnostics.CreateScope("GalleryCollection.CreateOrUpdate");
             scope.Start();
@@ -97,15 +94,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery. The allowed characters are alphabets and numbers with dots and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="gallery"> Parameters supplied to the create or update Shared Image Gallery operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> or <paramref name="gallery"/> is null. </exception>
         public virtual ArmOperation<Gallery> CreateOrUpdate(bool waitForCompletion, string galleryName, GalleryData gallery, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
-            if (gallery == null)
-            {
-                throw new ArgumentNullException(nameof(gallery));
-            }
+            Argument.AssertNotNull(gallery, nameof(gallery));
 
             using var scope = _galleryClientDiagnostics.CreateScope("GalleryCollection.CreateOrUpdate");
             scope.Start();
@@ -132,7 +126,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
         /// <param name="select"> The select expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
         public async virtual Task<Response<Gallery>> GetAsync(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
         {
@@ -162,7 +156,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
         /// <param name="select"> The select expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
         public virtual Response<Gallery> Get(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
         {
@@ -276,7 +270,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
         /// <param name="select"> The select expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
         {
@@ -304,7 +298,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
         /// <param name="select"> The select expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
         public virtual Response<bool> Exists(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
         {
@@ -332,7 +326,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
         /// <param name="select"> The select expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
         public async virtual Task<Response<Gallery>> GetIfExistsAsync(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
         {
@@ -362,7 +356,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
         /// <param name="select"> The select expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
         public virtual Response<Gallery> GetIfExists(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
         {

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="alias"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="alias"/> is null. </exception>
         public async Task<Response<ServiceBusAuthorizationRuleListResult>> ListAsync(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="alias"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="alias"/> is null. </exception>
         public Response<ServiceBusAuthorizationRuleListResult> List(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="alias"/>, or <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="alias"/> or <paramref name="authorizationRuleName"/> is null. </exception>
         public async Task<Response<ServiceBusAuthorizationRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="alias"/>, or <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="alias"/> or <paramref name="authorizationRuleName"/> is null. </exception>
         public Response<ServiceBusAuthorizationRuleData> Get(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="alias"/>, or <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="alias"/> or <paramref name="authorizationRuleName"/> is null. </exception>
         public async Task<Response<AccessKeys>> ListKeysAsync(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="alias"/>, or <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="alias"/> or <paramref name="authorizationRuleName"/> is null. </exception>
         public Response<AccessKeys> ListKeys(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="alias"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="alias"/> is null. </exception>
         public async Task<Response<ServiceBusAuthorizationRuleListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="alias"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="alias"/> is null. </exception>
         public Response<ServiceBusAuthorizationRuleListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

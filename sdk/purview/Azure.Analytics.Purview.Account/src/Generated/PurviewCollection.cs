@@ -44,15 +44,8 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
         /// <param name="collectionName"> The String to use. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/>, <paramref name="collectionName"/>, or <paramref name="apiVersion"/> is null. </exception>
-        internal PurviewCollection(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string collectionName, string apiVersion = "2019-11-01-preview")
+        internal PurviewCollection(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string collectionName, string apiVersion)
         {
-            Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
-            Argument.AssertNotNull(pipeline, nameof(pipeline));
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(collectionName, nameof(collectionName));
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _tokenCredential = tokenCredential;

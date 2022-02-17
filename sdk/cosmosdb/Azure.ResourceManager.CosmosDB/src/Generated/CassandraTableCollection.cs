@@ -60,15 +60,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="createUpdateCassandraTableParameters"> The parameters to provide for the current Cassandra Table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> or <paramref name="createUpdateCassandraTableParameters"/> is null. </exception>
         public async virtual Task<ArmOperation<CassandraTable>> CreateOrUpdateAsync(bool waitForCompletion, string tableName, CassandraTableCreateUpdateOptions createUpdateCassandraTableParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            if (createUpdateCassandraTableParameters == null)
-            {
-                throw new ArgumentNullException(nameof(createUpdateCassandraTableParameters));
-            }
+            Argument.AssertNotNull(createUpdateCassandraTableParameters, nameof(createUpdateCassandraTableParameters));
 
             using var scope = _cassandraTableCassandraResourcesClientDiagnostics.CreateScope("CassandraTableCollection.CreateOrUpdate");
             scope.Start();
@@ -96,15 +93,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="createUpdateCassandraTableParameters"> The parameters to provide for the current Cassandra Table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> or <paramref name="createUpdateCassandraTableParameters"/> is null. </exception>
         public virtual ArmOperation<CassandraTable> CreateOrUpdate(bool waitForCompletion, string tableName, CassandraTableCreateUpdateOptions createUpdateCassandraTableParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            if (createUpdateCassandraTableParameters == null)
-            {
-                throw new ArgumentNullException(nameof(createUpdateCassandraTableParameters));
-            }
+            Argument.AssertNotNull(createUpdateCassandraTableParameters, nameof(createUpdateCassandraTableParameters));
 
             using var scope = _cassandraTableCassandraResourcesClientDiagnostics.CreateScope("CassandraTableCollection.CreateOrUpdate");
             scope.Start();
@@ -130,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public async virtual Task<Response<CassandraTable>> GetAsync(string tableName, CancellationToken cancellationToken = default)
         {
@@ -159,7 +153,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual Response<CassandraTable> Get(string tableName, CancellationToken cancellationToken = default)
         {
@@ -242,7 +236,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string tableName, CancellationToken cancellationToken = default)
         {
@@ -269,7 +263,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual Response<bool> Exists(string tableName, CancellationToken cancellationToken = default)
         {
@@ -296,7 +290,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public async virtual Task<Response<CassandraTable>> GetIfExistsAsync(string tableName, CancellationToken cancellationToken = default)
         {
@@ -325,7 +319,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual Response<CassandraTable> GetIfExists(string tableName, CancellationToken cancellationToken = default)
         {

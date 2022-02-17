@@ -42,7 +42,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="instanceId"> Account instance identifier. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/>, or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
         public DeviceUpdateClient(string endpoint, string instanceId, TokenCredential credential, DeviceUpdateClientOptions options = null)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -64,7 +64,8 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="version"> Update version. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -122,9 +123,9 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetUpdateAsync(string provider, string name, string version, ETag? ifNoneMatch = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(provider, nameof(provider));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(version, nameof(version));
+            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetUpdate");
             scope.Start();
@@ -146,7 +147,8 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="version"> Update version. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -204,9 +206,9 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetUpdate(string provider, string name, string version, ETag? ifNoneMatch = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(provider, nameof(provider));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(version, nameof(version));
+            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetUpdate");
             scope.Start();
@@ -229,7 +231,8 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="fileId"> File identifier. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/>, or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -266,10 +269,10 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetFileAsync(string provider, string name, string version, string fileId, ETag? ifNoneMatch = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(provider, nameof(provider));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(version, nameof(version));
-            Argument.AssertNotNull(fileId, nameof(fileId));
+            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetFile");
             scope.Start();
@@ -292,7 +295,8 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="fileId"> File identifier. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/>, or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -329,10 +333,10 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetFile(string provider, string name, string version, string fileId, ETag? ifNoneMatch = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(provider, nameof(provider));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(version, nameof(version));
-            Argument.AssertNotNull(fileId, nameof(fileId));
+            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetFile");
             scope.Start();
@@ -353,6 +357,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -406,7 +411,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetOperationAsync(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(operationId, nameof(operationId));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetOperation");
             scope.Start();
@@ -427,6 +432,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -480,7 +486,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetOperation(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(operationId, nameof(operationId));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetOperation");
             scope.Start();
@@ -756,6 +762,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="provider"> Update provider. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provider"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -786,7 +793,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual AsyncPageable<BinaryData> GetNamesAsync(string provider, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(provider, nameof(provider));
+            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
 
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceUpdateClient.GetNames");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -807,6 +814,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="provider"> Update provider. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provider"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -837,7 +845,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Pageable<BinaryData> GetNames(string provider, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(provider, nameof(provider));
+            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
 
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceUpdateClient.GetNames");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -860,6 +868,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="filter"> Filter updates by its properties. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provider"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -890,8 +899,8 @@ namespace Azure.IoT.DeviceUpdate
         public virtual AsyncPageable<BinaryData> GetVersionsAsync(string provider, string name, string filter = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(provider, nameof(provider));
-            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceUpdateClient.GetVersions");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -914,6 +923,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="filter"> Filter updates by its properties. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provider"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -944,8 +954,8 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Pageable<BinaryData> GetVersions(string provider, string name, string filter = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(provider, nameof(provider));
-            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceUpdateClient.GetVersions");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -967,7 +977,8 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="name"> Update name. </param>
         /// <param name="version"> Update version. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -998,9 +1009,9 @@ namespace Azure.IoT.DeviceUpdate
         public virtual AsyncPageable<BinaryData> GetFilesAsync(string provider, string name, string version, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(provider, nameof(provider));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(version, nameof(version));
+            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceUpdateClient.GetFiles");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1022,7 +1033,8 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="name"> Update name. </param>
         /// <param name="version"> Update version. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1053,9 +1065,9 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Pageable<BinaryData> GetFiles(string provider, string name, string version, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(provider, nameof(provider));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(version, nameof(version));
+            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceUpdateClient.GetFiles");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1424,7 +1436,8 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="name"> Update name. </param>
         /// <param name="version"> Update version. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1449,9 +1462,9 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Operation<BinaryData>> DeleteUpdateAsync(bool waitForCompletion, string provider, string name, string version, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(provider, nameof(provider));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(version, nameof(version));
+            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.DeleteUpdate");
             scope.Start();
@@ -1473,7 +1486,8 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="name"> Update name. </param>
         /// <param name="version"> Update version. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1498,9 +1512,9 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Operation<BinaryData> DeleteUpdate(bool waitForCompletion, string provider, string name, string version, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(provider, nameof(provider));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(version, nameof(version));
+            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.DeleteUpdate");
             scope.Start();

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="elasticPoolName"> The name of the elastic pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="elasticPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="elasticPoolName"/> is null. </exception>
         public async Task<Response<ElasticPoolDatabaseActivityListResult>> ListByElasticPoolAsync(string subscriptionId, string resourceGroupName, string serverName, string elasticPoolName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="elasticPoolName"> The name of the elastic pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="elasticPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="elasticPoolName"/> is null. </exception>
         public Response<ElasticPoolDatabaseActivityListResult> ListByElasticPool(string subscriptionId, string resourceGroupName, string serverName, string elasticPoolName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="view"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public async virtual Task<Response<NetworkFeatures>> GetAsync(string view, CancellationToken cancellationToken = default)
         {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="view"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public virtual Response<NetworkFeatures> Get(string view, CancellationToken cancellationToken = default)
         {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="view"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string view, CancellationToken cancellationToken = default)
         {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="view"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public virtual Response<bool> Exists(string view, CancellationToken cancellationToken = default)
         {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="view"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public async virtual Task<Response<NetworkFeatures>> GetIfExistsAsync(string view, CancellationToken cancellationToken = default)
         {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="view"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public virtual Response<NetworkFeatures> GetIfExists(string view, CancellationToken cancellationToken = default)
         {

@@ -59,15 +59,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> ID of an existing deployment. </param>
         /// <param name="deployment"> Deployment details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="deployment"/> is null. </exception>
         public async virtual Task<ArmOperation<SiteSlotDeployment>> CreateOrUpdateAsync(bool waitForCompletion, string id, DeploymentData deployment, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
-            if (deployment == null)
-            {
-                throw new ArgumentNullException(nameof(deployment));
-            }
+            Argument.AssertNotNull(deployment, nameof(deployment));
 
             using var scope = _siteSlotDeploymentWebAppsClientDiagnostics.CreateScope("SiteSlotDeploymentCollection.CreateOrUpdate");
             scope.Start();
@@ -95,15 +92,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> ID of an existing deployment. </param>
         /// <param name="deployment"> Deployment details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="deployment"/> is null. </exception>
         public virtual ArmOperation<SiteSlotDeployment> CreateOrUpdate(bool waitForCompletion, string id, DeploymentData deployment, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
-            if (deployment == null)
-            {
-                throw new ArgumentNullException(nameof(deployment));
-            }
+            Argument.AssertNotNull(deployment, nameof(deployment));
 
             using var scope = _siteSlotDeploymentWebAppsClientDiagnostics.CreateScope("SiteSlotDeploymentCollection.CreateOrUpdate");
             scope.Start();
@@ -129,7 +123,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="id"> Deployment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public async virtual Task<Response<SiteSlotDeployment>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
@@ -158,7 +152,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="id"> Deployment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual Response<SiteSlotDeployment> Get(string id, CancellationToken cancellationToken = default)
         {
@@ -271,7 +265,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="id"> Deployment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string id, CancellationToken cancellationToken = default)
         {
@@ -298,7 +292,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="id"> Deployment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual Response<bool> Exists(string id, CancellationToken cancellationToken = default)
         {
@@ -325,7 +319,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="id"> Deployment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public async virtual Task<Response<SiteSlotDeployment>> GetIfExistsAsync(string id, CancellationToken cancellationToken = default)
         {
@@ -354,7 +348,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="id"> Deployment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual Response<SiteSlotDeployment> GetIfExists(string id, CancellationToken cancellationToken = default)
         {

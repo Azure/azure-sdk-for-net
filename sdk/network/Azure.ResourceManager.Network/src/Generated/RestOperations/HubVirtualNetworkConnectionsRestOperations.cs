@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionName"> The name of the HubVirtualNetworkConnection. </param>
         /// <param name="hubVirtualNetworkConnectionParameters"> Parameters supplied to create or update a hub virtual network connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, <paramref name="connectionName"/>, or <paramref name="hubVirtualNetworkConnectionParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, <paramref name="connectionName"/> or <paramref name="hubVirtualNetworkConnectionParameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string virtualHubName, string connectionName, HubVirtualNetworkConnectionData hubVirtualNetworkConnectionParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionName"> The name of the HubVirtualNetworkConnection. </param>
         /// <param name="hubVirtualNetworkConnectionParameters"> Parameters supplied to create or update a hub virtual network connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, <paramref name="connectionName"/>, or <paramref name="hubVirtualNetworkConnectionParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, <paramref name="connectionName"/> or <paramref name="hubVirtualNetworkConnectionParameters"/> is null. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string virtualHubName, string connectionName, HubVirtualNetworkConnectionData hubVirtualNetworkConnectionParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="connectionName"> The name of the HubVirtualNetworkConnection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, or <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/> or <paramref name="connectionName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string virtualHubName, string connectionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="connectionName"> The name of the HubVirtualNetworkConnection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, or <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/> or <paramref name="connectionName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string virtualHubName, string connectionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, or <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/> or <paramref name="connectionName"/> is null. </exception>
         public async Task<Response<HubVirtualNetworkConnectionData>> GetAsync(string subscriptionId, string resourceGroupName, string virtualHubName, string connectionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, or <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/> or <paramref name="connectionName"/> is null. </exception>
         public Response<HubVirtualNetworkConnectionData> Get(string subscriptionId, string resourceGroupName, string virtualHubName, string connectionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualHubName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is null. </exception>
         public async Task<Response<ListHubVirtualNetworkConnectionsResult>> ListAsync(string subscriptionId, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualHubName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is null. </exception>
         public Response<ListHubVirtualNetworkConnectionsResult> List(string subscriptionId, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualHubName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is null. </exception>
         public async Task<Response<ListHubVirtualNetworkConnectionsResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualHubName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is null. </exception>
         public Response<ListHubVirtualNetworkConnectionsResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

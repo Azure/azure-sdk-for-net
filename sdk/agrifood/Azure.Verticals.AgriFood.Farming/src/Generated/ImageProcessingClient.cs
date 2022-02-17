@@ -55,6 +55,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="jobId"> ID of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -80,7 +81,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> GetRasterizeJobAsync(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ImageProcessingClient.GetRasterizeJob");
             scope.Start();
@@ -100,6 +101,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="jobId"> ID of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -125,7 +127,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response GetRasterizeJob(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ImageProcessingClient.GetRasterizeJob");
             scope.Start();
@@ -147,6 +149,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -190,7 +193,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Operation<BinaryData>> CreateRasterizeJobAsync(bool waitForCompletion, string jobId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ImageProcessingClient.CreateRasterizeJob");
             scope.Start();
@@ -212,6 +215,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -255,7 +259,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Operation<BinaryData> CreateRasterizeJob(bool waitForCompletion, string jobId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ImageProcessingClient.CreateRasterizeJob");
             scope.Start();

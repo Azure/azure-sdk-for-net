@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="parameters"> Parameters required to create an Alias(Disaster Recovery configuration). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="alias"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="alias"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<DisasterRecoveryData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, DisasterRecoveryData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="parameters"> Parameters required to create an Alias(Disaster Recovery configuration). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="alias"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="alias"/> or <paramref name="parameters"/> is null. </exception>
         public Response<DisasterRecoveryData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, DisasterRecoveryData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="alias"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="alias"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="alias"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="alias"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)

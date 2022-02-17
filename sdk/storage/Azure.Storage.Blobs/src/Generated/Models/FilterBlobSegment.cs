@@ -18,7 +18,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="serviceEndpoint"></param>
         /// <param name="where"></param>
         /// <param name="blobs"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="where"/>, or <paramref name="blobs"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="where"/> or <paramref name="blobs"/> is null. </exception>
         internal FilterBlobSegment(string serviceEndpoint, string @where, IEnumerable<FilterBlobItem> blobs)
         {
             if (serviceEndpoint == null)

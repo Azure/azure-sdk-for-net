@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the managed database for which the security alert policy is defined. </param>
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
         public async Task<Response<ManagedDatabaseSecurityAlertPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the managed database for which the security alert policy is defined. </param>
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
         public Response<ManagedDatabaseSecurityAlertPolicyData> Get(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="parameters"> The database security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<ManagedDatabaseSecurityAlertPolicyData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, SecurityAlertPolicyName securityAlertPolicyName, ManagedDatabaseSecurityAlertPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="parameters"> The database security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="parameters"/> is null. </exception>
         public Response<ManagedDatabaseSecurityAlertPolicyData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, SecurityAlertPolicyName securityAlertPolicyName, ManagedDatabaseSecurityAlertPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="databaseName"> The name of the managed database for which the security alert policies are defined. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
         public async Task<Response<ManagedDatabaseSecurityAlertPolicyListResult>> ListByDatabaseAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="databaseName"> The name of the managed database for which the security alert policies are defined. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
         public Response<ManagedDatabaseSecurityAlertPolicyListResult> ListByDatabase(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="databaseName"> The name of the managed database for which the security alert policies are defined. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
         public async Task<Response<ManagedDatabaseSecurityAlertPolicyListResult>> ListByDatabaseNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="databaseName"> The name of the managed database for which the security alert policies are defined. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
         public Response<ManagedDatabaseSecurityAlertPolicyListResult> ListByDatabaseNextPage(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="ipGroupsName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ipGroupsName"/> is null. </exception>
         public async Task<Response<IpGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="ipGroupsName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ipGroupsName"/> is null. </exception>
         public Response<IpGroupData> Get(string subscriptionId, string resourceGroupName, string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="parameters"> Parameters supplied to the create or update IpGroups operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ipGroupsName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ipGroupsName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string ipGroupsName, IpGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="parameters"> Parameters supplied to the create or update IpGroups operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ipGroupsName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ipGroupsName"/> or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string ipGroupsName, IpGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="parameters"> Parameters supplied to the update ipGroups operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ipGroupsName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ipGroupsName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<IpGroupData>> UpdateGroupsAsync(string subscriptionId, string resourceGroupName, string ipGroupsName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="parameters"> Parameters supplied to the update ipGroups operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ipGroupsName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ipGroupsName"/> or <paramref name="parameters"/> is null. </exception>
         public Response<IpGroupData> UpdateGroups(string subscriptionId, string resourceGroupName, string ipGroupsName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="ipGroupsName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ipGroupsName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string ipGroupsName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="ipGroupsName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ipGroupsName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string ipGroupsName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<IpGroupListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<IpGroupListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

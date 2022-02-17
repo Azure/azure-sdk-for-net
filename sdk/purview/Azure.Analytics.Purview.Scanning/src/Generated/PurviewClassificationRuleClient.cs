@@ -42,11 +42,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="classificationRuleName"> The String to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="classificationRuleName"/>, or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="classificationRuleName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="classificationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public PurviewClassificationRuleClient(Uri endpoint, string classificationRuleName, TokenCredential credential, PurviewScanningServiceClientOptions options = null)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(classificationRuleName, nameof(classificationRuleName));
+            Argument.AssertNotNullOrEmpty(classificationRuleName, nameof(classificationRuleName));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new PurviewScanningServiceClientOptions();
 

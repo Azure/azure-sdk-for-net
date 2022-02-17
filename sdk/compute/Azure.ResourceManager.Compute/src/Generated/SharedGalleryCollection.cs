@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// <param name="location"> Resource location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         internal SharedGalleryCollection(ArmClient client, ResourceIdentifier id, string location) : base(client, id)
         {
             _location = location;
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
         public async virtual Task<Response<SharedGallery>> GetAsync(string galleryUniqueName, CancellationToken cancellationToken = default)
         {
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
         public virtual Response<SharedGallery> Get(string galleryUniqueName, CancellationToken cancellationToken = default)
         {
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string galleryUniqueName, CancellationToken cancellationToken = default)
         {
@@ -256,7 +257,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
         public virtual Response<bool> Exists(string galleryUniqueName, CancellationToken cancellationToken = default)
         {
@@ -283,7 +284,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
         public async virtual Task<Response<SharedGallery>> GetIfExistsAsync(string galleryUniqueName, CancellationToken cancellationToken = default)
         {
@@ -313,7 +314,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
         public virtual Response<SharedGallery> GetIfExists(string galleryUniqueName, CancellationToken cancellationToken = default)
         {

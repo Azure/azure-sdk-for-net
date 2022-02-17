@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="natRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="natRuleName"/> is null. </exception>
         public async Task<Response<VpnGatewayNatRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string gatewayName, string natRuleName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="natRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="natRuleName"/> is null. </exception>
         public Response<VpnGatewayNatRuleData> Get(string subscriptionId, string resourceGroupName, string gatewayName, string natRuleName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="natRuleParameters"> Parameters supplied to create or Update a Nat Rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="natRuleName"/>, or <paramref name="natRuleParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="natRuleName"/> or <paramref name="natRuleParameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string gatewayName, string natRuleName, VpnGatewayNatRuleData natRuleParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="natRuleParameters"> Parameters supplied to create or Update a Nat Rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="natRuleName"/>, or <paramref name="natRuleParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="natRuleName"/> or <paramref name="natRuleParameters"/> is null. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string gatewayName, string natRuleName, VpnGatewayNatRuleData natRuleParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="natRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="natRuleName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string gatewayName, string natRuleName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="natRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="natRuleName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string gatewayName, string natRuleName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnGateway. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is null. </exception>
         public async Task<Response<ListVpnGatewayNatRulesResult>> ListByVpnGatewayAsync(string subscriptionId, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnGateway. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is null. </exception>
         public Response<ListVpnGatewayNatRulesResult> ListByVpnGateway(string subscriptionId, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnGateway. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is null. </exception>
         public async Task<Response<ListVpnGatewayNatRulesResult>> ListByVpnGatewayNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnGateway. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is null. </exception>
         public Response<ListVpnGatewayNatRulesResult> ListByVpnGatewayNextPage(string nextLink, string subscriptionId, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

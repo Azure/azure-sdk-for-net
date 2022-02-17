@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="restoreDetailsName"> The name of the restore details to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
         public async Task<Response<ManagedDatabaseRestoreDetailsResultData>> GetAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="restoreDetailsName"> The name of the restore details to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
         public Response<ManagedDatabaseRestoreDetailsResultData> Get(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)

@@ -141,10 +141,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="multiRolePoolEnvelope"/> is null. </exception>
         public async virtual Task<Response<HostingEnvironmentMultiRolePool>> UpdateAsync(WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
         {
-            if (multiRolePoolEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(multiRolePoolEnvelope));
-            }
+            Argument.AssertNotNull(multiRolePoolEnvelope, nameof(multiRolePoolEnvelope));
 
             using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.Update");
             scope.Start();
@@ -170,10 +167,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="multiRolePoolEnvelope"/> is null. </exception>
         public virtual Response<HostingEnvironmentMultiRolePool> Update(WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
         {
-            if (multiRolePoolEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(multiRolePoolEnvelope));
-            }
+            Argument.AssertNotNull(multiRolePoolEnvelope, nameof(multiRolePoolEnvelope));
 
             using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.Update");
             scope.Start();
@@ -200,10 +194,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="multiRolePoolEnvelope"/> is null. </exception>
         public async virtual Task<ArmOperation<HostingEnvironmentMultiRolePool>> CreateOrUpdateAsync(bool waitForCompletion, WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
         {
-            if (multiRolePoolEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(multiRolePoolEnvelope));
-            }
+            Argument.AssertNotNull(multiRolePoolEnvelope, nameof(multiRolePoolEnvelope));
 
             using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.CreateOrUpdate");
             scope.Start();
@@ -233,10 +224,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="multiRolePoolEnvelope"/> is null. </exception>
         public virtual ArmOperation<HostingEnvironmentMultiRolePool> CreateOrUpdate(bool waitForCompletion, WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
         {
-            if (multiRolePoolEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(multiRolePoolEnvelope));
-            }
+            Argument.AssertNotNull(multiRolePoolEnvelope, nameof(multiRolePoolEnvelope));
 
             using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.CreateOrUpdate");
             scope.Start();
@@ -262,7 +250,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="instance"> Name of the instance in the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instance"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instance"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instance"/> is null. </exception>
         /// <returns> An async collection of <see cref="ResourceMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceMetricDefinition> GetMultiRolePoolInstanceMetricDefinitionsAsync(string instance, CancellationToken cancellationToken = default)
@@ -309,7 +297,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="instance"> Name of the instance in the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instance"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instance"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instance"/> is null. </exception>
         /// <returns> A collection of <see cref="ResourceMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceMetricDefinition> GetMultiRolePoolInstanceMetricDefinitions(string instance, CancellationToken cancellationToken = default)

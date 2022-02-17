@@ -60,15 +60,12 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="parameters"> Parameters for the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<WebPubSub>> CreateOrUpdateAsync(bool waitForCompletion, string resourceName, WebPubSubData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.CreateOrUpdate");
             scope.Start();
@@ -96,15 +93,12 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="parameters"> Parameters for the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<WebPubSub> CreateOrUpdate(bool waitForCompletion, string resourceName, WebPubSubData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.CreateOrUpdate");
             scope.Start();
@@ -130,7 +124,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </summary>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public async virtual Task<Response<WebPubSub>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
@@ -159,7 +153,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </summary>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual Response<WebPubSub> Get(string resourceName, CancellationToken cancellationToken = default)
         {
@@ -272,7 +266,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </summary>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
@@ -299,7 +293,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </summary>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string resourceName, CancellationToken cancellationToken = default)
         {
@@ -326,7 +320,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </summary>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public async virtual Task<Response<WebPubSub>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
@@ -355,7 +349,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </summary>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual Response<WebPubSub> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
         {

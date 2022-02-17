@@ -142,10 +142,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
         public async virtual Task<ArmOperation<AccessUri>> GrantAccessAsync(bool waitForCompletion, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
         {
-            if (grantAccessData == null)
-            {
-                throw new ArgumentNullException(nameof(grantAccessData));
-            }
+            Argument.AssertNotNull(grantAccessData, nameof(grantAccessData));
 
             using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePoint.GrantAccess");
             scope.Start();
@@ -175,10 +172,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
         public virtual ArmOperation<AccessUri> GrantAccess(bool waitForCompletion, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
         {
-            if (grantAccessData == null)
-            {
-                throw new ArgumentNullException(nameof(grantAccessData));
-            }
+            Argument.AssertNotNull(grantAccessData, nameof(grantAccessData));
 
             using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePoint.GrantAccess");
             scope.Start();

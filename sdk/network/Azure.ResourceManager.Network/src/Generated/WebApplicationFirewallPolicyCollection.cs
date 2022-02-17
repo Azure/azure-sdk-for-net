@@ -60,15 +60,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="parameters"> Policy to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<WebApplicationFirewallPolicy>> CreateOrUpdateAsync(bool waitForCompletion, string policyName, WebApplicationFirewallPolicyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _webApplicationFirewallPolicyClientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -96,15 +93,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="parameters"> Policy to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<WebApplicationFirewallPolicy> CreateOrUpdate(bool waitForCompletion, string policyName, WebApplicationFirewallPolicyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _webApplicationFirewallPolicyClientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -130,7 +124,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public async virtual Task<Response<WebApplicationFirewallPolicy>> GetAsync(string policyName, CancellationToken cancellationToken = default)
         {
@@ -159,7 +153,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual Response<WebApplicationFirewallPolicy> Get(string policyName, CancellationToken cancellationToken = default)
         {
@@ -272,7 +266,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string policyName, CancellationToken cancellationToken = default)
         {
@@ -299,7 +293,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual Response<bool> Exists(string policyName, CancellationToken cancellationToken = default)
         {
@@ -326,7 +320,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public async virtual Task<Response<WebApplicationFirewallPolicy>> GetIfExistsAsync(string policyName, CancellationToken cancellationToken = default)
         {
@@ -355,7 +349,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual Response<WebApplicationFirewallPolicy> GetIfExists(string policyName, CancellationToken cancellationToken = default)
         {

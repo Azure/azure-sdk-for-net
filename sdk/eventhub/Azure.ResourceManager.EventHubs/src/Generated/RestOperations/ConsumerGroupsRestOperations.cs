@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="consumerGroupName"> The consumer group name. </param>
         /// <param name="parameters"> Parameters supplied to create or update a consumer group resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/>, <paramref name="consumerGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/>, <paramref name="consumerGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<ConsumerGroupData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, ConsumerGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="consumerGroupName"> The consumer group name. </param>
         /// <param name="parameters"> Parameters supplied to create or update a consumer group resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/>, <paramref name="consumerGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/>, <paramref name="consumerGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public Response<ConsumerGroupData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, ConsumerGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="consumerGroupName"> The consumer group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/>, or <paramref name="consumerGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/> or <paramref name="consumerGroupName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="consumerGroupName"> The consumer group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/>, or <paramref name="consumerGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/> or <paramref name="consumerGroupName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="consumerGroupName"> The consumer group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/>, or <paramref name="consumerGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/> or <paramref name="consumerGroupName"/> is null. </exception>
         public async Task<Response<ConsumerGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="consumerGroupName"> The consumer group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/>, or <paramref name="consumerGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/> or <paramref name="consumerGroupName"/> is null. </exception>
         public Response<ConsumerGroupData> Get(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="eventHubName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is null. </exception>
         public async Task<Response<ConsumerGroupListResult>> ListByEventHubAsync(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="eventHubName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is null. </exception>
         public Response<ConsumerGroupListResult> ListByEventHub(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="eventHubName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is null. </exception>
         public async Task<Response<ConsumerGroupListResult>> ListByEventHubNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="eventHubName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is null. </exception>
         public Response<ConsumerGroupListResult> ListByEventHubNextPage(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

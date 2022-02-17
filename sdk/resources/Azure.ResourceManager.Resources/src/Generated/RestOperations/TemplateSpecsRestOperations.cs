@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpec"> Template Spec supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/>, or <paramref name="templateSpec"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpec"/> is null. </exception>
         public async Task<Response<TemplateSpecData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string templateSpecName, TemplateSpecData templateSpec, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpec"> Template Spec supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/>, or <paramref name="templateSpec"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpec"/> is null. </exception>
         public Response<TemplateSpecData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string templateSpecName, TemplateSpecData templateSpec, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="templateSpecName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is null. </exception>
         public async Task<Response<TemplateSpecData>> UpdateAsync(string subscriptionId, string resourceGroupName, string templateSpecName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="templateSpecName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is null. </exception>
         public Response<TemplateSpecData> Update(string subscriptionId, string resourceGroupName, string templateSpecName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="templateSpecName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is null. </exception>
         public async Task<Response<TemplateSpecData>> GetAsync(string subscriptionId, string resourceGroupName, string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="templateSpecName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is null. </exception>
         public Response<TemplateSpecData> Get(string subscriptionId, string resourceGroupName, string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="templateSpecName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="templateSpecName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<TemplateSpecsListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -757,7 +757,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<TemplateSpecsListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

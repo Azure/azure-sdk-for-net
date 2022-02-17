@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// </summary>
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public async virtual Task<Response<PrivateLink>> GetAsync(string groupId, CancellationToken cancellationToken = default)
         {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// </summary>
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual Response<PrivateLink> Get(string groupId, CancellationToken cancellationToken = default)
         {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// </summary>
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string groupId, CancellationToken cancellationToken = default)
         {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// </summary>
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual Response<bool> Exists(string groupId, CancellationToken cancellationToken = default)
         {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// </summary>
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public async virtual Task<Response<PrivateLink>> GetIfExistsAsync(string groupId, CancellationToken cancellationToken = default)
         {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// </summary>
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual Response<PrivateLink> GetIfExists(string groupId, CancellationToken cancellationToken = default)
         {

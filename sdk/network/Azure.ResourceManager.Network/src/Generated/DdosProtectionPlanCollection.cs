@@ -60,15 +60,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="ddosProtectionPlanName"> The name of the DDoS protection plan. </param>
         /// <param name="parameters"> Parameters supplied to the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ddosProtectionPlanName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ddosProtectionPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<DdosProtectionPlan>> CreateOrUpdateAsync(bool waitForCompletion, string ddosProtectionPlanName, DdosProtectionPlanData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ddosProtectionPlanName, nameof(ddosProtectionPlanName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _ddosProtectionPlanClientDiagnostics.CreateScope("DdosProtectionPlanCollection.CreateOrUpdate");
             scope.Start();
@@ -96,15 +93,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="ddosProtectionPlanName"> The name of the DDoS protection plan. </param>
         /// <param name="parameters"> Parameters supplied to the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ddosProtectionPlanName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ddosProtectionPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<DdosProtectionPlan> CreateOrUpdate(bool waitForCompletion, string ddosProtectionPlanName, DdosProtectionPlanData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ddosProtectionPlanName, nameof(ddosProtectionPlanName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _ddosProtectionPlanClientDiagnostics.CreateScope("DdosProtectionPlanCollection.CreateOrUpdate");
             scope.Start();
@@ -130,7 +124,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="ddosProtectionPlanName"> The name of the DDoS protection plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ddosProtectionPlanName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ddosProtectionPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> is null. </exception>
         public async virtual Task<Response<DdosProtectionPlan>> GetAsync(string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
@@ -159,7 +153,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="ddosProtectionPlanName"> The name of the DDoS protection plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ddosProtectionPlanName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ddosProtectionPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> is null. </exception>
         public virtual Response<DdosProtectionPlan> Get(string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
@@ -272,7 +266,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="ddosProtectionPlanName"> The name of the DDoS protection plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ddosProtectionPlanName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ddosProtectionPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
@@ -299,7 +293,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="ddosProtectionPlanName"> The name of the DDoS protection plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ddosProtectionPlanName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ddosProtectionPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> is null. </exception>
         public virtual Response<bool> Exists(string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
@@ -326,7 +320,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="ddosProtectionPlanName"> The name of the DDoS protection plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ddosProtectionPlanName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ddosProtectionPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> is null. </exception>
         public async virtual Task<Response<DdosProtectionPlan>> GetIfExistsAsync(string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
@@ -355,7 +349,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="ddosProtectionPlanName"> The name of the DDoS protection plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ddosProtectionPlanName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ddosProtectionPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> is null. </exception>
         public virtual Response<DdosProtectionPlan> GetIfExists(string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {

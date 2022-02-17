@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public async virtual Task<Response<Feature>> GetAsync(string featureName, CancellationToken cancellationToken = default)
         {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public virtual Response<Feature> Get(string featureName, CancellationToken cancellationToken = default)
         {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string featureName, CancellationToken cancellationToken = default)
         {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public virtual Response<bool> Exists(string featureName, CancellationToken cancellationToken = default)
         {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public async virtual Task<Response<Feature>> GetIfExistsAsync(string featureName, CancellationToken cancellationToken = default)
         {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public virtual Response<Feature> GetIfExists(string featureName, CancellationToken cancellationToken = default)
         {

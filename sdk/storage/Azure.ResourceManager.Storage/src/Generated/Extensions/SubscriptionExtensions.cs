@@ -72,10 +72,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public async static Task<Response<CheckNameAvailabilityResult>> CheckStorageAccountNameAvailabilityAsync(this Subscription subscription, StorageAccountCheckNameAvailabilityParameters accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
+            Argument.AssertNotNull(accountName, nameof(accountName));
 
             return await GetExtensionClient(subscription).CheckStorageAccountNameAvailabilityAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
@@ -91,10 +88,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public static Response<CheckNameAvailabilityResult> CheckStorageAccountNameAvailability(this Subscription subscription, StorageAccountCheckNameAvailabilityParameters accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
+            Argument.AssertNotNull(accountName, nameof(accountName));
 
             return GetExtensionClient(subscription).CheckStorageAccountNameAvailability(accountName, cancellationToken);
         }
@@ -159,7 +153,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the Azure Storage resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<Usage> GetUsagesByLocationAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
@@ -177,7 +171,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the Azure Storage resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<Usage> GetUsagesByLocation(this Subscription subscription, string location, CancellationToken cancellationToken = default)

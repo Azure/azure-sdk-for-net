@@ -39,14 +39,8 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/>, or <paramref name="apiVersion"/> is null. </exception>
-        internal PurviewResourceSetRule(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion = "2019-11-01-preview")
+        internal PurviewResourceSetRule(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
-            Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
-            Argument.AssertNotNull(pipeline, nameof(pipeline));
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _tokenCredential = tokenCredential;

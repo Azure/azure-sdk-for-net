@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualClusterName"/> is null. </exception>
         public async Task<Response<UpdateManagedInstanceDnsServersOperation>> UpdateDnsServersAsync(string subscriptionId, string resourceGroupName, string virtualClusterName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualClusterName"/> is null. </exception>
         public Response<UpdateManagedInstanceDnsServersOperation> UpdateDnsServers(string subscriptionId, string resourceGroupName, string virtualClusterName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualClusterName"/> is null. </exception>
         public async Task<Response<VirtualClusterData>> GetAsync(string subscriptionId, string resourceGroupName, string virtualClusterName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualClusterName"/> is null. </exception>
         public Response<VirtualClusterData> Get(string subscriptionId, string resourceGroupName, string virtualClusterName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualClusterName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string virtualClusterName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualClusterName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string virtualClusterName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="options"> The requested virtual cluster resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualClusterName"/>, or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualClusterName"/> or <paramref name="options"/> is null. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string virtualClusterName, VirtualClusterUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="options"> The requested virtual cluster resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualClusterName"/>, or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualClusterName"/> or <paramref name="options"/> is null. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string virtualClusterName, VirtualClusterUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<VirtualClusterListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<VirtualClusterListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

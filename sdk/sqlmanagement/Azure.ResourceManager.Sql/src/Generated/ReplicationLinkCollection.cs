@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="linkId"> The name of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
         public async virtual Task<Response<ReplicationLink>> GetAsync(string linkId, CancellationToken cancellationToken = default)
         {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="linkId"> The name of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
         public virtual Response<ReplicationLink> Get(string linkId, CancellationToken cancellationToken = default)
         {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="linkId"> The name of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string linkId, CancellationToken cancellationToken = default)
         {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="linkId"> The name of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
         public virtual Response<bool> Exists(string linkId, CancellationToken cancellationToken = default)
         {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="linkId"> The name of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
         public async virtual Task<Response<ReplicationLink>> GetIfExistsAsync(string linkId, CancellationToken cancellationToken = default)
         {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="linkId"> The name of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
         public virtual Response<ReplicationLink> GetIfExists(string linkId, CancellationToken cancellationToken = default)
         {

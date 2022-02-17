@@ -63,10 +63,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public async virtual Task<ArmOperation<BlobInventoryPolicy>> CreateOrUpdateAsync(bool waitForCompletion, BlobInventoryPolicyName blobInventoryPolicyName, BlobInventoryPolicyData properties, CancellationToken cancellationToken = default)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             using var scope = _blobInventoryPolicyClientDiagnostics.CreateScope("BlobInventoryPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -97,10 +94,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public virtual ArmOperation<BlobInventoryPolicy> CreateOrUpdate(bool waitForCompletion, BlobInventoryPolicyName blobInventoryPolicyName, BlobInventoryPolicyData properties, CancellationToken cancellationToken = default)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             using var scope = _blobInventoryPolicyClientDiagnostics.CreateScope("BlobInventoryPolicyCollection.CreateOrUpdate");
             scope.Start();

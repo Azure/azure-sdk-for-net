@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="instancePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is null. </exception>
         public async Task<Response<InstancePoolData>> GetAsync(string subscriptionId, string resourceGroupName, string instancePoolName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="instancePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is null. </exception>
         public Response<InstancePoolData> Get(string subscriptionId, string resourceGroupName, string instancePoolName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="instancePoolName"> The name of the instance pool to be created or updated. </param>
         /// <param name="parameters"> The requested instance pool resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instancePoolName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instancePoolName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string instancePoolName, InstancePoolData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="instancePoolName"> The name of the instance pool to be created or updated. </param>
         /// <param name="parameters"> The requested instance pool resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instancePoolName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instancePoolName"/> or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string instancePoolName, InstancePoolData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="instancePoolName"> The name of the instance pool to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="instancePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string instancePoolName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="instancePoolName"> The name of the instance pool to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="instancePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string instancePoolName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="instancePoolName"> The name of the instance pool to be updated. </param>
         /// <param name="options"> The requested instance pool resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instancePoolName"/>, or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instancePoolName"/> or <paramref name="options"/> is null. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string instancePoolName, InstancePoolUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="instancePoolName"> The name of the instance pool to be updated. </param>
         /// <param name="options"> The requested instance pool resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instancePoolName"/>, or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instancePoolName"/> or <paramref name="options"/> is null. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string instancePoolName, InstancePoolUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<InstancePoolListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<InstancePoolListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

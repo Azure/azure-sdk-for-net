@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         public async Task<Response<ManagedInstanceOperationListResult>> ListByManagedInstanceAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         public Response<ManagedInstanceOperationListResult> ListByManagedInstance(string subscriptionId, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="operationId"> The Uuid to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         public async Task<Response<ManagedInstanceOperationData>> GetAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, Guid operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="operationId"> The Uuid to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         public Response<ManagedInstanceOperationData> Get(string subscriptionId, string resourceGroupName, string managedInstanceName, Guid operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="operationId"> The Uuid to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         public async Task<Response> CancelAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, Guid operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="operationId"> The Uuid to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         public Response Cancel(string subscriptionId, string resourceGroupName, string managedInstanceName, Guid operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         public async Task<Response<ManagedInstanceOperationListResult>> ListByManagedInstanceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         public Response<ManagedInstanceOperationListResult> ListByManagedInstanceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

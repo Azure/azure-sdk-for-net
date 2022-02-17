@@ -42,11 +42,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="dataSourceName"> The String to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="dataSourceName"/>, or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="dataSourceName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataSourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public PurviewDataSourceClient(Uri endpoint, string dataSourceName, TokenCredential credential, PurviewScanningServiceClientOptions options = null)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(dataSourceName, nameof(dataSourceName));
+            Argument.AssertNotNullOrEmpty(dataSourceName, nameof(dataSourceName));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new PurviewScanningServiceClientOptions();
 

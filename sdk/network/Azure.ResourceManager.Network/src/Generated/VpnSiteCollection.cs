@@ -60,15 +60,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnSiteName"> The name of the VpnSite being created or updated. </param>
         /// <param name="vpnSiteParameters"> Parameters supplied to create or update VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> or <paramref name="vpnSiteParameters"/> is null. </exception>
         public async virtual Task<ArmOperation<VpnSite>> CreateOrUpdateAsync(bool waitForCompletion, string vpnSiteName, VpnSiteData vpnSiteParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vpnSiteName, nameof(vpnSiteName));
-            if (vpnSiteParameters == null)
-            {
-                throw new ArgumentNullException(nameof(vpnSiteParameters));
-            }
+            Argument.AssertNotNull(vpnSiteParameters, nameof(vpnSiteParameters));
 
             using var scope = _vpnSiteClientDiagnostics.CreateScope("VpnSiteCollection.CreateOrUpdate");
             scope.Start();
@@ -96,15 +93,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnSiteName"> The name of the VpnSite being created or updated. </param>
         /// <param name="vpnSiteParameters"> Parameters supplied to create or update VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> or <paramref name="vpnSiteParameters"/> is null. </exception>
         public virtual ArmOperation<VpnSite> CreateOrUpdate(bool waitForCompletion, string vpnSiteName, VpnSiteData vpnSiteParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vpnSiteName, nameof(vpnSiteName));
-            if (vpnSiteParameters == null)
-            {
-                throw new ArgumentNullException(nameof(vpnSiteParameters));
-            }
+            Argument.AssertNotNull(vpnSiteParameters, nameof(vpnSiteParameters));
 
             using var scope = _vpnSiteClientDiagnostics.CreateScope("VpnSiteCollection.CreateOrUpdate");
             scope.Start();
@@ -130,7 +124,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> is null. </exception>
         public async virtual Task<Response<VpnSite>> GetAsync(string vpnSiteName, CancellationToken cancellationToken = default)
         {
@@ -159,7 +153,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> is null. </exception>
         public virtual Response<VpnSite> Get(string vpnSiteName, CancellationToken cancellationToken = default)
         {
@@ -272,7 +266,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string vpnSiteName, CancellationToken cancellationToken = default)
         {
@@ -299,7 +293,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> is null. </exception>
         public virtual Response<bool> Exists(string vpnSiteName, CancellationToken cancellationToken = default)
         {
@@ -326,7 +320,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> is null. </exception>
         public async virtual Task<Response<VpnSite>> GetIfExistsAsync(string vpnSiteName, CancellationToken cancellationToken = default)
         {
@@ -355,7 +349,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> is null. </exception>
         public virtual Response<VpnSite> GetIfExists(string vpnSiteName, CancellationToken cancellationToken = default)
         {

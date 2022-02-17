@@ -50,15 +50,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<Deployment>> CreateOrUpdateAsync(bool waitForCompletion, string deploymentName, DeploymentInput parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentCollection.CreateOrUpdate");
             scope.Start();
@@ -86,15 +83,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<Deployment> CreateOrUpdate(bool waitForCompletion, string deploymentName, DeploymentInput parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentCollection.CreateOrUpdate");
             scope.Start();
@@ -120,7 +114,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public async virtual Task<Response<Deployment>> GetAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
@@ -149,7 +143,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual Response<Deployment> Get(string deploymentName, CancellationToken cancellationToken = default)
         {
@@ -266,7 +260,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
@@ -293,7 +287,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual Response<bool> Exists(string deploymentName, CancellationToken cancellationToken = default)
         {
@@ -320,7 +314,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public async virtual Task<Response<Deployment>> GetIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
@@ -349,7 +343,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual Response<Deployment> GetIfExists(string deploymentName, CancellationToken cancellationToken = default)
         {

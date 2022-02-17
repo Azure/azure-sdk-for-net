@@ -42,7 +42,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="databaseName"> The name of the managed database. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/>, or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         internal ResourceGroupLongTermRetentionManagedInstanceBackupCollection(ArmClient client, ResourceIdentifier id, string locationName, string managedInstanceName, string databaseName) : base(client, id)
         {
             _locationName = locationName;
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public async virtual Task<Response<ResourceGroupLongTermRetentionManagedInstanceBackup>> GetAsync(string backupName, CancellationToken cancellationToken = default)
         {
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public virtual Response<ResourceGroupLongTermRetentionManagedInstanceBackup> Get(string backupName, CancellationToken cancellationToken = default)
         {
@@ -215,7 +216,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string backupName, CancellationToken cancellationToken = default)
         {
@@ -242,7 +243,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public virtual Response<bool> Exists(string backupName, CancellationToken cancellationToken = default)
         {
@@ -269,7 +270,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public async virtual Task<Response<ResourceGroupLongTermRetentionManagedInstanceBackup>> GetIfExistsAsync(string backupName, CancellationToken cancellationToken = default)
         {
@@ -298,7 +299,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public virtual Response<ResourceGroupLongTermRetentionManagedInstanceBackup> GetIfExists(string backupName, CancellationToken cancellationToken = default)
         {

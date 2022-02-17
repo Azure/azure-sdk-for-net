@@ -141,10 +141,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<NetworkRuleSet>> CreateOrUpdateAsync(bool waitForCompletion, NetworkRuleSetData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _networkRuleSetNamespacesClientDiagnostics.CreateScope("NetworkRuleSet.CreateOrUpdate");
             scope.Start();
@@ -174,10 +171,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<NetworkRuleSet> CreateOrUpdate(bool waitForCompletion, NetworkRuleSetData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _networkRuleSetNamespacesClientDiagnostics.CreateScope("NetworkRuleSet.CreateOrUpdate");
             scope.Start();
