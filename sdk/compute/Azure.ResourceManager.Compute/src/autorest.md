@@ -14,6 +14,7 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/ac40996ab146d1360a47
 tag: package-2021-08-01
 clear-output-folder: true
 skip-csproj: true
+output-folder: ./Generated
 
 rename-rules:
   Os: OS
@@ -23,6 +24,7 @@ rename-rules:
   IDs: Ids
   VM: Vm
   VMs: Vms
+  Vmos: VmOS
   VMScaleSet: VmScaleSet
   DNS: Dns
   VPN: Vpn
