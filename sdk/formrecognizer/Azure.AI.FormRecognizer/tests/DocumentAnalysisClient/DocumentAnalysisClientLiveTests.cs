@@ -1201,7 +1201,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26605")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27083")]
         public async Task StartAnalyzeDocumentPopulatesExtractedReceiptJpg(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
