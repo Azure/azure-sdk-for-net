@@ -78,10 +78,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             var connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
 
             var containerName = GetNewContainerName();
+            BlobContainerClient containerClient = new BlobContainerClient(connectionString.ToString(), containerName);
             var directoryName = GetNewBlobDirectoryName();
 
-            BlobVirtualDirectoryClient directory1 = InstrumentClient(new BlobVirtualDirectoryClient(connectionString.ToString(true), containerName, directoryName, GetBlobClientOptions()));
-            BlobVirtualDirectoryClient directory2 = InstrumentClient(new BlobVirtualDirectoryClient(connectionString.ToString(true), containerName, directoryName));
+            BlobVirtualDirectoryClient directory1 = InstrumentClient(new BlobVirtualDirectoryClient(containerClient, directoryName));
+            BlobVirtualDirectoryClient directory2 = InstrumentClient(new BlobVirtualDirectoryClient(containerClient, directoryName));
 
             var builder1 = new BlobUriBuilder(directory1.Uri);
             var builder2 = new BlobUriBuilder(directory2.Uri);
@@ -111,7 +112,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Response<BlobContentInfo> uploadResponse = await initalBlob.UploadAsync(stream);
 
             // Act
-            BlobVirtualDirectoryClient directoryClient = new BlobVirtualDirectoryClient(TestConfigDefault.ConnectionString, test.Container.Name, directoryName, GetBlobClientOptions());
+            BlobVirtualDirectoryClient directoryClient = new BlobVirtualDirectoryClient(test.Container, directoryName);
             IList<BlobItem> listResponse = await directoryClient.GetBlobsAsync().ToListAsync();
 
             // Assert
@@ -132,84 +133,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
-        public void Ctor_Uri()
-        {
-            var accountName = "accountName";
-            var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
-            BlobVirtualDirectoryClient directory = InstrumentClient(new BlobVirtualDirectoryClient(blobEndpoint));
-            var builder = new BlobUriBuilder(directory.Uri);
-
-            Assert.AreEqual(accountName, builder.AccountName);
-        }
-
-        [RecordedTest]
-        public void Ctor_UriNonIpStyle()
-        {
-            // Arrange
-            string accountName = "accountname";
-            string containerName = GetNewContainerName();
-            string directoryName = GetNewBlobDirectoryName();
-
-            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{directoryName}");
-
-            // Act
-            BlobVirtualDirectoryClient directoryClient = new BlobVirtualDirectoryClient(uri);
-
-            // Assert
-            BlobUriBuilder builder = new BlobUriBuilder(directoryClient.Uri);
-
-            Assert.AreEqual(containerName, builder.BlobContainerName);
-            Assert.AreEqual(directoryName, builder.BlobName);
-            Assert.AreEqual(accountName, builder.AccountName);
-        }
-
-        [RecordedTest]
-        public void Ctor_TokenAuth_Http()
-        {
-            // Arrange
-            Uri httpUri = new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint).ToHttp();
-
-            // Act
-            TestHelper.AssertExpectedException(
-                () => new BlobVirtualDirectoryClient(httpUri, Tenants.GetOAuthCredential()),
-                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
-        }
-
-        [RecordedTest]
-        public void Ctor_CPK_Http()
-        {
-            // Arrange
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            BlobClientOptions blobClientOptions = new BlobClientOptions()
-            {
-                CustomerProvidedKey = customerProvidedKey
-            };
-            Uri httpUri = new Uri(TestConfigDefault.BlobServiceEndpoint).ToHttp();
-
-            // Act
-            TestHelper.AssertExpectedException(
-                () => new BlobVirtualDirectoryClient(httpUri, blobClientOptions),
-                new ArgumentException("Cannot use client-provided key without HTTPS."));
-        }
-
-        [RecordedTest]
-        public void Ctor_CPK_EncryptionScope()
-        {
-            // Arrange
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            BlobClientOptions blobClientOptions = new BlobClientOptions
-            {
-                CustomerProvidedKey = customerProvidedKey,
-                EncryptionScope = TestConfigDefault.EncryptionScope
-            };
-
-            // Act
-            TestHelper.AssertExpectedException(
-                () => new BlobVirtualDirectoryClient(new Uri(TestConfigDefault.BlobServiceEndpoint), blobClientOptions),
-                new ArgumentException("CustomerProvidedKey and EncryptionScope cannot both be set"));
-        }
-
-        [RecordedTest]
         public async Task Ctor_AzureSasCredential()
         {
             // Arrange
@@ -220,8 +143,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await blobClient.UploadAsync(new MemoryStream());
             Uri directoryUri = directoryClient.Uri;
 
+            BlobContainerClient containerClient = new BlobContainerClient(test.Container.Uri, new AzureSasCredential(sas), GetBlobClientOptions());
+
             // Act
-            BlobVirtualDirectoryClient sasClient = InstrumentClient(new BlobVirtualDirectoryClient(directoryUri, new AzureSasCredential(sas), GetBlobClientOptions()));
+            BlobVirtualDirectoryClient sasClient = InstrumentClient(new BlobVirtualDirectoryClient(containerClient, directoryClient.DirectoryPath));
             IList<BlobItem> blobItems = await sasClient.GetBlobsAsync().ToListAsync();
 
             // Assert
@@ -247,8 +172,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             };
             var sas = sasBuilder.ToSasQueryParameters(userDelegationKey.Value, blobClient.AccountName).ToString();
 
+            BlobContainerClient containerClient = new BlobContainerClient(test.Container.Uri, new AzureSasCredential(sas), GetBlobClientOptions());
+
             // Act
-            var sasClient = InstrumentClient(new BlobVirtualDirectoryClient(blobUri, new AzureSasCredential(sas), GetBlobClientOptions()));
+            var sasClient = InstrumentClient(new BlobVirtualDirectoryClient(containerClient, directoryClient.DirectoryPath));
             IList<BlobItem> blobItems = await sasClient.GetBlobsAsync().ToListAsync();
 
             // Assert
@@ -261,12 +188,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync();
             string sas = GetContainerSas(test.Container.Name, BlobContainerSasPermissions.All).ToString();
-            Uri blobUri = test.Container.GetBlobClient("foo").Uri;
-            blobUri = new Uri(blobUri.ToString() + "?" + sas);
+
+            BlobContainerClient containerClient = new BlobContainerClient(test.Container.Uri, new AzureSasCredential(sas), GetBlobClientOptions());
 
             // Act
             TestHelper.AssertExpectedException<ArgumentException>(
-                () => new BlobVirtualDirectoryClient(blobUri, new AzureSasCredential(sas)),
+                () => new BlobVirtualDirectoryClient(containerClient, "foo"),
                 e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
         }
 
@@ -382,7 +309,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             Directory.Delete(folder, true);
 
-            await client.DownloadAsync(folder);
+            await client.DownloadToAsync(folder);
 
             List<string> localItemsAfterDownload = Directory.GetFiles(folder, "*", SearchOption.AllDirectories).ToList();
 
@@ -412,7 +339,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
 
             // Act
-            await client.DownloadAsync(folder);
+            await client.DownloadToAsync(folder);
             List<string> localItemsAfterDownload = Directory.GetFiles(folder, "*", SearchOption.AllDirectories).ToList();
 
             // Assert
@@ -716,7 +643,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await SetUpDirectoryForListing(directoryClient);
 
             // Act
-            IList<BlobItem> blobs = await directoryClient.GetBlobsAsync(prefix: "foo").ToListAsync();
+            IList<BlobItem> blobs = await directoryClient.GetBlobsAsync(additionalPrefix: "foo").ToListAsync();
 
             // Assert
             Assert.AreEqual(3, blobs.Count);
@@ -1081,7 +1008,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await SetUpDirectoryForListing(directoryClient);
 
             // Act
-            IList<BlobHierarchyItem> blobs = await directoryClient.GetBlobsByHierarchyAsync(prefix: "foo").ToListAsync();
+            IList<BlobHierarchyItem> blobs = await directoryClient.GetBlobsByHierarchyAsync(additionalPrefix: "foo").ToListAsync();
 
             // Assert
             Assert.AreEqual(3, blobs.Count);

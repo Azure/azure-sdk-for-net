@@ -22,7 +22,7 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// progress updates about data transfers.
         /// TODO: replace long value with appropriate model similar to BlobUploadDirectoryResponse
         /// </summary>
-        public IProgress<BlobCopyDirectoryProgress> ProgressHandler { get; set; }
+        public IProgress<BlobDownloadDirectoryProgress> ProgressHandler { get; set; }
 
         /// <summary>
         /// Optional <see cref="StorageTransferOptions"/> to configure
@@ -34,5 +34,11 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// Transactional hashing options for data integrity checks.
         /// </summary>
         public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+
+        /// <summary>
+        /// Optional <see cref="DownloadOverwriteMethod"/> to configure overwrite
+        /// behavior. Will default to <see cref="DownloadOverwriteMethod.Overwrite"/>.
+        /// </summary>
+        public DownloadOverwriteMethod OverwriteOptions { get; set; }
     }
 }

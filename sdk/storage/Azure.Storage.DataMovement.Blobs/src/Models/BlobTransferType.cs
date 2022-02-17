@@ -10,7 +10,7 @@ namespace Azure.Storage.DataMovement.Blobs.Models
     /// Defines the type of transfer the job is performing.
     /// This is used in the <see cref="BlobTransferJobProperties"/>.
     /// </summary>
-    public enum StorageTransferType
+    public enum BlobTransferType
     {
         /// <summary>
         /// Single Upload Transfer.
@@ -35,11 +35,11 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// <summary>
         /// Single Copy Transfer
         /// </summary>
-        SingleServiceCopy,
+        SingleCopy,
 
         /// <summary>
         /// Directory Copy Transfer
         /// </summary>
-        DirectoryServiceCopy
+        DirectoryCopy
     }
 }

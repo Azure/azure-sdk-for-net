@@ -14,11 +14,17 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// <summary>
         /// Number of Blobs that succeeded in transfer
         /// </summary>
-        public int BlobsSuccesfullyTransferred { get; internal set; }
+        public long BlobsSuccesfullyTransferred { get; internal set; }
+
+        /// <summary>
+        /// Number of Blobs that succeeded in transfer
+        /// </summary>
+        public long BlobsSkippedTransferred { get; internal set; }
+
         /// <summary>
         /// Number of blobs that failed transferred.
         /// </summary>
-        public int BlobsFailedTransferred { get; internal set; }
+        public long BlobsFailedTransferred { get; internal set; }
         /// <summary>
         /// Number of bytes transferred succesfully.
         /// </summary>

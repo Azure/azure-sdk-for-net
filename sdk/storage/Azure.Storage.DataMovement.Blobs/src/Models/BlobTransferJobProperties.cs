@@ -26,7 +26,7 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// <summary>
         /// Defines the type of transfer the job is performing.
         /// </summary>
-        public StorageTransferType TransferType { get; internal set; }
+        public BlobTransferType TransferType { get; internal set; }
 
         /// <summary>
         /// Status of the job
@@ -39,7 +39,7 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         public string SourceLocalPath { get; internal set; }
 
         /// <summary>
-        /// Source Uri single and directory copy transfers.
+        /// Source Uri single transfers.
         /// </summary>
         public Uri SourceUri { get; internal set; }
 
@@ -51,7 +51,7 @@ namespace Azure.Storage.DataMovement.Blobs.Models
 
         /// <summary>
         /// The source blob directory client. This client contains the information and methods required to perform
-        /// the directory download from the source directory blob.
+        /// the directory download and directory copy from the source directory blob.
         /// </summary>
         public BlobVirtualDirectoryClient SourceBlobDirectoryClient { get; internal set; }
 

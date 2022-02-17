@@ -374,13 +374,17 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string planDirectoryPath = CreateTempPath();
             string sourcePath = CreateSampleDirectoryTree();
             string downloadPath = CreateSampleDirectoryTree();
+            string containerName = Randomize("sample-container");
+            string connectionString = ConnectionString;
+
+            BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
             // Possible someone could have gotten a list of directories from a list call
-            BlobVirtualDirectoryClient sourceBlobDirectory = new BlobVirtualDirectoryClient("", "", "", new BlobClientOptions());
-            BlobVirtualDirectoryClient sourceBlobDirectory2 = new BlobVirtualDirectoryClient("", "", "", new BlobClientOptions());
-            BlobVirtualDirectoryClient sourceBlobDirectory3 = new BlobVirtualDirectoryClient("", "", "", new BlobClientOptions());
-            BlobVirtualDirectoryClient sourceBlobDirectory4 = new BlobVirtualDirectoryClient("", "", "", new BlobClientOptions());
-            BlobVirtualDirectoryClient sourceBlobDirectory5 = new BlobVirtualDirectoryClient("", "", "", new BlobClientOptions());
-            BlobVirtualDirectoryClient destinationBlob = new BlobVirtualDirectoryClient("", "", "", new BlobClientOptions());
+            BlobVirtualDirectoryClient sourceBlobDirectory = new BlobVirtualDirectoryClient(container, Randomize("sample-directory"));
+            BlobVirtualDirectoryClient sourceBlobDirectory2 = new BlobVirtualDirectoryClient(container, Randomize("sample-directory"));
+            BlobVirtualDirectoryClient sourceBlobDirectory3 = new BlobVirtualDirectoryClient(container, Randomize("sample-directory"));
+            BlobVirtualDirectoryClient sourceBlobDirectory4 = new BlobVirtualDirectoryClient(container, Randomize("sample-directory"));
+            BlobVirtualDirectoryClient sourceBlobDirectory5 = new BlobVirtualDirectoryClient(container, Randomize("sample-directory"));
+            BlobVirtualDirectoryClient destinationBlob = new BlobVirtualDirectoryClient(container, Randomize("sample-directory"));
 
             // Set plan file or the directory where you would like the transfer state directory path
             StorageTransferManagerOptions transferManagerOptions = new StorageTransferManagerOptions();
@@ -607,6 +611,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                         cts.Cancel();
                         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                         {
+                            /*
                             DirectoryInfo skippedDirectory = new DirectoryInfo(args.Exception.Source);
                             DirectorySecurity rights = skippedDirectory.GetAccessControl();
                             rights.AddAccessRule(new FileSystemAccessRule("userIdentity", FileSystemRights.FullControl, AccessControlType.Allow));
@@ -618,6 +623,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                             rights.AddAccessRule(new FileSystemAccessRule("userIdentity", FileSystemRights.FullControl, AccessControlType.Allow));
                             skippedDirectory.SetAccessControl(rights);
                             await transferManager.ResumeTransferJobAsync(args.JobId);
+                            */
                         }
                     }
                     // Remove stub

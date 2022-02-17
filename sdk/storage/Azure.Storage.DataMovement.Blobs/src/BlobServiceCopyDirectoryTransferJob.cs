@@ -18,12 +18,12 @@ namespace Azure.Storage.DataMovement.Blobs
     /// </summary>
     internal class BlobServiceCopyDirectoryTransferJob : BlobTransferJobInternal
     {
-        private Uri _sourceDirectoryUri;
+        private BlobVirtualDirectoryClient _sourceDirectoryClient;
 
         /// <summary>
         /// Source Directory Uri jobs.
         /// </summary>
-        public Uri SourceDirectoryUri => _sourceDirectoryUri;
+        public BlobVirtualDirectoryClient SourceDirectoryClient => _sourceDirectoryClient;
 
         internal BlobVirtualDirectoryClient _destinationDirectoryClient;
 
@@ -53,19 +53,19 @@ namespace Azure.Storage.DataMovement.Blobs
         /// TODO; better descriptions and update parameter descriptions
         /// </summary>
         /// <param name="jobId"></param>
-        /// <param name="sourceDirectoryUri"></param>
+        /// <param name="sourceClient"></param>
         /// <param name="destinationClient"></param>
         /// <param name="copyMethod"></param>
         /// <param name="copyFromUriOptions"></param>
         public BlobServiceCopyDirectoryTransferJob(
             string jobId,
-            Uri sourceDirectoryUri,
+            BlobVirtualDirectoryClient sourceClient,
             BlobVirtualDirectoryClient destinationClient,
             BlobCopyMethod copyMethod,
             BlobDirectoryCopyFromUriOptions copyFromUriOptions)
             : base(jobId)
         {
-            _sourceDirectoryUri = sourceDirectoryUri;
+            _sourceDirectoryClient = sourceClient;
             _destinationDirectoryClient = destinationClient;
             CopyMethod = copyMethod;
             _copyFromUriOptions = copyFromUriOptions;
@@ -79,7 +79,7 @@ namespace Azure.Storage.DataMovement.Blobs
         internal async Task<CopyFromUriOperation> GetSingleAsyncCopyTaskAsync(string blobName)
         {
             //TODO: check if the listing operation gives the full blob path name or just everything but the prefix
-            BlobUriBuilder sourceUriBuilder = new BlobUriBuilder(SourceDirectoryUri);
+            BlobUriBuilder sourceUriBuilder = new BlobUriBuilder(SourceDirectoryClient.Uri);
             sourceUriBuilder.BlobName += $"/{blobName}";
 
             BlockBlobClient blockBlobClient = DestinationBlobDirectoryClient.GetBlockBlobClient(blobName);
@@ -93,7 +93,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 SourceAuthentication = CopyFromUriOptions.SourceAuthentication,
             };
 
-            return await blockBlobClient.StartCopyFromUriAsync(SourceDirectoryUri, blobCopyFromUriOptions).ConfigureAwait(false);
+            return await blockBlobClient.StartCopyFromUriAsync(sourceUriBuilder.ToUri(), blobCopyFromUriOptions).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.Storage.DataMovement.Blobs
         internal async Task<Response<BlobCopyInfo>> GetSingleSyncCopyTaskAsync(string blobName)
         {
             //TODO: check if the listing operation gives the full blob path name or just everything but the prefix
-            BlobUriBuilder sourceUriBuilder = new BlobUriBuilder(SourceDirectoryUri);
+            BlobUriBuilder sourceUriBuilder = new BlobUriBuilder(SourceDirectoryClient.Uri);
             sourceUriBuilder.BlobName += $"/{blobName}";
 
             BlockBlobClient blockBlobClient = DestinationBlobDirectoryClient.GetBlockBlobClient(blobName);
@@ -118,7 +118,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 SourceAuthentication = CopyFromUriOptions.SourceAuthentication,
             };
 
-            return await blockBlobClient.SyncCopyFromUriAsync(SourceDirectoryUri, blobCopyFromUriOptions).ConfigureAwait(false);
+            return await blockBlobClient.SyncCopyFromUriAsync(sourceUriBuilder.ToUri(), blobCopyFromUriOptions).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             return () =>
             {
-                BlobUriBuilder sourceUriBuilder = new BlobUriBuilder(SourceDirectoryUri);
+                BlobUriBuilder sourceUriBuilder = new BlobUriBuilder(SourceDirectoryClient.Uri);
                 sourceUriBuilder.BlobName += $"/{blobName}";
                 Uri sourceBlobUri = sourceUriBuilder.ToUri();
 
