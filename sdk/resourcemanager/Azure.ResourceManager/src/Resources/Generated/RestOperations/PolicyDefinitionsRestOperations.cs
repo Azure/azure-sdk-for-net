@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyDefinitionName"> The name of the policy definition to create. </param>
         /// <param name="parameters"> The policy definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="policyDefinitionName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="policyDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<PolicyDefinitionData>> CreateOrUpdateAsync(string subscriptionId, string policyDefinitionName, PolicyDefinitionData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyDefinitionName"> The name of the policy definition to create. </param>
         /// <param name="parameters"> The policy definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="policyDefinitionName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="policyDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
         public Response<PolicyDefinitionData> CreateOrUpdate(string subscriptionId, string policyDefinitionName, PolicyDefinitionData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyDefinitionName"> The name of the policy definition to create. </param>
         /// <param name="parameters"> The policy definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="policyDefinitionName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="policyDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<PolicyDefinitionData>> CreateOrUpdateAtManagementGroupAsync(string managementGroupId, string policyDefinitionName, PolicyDefinitionData parameters, CancellationToken cancellationToken = default)
         {
             if (managementGroupId == null)
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyDefinitionName"> The name of the policy definition to create. </param>
         /// <param name="parameters"> The policy definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="policyDefinitionName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="policyDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
         public Response<PolicyDefinitionData> CreateOrUpdateAtManagementGroup(string managementGroupId, string policyDefinitionName, PolicyDefinitionData parameters, CancellationToken cancellationToken = default)
         {
             if (managementGroupId == null)

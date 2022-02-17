@@ -19,7 +19,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="prefix"></param>
         /// <param name="segment"> Abstract for entries that can be listed from Directory. </param>
         /// <param name="nextMarker"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="shareName"/>, <paramref name="directoryPath"/>, <paramref name="prefix"/>, <paramref name="segment"/>, or <paramref name="nextMarker"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="shareName"/>, <paramref name="directoryPath"/>, <paramref name="prefix"/>, <paramref name="segment"/> or <paramref name="nextMarker"/> is null. </exception>
         internal ListFilesAndDirectoriesSegmentResponse(string serviceEndpoint, string shareName, string directoryPath, string prefix, FilesAndDirectoriesListSegment segment, string nextMarker)
         {
             if (serviceEndpoint == null)

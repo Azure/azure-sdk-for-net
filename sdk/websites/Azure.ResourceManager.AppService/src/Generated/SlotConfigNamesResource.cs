@@ -141,10 +141,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="slotConfigNames"/> is null. </exception>
         public async virtual Task<ArmOperation<SlotConfigNamesResource>> CreateOrUpdateAsync(bool waitForCompletion, SlotConfigNamesResourceData slotConfigNames, CancellationToken cancellationToken = default)
         {
-            if (slotConfigNames == null)
-            {
-                throw new ArgumentNullException(nameof(slotConfigNames));
-            }
+            Argument.AssertNotNull(slotConfigNames, nameof(slotConfigNames));
 
             using var scope = _slotConfigNamesResourceWebAppsClientDiagnostics.CreateScope("SlotConfigNamesResource.CreateOrUpdate");
             scope.Start();
@@ -174,10 +171,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="slotConfigNames"/> is null. </exception>
         public virtual ArmOperation<SlotConfigNamesResource> CreateOrUpdate(bool waitForCompletion, SlotConfigNamesResourceData slotConfigNames, CancellationToken cancellationToken = default)
         {
-            if (slotConfigNames == null)
-            {
-                throw new ArgumentNullException(nameof(slotConfigNames));
-            }
+            Argument.AssertNotNull(slotConfigNames, nameof(slotConfigNames));
 
             using var scope = _slotConfigNamesResourceWebAppsClientDiagnostics.CreateScope("SlotConfigNamesResource.CreateOrUpdate");
             scope.Start();

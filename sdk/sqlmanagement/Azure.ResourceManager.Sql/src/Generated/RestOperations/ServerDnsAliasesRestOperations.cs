@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="dnsAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="dnsAliasName"/> is null. </exception>
         public async Task<Response<ServerDnsAliasData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="dnsAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="dnsAliasName"/> is null. </exception>
         public Response<ServerDnsAliasData> Get(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="dnsAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="dnsAliasName"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="dnsAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="dnsAliasName"/> is null. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="dnsAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="dnsAliasName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="dnsAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="dnsAliasName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="serverName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         public async Task<Response<ServerDnsAliasListResult>> ListByServerAsync(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="serverName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         public Response<ServerDnsAliasListResult> ListByServer(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="parameters"> The ServerDnsAliasAcquisition to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="dnsAliasName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="dnsAliasName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> AcquireAsync(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="parameters"> The ServerDnsAliasAcquisition to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="dnsAliasName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="dnsAliasName"/> or <paramref name="parameters"/> is null. </exception>
         public Response Acquire(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="serverName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         public async Task<Response<ServerDnsAliasListResult>> ListByServerNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="serverName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         public Response<ServerDnsAliasListResult> ListByServerNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

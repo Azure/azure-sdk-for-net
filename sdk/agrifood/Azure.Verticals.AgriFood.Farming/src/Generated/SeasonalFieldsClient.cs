@@ -59,6 +59,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="seasonalFieldId"> ID of the seasonal field. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -106,8 +107,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> GetSeasonalFieldAsync(string farmerId, string seasonalFieldId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
-            Argument.AssertNotNull(seasonalFieldId, nameof(seasonalFieldId));
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(seasonalFieldId, nameof(seasonalFieldId));
 
             using var scope = ClientDiagnostics.CreateScope("SeasonalFieldsClient.GetSeasonalField");
             scope.Start();
@@ -128,6 +129,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="seasonalFieldId"> ID of the seasonal field. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -175,8 +177,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response GetSeasonalField(string farmerId, string seasonalFieldId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
-            Argument.AssertNotNull(seasonalFieldId, nameof(seasonalFieldId));
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(seasonalFieldId, nameof(seasonalFieldId));
 
             using var scope = ClientDiagnostics.CreateScope("SeasonalFieldsClient.GetSeasonalField");
             scope.Start();
@@ -198,6 +200,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -270,8 +273,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string seasonalFieldId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
-            Argument.AssertNotNull(seasonalFieldId, nameof(seasonalFieldId));
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(seasonalFieldId, nameof(seasonalFieldId));
 
             using var scope = ClientDiagnostics.CreateScope("SeasonalFieldsClient.CreateOrUpdate");
             scope.Start();
@@ -293,6 +296,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -365,8 +369,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response CreateOrUpdate(string farmerId, string seasonalFieldId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
-            Argument.AssertNotNull(seasonalFieldId, nameof(seasonalFieldId));
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(seasonalFieldId, nameof(seasonalFieldId));
 
             using var scope = ClientDiagnostics.CreateScope("SeasonalFieldsClient.CreateOrUpdate");
             scope.Start();
@@ -387,6 +391,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="seasonalFieldId"> ID of the seasonal field. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -409,8 +414,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> DeleteAsync(string farmerId, string seasonalFieldId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
-            Argument.AssertNotNull(seasonalFieldId, nameof(seasonalFieldId));
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(seasonalFieldId, nameof(seasonalFieldId));
 
             using var scope = ClientDiagnostics.CreateScope("SeasonalFieldsClient.Delete");
             scope.Start();
@@ -431,6 +436,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="seasonalFieldId"> ID of the seasonal field. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -453,8 +459,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response Delete(string farmerId, string seasonalFieldId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
-            Argument.AssertNotNull(seasonalFieldId, nameof(seasonalFieldId));
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(seasonalFieldId, nameof(seasonalFieldId));
 
             using var scope = ClientDiagnostics.CreateScope("SeasonalFieldsClient.Delete");
             scope.Start();
@@ -474,6 +480,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="jobId"> ID of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -514,7 +521,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("SeasonalFieldsClient.GetCascadeDeleteJobDetails");
             scope.Start();
@@ -534,6 +541,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="jobId"> ID of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -574,7 +582,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("SeasonalFieldsClient.GetCascadeDeleteJobDetails");
             scope.Start();
@@ -623,6 +631,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -676,7 +685,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual AsyncPageable<BinaryData> GetSeasonalFieldsByFarmerIdAsync(string farmerId, IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
 
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "SeasonalFieldsClient.GetSeasonalFieldsByFarmerId");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -726,6 +735,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -779,7 +789,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Pageable<BinaryData> GetSeasonalFieldsByFarmerId(string farmerId, IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
 
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "SeasonalFieldsClient.GetSeasonalFieldsByFarmerId");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1000,7 +1010,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="seasonalFieldId"> ID of the seasonalField to be deleted. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/>, or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1041,7 +1052,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(bool waitForCompletion, string jobId, string farmerId, string seasonalFieldId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(farmerId, nameof(farmerId));
             Argument.AssertNotNull(seasonalFieldId, nameof(seasonalFieldId));
 
@@ -1065,7 +1076,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="seasonalFieldId"> ID of the seasonalField to be deleted. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/>, or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1106,7 +1118,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Operation<BinaryData> CreateCascadeDeleteJob(bool waitForCompletion, string jobId, string farmerId, string seasonalFieldId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(farmerId, nameof(farmerId));
             Argument.AssertNotNull(seasonalFieldId, nameof(seasonalFieldId));
 

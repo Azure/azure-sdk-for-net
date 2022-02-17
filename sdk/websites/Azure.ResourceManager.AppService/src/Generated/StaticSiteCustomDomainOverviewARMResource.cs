@@ -194,10 +194,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="staticSiteCustomDomainRequestPropertiesEnvelope"/> is null. </exception>
         public async virtual Task<ArmOperation> ValidateCustomDomainCanBeAddedToStaticSiteAsync(bool waitForCompletion, StaticSiteCustomDomainRequestPropertiesARMResource staticSiteCustomDomainRequestPropertiesEnvelope, CancellationToken cancellationToken = default)
         {
-            if (staticSiteCustomDomainRequestPropertiesEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(staticSiteCustomDomainRequestPropertiesEnvelope));
-            }
+            Argument.AssertNotNull(staticSiteCustomDomainRequestPropertiesEnvelope, nameof(staticSiteCustomDomainRequestPropertiesEnvelope));
 
             using var scope = _staticSiteCustomDomainOverviewARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResource.ValidateCustomDomainCanBeAddedToStaticSite");
             scope.Start();
@@ -227,10 +224,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="staticSiteCustomDomainRequestPropertiesEnvelope"/> is null. </exception>
         public virtual ArmOperation ValidateCustomDomainCanBeAddedToStaticSite(bool waitForCompletion, StaticSiteCustomDomainRequestPropertiesARMResource staticSiteCustomDomainRequestPropertiesEnvelope, CancellationToken cancellationToken = default)
         {
-            if (staticSiteCustomDomainRequestPropertiesEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(staticSiteCustomDomainRequestPropertiesEnvelope));
-            }
+            Argument.AssertNotNull(staticSiteCustomDomainRequestPropertiesEnvelope, nameof(staticSiteCustomDomainRequestPropertiesEnvelope));
 
             using var scope = _staticSiteCustomDomainOverviewARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResource.ValidateCustomDomainCanBeAddedToStaticSite");
             scope.Start();

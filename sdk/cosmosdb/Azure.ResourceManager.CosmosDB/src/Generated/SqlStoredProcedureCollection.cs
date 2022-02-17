@@ -60,15 +60,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="storedProcedureName"> Cosmos DB storedProcedure name. </param>
         /// <param name="createUpdateSqlStoredProcedureParameters"> The parameters to provide for the current SQL storedProcedure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> or <paramref name="createUpdateSqlStoredProcedureParameters"/> is null. </exception>
         public async virtual Task<ArmOperation<SqlStoredProcedure>> CreateOrUpdateAsync(bool waitForCompletion, string storedProcedureName, SqlStoredProcedureCreateUpdateOptions createUpdateSqlStoredProcedureParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
-            if (createUpdateSqlStoredProcedureParameters == null)
-            {
-                throw new ArgumentNullException(nameof(createUpdateSqlStoredProcedureParameters));
-            }
+            Argument.AssertNotNull(createUpdateSqlStoredProcedureParameters, nameof(createUpdateSqlStoredProcedureParameters));
 
             using var scope = _sqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("SqlStoredProcedureCollection.CreateOrUpdate");
             scope.Start();
@@ -96,15 +93,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="storedProcedureName"> Cosmos DB storedProcedure name. </param>
         /// <param name="createUpdateSqlStoredProcedureParameters"> The parameters to provide for the current SQL storedProcedure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> or <paramref name="createUpdateSqlStoredProcedureParameters"/> is null. </exception>
         public virtual ArmOperation<SqlStoredProcedure> CreateOrUpdate(bool waitForCompletion, string storedProcedureName, SqlStoredProcedureCreateUpdateOptions createUpdateSqlStoredProcedureParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
-            if (createUpdateSqlStoredProcedureParameters == null)
-            {
-                throw new ArgumentNullException(nameof(createUpdateSqlStoredProcedureParameters));
-            }
+            Argument.AssertNotNull(createUpdateSqlStoredProcedureParameters, nameof(createUpdateSqlStoredProcedureParameters));
 
             using var scope = _sqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("SqlStoredProcedureCollection.CreateOrUpdate");
             scope.Start();
@@ -130,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="storedProcedureName"> Cosmos DB storedProcedure name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
         public async virtual Task<Response<SqlStoredProcedure>> GetAsync(string storedProcedureName, CancellationToken cancellationToken = default)
         {
@@ -159,7 +153,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="storedProcedureName"> Cosmos DB storedProcedure name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
         public virtual Response<SqlStoredProcedure> Get(string storedProcedureName, CancellationToken cancellationToken = default)
         {
@@ -242,7 +236,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="storedProcedureName"> Cosmos DB storedProcedure name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string storedProcedureName, CancellationToken cancellationToken = default)
         {
@@ -269,7 +263,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="storedProcedureName"> Cosmos DB storedProcedure name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
         public virtual Response<bool> Exists(string storedProcedureName, CancellationToken cancellationToken = default)
         {
@@ -296,7 +290,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="storedProcedureName"> Cosmos DB storedProcedure name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
         public async virtual Task<Response<SqlStoredProcedure>> GetIfExistsAsync(string storedProcedureName, CancellationToken cancellationToken = default)
         {
@@ -325,7 +319,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="storedProcedureName"> Cosmos DB storedProcedure name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
         public virtual Response<SqlStoredProcedure> GetIfExists(string storedProcedureName, CancellationToken cancellationToken = default)
         {

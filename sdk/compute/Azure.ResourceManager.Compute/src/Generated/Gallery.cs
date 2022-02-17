@@ -215,10 +215,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public async virtual Task<ArmOperation<Gallery>> UpdateAsync(bool waitForCompletion, GalleryUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _galleryClientDiagnostics.CreateScope("Gallery.Update");
             scope.Start();
@@ -248,10 +245,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual ArmOperation<Gallery> Update(bool waitForCompletion, GalleryUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _galleryClientDiagnostics.CreateScope("Gallery.Update");
             scope.Start();
@@ -281,10 +275,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="sharingUpdate"/> is null. </exception>
         public async virtual Task<ArmOperation<SharingUpdate>> UpdateSharingProfileAsync(bool waitForCompletion, SharingUpdate sharingUpdate, CancellationToken cancellationToken = default)
         {
-            if (sharingUpdate == null)
-            {
-                throw new ArgumentNullException(nameof(sharingUpdate));
-            }
+            Argument.AssertNotNull(sharingUpdate, nameof(sharingUpdate));
 
             using var scope = _gallerySharingProfileClientDiagnostics.CreateScope("Gallery.UpdateSharingProfile");
             scope.Start();
@@ -314,10 +305,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="sharingUpdate"/> is null. </exception>
         public virtual ArmOperation<SharingUpdate> UpdateSharingProfile(bool waitForCompletion, SharingUpdate sharingUpdate, CancellationToken cancellationToken = default)
         {
-            if (sharingUpdate == null)
-            {
-                throw new ArgumentNullException(nameof(sharingUpdate));
-            }
+            Argument.AssertNotNull(sharingUpdate, nameof(sharingUpdate));
 
             using var scope = _gallerySharingProfileClientDiagnostics.CreateScope("Gallery.UpdateSharingProfile");
             scope.Start();
@@ -347,14 +335,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<Gallery>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _galleryClientDiagnostics.CreateScope("Gallery.AddTag");
             scope.Start();
@@ -384,14 +366,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<Gallery> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _galleryClientDiagnostics.CreateScope("Gallery.AddTag");
             scope.Start();
@@ -420,10 +396,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<Gallery>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _galleryClientDiagnostics.CreateScope("Gallery.SetTags");
             scope.Start();
@@ -453,10 +426,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<Gallery> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _galleryClientDiagnostics.CreateScope("Gallery.SetTags");
             scope.Start();
@@ -486,10 +456,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<Gallery>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _galleryClientDiagnostics.CreateScope("Gallery.RemoveTag");
             scope.Start();
@@ -518,10 +485,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<Gallery> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _galleryClientDiagnostics.CreateScope("Gallery.RemoveTag");
             scope.Start();

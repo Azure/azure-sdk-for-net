@@ -59,15 +59,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="parameters"> The requested sync group resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<SyncGroup>> CreateOrUpdateAsync(bool waitForCompletion, string syncGroupName, SyncGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -95,15 +92,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="parameters"> The requested sync group resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<SyncGroup> CreateOrUpdate(bool waitForCompletion, string syncGroupName, SyncGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -129,7 +123,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
         public async virtual Task<Response<SyncGroup>> GetAsync(string syncGroupName, CancellationToken cancellationToken = default)
         {
@@ -158,7 +152,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
         public virtual Response<SyncGroup> Get(string syncGroupName, CancellationToken cancellationToken = default)
         {
@@ -271,7 +265,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string syncGroupName, CancellationToken cancellationToken = default)
         {
@@ -298,7 +292,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string syncGroupName, CancellationToken cancellationToken = default)
         {
@@ -325,7 +319,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
         public async virtual Task<Response<SyncGroup>> GetIfExistsAsync(string syncGroupName, CancellationToken cancellationToken = default)
         {
@@ -354,7 +348,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
         public virtual Response<SyncGroup> GetIfExists(string syncGroupName, CancellationToken cancellationToken = default)
         {

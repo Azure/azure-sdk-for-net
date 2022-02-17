@@ -112,7 +112,7 @@
         ],
         "x-ms-client-request-id": "4dc7c175-a6b9-5ca0-7d99-11faf057f9aa",
         "x-ms-date": "Fri, 19 Feb 2021 19:11:49 GMT",
-        "x-ms-rename-source": "%2Ftest-filesystem-51f26802-2627-e007-d58c-b91a86f47882%2F+my+cool+file+=",
+        "x-ms-rename-source": "/test-filesystem-51f26802-2627-e007-d58c-b91a86f47882/%20my%20cool%20file%20",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2021-04-10"
       },

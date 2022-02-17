@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="location"> The location of the deleted storage account. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="deletedAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="deletedAccountName"/> is null. </exception>
         public async Task<Response<DeletedAccountData>> GetAsync(string subscriptionId, string location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="location"> The location of the deleted storage account. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="deletedAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="deletedAccountName"/> is null. </exception>
         public Response<DeletedAccountData> Get(string subscriptionId, string location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)

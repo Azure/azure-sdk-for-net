@@ -202,10 +202,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public async virtual Task<ArmOperation<ClusterResource>> UpdateAsync(bool waitForCompletion, ClusterResourceData body, CancellationToken cancellationToken = default)
         {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
+            Argument.AssertNotNull(body, nameof(body));
 
             using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResource.Update");
             scope.Start();
@@ -235,10 +232,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual ArmOperation<ClusterResource> Update(bool waitForCompletion, ClusterResourceData body, CancellationToken cancellationToken = default)
         {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
+            Argument.AssertNotNull(body, nameof(body));
 
             using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResource.Update");
             scope.Start();
@@ -268,10 +262,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public async virtual Task<ArmOperation<CommandOutput>> InvokeCommandAsync(bool waitForCompletion, CommandPostBody body, CancellationToken cancellationToken = default)
         {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
+            Argument.AssertNotNull(body, nameof(body));
 
             using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResource.InvokeCommand");
             scope.Start();
@@ -301,10 +292,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual ArmOperation<CommandOutput> InvokeCommand(bool waitForCompletion, CommandPostBody body, CancellationToken cancellationToken = default)
         {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
+            Argument.AssertNotNull(body, nameof(body));
 
             using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResource.InvokeCommand");
             scope.Start();
@@ -482,14 +470,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<ClusterResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResource.AddTag");
             scope.Start();
@@ -519,14 +501,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ClusterResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResource.AddTag");
             scope.Start();
@@ -555,10 +531,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<ClusterResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResource.SetTags");
             scope.Start();
@@ -588,10 +561,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ClusterResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResource.SetTags");
             scope.Start();
@@ -621,10 +591,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<ClusterResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResource.RemoveTag");
             scope.Start();
@@ -653,10 +620,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ClusterResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResource.RemoveTag");
             scope.Start();

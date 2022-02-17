@@ -143,10 +143,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="updateThroughputParameters"/> is null. </exception>
         public async virtual Task<ArmOperation<DatabaseAccountGremlinDatabaseGraphThroughputSetting>> CreateOrUpdateAsync(bool waitForCompletion, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
         {
-            if (updateThroughputParameters == null)
-            {
-                throw new ArgumentNullException(nameof(updateThroughputParameters));
-            }
+            Argument.AssertNotNull(updateThroughputParameters, nameof(updateThroughputParameters));
 
             using var scope = _databaseAccountGremlinDatabaseGraphThroughputSettingGremlinResourcesClientDiagnostics.CreateScope("DatabaseAccountGremlinDatabaseGraphThroughputSetting.CreateOrUpdate");
             scope.Start();
@@ -176,10 +173,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="updateThroughputParameters"/> is null. </exception>
         public virtual ArmOperation<DatabaseAccountGremlinDatabaseGraphThroughputSetting> CreateOrUpdate(bool waitForCompletion, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
         {
-            if (updateThroughputParameters == null)
-            {
-                throw new ArgumentNullException(nameof(updateThroughputParameters));
-            }
+            Argument.AssertNotNull(updateThroughputParameters, nameof(updateThroughputParameters));
 
             using var scope = _databaseAccountGremlinDatabaseGraphThroughputSettingGremlinResourcesClientDiagnostics.CreateScope("DatabaseAccountGremlinDatabaseGraphThroughputSetting.CreateOrUpdate");
             scope.Start();
@@ -313,14 +307,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<DatabaseAccountGremlinDatabaseGraphThroughputSetting>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _databaseAccountGremlinDatabaseGraphThroughputSettingGremlinResourcesClientDiagnostics.CreateScope("DatabaseAccountGremlinDatabaseGraphThroughputSetting.AddTag");
             scope.Start();
@@ -350,14 +338,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<DatabaseAccountGremlinDatabaseGraphThroughputSetting> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _databaseAccountGremlinDatabaseGraphThroughputSettingGremlinResourcesClientDiagnostics.CreateScope("DatabaseAccountGremlinDatabaseGraphThroughputSetting.AddTag");
             scope.Start();
@@ -386,10 +368,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<DatabaseAccountGremlinDatabaseGraphThroughputSetting>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _databaseAccountGremlinDatabaseGraphThroughputSettingGremlinResourcesClientDiagnostics.CreateScope("DatabaseAccountGremlinDatabaseGraphThroughputSetting.SetTags");
             scope.Start();
@@ -419,10 +398,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DatabaseAccountGremlinDatabaseGraphThroughputSetting> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _databaseAccountGremlinDatabaseGraphThroughputSettingGremlinResourcesClientDiagnostics.CreateScope("DatabaseAccountGremlinDatabaseGraphThroughputSetting.SetTags");
             scope.Start();
@@ -452,10 +428,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<DatabaseAccountGremlinDatabaseGraphThroughputSetting>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _databaseAccountGremlinDatabaseGraphThroughputSettingGremlinResourcesClientDiagnostics.CreateScope("DatabaseAccountGremlinDatabaseGraphThroughputSetting.RemoveTag");
             scope.Start();
@@ -484,10 +457,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<DatabaseAccountGremlinDatabaseGraphThroughputSetting> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _databaseAccountGremlinDatabaseGraphThroughputSettingGremlinResourcesClientDiagnostics.CreateScope("DatabaseAccountGremlinDatabaseGraphThroughputSetting.RemoveTag");
             scope.Start();

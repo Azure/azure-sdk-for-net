@@ -211,10 +211,7 @@ namespace Azure.ResourceManager.Management
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public async virtual Task<Response<ManagementGroup>> UpdateAsync(ManagementGroupUpdateOptions options, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.Update");
             scope.Start();
@@ -242,10 +239,7 @@ namespace Azure.ResourceManager.Management
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual Response<ManagementGroup> Update(ManagementGroupUpdateOptions options, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.Update");
             scope.Start();

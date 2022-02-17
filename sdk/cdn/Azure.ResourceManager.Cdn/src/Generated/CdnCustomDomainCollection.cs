@@ -60,15 +60,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="customDomainProperties"> Properties required to create a new custom domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="customDomainProperties"/> is null. </exception>
         public async virtual Task<ArmOperation<CdnCustomDomain>> CreateOrUpdateAsync(bool waitForCompletion, string customDomainName, CustomDomainOptions customDomainProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
-            if (customDomainProperties == null)
-            {
-                throw new ArgumentNullException(nameof(customDomainProperties));
-            }
+            Argument.AssertNotNull(customDomainProperties, nameof(customDomainProperties));
 
             using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.CreateOrUpdate");
             scope.Start();
@@ -96,15 +93,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="customDomainProperties"> Properties required to create a new custom domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="customDomainProperties"/> is null. </exception>
         public virtual ArmOperation<CdnCustomDomain> CreateOrUpdate(bool waitForCompletion, string customDomainName, CustomDomainOptions customDomainProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
-            if (customDomainProperties == null)
-            {
-                throw new ArgumentNullException(nameof(customDomainProperties));
-            }
+            Argument.AssertNotNull(customDomainProperties, nameof(customDomainProperties));
 
             using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.CreateOrUpdate");
             scope.Start();
@@ -130,7 +124,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public async virtual Task<Response<CdnCustomDomain>> GetAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
@@ -159,7 +153,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public virtual Response<CdnCustomDomain> Get(string customDomainName, CancellationToken cancellationToken = default)
         {
@@ -272,7 +266,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
@@ -299,7 +293,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public virtual Response<bool> Exists(string customDomainName, CancellationToken cancellationToken = default)
         {
@@ -326,7 +320,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public async virtual Task<Response<CdnCustomDomain>> GetIfExistsAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
@@ -355,7 +349,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public virtual Response<CdnCustomDomain> GetIfExists(string customDomainName, CancellationToken cancellationToken = default)
         {

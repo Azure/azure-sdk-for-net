@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="applicationSecurityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationSecurityGroupName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="applicationSecurityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationSecurityGroupName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="applicationSecurityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationSecurityGroupName"/> is null. </exception>
         public async Task<Response<ApplicationSecurityGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="applicationSecurityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationSecurityGroupName"/> is null. </exception>
         public Response<ApplicationSecurityGroupData> Get(string subscriptionId, string resourceGroupName, string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="parameters"> Parameters supplied to the create or update ApplicationSecurityGroup operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationSecurityGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationSecurityGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string applicationSecurityGroupName, ApplicationSecurityGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="parameters"> Parameters supplied to the create or update ApplicationSecurityGroup operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationSecurityGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationSecurityGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string applicationSecurityGroupName, ApplicationSecurityGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="parameters"> Parameters supplied to update application security group tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationSecurityGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationSecurityGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<ApplicationSecurityGroupData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string applicationSecurityGroupName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="parameters"> Parameters supplied to update application security group tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationSecurityGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationSecurityGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public Response<ApplicationSecurityGroupData> UpdateTags(string subscriptionId, string resourceGroupName, string applicationSecurityGroupName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ApplicationSecurityGroupListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ApplicationSecurityGroupListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

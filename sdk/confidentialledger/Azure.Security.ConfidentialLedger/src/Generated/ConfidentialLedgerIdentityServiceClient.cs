@@ -37,6 +37,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="ledgerId"> Id of the Confidential Ledger instance to get information for. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ledgerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -59,7 +60,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> GetLedgerIdentityAsync(string ledgerId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(ledgerId, nameof(ledgerId));
+            Argument.AssertNotNullOrEmpty(ledgerId, nameof(ledgerId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerIdentityServiceClient.GetLedgerIdentity");
             scope.Start();
@@ -79,6 +80,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="ledgerId"> Id of the Confidential Ledger instance to get information for. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ledgerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -101,7 +103,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response GetLedgerIdentity(string ledgerId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(ledgerId, nameof(ledgerId));
+            Argument.AssertNotNullOrEmpty(ledgerId, nameof(ledgerId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerIdentityServiceClient.GetLedgerIdentity");
             scope.Start();

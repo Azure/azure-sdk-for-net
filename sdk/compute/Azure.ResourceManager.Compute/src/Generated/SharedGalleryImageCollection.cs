@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
         public async virtual Task<Response<SharedGalleryImage>> GetAsync(string galleryImageName, CancellationToken cancellationToken = default)
         {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
         public virtual Response<SharedGalleryImage> Get(string galleryImageName, CancellationToken cancellationToken = default)
         {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string galleryImageName, CancellationToken cancellationToken = default)
         {
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
         public virtual Response<bool> Exists(string galleryImageName, CancellationToken cancellationToken = default)
         {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
         public async virtual Task<Response<SharedGalleryImage>> GetIfExistsAsync(string galleryImageName, CancellationToken cancellationToken = default)
         {
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
         public virtual Response<SharedGalleryImage> GetIfExists(string galleryImageName, CancellationToken cancellationToken = default)
         {

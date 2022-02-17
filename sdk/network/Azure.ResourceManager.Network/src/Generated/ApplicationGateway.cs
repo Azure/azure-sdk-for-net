@@ -365,10 +365,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="probeRequest"/> is null. </exception>
         public async virtual Task<ArmOperation<ApplicationGatewayBackendHealthOnDemand>> BackendHealthOnDemandAsync(bool waitForCompletion, ApplicationGatewayOnDemandProbe probeRequest, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (probeRequest == null)
-            {
-                throw new ArgumentNullException(nameof(probeRequest));
-            }
+            Argument.AssertNotNull(probeRequest, nameof(probeRequest));
 
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGateway.BackendHealthOnDemand");
             scope.Start();
@@ -399,10 +396,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="probeRequest"/> is null. </exception>
         public virtual ArmOperation<ApplicationGatewayBackendHealthOnDemand> BackendHealthOnDemand(bool waitForCompletion, ApplicationGatewayOnDemandProbe probeRequest, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (probeRequest == null)
-            {
-                throw new ArgumentNullException(nameof(probeRequest));
-            }
+            Argument.AssertNotNull(probeRequest, nameof(probeRequest));
 
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGateway.BackendHealthOnDemand");
             scope.Start();
@@ -516,14 +510,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<ApplicationGateway>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGateway.AddTag");
             scope.Start();
@@ -553,14 +541,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ApplicationGateway> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGateway.AddTag");
             scope.Start();
@@ -589,10 +571,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<ApplicationGateway>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGateway.SetTags");
             scope.Start();
@@ -622,10 +601,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ApplicationGateway> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGateway.SetTags");
             scope.Start();
@@ -655,10 +631,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<ApplicationGateway>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGateway.RemoveTag");
             scope.Start();
@@ -687,10 +660,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ApplicationGateway> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGateway.RemoveTag");
             scope.Start();

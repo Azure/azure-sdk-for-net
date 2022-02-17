@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="circuitName"> The name of the express route circuit. </param>
         /// <param name="authorizationName"> The name of the authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="authorizationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/> or <paramref name="authorizationName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string circuitName, string authorizationName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="circuitName"> The name of the express route circuit. </param>
         /// <param name="authorizationName"> The name of the authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="authorizationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/> or <paramref name="authorizationName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string circuitName, string authorizationName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="circuitName"> The name of the express route circuit. </param>
         /// <param name="authorizationName"> The name of the authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="authorizationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/> or <paramref name="authorizationName"/> is null. </exception>
         public async Task<Response<ExpressRouteCircuitAuthorizationData>> GetAsync(string subscriptionId, string resourceGroupName, string circuitName, string authorizationName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="circuitName"> The name of the express route circuit. </param>
         /// <param name="authorizationName"> The name of the authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="authorizationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/> or <paramref name="authorizationName"/> is null. </exception>
         public Response<ExpressRouteCircuitAuthorizationData> Get(string subscriptionId, string resourceGroupName, string circuitName, string authorizationName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="authorizationName"> The name of the authorization. </param>
         /// <param name="authorizationParameters"> Parameters supplied to the create or update express route circuit authorization operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="authorizationName"/>, or <paramref name="authorizationParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="authorizationName"/> or <paramref name="authorizationParameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string circuitName, string authorizationName, ExpressRouteCircuitAuthorizationData authorizationParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="authorizationName"> The name of the authorization. </param>
         /// <param name="authorizationParameters"> Parameters supplied to the create or update express route circuit authorization operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="authorizationName"/>, or <paramref name="authorizationParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="authorizationName"/> or <paramref name="authorizationParameters"/> is null. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string circuitName, string authorizationName, ExpressRouteCircuitAuthorizationData authorizationParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="circuitName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="circuitName"/> is null. </exception>
         public async Task<Response<AuthorizationListResult>> ListAsync(string subscriptionId, string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="circuitName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="circuitName"/> is null. </exception>
         public Response<AuthorizationListResult> List(string subscriptionId, string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="circuitName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="circuitName"/> is null. </exception>
         public async Task<Response<AuthorizationListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="circuitName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="circuitName"/> is null. </exception>
         public Response<AuthorizationListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

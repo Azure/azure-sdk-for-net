@@ -171,7 +171,7 @@
         "x-ms-date": "Tue, 30 Nov 2021 19:31:26 GMT",
         "x-ms-file-rename-ignore-readonly": "false",
         "x-ms-file-rename-replace-if-exists": "true",
-        "x-ms-file-rename-source": "https%3A%2F%2Ffp8xscnapby3pev24a.file.preprod.core.windows.net%2Ftest-share-7c5e7eb6-4a32-be61-6023-1176446e6185%2Ftest-directory-9d7ba656-ee11-5194-d966-b43d592b164e%2Ftest-file-97e0ada1-d745-f3d3-307f-f3dd3032e81f=",
+        "x-ms-file-rename-source": "https://fp8xscnapby3pev24a.file.preprod.core.windows.net/test-share-7c5e7eb6-4a32-be61-6023-1176446e6185/test-directory-9d7ba656-ee11-5194-d966-b43d592b164e/test-file-97e0ada1-d745-f3d3-307f-f3dd3032e81f",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2021-04-10"
       },

@@ -5,21 +5,26 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     /// <summary> Request payload used to update and existing Accounts. </summary>
-    public partial class DeviceUpdateAccountUpdateOptions : DeviceUpdateInstanceUpdateOptions
+    public partial class DeviceUpdateAccountUpdateOptions
     {
         /// <summary> Initializes a new instance of DeviceUpdateAccountUpdateOptions. </summary>
         public DeviceUpdateAccountUpdateOptions()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The type of identity used for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
         public string Location { get; set; }
+        /// <summary> List of key value pairs that describe the resource. This will overwrite the existing tags. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

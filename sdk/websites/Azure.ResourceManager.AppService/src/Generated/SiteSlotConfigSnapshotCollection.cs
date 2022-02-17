@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         public async virtual Task<Response<SiteSlotConfigSnapshot>> GetAsync(string snapshotId, CancellationToken cancellationToken = default)
         {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         public virtual Response<SiteSlotConfigSnapshot> Get(string snapshotId, CancellationToken cancellationToken = default)
         {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string snapshotId, CancellationToken cancellationToken = default)
         {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         public virtual Response<bool> Exists(string snapshotId, CancellationToken cancellationToken = default)
         {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         public async virtual Task<Response<SiteSlotConfigSnapshot>> GetIfExistsAsync(string snapshotId, CancellationToken cancellationToken = default)
         {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         public virtual Response<SiteSlotConfigSnapshot> GetIfExists(string snapshotId, CancellationToken cancellationToken = default)
         {

@@ -141,10 +141,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="userDetails"/> is null. </exception>
         public async virtual Task<ArmOperation<User>> CreateOrUpdateAsync(bool waitForCompletion, UserData userDetails, CancellationToken cancellationToken = default)
         {
-            if (userDetails == null)
-            {
-                throw new ArgumentNullException(nameof(userDetails));
-            }
+            Argument.AssertNotNull(userDetails, nameof(userDetails));
 
             using var scope = _userClientDiagnostics.CreateScope("User.CreateOrUpdate");
             scope.Start();
@@ -174,10 +171,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="userDetails"/> is null. </exception>
         public virtual ArmOperation<User> CreateOrUpdate(bool waitForCompletion, UserData userDetails, CancellationToken cancellationToken = default)
         {
-            if (userDetails == null)
-            {
-                throw new ArgumentNullException(nameof(userDetails));
-            }
+            Argument.AssertNotNull(userDetails, nameof(userDetails));
 
             using var scope = _userClientDiagnostics.CreateScope("User.CreateOrUpdate");
             scope.Start();

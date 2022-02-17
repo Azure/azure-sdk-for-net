@@ -193,10 +193,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public async virtual Task<Response<TagResource>> UpdateAsync(TagResourceUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Update");
             scope.Start();
@@ -222,10 +219,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual Response<TagResource> Update(TagResourceUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Update");
             scope.Start();
@@ -252,10 +246,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<TagResource>> CreateOrUpdateAsync(bool waitForCompletion, TagResourceData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.CreateOrUpdate");
             scope.Start();
@@ -285,10 +276,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<TagResource> CreateOrUpdate(bool waitForCompletion, TagResourceData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.CreateOrUpdate");
             scope.Start();

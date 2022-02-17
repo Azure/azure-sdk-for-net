@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="datastoreName"> Name of the datastore. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
         public async virtual Task<ArmOperation<VMwareDatastore>> CreateOrUpdateAsync(bool waitForCompletion, string datastoreName, VMwareDatastoreData body = null, CancellationToken cancellationToken = default)
         {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="datastoreName"> Name of the datastore. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
         public virtual ArmOperation<VMwareDatastore> CreateOrUpdate(bool waitForCompletion, string datastoreName, VMwareDatastoreData body = null, CancellationToken cancellationToken = default)
         {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="datastoreName"> Name of the datastore. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
         public async virtual Task<Response<VMwareDatastore>> GetAsync(string datastoreName, CancellationToken cancellationToken = default)
         {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="datastoreName"> Name of the datastore. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
         public virtual Response<VMwareDatastore> Get(string datastoreName, CancellationToken cancellationToken = default)
         {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="datastoreName"> Name of the datastore. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string datastoreName, CancellationToken cancellationToken = default)
         {
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="datastoreName"> Name of the datastore. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
         public virtual Response<bool> Exists(string datastoreName, CancellationToken cancellationToken = default)
         {
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="datastoreName"> Name of the datastore. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
         public async virtual Task<Response<VMwareDatastore>> GetIfExistsAsync(string datastoreName, CancellationToken cancellationToken = default)
         {
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="datastoreName"> Name of the datastore. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
         public virtual Response<VMwareDatastore> GetIfExists(string datastoreName, CancellationToken cancellationToken = default)
         {

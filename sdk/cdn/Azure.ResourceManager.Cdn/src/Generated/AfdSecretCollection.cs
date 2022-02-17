@@ -59,15 +59,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="secret"> The Secret properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="secret"/> is null. </exception>
         public async virtual Task<ArmOperation<AfdSecret>> CreateOrUpdateAsync(bool waitForCompletion, string secretName, AfdSecretData secret, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-            if (secret == null)
-            {
-                throw new ArgumentNullException(nameof(secret));
-            }
+            Argument.AssertNotNull(secret, nameof(secret));
 
             using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecretCollection.CreateOrUpdate");
             scope.Start();
@@ -95,15 +92,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="secret"> The Secret properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="secret"/> is null. </exception>
         public virtual ArmOperation<AfdSecret> CreateOrUpdate(bool waitForCompletion, string secretName, AfdSecretData secret, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-            if (secret == null)
-            {
-                throw new ArgumentNullException(nameof(secret));
-            }
+            Argument.AssertNotNull(secret, nameof(secret));
 
             using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecretCollection.CreateOrUpdate");
             scope.Start();
@@ -129,7 +123,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public async virtual Task<Response<AfdSecret>> GetAsync(string secretName, CancellationToken cancellationToken = default)
         {
@@ -158,7 +152,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public virtual Response<AfdSecret> Get(string secretName, CancellationToken cancellationToken = default)
         {
@@ -271,7 +265,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string secretName, CancellationToken cancellationToken = default)
         {
@@ -298,7 +292,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public virtual Response<bool> Exists(string secretName, CancellationToken cancellationToken = default)
         {
@@ -325,7 +319,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public async virtual Task<Response<AfdSecret>> GetIfExistsAsync(string secretName, CancellationToken cancellationToken = default)
         {
@@ -354,7 +348,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public virtual Response<AfdSecret> GetIfExists(string secretName, CancellationToken cancellationToken = default)
         {

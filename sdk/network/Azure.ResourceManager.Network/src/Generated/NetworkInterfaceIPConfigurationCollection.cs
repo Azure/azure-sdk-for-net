@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
         public async virtual Task<Response<NetworkInterfaceIPConfiguration>> GetAsync(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
         public virtual Response<NetworkInterfaceIPConfiguration> Get(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
         public virtual Response<bool> Exists(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
         public async virtual Task<Response<NetworkInterfaceIPConfiguration>> GetIfExistsAsync(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
         public virtual Response<NetworkInterfaceIPConfiguration> GetIfExists(string ipConfigurationName, CancellationToken cancellationToken = default)
         {

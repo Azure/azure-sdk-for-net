@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         internal SubscriptionUsageCollection(ArmClient client, ResourceIdentifier id, string locationName) : base(client, id)
         {
             _locationName = locationName;
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="usageName"> Name of usage metric to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
         public async virtual Task<Response<SubscriptionUsage>> GetAsync(string usageName, CancellationToken cancellationToken = default)
         {
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="usageName"> Name of usage metric to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
         public virtual Response<SubscriptionUsage> Get(string usageName, CancellationToken cancellationToken = default)
         {
@@ -204,7 +205,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="usageName"> Name of usage metric to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string usageName, CancellationToken cancellationToken = default)
         {
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="usageName"> Name of usage metric to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
         public virtual Response<bool> Exists(string usageName, CancellationToken cancellationToken = default)
         {
@@ -258,7 +259,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="usageName"> Name of usage metric to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
         public async virtual Task<Response<SubscriptionUsage>> GetIfExistsAsync(string usageName, CancellationToken cancellationToken = default)
         {
@@ -287,7 +288,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="usageName"> Name of usage metric to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
         public virtual Response<SubscriptionUsage> GetIfExists(string usageName, CancellationToken cancellationToken = default)
         {

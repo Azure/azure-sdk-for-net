@@ -148,10 +148,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<TableService>> CreateOrUpdateAsync(bool waitForCompletion, TableServiceData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _tableServiceClientDiagnostics.CreateScope("TableService.CreateOrUpdate");
             scope.Start();
@@ -181,10 +178,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<TableService> CreateOrUpdate(bool waitForCompletion, TableServiceData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _tableServiceClientDiagnostics.CreateScope("TableService.CreateOrUpdate");
             scope.Start();

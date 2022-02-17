@@ -60,15 +60,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="routeFilterParameters"> Parameters supplied to the create or update route filter operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> or <paramref name="routeFilterParameters"/> is null. </exception>
         public async virtual Task<ArmOperation<RouteFilter>> CreateOrUpdateAsync(bool waitForCompletion, string routeFilterName, RouteFilterData routeFilterParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeFilterName, nameof(routeFilterName));
-            if (routeFilterParameters == null)
-            {
-                throw new ArgumentNullException(nameof(routeFilterParameters));
-            }
+            Argument.AssertNotNull(routeFilterParameters, nameof(routeFilterParameters));
 
             using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilterCollection.CreateOrUpdate");
             scope.Start();
@@ -96,15 +93,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="routeFilterParameters"> Parameters supplied to the create or update route filter operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> or <paramref name="routeFilterParameters"/> is null. </exception>
         public virtual ArmOperation<RouteFilter> CreateOrUpdate(bool waitForCompletion, string routeFilterName, RouteFilterData routeFilterParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeFilterName, nameof(routeFilterName));
-            if (routeFilterParameters == null)
-            {
-                throw new ArgumentNullException(nameof(routeFilterParameters));
-            }
+            Argument.AssertNotNull(routeFilterParameters, nameof(routeFilterParameters));
 
             using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilterCollection.CreateOrUpdate");
             scope.Start();
@@ -131,7 +125,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> is null. </exception>
         public async virtual Task<Response<RouteFilter>> GetAsync(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -161,7 +155,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> is null. </exception>
         public virtual Response<RouteFilter> Get(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -275,7 +269,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -303,7 +297,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> is null. </exception>
         public virtual Response<bool> Exists(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -331,7 +325,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> is null. </exception>
         public async virtual Task<Response<RouteFilter>> GetIfExistsAsync(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -361,7 +355,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> is null. </exception>
         public virtual Response<RouteFilter> GetIfExists(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
         {

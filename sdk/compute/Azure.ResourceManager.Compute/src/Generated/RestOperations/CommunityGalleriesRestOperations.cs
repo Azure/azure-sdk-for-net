@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Resource location. </param>
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="publicGalleryName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="publicGalleryName"/> is null. </exception>
         public async Task<Response<CommunityGallery>> GetAsync(string subscriptionId, string location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Resource location. </param>
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="publicGalleryName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="publicGalleryName"/> is null. </exception>
         public Response<CommunityGallery> Get(string subscriptionId, string location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)

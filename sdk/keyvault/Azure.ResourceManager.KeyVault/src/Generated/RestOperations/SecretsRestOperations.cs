@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="secretName"> Name of the secret. </param>
         /// <param name="parameters"> Parameters to create or update the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<SecretData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string secretName, SecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="secretName"> Name of the secret. </param>
         /// <param name="parameters"> Parameters to create or update the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/> or <paramref name="parameters"/> is null. </exception>
         public Response<SecretData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string vaultName, string secretName, SecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="secretName"> Name of the secret. </param>
         /// <param name="options"> Parameters to patch the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/>, or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/> or <paramref name="options"/> is null. </exception>
         public async Task<Response<SecretData>> UpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string secretName, SecretUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="secretName"> Name of the secret. </param>
         /// <param name="options"> Parameters to patch the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/>, or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/> or <paramref name="options"/> is null. </exception>
         public Response<SecretData> Update(string subscriptionId, string resourceGroupName, string vaultName, string secretName, SecretUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="secretName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="secretName"/> is null. </exception>
         public async Task<Response<SecretData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string secretName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="secretName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="secretName"/> is null. </exception>
         public Response<SecretData> Get(string subscriptionId, string resourceGroupName, string vaultName, string secretName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         public async Task<Response<SecretListResult>> ListAsync(string subscriptionId, string resourceGroupName, string vaultName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         public Response<SecretListResult> List(string subscriptionId, string resourceGroupName, string vaultName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         public async Task<Response<SecretListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string vaultName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         public Response<SecretListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string vaultName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

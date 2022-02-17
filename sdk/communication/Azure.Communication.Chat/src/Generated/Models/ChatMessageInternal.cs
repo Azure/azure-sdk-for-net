@@ -21,7 +21,7 @@ namespace Azure.Communication.Chat
         /// <param name="sequenceId"> Sequence of the chat message in the conversation. </param>
         /// <param name="version"> Version of the chat message. </param>
         /// <param name="createdOn"> The timestamp when the chat message arrived at the server. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="sequenceId"/>, or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="sequenceId"/> or <paramref name="version"/> is null. </exception>
         internal ChatMessageInternal(string id, ChatMessageType type, string sequenceId, string version, DateTimeOffset createdOn)
         {
             if (id == null)

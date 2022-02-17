@@ -192,10 +192,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxy"/> is null. </exception>
         public async virtual Task<Response> ValidateAsync(PrivateEndpointConnectionProxyData privateEndpointConnectionProxy, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionProxy == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionProxy));
-            }
+            Argument.AssertNotNull(privateEndpointConnectionProxy, nameof(privateEndpointConnectionProxy));
 
             using var scope = _privateEndpointConnectionProxyClientDiagnostics.CreateScope("PrivateEndpointConnectionProxy.Validate");
             scope.Start();
@@ -221,10 +218,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxy"/> is null. </exception>
         public virtual Response Validate(PrivateEndpointConnectionProxyData privateEndpointConnectionProxy, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionProxy == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionProxy));
-            }
+            Argument.AssertNotNull(privateEndpointConnectionProxy, nameof(privateEndpointConnectionProxy));
 
             using var scope = _privateEndpointConnectionProxyClientDiagnostics.CreateScope("PrivateEndpointConnectionProxy.Validate");
             scope.Start();

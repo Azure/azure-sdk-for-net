@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the operation to create a connection monitor. </param>
         /// <param name="migrate"> Value indicating whether connection monitor V1 should be migrated to V2 format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="connectionMonitorName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="connectionMonitorName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitorInput parameters, string migrate = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the operation to create a connection monitor. </param>
         /// <param name="migrate"> Value indicating whether connection monitor V1 should be migrated to V2 format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="connectionMonitorName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="connectionMonitorName"/> or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitorInput parameters, string migrate = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="connectionMonitorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is null. </exception>
         public async Task<Response<ConnectionMonitorData>> GetAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="connectionMonitorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is null. </exception>
         public Response<ConnectionMonitorData> Get(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="connectionMonitorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="connectionMonitorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="parameters"> Parameters supplied to update connection monitor tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="connectionMonitorName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="connectionMonitorName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<ConnectionMonitorData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="parameters"> Parameters supplied to update connection monitor tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="connectionMonitorName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="connectionMonitorName"/> or <paramref name="parameters"/> is null. </exception>
         public Response<ConnectionMonitorData> UpdateTags(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="connectionMonitorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is null. </exception>
         public async Task<Response> StopAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="connectionMonitorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is null. </exception>
         public Response Stop(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="connectionMonitorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is null. </exception>
         public async Task<Response> StartAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="connectionMonitorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is null. </exception>
         public Response Start(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name given to the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="connectionMonitorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is null. </exception>
         public async Task<Response> QueryAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name given to the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="connectionMonitorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is null. </exception>
         public Response Query(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group containing Network Watcher. </param>
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="networkWatcherName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is null. </exception>
         public async Task<Response<ConnectionMonitorListResult>> ListAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -849,7 +849,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group containing Network Watcher. </param>
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="networkWatcherName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is null. </exception>
         public Response<ConnectionMonitorListResult> List(string subscriptionId, string resourceGroupName, string networkWatcherName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)

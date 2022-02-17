@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="parameters"> Parameters for creating a eventhub cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, EventHubClusterData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="parameters"> Parameters for creating a eventhub cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string clusterName, EventHubClusterData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="parameters"> The properties of the Event Hubs Cluster which should be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, EventHubClusterData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="parameters"> The properties of the Event Hubs Cluster which should be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="parameters"/> is null. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string clusterName, EventHubClusterData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)

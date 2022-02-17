@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="addressName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is null. </exception>
         public async Task<Response<AddressResourceData>> GetAddressByNameAsync(string subscriptionId, string resourceGroupName, string addressName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="addressName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is null. </exception>
         public Response<AddressResourceData> GetAddressByName(string subscriptionId, string resourceGroupName, string addressName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="addressResource"> Address details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/>, or <paramref name="addressResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="addressResource"/> is null. </exception>
         public async Task<Response> CreateAddressAsync(string subscriptionId, string resourceGroupName, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -818,7 +818,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="addressResource"> Address details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/>, or <paramref name="addressResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="addressResource"/> is null. </exception>
         public Response CreateAddress(string subscriptionId, string resourceGroupName, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -875,7 +875,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="addressName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is null. </exception>
         public async Task<Response> DeleteAddressByNameAsync(string subscriptionId, string resourceGroupName, string addressName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -909,7 +909,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="addressName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is null. </exception>
         public Response DeleteAddressByName(string subscriptionId, string resourceGroupName, string addressName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -973,7 +973,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="options"> Address update parameters from request body. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/>, or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="options"/> is null. </exception>
         public async Task<Response> UpdateAddressAsync(string subscriptionId, string resourceGroupName, string addressName, AddressResourceUpdateOptions options, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1012,7 +1012,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="options"> Address update parameters from request body. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/>, or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="options"/> is null. </exception>
         public Response UpdateAddress(string subscriptionId, string resourceGroupName, string addressName, AddressResourceUpdateOptions options, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1161,7 +1161,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="orderName"> The name of the order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="location"/>, or <paramref name="orderName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="location"/> or <paramref name="orderName"/> is null. </exception>
         public async Task<Response<OrderResourceData>> GetOrderByNameAsync(string subscriptionId, string resourceGroupName, string location, string orderName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1205,7 +1205,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="orderName"> The name of the order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="location"/>, or <paramref name="orderName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="location"/> or <paramref name="orderName"/> is null. </exception>
         public Response<OrderResourceData> GetOrderByName(string subscriptionId, string resourceGroupName, string location, string orderName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1374,7 +1374,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="orderItemName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is null. </exception>
         public async Task<Response<OrderItemResourceData>> GetOrderItemByNameAsync(string subscriptionId, string resourceGroupName, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1414,7 +1414,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="orderItemName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is null. </exception>
         public Response<OrderItemResourceData> GetOrderItemByName(string subscriptionId, string resourceGroupName, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1478,7 +1478,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="orderItemResource"> Order item details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/>, or <paramref name="orderItemResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="orderItemResource"/> is null. </exception>
         public async Task<Response> CreateOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceData orderItemResource, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1516,7 +1516,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="orderItemResource"> Order item details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/>, or <paramref name="orderItemResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="orderItemResource"/> is null. </exception>
         public Response CreateOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceData orderItemResource, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1573,7 +1573,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="orderItemName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is null. </exception>
         public async Task<Response> DeleteOrderItemByNameAsync(string subscriptionId, string resourceGroupName, string orderItemName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1607,7 +1607,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="orderItemName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is null. </exception>
         public Response DeleteOrderItemByName(string subscriptionId, string resourceGroupName, string orderItemName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1671,7 +1671,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="options"> order item update parameters from request body. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the order on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/>, or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="options"/> is null. </exception>
         public async Task<Response> UpdateOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceUpdateOptions options, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1710,7 +1710,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="options"> order item update parameters from request body. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the order on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/>, or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="options"/> is null. </exception>
         public Response UpdateOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceUpdateOptions options, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1773,7 +1773,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="cancellationReason"> Reason for cancellation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/>, or <paramref name="cancellationReason"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="cancellationReason"/> is null. </exception>
         public async Task<Response> CancelOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, CancellationReason cancellationReason, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1811,7 +1811,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="cancellationReason"> Reason for cancellation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/>, or <paramref name="cancellationReason"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="cancellationReason"/> is null. </exception>
         public Response CancelOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, CancellationReason cancellationReason, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1874,7 +1874,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="returnOrderItemDetails"> Return order item CurrentStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/>, or <paramref name="returnOrderItemDetails"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="returnOrderItemDetails"/> is null. </exception>
         public async Task<Response> ReturnOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, ReturnOrderItemDetails returnOrderItemDetails, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1912,7 +1912,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="returnOrderItemDetails"> Return order item CurrentStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/>, or <paramref name="returnOrderItemDetails"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="returnOrderItemDetails"/> is null. </exception>
         public Response ReturnOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, ReturnOrderItemDetails returnOrderItemDetails, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2047,7 +2047,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="productFamiliesRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="productFamiliesRequest"/> is null. </exception>
         public async Task<Response<ProductFamilies>> ListProductFamiliesNextPageAsync(string nextLink, string subscriptionId, ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2086,7 +2086,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="productFamiliesRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="productFamiliesRequest"/> is null. </exception>
         public Response<ProductFamilies> ListProductFamiliesNextPage(string nextLink, string subscriptionId, ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2138,7 +2138,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="configurationsRequest"> Filters for showing the configurations. </param>
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="configurationsRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="configurationsRequest"/> is null. </exception>
         public async Task<Response<ProductConfigurations>> ListConfigurationsNextPageAsync(string nextLink, string subscriptionId, ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2176,7 +2176,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="configurationsRequest"> Filters for showing the configurations. </param>
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="configurationsRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="configurationsRequest"/> is null. </exception>
         public Response<ProductConfigurations> ListConfigurationsNextPage(string nextLink, string subscriptionId, ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2473,7 +2473,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<AddressResourceList>> ListAddressesAtResourceGroupLevelNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2512,7 +2512,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<AddressResourceList> ListAddressesAtResourceGroupLevelNextPage(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2564,7 +2564,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<OrderResourceList>> ListOrderAtResourceGroupLevelNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2602,7 +2602,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<OrderResourceList> ListOrderAtResourceGroupLevelNextPage(string nextLink, string subscriptionId, string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2656,7 +2656,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<OrderItemResourceList>> ListOrderItemsAtResourceGroupLevelNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2696,7 +2696,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<OrderItemResourceList> ListOrderItemsAtResourceGroupLevelNextPage(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

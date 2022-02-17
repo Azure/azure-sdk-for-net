@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/>, or <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/> or <paramref name="ruleName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string routeFilterName, string ruleName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/>, or <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/> or <paramref name="ruleName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string routeFilterName, string ruleName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/>, or <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/> or <paramref name="ruleName"/> is null. </exception>
         public async Task<Response<RouteFilterRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string routeFilterName, string ruleName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/>, or <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/> or <paramref name="ruleName"/> is null. </exception>
         public Response<RouteFilterRuleData> Get(string subscriptionId, string resourceGroupName, string routeFilterName, string ruleName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ruleName"> The name of the route filter rule. </param>
         /// <param name="routeFilterRuleParameters"> Parameters supplied to the create or update route filter rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/>, <paramref name="ruleName"/>, or <paramref name="routeFilterRuleParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/>, <paramref name="ruleName"/> or <paramref name="routeFilterRuleParameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string routeFilterName, string ruleName, RouteFilterRuleData routeFilterRuleParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ruleName"> The name of the route filter rule. </param>
         /// <param name="routeFilterRuleParameters"> Parameters supplied to the create or update route filter rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/>, <paramref name="ruleName"/>, or <paramref name="routeFilterRuleParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="routeFilterName"/>, <paramref name="ruleName"/> or <paramref name="routeFilterRuleParameters"/> is null. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string routeFilterName, string ruleName, RouteFilterRuleData routeFilterRuleParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="routeFilterName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="routeFilterName"/> is null. </exception>
         public async Task<Response<RouteFilterRuleListResult>> ListByRouteFilterAsync(string subscriptionId, string resourceGroupName, string routeFilterName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="routeFilterName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="routeFilterName"/> is null. </exception>
         public Response<RouteFilterRuleListResult> ListByRouteFilter(string subscriptionId, string resourceGroupName, string routeFilterName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="routeFilterName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="routeFilterName"/> is null. </exception>
         public async Task<Response<RouteFilterRuleListResult>> ListByRouteFilterNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string routeFilterName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="routeFilterName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="routeFilterName"/> is null. </exception>
         public Response<RouteFilterRuleListResult> ListByRouteFilterNextPage(string nextLink, string subscriptionId, string resourceGroupName, string routeFilterName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

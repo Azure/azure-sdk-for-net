@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="usageName"> Name of usage metric to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/>, or <paramref name="usageName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/> or <paramref name="usageName"/> is null. </exception>
         public async Task<Response<SubscriptionUsageData>> GetAsync(string subscriptionId, string locationName, string usageName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="usageName"> Name of usage metric to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/>, or <paramref name="usageName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/> or <paramref name="usageName"/> is null. </exception>
         public Response<SubscriptionUsageData> Get(string subscriptionId, string locationName, string usageName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="locationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
         public async Task<Response<SubscriptionUsageListResult>> ListByLocationNextPageAsync(string nextLink, string subscriptionId, string locationName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="locationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
         public Response<SubscriptionUsageListResult> ListByLocationNextPage(string nextLink, string subscriptionId, string locationName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
