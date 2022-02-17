@@ -416,7 +416,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         public void ValidateEntityNameAllowsValidPaths(string entityName, string connectionString)
         {
             var client = new ServiceBusClient(connectionString);
-            client.ValidateEntityName(entityName);
+            Assert.That(
+                () => client.ValidateEntityName(entityName),
+                Throws.Nothing);
         }
 
         [Test]

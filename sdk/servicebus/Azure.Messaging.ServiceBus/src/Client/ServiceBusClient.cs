@@ -703,10 +703,17 @@ namespace Azure.Messaging.ServiceBus
             // for comparison because subscription paths are not supported in SAS connection strings.
             // This is important for the Service Bus Functions extension which does pre-formatting of the entity path.
             // If this is the case the entity name will be in the format of {topic}/Subscriptions/{subscription}
+            const string SubscriptionSlug = "/Subscriptions/";
 
-            string[] arr = entityName.Split(new char[]{'/'}, StringSplitOptions.RemoveEmptyEntries);
-            if (arr.Length != 3 || !string.Equals(arr[1], "Subscriptions", StringComparison.InvariantCultureIgnoreCase) ||
-                !string.Equals(arr[0], Connection.EntityPath, StringComparison.InvariantCultureIgnoreCase))
+            int subscriptionStart = entityName.IndexOf(SubscriptionSlug, StringComparison.InvariantCultureIgnoreCase);
+            bool match = subscriptionStart switch
+            {
+                > 0 => subscriptionStart + SubscriptionSlug.Length < entityName.Length // ensure subscription is not empty as that would make it an invalid entity path
+                       && string.Equals(entityName.Substring(0, subscriptionStart), Connection.EntityPath, StringComparison.InvariantCultureIgnoreCase),
+                _ => false
+            };
+
+            if (!match)
             {
                 throw new ArgumentException(Resources.OnlyOneEntityNameMayBeSpecified);
             }
