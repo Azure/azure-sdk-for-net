@@ -682,12 +682,31 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="entityName">Entity name to validate.</param>
-        private void ValidateEntityName(string entityName)
+        internal void ValidateEntityName(string entityName)
         {
-            // If the entity name is specified in both the connection string and as a stand-alone parameter,
-            // validate that they are the same.
+            // No entity path specified so the entity name is valid
 
-            if (!string.IsNullOrEmpty(Connection.EntityPath) && !string.Equals(entityName, Connection.EntityPath, StringComparison.InvariantCultureIgnoreCase))
+            if (string.IsNullOrEmpty(Connection.EntityPath))
+            {
+                return;
+            }
+
+            // If the entity name is specified in both the connection string,
+            // validate that it is the same as the passed in entity name.
+
+            if (string.Equals(entityName, Connection.EntityPath, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return;
+            }
+
+            // If the user is preformatting the subscription path into the queueName method, extract the topic name and use that
+            // for comparison because subscription paths are not supported in SAS connection strings.
+            // This is important for the Service Bus Functions extension which does pre-formatting of the entity path.
+            // If this is the case the entity name will be in the format of {topic}/Subscriptions/{subscription}
+
+            string[] arr = entityName.Split(new char[]{'/'}, StringSplitOptions.RemoveEmptyEntries);
+            if (arr.Length != 3 || !string.Equals(arr[1], "Subscriptions", StringComparison.InvariantCultureIgnoreCase) ||
+                !string.Equals(arr[0], Connection.EntityPath, StringComparison.InvariantCultureIgnoreCase))
             {
                 throw new ArgumentException(Resources.OnlyOneEntityNameMayBeSpecified);
             }
