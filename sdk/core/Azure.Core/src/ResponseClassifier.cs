@@ -54,19 +54,17 @@ namespace Azure.Core
 
         internal bool IsError(HttpMessage message)
         {
-            if (TryClassify(message, out bool isError))
-            {
-                return isError;
-            }
-
-            return IsErrorResponse(message);
+            // Because we're at the "end of the chain,"
+            // TryClassify will always return true.
+            TryClassify(message, out bool isError);
+            return isError;
         }
 
         /// <inheritdoc/>
-        public override bool TryClassify(HttpMessage message, out bool isError)
+        public sealed override bool TryClassify(HttpMessage message, out bool isError)
         {
-            isError = false;
-            return false;
+            isError = IsErrorResponse(message);
+            return true;
         }
 
         /// <summary>

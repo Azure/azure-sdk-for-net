@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using Azure.Core.Pipeline;
@@ -96,20 +97,24 @@ namespace Azure.Core
         /// </summary>
         public TimeSpan? NetworkTimeout { get; set; }
 
+        private bool _contextApplied;
         internal void ApplyRequestContext(RequestContext? context)
         {
+            Debug.Assert(!_contextApplied, "ApplyRequestContext should only be called once.");
+            _contextApplied = true;
+
             if (context == null)
             {
                 return;
             }
+
+            context.Freeze();
 
             if (context.Policies?.Count > 0)
             {
                 Policies ??= new(context.Policies.Count);
                 Policies.AddRange(context.Policies);
             }
-
-            context.Freeze();
 
             if (context.StatusCodes != null || context.MessageClassifiers != null)
             {
@@ -155,7 +160,7 @@ namespace Azure.Core
 
                 if (_messageClassifiers != null)
                 {
-                    custom.MessageClassifiers = _messageClassifiers;
+                    custom.TryClassifiers = _messageClassifiers;
                 }
 
                 classifier = custom;

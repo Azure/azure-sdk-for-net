@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 
 #nullable enable
 
@@ -14,34 +12,37 @@ namespace Azure.Core
     {
         private ulong[] _nonErrors = new ulong[10];
 
-        internal HttpMessageClassifier[]? MessageClassifiers { get; set; }
+        internal HttpMessageClassifier[]? TryClassifiers { get; set; }
 
         public StatusCodeClassifier(int[] nonErrors)
         {
             for (int i = 0; i < nonErrors.Length; i++)
             {
-                AddClassifier(nonErrors[i], true);
+                AddClassifier(nonErrors[i], isError: false);
             }
         }
 
-        private StatusCodeClassifier(ulong[] nonErrors)
+        private StatusCodeClassifier(ulong[] nonErrors, HttpMessageClassifier[]? tryClassifiers)
         {
             Debug.Assert(nonErrors?.Length == 10);
             Array.Copy(nonErrors, _nonErrors, _nonErrors.Length);
+            TryClassifiers = tryClassifiers;
+        }
+
+        public virtual StatusCodeClassifier Clone()
+        {
+            return new StatusCodeClassifier(_nonErrors, TryClassifiers);
         }
 
         public override bool IsErrorResponse(HttpMessage message)
         {
-            if (TryClassify(message, out var isError))
-            {
-                return isError;
-            }
+            bool isError;
 
-            if (MessageClassifiers != null)
+            if (TryClassifiers != null)
             {
-                for (int i = MessageClassifiers.Length; i >= 0; i--)
+                for (int i = TryClassifiers.Length - 1; i >= 0; i--)
                 {
-                    if (MessageClassifiers[i].TryClassify(message, out isError))
+                    if (TryClassifiers[i].TryClassify(message, out isError))
                     {
                         return isError;
                     }
@@ -51,19 +52,14 @@ namespace Azure.Core
             return !IsNonError(message.Response.Status);
         }
 
-        public virtual StatusCodeClassifier Clone()
+        internal void AddClassifier(int statusCode, bool isError)
         {
-            return new StatusCodeClassifier(_nonErrors);
-        }
-
-        internal void AddClassifier(int code, bool isNonError)
-        {
-            var index = code >> 6;        // divides by 64
-            int bit = code & 0b111111;    // keeps the bits up to 63
+            var index = statusCode >> 6;        // divides by 64
+            int bit = statusCode & 0b111111;    // keeps the bits up to 63
             ulong mask = 1ul << bit;      // shifts a 1 to the position of code
 
             ulong value = _nonErrors[index];
-            if (isNonError)
+            if (!isError)
             {
                 value |= mask;
             }
@@ -75,10 +71,10 @@ namespace Azure.Core
             _nonErrors[index] = value;
         }
 
-        private bool IsNonError(int code)
+        private bool IsNonError(int statusCode)
         {
-            var index = code >> 6;      // divides by 64
-            int bit = code & 0b111111;  // keeps the bits up to 63
+            var index = statusCode >> 6;      // divides by 64
+            int bit = statusCode & 0b111111;  // keeps the bits up to 63
             ulong mask = 1ul << bit;    // shifts a 1 to the position of code
 
             ulong value = _nonErrors[index];

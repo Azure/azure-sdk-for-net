@@ -39,7 +39,7 @@ namespace Azure.Core.Tests
         [Test]
         public void AppliesResponseClassifierErrors()
         {
-            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
+            HttpMessage message = new HttpMessage(new MockRequest(), DpgClassifier.Instance);
             RequestContext context = new RequestContext();
             context.AddClassifier(204, isError: true);
             message.ApplyRequestContext(context);
@@ -60,10 +60,13 @@ namespace Azure.Core.Tests
         [Test]
         public void AppliesResponseClassifierNonErrors()
         {
-            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
+            HttpMessage message = new HttpMessage(new MockRequest(), DpgClassifier.Instance);
             RequestContext context = new RequestContext();
             context.AddClassifier(404, isError: false);
             message.ApplyRequestContext(context);
+
+            message.Response = new MockResponse(204);
+            Assert.IsFalse(message.ResponseClassifier.IsError(message));
 
             message.Response = new MockResponse(304);
             Assert.IsFalse(message.ResponseClassifier.IsError(message));
@@ -78,12 +81,15 @@ namespace Azure.Core.Tests
         [Test]
         public void AppliesResponseClassifierBothErrorsAndNonErrors()
         {
-            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
+            HttpMessage message = new HttpMessage(new MockRequest(), DpgClassifier.Instance);
             RequestContext context = new RequestContext();
-            context.AddClassifier(404, isError: false);
             context.AddClassifier(301, isError: true);
             context.AddClassifier(304, isError: true);
+            context.AddClassifier(404, isError: false);
             message.ApplyRequestContext(context);
+
+            message.Response = new MockResponse(204);
+            Assert.IsFalse(message.ResponseClassifier.IsError(message));
 
             message.Response = new MockResponse(301);
             Assert.IsTrue(message.ResponseClassifier.IsError(message));
@@ -101,29 +107,32 @@ namespace Azure.Core.Tests
         [Test]
         public void SettingResponseClassifierReplacesBaseClassifier()
         {
-            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
+            HttpMessage message = new HttpMessage(new MockRequest(), DpgClassifier.Instance);
 
             message.Response = new MockResponse(404);
             Assert.IsTrue(message.ResponseClassifier.IsError(message));
 
-            // This replaces the base classifier with one that only thinks 404 is a non-error
-            // and doesn't have opinions on anything else.
-            message.ResponseClassifier = new StatusCodeClassifier(404, false);
+            // This replaces the base classifier with one that thinks
+            // only 404 is a non-error.
+            message.ResponseClassifier = new StatusCodeClassifier(new int[] { 404 });
+
+            message.Response = new MockResponse(204);
+            Assert.IsTrue(message.ResponseClassifier.IsError(message));
 
             message.Response = new MockResponse(304);
-            Assert.IsFalse(message.ResponseClassifier.IsError(message));
+            Assert.IsTrue(message.ResponseClassifier.IsError(message));
 
             message.Response = new MockResponse(404);
             Assert.IsFalse(message.ResponseClassifier.IsError(message));
 
             message.Response = new MockResponse(500);
-            Assert.IsFalse(message.ResponseClassifier.IsError(message));
+            Assert.IsTrue(message.ResponseClassifier.IsError(message));
         }
 
         [Test]
         public void SettingResponseClassifierReplacesBaseClassifier_PerCallCustomization()
         {
-            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
+            HttpMessage message = new HttpMessage(new MockRequest(), DpgClassifier.Instance);
 
             message.Response = new MockResponse(404);
             Assert.IsTrue(message.ResponseClassifier.IsError(message));
@@ -135,7 +144,7 @@ namespace Azure.Core.Tests
 
             // This replaces the base classifier with one that only thinks 404 is a non-error
             // and doesn't have opinions on anything else.
-            message.ResponseClassifier = new StatusCodeClassifier(404, false);
+            message.ResponseClassifier = new StatusCodeClassifier(new int[] { 404 });
 
             message.Response = new MockResponse(304);
             Assert.IsTrue(message.ResponseClassifier.IsError(message));
@@ -144,7 +153,7 @@ namespace Azure.Core.Tests
             Assert.IsFalse(message.ResponseClassifier.IsError(message));
 
             message.Response = new MockResponse(500);
-            Assert.IsFalse(message.ResponseClassifier.IsError(message));
+            Assert.IsTrue(message.ResponseClassifier.IsError(message));
         }
 
         [Test]
@@ -154,17 +163,9 @@ namespace Azure.Core.Tests
                 ClientOptions.Default,
                 new HttpPipelinePolicy[] { },
                 new HttpPipelinePolicy[] { },
-                new StatusCodeClassifier(404, false));
+                new StatusCodeClassifier(new int[] { 404 }));
 
             var message = pipeline.CreateMessage();
-
-            message.Response = new MockResponse(304);
-            Assert.IsFalse(message.ResponseClassifier.IsError(message));
-
-            message.Response = new MockResponse(404);
-            Assert.IsFalse(message.ResponseClassifier.IsError(message));
-
-            message.ResponseClassifier = new StatusCodeClassifier(304, true);
 
             message.Response = new MockResponse(304);
             Assert.IsTrue(message.ResponseClassifier.IsError(message));
@@ -172,7 +173,37 @@ namespace Azure.Core.Tests
             message.Response = new MockResponse(404);
             Assert.IsFalse(message.ResponseClassifier.IsError(message));
 
-            message.ResponseClassifier = ResponseClassifier.Shared;
+            message.ResponseClassifier = new StatusCodeClassifier(new int[] { 304 });
+
+            message.Response = new MockResponse(304);
+            Assert.IsFalse(message.ResponseClassifier.IsError(message));
+
+            message.Response = new MockResponse(404);
+            Assert.IsTrue(message.ResponseClassifier.IsError(message));
+
+            message.ResponseClassifier = DpgClassifier.Instance;
+
+            message.Response = new MockResponse(304);
+            Assert.IsFalse(message.ResponseClassifier.IsError(message));
+
+            message.Response = new MockResponse(404);
+            Assert.IsTrue(message.ResponseClassifier.IsError(message));
+
+            message.Response = new MockResponse(500);
+            Assert.IsTrue(message.ResponseClassifier.IsError(message));
+        }
+
+        [Test]
+        public void AppliesMessageClassifierBeforeResponseClassifier()
+        {
+            HttpMessage message = new HttpMessage(new MockRequest(), DpgClassifier.Instance);
+            RequestContext context = new RequestContext();
+            context.AddClassifier(new StatusCodeMessageClassifier(204, true));
+            context.AddClassifier(204, isError: false);
+            message.ApplyRequestContext(context);
+
+            message.Response = new MockResponse(204);
+            Assert.IsTrue(message.ResponseClassifier.IsError(message));
 
             message.Response = new MockResponse(304);
             Assert.IsFalse(message.ResponseClassifier.IsError(message));
@@ -209,25 +240,16 @@ namespace Azure.Core.Tests
             }
         }
 
-        private class StatusCodeClassifier : ResponseClassifier
+        /// <summary>
+        /// Example DPG classifier for testing purposes.
+        /// </summary>
+        private sealed class DpgClassifier : StatusCodeClassifier
         {
-            private readonly int _statusCode;
-            private readonly bool _isError;
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new DpgClassifier();
 
-            public StatusCodeClassifier(int statusCode, bool isError)
+            public DpgClassifier() : base(new int[] { 200, 204, 304 })
             {
-                _statusCode = statusCode;
-                _isError = isError;
-            }
-
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                if (message.Response.Status == _statusCode)
-                {
-                    return _isError;
-                }
-
-                return false;
             }
         }
         #endregion
