@@ -42,7 +42,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="instanceId"> Account instance identifier. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/>, or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
         public DeviceManagementClient(string endpoint, string instanceId, TokenCredential credential, DeviceUpdateClientOptions options = null)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -62,6 +62,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -97,7 +98,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetDeviceClassAsync(string deviceClassId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(deviceClassId, nameof(deviceClassId));
+            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceClass");
             scope.Start();
@@ -117,6 +118,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -152,7 +154,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetDeviceClass(string deviceClassId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(deviceClassId, nameof(deviceClassId));
+            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceClass");
             scope.Start();
@@ -172,6 +174,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="deviceId"> Device identifier in Azure IoT Hub. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -229,7 +232,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetDeviceAsync(string deviceId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(deviceId, nameof(deviceId));
+            Argument.AssertNotNullOrEmpty(deviceId, nameof(deviceId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDevice");
             scope.Start();
@@ -249,6 +252,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="deviceId"> Device identifier in Azure IoT Hub. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -306,7 +310,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetDevice(string deviceId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(deviceId, nameof(deviceId));
+            Argument.AssertNotNullOrEmpty(deviceId, nameof(deviceId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDevice");
             scope.Start();
@@ -327,6 +331,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="moduleId"> Device module identifier in Azure IoT Hub. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> or <paramref name="moduleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceId"/> or <paramref name="moduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -384,8 +389,8 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetDeviceModuleAsync(string deviceId, string moduleId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(deviceId, nameof(deviceId));
-            Argument.AssertNotNull(moduleId, nameof(moduleId));
+            Argument.AssertNotNullOrEmpty(deviceId, nameof(deviceId));
+            Argument.AssertNotNullOrEmpty(moduleId, nameof(moduleId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceModule");
             scope.Start();
@@ -406,6 +411,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="moduleId"> Device module identifier in Azure IoT Hub. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> or <paramref name="moduleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceId"/> or <paramref name="moduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -463,8 +469,8 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetDeviceModule(string deviceId, string moduleId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(deviceId, nameof(deviceId));
-            Argument.AssertNotNull(moduleId, nameof(moduleId));
+            Argument.AssertNotNullOrEmpty(deviceId, nameof(deviceId));
+            Argument.AssertNotNullOrEmpty(moduleId, nameof(moduleId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceModule");
             scope.Start();
@@ -580,6 +586,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="tagName"> Tag name. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tagName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -610,7 +617,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetDeviceTagAsync(string tagName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(tagName, nameof(tagName));
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceTag");
             scope.Start();
@@ -630,6 +637,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="tagName"> Tag name. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tagName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -660,7 +668,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetDeviceTag(string tagName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(tagName, nameof(tagName));
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceTag");
             scope.Start();
@@ -680,6 +688,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="groupId"> Group identity. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -715,7 +724,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetGroupAsync(string groupId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetGroup");
             scope.Start();
@@ -735,6 +744,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="groupId"> Group identity. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -770,7 +780,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetGroup(string groupId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetGroup");
             scope.Start();
@@ -791,6 +801,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -837,7 +848,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> CreateOrUpdateGroupAsync(string groupId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.CreateOrUpdateGroup");
@@ -859,6 +870,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -905,7 +917,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response CreateOrUpdateGroup(string groupId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.CreateOrUpdateGroup");
@@ -926,6 +938,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="groupId"> Group identity. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -950,7 +963,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> DeleteGroupAsync(string groupId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.DeleteGroup");
             scope.Start();
@@ -970,6 +983,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="groupId"> Group identity. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -994,7 +1008,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response DeleteGroup(string groupId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.DeleteGroup");
             scope.Start();
@@ -1014,6 +1028,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="groupId"> Group identity. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1046,7 +1061,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetGroupUpdateComplianceAsync(string groupId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetGroupUpdateCompliance");
             scope.Start();
@@ -1066,6 +1081,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="groupId"> Group identity. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1098,7 +1114,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetGroupUpdateCompliance(string groupId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetGroupUpdateCompliance");
             scope.Start();
@@ -1119,6 +1135,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1157,8 +1174,8 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetDeploymentAsync(string groupId, string deploymentId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
-            Argument.AssertNotNull(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeployment");
             scope.Start();
@@ -1179,6 +1196,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1217,8 +1235,8 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetDeployment(string groupId, string deploymentId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
-            Argument.AssertNotNull(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeployment");
             scope.Start();
@@ -1239,7 +1257,8 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/>, or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1292,8 +1311,8 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> CreateOrUpdateDeploymentAsync(string groupId, string deploymentId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
-            Argument.AssertNotNull(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.CreateOrUpdateDeployment");
@@ -1315,7 +1334,8 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/>, or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1368,8 +1388,8 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response CreateOrUpdateDeployment(string groupId, string deploymentId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
-            Argument.AssertNotNull(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.CreateOrUpdateDeployment");
@@ -1391,6 +1411,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1415,8 +1436,8 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> DeleteDeploymentAsync(string groupId, string deploymentId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
-            Argument.AssertNotNull(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.DeleteDeployment");
             scope.Start();
@@ -1437,6 +1458,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1461,8 +1483,8 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response DeleteDeployment(string groupId, string deploymentId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
-            Argument.AssertNotNull(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.DeleteDeployment");
             scope.Start();
@@ -1483,6 +1505,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1517,8 +1540,8 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetDeploymentStatusAsync(string groupId, string deploymentId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
-            Argument.AssertNotNull(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeploymentStatus");
             scope.Start();
@@ -1539,6 +1562,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1573,8 +1597,8 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetDeploymentStatus(string groupId, string deploymentId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
-            Argument.AssertNotNull(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeploymentStatus");
             scope.Start();
@@ -1595,6 +1619,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1642,7 +1667,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetOperationAsync(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(operationId, nameof(operationId));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetOperation");
             scope.Start();
@@ -1663,6 +1688,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1710,7 +1736,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetOperation(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(operationId, nameof(operationId));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetOperation");
             scope.Start();
@@ -1731,6 +1757,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1785,7 +1812,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> CollectLogsAsync(string operationId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(operationId, nameof(operationId));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.CollectLogs");
@@ -1807,6 +1834,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1861,7 +1889,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response CollectLogs(string operationId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(operationId, nameof(operationId));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.CollectLogs");
@@ -1882,6 +1910,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="operationId"> Operation identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1921,7 +1950,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetLogCollectionOperationAsync(string operationId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(operationId, nameof(operationId));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetLogCollectionOperation");
             scope.Start();
@@ -1941,6 +1970,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="operationId"> Operation identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1980,7 +2010,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetLogCollectionOperation(string operationId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(operationId, nameof(operationId));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetLogCollectionOperation");
             scope.Start();
@@ -2000,6 +2030,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="operationId"> Operation identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2043,7 +2074,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> GetLogCollectionOperationDetailedStatusAsync(string operationId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(operationId, nameof(operationId));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetLogCollectionOperationDetailedStatus");
             scope.Start();
@@ -2063,6 +2094,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="operationId"> Operation identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2106,7 +2138,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response GetLogCollectionOperationDetailedStatus(string operationId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(operationId, nameof(operationId));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetLogCollectionOperationDetailedStatus");
             scope.Start();
@@ -2127,7 +2159,8 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="action"> Cancel deployment action. Allowed values: &quot;cancel&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/>, or <paramref name="action"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/> or <paramref name="action"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2166,8 +2199,8 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> StopDeploymentAsync(string groupId, string deploymentId, string action, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
-            Argument.AssertNotNull(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(action, nameof(action));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.StopDeployment");
@@ -2189,7 +2222,8 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="action"> Cancel deployment action. Allowed values: &quot;cancel&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/>, or <paramref name="action"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/> or <paramref name="action"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2228,8 +2262,8 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response StopDeployment(string groupId, string deploymentId, string action, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
-            Argument.AssertNotNull(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(action, nameof(action));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.StopDeployment");
@@ -2251,7 +2285,8 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="action"> Retry deployment action. Allowed values: &quot;retry&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/>, or <paramref name="action"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/> or <paramref name="action"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2290,8 +2325,8 @@ namespace Azure.IoT.DeviceUpdate
         public virtual async Task<Response> RetryDeploymentAsync(string groupId, string deploymentId, string action, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
-            Argument.AssertNotNull(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(action, nameof(action));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.RetryDeployment");
@@ -2313,7 +2348,8 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="action"> Retry deployment action. Allowed values: &quot;retry&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/>, or <paramref name="action"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/> or <paramref name="action"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2352,8 +2388,8 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Response RetryDeployment(string groupId, string deploymentId, string action, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
-            Argument.AssertNotNull(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(action, nameof(action));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.RetryDeployment");
@@ -2488,6 +2524,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2524,7 +2561,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual AsyncPageable<BinaryData> GetInstallableUpdatesForDeviceClassesAsync(string deviceClassId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(deviceClassId, nameof(deviceClassId));
+            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceManagementClient.GetInstallableUpdatesForDeviceClasses");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -2545,6 +2582,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2581,7 +2619,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Pageable<BinaryData> GetInstallableUpdatesForDeviceClasses(string deviceClassId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(deviceClassId, nameof(deviceClassId));
+            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceManagementClient.GetInstallableUpdatesForDeviceClasses");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -2981,6 +3019,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="filter"> Restricts the set of bestUpdates returned. You can filter on update Provider, Name and Version property. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3020,7 +3059,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual AsyncPageable<BinaryData> GetBestUpdatesForGroupsAsync(string groupId, string filter = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceManagementClient.GetBestUpdatesForGroups");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -3042,6 +3081,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="filter"> Restricts the set of bestUpdates returned. You can filter on update Provider, Name and Version property. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3081,7 +3121,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Pageable<BinaryData> GetBestUpdatesForGroups(string groupId, string filter = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceManagementClient.GetBestUpdatesForGroups");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -3103,6 +3143,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="filter"> Restricts the set of deployments returned. You can filter on update Provider, Name and Version property. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3146,7 +3187,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual AsyncPageable<BinaryData> GetDeploymentsForGroupsAsync(string groupId, string filter = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceManagementClient.GetDeploymentsForGroups");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -3168,6 +3209,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="filter"> Restricts the set of deployments returned. You can filter on update Provider, Name and Version property. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3211,7 +3253,7 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Pageable<BinaryData> GetDeploymentsForGroups(string groupId, string filter = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceManagementClient.GetDeploymentsForGroups");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -3234,6 +3276,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="filter"> Restricts the set of deployment device states returned. You can filter on deviceId and moduleId and/or deviceState. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3272,8 +3315,8 @@ namespace Azure.IoT.DeviceUpdate
         public virtual AsyncPageable<BinaryData> GetDeploymentDevicesAsync(string groupId, string deploymentId, string filter = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
-            Argument.AssertNotNull(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
 
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceManagementClient.GetDeploymentDevices");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -3296,6 +3339,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="filter"> Restricts the set of deployment device states returned. You can filter on deviceId and moduleId and/or deviceState. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3334,8 +3378,8 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Pageable<BinaryData> GetDeploymentDevices(string groupId, string deploymentId, string filter = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(groupId, nameof(groupId));
-            Argument.AssertNotNull(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
 
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceManagementClient.GetDeploymentDevices");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)

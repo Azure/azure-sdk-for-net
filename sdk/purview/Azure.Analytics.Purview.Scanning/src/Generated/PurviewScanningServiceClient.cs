@@ -58,6 +58,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="keyVaultName"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -92,7 +93,7 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> GetKeyVaultReferenceAsync(string keyVaultName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(keyVaultName, nameof(keyVaultName));
+            Argument.AssertNotNullOrEmpty(keyVaultName, nameof(keyVaultName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.GetKeyVaultReference");
             scope.Start();
@@ -112,6 +113,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="keyVaultName"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -146,7 +148,7 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response GetKeyVaultReference(string keyVaultName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(keyVaultName, nameof(keyVaultName));
+            Argument.AssertNotNullOrEmpty(keyVaultName, nameof(keyVaultName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.GetKeyVaultReference");
             scope.Start();
@@ -167,6 +169,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -211,7 +214,7 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> CreateOrUpdateKeyVaultReferenceAsync(string keyVaultName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(keyVaultName, nameof(keyVaultName));
+            Argument.AssertNotNullOrEmpty(keyVaultName, nameof(keyVaultName));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference");
@@ -233,6 +236,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -277,7 +281,7 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response CreateOrUpdateKeyVaultReference(string keyVaultName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(keyVaultName, nameof(keyVaultName));
+            Argument.AssertNotNullOrEmpty(keyVaultName, nameof(keyVaultName));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference");
@@ -298,6 +302,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="keyVaultName"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -332,7 +337,7 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> DeleteKeyVaultReferenceAsync(string keyVaultName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(keyVaultName, nameof(keyVaultName));
+            Argument.AssertNotNullOrEmpty(keyVaultName, nameof(keyVaultName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.DeleteKeyVaultReference");
             scope.Start();
@@ -352,6 +357,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="keyVaultName"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -386,7 +392,7 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response DeleteKeyVaultReference(string keyVaultName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(keyVaultName, nameof(keyVaultName));
+            Argument.AssertNotNullOrEmpty(keyVaultName, nameof(keyVaultName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.DeleteKeyVaultReference");
             scope.Start();
@@ -406,6 +412,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="scanRulesetName"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scanRulesetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scanRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -440,7 +447,7 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> GetScanRulesetAsync(string scanRulesetName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(scanRulesetName, nameof(scanRulesetName));
+            Argument.AssertNotNullOrEmpty(scanRulesetName, nameof(scanRulesetName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.GetScanRuleset");
             scope.Start();
@@ -460,6 +467,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="scanRulesetName"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scanRulesetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scanRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -494,7 +502,7 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response GetScanRuleset(string scanRulesetName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(scanRulesetName, nameof(scanRulesetName));
+            Argument.AssertNotNullOrEmpty(scanRulesetName, nameof(scanRulesetName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.GetScanRuleset");
             scope.Start();
@@ -515,6 +523,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scanRulesetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scanRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -559,7 +568,7 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> CreateOrUpdateScanRulesetAsync(string scanRulesetName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(scanRulesetName, nameof(scanRulesetName));
+            Argument.AssertNotNullOrEmpty(scanRulesetName, nameof(scanRulesetName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.CreateOrUpdateScanRuleset");
             scope.Start();
@@ -580,6 +589,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scanRulesetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scanRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -624,7 +634,7 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response CreateOrUpdateScanRuleset(string scanRulesetName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(scanRulesetName, nameof(scanRulesetName));
+            Argument.AssertNotNullOrEmpty(scanRulesetName, nameof(scanRulesetName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.CreateOrUpdateScanRuleset");
             scope.Start();
@@ -644,6 +654,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="scanRulesetName"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scanRulesetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scanRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -678,7 +689,7 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> DeleteScanRulesetAsync(string scanRulesetName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(scanRulesetName, nameof(scanRulesetName));
+            Argument.AssertNotNullOrEmpty(scanRulesetName, nameof(scanRulesetName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.DeleteScanRuleset");
             scope.Start();
@@ -698,6 +709,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="scanRulesetName"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scanRulesetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scanRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -732,7 +744,7 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response DeleteScanRuleset(string scanRulesetName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(scanRulesetName, nameof(scanRulesetName));
+            Argument.AssertNotNullOrEmpty(scanRulesetName, nameof(scanRulesetName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.DeleteScanRuleset");
             scope.Start();
@@ -752,6 +764,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataSourceType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -786,7 +799,7 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> GetSystemRulesetsForDataSourceAsync(string dataSourceType, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(dataSourceType, nameof(dataSourceType));
+            Argument.AssertNotNullOrEmpty(dataSourceType, nameof(dataSourceType));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.GetSystemRulesetsForDataSource");
             scope.Start();
@@ -806,6 +819,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataSourceType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -840,7 +854,7 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response GetSystemRulesetsForDataSource(string dataSourceType, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(dataSourceType, nameof(dataSourceType));
+            Argument.AssertNotNullOrEmpty(dataSourceType, nameof(dataSourceType));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.GetSystemRulesetsForDataSource");
             scope.Start();

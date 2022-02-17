@@ -49,15 +49,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="parameters"> Create or update management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<ManagementLock>> CreateOrUpdateAsync(bool waitForCompletion, string lockName, ManagementLockData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.CreateOrUpdate");
             scope.Start();
@@ -85,15 +82,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="parameters"> Create or update management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<ManagementLock> CreateOrUpdate(bool waitForCompletion, string lockName, ManagementLockData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.CreateOrUpdate");
             scope.Start();
@@ -119,7 +113,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
         public async virtual Task<Response<ManagementLock>> GetAsync(string lockName, CancellationToken cancellationToken = default)
         {
@@ -148,7 +142,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
         public virtual Response<ManagementLock> Get(string lockName, CancellationToken cancellationToken = default)
         {
@@ -263,7 +257,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string lockName, CancellationToken cancellationToken = default)
         {
@@ -290,7 +284,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
         public virtual Response<bool> Exists(string lockName, CancellationToken cancellationToken = default)
         {
@@ -317,7 +311,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
         public async virtual Task<Response<ManagementLock>> GetIfExistsAsync(string lockName, CancellationToken cancellationToken = default)
         {
@@ -346,7 +340,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
         public virtual Response<ManagementLock> GetIfExists(string lockName, CancellationToken cancellationToken = default)
         {

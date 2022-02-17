@@ -198,10 +198,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public async virtual Task<ArmOperation<OrderItemResource>> UpdateAsync(bool waitForCompletion, OrderItemResourceUpdateOptions options, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _orderItemResourceClientDiagnostics.CreateScope("OrderItemResource.Update");
             scope.Start();
@@ -232,10 +229,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual ArmOperation<OrderItemResource> Update(bool waitForCompletion, OrderItemResourceUpdateOptions options, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _orderItemResourceClientDiagnostics.CreateScope("OrderItemResource.Update");
             scope.Start();
@@ -264,10 +258,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="cancellationReason"/> is null. </exception>
         public async virtual Task<Response> CancelOrderItemAsync(CancellationReason cancellationReason, CancellationToken cancellationToken = default)
         {
-            if (cancellationReason == null)
-            {
-                throw new ArgumentNullException(nameof(cancellationReason));
-            }
+            Argument.AssertNotNull(cancellationReason, nameof(cancellationReason));
 
             using var scope = _orderItemResourceClientDiagnostics.CreateScope("OrderItemResource.CancelOrderItem");
             scope.Start();
@@ -293,10 +284,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="cancellationReason"/> is null. </exception>
         public virtual Response CancelOrderItem(CancellationReason cancellationReason, CancellationToken cancellationToken = default)
         {
-            if (cancellationReason == null)
-            {
-                throw new ArgumentNullException(nameof(cancellationReason));
-            }
+            Argument.AssertNotNull(cancellationReason, nameof(cancellationReason));
 
             using var scope = _orderItemResourceClientDiagnostics.CreateScope("OrderItemResource.CancelOrderItem");
             scope.Start();
@@ -323,10 +311,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="returnOrderItemDetails"/> is null. </exception>
         public async virtual Task<ArmOperation> ReturnOrderItemAsync(bool waitForCompletion, ReturnOrderItemDetails returnOrderItemDetails, CancellationToken cancellationToken = default)
         {
-            if (returnOrderItemDetails == null)
-            {
-                throw new ArgumentNullException(nameof(returnOrderItemDetails));
-            }
+            Argument.AssertNotNull(returnOrderItemDetails, nameof(returnOrderItemDetails));
 
             using var scope = _orderItemResourceClientDiagnostics.CreateScope("OrderItemResource.ReturnOrderItem");
             scope.Start();
@@ -356,10 +341,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="returnOrderItemDetails"/> is null. </exception>
         public virtual ArmOperation ReturnOrderItem(bool waitForCompletion, ReturnOrderItemDetails returnOrderItemDetails, CancellationToken cancellationToken = default)
         {
-            if (returnOrderItemDetails == null)
-            {
-                throw new ArgumentNullException(nameof(returnOrderItemDetails));
-            }
+            Argument.AssertNotNull(returnOrderItemDetails, nameof(returnOrderItemDetails));
 
             using var scope = _orderItemResourceClientDiagnostics.CreateScope("OrderItemResource.ReturnOrderItem");
             scope.Start();
@@ -389,14 +371,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<OrderItemResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _orderItemResourceClientDiagnostics.CreateScope("OrderItemResource.AddTag");
             scope.Start();
@@ -426,14 +402,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<OrderItemResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _orderItemResourceClientDiagnostics.CreateScope("OrderItemResource.AddTag");
             scope.Start();
@@ -462,10 +432,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<OrderItemResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _orderItemResourceClientDiagnostics.CreateScope("OrderItemResource.SetTags");
             scope.Start();
@@ -495,10 +462,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<OrderItemResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _orderItemResourceClientDiagnostics.CreateScope("OrderItemResource.SetTags");
             scope.Start();
@@ -528,10 +492,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<OrderItemResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _orderItemResourceClientDiagnostics.CreateScope("OrderItemResource.RemoveTag");
             scope.Start();
@@ -560,10 +521,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<OrderItemResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _orderItemResourceClientDiagnostics.CreateScope("OrderItemResource.RemoveTag");
             scope.Start();

@@ -58,7 +58,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role definition to delete. Managed HSM only supports &apos;/&apos;. </param>
         /// <param name="roleDefinitionName"> The name (GUID) of the role definition to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, or <paramref name="roleDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/> or <paramref name="roleDefinitionName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string vaultBaseUrl, string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
@@ -91,7 +91,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role definition to delete. Managed HSM only supports &apos;/&apos;. </param>
         /// <param name="roleDefinitionName"> The name (GUID) of the role definition to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, or <paramref name="roleDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/> or <paramref name="roleDefinitionName"/> is null. </exception>
         public Response Delete(string vaultBaseUrl, string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
@@ -146,7 +146,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleDefinitionName"> The name of the role definition to create or update. It can be any valid GUID. </param>
         /// <param name="parameters"> Parameters for the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, <paramref name="roleDefinitionName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, <paramref name="roleDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<KeyVaultRoleDefinition>> CreateOrUpdateAsync(string vaultBaseUrl, string scope, string roleDefinitionName, RoleDefinitionCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
@@ -188,7 +188,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleDefinitionName"> The name of the role definition to create or update. It can be any valid GUID. </param>
         /// <param name="parameters"> Parameters for the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, <paramref name="roleDefinitionName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, <paramref name="roleDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
         public Response<KeyVaultRoleDefinition> CreateOrUpdate(string vaultBaseUrl, string scope, string roleDefinitionName, RoleDefinitionCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
@@ -246,7 +246,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role definition to get. Managed HSM only supports &apos;/&apos;. </param>
         /// <param name="roleDefinitionName"> The name of the role definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, or <paramref name="roleDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/> or <paramref name="roleDefinitionName"/> is null. </exception>
         public async Task<Response<KeyVaultRoleDefinition>> GetAsync(string vaultBaseUrl, string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
@@ -283,7 +283,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role definition to get. Managed HSM only supports &apos;/&apos;. </param>
         /// <param name="roleDefinitionName"> The name of the role definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, or <paramref name="roleDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/> or <paramref name="roleDefinitionName"/> is null. </exception>
         public Response<KeyVaultRoleDefinition> Get(string vaultBaseUrl, string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
@@ -420,7 +420,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role definition. </param>
         /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="vaultBaseUrl"/>, or <paramref name="scope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="vaultBaseUrl"/> or <paramref name="scope"/> is null. </exception>
         public async Task<Response<RoleDefinitionListResult>> ListNextPageAsync(string nextLink, string vaultBaseUrl, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -458,7 +458,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role definition. </param>
         /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="vaultBaseUrl"/>, or <paramref name="scope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="vaultBaseUrl"/> or <paramref name="scope"/> is null. </exception>
         public Response<RoleDefinitionListResult> ListNextPage(string nextLink, string vaultBaseUrl, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

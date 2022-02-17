@@ -50,15 +50,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
         /// <param name="parameters"> Parameters for the policy exemption. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<PolicyExemption>> CreateOrUpdateAsync(bool waitForCompletion, string policyExemptionName, PolicyExemptionData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _policyExemptionClientDiagnostics.CreateScope("PolicyExemptionCollection.CreateOrUpdate");
             scope.Start();
@@ -86,15 +83,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
         /// <param name="parameters"> Parameters for the policy exemption. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<PolicyExemption> CreateOrUpdate(bool waitForCompletion, string policyExemptionName, PolicyExemptionData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _policyExemptionClientDiagnostics.CreateScope("PolicyExemptionCollection.CreateOrUpdate");
             scope.Start();
@@ -120,7 +114,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
         public async virtual Task<Response<PolicyExemption>> GetAsync(string policyExemptionName, CancellationToken cancellationToken = default)
         {
@@ -149,7 +143,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
         public virtual Response<PolicyExemption> Get(string policyExemptionName, CancellationToken cancellationToken = default)
         {
@@ -486,7 +480,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string policyExemptionName, CancellationToken cancellationToken = default)
         {
@@ -513,7 +507,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
         public virtual Response<bool> Exists(string policyExemptionName, CancellationToken cancellationToken = default)
         {
@@ -540,7 +534,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
         public async virtual Task<Response<PolicyExemption>> GetIfExistsAsync(string policyExemptionName, CancellationToken cancellationToken = default)
         {
@@ -569,7 +563,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
         public virtual Response<PolicyExemption> GetIfExists(string policyExemptionName, CancellationToken cancellationToken = default)
         {

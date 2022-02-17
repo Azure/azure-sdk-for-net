@@ -194,10 +194,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public async virtual Task<ArmOperation<AfdRule>> UpdateAsync(bool waitForCompletion, AfdRuleUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _afdRuleClientDiagnostics.CreateScope("AfdRule.Update");
             scope.Start();
@@ -227,10 +224,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual ArmOperation<AfdRule> Update(bool waitForCompletion, AfdRuleUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _afdRuleClientDiagnostics.CreateScope("AfdRule.Update");
             scope.Start();

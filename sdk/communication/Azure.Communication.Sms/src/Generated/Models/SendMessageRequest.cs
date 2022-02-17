@@ -19,7 +19,7 @@ namespace Azure.Communication.Sms.Models
         /// <param name="from"> The sender&apos;s phone number in E.164 format that is owned by the authenticated account. </param>
         /// <param name="smsRecipients"> The recipient&apos;s phone number in E.164 format. In this version, a minimum of 1 and upto 100 recipients in the list are supported. </param>
         /// <param name="message"> The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="smsRecipients"/>, or <paramref name="message"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="smsRecipients"/> or <paramref name="message"/> is null. </exception>
         public SendMessageRequest(string @from, IEnumerable<SmsRecipient> smsRecipients, string message)
         {
             if (@from == null)

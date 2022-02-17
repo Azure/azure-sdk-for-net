@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="contactName"> Contact name of the person. </param>
         /// <param name="phone"> Phone number of the contact person. </param>
         /// <param name="emailList"> List of Email-ids to be notified about job progress. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="contactName"/>, <paramref name="phone"/>, or <paramref name="emailList"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contactName"/>, <paramref name="phone"/> or <paramref name="emailList"/> is null. </exception>
         public ContactDetails(string contactName, string phone, IEnumerable<string> emailList)
         {
             if (contactName == null)

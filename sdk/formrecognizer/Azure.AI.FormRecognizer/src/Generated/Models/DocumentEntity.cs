@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="content"> Entity content. </param>
         /// <param name="spans"> Location of the entity in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the entity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="category"/>, <paramref name="content"/>, or <paramref name="spans"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="category"/>, <paramref name="content"/> or <paramref name="spans"/> is null. </exception>
         internal DocumentEntity(string category, string content, IEnumerable<DocumentSpan> spans, float confidence)
         {
             if (category == null)

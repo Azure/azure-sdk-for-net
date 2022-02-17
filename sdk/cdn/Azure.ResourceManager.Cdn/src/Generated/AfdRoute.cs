@@ -194,10 +194,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public async virtual Task<ArmOperation<AfdRoute>> UpdateAsync(bool waitForCompletion, AfdRouteUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRoute.Update");
             scope.Start();
@@ -227,10 +224,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual ArmOperation<AfdRoute> Update(bool waitForCompletion, AfdRouteUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRoute.Update");
             scope.Start();

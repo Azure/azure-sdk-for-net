@@ -204,10 +204,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="prepareNetworkPoliciesRequestParameters"/> is null. </exception>
         public async virtual Task<ArmOperation> PrepareNetworkPoliciesAsync(bool waitForCompletion, PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
         {
-            if (prepareNetworkPoliciesRequestParameters == null)
-            {
-                throw new ArgumentNullException(nameof(prepareNetworkPoliciesRequestParameters));
-            }
+            Argument.AssertNotNull(prepareNetworkPoliciesRequestParameters, nameof(prepareNetworkPoliciesRequestParameters));
 
             using var scope = _subnetClientDiagnostics.CreateScope("Subnet.PrepareNetworkPolicies");
             scope.Start();
@@ -237,10 +234,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="prepareNetworkPoliciesRequestParameters"/> is null. </exception>
         public virtual ArmOperation PrepareNetworkPolicies(bool waitForCompletion, PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
         {
-            if (prepareNetworkPoliciesRequestParameters == null)
-            {
-                throw new ArgumentNullException(nameof(prepareNetworkPoliciesRequestParameters));
-            }
+            Argument.AssertNotNull(prepareNetworkPoliciesRequestParameters, nameof(prepareNetworkPoliciesRequestParameters));
 
             using var scope = _subnetClientDiagnostics.CreateScope("Subnet.PrepareNetworkPolicies");
             scope.Start();
@@ -270,10 +264,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="unprepareNetworkPoliciesRequestParameters"/> is null. </exception>
         public async virtual Task<ArmOperation> UnprepareNetworkPoliciesAsync(bool waitForCompletion, UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
         {
-            if (unprepareNetworkPoliciesRequestParameters == null)
-            {
-                throw new ArgumentNullException(nameof(unprepareNetworkPoliciesRequestParameters));
-            }
+            Argument.AssertNotNull(unprepareNetworkPoliciesRequestParameters, nameof(unprepareNetworkPoliciesRequestParameters));
 
             using var scope = _subnetClientDiagnostics.CreateScope("Subnet.UnprepareNetworkPolicies");
             scope.Start();
@@ -303,10 +294,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="unprepareNetworkPoliciesRequestParameters"/> is null. </exception>
         public virtual ArmOperation UnprepareNetworkPolicies(bool waitForCompletion, UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
         {
-            if (unprepareNetworkPoliciesRequestParameters == null)
-            {
-                throw new ArgumentNullException(nameof(unprepareNetworkPoliciesRequestParameters));
-            }
+            Argument.AssertNotNull(unprepareNetworkPoliciesRequestParameters, nameof(unprepareNetworkPoliciesRequestParameters));
 
             using var scope = _subnetClientDiagnostics.CreateScope("Subnet.UnprepareNetworkPolicies");
             scope.Start();

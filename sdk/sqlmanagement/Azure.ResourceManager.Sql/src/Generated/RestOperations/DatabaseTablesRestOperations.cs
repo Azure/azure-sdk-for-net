@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="schemaName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="schemaName"/> is null. </exception>
         public async Task<Response<DatabaseTableListResult>> ListBySchemaAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="schemaName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="schemaName"/> is null. </exception>
         public Response<DatabaseTableListResult> ListBySchema(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="tableName"> The name of the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, or <paramref name="tableName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/> or <paramref name="tableName"/> is null. </exception>
         public async Task<Response<DatabaseTableData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="tableName"> The name of the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, or <paramref name="tableName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/> or <paramref name="tableName"/> is null. </exception>
         public Response<DatabaseTableData> Get(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="schemaName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="schemaName"/> is null. </exception>
         public async Task<Response<DatabaseTableListResult>> ListBySchemaNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="schemaName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="schemaName"/> is null. </exception>
         public Response<DatabaseTableListResult> ListBySchemaNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
