@@ -9,7 +9,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the TagResource data model. </summary>
-    public partial class TagResourceData : ResourceData
+    public partial class TagResourceData
     {
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IDictionary<string, string> TagValues
