@@ -2681,6 +2681,15 @@ namespace Azure.Messaging.EventHubs.Diagnostics
             }
         }
 
+        /// <summary>
+        /// Writes an event with two string arguments and two value type arguments into a stack allocated
+        /// <see cref="EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        /// <param name="eventId">The event identifier.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        /// <param name="arg4">The fourth argument.</param>
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private unsafe void WriteEvent<TValue1, TValue2>(int eventId, string arg1, string arg2, TValue1 arg3, TValue2 arg4)
@@ -2708,6 +2717,16 @@ namespace Azure.Messaging.EventHubs.Diagnostics
             }
         }
 
+        /// <summary>
+        /// Writes an event with two string arguments and three value type arguments into a stack allocated
+        /// <see cref="EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        /// <param name="eventId">The event identifier.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        /// <param name="arg4">The fourth argument.</param>
+        /// <param name="arg5">The fifth argument.</param>
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private unsafe void WriteEvent<TValue1, TValue2, TValue3>(int eventId, string arg1, string arg2, TValue1 arg3, TValue2 arg4, TValue3 arg5)
@@ -2739,6 +2758,17 @@ namespace Azure.Messaging.EventHubs.Diagnostics
             }
         }
 
+        /// <summary>
+        /// Writes an event with three string arguments and two value type arguments into a stack allocated
+        /// <see cref="EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        /// <param name="eventId">The event identifier.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        /// <param name="arg4">The fourth argument.</param>
+        /// <param name="arg5">The fifth argument.</param>
+        /// <param name="arg6">The sixth argument.</param>
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private unsafe void WriteEvent<TValue1, TValue2>(int eventId, string arg1, string arg2, string arg3, string arg4, TValue1 arg5, TValue2 arg6)
