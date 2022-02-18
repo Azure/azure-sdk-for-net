@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The provisioning state. </summary>
         public string ResourceGroupProvisioningState
         {
-            get => Properties.ProvisioningState;
+            get => Properties is null ? default : Properties.ProvisioningState;
         }
 
         /// <summary> The ID of the resource that manages this resource group. </summary>

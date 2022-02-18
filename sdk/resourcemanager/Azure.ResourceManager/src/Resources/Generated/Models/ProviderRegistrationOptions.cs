@@ -20,8 +20,13 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> A value indicating whether authorization is consented or not. </summary>
         public bool? ConsentToAuthorization
         {
-            get => ThirdPartyProviderConsent.ConsentToAuthorization;
-            set => ThirdPartyProviderConsent.ConsentToAuthorization = value;
+            get => ThirdPartyProviderConsent is null ? default : ThirdPartyProviderConsent.ConsentToAuthorization;
+            set
+            {
+                if (ThirdPartyProviderConsent is null)
+                    ThirdPartyProviderConsent = new ProviderConsentDefinition();
+                ThirdPartyProviderConsent.ConsentToAuthorization = value;
+            }
         }
     }
 }

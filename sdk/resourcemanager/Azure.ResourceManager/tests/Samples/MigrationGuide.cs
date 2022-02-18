@@ -49,12 +49,9 @@ namespace Azure.ResourceManager.Tests.Samples
             #region Snippet:Create_Vnet_and_Subnet
             string vnetName = "MYVM" + "_vnet";
             string subnetName = "mySubnet";
-            AddressSpace addressSpace = new AddressSpace();
-            addressSpace.AddressPrefixes.Add("10.0.0.0/16");
 
             VirtualNetworkData vnetData = new VirtualNetworkData()
             {
-                AddressSpace = addressSpace,
                 Subnets =
                 {
                     new SubnetData()
@@ -64,6 +61,7 @@ namespace Azure.ResourceManager.Tests.Samples
                     }
                 }
             };
+            vnetData.AddressPrefixes.Add("10.0.0.0/16");
             ArmOperation<VirtualNetwork> vnetCreateLro = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnetData);
             VirtualNetwork vnet = vnetCreateLro.Value;
             #endregion

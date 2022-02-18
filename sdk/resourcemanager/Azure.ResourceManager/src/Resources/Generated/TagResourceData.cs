@@ -45,7 +45,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IDictionary<string, string> TagValues
         {
-            get => Properties.TagValues;
+            get
+            {
+                if (Properties is null)
+                    Properties = new Tag();
+                return Properties.TagValues;
+            }
         }
     }
 }
