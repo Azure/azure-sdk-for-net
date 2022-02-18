@@ -21,7 +21,7 @@ namespace Azure.Core.Tests
                 for (int code = 100; code <= 599; code++)
                 {
                     message.Response = new MockResponse(code);
-                    var isNonError = !message.ResponseClassifier.IsError(message);
+                    var isNonError = !message.ResponseClassifier.IsErrorResponse(message);
 
                     if (nonError == code)
                     {
@@ -48,7 +48,7 @@ namespace Azure.Core.Tests
             HttpMessage message = new HttpMessage(new MockRequest(), classifier);
 
             message.Response = new MockResponse(code);
-            Assert.AreEqual(isError, message.ResponseClassifier.IsError(message));
+            Assert.AreEqual(isError, message.ResponseClassifier.IsErrorResponse(message));
         }
     }
 }

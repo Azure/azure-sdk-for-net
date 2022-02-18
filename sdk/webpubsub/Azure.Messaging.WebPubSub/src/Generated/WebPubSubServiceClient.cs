@@ -2088,14 +2088,24 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier200404.Instance;
+
+            if (!context.HasClassifier)
+            {
+                message.ResponseClassifier = ResponseClassifier200404.Instance;
+            }
+            else
+            {
+                message.ResponseClassifier = ResponseClassifier200404.Instance.Clone();
+                context.Apply(message);
+            }
+
             return message;
         }
 
         private sealed class ResponseClassifier200 : StatusCodeClassifier
         {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
+            private static StatusCodeClassifier _instance;
+            public static StatusCodeClassifier Instance => _instance ??= new ResponseClassifier200();
 
             public ResponseClassifier200() : base(stackalloc int[]{ 200 })
             {
@@ -2103,8 +2113,8 @@ namespace Azure.Messaging.WebPubSub
         }
         private sealed class ResponseClassifier204 : StatusCodeClassifier
         {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier204();
+            private static StatusCodeClassifier _instance;
+            public static StatusCodeClassifier Instance => _instance ??= new ResponseClassifier204();
 
             public ResponseClassifier204() : base(stackalloc int[]{ 204 })
             {
@@ -2112,8 +2122,8 @@ namespace Azure.Messaging.WebPubSub
         }
         private sealed class ResponseClassifier202 : StatusCodeClassifier
         {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier202();
+            private static StatusCodeClassifier _instance;
+            public static StatusCodeClassifier Instance => _instance ??= new ResponseClassifier202();
 
             public ResponseClassifier202() : base(stackalloc int[]{ 202 })
             {
@@ -2121,8 +2131,8 @@ namespace Azure.Messaging.WebPubSub
         }
         private sealed class ResponseClassifier200404 : StatusCodeClassifier
         {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200404();
+            private static StatusCodeClassifier _instance;
+            public static StatusCodeClassifier Instance => _instance ??= new ResponseClassifier200404();
 
             public ResponseClassifier200404() : base(stackalloc int[]{ 200, 404 })
             {

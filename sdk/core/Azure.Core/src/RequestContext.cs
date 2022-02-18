@@ -25,6 +25,11 @@ namespace Azure
         internal HttpMessageClassifier[]? MessageClassifiers => _classifiers;
 
         /// <summary>
+        /// Gets a value indicating if classifiers have been added to this <see cref="RequestContext"/>.
+        /// </summary>
+        public bool HasClassifier => _statusCodes != null || _classifiers != null;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="RequestContext"/> class.
         /// </summary>
         public RequestContext()
@@ -108,5 +113,21 @@ namespace Azure
         {
             _frozen = true;
         }
+
+        //public void ApplyCustomizations(StatusCodeClassifier classifier)
+        //{
+        //    if (_statusCodes != null)
+        //    {
+        //        foreach (var classification in _statusCodes)
+        //        {
+        //            custom.AddClassifier(classification.Status, classification.IsError);
+        //        }
+        //    }
+
+        //    if (_messageClassifiers != null)
+        //    {
+        //        custom.TryClassifiers = _messageClassifiers;
+        //    }
+        //}
     }
 }

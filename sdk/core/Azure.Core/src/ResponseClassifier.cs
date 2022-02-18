@@ -10,7 +10,7 @@ namespace Azure.Core
     /// A type that analyzes HTTP responses and exceptions and determines if they should be retried,
     /// and/or analyzes responses and determines if they should be treated as error responses.
     /// </summary>
-    public class ResponseClassifier : HttpMessageClassifier
+    public class ResponseClassifier
     {
         internal static ResponseClassifier Shared { get; } = new();
 
@@ -50,21 +50,6 @@ namespace Azure.Core
             return IsRetriableException(exception) ||
                    // Retry non-user initiated cancellations
                    (exception is OperationCanceledException && !message.CancellationToken.IsCancellationRequested);
-        }
-
-        internal bool IsError(HttpMessage message)
-        {
-            // Because we're at the "end of the chain,"
-            // TryClassify will always return true.
-            TryClassify(message, out bool isError);
-            return isError;
-        }
-
-        /// <inheritdoc/>
-        public sealed override bool TryClassify(HttpMessage message, out bool isError)
-        {
-            isError = IsErrorResponse(message);
-            return true;
         }
 
         /// <summary>
