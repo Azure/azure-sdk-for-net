@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
         public async Task<ExpressRouteCircuit> UpdateDefaultExpressRouteCircuitWithIPv6MicrosoftPeering(Resources.ResourceGroup resourceGroup, string circuitName)
         {
-            var ipv6Peering = new Ipv6ExpressRouteCircuitPeeringConfig()
+            var ipv6Peering = new IPv6ExpressRouteCircuitPeeringConfig()
             {
                 PrimaryPeerAddressPrefix = ExpressRouteTests.MS_PrimaryPrefix_V6,
                 SecondaryPeerAddressPrefix = ExpressRouteTests.MS_SecondaryPrefix_V6,
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 PeeringType = ExpressRoutePeeringType.MicrosoftPeering,
                 PeerASN = Convert.ToInt32(ExpressRouteTests.MS_PeerASN),
                 VlanId = Convert.ToInt32(ExpressRouteTests.MS_VlanId),
-                Ipv6PeeringConfig = ipv6Peering
+                IPv6PeeringConfig = ipv6Peering
             };
 
             var circuitCollection = resourceGroup.GetExpressRouteCircuits();
