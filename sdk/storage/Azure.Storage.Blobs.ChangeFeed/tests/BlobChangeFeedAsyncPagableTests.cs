@@ -23,7 +23,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         }
 
         [RecordedTest]
-        [Ignore("For debugging larger Change Feeds locally")]
+        //[Ignore("For debugging larger Change Feeds locally")]
         public async Task Test()
         {
             BlobServiceClient service = GetServiceClient_SharedKey();

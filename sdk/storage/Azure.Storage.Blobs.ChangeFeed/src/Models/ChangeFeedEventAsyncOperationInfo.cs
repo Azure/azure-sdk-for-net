@@ -16,5 +16,15 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
         /// DestinationAccessTier.
         /// </summary>
         public AccessTier? DestinationAccessTier { get; internal set; }
+
+        /// <summary>
+        /// If the operation was async.
+        /// </summary>
+        public bool WasAyncOperation { get; internal set; }
+
+        /// <summary>
+        /// Copy Id.
+        /// </summary>
+        public string CopyId { get; internal set; }
     }
 }

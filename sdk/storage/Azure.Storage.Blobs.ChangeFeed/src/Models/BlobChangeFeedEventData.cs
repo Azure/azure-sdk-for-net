@@ -34,9 +34,15 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 Constants.ChangeFeed.EventData.AppendBlob => BlobType.Append,
                 _ => default
             };
-            BlobVersion = ExtractBlobVersion(record);
-            ContainerVersion = ExtractContainerVersion(record);
-            BlobAccessTier = ExtractBlobAccessTier(record);
+            record.TryGetValue(Constants.ChangeFeed.EventData.BlobVersion, out object blobVersionObject);
+            BlobVersion = (string)blobVersionObject;
+            record.TryGetValue(Constants.ChangeFeed.EventData.ContainerVersion, out object containerVersionObject);
+            ContainerVersion = (string)containerVersionObject;
+            record.TryGetValue(Constants.ChangeFeed.EventData.BlobTier, out object blobTierObject);
+            if (blobTierObject != null)
+            {
+                BlobAccessTier = new AccessTier((string)blobTierObject);
+            }
             record.TryGetValue(Constants.ChangeFeed.EventData.ContentOffset, out object contentOffset);
             ContentOffset = (long?)contentOffset;
             record.TryGetValue(Constants.ChangeFeed.EventData.DestinationUrl, out object destinationUrl);
@@ -48,8 +54,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
             record.TryGetValue(Constants.ChangeFeed.EventData.Recursive, out object recursive);
             Recursive = (bool?)recursive;
             Sequencer = (string)record[Constants.ChangeFeed.EventData.Sequencer];
+            record.TryGetValue(Constants.ChangeFeed.EventData.PreviousInfo, out object previousInfoObject);
             PreviousInfo = ExtractPreviousInfo(record);
-            Snapshot = ExtractSnapshot(record);
+            record.TryGetValue(Constants.ChangeFeed.EventData.Snapshot, out object snapshotObject);
+            Snapshot = (string)snapshotObject;
             UpdatedBlobProperties = ExtractBlobProperties(record);
             AsyncOperationInfo = ExtractAsyncOperationInfo(record);
         }
@@ -153,7 +161,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <summary>
         /// Previous info for the blob.
         /// </summary>
-        public Dictionary<string, object> PreviousInfo { get; internal set; }
+        public ChangeFeedEventPreviousInfo PreviousInfo { get; internal set; }
 
         /// <summary>
         /// The Snapshot associated with the event.
@@ -170,110 +178,105 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         public ChangeFeedEventAsyncOperationInfo AsyncOperationInfo { get; internal set; }
 
-        private static string ExtractBlobVersion(Dictionary<string, object> recordDictionary)
+        private static ChangeFeedEventPreviousInfo ExtractPreviousInfo(Dictionary<string, object> recordDictionary)
         {
-            if (recordDictionary.TryGetValue(
-                Constants.ChangeFeed.EventData.BlobVersion,
-                out object blobVersionObject))
+            // Note that these property keys may be present in the dictionary, but with a value of null.
+            // This is why we need to do the null check, instead of if(Dictionary.TryGetValue()).
+            recordDictionary.TryGetValue(Constants.ChangeFeed.EventData.PreviousInfo, out object previousInfoObject);
+            if (previousInfoObject == null)
             {
-                Dictionary<string, object> blobVersionDictionary = (Dictionary<string, object>)blobVersionObject;
-                return (string)blobVersionDictionary[Constants.ChangeFeed.EventData.String];
-            }
                 return null;
-        }
-
-        private static string ExtractContainerVersion(Dictionary<string, object> recordDictionary)
-        {
-            if (recordDictionary.TryGetValue(
-                Constants.ChangeFeed.EventData.ContainerVersion,
-                out object containerVersionObject))
-            {
-                Dictionary<string, object> containerVersionDictionary = (Dictionary<string, object>)containerVersionObject;
-                return (string)containerVersionDictionary[Constants.ChangeFeed.EventData.String];
             }
-            return null;
-        }
 
-        private static AccessTier? ExtractBlobAccessTier(Dictionary<string, object> recordDictionary)
-        {
-            if (recordDictionary.TryGetValue(
-                Constants.ChangeFeed.EventData.BlobTier,
-                out object blobTierString))
+            Dictionary<string, object> previousInfoDictionary = (Dictionary<string, object>)previousInfoObject;
+
+            ChangeFeedEventPreviousInfo previousInfo = new ChangeFeedEventPreviousInfo();
+
+            previousInfoDictionary.TryGetValue(Constants.ChangeFeed.EventData.SoftDeletedSnapshot, out object softDeletedSnapshotObject);
+            previousInfo.SoftDeleteSnapshot = (string)softDeletedSnapshotObject;
+
+            previousInfoDictionary.TryGetValue(Constants.ChangeFeed.EventData.WasBlobSoftDeleted, out object wasBlobSoftDeletedObject);
+            if (wasBlobSoftDeletedObject != null)
             {
-                return new AccessTier((string)blobTierString);
+                previousInfo.WasBlobSoftDeleted = (bool)wasBlobSoftDeletedObject;
             }
-            return null;
-        }
 
-        private static Dictionary<string, object> ExtractPreviousInfo(Dictionary<string, object> recordDictionary)
-        {
-            if (recordDictionary.TryGetValue(
-                Constants.ChangeFeed.EventData.PreviousInfo,
-                out object previousInfoObject))
+            previousInfoDictionary.TryGetValue(Constants.ChangeFeed.EventData.BlobVersion, out object blobVersionObject);
+            previousInfo.BlobVersion = (string)blobVersionObject;
+
+            previousInfoDictionary.TryGetValue(Constants.ChangeFeed.EventData.LastVersion, out object lastVersionObject);
+            previousInfo.LastVersion = (string)lastVersionObject;
+
+            previousInfoDictionary.TryGetValue(Constants.ChangeFeed.EventData.PreviousTier, out object previousTierObject);
+            if (previousTierObject != null)
             {
-                Dictionary<string, object> previousInfoDictionary = (Dictionary<string, object>)previousInfoObject;
-
-                 return (Dictionary<string, object>)previousInfoDictionary[Constants.ChangeFeed.EventData.Map];
+                previousInfo.PreviousTier = new AccessTier((string)previousTierObject);
             }
-            return null;
-        }
 
-        private static string ExtractSnapshot(Dictionary<string, object> recordDictionary)
-        {
-            if (recordDictionary.TryGetValue(
-                Constants.ChangeFeed.EventData.Snapshot,
-                out object snapshotObject))
-            {
-                Dictionary<string, object> snapshotDictionary = (Dictionary<string, object>)snapshotObject;
-                return (string)snapshotDictionary[Constants.ChangeFeed.EventData.String];
-            }
-            return null;
+            return previousInfo;
         }
 
         private static Dictionary<string, BlobChangeFeedEventUpdatedBlobProperty> ExtractBlobProperties(
             Dictionary<string, object> recordDictionary)
         {
-            if (recordDictionary.TryGetValue(
-                Constants.ChangeFeed.EventData.BlobPropertiesUpdated,
-                out object blobPropertiesUpdatedObject))
+            // Note that these property keys may be present in the dictionary, but with a value of null.
+            // This is why we need to do the null check, instead of if(Dictionary.TryGetValue()).
+            recordDictionary.TryGetValue(Constants.ChangeFeed.EventData.BlobPropertiesUpdated, out object blobPropertiesUpdatedObject);
+            if (blobPropertiesUpdatedObject == null)
             {
-                Dictionary<string, object> updatedPropertiesDictionary = (Dictionary<string, object>)blobPropertiesUpdatedObject;
-                Dictionary<string, object> mapDictionary = (Dictionary<string, object>)updatedPropertiesDictionary[Constants.ChangeFeed.EventData.Map];
-
-                Dictionary<string, BlobChangeFeedEventUpdatedBlobProperty> result = new Dictionary<string, BlobChangeFeedEventUpdatedBlobProperty>();
-
-                foreach (KeyValuePair<string, object> kvp in mapDictionary)
-                {
-                    Dictionary<string, object> propertyMap = (Dictionary<string, object>)kvp.Value;
-                    result.Add(
-                        kvp.Key,
-                        new BlobChangeFeedEventUpdatedBlobProperty
-                        {
-                            PropertyName = kvp.Key,
-                            PreviousValue = (string)propertyMap[Constants.ChangeFeed.EventData.Previous],
-                            NewValue = (string)propertyMap[Constants.ChangeFeed.EventData.Current]
-                        });
-                }
-
-                return result;
+                return null;
             }
-            return null;
+
+            Dictionary<string, object> updatedPropertiesDictionary = (Dictionary<string, object>)blobPropertiesUpdatedObject;
+
+            Dictionary<string, BlobChangeFeedEventUpdatedBlobProperty> result = new Dictionary<string, BlobChangeFeedEventUpdatedBlobProperty>();
+
+            foreach (KeyValuePair<string, object> kvp in updatedPropertiesDictionary)
+            {
+                Dictionary<string, object> propertyMap = (Dictionary<string, object>)kvp.Value;
+                result.Add(
+                    kvp.Key,
+                    new BlobChangeFeedEventUpdatedBlobProperty
+                    {
+                        PropertyName = kvp.Key,
+                        PreviousValue = (string)propertyMap[Constants.ChangeFeed.EventData.Previous],
+                        NewValue = (string)propertyMap[Constants.ChangeFeed.EventData.Current]
+                    });
+            }
+
+            return result;
         }
 
         private static ChangeFeedEventAsyncOperationInfo ExtractAsyncOperationInfo(Dictionary<string, object> recordDictionary)
         {
-            if (recordDictionary.TryGetValue(
-                Constants.ChangeFeed.EventData.AsyncOperationInfo,
-                out object asyncOperationInfoObject))
+            // Note that these property keys may be present in the dictionary, but with a value of null.
+            // This is why we need to do the null check, instead of if(Dictionary.TryGetValue()).
+            recordDictionary.TryGetValue(Constants.ChangeFeed.EventData.AsyncOperationInfo, out object asyncOperationInfoObject);
+            if (asyncOperationInfoObject == null)
             {
-                Dictionary<string, object> asyncOperationInfoDictionary = (Dictionary<string, object>)asyncOperationInfoObject;
-
-                return new ChangeFeedEventAsyncOperationInfo
-                {
-                    DestinationAccessTier = new AccessTier((string)asyncOperationInfoDictionary[Constants.ChangeFeed.EventData.DestinationTier])
-                };
+                return null;
             }
-            return null;
+
+            Dictionary<string, object> asyncOperationInfoDictionary = (Dictionary<string, object>)asyncOperationInfoObject;
+
+            ChangeFeedEventAsyncOperationInfo asyncOperationInfo = new ChangeFeedEventAsyncOperationInfo();
+
+            asyncOperationInfoDictionary.TryGetValue(Constants.ChangeFeed.EventData.DestinationTier, out object destinationTierObject);
+            if (destinationTierObject != null)
+            {
+                asyncOperationInfo.DestinationAccessTier = new AccessTier((string)destinationTierObject);
+            }
+
+            asyncOperationInfoDictionary.TryGetValue(Constants.ChangeFeed.EventData.WasAsyncOperation, out object wasAsyncOperationObject);
+            if (wasAsyncOperationObject != null)
+            {
+                asyncOperationInfo.WasAyncOperation = (bool)wasAsyncOperationObject;
+            }
+
+            asyncOperationInfoDictionary.TryGetValue(Constants.ChangeFeed.EventData.CopyId, out object copyIdObject);
+            asyncOperationInfo.CopyId = (string)copyIdObject;
+
+            return asyncOperationInfo;
         }
     }
 }

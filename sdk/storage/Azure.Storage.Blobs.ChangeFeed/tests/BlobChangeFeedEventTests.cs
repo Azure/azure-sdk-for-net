@@ -139,9 +139,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 "00000000000000010000000000000002000000000000001d",
                 changeFeedEvent.EventData.Sequencer);
 
-            Assert.AreEqual(2, changeFeedEvent.EventData.PreviousInfo.Count);
-            Assert.AreEqual("2022-02-17T13:05:19.6788227Z", changeFeedEvent.EventData.PreviousInfo["SoftDeleteSnapshot"]);
-            Assert.AreEqual("2022-02-17T16:11:52.0781797Z", changeFeedEvent.EventData.PreviousInfo["LastVersion"]);
+            Assert.AreEqual("2022-02-17T13:08:42.4825913Z", changeFeedEvent.EventData.PreviousInfo.SoftDeleteSnapshot);
+            Assert.IsTrue(changeFeedEvent.EventData.PreviousInfo.WasBlobSoftDeleted);
+            Assert.AreEqual("2024-02-17T16:11:52.0781797Z", changeFeedEvent.EventData.PreviousInfo.BlobVersion);
+            Assert.AreEqual("2022-02-17T16:11:52.0781797Z", changeFeedEvent.EventData.PreviousInfo.LastVersion);
+            Assert.AreEqual(AccessTier.Hot, changeFeedEvent.EventData.PreviousInfo.PreviousTier);
 
             Assert.AreEqual(
                 "2022-02-17T16:09:16.7261278Z",
@@ -242,9 +244,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 "00000000000000010000000000000002000000000000001d",
                 changeFeedEvent.EventData.Sequencer);
 
-            Assert.AreEqual(2, changeFeedEvent.EventData.PreviousInfo.Count);
-            Assert.AreEqual("2022-02-17T13:08:42.4825913Z", changeFeedEvent.EventData.PreviousInfo["SoftDeleteSnapshot"]);
-            Assert.AreEqual("2022-02-17T16:11:52.0781797Z", changeFeedEvent.EventData.PreviousInfo["LastVersion"]);
+            Assert.AreEqual("2022-02-17T13:08:42.4825913Z", changeFeedEvent.EventData.PreviousInfo.SoftDeleteSnapshot);
+            Assert.IsTrue(changeFeedEvent.EventData.PreviousInfo.WasBlobSoftDeleted);
+            Assert.AreEqual("2024-02-17T16:11:52.0781797Z", changeFeedEvent.EventData.PreviousInfo.BlobVersion);
+            Assert.AreEqual("2022-02-17T16:11:52.0781797Z", changeFeedEvent.EventData.PreviousInfo.LastVersion);
+            Assert.AreEqual(AccessTier.Hot, changeFeedEvent.EventData.PreviousInfo.PreviousTier);
 
             Assert.AreEqual(
                 "2022-02-17T16:09:16.7261278Z",

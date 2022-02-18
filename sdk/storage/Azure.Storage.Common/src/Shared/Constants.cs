@@ -442,12 +442,17 @@ namespace Azure.Storage
                 public const string BlobPropertiesUpdated = "blobPropertiesUpdated";
                 public const string AsyncOperationInfo = "asyncOperationInfo";
 
-                public const string String ="string";
-                public const string Map = "map";
                 public const string Current = "current";
                 public const string Previous = "previous";
 
                 public const string DestinationTier = "DestinationTier";
+                public const string WasAsyncOperation = "WasAsyncOperation";
+                public const string CopyId = "CopyId";
+
+                public const string SoftDeletedSnapshot = "SoftDeleteSnapshot";
+                public const string WasBlobSoftDeleted = "WasBlobSoftDeleted";
+                public const string LastVersion = "LastVersion";
+                public const string PreviousTier = "PreviousTier";
             }
         }
 
