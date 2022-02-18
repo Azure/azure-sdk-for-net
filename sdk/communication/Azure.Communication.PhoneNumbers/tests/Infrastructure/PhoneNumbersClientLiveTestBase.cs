@@ -89,7 +89,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             if (TestEnvironment.Mode == RecordedTestMode.Playback)
                 return RecordedTestSanitizer.SanitizeValue;
 
-            if (!SkipPhoneNumberLiveTests)
+            if (!SkipUpdateCapabilitiesLiveTest)
                 return TestEnvironment.TestAgentPhoneNumber;
 
             return TestEnvironment.DefaultTestPhoneNumber;
