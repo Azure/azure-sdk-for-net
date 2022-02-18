@@ -35,6 +35,8 @@ directive:
 
 ## Seal single value enums
 
+Prevents the creation of single-value extensible enums in generated code. The following single-value enums will be generated as string constants.
+
 ``` yaml
 directive:
 - from: https://github.com/Azure/azure-rest-api-specs/blob/7043b48f4be1fdd40757b9ef372b65f054daf48f/specification/cognitiveservices/data-plane/FormRecognizer/stable/v2.1/FormRecognizer.json
