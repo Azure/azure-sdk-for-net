@@ -50,5 +50,17 @@ namespace Azure.Storage.Test.Shared
                 GroupForReplace = "group"
             });
         }
+
+        public string SanitizeUri(string uri)
+        {
+            var builder = new UriBuilder(uri);
+            var query = new UriQueryParamsCollection(builder.Query);
+            if (query.ContainsKey(SignatureQueryName))
+            {
+                query[SignatureQueryName] = SanitizeValue;
+                builder.Query = query.ToString();
+            }
+            return builder.Uri.AbsoluteUri;
+        }
     }
 }

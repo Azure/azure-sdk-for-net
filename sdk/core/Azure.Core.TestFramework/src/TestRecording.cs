@@ -115,11 +115,7 @@ namespace Azure.Core.TestFramework
             foreach (var (header, queryParameter) in _sanitizer.SanitizedQueryParametersInHeaders)
             {
                 await _proxy.Client.AddHeaderSanitizerAsync(
-                    new(header, Sanitized)
-                    {
-                        Regex = $@"([\x0026|&|?]{queryParameter}=)(?<group>[\w\d%]+)",
-                        GroupForReplace = "group"
-                    },
+                    HeaderRegexSanitizer.CreateWithQueryParameter(header, queryParameter, Sanitized),
                     RecordingId);
             }
 
@@ -136,10 +132,7 @@ namespace Azure.Core.TestFramework
             foreach (string queryParameter in _sanitizer.SanitizedQueryParameters)
             {
                 await _proxy.Client.AddUriSanitizerAsync(
-                    new($@"([\x0026|&|?]{queryParameter}=)(?<group>[\w\d%]+)", Sanitized)
-                    {
-                        GroupForReplace = "group"
-                    },
+                    UriRegexSanitizer.CreateWithQueryParameter(queryParameter, Sanitized),
                     RecordingId);
             }
 

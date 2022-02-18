@@ -13,20 +13,16 @@ namespace Azure.Core.Tests
         [Test]
         public void CanSanitizeQueryParamsInHeader()
         {
-            var sanitizer = new RecordedTestSanitizer();
-            sanitizer.SanitizedQueryParametersInHeaders.Add(("headerKey", "queryParameter"));
-            HeaderRegexSanitizer headerSanitizer = sanitizer.HeaderRegexSanitizers.First();
-            Assert.AreEqual("headerKey", headerSanitizer.Key);
-            Assert.AreEqual(@"([\x0026|&|?]queryParameter=)(?<group>[\w\d%]+)", headerSanitizer.Regex);
+            var sanitizer = HeaderRegexSanitizer.CreateWithQueryParameter("headerKey", "queryParameter", "value");
+            Assert.AreEqual("headerKey", sanitizer.Key);
+            Assert.AreEqual(@"([\x0026|&|?]queryParameter=)(?<group>[\w\d%]+)", sanitizer.Regex);
         }
 
         [Test]
         public void CanSanitizeQueryParamsInUri()
         {
-            var sanitizer = new RecordedTestSanitizer();
-            sanitizer.SanitizedQueryParameters.Add("queryParameter");
-            UriRegexSanitizer uriSanitizer = sanitizer.UriRegexSanitizers.First();
-            Assert.AreEqual(@"([\x0026|&|?]queryParameter=)(?<group>[\w\d%]+)", uriSanitizer.Regex);
+            var sanitizer = UriRegexSanitizer.CreateWithQueryParameter("queryParameter", "value");
+            Assert.AreEqual(@"([\x0026|&|?]queryParameter=)(?<group>[\w\d%]+)", sanitizer.Regex);
         }
     }
 }

@@ -3,6 +3,7 @@
 
 using System.Text;
 using System.Text.RegularExpressions;
+using Azure.Core.TestFramework.Models;
 using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage.Blobs.Batch.Tests
@@ -11,18 +12,12 @@ namespace Azure.Storage.Blobs.Batch.Tests
     {
         private static Regex pattern = new Regex(@"sig=\S+\s", RegexOptions.Compiled);
 
-        public override byte[] SanitizeBody(string contentType, byte[] body)
+        public BatchStorageRecordedTestSanitizer()
         {
-            if (contentType != null && contentType.Contains("multipart/mixed"))
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"sig=(?<group>.*?)(?=\s+)", SanitizeValue)
             {
-                string bodyAsString = Encoding.UTF8.GetString(body);
-                bodyAsString = pattern.Replace(bodyAsString, "sig=Sanitized ");
-                return Encoding.UTF8.GetBytes(bodyAsString);
-            }
-            else
-            {
-                return base.SanitizeBody(contentType, body);
-            }
+                GroupForReplace = "group"
+            });
         }
     }
 }
