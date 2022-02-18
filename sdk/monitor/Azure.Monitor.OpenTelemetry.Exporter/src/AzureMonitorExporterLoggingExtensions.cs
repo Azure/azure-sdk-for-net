@@ -10,8 +10,17 @@ using OpenTelemetry.Logs;
 
 namespace Microsoft.Extensions.Logging
 {
+    /// <summary>
+    /// Extension methods to simplify registering of Azure Monitor Log Exporter.
+    /// </summary>
     public static class AzureMonitorExporterLoggingExtensions
     {
+        /// <summary>
+        /// Adds Azure Monitor Log Exporter as a configuration to the OpenTelemetry ILoggingBuilder.
+        /// </summary>
+        /// <param name="loggerOptions"><see cref="OpenTelemetryLoggerOptions"/> options to use.</param>
+        /// <param name="configure">Exporter configuration options.</param>
+        /// <returns>The instance of <see cref="OpenTelemetryLoggerOptions"/> to chain the calls.</returns>
         public static OpenTelemetryLoggerOptions AddAzureMonitorLogExporter(this OpenTelemetryLoggerOptions loggerOptions, Action<AzureMonitorExporterOptions> configure = null)
         {
             if (loggerOptions == null)
