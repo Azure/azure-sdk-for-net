@@ -38,6 +38,7 @@ rename-rules:
   WAN: Wan
   Ipv4: IPv4
   Ipv6: IPv6
+  Ipsec: IPsec
 
 #TODO: remove after we resolve why DdosCustomPolicy has no list
 list-exception:

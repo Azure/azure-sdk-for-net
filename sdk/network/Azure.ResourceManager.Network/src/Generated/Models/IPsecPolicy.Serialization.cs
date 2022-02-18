@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class IpsecPolicy : IUtf8JsonSerializable
+    public partial class IPsecPolicy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Network.Models
             writer.WritePropertyName("saDataSizeKilobytes");
             writer.WriteNumberValue(SaDataSizeKilobytes);
             writer.WritePropertyName("ipsecEncryption");
-            writer.WriteStringValue(IpsecEncryption.ToString());
+            writer.WriteStringValue(IPsecEncryption.ToString());
             writer.WritePropertyName("ipsecIntegrity");
-            writer.WriteStringValue(IpsecIntegrity.ToString());
+            writer.WriteStringValue(IPsecIntegrity.ToString());
             writer.WritePropertyName("ikeEncryption");
             writer.WriteStringValue(IkeEncryption.ToString());
             writer.WritePropertyName("ikeIntegrity");
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static IpsecPolicy DeserializeIpsecPolicy(JsonElement element)
+        internal static IPsecPolicy DeserializeIPsecPolicy(JsonElement element)
         {
             int saLifeTimeSeconds = default;
             int saDataSizeKilobytes = default;
-            IpsecEncryption ipsecEncryption = default;
-            IpsecIntegrity ipsecIntegrity = default;
+            IPsecEncryption ipsecEncryption = default;
+            IPsecIntegrity ipsecIntegrity = default;
             IkeEncryption ikeEncryption = default;
             IkeIntegrity ikeIntegrity = default;
             DhGroup dhGroup = default;
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("ipsecEncryption"))
                 {
-                    ipsecEncryption = new IpsecEncryption(property.Value.GetString());
+                    ipsecEncryption = new IPsecEncryption(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipsecIntegrity"))
                 {
-                    ipsecIntegrity = new IpsecIntegrity(property.Value.GetString());
+                    ipsecIntegrity = new IPsecIntegrity(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ikeEncryption"))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new IpsecPolicy(saLifeTimeSeconds, saDataSizeKilobytes, ipsecEncryption, ipsecIntegrity, ikeEncryption, ikeIntegrity, dhGroup, pfsGroup);
+            return new IPsecPolicy(saLifeTimeSeconds, saDataSizeKilobytes, ipsecEncryption, ipsecIntegrity, ikeEncryption, ikeIntegrity, dhGroup, pfsGroup);
         }
     }
 }
