@@ -364,8 +364,7 @@ namespace Azure.Core
     }
     public partial class CoreResponseClassifier : Azure.Core.ResponseClassifier
     {
-        public CoreResponseClassifier(int[] nonErrors) { }
-        public virtual Azure.Core.CoreResponseClassifier Clone() { throw null; }
+        public CoreResponseClassifier(System.ReadOnlySpan<int> nonErrors) { }
         public override bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }
     }
     public static partial class DelegatedTokenCredential

@@ -46,7 +46,7 @@ namespace Azure.Core
         /// <summary>
         /// </summary>
         /// <returns></returns>
-        public virtual CoreResponseClassifier Clone()
+        internal virtual CoreResponseClassifier Clone()
         {
             ulong[] nonErrors = new ulong[Length];
             Array.Copy(_nonErrors, nonErrors, Length);
