@@ -27,6 +27,7 @@ steps:
 - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
   displayName: CredScan running
   inputs:
+    toolVersion: 2.2.7.8 
     scanFolder: "${{ parameters.SourceDirectory }}/credscan.tsv"
     suppressionsFile: ${{ parameters.SuppressionFilePath }}
 - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
@@ -38,7 +39,7 @@ steps:
     GdnBreakGdnToolCredScanSeverity: Error
     GdnBreakBaselines: baseline
     # Used for generating baseline file.
-    # GdnBreakOutputBaselineFile: dotnet
+    # GdnBreakOutputBaselineFile: baseline
     # GdnBreakOutputBaseline: baseline
   condition: succeededOrFailed()
 - pwsh: |
