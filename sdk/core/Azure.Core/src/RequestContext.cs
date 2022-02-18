@@ -71,8 +71,10 @@ namespace Azure
         /// </summary>
         /// <param name="statusCode">The status code to customize classification for.</param>
         /// <param name="isError">Whether the passed-in status code should be classified as an error.</param>
-        public void AddClassificationHandler(int statusCode, bool isError)
+        public void ChangeClassification(int statusCode, bool isError)
         {
+            Argument.AssertInRange(statusCode, 100, 599, nameof(statusCode));
+
             if (_frozen)
             {
                 throw new InvalidOperationException("Cannot modify this RequestContext after it has been used in a method call.");
@@ -92,7 +94,7 @@ namespace Azure
         /// logs or distributed traces.
         /// </summary>
         /// <param name="classifier">The custom classifier.</param>
-        public void AddClassificationHandler(ResponseClassificationHandler classifier)
+        public void ChangeClassification(ResponseClassificationHandler classifier)
         {
             if (_frozen)
             {
