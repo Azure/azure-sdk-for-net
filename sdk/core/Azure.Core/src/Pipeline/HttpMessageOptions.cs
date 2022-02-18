@@ -16,7 +16,7 @@ namespace Azure.Core.Pipeline
         /// <param name="packageInfo"> </param>
         public static void SetTelemetryPackage(HttpMessage message, TelemetryPackageInfo packageInfo)
         {
-            message.SetInternalProperty(packageInfo);
+            message.SetInternalProperty(packageInfo.GetType(), packageInfo);
         }
     }
 }

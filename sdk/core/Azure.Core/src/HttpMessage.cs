@@ -102,7 +102,7 @@ namespace Azure.Core
         public bool TryGetProperty(string name, out object? value)
         {
             value = null;
-            if (_typeProperties == null || !_typeProperties.TryGetValue(typeof(PropertyKey), out var rawValue))
+            if (_typeProperties == null || !_typeProperties.TryGetValue(typeof(MessagePropertyKey), out var rawValue))
             {
                 return false;
             }
@@ -119,10 +119,10 @@ namespace Azure.Core
         {
             _typeProperties ??= new Dictionary<Type, object>();
             Dictionary<string, object> properties;
-            if (!_typeProperties.TryGetValue(typeof(PropertyKey), out var rawValue))
+            if (!_typeProperties.TryGetValue(typeof(MessagePropertyKey), out var rawValue))
             {
                 properties = new Dictionary<string, object>();
-                _typeProperties[typeof(PropertyKey)] = properties;
+                _typeProperties[typeof(MessagePropertyKey)] = properties;
             }
             else
             {
@@ -235,6 +235,6 @@ namespace Azure.Core
         /// <summary>
         /// Exists as a private key entry into the <see cref="HttpMessage._typeProperties"/> dictionary for stashing string keyed entries in the Type keyed dictionary.
         /// </summary>
-        private class PropertyKey {}
+        private class MessagePropertyKey {}
     }
 }
