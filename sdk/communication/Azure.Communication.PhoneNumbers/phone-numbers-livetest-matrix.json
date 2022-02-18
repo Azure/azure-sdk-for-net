@@ -36,24 +36,21 @@
                 "OSVmImage": "macOS-10.15",
                 "Pool": "Azure Pipelines",
                 "TestTargetFramework": "netcoreapp3.1",
-                "AZURE_PHONE_NUMBER_ID": "2",
-                "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "FALSE"
+                "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "TRUE"
             },
             "macOS-10.15_NET6.0": {
                 "OSVmImage": "macOS-10.15",
                 "Pool": "Azure Pipelines",
                 "TestTargetFramework": "net6.0",
-                "AZURE_TEST_AGENT": "macos_1015_net60"
+                "AZURE_TEST_AGENT": "macos_1015_net60",
+                "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "FALSE"
             }
         },
         "AdditionalTestArguments": [
             "/p:UseProjectReferenceToAzureClients=false",
             "/p:UseProjectReferenceToAzureClients=true"
         ],
-        "BuildConfiguration": [
-            "Debug",
-            "Release"
-        ]
+        "BuildConfiguration": ["Debug", "Release"]
     },
     "include": [
         {

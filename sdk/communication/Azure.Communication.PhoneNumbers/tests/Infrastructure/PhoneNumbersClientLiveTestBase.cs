@@ -86,9 +86,13 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
         protected string GetTestPhoneNumber()
         {
-            return TestEnvironment.Mode == RecordedTestMode.Playback
-                ? RecordedTestSanitizer.SanitizeValue
-                : TestEnvironment.CommunicationTestPhoneNumber;
+            if (TestEnvironment.Mode == RecordedTestMode.Playback)
+                return RecordedTestSanitizer.SanitizeValue;
+
+            if (!SkipPhoneNumberLiveTests)
+                return TestEnvironment.TestAgentPhoneNumber;
+
+            return TestEnvironment.DefaultTestPhoneNumber;
         }
 
         protected void SleepIfNotInPlaybackMode()
