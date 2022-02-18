@@ -14,12 +14,12 @@ Intel Core i7-8650U CPU 1.90GHz, 1 CPU, 8 logical and 4 physical cores
   DefaultJob : .NET 6.0.2 (6.0.222.6406), X64 RyuJIT
 
 
-|                           Method |     Mean |    Error |   StdDev |  Gen 0 | Allocated |
-|--------------------------------- |---------:|---------:|---------:|-------:|----------:|
-|      Enumerate_TagObjects_NoItem | 205.4 ns |  8.56 ns | 24.71 ns |      - |         - |
-|       Enumerate_TagObjects_PartB | 530.1 ns | 16.31 ns | 47.31 ns | 0.0191 |      80 B |
-|       Enumerate_TagObjects_PartC | 856.6 ns | 25.41 ns | 74.54 ns | 0.0763 |     320 B |
-| Enumerate_TagObjects_PartB_And_C | 510.5 ns | 11.70 ns | 33.94 ns | 0.0191 |      80 B |
+|                           Method |     Mean |    Error |   StdDev |   Median |  Gen 0 | Allocated |
+|--------------------------------- |---------:|---------:|---------:|---------:|-------:|----------:|
+|      Enumerate_TagObjects_NoItem | 174.5 ns |  3.48 ns | 10.04 ns | 175.0 ns |      - |         - |
+|       Enumerate_TagObjects_PartB | 473.5 ns | 10.38 ns | 30.62 ns | 481.4 ns | 0.0095 |      40 B |
+|       Enumerate_TagObjects_PartC | 759.5 ns | 15.55 ns | 45.86 ns | 773.8 ns | 0.0668 |     280 B |
+| Enumerate_TagObjects_PartB_And_C | 454.3 ns | 11.03 ns | 32.52 ns | 467.0 ns | 0.0095 |      40 B |
 */
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks

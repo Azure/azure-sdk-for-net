@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
@@ -71,56 +70,53 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         public void ForEach(IEnumerable<KeyValuePair<string, object>> activityTags)
         {
-            if (activityTags.Any())
+            foreach (KeyValuePair<string, object> activityTag in activityTags)
             {
-                foreach (KeyValuePair<string, object> activityTag in activityTags)
+                if (activityTag.Value == null)
                 {
-                    if (activityTag.Value == null)
-                    {
-                        continue;
-                    }
+                    continue;
+                }
 
-                    if (activityTag.Value is Array array)
+                if (activityTag.Value is Array array)
+                {
+                    StringBuilder sw = new StringBuilder();
+                    foreach (var item in array)
                     {
-                        StringBuilder sw = new StringBuilder();
-                        foreach (var item in array)
+                        // TODO: Consider changing it to JSon array.
+                        if (item != null)
                         {
-                            // TODO: Consider changing it to JSon array.
-                            if (item != null)
-                            {
-                                sw.Append(item);
-                                sw.Append(',');
-                            }
+                            sw.Append(item);
+                            sw.Append(',');
                         }
-
-                        if (sw.Length > 0)
-                        {
-                            sw.Length--;
-                        }
-
-                        AzMonList.Add(ref PartCTags, new KeyValuePair<string, object>(activityTag.Key, sw.ToString()));
-                        continue;
                     }
 
-                    if (!s_part_B_Mapping.TryGetValue(activityTag.Key, out _tempActivityType))
+                    if (sw.Length > 0)
                     {
-                        AzMonList.Add(ref PartCTags, activityTag);
-                        continue;
+                        sw.Length--;
                     }
 
-                    if (activityType == PartBType.Unknown || activityType == PartBType.Common)
-                    {
-                        activityType = _tempActivityType;
-                    }
+                    AzMonList.Add(ref PartCTags, new KeyValuePair<string, object>(activityTag.Key, sw.ToString()));
+                    continue;
+                }
 
-                    if (_tempActivityType == activityType || _tempActivityType == PartBType.Common)
-                    {
-                        AzMonList.Add(ref PartBTags, activityTag);
-                    }
-                    else
-                    {
-                        AzMonList.Add(ref PartCTags, activityTag);
-                    }
+                if (!s_part_B_Mapping.TryGetValue(activityTag.Key, out _tempActivityType))
+                {
+                    AzMonList.Add(ref PartCTags, activityTag);
+                    continue;
+                }
+
+                if (activityType == PartBType.Unknown || activityType == PartBType.Common)
+                {
+                    activityType = _tempActivityType;
+                }
+
+                if (_tempActivityType == activityType || _tempActivityType == PartBType.Common)
+                {
+                    AzMonList.Add(ref PartBTags, activityTag);
+                }
+                else
+                {
+                    AzMonList.Add(ref PartCTags, activityTag);
                 }
             }
         }
