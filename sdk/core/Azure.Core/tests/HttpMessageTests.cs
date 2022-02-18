@@ -197,7 +197,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void AppliesMessageClassifier()
+        public void AppliesHandler()
         {
             RequestContext context = new RequestContext();
             context.AddClassificationHandler(new StatusCodeHandler(204, isError: true));
@@ -219,7 +219,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void AppliesMessageClassifierBeforeResponseClassifier()
+        public void AppliesHandlerBeforeResponseClassifier()
         {
             RequestContext context = new RequestContext();
             context.AddClassificationHandler(new StatusCodeHandler(204, true));
@@ -242,7 +242,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void AppliesMessageClassifierWithLastSetWinsSemantics()
+        public void AppliesHandlerWithLastSetWinsSemantics()
         {
             RequestContext context = new RequestContext();
             context.AddClassificationHandler(new StatusCodeHandler(204, true));
