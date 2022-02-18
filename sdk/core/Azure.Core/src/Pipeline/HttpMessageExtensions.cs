@@ -13,10 +13,10 @@ namespace Azure.Core.Pipeline
         /// Note: If <see cref="DiagnosticsOptions.IsTelemetryEnabled"/> is false, this value is never used.
         /// </summary>
         /// <param name="message">The <see cref="HttpMessage"/>.</param>
-        /// <param name="userAgentString">The <see cref="SetUserAgentString"/>.</param>
-        public static void SetUserAgentString(this HttpMessage message, UserAgentString userAgentString)
+        /// <param name="userAgentValue">The <see cref="SetUserAgentString"/>.</param>
+        public static void SetUserAgentString(this HttpMessage message, UserAgentValue userAgentValue)
         {
-            message.SetInternalProperty(userAgentString.GetType(), userAgentString);
+            message.SetInternalProperty(userAgentValue.GetType(), userAgentValue);
         }
     }
 }

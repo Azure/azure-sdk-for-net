@@ -874,7 +874,7 @@ namespace Azure.Core.Pipeline
     }
     public static partial class HttpMessageExtensions
     {
-        public static void SetUserAgentString(this Azure.Core.HttpMessage message, Azure.Core.Pipeline.UserAgentString userAgentString) { }
+        public static void SetUserAgentString(this Azure.Core.HttpMessage message, Azure.Core.Pipeline.UserAgentValue userAgentValue) { }
     }
     public partial class HttpPipeline
     {
@@ -931,10 +931,10 @@ namespace Azure.Core.Pipeline
         public System.Security.Cryptography.X509Certificates.X509Chain? CertificateAuthorityChain { get { throw null; } }
         public System.Net.Security.SslPolicyErrors SslPolicyErrors { get { throw null; } }
     }
-    public partial class UserAgentString
+    public partial class UserAgentValue
     {
-        public UserAgentString(System.Reflection.Assembly assembly, string? applicationId = null) { }
-        public static Azure.Core.Pipeline.UserAgentString FromType<T>(string? applicationId = null) { throw null; }
+        public UserAgentValue(System.Type type, string? applicationId = null) { }
+        public static Azure.Core.Pipeline.UserAgentValue FromType<T>(string? applicationId = null) { throw null; }
         public override string ToString() { throw null; }
     }
 }

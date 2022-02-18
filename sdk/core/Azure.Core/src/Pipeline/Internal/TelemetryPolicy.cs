@@ -7,16 +7,16 @@ namespace Azure.Core.Pipeline
     {
         private readonly string _defaultHeader;
 
-        public TelemetryPolicy(UserAgentString userAgentString)
+        public TelemetryPolicy(UserAgentValue userAgentValue)
         {
-            _defaultHeader = userAgentString.ToString();
+            _defaultHeader = userAgentValue.ToString();
         }
 
         public override void OnSendingRequest(HttpMessage message)
         {
-            if (message.TryGetInternalProperty(typeof(UserAgentString), out var userAgent))
+            if (message.TryGetInternalProperty(typeof(UserAgentValue), out var userAgent))
             {
-                message.Request.Headers.Add(HttpHeader.Names.UserAgent, ((UserAgentString)userAgent!).ToString());
+                message.Request.Headers.Add(HttpHeader.Names.UserAgent, ((UserAgentValue)userAgent!).ToString());
             }
             else
             {

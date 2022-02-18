@@ -10,30 +10,32 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Information about the package to be included in UserAgent telemetry
     /// </summary>
-    public class UserAgentString
+    public class UserAgentValue
     {
         private string _userAgent;
 
         /// <summary>
-        /// Initialize an instance of <see cref="UserAgentString"/>.
+        /// Initialize an instance of <see cref="UserAgentValue"/> by extracting the name and version information from the <see cref="Assembly"/> associated with the <paramref name="type"/>.
         /// </summary>
-        /// <param name="assembly">The <see cref="Assembly"/> used to generate the package name and version information for the <see cref="UserAgentString"/> value.</param>
-        /// <param name="applicationId">An optional applicationId to be prepended to the <see cref="UserAgentString"/> value. This value behaves exactly like the <see cref="DiagnosticsOptions.ApplicationId"/> property.</param>
-        public UserAgentString(Assembly assembly, string? applicationId = null)
+        /// <param name="type">The <see cref="Type"/> used to generate the package name and version information for the <see cref="UserAgentValue"/> value.</param>
+        /// <param name="applicationId">An optional value to be prepended to the <see cref="UserAgentValue"/>.
+        /// This value overrides the behavior of the <see cref="DiagnosticsOptions.ApplicationId"/> property for the <see cref="HttpMessage"/> it is applied to.</param>
+        public UserAgentValue(Type type, string? applicationId = null)
         {
+            var assembly = Assembly.GetAssembly(type);
+            if (assembly == null) throw new ArgumentException($"The type parameter {type.FullName} does not have a valid Assembly");
             _userAgent = GenerateUserAgentString(assembly, applicationId);
         }
 
         /// <summary>
-        /// Creates an instance of a <see cref="UserAgentString"/> based on the Type provided.
+        /// Creates an instance of a <see cref="UserAgentValue"/> based on the Type provided.
         /// </summary>
         /// <param name="applicationId"></param>
         /// <typeparam name="T">The type contained by the Assembly used to generate package name and version information.</typeparam>
         /// <returns></returns>
-        public static UserAgentString FromType<T>(string? applicationId = null)
+        public static UserAgentValue FromType<T>(string? applicationId = null)
         {
-            var assembly = Assembly.GetAssembly(typeof(T));
-            return new UserAgentString(assembly!, applicationId);
+            return new UserAgentValue(typeof(T), applicationId);
         }
 
         /// <summary>

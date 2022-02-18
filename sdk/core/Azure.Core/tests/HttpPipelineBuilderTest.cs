@@ -132,7 +132,7 @@ namespace Azure.Core.Tests
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
 
             var message = pipeline.CreateMessage();
-            message.SetUserAgentString(UserAgentString.FromType<string>());
+            message.SetUserAgentString(UserAgentValue.FromType<string>());
             using Request request = message.Request;
             request.Method = RequestMethod.Get;
             request.Uri.Reset(new Uri("http://example.com"));
