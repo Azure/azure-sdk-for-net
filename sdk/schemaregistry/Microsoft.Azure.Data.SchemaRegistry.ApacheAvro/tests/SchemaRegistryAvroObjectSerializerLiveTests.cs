@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         }
 
         [RecordedTest]
-        public async Task CanUseserializerWithEventData()
+        public async Task CanUseEncoderWithEventData()
         {
             var client = CreateClient();
             var groupName = TestEnvironment.SchemaRegistryGroup;
@@ -204,7 +204,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         }
 
         [RecordedTest]
-        public async Task CanUseserializerWithEventDataUsingGenerics()
+        public async Task CanUseEncoderWithEventDataUsingGenerics()
         {
             var client = CreateClient();
             var groupName = TestEnvironment.SchemaRegistryGroup;
