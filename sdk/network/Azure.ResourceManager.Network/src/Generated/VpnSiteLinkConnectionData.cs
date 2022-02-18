@@ -76,7 +76,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> Resource type. </summary>
         public string Type { get; }
         /// <summary> Id of the connected vpn site link. </summary>
-        public WritableSubResource VpnSiteLink { get; set; }
+        internal WritableSubResource VpnSiteLink { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VpnSiteLinkId
+        {
+            get => VpnSiteLink is null ? default : VpnSiteLink.Id;
+            set
+            {
+                if (VpnSiteLink is null)
+                    VpnSiteLink = new WritableSubResource();
+                VpnSiteLink.Id = value;
+            }
+        }
+
         /// <summary> Routing weight for vpn connection. </summary>
         public int? RoutingWeight { get; set; }
         /// <summary> Vpn link connection mode. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -50,7 +51,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The private IP address allocation method. </summary>
         public IPAllocationMethod? PrivateIPAllocationMethod { get; set; }
         /// <summary> Reference to the subnet resource. </summary>
-        public WritableSubResource Subnet { get; set; }
+        internal WritableSubResource Subnet { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get => Subnet is null ? default : Subnet.Id;
+            set
+            {
+                if (Subnet is null)
+                    Subnet = new WritableSubResource();
+                Subnet.Id = value;
+            }
+        }
+
         /// <summary> Whether the ip configuration is primary or not. </summary>
         public bool? Primary { get; set; }
         /// <summary> The provisioning state of the application gateway private link IP configuration. </summary>

@@ -51,7 +51,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> SSL policy of the application gateway resource. </summary>
         public ApplicationGatewaySslPolicy SslPolicy { get; set; }
         /// <summary> Client authentication configuration of the application gateway resource. </summary>
-        public ApplicationGatewayClientAuthConfiguration ClientAuthConfiguration { get; set; }
+        internal ApplicationGatewayClientAuthConfiguration ClientAuthConfiguration { get; set; }
+        /// <summary> Verify client certificate issuer name on the application gateway. </summary>
+        public bool? VerifyClientCertIssuerDN
+        {
+            get => ClientAuthConfiguration is null ? default : ClientAuthConfiguration.VerifyClientCertIssuerDN;
+            set
+            {
+                if (ClientAuthConfiguration is null)
+                    ClientAuthConfiguration = new ApplicationGatewayClientAuthConfiguration();
+                ClientAuthConfiguration.VerifyClientCertIssuerDN = value;
+            }
+        }
+
         /// <summary> The provisioning state of the HTTP listener resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

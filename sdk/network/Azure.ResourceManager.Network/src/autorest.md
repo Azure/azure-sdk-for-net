@@ -3,6 +3,7 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
+save-inputs: true
 azure-arm: true
 csharp: true
 library-name: Network
