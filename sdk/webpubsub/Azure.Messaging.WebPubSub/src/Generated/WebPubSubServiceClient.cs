@@ -1559,9 +1559,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-
             message.ResponseClassifier = ResponseClassifier200.Instance;
-
             return message;
         }
 
@@ -2070,7 +2068,7 @@ namespace Azure.Messaging.WebPubSub
 
         internal HttpMessage CreateCheckPermissionRequest(string permission, string connectionId, string targetName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200404.Instance);
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
@@ -2088,43 +2086,61 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier200404.Instance;
             return message;
         }
 
-        private sealed class ResponseClassifier200 : CoreResponseClassifier
+        private sealed class ResponseClassifier200 : ResponseClassifier
         {
-            private static CoreResponseClassifier _instance;
-            public static CoreResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-
-            public ResponseClassifier200() : base(stackalloc int[]{ 200 })
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
+            public override bool IsErrorResponse(HttpMessage message)
             {
+                return message.Response.Status switch
+                {
+                    200 => false,
+                    _ => true
+                };
             }
         }
-        private sealed class ResponseClassifier204 : CoreResponseClassifier
+        private sealed class ResponseClassifier204 : ResponseClassifier
         {
-            private static CoreResponseClassifier _instance;
-            public static CoreResponseClassifier Instance => _instance ??= new ResponseClassifier204();
-
-            public ResponseClassifier204() : base(stackalloc int[]{ 204 })
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier204();
+            public override bool IsErrorResponse(HttpMessage message)
             {
+                return message.Response.Status switch
+                {
+                    204 => false,
+                    _ => true
+                };
             }
         }
-        private sealed class ResponseClassifier202 : CoreResponseClassifier
+        private sealed class ResponseClassifier202 : ResponseClassifier
         {
-            private static CoreResponseClassifier _instance;
-            public static CoreResponseClassifier Instance => _instance ??= new ResponseClassifier202();
-
-            public ResponseClassifier202() : base(stackalloc int[]{ 202 })
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier202();
+            public override bool IsErrorResponse(HttpMessage message)
             {
+                return message.Response.Status switch
+                {
+                    202 => false,
+                    _ => true
+                };
             }
         }
-        private sealed class ResponseClassifier200404 : CoreResponseClassifier
+        private sealed class ResponseClassifier200404 : ResponseClassifier
         {
-            private static CoreResponseClassifier _instance;
-            public static CoreResponseClassifier Instance => _instance ??= new ResponseClassifier200404();
-
-            public ResponseClassifier200404() : base(stackalloc int[]{ 200, 404 })
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200404();
+            public override bool IsErrorResponse(HttpMessage message)
             {
+                return message.Response.Status switch
+                {
+                    200 => false,
+                    404 => false,
+                    _ => true
+                };
             }
         }
     }
