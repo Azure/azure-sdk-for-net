@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Storage
         public bool? AutomaticSnapshotPolicyEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.ChangeFeed ChangeFeed { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.DeleteRetentionPolicy ContainerDeleteRetentionPolicy { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.CorsRules Cors { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.CorsRule> CorsRulesValue { get { throw null; } }
         public string DefaultServiceVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.DeleteRetentionPolicy DeleteRetentionPolicy { get { throw null; } set { } }
         public bool? IsVersioningEnabled { get { throw null; } set { } }
@@ -229,8 +229,8 @@ namespace Azure.ResourceManager.Storage
     public partial class FileServiceData : Azure.ResourceManager.Models.ResourceData
     {
         public FileServiceData() { }
-        public Azure.ResourceManager.Storage.Models.CorsRules Cors { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.ProtocolSettings ProtocolSettings { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.CorsRule> CorsRulesValue { get { throw null; } }
+        public Azure.ResourceManager.Storage.Models.SmbSetting ProtocolSmb { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.DeleteRetentionPolicy ShareDeleteRetentionPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.Sku Sku { get { throw null; } }
     }
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Storage
     {
         public ManagementPolicyData() { }
         public System.DateTimeOffset? LastModifiedTime { get { throw null; } }
-        public Azure.ResourceManager.Storage.Models.ManagementPolicySchema Policy { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.ManagementPolicyRule> Rules { get { throw null; } set { } }
     }
     public partial class ObjectReplicationPolicy : Azure.ResourceManager.Core.ArmResource
     {
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Storage
     public partial class PrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public PrivateEndpointConnectionData() { }
-        public Azure.ResourceManager.Resources.Models.SubResource PrivateEndpoint { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.PrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Storage
     public partial class QueueServiceData : Azure.ResourceManager.Models.ResourceData
     {
         public QueueServiceData() { }
-        public Azure.ResourceManager.Storage.Models.CorsRules Cors { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.CorsRule> CorsRulesValue { get { throw null; } }
     }
     public static partial class ResourceGroupExtensions
     {
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.Storage
         public bool? IsLocalUserEnabled { get { throw null; } set { } }
         public bool? IsSftpEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.KeyCreationTime KeyCreationTime { get { throw null; } }
-        public Azure.ResourceManager.Storage.Models.KeyPolicy KeyPolicy { get { throw null; } }
+        public int KeyExpirationPeriodInDays { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.Kind? Kind { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.LargeFileSharesState? LargeFileSharesState { get { throw null; } set { } }
         public System.DateTimeOffset? LastGeoFailoverTime { get { throw null; } }
@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.Storage
     public partial class TableServiceData : Azure.ResourceManager.Models.ResourceData
     {
         public TableServiceData() { }
-        public Azure.ResourceManager.Storage.Models.CorsRules Cors { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.CorsRule> CorsRulesValue { get { throw null; } }
     }
 }
 namespace Azure.ResourceManager.Storage.Models
@@ -964,11 +964,6 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator !=(Azure.ResourceManager.Storage.Models.CorsRuleAllowedMethodsItem left, Azure.ResourceManager.Storage.Models.CorsRuleAllowedMethodsItem right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CorsRules
-    {
-        public CorsRules() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.CorsRule> CorsRulesValue { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.Storage.Models.CreatedByType>
     {
@@ -994,11 +989,6 @@ namespace Azure.ResourceManager.Storage.Models
         public CustomDomain(string name) { }
         public string Name { get { throw null; } set { } }
         public bool? UseSubDomainName { get { throw null; } set { } }
-    }
-    public partial class DateAfterCreation
-    {
-        public DateAfterCreation(float daysAfterCreationGreaterThan) { }
-        public float DaysAfterCreationGreaterThan { get { throw null; } set { } }
     }
     public partial class DateAfterModification
     {
@@ -1395,11 +1385,6 @@ namespace Azure.ResourceManager.Storage.Models
         Read = 0,
         Full = 1,
     }
-    public partial class KeyPolicy
-    {
-        public KeyPolicy(int keyExpirationPeriodInDays) { }
-        public int KeyExpirationPeriodInDays { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KeySource : System.IEquatable<Azure.ResourceManager.Storage.Models.KeySource>
     {
@@ -1769,24 +1754,19 @@ namespace Azure.ResourceManager.Storage.Models
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.RuleType Type { get { throw null; } set { } }
     }
-    public partial class ManagementPolicySchema
-    {
-        public ManagementPolicySchema(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.ManagementPolicyRule> rules) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.ManagementPolicyRule> Rules { get { throw null; } }
-    }
     public partial class ManagementPolicySnapShot
     {
         public ManagementPolicySnapShot() { }
-        public Azure.ResourceManager.Storage.Models.DateAfterCreation Delete { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.DateAfterCreation TierToArchive { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.DateAfterCreation TierToCool { get { throw null; } set { } }
+        public float DeleteDaysAfterCreationGreaterThan { get { throw null; } set { } }
+        public float TierToArchiveDaysAfterCreationGreaterThan { get { throw null; } set { } }
+        public float TierToCoolDaysAfterCreationGreaterThan { get { throw null; } set { } }
     }
     public partial class ManagementPolicyVersion
     {
         public ManagementPolicyVersion() { }
-        public Azure.ResourceManager.Storage.Models.DateAfterCreation Delete { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.DateAfterCreation TierToArchive { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.DateAfterCreation TierToCool { get { throw null; } set { } }
+        public float DeleteDaysAfterCreationGreaterThan { get { throw null; } set { } }
+        public float TierToArchiveDaysAfterCreationGreaterThan { get { throw null; } set { } }
+        public float TierToCoolDaysAfterCreationGreaterThan { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MigrationState : System.IEquatable<Azure.ResourceManager.Storage.Models.MigrationState>
@@ -1824,11 +1804,6 @@ namespace Azure.ResourceManager.Storage.Models
         public static implicit operator Azure.ResourceManager.Storage.Models.MinimumTlsVersion (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.MinimumTlsVersion left, Azure.ResourceManager.Storage.Models.MinimumTlsVersion right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class Multichannel
-    {
-        public Multichannel() { }
-        public bool? Enabled { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Name : System.IEquatable<Azure.ResourceManager.Storage.Models.Name>
@@ -1982,11 +1957,6 @@ namespace Azure.ResourceManager.Storage.Models
         internal ProtectedAppendWritesHistory() { }
         public bool? AllowProtectedAppendWritesAll { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
-    }
-    public partial class ProtocolSettings
-    {
-        public ProtocolSettings() { }
-        public Azure.ResourceManager.Storage.Models.SmbSetting Smb { get { throw null; } set { } }
     }
     public enum ProvisioningState
     {
@@ -2311,8 +2281,8 @@ namespace Azure.ResourceManager.Storage.Models
         public SmbSetting() { }
         public string AuthenticationMethods { get { throw null; } set { } }
         public string ChannelEncryption { get { throw null; } set { } }
+        public bool? Enabled { get { throw null; } set { } }
         public string KerberosTicketEncryption { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.Multichannel Multichannel { get { throw null; } set { } }
         public string Versions { get { throw null; } set { } }
     }
     public partial class SshPublicKey
@@ -2368,7 +2338,7 @@ namespace Azure.ResourceManager.Storage.Models
         public bool? IsHnsEnabled { get { throw null; } set { } }
         public bool? IsLocalUserEnabled { get { throw null; } set { } }
         public bool? IsSftpEnabled { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.KeyPolicy KeyPolicy { get { throw null; } set { } }
+        public int KeyExpirationPeriodInDays { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.Kind Kind { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.LargeFileSharesState? LargeFileSharesState { get { throw null; } set { } }
         public string Location { get { throw null; } }
@@ -2438,7 +2408,7 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.ImmutableStorageAccount ImmutableStorageWithVersioning { get { throw null; } set { } }
         public bool? IsLocalUserEnabled { get { throw null; } set { } }
         public bool? IsSftpEnabled { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.KeyPolicy KeyPolicy { get { throw null; } set { } }
+        public int KeyExpirationPeriodInDays { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.Kind? Kind { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.LargeFileSharesState? LargeFileSharesState { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.MinimumTlsVersion? MinimumTlsVersion { get { throw null; } set { } }

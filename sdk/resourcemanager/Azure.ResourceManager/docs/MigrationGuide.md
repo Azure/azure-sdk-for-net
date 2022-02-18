@@ -143,12 +143,9 @@ VirtualNetwork subnetResponse = networkClient.Subnets.Get(rgName, vnetName, subn
 ```C# Snippet:Create_Vnet_and_Subnet
 string vnetName = "MYVM" + "_vnet";
 string subnetName = "mySubnet";
-AddressSpace addressSpace = new AddressSpace();
-addressSpace.AddressPrefixes.Add("10.0.0.0/16");
 
 VirtualNetworkData vnetData = new VirtualNetworkData()
 {
-    AddressSpace = addressSpace,
     Subnets =
     {
         new SubnetData()
@@ -158,6 +155,7 @@ VirtualNetworkData vnetData = new VirtualNetworkData()
         }
     }
 };
+vnetData.AddressPrefixes.Add("10.0.0.0/16");
 ArmOperation<VirtualNetwork> vnetCreateLro = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnetData);
 VirtualNetwork vnet = vnetCreateLro.Value;
 ```
@@ -290,8 +288,7 @@ VirtualMachineData vmData = new VirtualMachineData(location);
 vmData.OSProfile.AdminUsername = "admin-username";
 vmData.OSProfile.AdminPassword = "admin-p4$$w0rd";
 vmData.OSProfile.ComputerName = "computer-name";
-vmData.AvailabilitySet = new WritableSubResource();
-vmData.AvailabilitySet.Id = aset.Id;
+vmData.AvailabilitySetId = aset.Id;
 NetworkInterfaceReference nicReference = new NetworkInterfaceReference();
 nicReference.Id = nic.Id;
 vmData.NetworkProfile.NetworkInterfaces.Add(nicReference);

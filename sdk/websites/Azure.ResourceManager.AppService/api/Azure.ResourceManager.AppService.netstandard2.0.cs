@@ -1212,7 +1212,7 @@ namespace Azure.ResourceManager.AppService
     {
         public RemotePrivateEndpointConnectionARMResourceData() { }
         public System.Collections.Generic.IList<string> IpAddresses { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.SubResource PrivateEndpoint { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.PrivateLinkConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
     }
@@ -1434,8 +1434,8 @@ namespace Azure.ResourceManager.AppService
         public bool? AcrUseManagedIdentityCreds { get { throw null; } set { } }
         public string AcrUserManagedIdentityID { get { throw null; } set { } }
         public bool? AlwaysOn { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.ApiDefinitionInfo ApiDefinition { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.ApiManagementConfig ApiManagementConfig { get { throw null; } set { } }
+        public string ApiDefinitionUrl { get { throw null; } set { } }
+        public string ApiManagementConfigId { get { throw null; } set { } }
         public string AppCommandLine { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.NameValuePair> AppSettings { get { throw null; } set { } }
         public bool? AutoHealEnabled { get { throw null; } set { } }
@@ -1447,7 +1447,7 @@ namespace Azure.ResourceManager.AppService
         public System.Collections.Generic.IList<string> DefaultDocuments { get { throw null; } set { } }
         public bool? DetailedErrorLoggingEnabled { get { throw null; } set { } }
         public string DocumentRoot { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.Experiments Experiments { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.RampUpRule> ExperimentsRampUpRules { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.FtpsState? FtpsState { get { throw null; } set { } }
         public int? FunctionAppScaleLimit { get { throw null; } set { } }
         public bool? FunctionsRuntimeScaleMonitoringEnabled { get { throw null; } set { } }
@@ -1978,8 +1978,8 @@ namespace Azure.ResourceManager.AppService
     {
         public SiteLogsConfigData() { }
         public Azure.ResourceManager.AppService.Models.ApplicationLogsConfig ApplicationLogs { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.EnabledConfig DetailedErrorMessages { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.EnabledConfig FailedRequestsTracing { get { throw null; } set { } }
+        public bool? DetailedErrorMessagesEnabled { get { throw null; } set { } }
+        public bool? FailedRequestsTracingEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.HttpLogsConfig HttpLogs { get { throw null; } set { } }
     }
     public partial class SiteNetworkConfig : Azure.ResourceManager.Core.ArmResource
@@ -4345,11 +4345,6 @@ namespace Azure.ResourceManager.AppService.Models
         public string ServiceIpAddress { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.VirtualIPMapping> VipMappings { get { throw null; } }
     }
-    public partial class AllowedAudiencesValidation
-    {
-        public AllowedAudiencesValidation() { }
-        public System.Collections.Generic.IList<string> AllowedAudiences { get { throw null; } }
-    }
     public partial class AllowedPrincipals
     {
         public AllowedPrincipals() { }
@@ -4360,20 +4355,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public AnalysisData() { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.NameValuePair>> Data { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.DataSource DataSource { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.DetectorDefinition DetectorDefinition { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.ResponseMetaData DetectorMetaData { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DiagnosticMetricSet> Metrics { get { throw null; } }
         public string Source { get { throw null; } set { } }
-    }
-    public partial class ApiDefinitionInfo
-    {
-        public ApiDefinitionInfo() { }
-        public string Url { get { throw null; } set { } }
-    }
-    public partial class ApiManagementConfig
-    {
-        public ApiManagementConfig() { }
-        public string Id { get { throw null; } set { } }
     }
     public partial class AppInsightsWebAppStackSettings
     {
@@ -4385,7 +4370,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public Apple() { }
         public bool? Enabled { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.LoginScopes Login { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> LoginScopes { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.AppleRegistration Registration { get { throw null; } set { } }
     }
     public partial class AppleRegistration
@@ -4399,7 +4384,7 @@ namespace Azure.ResourceManager.AppService.Models
         public ApplicationLogsConfig() { }
         public Azure.ResourceManager.AppService.Models.AzureBlobStorageApplicationLogsConfig AzureBlobStorage { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AzureTableStorageApplicationLogsConfig AzureTableStorage { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.FileSystemApplicationLogsConfig FileSystem { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.LogLevel? FileSystemLevel { get { throw null; } set { } }
     }
     public partial class ApplicationStack
     {
@@ -4648,7 +4633,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string ArtifactStorageClassName { get { throw null; } set { } }
         public string ArtifactStorageMountPath { get { throw null; } set { } }
         public string ArtifactStorageNodeName { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.FrontEndConfiguration FrontEndServiceConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.FrontEndServiceType? FrontEndServiceKind { get { throw null; } set { } }
         public string KubeConfig { get { throw null; } set { } }
     }
     public partial class ArmPlan
@@ -4757,12 +4742,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public AzureStaticWebApps() { }
         public bool? Enabled { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.AzureStaticWebAppsRegistration Registration { get { throw null; } set { } }
-    }
-    public partial class AzureStaticWebAppsRegistration
-    {
-        public AzureStaticWebAppsRegistration() { }
-        public string ClientId { get { throw null; } set { } }
+        public string RegistrationClientId { get { throw null; } set { } }
     }
     public partial class AzureStorageInfoValue
     {
@@ -4847,11 +4827,6 @@ namespace Azure.ResourceManager.AppService.Models
         public string OsType { get { throw null; } set { } }
         public string ResourceType { get { throw null; } set { } }
         public string ShortName { get { throw null; } set { } }
-    }
-    public partial class BlobStorageTokenStore
-    {
-        public BlobStorageTokenStore() { }
-        public string SasUrlSettingName { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BuildStatus : System.IEquatable<Azure.ResourceManager.AppService.Models.BuildStatus>
@@ -5189,16 +5164,11 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class CsmOperationDescription
     {
         internal CsmOperationDescription() { }
+        public Azure.ResourceManager.AppService.Models.ServiceSpecification CsmOperationDescriptionServiceSpecification { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.CsmOperationDisplay Display { get { throw null; } }
         public bool? IsDataAction { get { throw null; } }
         public string Name { get { throw null; } }
         public string Origin { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.CsmOperationDescriptionProperties Properties { get { throw null; } }
-    }
-    public partial class CsmOperationDescriptionProperties
-    {
-        internal CsmOperationDescriptionProperties() { }
-        public Azure.ResourceManager.AppService.Models.ServiceSpecification ServiceSpecification { get { throw null; } }
     }
     public partial class CsmOperationDisplay
     {
@@ -5412,11 +5382,11 @@ namespace Azure.ResourceManager.AppService.Models
         public DiagnosticDetectorResponse() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DetectorAbnormalTimePeriod> AbnormalTimePeriods { get { throw null; } }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.NameValuePair>> Data { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.DataSource DataSource { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.DetectorDefinition DetectorDefinition { get { throw null; } set { } }
         public System.DateTimeOffset? EndTime { get { throw null; } set { } }
         public bool? IssueDetected { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DiagnosticMetricSet> Metrics { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.ResponseMetaData ResponseMetaData { get { throw null; } set { } }
         public System.DateTimeOffset? StartTime { get { throw null; } set { } }
     }
     public partial class DiagnosticMetricSample
@@ -5533,11 +5503,6 @@ namespace Azure.ResourceManager.AppService.Models
         Regular = 0,
         SoftDeleted = 1,
     }
-    public partial class EnabledConfig
-    {
-        public EnabledConfig() { }
-        public bool? Enabled { get { throw null; } set { } }
-    }
     public partial class EndpointDependency
     {
         internal EndpointDependency() { }
@@ -5564,11 +5529,6 @@ namespace Azure.ResourceManager.AppService.Models
         public System.Collections.Generic.IReadOnlyList<string> Parameters { get { throw null; } }
         public string Target { get { throw null; } }
     }
-    public partial class Experiments
-    {
-        public Experiments() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.RampUpRule> RampUpRules { get { throw null; } }
-    }
     public partial class ExtendedLocation
     {
         public ExtendedLocation() { }
@@ -5580,13 +5540,8 @@ namespace Azure.ResourceManager.AppService.Models
         public Facebook() { }
         public bool? Enabled { get { throw null; } set { } }
         public string GraphApiVersion { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.LoginScopes Login { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> LoginScopes { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.AppRegistration Registration { get { throw null; } set { } }
-    }
-    public partial class FileSystemApplicationLogsConfig
-    {
-        public FileSystemApplicationLogsConfig() { }
-        public Azure.ResourceManager.AppService.Models.LogLevel? Level { get { throw null; } set { } }
     }
     public partial class FileSystemHttpLogsConfig
     {
@@ -5594,11 +5549,6 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? Enabled { get { throw null; } set { } }
         public int? RetentionInDays { get { throw null; } set { } }
         public int? RetentionInMb { get { throw null; } set { } }
-    }
-    public partial class FileSystemTokenStore
-    {
-        public FileSystemTokenStore() { }
-        public string Directory { get { throw null; } set { } }
     }
     public partial class ForwardProxy
     {
@@ -5617,11 +5567,6 @@ namespace Azure.ResourceManager.AppService.Models
     {
         Day = 0,
         Hour = 1,
-    }
-    public partial class FrontEndConfiguration
-    {
-        public FrontEndConfiguration() { }
-        public Azure.ResourceManager.AppService.Models.FrontEndServiceType? Kind { get { throw null; } set { } }
     }
     public enum FrontEndServiceType
     {
@@ -5711,7 +5656,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public GitHub() { }
         public bool? Enabled { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.LoginScopes Login { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> LoginScopes { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.ClientRegistration Registration { get { throw null; } set { } }
     }
     public partial class GitHubActionCodeConfiguration
@@ -5765,9 +5710,9 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public Google() { }
         public bool? Enabled { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.LoginScopes Login { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> LoginScopes { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.ClientRegistration Registration { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.AllowedAudiencesValidation Validation { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ValidationAllowedAudiences { get { throw null; } }
     }
     public partial class HandlerMapping
     {
@@ -5850,12 +5795,7 @@ namespace Azure.ResourceManager.AppService.Models
         public HttpSettings() { }
         public Azure.ResourceManager.AppService.Models.ForwardProxy ForwardProxy { get { throw null; } set { } }
         public bool? RequireHttps { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.HttpSettingsRoutes Routes { get { throw null; } set { } }
-    }
-    public partial class HttpSettingsRoutes
-    {
-        public HttpSettingsRoutes() { }
-        public string ApiPrefix { get { throw null; } set { } }
+        public string RoutesApiPrefix { get { throw null; } set { } }
     }
     public partial class HybridConnectionKey : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
@@ -6022,9 +5962,9 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public LegacyMicrosoftAccount() { }
         public bool? Enabled { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.LoginScopes Login { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> LoginScopes { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.ClientRegistration Registration { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.AllowedAudiencesValidation Validation { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ValidationAllowedAudiences { get { throw null; } }
     }
     public partial class LinuxJavaContainerSettings
     {
@@ -6077,18 +6017,8 @@ namespace Azure.ResourceManager.AppService.Models
         public Azure.ResourceManager.AppService.Models.CookieExpiration CookieExpiration { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.Nonce Nonce { get { throw null; } set { } }
         public bool? PreserveUrlFragmentsForLogins { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.LoginRoutes Routes { get { throw null; } set { } }
+        public string RoutesLogoutEndpoint { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.TokenStore TokenStore { get { throw null; } set { } }
-    }
-    public partial class LoginRoutes
-    {
-        public LoginRoutes() { }
-        public string LogoutEndpoint { get { throw null; } set { } }
-    }
-    public partial class LoginScopes
-    {
-        public LoginScopes() { }
-        public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
     }
     public enum LogLevel
     {
@@ -6519,7 +6449,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public RemotePrivateEndpointConnection() { }
         public System.Collections.Generic.IList<string> IpAddresses { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.SubResource PrivateEndpoint { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.PrivateLinkConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
     }
@@ -6638,11 +6568,6 @@ namespace Azure.ResourceManager.AppService.Models
         public string Status { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
-    }
-    public partial class ResponseMetaData
-    {
-        public ResponseMetaData() { }
-        public Azure.ResourceManager.AppService.Models.DataSource DataSource { get { throw null; } set { } }
     }
     public partial class RestoreRequest : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
@@ -6798,8 +6723,8 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? AcrUseManagedIdentityCreds { get { throw null; } set { } }
         public string AcrUserManagedIdentityID { get { throw null; } set { } }
         public bool? AlwaysOn { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.ApiDefinitionInfo ApiDefinition { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.ApiManagementConfig ApiManagementConfig { get { throw null; } set { } }
+        public string ApiDefinitionUrl { get { throw null; } set { } }
+        public string ApiManagementConfigId { get { throw null; } set { } }
         public string AppCommandLine { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.NameValuePair> AppSettings { get { throw null; } set { } }
         public bool? AutoHealEnabled { get { throw null; } set { } }
@@ -6811,7 +6736,7 @@ namespace Azure.ResourceManager.AppService.Models
         public System.Collections.Generic.IList<string> DefaultDocuments { get { throw null; } set { } }
         public bool? DetailedErrorLoggingEnabled { get { throw null; } set { } }
         public string DocumentRoot { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.Experiments Experiments { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.RampUpRule> ExperimentsRampUpRules { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.FtpsState? FtpsState { get { throw null; } set { } }
         public int? FunctionAppScaleLimit { get { throw null; } set { } }
         public bool? FunctionsRuntimeScaleMonitoringEnabled { get { throw null; } set { } }
@@ -7353,9 +7278,9 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class TokenStore
     {
         public TokenStore() { }
-        public Azure.ResourceManager.AppService.Models.BlobStorageTokenStore AzureBlobStorage { get { throw null; } set { } }
+        public string AzureBlobStorageSasUrlSettingName { get { throw null; } set { } }
         public bool? Enabled { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.FileSystemTokenStore FileSystem { get { throw null; } set { } }
+        public string FileSystemDirectory { get { throw null; } set { } }
         public double? TokenRefreshExtensionHours { get { throw null; } set { } }
     }
     public partial class TopLevelDomainAgreementOption
