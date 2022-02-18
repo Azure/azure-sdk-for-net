@@ -19,8 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             // http.scheme, http.host, http.target
             // http.scheme, http.server_name, net.host.port, http.target
             // http.scheme, net.host.name, net.host.port, http.target
-            string url = null;
-            url = tagObjects.GetUrlUsingHttpUrl();
+            string url = tagObjects.GetUrlUsingHttpUrl();
             if (url != null)
             {
                 return url;
@@ -37,8 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     return null;
                 }
 
-                string defaultPort = GetDefaultHttpPort(httpScheme);
-                url = tagObjects.GetUrlUsingHttpHost(httpScheme, defaultPort, httpTarget);
+                url = tagObjects.GetUrlUsingHttpHost(httpScheme, httpTarget);
                 if (url != null)
                 {
                     return url;
@@ -56,10 +54,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
                 if (!string.IsNullOrWhiteSpace(host))
                 {
-                    var netHostPort = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeNetHostPort)?.ToString();
-                    if (!string.IsNullOrWhiteSpace(netHostPort))
+                    var netHostPort = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeNetHostPort);
+                    if (netHostPort != null)
                     {
-                        url = tagObjects.GetUrlUsingHostAndPort(httpScheme, host, netHostPort, defaultPort, httpTarget);
+                        url = GetUrlUsingHostAndPort(httpScheme, host, (int)netHostPort, httpTarget);
                         return url;
                     }
                 }
@@ -79,8 +77,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             // http.scheme, http.host, http.target
             // http.scheme, net.peer.name, net.peer.port, http.target
             // http.scheme, net.peer.ip, net.peer.port, http.target
-            string url = null;
-            url = tagObjects.GetUrlUsingHttpUrl();
+            string url = tagObjects.GetUrlUsingHttpUrl();
             if (url != null)
             {
                 return url;
@@ -97,8 +94,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     return null;
                 }
 
-                string defaultPort = GetDefaultHttpPort(httpScheme);
-                url = tagObjects.GetUrlUsingHttpHost(httpScheme, defaultPort, httpTarget);
+                url = tagObjects.GetUrlUsingHttpHost(httpScheme, httpTarget);
                 if (url != null)
                 {
                     return url;
@@ -107,10 +103,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 var host = tagObjects.GetHostUsingNetPeerAttributes();
                 if (!string.IsNullOrWhiteSpace(host))
                 {
-                    var netPeerPort = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeNetPeerPort)?.ToString();
-                    if (!string.IsNullOrWhiteSpace(netPeerPort))
+                    var netHostPort = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeNetHostPort);
+                    if (netHostPort != null)
                     {
-                        url = tagObjects.GetUrlUsingHostAndPort(httpScheme, host, netPeerPort, defaultPort, httpTarget);
+                        url = GetUrlUsingHostAndPort(httpScheme, host, (int)netHostPort, httpTarget);
                         return url;
                     }
                 }
@@ -166,40 +162,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return url;
         }
 
-        internal static string GetUrlUsingHttpHost(this AzMonList tagObjects, string httpScheme, string defaultPort, string httpTarget)
+        internal static string GetUrlUsingHttpHost(this AzMonList tagObjects, string httpScheme, string httpTarget)
         {
-            string url = null;
             var httpHost = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpHost)?.ToString();
             if (!string.IsNullOrWhiteSpace(httpHost))
             {
-                string portSection = $":{defaultPort}";
-                if (httpHost.EndsWith(portSection, StringComparison.OrdinalIgnoreCase))
-                {
-                    var truncatedHost = httpHost.Substring(0, httpHost.IndexOf(portSection, StringComparison.OrdinalIgnoreCase));
-                    url = $"{httpScheme}://{truncatedHost}{httpTarget}";
-                }
-                else
-                {
-                    url = $"{httpScheme}://{httpHost}{httpTarget}";
-                }
+                var uribuilder = new UriBuilder(httpScheme, httpHost);
+                uribuilder.Path = httpTarget;
+                return uribuilder.Uri.AbsoluteUri;
             }
 
-            return url;
+            return null;
         }
 
-        internal static string GetUrlUsingHostAndPort(this AzMonList tagObjects, string httpScheme, string host, string port, string defaultPort, string httpTarget)
+        internal static string GetUrlUsingHostAndPort(string httpScheme, string host, int port, string httpTarget)
         {
-            string url = null;
-            if (port == defaultPort)
-            {
-                url = $"{httpScheme}://{host}{httpTarget}";
-            }
-            else
-            {
-                url = $"{httpScheme}://{host}:{port}{httpTarget}";
-            }
-
-            return url;
+            var uribuilder = new UriBuilder(httpScheme, host, port, httpTarget);
+            return uribuilder.Uri.AbsoluteUri;
         }
 
         internal static string GetHostUsingNetPeerAttributes(this AzMonList tagObjects)

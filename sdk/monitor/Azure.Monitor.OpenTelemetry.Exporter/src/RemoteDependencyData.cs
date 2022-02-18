@@ -38,6 +38,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             {
                 case PartBType.Http:
                     Data = httpUrl;
+                    // TODO: AzMonList is parsed for second time to get the same details as in httpUrl.
+                    // Change this to read once and remove default port check.
                     Target = monitorTags.PartBTags.GetDependencyTarget(PartBType.Http);
                     Type = "Http";
                     ResultCode = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpStatusCode)?.ToString() ?? "0";
