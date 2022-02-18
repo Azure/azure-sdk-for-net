@@ -241,6 +241,29 @@ namespace Azure.Core.Tests
             Assert.IsTrue(message.ResponseClassifier.IsErrorResponse(message));
         }
 
+        [Test]
+        public void AppliesMessageClassifierWithLastSetWinsSemantics()
+        {
+            RequestContext context = new RequestContext();
+            context.AddClassificationHandler(new StatusCodeHandler(204, true));
+            context.AddClassificationHandler(new StatusCodeHandler(204, false));
+
+            HttpMessage message = new HttpMessage(new MockRequest(), default);
+            message.ApplyRequestContext(context, DpgClassifier.Instance);
+
+            message.Response = new MockResponse(204);
+            Assert.IsFalse(message.ResponseClassifier.IsErrorResponse(message));
+
+            message.Response = new MockResponse(304);
+            Assert.IsFalse(message.ResponseClassifier.IsErrorResponse(message));
+
+            message.Response = new MockResponse(404);
+            Assert.IsTrue(message.ResponseClassifier.IsErrorResponse(message));
+
+            message.Response = new MockResponse(500);
+            Assert.IsTrue(message.ResponseClassifier.IsErrorResponse(message));
+        }
+
         #region Helpers
         private class StatusCodeHandler : ResponseClassificationHandler
         {

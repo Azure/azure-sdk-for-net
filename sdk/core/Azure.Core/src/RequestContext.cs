@@ -101,7 +101,8 @@ namespace Azure
 
             int length = _handlers == null ? 0 : _handlers.Length;
             Array.Resize(ref _handlers, length + 1);
-            _handlers[length] = classifier;
+            Array.Copy(_handlers, 0, _handlers, 1, length);
+            _handlers[0] = classifier;
         }
 
         internal void Freeze()

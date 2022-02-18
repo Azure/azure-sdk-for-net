@@ -61,9 +61,9 @@ namespace Azure.Core
 
             if (Handlers != null)
             {
-                for (int i = Handlers.Length - 1; i >= 0; i--)
+                foreach (var handler in Handlers)
                 {
-                    if (Handlers[i].TryClassify(message, out isError))
+                    if (handler.TryClassify(message, out isError))
                     {
                         return isError;
                     }
