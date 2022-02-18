@@ -94,9 +94,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetDeviceClassAsync(string deviceClassId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
@@ -150,9 +148,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetDeviceClass(string deviceClassId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
@@ -228,9 +224,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetDeviceAsync(string deviceId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(deviceId, nameof(deviceId));
 
@@ -306,9 +300,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetDevice(string deviceId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(deviceId, nameof(deviceId));
 
@@ -385,9 +377,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetDeviceModuleAsync(string deviceId, string moduleId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(deviceId, nameof(deviceId));
             Argument.AssertNotNullOrEmpty(moduleId, nameof(moduleId));
@@ -465,9 +455,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetDeviceModule(string deviceId, string moduleId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(deviceId, nameof(deviceId));
             Argument.AssertNotNullOrEmpty(moduleId, nameof(moduleId));
@@ -516,9 +504,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetUpdateComplianceAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetUpdateCompliance");
             scope.Start();
@@ -564,9 +550,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetUpdateCompliance(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetUpdateCompliance");
             scope.Start();
@@ -613,9 +597,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetDeviceTagAsync(string tagName, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
 
@@ -664,9 +646,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetDeviceTag(string tagName, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
 
@@ -720,9 +700,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetGroupAsync(string groupId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -776,9 +754,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetGroup(string groupId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -844,9 +820,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CreateOrUpdateGroupAsync(string groupId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNull(content, nameof(content));
@@ -913,9 +887,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response CreateOrUpdateGroup(string groupId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNull(content, nameof(content));
@@ -959,9 +931,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> DeleteGroupAsync(string groupId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -1004,9 +974,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response DeleteGroup(string groupId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -1057,9 +1025,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetGroupUpdateComplianceAsync(string groupId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -1110,9 +1076,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetGroupUpdateCompliance(string groupId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -1170,9 +1134,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetDeploymentAsync(string groupId, string deploymentId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
@@ -1231,9 +1193,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetDeployment(string groupId, string deploymentId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
@@ -1307,9 +1267,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CreateOrUpdateDeploymentAsync(string groupId, string deploymentId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
@@ -1384,9 +1342,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response CreateOrUpdateDeployment(string groupId, string deploymentId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
@@ -1432,9 +1388,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> DeleteDeploymentAsync(string groupId, string deploymentId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
@@ -1479,9 +1433,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response DeleteDeployment(string groupId, string deploymentId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
@@ -1536,9 +1488,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetDeploymentStatusAsync(string groupId, string deploymentId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
@@ -1593,9 +1543,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetDeploymentStatus(string groupId, string deploymentId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
@@ -1663,9 +1611,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetOperationAsync(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
@@ -1732,9 +1678,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetOperation(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
@@ -1808,9 +1752,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CollectLogsAsync(string operationId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
             Argument.AssertNotNull(content, nameof(content));
@@ -1885,9 +1827,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response CollectLogs(string operationId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
             Argument.AssertNotNull(content, nameof(content));
@@ -1946,9 +1886,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetLogCollectionOperationAsync(string operationId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
@@ -2006,9 +1944,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetLogCollectionOperation(string operationId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
@@ -2070,9 +2006,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetLogCollectionOperationDetailedStatusAsync(string operationId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
@@ -2134,9 +2068,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetLogCollectionOperationDetailedStatus(string operationId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
@@ -2195,9 +2127,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> StopDeploymentAsync(string groupId, string deploymentId, string action, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
@@ -2258,9 +2188,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response StopDeployment(string groupId, string deploymentId, string action, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
@@ -2321,9 +2249,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> RetryDeploymentAsync(string groupId, string deploymentId, string action, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
@@ -2384,9 +2310,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response RetryDeployment(string groupId, string deploymentId, string action, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
@@ -2444,9 +2368,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetDeviceClassesAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceManagementClient.GetDeviceClasses");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -2501,9 +2423,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetDeviceClasses(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceManagementClient.GetDeviceClasses");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -2557,9 +2477,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetInstallableUpdatesForDeviceClassesAsync(string deviceClassId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
@@ -2615,9 +2533,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetInstallableUpdatesForDeviceClasses(string deviceClassId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
@@ -2697,9 +2613,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetDevicesAsync(string filter = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceManagementClient.GetDevices");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -2777,9 +2691,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetDevices(string filter = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceManagementClient.GetDevices");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -2829,9 +2741,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetDeviceTagsAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceManagementClient.GetDeviceTags");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -2881,9 +2791,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetDeviceTags(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceManagementClient.GetDeviceTags");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -2938,9 +2846,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetGroupsAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceManagementClient.GetGroups");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -2995,9 +2901,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetGroups(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceManagementClient.GetGroups");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -3055,9 +2959,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetBestUpdatesForGroupsAsync(string groupId, string filter = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -3117,9 +3019,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetBestUpdatesForGroups(string groupId, string filter = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -3183,9 +3083,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetDeploymentsForGroupsAsync(string groupId, string filter = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -3249,9 +3147,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetDeploymentsForGroups(string groupId, string filter = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -3311,9 +3207,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetDeploymentDevicesAsync(string groupId, string deploymentId, string filter = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
@@ -3374,9 +3268,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetDeploymentDevices(string groupId, string deploymentId, string filter = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
@@ -3448,9 +3340,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetOperationsAsync(string filter = null, int? top = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceManagementClient.GetOperations");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -3519,9 +3409,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetOperations(string filter = null, int? top = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceManagementClient.GetOperations");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -3580,9 +3468,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetLogCollectionOperationsAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceManagementClient.GetLogCollectionOperations");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -3641,9 +3527,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetLogCollectionOperations(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceManagementClient.GetLogCollectionOperations");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -3686,9 +3570,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Operation<BinaryData>> ImportDevicesAsync(bool waitForCompletion, string action, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(action, nameof(action));
             Argument.AssertNotNull(content, nameof(content));
@@ -3733,9 +3615,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Operation<BinaryData> ImportDevices(bool waitForCompletion, string action, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(action, nameof(action));
             Argument.AssertNotNull(content, nameof(content));

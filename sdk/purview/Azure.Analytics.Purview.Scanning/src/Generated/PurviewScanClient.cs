@@ -95,9 +95,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetFilterAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetFilter");
             scope.Start();
@@ -145,9 +143,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetFilter(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetFilter");
             scope.Start();
@@ -206,9 +202,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CreateOrUpdateFilterAsync(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateFilter");
             scope.Start();
@@ -267,9 +261,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response CreateOrUpdateFilter(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateFilter");
             scope.Start();
@@ -407,9 +399,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -549,9 +539,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response CreateOrUpdate(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -640,9 +628,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetPropertiesAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetProperties");
             scope.Start();
@@ -729,9 +715,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetProperties(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetProperties");
             scope.Start();
@@ -818,9 +802,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> DeleteAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.Delete");
             scope.Start();
@@ -907,9 +889,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response Delete(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.Delete");
             scope.Start();
@@ -972,9 +952,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> RunScanAsync(string runId, string scanLevel = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
@@ -1039,9 +1017,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response RunScan(string runId, string scanLevel = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
@@ -1105,9 +1081,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CancelScanAsync(string runId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
@@ -1171,9 +1145,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response CancelScan(string runId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
@@ -1248,9 +1220,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetTriggerAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetTrigger");
             scope.Start();
@@ -1323,9 +1293,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetTrigger(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetTrigger");
             scope.Start();
@@ -1435,9 +1403,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CreateOrUpdateTriggerAsync(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1549,9 +1515,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response CreateOrUpdateTrigger(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1626,9 +1590,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> DeleteTriggerAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.DeleteTrigger");
             scope.Start();
@@ -1701,9 +1663,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response DeleteTrigger(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.DeleteTrigger");
             scope.Start();
@@ -1789,9 +1749,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetRunsAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewScanClient.GetRuns");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1878,9 +1836,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetRuns(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewScanClient.GetRuns");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
