@@ -143,7 +143,14 @@ namespace Azure.ResourceManager.Storage
         /// <summary> SasPolicy assigned to the storage account. </summary>
         public SasPolicy SasPolicy { get; }
         /// <summary> KeyPolicy assigned to the storage account. </summary>
-        public KeyPolicy KeyPolicy { get; }
+        internal KeyPolicy KeyPolicy { get; }
+        /// <summary> The key expiration period in days. </summary>
+        public int KeyExpirationPeriodInDays
+        {
+            get => KeyPolicy.KeyExpirationPeriodInDays;
+            set => KeyPolicy.KeyExpirationPeriodInDays = value;
+        }
+
         /// <summary> Storage account keys creation time. </summary>
         public KeyCreationTime KeyCreationTime { get; }
         /// <summary> Gets the URLs that are used to perform a retrieval of a public blob, queue, or table object from the secondary location of the storage account. Only available if the SKU name is Standard_RAGRS. </summary>
