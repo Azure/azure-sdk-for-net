@@ -18,10 +18,19 @@ namespace Azure.AI.Personalizer.Tests
         {
             PersonalizerAdministrationClient client = GetAdministrationClient(isSingleSlot: true);
             await GetModel(false, client);
+            await GetModel(true, client);
             await GetModelProperties(client);
-            Response<Stream> response = await GetModel(true, client);
-            await ImportModel(response.Value, client);
+            Response<Stream> response = await ExportSignedModel(client);
+            await ImportSignedModel(response.Value, client);
             await ResetModel(client);
+        }
+
+        [Test]
+        public async Task ExportImportModelTest()
+        {
+            PersonalizerAdministrationClient client = GetAdministrationClient(isSingleSlot: true);
+            Response<Stream> response = await ExportSignedModel(client);
+            await ImportSignedModel(response.Value, client);
         }
 
         private async Task<Response<Stream>> GetModel(bool signed, PersonalizerAdministrationClient client)
@@ -29,9 +38,14 @@ namespace Azure.AI.Personalizer.Tests
             return await client.GetPersonalizerModelAsync(signed);
         }
 
-        private async Task<Response> ImportModel(Stream modelStream, PersonalizerAdministrationClient client)
+        private async Task<Response<Stream>> ExportSignedModel(PersonalizerAdministrationClient client)
         {
-            return await client.ImportPersonalizerModelAsync(modelStream);
+            return await client.ExportPersonalizerSignedModelAsync();
+        }
+
+        private async Task<Response> ImportSignedModel(Stream modelStream, PersonalizerAdministrationClient client)
+        {
+            return await client.ImportPersonalizerSignedModelAsync(modelStream);
         }
 
         private async Task ResetModel(PersonalizerAdministrationClient client)

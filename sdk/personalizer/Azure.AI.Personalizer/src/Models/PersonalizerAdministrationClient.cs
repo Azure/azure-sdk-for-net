@@ -306,10 +306,24 @@ namespace Azure.AI.Personalizer
             }
         }
 
+        /// <summary> Export the current model used by Personalizer service. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets the signed Personalizer model. </remarks>
+        public virtual async Task<Response<Stream>> ExportPersonalizerSignedModelAsync(CancellationToken cancellationToken = default)
+        {
+            return await GetPersonalizerModelAsync(true, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Export the current model used by Personalizer service. </summary>
+        public virtual Response<Stream> ExportPersonalizerSignedModel(CancellationToken cancellationToken = default)
+        {
+            return GetPersonalizerModel(isSigned: true, cancellationToken);
+        }
+
         /// <summary> Replace the current model used by Personalizer service with an updated model. </summary>
         /// <param name="modelStream">Stream representing the digitally signed model zip archive.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ImportPersonalizerModelAsync(Stream modelStream, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ImportPersonalizerSignedModelAsync(Stream modelStream, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PersonalizerAdministrationClient.ImportPersonalizerModel");
             scope.Start();
@@ -327,7 +341,7 @@ namespace Azure.AI.Personalizer
         /// <summary> Replace the current model used by Personalizer service with an updated model. </summary>
         /// <param name="modelStream">Stream representing the digitally signed model zip archive.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response ImportPersonalizerModel(Stream modelStream, CancellationToken cancellationToken = default)
+        public virtual Response ImportPersonalizerSignedModel(Stream modelStream, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PersonalizerAdministrationClient.ImportPersonalizerModel");
             scope.Start();
