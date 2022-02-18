@@ -251,7 +251,7 @@ For example:
         public ConfigurationLiveTests()
         {
             Sanitizer.SanitizedHeaders.Add("example-header");
-            Sanitizer.SanitizeQueryParameter("example-query-parameter");
+            Sanitizer.SanitizeQueryParameters.Add("example-query-parameter");
         }
     }
 ```
