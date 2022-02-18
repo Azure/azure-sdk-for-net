@@ -26,7 +26,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
 
         public ChangeFeedTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
-            : base(async, RecordedTestMode.Live)
+            : base(async, mode)
         {
             _serviceVersion = serviceVersion;
         }
