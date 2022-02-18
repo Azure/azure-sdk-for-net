@@ -14,9 +14,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
-    public class VmssPublicIpAddressTests : NetworkTestsManagementClientBase
+    public class VmssPublicIPAddressTests : NetworkTestsManagementClientBase
     {
-        public VmssPublicIpAddressTests(bool isAsync) : base(isAsync)
+        public VmssPublicIPAddressTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests
         }
 
         [Test]
-        public async Task VmssPublicIpAddressApiTest()
+        public async Task VmssPublicIPAddressApiTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 

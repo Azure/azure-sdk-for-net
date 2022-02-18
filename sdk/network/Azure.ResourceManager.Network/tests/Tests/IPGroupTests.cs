@@ -14,15 +14,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Tests
 {
-    public class IpGroupTests : NetworkServiceClientTestBase
+    public class IPGroupTests : NetworkServiceClientTestBase
     {
         private ResourceGroup _resourceGroup;
         private string _ipGroupName;
 
         private ResourceIdentifier _resourceGroupIdentifier;
 
-        public IpGroupTests(bool isAsync)
-        : base(isAsync)//, RecordedTestMode.Record)
+        public IPGroupTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -53,17 +53,17 @@ namespace Azure.ResourceManager.Network.Tests
         [TearDown]
         public async Task TearDown()
         {
-            if (await _resourceGroup.GetIpGroups().ExistsAsync(_ipGroupName))
+            if (await _resourceGroup.GetIPGroups().ExistsAsync(_ipGroupName))
             {
-                var ipGroup = await _resourceGroup.GetIpGroups().GetAsync(_ipGroupName);
+                var ipGroup = await _resourceGroup.GetIPGroups().GetAsync(_ipGroupName);
                 await ipGroup.Value.DeleteAsync(true);
             }
         }
 
-        private async Task<ArmOperation<IpGroup>> CreateIpGroup(string ipGroupName)
+        private async Task<ArmOperation<IPGroup>> CreateIPGroup(string ipGroupName)
         {
-            var container = _resourceGroup.GetIpGroups();
-            var data = new IpGroupData();
+            var container = _resourceGroup.GetIPGroups();
+            var data = new IPGroupData();
             data.Location = AzureLocation.WestUS2;
             var ipGroup = await container.CreateOrUpdateAsync(true, ipGroupName, data);
             return ipGroup;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            var ipGroup = await CreateIpGroup(_ipGroupName);
+            var ipGroup = await CreateIPGroup(_ipGroupName);
             Assert.IsNotNull(ipGroup.Value.Data);
             Assert.AreEqual(_ipGroupName, ipGroup.Value.Data.Name);
         }
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task Get()
         {
-            await CreateIpGroup(_ipGroupName);
-            var ipGroup = await _resourceGroup.GetIpGroups().GetAsync(_ipGroupName);
+            await CreateIPGroup(_ipGroupName);
+            var ipGroup = await _resourceGroup.GetIPGroups().GetAsync(_ipGroupName);
             Assert.IsNotNull(ipGroup.Value.Data);
             Assert.AreEqual(_ipGroupName, ipGroup.Value.Data.Name);
         }
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task GetAll ()
         {
-            await CreateIpGroup(_ipGroupName);
-            var ipGroupList = await _resourceGroup.GetIpGroups().GetAllAsync().ToEnumerableAsync();
+            await CreateIPGroup(_ipGroupName);
+            var ipGroupList = await _resourceGroup.GetIPGroups().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, ipGroupList.Count);
         }
 
@@ -101,17 +101,17 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task CheckIfExist()
         {
-            await CreateIpGroup(_ipGroupName);
-            Assert.IsTrue(await _resourceGroup.GetIpGroups().ExistsAsync(_ipGroupName));
+            await CreateIPGroup(_ipGroupName);
+            Assert.IsTrue(await _resourceGroup.GetIPGroups().ExistsAsync(_ipGroupName));
         }
 
         [Test]
         [RecordedTest]
         public async Task Delete()
         {
-            var ipGroup  = await CreateIpGroup(_ipGroupName);
+            var ipGroup  = await CreateIPGroup(_ipGroupName);
             await ipGroup.Value.DeleteAsync(true);
-            var ipGroupList = await _resourceGroup.GetIpGroups().GetAllAsync().ToEnumerableAsync();
+            var ipGroupList = await _resourceGroup.GetIPGroups().GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(ipGroupList);
         }
     }

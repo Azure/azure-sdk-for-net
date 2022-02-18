@@ -4,17 +4,15 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
-    public class VerifyIpFlowTests : NetworkServiceClientTestBase
+    public class VerifyIPFlowTests : NetworkServiceClientTestBase
     {
-        public VerifyIpFlowTests(bool isAsync) : base(isAsync)
+        public VerifyIPFlowTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -30,7 +28,7 @@ namespace Azure.ResourceManager.Network.Tests
         [Test]
         [RecordedTest]
         [Ignore("Track2: The NetworkWathcer is involved, so disable the test")]
-        public async Task VerifyIpFlowApiTest()
+        public async Task VerifyIPFlowApiTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
@@ -50,7 +48,7 @@ namespace Azure.ResourceManager.Network.Tests
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
             //await networkWatcherCollection.CreateOrUpdateAsync(true, resourceGroupName, networkWatcherName, properties);
 
-            string localIPAddress = GetNetworkInterfaceCollection(resourceGroupName).GetAsync(networkInterfaceName1).Result.Value.Data.IpConfigurations.FirstOrDefault().PrivateIPAddress;
+            string localIPAddress = GetNetworkInterfaceCollection(resourceGroupName).GetAsync(networkInterfaceName1).Result.Value.Data.IPConfigurations.FirstOrDefault().PrivateIPAddress;
 
             string securityRule1 = Recording.GenerateAssetName("azsmnet");
 
@@ -78,11 +76,11 @@ namespace Azure.ResourceManager.Network.Tests
             VerificationIPFlowParameters ipFlowProperties = new VerificationIPFlowParameters(vm.Id, "Outbound", "TCP", "80", "80", localIPAddress, "12.11.12.14");
 
             //Verify IP flow from a VM to a location given the configured  rule
-            var verifyIpFlowOperation = await GetNetworkWatcherCollection("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.VerifyIPFlowAsync(true, ipFlowProperties);
-            Response<VerificationIPFlowResult> verifyIpFlow = await verifyIpFlowOperation.WaitForCompletionAsync();;
+            var verifyIPFlowOperation = await GetNetworkWatcherCollection("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.VerifyIPFlowAsync(true, ipFlowProperties);
+            Response<VerificationIPFlowResult> verifyIPFlow = await verifyIPFlowOperation.WaitForCompletionAsync();;
             //Verify validity of the result
-            Assert.AreEqual("Deny", verifyIpFlow.Value.Access.ToString());
-            Assert.AreEqual("securityRules/" + securityRule1, verifyIpFlow.Value.RuleName);
+            Assert.AreEqual("Deny", verifyIPFlow.Value.Access.ToString());
+            Assert.AreEqual("securityRules/" + securityRule1, verifyIPFlow.Value.RuleName);
         }
     }
 }

@@ -14,11 +14,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
-    public class PublicIpPrefixTests : NetworkServiceClientTestBase
+    public class PublicIPPrefixTests : NetworkServiceClientTestBase
     {
         private Subscription _subscription;
 
-        public PublicIpPrefixTests(bool isAsync) : base(isAsync)
+        public PublicIPPrefixTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests
 
         [Test]
         [RecordedTest]
-        public async Task PublicIpPrefixApiTest()
+        public async Task PublicIPPrefixApiTest()
         {
             var container = await GetCollection();
             var name = Recording.GenerateAssetName("test_public_ip_prefix_");
