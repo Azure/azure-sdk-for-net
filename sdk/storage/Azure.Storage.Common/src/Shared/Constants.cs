@@ -454,6 +454,8 @@ namespace Azure.Storage
                 public const string BlobVersion = "BlobVersion";
                 public const string LastVersion = "LastVersion";
                 public const string PreviousTier = "PreviousTier";
+
+                public const string BlobTagsUpdated = "blobTagsUpdated";
             }
         }
 

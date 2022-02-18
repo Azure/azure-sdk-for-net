@@ -60,6 +60,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             Snapshot = (string)snapshotObject;
             UpdatedBlobProperties = ExtractBlobProperties(record);
             AsyncOperationInfo = ExtractAsyncOperationInfo(record);
+            UpdatedBlobTags = ExtractUpdatedBlobTags(record);
         }
 
         /// <summary>
@@ -178,6 +179,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         public ChangeFeedEventAsyncOperationInfo AsyncOperationInfo { get; internal set; }
 
+        /// <summary>
+        /// Blob tags that were updated during this event.
+        /// </summary>
+        public BlobChangeFeedEventUpdatedBlobTags UpdatedBlobTags { get; internal set; }
+
         private static ChangeFeedEventPreviousInfo ExtractPreviousInfo(Dictionary<string, object> recordDictionary)
         {
             // Note that these property keys may be present in the dictionary, but with a value of null.
@@ -277,6 +283,41 @@ namespace Azure.Storage.Blobs.ChangeFeed
             asyncOperationInfo.CopyId = (string)copyIdObject;
 
             return asyncOperationInfo;
+        }
+
+        private static BlobChangeFeedEventUpdatedBlobTags ExtractUpdatedBlobTags(Dictionary<string, object> recordDictionary)
+        {
+            // Note that these property keys may be present in the dictionary, but with a value of null.
+            // This is why we need to do the null check, instead of if(Dictionary.TryGetValue()).
+            recordDictionary.TryGetValue(Constants.ChangeFeed.EventData.BlobTagsUpdated, out object blobTagsUpdatedObject);
+            if (blobTagsUpdatedObject == null)
+            {
+                return null;
+            }
+
+            Dictionary<string, object> blobTagsUpdatedDictionary = (Dictionary<string, object>)blobTagsUpdatedObject;
+
+            Dictionary<string, object> previousTags
+                = (Dictionary<string, object>)blobTagsUpdatedDictionary[Constants.ChangeFeed.EventData.Previous];
+            Dictionary<string, object> newTags
+                = (Dictionary<string, object>)blobTagsUpdatedDictionary[Constants.ChangeFeed.EventData.Current];
+
+            BlobChangeFeedEventUpdatedBlobTags updatedBlobTags = new BlobChangeFeedEventUpdatedBlobTags();
+
+            updatedBlobTags.PreviousTags = new Dictionary<string, string>();
+            updatedBlobTags.NewTags = new Dictionary<string, string>();
+
+            foreach (KeyValuePair<string, object> kv in previousTags)
+            {
+                updatedBlobTags.PreviousTags.Add(kv.Key, (string)kv.Value);
+            }
+
+            foreach (KeyValuePair <string, object> kv in newTags)
+            {
+                updatedBlobTags.NewTags.Add(kv.Key, (string)kv.Value);
+            }
+
+            return updatedBlobTags;
         }
     }
 }
