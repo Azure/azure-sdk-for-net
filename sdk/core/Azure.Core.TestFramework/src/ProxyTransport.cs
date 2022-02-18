@@ -111,6 +111,7 @@ namespace Azure.Core.TestFramework
                 throw _recording.MismatchException;
             }
 
+            _recording.HasRequests = true;
             var request = _innerTransport.CreateRequest();
             lock (_recording.Random)
             {

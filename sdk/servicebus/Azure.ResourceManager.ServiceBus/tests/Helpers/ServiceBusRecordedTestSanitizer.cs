@@ -11,9 +11,9 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
         public ServiceBusRecordedTestSanitizer() : base()
         {
             // Lazy sanitize fields in the request and response bodies
-            AddJsonPathSanitizer("$..aliasPrimaryConnectionString");
-            AddJsonPathSanitizer("$..aliasSecondaryConnectionString");
-            AddJsonPathSanitizer("$..keyName");
+            JsonPathSanitizers.Add("$..aliasPrimaryConnectionString");
+            JsonPathSanitizers.Add("$..aliasSecondaryConnectionString");
+            JsonPathSanitizers.Add("$..keyName");
         }
     }
 }

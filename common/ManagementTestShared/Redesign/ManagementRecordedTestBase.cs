@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.TestFramework
             Initialize();
         }
 
-        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode mode, bool useLegacyTransport = false) : base(isAsync, mode, useLegacyTransport)
+        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;

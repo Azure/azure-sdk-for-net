@@ -12,7 +12,7 @@ namespace Azure.Search.Documents.Tests
     {
         public SearchRecordedTestSanitizer()
         {
-            AddJsonPathSanitizer("$..applicationSecret");
+            JsonPathSanitizers.Add("$..applicationSecret");
             SanitizedHeaders.Add("api-key");
         }
     }

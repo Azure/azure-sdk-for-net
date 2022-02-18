@@ -24,18 +24,18 @@ namespace Azure.Quantum.Jobs.Tests
         public QuantumJobClientRecordedTestSanitizer()
             : base()
         {
-            AddJsonPathSanitizer("$..containerUri");
-            AddJsonPathSanitizer("$..inputDataUri");
-            AddJsonPathSanitizer("$..outputDataUri");
-            AddJsonPathSanitizer("$..sasUri");
-            AddJsonPathSanitizer("$..outputMappingBlobUri");
-            AddJsonPathSanitizer("$..containerUri");
-            AddJsonPathSanitizer("$..containerUri");
-            AddJsonPathSanitizer("$..containerUri");
+            JsonPathSanitizers.Add("$..containerUri");
+            JsonPathSanitizers.Add("$..inputDataUri");
+            JsonPathSanitizers.Add("$..outputDataUri");
+            JsonPathSanitizers.Add("$..sasUri");
+            JsonPathSanitizers.Add("$..outputMappingBlobUri");
+            JsonPathSanitizers.Add("$..containerUri");
+            JsonPathSanitizers.Add("$..containerUri");
+            JsonPathSanitizers.Add("$..containerUri");
 
-            AddJsonPathSanitizer("$..AZURE_QUANTUM_WORKSPACE_LOCATION");
-            AddJsonPathSanitizer("$..AZURE_QUANTUM_WORKSPACE_NAME");
-            AddJsonPathSanitizer("$..AZURE_QUANTUM_WORKSPACE_RG");
+            JsonPathSanitizers.Add("$..AZURE_QUANTUM_WORKSPACE_LOCATION");
+            JsonPathSanitizers.Add("$..AZURE_QUANTUM_WORKSPACE_NAME");
+            JsonPathSanitizers.Add("$..AZURE_QUANTUM_WORKSPACE_RG");
 
             var testEnvironment = new QuantumJobClientTestEnvironment();
             UriRegexSanitizers.Add(new UriRegexSanitizer(

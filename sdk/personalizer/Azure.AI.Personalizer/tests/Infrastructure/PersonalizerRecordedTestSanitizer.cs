@@ -10,11 +10,9 @@ namespace Azure.AI.Personalizer.Tests
     {
         public PersonalizerRecordedTestSanitizer() : base()
         {
-            AddJsonPathSanitizer("$..accessToken");
-            AddJsonPathSanitizer("$..source");
+            JsonPathSanitizers.Add("$..accessToken");
+            JsonPathSanitizers.Add("$..source");
             SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
-            // TODO: Remove when re-recording
-            LegacyConvertJsonDateTokens = true;
         }
     }
 }

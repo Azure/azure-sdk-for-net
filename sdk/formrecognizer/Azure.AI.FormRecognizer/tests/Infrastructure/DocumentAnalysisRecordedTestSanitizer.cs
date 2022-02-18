@@ -11,8 +11,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         public DocumentAnalysisRecordedTestSanitizer()
             : base()
         {
-            AddJsonPathSanitizer("$..accessToken");
-            AddJsonPathSanitizer("$..containerUrl");
+            JsonPathSanitizers.Add("$..accessToken");
+            JsonPathSanitizers.Add("$..containerUrl");
             SanitizedHeaders.Add(Constants.AuthorizationHeader);
         }
     }

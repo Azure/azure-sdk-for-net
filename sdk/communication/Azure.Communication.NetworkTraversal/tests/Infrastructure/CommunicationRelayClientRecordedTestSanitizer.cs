@@ -6,6 +6,6 @@ namespace Azure.Communication.Pipeline
     public class CommunicationRelayClientRecordedTestSanitizer : CommunicationRecordedTestSanitizer
     {
         public CommunicationRelayClientRecordedTestSanitizer()
-            => AddJsonPathSanitizer("$..credential");
+            => JsonPathSanitizers.Add("$..credential");
     }
 }

@@ -14,12 +14,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
         public TestUrlSanitizer()
         {
-            ReplaceHostInUri(FAKE_HOST);
-        }
-
-        public override string SanitizeUri(string uri)
-        {
-            return uri.Replace(new Uri(uri).Host, FAKE_HOST);
+            ReplacementHost = FAKE_HOST;
         }
     }
 }

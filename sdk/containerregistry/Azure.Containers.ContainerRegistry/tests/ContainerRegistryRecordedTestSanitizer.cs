@@ -23,8 +23,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string encodedBody = Base64Url.EncodeString($"{{\"exp\":{expiresOn.ToUnixTimeSeconds()}}}");
 
             var jwtSanitizedValue = $"{SanitizeValue}.{encodedBody}.{SanitizeValue}";
-            AddJsonPathSanitizer("$..refresh_token", _ => JToken.FromObject(jwtSanitizedValue));
-
             BodyKeySanitizers.Add(new BodyKeySanitizer(jwtSanitizedValue)
             {
                 JsonPath = "$..refresh_token"

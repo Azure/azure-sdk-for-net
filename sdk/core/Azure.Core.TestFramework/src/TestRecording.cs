@@ -26,60 +26,27 @@ namespace Azure.Core.TestFramework
         private const string Sanitized = "Sanitized";
         internal const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
 
-        public SortedDictionary<string, string> Variables => _useLegacyTransport ? Session.Variables : _variables;
+        public SortedDictionary<string, string> Variables => _variables;
         private SortedDictionary<string, string> _variables = new();
 
-        public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher, TestProxy proxy = default, bool useLegacyTransport = false)
+        private TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher, TestProxy proxy)
         {
             Mode = mode;
             _sessionFile = sessionFile;
             _sanitizer = sanitizer;
             _matcher = matcher;
-
-            _useLegacyTransport = useLegacyTransport;
             _proxy = proxy;
+        }
 
-            if (_useLegacyTransport)
-            {
-                switch (Mode)
-                {
-                    case RecordedTestMode.Record:
-                        Session = new RecordSession();
-                        if (File.Exists(_sessionFile))
-                        {
-                            try
-                            {
-                                _previousSession = Load();
-                            }
-                            catch (Exception)
-                            {
-                                // ignore
-                            }
-                        }
-
-                        break;
-                    case RecordedTestMode.Playback:
-                        try
-                        {
-                            Session = Load();
-                        }
-                        catch (Exception ex) when (ex is FileNotFoundException || ex is DirectoryNotFoundException)
-                        {
-                            MismatchException = new TestRecordingMismatchException(ex.Message, ex);
-                        }
-
-                        break;
-                }
-            }
+        public static async Task<TestRecording> CreateAsync(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher, TestProxy proxy)
+        {
+            var recording = new TestRecording(mode, sessionFile, sanitizer, matcher, proxy);
+            await recording.InitializeProxySettingsAsync();
+            return recording;
         }
 
         internal async Task InitializeProxySettingsAsync()
         {
-            if (_useLegacyTransport)
-            {
-                return;
-            }
-
             switch (Mode)
             {
                 case RecordedTestMode.Record:
@@ -145,7 +112,18 @@ namespace Azure.Core.TestFramework
                 await _proxy.Client.AddHeaderSanitizerAsync(header, RecordingId);
             }
 
-            foreach (string jsonPath in _sanitizer.JsonPathSanitizers.Select(s => s.JsonPath))
+            foreach (var (header, queryParameter) in _sanitizer.SanitizedQueryParametersInHeaders)
+            {
+                await _proxy.Client.AddHeaderSanitizerAsync(
+                    new(header, Sanitized)
+                    {
+                        Regex = $@"([\x0026|&|?]{queryParameter}=)(?<group>[\w\d%]+)",
+                        GroupForReplace = "group"
+                    },
+                    RecordingId);
+            }
+
+            foreach (string jsonPath in _sanitizer.JsonPathSanitizers)
             {
                 await _proxy.Client.AddBodyKeySanitizerAsync(new BodyKeySanitizer(Sanitized) { JsonPath = jsonPath }, RecordingId);
             }
@@ -155,9 +133,19 @@ namespace Azure.Core.TestFramework
                 await _proxy.Client.AddUriSanitizerAsync(sanitizer, RecordingId);
             }
 
-            foreach (BodyKeySanitizer sanitizer in _sanitizer.BodyKeySanitizers)
+            foreach (string queryParameter in _sanitizer.SanitizedQueryParameters)
             {
-                await _proxy.Client.AddBodyKeySanitizerAsync(sanitizer, RecordingId);
+                await _proxy.Client.AddUriSanitizerAsync(
+                    new($@"([\x0026|&|?]{queryParameter}=)(?<group>[\w\d%]+)", Sanitized)
+                    {
+                        GroupForReplace = "group"
+                    },
+                    RecordingId);
+            }
+
+            foreach (string path in _sanitizer.JsonPathSanitizers)
+            {
+                await _proxy.Client.AddBodyKeySanitizerAsync(new BodyKeySanitizer(Sanitized) { JsonPath = path }, RecordingId);
             }
 
             foreach (BodyRegexSanitizer sanitizer in _sanitizer.BodyRegexSanitizers)
@@ -175,26 +163,8 @@ namespace Azure.Core.TestFramework
         private readonly RecordedTestSanitizer _sanitizer;
 
         private readonly RecordMatcher _matcher;
-        private RecordSession _sessionInternal;
-        private RecordSession Session
-        {
-            get
-            {
-                return MismatchException switch
-                {
-                    null => _sessionInternal,
-                    _ => throw MismatchException
-                };
-            }
-            set
-            {
-                _sessionInternal = value;
-            }
-        }
 
         internal TestRecordingMismatchException MismatchException;
-
-        private RecordSession _previousSession;
 
         private TestRandom _random;
 
@@ -218,29 +188,13 @@ namespace Azure.Core.TestFramework
                             _random = new TestRandom(Mode, liveSeed);
                             break;
                         case RecordedTestMode.Record:
-                            // Try get the seed from existing session
-                            if (!(_previousSession != null &&
-                                  _previousSession.Variables.TryGetValue(RandomSeedVariableKey, out string seedString) &&
-                                  int.TryParse(seedString, out int seed)
-                                ))
-                            {
                                 _random = new TestRandom(Mode);
-                                seed = _random.Next();
-                            }
-                            Variables[RandomSeedVariableKey] = seed.ToString();
+                                int seed = _random.Next();
+                                Variables[RandomSeedVariableKey] = seed.ToString();
                             _random = new TestRandom(Mode, seed);
                             break;
                         case RecordedTestMode.Playback:
-                            if (IsTrack1SessionRecord())
-                            {
-                                //random is not really used for track 1 playback, so randomly pick one as seed
-                                _random = new TestRandom(Mode, (int)DateTime.UtcNow.Ticks);
-                            }
-                            else
-                            {
-                                _random = new TestRandom(Mode, int.Parse(Variables[RandomSeedVariableKey]));
-                            }
-
+                            _random = new TestRandom(Mode, int.Parse(Variables[RandomSeedVariableKey]));
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -254,8 +208,6 @@ namespace Azure.Core.TestFramework
         /// The moment in time that this test is being run.
         /// </summary>
         private DateTimeOffset? _now;
-
-        private readonly bool _useLegacyTransport;
 
         private readonly TestProxy _proxy;
 
@@ -300,35 +252,9 @@ namespace Azure.Core.TestFramework
         /// </summary>
         public DateTimeOffset UtcNow => Now.ToUniversalTime();
 
-        private RecordSession Load()
-        {
-            using FileStream fileStream = File.OpenRead(_sessionFile);
-            using JsonDocument jsonDocument = JsonDocument.Parse(fileStream);
-            return RecordSession.Deserialize(jsonDocument.RootElement);
-        }
-
         public async ValueTask DisposeAsync(bool save)
         {
-            if (_useLegacyTransport)
-            {
-                if (Mode == RecordedTestMode.Record && save && !Session.IsEmpty)
-                {
-                    var directory = Path.GetDirectoryName(_sessionFile);
-                    Directory.CreateDirectory(directory);
-
-                    Session.Sanitize(_sanitizer);
-
-                    using FileStream fileStream = File.Create(_sessionFile);
-                    var utf8JsonWriter = new Utf8JsonWriter(fileStream, new JsonWriterOptions()
-                    {
-                        Indented = true
-                    });
-                    Session.Serialize(utf8JsonWriter);
-                    utf8JsonWriter.Flush();
-                }
-            }
-
-            else if (Mode == RecordedTestMode.Record && save)
+            if (Mode == RecordedTestMode.Record && save)
             {
                 await _proxy.Client.StopRecordAsync(RecordingId, Variables);
             }
@@ -341,7 +267,7 @@ namespace Azure.Core.TestFramework
 
         public HttpPipelineTransport CreateTransport(HttpPipelineTransport currentTransport)
         {
-            if (!_useLegacyTransport && Mode != RecordedTestMode.Live)
+            if (Mode != RecordedTestMode.Live)
             {
                 if (currentTransport is ProxyTransport)
                 {
@@ -349,14 +275,8 @@ namespace Azure.Core.TestFramework
                 }
                 return new ProxyTransport(_proxy, currentTransport, this, () => _disableRecording.Value);
             }
-            return Mode switch
-            {
-                RecordedTestMode.Live => currentTransport,
-                RecordedTestMode.Record => new RecordTransport(Session, currentTransport, entry => _disableRecording.Value, Random),
-                RecordedTestMode.Playback => new PlaybackTransport(Session, _matcher, _sanitizer, Random,
-                    entry => _disableRecording.Value == EntryRecordModel.RecordWithoutRequestBody),
-                _ => throw new ArgumentOutOfRangeException(nameof(Mode), Mode, null),
-            };
+
+            return currentTransport;
         }
 
         public string GenerateId()
@@ -399,19 +319,7 @@ namespace Azure.Core.TestFramework
 
         public string GenerateAssetName(string prefix, [CallerMemberName] string callerMethodName = "testframework_failed")
         {
-            if (Mode == RecordedTestMode.Playback && IsTrack1SessionRecord())
-            {
-                return Session.Names[callerMethodName].Dequeue();
-            }
-            else
-            {
-                return prefix + Random.Next(9999);
-            }
-        }
-
-        public bool IsTrack1SessionRecord()
-        {
-            return Session?.Entries.FirstOrDefault()?.IsTrack1Recording ?? false;
+            return prefix + Random.Next(9999);
         }
 
         public string GetVariable(string variableName, string defaultValue, Func<string, string> sanitizer = default)
@@ -447,12 +355,7 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        public void DisableIdReuse()
-        {
-            _previousSession = null;
-        }
-
-        public bool HasRequests => _sessionInternal?.Entries.Count > 0;
+        public bool HasRequests { get; internal set; }
 
         public DisableRecordingScope DisableRecording()
         {

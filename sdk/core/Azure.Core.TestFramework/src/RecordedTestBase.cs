@@ -3,30 +3,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework.Models;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using NUnit.Framework.Internal;
 
 namespace Azure.Core.TestFramework
 {
     public abstract class RecordedTestBase : ClientTestBase
     {
-        static RecordedTestBase()
-        {
-            // remove once https://github.com/Azure/azure-sdk-for-net/pull/25328 is shipped
-            ServicePointManager.Expect100Continue = false;
-        }
-
         protected RecordedTestSanitizer Sanitizer { get; set; }
 
-        protected internal RecordMatcher Matcher { get; set; }
+        protected RecordMatcher Matcher { get; set; }
 
         public TestRecording Recording { get; private set; }
 
@@ -50,6 +44,7 @@ namespace Azure.Core.TestFramework
         /// and will throw an exception from CI builds to help make that easier
         /// to spot.
         /// </summary>
+        /// TODO - see if this can be added to Test Proxy
         public bool SaveDebugRecordingsOnFailure
         {
             get => _saveDebugRecordingsOnFailure;
@@ -63,30 +58,28 @@ namespace Azure.Core.TestFramework
                 _saveDebugRecordingsOnFailure = value;
             }
         }
+
         private bool _saveDebugRecordingsOnFailure;
 
         private TestProxy _proxy;
 
-        private readonly bool _useLegacyTransport;
         private DateTime _testStartTime;
 
         protected bool ValidateClientInstrumentation { get; set; }
 
         protected override DateTime TestStartTime => _testStartTime;
 
-        protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null, bool useLegacyTransport = false) : base(isAsync)
+        protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
         {
             Sanitizer = new RecordedTestSanitizer();
             Matcher = new RecordMatcher();
             Mode = mode ?? TestEnvironment.GlobalTestMode;
-            _useLegacyTransport = useLegacyTransport;
         }
 
         protected async Task<TestRecording> CreateTestRecordingAsync(RecordedTestMode mode, string sessionFile,
             RecordedTestSanitizer sanitizer, RecordMatcher matcher)
         {
-            var recording = new TestRecording(mode, sessionFile, sanitizer, matcher, _proxy, _useLegacyTransport);
-            await recording.InitializeProxySettingsAsync();
+            var recording = await TestRecording.CreateAsync(mode, sessionFile, sanitizer, matcher, _proxy);
             return recording;
         }
 
@@ -163,7 +156,7 @@ namespace Azure.Core.TestFramework
                 Logger = new TestLogger();
             }
 
-            if (!_useLegacyTransport && Mode != RecordedTestMode.Live)
+            if (Mode != RecordedTestMode.Live)
             {
                 _proxy = TestProxy.Start();
             }

@@ -9,8 +9,8 @@ namespace Azure.Analytics.Purview.Tests
     {
         public PurviewRecordedTestSanitizer() : base()
         {
-            AddJsonPathSanitizer("$..atlasKafkaPrimaryEndpoint");
-            AddJsonPathSanitizer("$..atlasKafkaSecondaryEndpoint");
+            JsonPathSanitizers.Add("$..atlasKafkaPrimaryEndpoint");
+            JsonPathSanitizers.Add("$..atlasKafkaSecondaryEndpoint");
         }
     }
 }

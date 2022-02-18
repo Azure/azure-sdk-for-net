@@ -18,8 +18,8 @@ namespace Azure.IoT.Hub.Service.Tests
            : base()
         {
             // Sanitize SAS tokens in request body
-            AddJsonPathSanitizer("outputBlobContainerUri");
-            AddJsonPathSanitizer("inputBlobContainerUri");
+            JsonPathSanitizers.Add("outputBlobContainerUri");
+            JsonPathSanitizers.Add("inputBlobContainerUri");
             ReplaceHostInUri(FakeHost);
         }
     }

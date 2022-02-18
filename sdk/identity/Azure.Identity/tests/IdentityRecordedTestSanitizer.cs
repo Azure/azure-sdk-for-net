@@ -13,8 +13,8 @@ namespace Azure.Identity.Tests
         public IdentityRecordedTestSanitizer()
         {
             SanitizedHeaders.Add("secret");
-            AddJsonPathSanitizer("$..refresh_token");
-            AddJsonPathSanitizer("$..access_token");
+            JsonPathSanitizers.Add("$..refresh_token");
+            JsonPathSanitizers.Add("$..access_token");
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"=[^&|}|""]+", "=" + SanitizeValue)
             {
                 Condition = new Condition { UriRegex = ".*/token([?].*)?$" }

@@ -133,7 +133,6 @@ namespace Azure.AI.Translation.Document.Tests
 
         private BlobContainerClient CreateContainer(string name, List<TestDocument> documents)
         {
-            Recording.DisableIdReuse();
             var containerName = name + Recording.GenerateId();
             var containerClient = GetBlobContainerClient(containerName);
             containerClient.Create(PublicAccessType.BlobContainer);
@@ -148,7 +147,6 @@ namespace Azure.AI.Translation.Document.Tests
 
         private async Task<BlobContainerClient> CreateContainerAsync(string name, List<TestDocument> documents)
         {
-            Recording.DisableIdReuse();
             string containerName = name + Recording.GenerateId();
             var containerClient = GetBlobContainerClient(containerName);
             await containerClient.CreateAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
@@ -181,7 +179,6 @@ namespace Azure.AI.Translation.Document.Tests
         }
         public string GenerateRandomName(string baseName)
         {
-            Recording.DisableIdReuse();
             return baseName + Recording.GenerateId();
         }
     }

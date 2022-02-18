@@ -38,8 +38,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
         [RecordedTest]
         public async Task RunAssetConversion()
         {
-            Recording.DisableIdReuse();
-
             string localFilePath = assetLocalFilePath;
             Vector3 assetGravity = new Vector3(assetGravityX, assetGravityY, assetGravityZ);
             float scale = assetScale;
@@ -88,8 +86,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
         [RecordedTest]
         public async Task ObserveExistingAssetConversion()
         {
-            Recording.DisableIdReuse();
-
             string localFilePath = assetLocalFilePath;
             Vector3 assetGravity = new Vector3(assetGravityX, assetGravityY, assetGravityZ);
             float scale = assetScale;

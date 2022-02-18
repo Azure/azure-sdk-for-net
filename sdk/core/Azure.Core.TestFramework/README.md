@@ -241,71 +241,49 @@ When tests are run in recording mode, session records are saved to the project d
 ### Sanitizing
 
 Secrets that are part of requests, responses, headers, or connections strings should be sanitized before saving the record.
-**Do not check in session records containing secrets.** Common headers like `Authentication` are sanitized automatically, but if custom logic is required and/or if request or response body need to be sanitized, the `RecordedTestSanitizer` should be used as an extension point.
+**Do not check in session records containing secrets.** Common headers like `Authentication` are sanitized automatically, but if custom logic is required and/or if request or response body need to be sanitized, the `Sanitizer` property should be used as an extension point.
 
 For example:
 
-``` C#
-    public class ConfigurationRecordedTestSanitizer : RecordedTestSanitizer
+```C#
+    public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnvironment>
     {
-        public ConfigurationRecordedTestSanitizer()
+        public ConfigurationLiveTests()
         {
-            // Add headers that might contain secrets
-            SanitizedHeaders.Add("My-Custom-Auth-Header");
-        }
-
-        public override string SanitizeUri(string uri)
-        {
-            // sanitize url
+            Sanitizer.SanitizedHeaders.Add("example-header");
+            Sanitizer.SanitizeQueryParameter("example-query-parameter");
         }
     }
 ```
 
-Another sanitizer feature that is available for sanitizing Json payloads is the `AddJsonPathSanitizer`.
-This method allows adding a [Json Path](https://www.newtonsoft.com/json/help/html/QueryJsonSelectToken.htm) format strings that will be validated against the body. If a match exists, the value will be sanitized.
+Another sanitizer feature that is available is for sanitizing Json payloads.
+By adding a [Json Path](https://www.newtonsoft.com/json/help/html/QueryJsonSelectToken.htm) formatted string to the `JsonPathSanitizers` property, you can sanitize the value for a specific JSON property in request/response bodies.
 
-By default, the following values are added to the `AddJsonPathSanitizer` to be sanitized: `primaryKey`, `secondaryKey`, `primaryConnectionString`, `secondaryConnectionString`, and `connectionString`.
+By default, the following values are added to the `JsonPathSanitizers` to be sanitized: `primaryKey`, `secondaryKey`, `primaryConnectionString`, `secondaryConnectionString`, and `connectionString`.
 
 ```c#
-    public class FormRecognizerRecordedTestSanitizer : RecordedTestSanitizer
+    public class FormRecognizerLiveTests: RecordedTestBase<FormRecognizerTestEnvironment>
     {
-        public FormRecognizerRecordedTestSanitizer()
-            : base()
+        public FormRecognizerLiveTests()
         {
-            AddJsonPathSanitizer("$..accessToken");
-            AddJsonPathSanitizer("$..source");
+            Sanitizer.JsonPathSanitizers.Add("$..accessToken");
+            Sanitizer.JsonPathSanitizers.Add("$..source");
         }
     }
 ```
-
-Sometimes it's useful to be able to have a custom replacement values for JsonPath-based sanitization (connection strings, JWT tokens).
-To enable this the `AddJsonPathSanitizer` provides an additional callback that would be called for every match.
-
-```C#
-AddJsonPathSanitizer("$..jwt_token", token => SanitizeJwt(token));
-```
-
 
 ### Matching
 
-When tests are run in replay mode, HTTP method, Uri and headers are used to match the request to the recordings. Some headers change on every request and are not controlled by the client code and should be ignored during the matching. Common headers like `Date`, `x-ms-date`, `x-ms-client-request-id`, `User-Agent`, `Request-Id` are ignored by default but if more headers need to be ignored, use `RecordMatcher` extensions point.
+When tests are run in `Playback` mode, the HTTP method, Uri, and headers are used to match the request to the recordings. Some headers change on every request and are not controlled by the client code and should be ignored during matching. Common headers like `Date`, `x-ms-date`, `x-ms-client-request-id`, `User-Agent`, `Request-Id` are ignored by default but if more headers need to be ignored, use the `Matcher` property to customize as needed.
 
 
 ``` C#
-    public class ConfigurationRecordMatcher : RecordMatcher
+    public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnvironment>
     {
-        public ConfigurationRecordMatcher(RecordedTestSanitizer sanitizer) : base(sanitizer)
+        public ConfigurationLiveTests()
         {
-            IgnoredHeaders.Add("Sync-Token");
-        }
-    }
-
-    public class ConfigurationLiveTests: RecordedTestBase
-    {
-        public ConfigurationLiveTests(bool isAsync) : base(isAsync)
-        {
-            Sanitizer = new ConfigurationRecordedTestSanitizer();
-            Matcher = new ConfigurationRecordMatcher(Sanitizer);
+            Matcher.IgnoredHeaders.Add("Sync-Token");
+            Matcher.IgnoredQueryParameters.Add("service-version");
         }
     }
 ```

@@ -23,7 +23,7 @@ namespace Azure.Storage.Test.Shared
 
         public StorageRecordedTestSanitizer()
         {
-            UriRegexSanitizers.Add(UriRegexSanitizer.CreateWithQueryParameter(SignatureQueryName, SanitizeValue));
+            SanitizedQueryParameters.Add(SignatureQueryName);
 
 #if NETFRAMEWORK
             // Uri uses different escaping for some special characters between .NET Framework and Core. Because the Test Proxy runs on .NET
@@ -39,10 +39,11 @@ namespace Azure.Storage.Test.Shared
 
             HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("x-ms-encryption-key", SanitizeValue));
             HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(CopySourceAuthorization, SanitizeValue));
-            HeaderRegexSanitizers.Add(HeaderRegexSanitizer.CreateWithQueryParameter(CopySourceName, SignatureQueryName, SanitizeValue));
-            HeaderRegexSanitizers.Add(HeaderRegexSanitizer.CreateWithQueryParameter(RenameSource, SignatureQueryName, SanitizeValue));
-            HeaderRegexSanitizers.Add(HeaderRegexSanitizer.CreateWithQueryParameter(PreviousSnapshotUrl, SignatureQueryName, SanitizeValue));
-            HeaderRegexSanitizers.Add(HeaderRegexSanitizer.CreateWithQueryParameter(FileRenameSource, SignatureQueryName, SanitizeValue));
+
+            SanitizedQueryParametersInHeaders.Add((CopySourceName, SignatureQueryName));
+            SanitizedQueryParametersInHeaders.Add((RenameSource, SignatureQueryName));
+            SanitizedQueryParametersInHeaders.Add((PreviousSnapshotUrl, SignatureQueryName));
+            SanitizedQueryParametersInHeaders.Add((FileRenameSource, SignatureQueryName));
 
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"client_secret=(?<group>.*?)(?=&|$)", SanitizeValue)
             {
