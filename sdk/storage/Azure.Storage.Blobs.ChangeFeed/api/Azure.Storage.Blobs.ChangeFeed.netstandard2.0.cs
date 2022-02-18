@@ -32,7 +32,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
     public partial class BlobChangeFeedEventData
     {
         internal BlobChangeFeedEventData() { }
-        public Azure.Storage.Blobs.ChangeFeed.Models.ChangeFeedEventAsyncOperationInfo AsyncOperationInfo { get { throw null; } }
+        public Azure.Storage.Blobs.ChangeFeed.Models.BlobChangeFeedEventAsyncOperationInfo AsyncOperationInfo { get { throw null; } }
         public Azure.Storage.Blobs.Models.AccessTier? BlobAccessTier { get { throw null; } }
         public Azure.Storage.Blobs.ChangeFeed.BlobOperationName BlobOperationName { get { throw null; } }
         public Azure.Storage.Blobs.Models.BlobType BlobType { get { throw null; } }
@@ -86,7 +86,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
     public static partial class BlobChangeFeedModelFactory
     {
         public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEvent BlobChangeFeedEvent(string topic, string subject, Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType eventType, System.DateTimeOffset eventTime, System.Guid id, Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventData eventData, long dataVersion, string metadataVersion) { throw null; }
-        public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventData BlobChangeFeedEventData(string api, string clientRequestId, System.Guid requestId, Azure.ETag eTag, string contentType, long contentLength, Azure.Storage.Blobs.Models.BlobType blobType, long contentOffset, System.Uri destinationUri, System.Uri sourceUri, System.Uri uri, bool recursive, string sequencer) { throw null; }
+        public static Azure.Storage.Blobs.ChangeFeed.Models.BlobChangeFeedEventAsyncOperationInfo BlobChangeFeedEventAsyncOperationInfo(Azure.Storage.Blobs.Models.AccessTier? destinationAccessTier, bool wasAyncOperation, string copyId) { throw null; }
+        public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventData BlobChangeFeedEventData(string blobOperationName, string clientRequestId, System.Guid requestId, Azure.ETag eTag, string contentType, long contentLength, Azure.Storage.Blobs.Models.BlobType blobType, string blobVersion, string containerVersion, Azure.Storage.Blobs.Models.AccessTier? blobAccessTier, long contentOffset, System.Uri destinationUri, System.Uri sourceUri, System.Uri uri, bool recursive, string sequencer, Azure.Storage.Blobs.ChangeFeed.Models.ChangeFeedEventPreviousInfo previousInfo, string snapshot, System.Collections.Generic.Dictionary<string, Azure.Storage.Blobs.ChangeFeed.Models.BlobChangeFeedEventUpdatedBlobProperty> updatedBlobProperties, Azure.Storage.Blobs.ChangeFeed.Models.BlobChangeFeedEventAsyncOperationInfo asyncOperationInfo, Azure.Storage.Blobs.ChangeFeed.Models.BlobChangeFeedEventUpdatedBlobTags updatedBlobTags) { throw null; }
+        public static Azure.Storage.Blobs.ChangeFeed.Models.BlobChangeFeedEventUpdatedBlobProperty BlobChangeFeedEventUpdatedBlobProperty(string propertyName, string previousValue, string newValue) { throw null; }
+        public static Azure.Storage.Blobs.ChangeFeed.Models.BlobChangeFeedEventUpdatedBlobTags BlobChangeFeedEventUpdatedBlobTags(System.Collections.Generic.Dictionary<string, string> previousTags, System.Collections.Generic.Dictionary<string, string> newTags) { throw null; }
+        public static Azure.Storage.Blobs.ChangeFeed.Models.ChangeFeedEventPreviousInfo ChangeFeedEventPreviousInfo(string softDeleteSnapshot, bool wasBlobSoftDeleted, string blobVersion, string lastVersion, Azure.Storage.Blobs.Models.AccessTier? previousTier) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BlobOperationName : System.IEquatable<Azure.Storage.Blobs.ChangeFeed.BlobOperationName>
@@ -121,6 +125,13 @@ namespace Azure.Storage.Blobs.ChangeFeed
 }
 namespace Azure.Storage.Blobs.ChangeFeed.Models
 {
+    public partial class BlobChangeFeedEventAsyncOperationInfo
+    {
+        internal BlobChangeFeedEventAsyncOperationInfo() { }
+        public string CopyId { get { throw null; } }
+        public Azure.Storage.Blobs.Models.AccessTier? DestinationAccessTier { get { throw null; } }
+        public bool WasAyncOperation { get { throw null; } }
+    }
     public partial class BlobChangeFeedEventUpdatedBlobProperty
     {
         internal BlobChangeFeedEventUpdatedBlobProperty() { }
@@ -133,13 +144,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
         internal BlobChangeFeedEventUpdatedBlobTags() { }
         public System.Collections.Generic.Dictionary<string, string> NewTags { get { throw null; } }
         public System.Collections.Generic.Dictionary<string, string> PreviousTags { get { throw null; } }
-    }
-    public partial class ChangeFeedEventAsyncOperationInfo
-    {
-        internal ChangeFeedEventAsyncOperationInfo() { }
-        public string CopyId { get { throw null; } }
-        public Azure.Storage.Blobs.Models.AccessTier? DestinationAccessTier { get { throw null; } }
-        public bool WasAyncOperation { get { throw null; } }
     }
     public partial class ChangeFeedEventPreviousInfo
     {

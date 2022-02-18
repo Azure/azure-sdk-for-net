@@ -177,7 +177,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <summary>
         /// AsyncOperationInfo.
         /// </summary>
-        public ChangeFeedEventAsyncOperationInfo AsyncOperationInfo { get; internal set; }
+        public BlobChangeFeedEventAsyncOperationInfo AsyncOperationInfo { get; internal set; }
 
         /// <summary>
         /// Blob tags that were updated during this event.
@@ -253,7 +253,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             return result;
         }
 
-        private static ChangeFeedEventAsyncOperationInfo ExtractAsyncOperationInfo(Dictionary<string, object> recordDictionary)
+        private static BlobChangeFeedEventAsyncOperationInfo ExtractAsyncOperationInfo(Dictionary<string, object> recordDictionary)
         {
             // Note that these property keys may be present in the dictionary, but with a value of null.
             // This is why we need to do the null check, instead of if(Dictionary.TryGetValue()).
@@ -265,7 +265,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
             Dictionary<string, object> asyncOperationInfoDictionary = (Dictionary<string, object>)asyncOperationInfoObject;
 
-            ChangeFeedEventAsyncOperationInfo asyncOperationInfo = new ChangeFeedEventAsyncOperationInfo();
+            BlobChangeFeedEventAsyncOperationInfo asyncOperationInfo = new BlobChangeFeedEventAsyncOperationInfo();
 
             asyncOperationInfoDictionary.TryGetValue(Constants.ChangeFeed.EventData.DestinationTier, out object destinationTierObject);
             if (destinationTierObject != null)

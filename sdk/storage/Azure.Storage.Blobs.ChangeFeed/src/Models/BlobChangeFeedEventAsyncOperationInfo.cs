@@ -8,9 +8,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
     /// <summary>
     /// ChangeFeedEventAsyncOperationInfo.
     /// </summary>
-    public class ChangeFeedEventAsyncOperationInfo
+    public class BlobChangeFeedEventAsyncOperationInfo
     {
-        internal ChangeFeedEventAsyncOperationInfo() { }
+        internal BlobChangeFeedEventAsyncOperationInfo() { }
 
         /// <summary>
         /// DestinationAccessTier.
