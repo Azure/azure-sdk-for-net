@@ -113,7 +113,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                EventPublishCompleteCore(eventHubName ?? string.Empty, partitionIdOrKey ?? string.Empty, operationId ?? string.Empty, retryCount);
+                EventPublishCompleteCore(4, eventHubName ?? string.Empty, partitionIdOrKey ?? string.Empty, operationId ?? string.Empty, retryCount);
             }
         }
 
@@ -1599,7 +1599,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                BufferedProducerEventEnqueuedCore(identifier ?? string.Empty, eventHubName ?? string.Empty, requestedPartitionIdOrKey ?? string.Empty, operationId ?? string.Empty, assignedPartitionId ?? string.Empty, totalBufferedEventCount);
+                BufferedProducerEventEnqueuedCore(80, identifier ?? string.Empty, eventHubName ?? string.Empty, requestedPartitionIdOrKey ?? string.Empty, operationId ?? string.Empty, assignedPartitionId ?? string.Empty, totalBufferedEventCount);
             }
         }
 
@@ -1717,7 +1717,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                BufferedProducerPublishingAwaitStartCore(identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty);
+                BufferedProducerPublishingAwaitStartCore(86, identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty);
             }
         }
 
@@ -1741,7 +1741,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                BufferedProducerPublishingAwaitCompleteCore(identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty, durationSeconds);
+                BufferedProducerPublishingAwaitCompleteCore(87, identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty, durationSeconds);
             }
         }
 
@@ -2082,7 +2082,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                EventProcessorLoadBalancingCycleCompleteCore(identifier ?? string.Empty, eventHubName ?? string.Empty, totalPartitionCount, ownedPartitionCount, durationSeconds, delaySeconds);
+                EventProcessorLoadBalancingCycleCompleteCore(102, identifier ?? string.Empty, eventHubName ?? string.Empty, totalPartitionCount, ownedPartitionCount, durationSeconds, delaySeconds);
             }
         }
 
@@ -2235,7 +2235,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                BufferedProducerPublishingAwaitAllStartCore(identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty);
+                BufferedProducerPublishingAwaitAllStartCore(109, identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty);
             }
         }
 
@@ -2259,7 +2259,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                BufferedProducerPublishingAwaitAllCompleteCore(identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty, durationSeconds);
+                BufferedProducerPublishingAwaitAllCompleteCore(110, identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty, durationSeconds);
             }
         }
 
@@ -2455,7 +2455,8 @@ namespace Azure.Messaging.EventHubs.Diagnostics
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private unsafe void EventProcessorLoadBalancingCycleCompleteCore(string identifier,
+        private unsafe void EventProcessorLoadBalancingCycleCompleteCore(int eventId,
+                                                                         string identifier,
                                                                          string eventHubName,
                                                                          int totalPartitionCount,
                                                                          int ownedPartitionCount,
@@ -2485,13 +2486,14 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 eventPayload[5].Size = Unsafe.SizeOf<double>();
                 eventPayload[5].DataPointer = (IntPtr)Unsafe.AsPointer(ref delaySeconds);
 
-                WriteEventCore(102, 6, eventPayload);
+                WriteEventCore(eventId, 6, eventPayload);
             }
         }
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private unsafe void BufferedProducerPublishingAwaitAllStartCore(string identifier,
+        private unsafe void BufferedProducerPublishingAwaitAllStartCore(int eventId,
+                                                                        string identifier,
                                                                         string eventHubName,
                                                                         int totalActiveTasks,
                                                                         string operationId)
@@ -2514,13 +2516,14 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 eventPayload[3].Size = (operationId.Length + 1) * sizeof(char);
                 eventPayload[3].DataPointer = (IntPtr)operationIdPtr;
 
-                WriteEventCore(109, 4, eventPayload);
+                WriteEventCore(eventId, 4, eventPayload);
             }
         }
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private unsafe void BufferedProducerPublishingAwaitCompleteCore(string identifier,
+        private unsafe void BufferedProducerPublishingAwaitCompleteCore(int eventId,
+                                                                        string identifier,
                                                                         string eventHubName,
                                                                         int totalActiveTasks,
                                                                         string operationId,
@@ -2547,13 +2550,14 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 eventPayload[4].Size = Unsafe.SizeOf<double>();
                 eventPayload[4].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
 
-                WriteEventCore(87, 5, eventPayload);
+                WriteEventCore(eventId, 5, eventPayload);
             }
         }
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private unsafe void BufferedProducerPublishingAwaitStartCore(string identifier,
+        private unsafe void BufferedProducerPublishingAwaitStartCore(int eventId,
+                                                                     string identifier,
                                                                      string eventHubName,
                                                                      int totalActiveTasks,
                                                                      string operationId)
@@ -2576,13 +2580,14 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 eventPayload[3].Size = (operationId.Length + 1) * sizeof(char);
                 eventPayload[3].DataPointer = (IntPtr)operationIdPtr;
 
-                WriteEventCore(86, 4, eventPayload);
+                WriteEventCore(eventId, 4, eventPayload);
             }
         }
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private unsafe void BufferedProducerEventEnqueuedCore(string identifier,
+        private unsafe void BufferedProducerEventEnqueuedCore(int eventId,
+                                                              string identifier,
                                                               string eventHubName,
                                                               string requestedPartitionIdOrKey,
                                                               string assignedPartitionId,
@@ -2615,13 +2620,14 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 eventPayload[5].Size = Unsafe.SizeOf<double>();
                 eventPayload[5].DataPointer = (IntPtr)Unsafe.AsPointer(ref totalBufferedEventCount);
 
-                WriteEventCore(80, 6, eventPayload);
+                WriteEventCore(eventId, 6, eventPayload);
             }
         }
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private unsafe void EventPublishCompleteCore(string eventHubName,
+        private unsafe void EventPublishCompleteCore(int eventId,
+                                                     string eventHubName,
                                                      string partitionIdOrKey,
                                                      string operationId,
                                                      int retryCount)
@@ -2644,13 +2650,14 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 eventPayload[3].Size = Unsafe.SizeOf<int>();
                 eventPayload[3].DataPointer = (IntPtr)Unsafe.AsPointer(ref retryCount);
 
-                WriteEventCore(4, 4, eventPayload);
+                WriteEventCore(eventId, 4, eventPayload);
             }
         }
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private unsafe void BufferedProducerPublishingAwaitAllCompleteCore(string identifier,
+        private unsafe void BufferedProducerPublishingAwaitAllCompleteCore(int eventId,
+                                                                           string identifier,
                                                                            string eventHubName,
                                                                            int totalActiveTasks,
                                                                            string operationId,
@@ -2677,7 +2684,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 eventPayload[4].Size = Unsafe.SizeOf<double>();
                 eventPayload[4].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
 
-                WriteEventCore(110, 5, eventPayload);
+                WriteEventCore(eventId, 5, eventPayload);
             }
         }
 
