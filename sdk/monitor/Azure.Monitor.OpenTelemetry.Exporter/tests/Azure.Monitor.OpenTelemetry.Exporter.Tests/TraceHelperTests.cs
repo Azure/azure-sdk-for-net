@@ -10,17 +10,17 @@ using System.Text.Json;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Xunit;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
+namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
-    public class AzureMonitorTraceLinkTests
+    public class TraceHelperTests
     {
-        private const string ActivitySourceName = "AzureMonitorTraceLinkTests";
-        private const string ActivityName = "AzureMonitorTraceLinkTestsActivity";
+        private const string ActivitySourceName = "AzureMonitorTraceHelperTests";
+        private const string ActivityName = "AzureMonitorTraceHelperTestsActivity";
         private const string msLinks = "_MS.links";
         private const int MaxLinksAllowed = 100;
         private const int MaxLength = 8192;
 
-        static AzureMonitorTraceLinkTests()
+        static TraceHelperTests()
         {
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
             Activity.ForceDefaultIdFormat = true;
@@ -37,7 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
         [Theory]
         [InlineData("RequestData")]
         [InlineData("RemoteDependencyData")]
-        public void TelemetryPartBPropertiesDoesNotContainMSLinksWhenActivityHasNoLinks(string telemetryType)
+        public void PropertiesDoesNotContainMSLinksWhenActivityHasNoLinks(string telemetryType)
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
@@ -50,20 +50,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             if (telemetryType == "RequestData")
             {
-                var telemetryPartBRequestData = new RequestData(2, activity, ref monitorTags);
-                Assert.False(telemetryPartBRequestData.Properties.TryGetValue(msLinks, out var mslinks));
+                var requestData = new RequestData(2, activity, ref monitorTags);
+                Assert.False(requestData.Properties.TryGetValue(msLinks, out var mslinks));
             }
             if (telemetryType == "RemoteDependencyData")
             {
-                var telemetryPartBRemoteDependencyData = new RemoteDependencyData(2, activity, ref monitorTags);
-                Assert.False(telemetryPartBRemoteDependencyData.Properties.TryGetValue(msLinks, out var mslinks));
+                var remoteDependencyData = new RemoteDependencyData(2, activity, ref monitorTags);
+                Assert.False(remoteDependencyData.Properties.TryGetValue(msLinks, out var mslinks));
             }
         }
 
         [Theory]
         [InlineData("RequestData")]
         [InlineData("RemoteDependencyData")]
-        public void TelemetryPartBPropertiesContainsMSLinksWhenActivityHasLinks(string telemetryType)
+        public void PropertiesContainMSLinksWhenActivityHasLinks(string telemetryType)
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             ActivityLink activityLink = new ActivityLink(new ActivityContext(
@@ -89,13 +89,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             if (telemetryType == "RequestData")
             {
-                var telemetryPartBRequestData = new RequestData(2, activity, ref monitorTags);
-                Assert.True(telemetryPartBRequestData.Properties.TryGetValue(msLinks, out actualMSlinks));
+                var requestData = new RequestData(2, activity, ref monitorTags);
+                Assert.True(requestData.Properties.TryGetValue(msLinks, out actualMSlinks));
             }
             if (telemetryType == "RemoteDependencyData")
             {
-                var telemetryPartBRemoteDependencyData = new RemoteDependencyData(2, activity, ref monitorTags);
-                Assert.True(telemetryPartBRemoteDependencyData.Properties.TryGetValue(msLinks, out actualMSlinks));
+                var remoteDependencyData = new RemoteDependencyData(2, activity, ref monitorTags);
+                Assert.True(remoteDependencyData.Properties.TryGetValue(msLinks, out actualMSlinks));
             }
 
             Assert.Equal(expectedMSlinks, actualMSlinks);
@@ -109,7 +109,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             List<ActivityLink> links = new List<ActivityLink>();
 
-            int numberOfLinks = 150; //arbitrary number > 100
+            // Arbitrary number > 100
+            int numberOfLinks = 150;
 
             for (int i = 0; i < numberOfLinks; i++)
             {
@@ -135,13 +136,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             if (telemetryType == "RequestData")
             {
-                var telemetryPartBRequestData = new RequestData(2, activity, ref monitorTags);
-                Assert.True(telemetryPartBRequestData.Properties.TryGetValue(msLinks, out actualMSlinks));
+                var requestData = new RequestData(2, activity, ref monitorTags);
+                Assert.True(requestData.Properties.TryGetValue(msLinks, out actualMSlinks));
             }
             if (telemetryType == "RemoteDependencyData")
             {
-                var telemetryPartBRemoteDependencyData = new RemoteDependencyData(2, activity, ref monitorTags);
-                Assert.True(telemetryPartBRemoteDependencyData.Properties.TryGetValue(msLinks, out actualMSlinks));
+                var remoteDependencyData = new RemoteDependencyData(2, activity, ref monitorTags);
+                Assert.True(remoteDependencyData.Properties.TryGetValue(msLinks, out actualMSlinks));
             }
 
             // Check for valid JSON string
@@ -190,13 +191,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             if (telemetryType == "RequestData")
             {
-                var telemetryPartBRequestData = new RequestData(2, activity, ref monitorTags);
-                Assert.True(telemetryPartBRequestData.Properties.TryGetValue(msLinks, out actualMSlinks));
+                var requestData = new RequestData(2, activity, ref monitorTags);
+                Assert.True(requestData.Properties.TryGetValue(msLinks, out actualMSlinks));
             }
             if (telemetryType == "RemoteDependencyData")
             {
-                var telemetryPartBRemoteDependencyData = new RemoteDependencyData(2, activity, ref monitorTags);
-                Assert.True(telemetryPartBRemoteDependencyData.Properties.TryGetValue(msLinks, out actualMSlinks));
+                var remoteDependencyData = new RemoteDependencyData(2, activity, ref monitorTags);
+                Assert.True(remoteDependencyData.Properties.TryGetValue(msLinks, out actualMSlinks));
             }
 
             // Check for valid JSON string
