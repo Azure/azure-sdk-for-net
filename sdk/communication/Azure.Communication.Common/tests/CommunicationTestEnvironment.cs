@@ -42,7 +42,7 @@ namespace Azure.Communication.Tests
         public bool ShouldIgnorePhoneNumbersTests => bool.Parse(SkipPhoneNumbersTest);
 
         public string TestAgentPhoneNumber => GetRecordedVariable($"{AzurePhoneNumber}_{AzureTestAgent}", options => options.IsSecret("+14255550123"));
-        
+
         private string AzureTestAgent => GetVariable(AzureTestAgentVariableName);
     }
 }
