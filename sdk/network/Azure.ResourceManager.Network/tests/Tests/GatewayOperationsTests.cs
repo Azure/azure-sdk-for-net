@@ -773,11 +773,11 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(listVirtualNetworkGatewayConectionResponse);
         }
 
-        // Tests Resource:-VirtualNetworkGatewayConnection with Ipsec Policies
+        // Tests Resource:-VirtualNetworkGatewayConnection with IPsec Policies
         [Test]
         [RecordedTest]
         [Ignore("TODO: TRACK2 - Might be test framework issue")]
-        public async Task VirtualNetworkGatewayConnectionWithIpsecPoliciesTest()
+        public async Task VirtualNetworkGatewayConnectionWithIPsecPoliciesTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
@@ -863,7 +863,7 @@ namespace Azure.ResourceManager.Network.Tests
             Console.WriteLine("Virtual Network Gateway is deployed successfully.");
             Response<VirtualNetworkGateway> getVirtualNetworkGatewayResponse = await virtualNetworkGatewayCollection.GetAsync(virtualNetworkGatewayName);
 
-            // C. CreaetVirtualNetworkGatewayConnection API - Ipsec policy and policybased TS enabled
+            // C. CreaetVirtualNetworkGatewayConnection API - IPsec policy and policybased TS enabled
             string VirtualNetworkGatewayConnectionName = Recording.GenerateAssetName("azsmnet");
             var virtualNetworkGatewayConnection = new VirtualNetworkGatewayConnectionData(getVirtualNetworkGatewayResponse.Value.Data, VirtualNetworkGatewayConnectionType.IPsec)
             {
@@ -871,9 +871,9 @@ namespace Azure.ResourceManager.Network.Tests
                 LocalNetworkGateway2 = getLocalNetworkGatewayResponse.Value.Data,
                 RoutingWeight = 3,
                 SharedKey = "abc",
-                IpsecPolicies =
+                IPsecPolicies =
                 {
-                    new IpsecPolicy(300, 1024, IpsecEncryption.AES128, IpsecIntegrity.SHA256, IkeEncryption.AES192, IkeIntegrity.SHA1, DhGroup.DHGroup2, PfsGroup.PFS1)
+                    new IPsecPolicy(300, 1024, IPsecEncryption.AES128, IPsecIntegrity.SHA256, IkeEncryption.AES192, IkeIntegrity.SHA1, DhGroup.DHGroup2, PfsGroup.PFS1)
                 }
             };
 
@@ -887,29 +887,29 @@ namespace Azure.ResourceManager.Network.Tests
             // 2. GetVirtualNetworkGatewayConnection API
             Response<VirtualNetworkGatewayConnection> getVirtualNetworkGatewayConnectionResponse = await virtualNetworkGatewayConnectionCollection.GetAsync(VirtualNetworkGatewayConnectionName);
             Console.WriteLine("GatewayConnection details:- GatewayLocation: {0}, GatewayConnectionId:{1}, VirtualNetworkGateway1 name={2} & Id={3}, LocalNetworkGateway2 name={4} & Id={5}, " +
-                    "IpsecPolicies Count={6}, UsePolicyBasedTS={7}",
+                    "IPsecPolicies Count={6}, UsePolicyBasedTS={7}",
                     getVirtualNetworkGatewayConnectionResponse.Value.Data.Location, getVirtualNetworkGatewayConnectionResponse.Value.Id,
                     getVirtualNetworkGatewayConnectionResponse.Value.Data.Name,
                     getVirtualNetworkGatewayConnectionResponse.Value.Data.VirtualNetworkGateway1.Name, getVirtualNetworkGatewayConnectionResponse.Value.Data.VirtualNetworkGateway1.Id,
                     getVirtualNetworkGatewayConnectionResponse.Value.Data.LocalNetworkGateway2.Name, getVirtualNetworkGatewayConnectionResponse.Value.Data.LocalNetworkGateway2.Id,
-                    getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.Value.Data.UsePolicyBasedTrafficSelectors);
+                    getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.Value.Data.UsePolicyBasedTrafficSelectors);
 
             Assert.AreEqual(VirtualNetworkGatewayConnectionType.IPsec, getVirtualNetworkGatewayConnectionResponse.Value.Data.ConnectionType);
             Assert.AreEqual(virtualNetworkGatewayConnection.UsePolicyBasedTrafficSelectors, getVirtualNetworkGatewayConnectionResponse.Value.Data.UsePolicyBasedTrafficSelectors);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies.Count);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].IpsecEncryption, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].IpsecEncryption);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].IpsecIntegrity, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].IpsecIntegrity);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].IkeEncryption, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].IkeEncryption);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].IkeIntegrity, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].IkeIntegrity);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].DhGroup, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].DhGroup);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].PfsGroup, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].PfsGroup);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].SaDataSizeKilobytes, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].SaDataSizeKilobytes);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].SaLifeTimeSeconds, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].SaLifeTimeSeconds);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies.Count);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].IPsecEncryption, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].IPsecEncryption);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].IPsecIntegrity, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].IPsecIntegrity);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].IkeEncryption, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].IkeEncryption);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].IkeIntegrity, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].IkeIntegrity);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].DhGroup, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].DhGroup);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].PfsGroup, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].PfsGroup);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].SaDataSizeKilobytes, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].SaDataSizeKilobytes);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].SaLifeTimeSeconds, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].SaLifeTimeSeconds);
 
             // 3A. UpdateVirtualNetworkGatewayConnection API : update ipsec policies and disable TS
             virtualNetworkGatewayConnection.UsePolicyBasedTrafficSelectors = false;
-            virtualNetworkGatewayConnection.IpsecPolicies.Clear();
-            virtualNetworkGatewayConnection.IpsecPolicies.Add(new IpsecPolicy(600, 2048, IpsecEncryption.Gcmaes256, IpsecIntegrity.Gcmaes256, IkeEncryption.AES256, IkeIntegrity.SHA384, DhGroup.DHGroup2048, PfsGroup.ECP384));
+            virtualNetworkGatewayConnection.IPsecPolicies.Clear();
+            virtualNetworkGatewayConnection.IPsecPolicies.Add(new IPsecPolicy(600, 2048, IPsecEncryption.Gcmaes256, IPsecIntegrity.Gcmaes256, IkeEncryption.AES256, IkeIntegrity.SHA384, DhGroup.DHGroup2048, PfsGroup.ECP384));
 
             putVirtualNetworkGatewayConnectionResponseOperation = await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(true, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConnection);
             putVirtualNetworkGatewayConnectionResponse = await putVirtualNetworkGatewayConnectionResponseOperation.WaitForCompletionAsync();
@@ -918,26 +918,26 @@ namespace Azure.ResourceManager.Network.Tests
             // 3B. GetVirtualNetworkGatewayConnection API after Updating
             getVirtualNetworkGatewayConnectionResponse = await virtualNetworkGatewayConnectionCollection.GetAsync(VirtualNetworkGatewayConnectionName);
             Console.WriteLine("GatewayConnection details:- GatewayLocation: {0}, GatewayConnectionId:{1}, VirtualNetworkGateway1 name={2} & Id={3}, LocalNetworkGateway2 name={4} & Id={5}, " +
-                "IpsecPolicies Count={6}, UsePolicyBasedTS={7}",
+                "IPsecPolicies Count={6}, UsePolicyBasedTS={7}",
                 getVirtualNetworkGatewayConnectionResponse.Value.Data.Location, getVirtualNetworkGatewayConnectionResponse.Value.Id,
                 getVirtualNetworkGatewayConnectionResponse.Value.Data.Name,
                 getVirtualNetworkGatewayConnectionResponse.Value.Data.VirtualNetworkGateway1.Name, getVirtualNetworkGatewayConnectionResponse.Value.Data.VirtualNetworkGateway1.Id,
                 getVirtualNetworkGatewayConnectionResponse.Value.Data.LocalNetworkGateway2.Name, getVirtualNetworkGatewayConnectionResponse.Value.Data.LocalNetworkGateway2.Id,
-                getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.Value.Data.UsePolicyBasedTrafficSelectors);
+                getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.Value.Data.UsePolicyBasedTrafficSelectors);
 
             Assert.AreEqual(virtualNetworkGatewayConnection.UsePolicyBasedTrafficSelectors, getVirtualNetworkGatewayConnectionResponse.Value.Data.UsePolicyBasedTrafficSelectors);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies.Count);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].IpsecEncryption, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].IpsecEncryption);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].IpsecIntegrity, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].IpsecIntegrity);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].IkeEncryption, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].IkeEncryption);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].IkeIntegrity, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].IkeIntegrity);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].DhGroup, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].DhGroup);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].PfsGroup, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].PfsGroup);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].SaDataSizeKilobytes, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].SaDataSizeKilobytes);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].SaLifeTimeSeconds, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].SaLifeTimeSeconds);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies.Count);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].IPsecEncryption, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].IPsecEncryption);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].IPsecIntegrity, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].IPsecIntegrity);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].IkeEncryption, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].IkeEncryption);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].IkeIntegrity, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].IkeIntegrity);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].DhGroup, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].DhGroup);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].PfsGroup, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].PfsGroup);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].SaDataSizeKilobytes, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].SaDataSizeKilobytes);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].SaLifeTimeSeconds, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].SaLifeTimeSeconds);
 
             // 4A. UpdateVirtualNetworkGatewayConnection API : remove ipsec policies
-            (virtualNetworkGatewayConnection.IpsecPolicies as ChangeTrackingList<IpsecPolicy>).Reset();
+            (virtualNetworkGatewayConnection.IPsecPolicies as ChangeTrackingList<IPsecPolicy>).Reset();
 
             putVirtualNetworkGatewayConnectionResponseOperation = await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(true, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConnection);
             putVirtualNetworkGatewayConnectionResponse = await putVirtualNetworkGatewayConnectionResponseOperation.WaitForCompletionAsync();
@@ -946,15 +946,15 @@ namespace Azure.ResourceManager.Network.Tests
             // 4B. GetVirtualNetworkGatewayConnection API after Updating
             getVirtualNetworkGatewayConnectionResponse = await virtualNetworkGatewayConnectionCollection.GetAsync(VirtualNetworkGatewayConnectionName);
             Console.WriteLine("GatewayConnection details:- GatewayLocation: {0}, GatewayConnectionId:{1}, VirtualNetworkGateway1 name={2} & Id={3}, LocalNetworkGateway2 name={4} & Id={5}, " +
-                "IpsecPolicies Count={6}, UsePolicyBasedTS={7}",
+                "IPsecPolicies Count={6}, UsePolicyBasedTS={7}",
                 getVirtualNetworkGatewayConnectionResponse.Value.Data.Location, getVirtualNetworkGatewayConnectionResponse.Value.Id,
                 getVirtualNetworkGatewayConnectionResponse.Value.Data.Name,
                 getVirtualNetworkGatewayConnectionResponse.Value.Data.VirtualNetworkGateway1.Name, getVirtualNetworkGatewayConnectionResponse.Value.Data.VirtualNetworkGateway1.Id,
                 getVirtualNetworkGatewayConnectionResponse.Value.Data.LocalNetworkGateway2.Name, getVirtualNetworkGatewayConnectionResponse.Value.Data.LocalNetworkGateway2.Id,
-                getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.Value.Data.UsePolicyBasedTrafficSelectors);
+                getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.Value.Data.UsePolicyBasedTrafficSelectors);
 
             Assert.AreEqual(virtualNetworkGatewayConnection.UsePolicyBasedTrafficSelectors, getVirtualNetworkGatewayConnectionResponse.Value.Data.UsePolicyBasedTrafficSelectors);
-            Assert.AreEqual(0, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies.Count);
+            Assert.AreEqual(0, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies.Count);
 
             // 4. ListVitualNetworkGatewayConnections API
             AsyncPageable<VirtualNetworkGatewayConnection> listVirtualNetworkGatewayConectionResponseAP = virtualNetworkGatewayConnectionCollection.GetAllAsync();
@@ -1945,7 +1945,7 @@ namespace Azure.ResourceManager.Network.Tests
             Console.WriteLine("Virtual Network Gateway is deployed successfully.");
             Response<VirtualNetworkGateway> getVirtualNetworkGatewayResponse = await virtualNetworkGatewayCollection.GetAsync(virtualNetworkGatewayName);
 
-            // C. CreaetVirtualNetworkGatewayConnection API - Ipsec policy and policybased TS enabled
+            // C. CreaetVirtualNetworkGatewayConnection API - IPsec policy and policybased TS enabled
             string virtualNetworkGatewayConnectionName = Recording.GenerateAssetName("azsmnet");
             var virtualNetworkGatewayConnection = new VirtualNetworkGatewayConnectionData(getVirtualNetworkGatewayResponse.Value.Data, VirtualNetworkGatewayConnectionType.IPsec)
             {
@@ -1955,8 +1955,8 @@ namespace Azure.ResourceManager.Network.Tests
                 SharedKey = "abc"
             };
 
-            virtualNetworkGatewayConnection.IpsecPolicies.Add(
-                    new IpsecPolicy(300, 1024, IpsecEncryption.AES128, IpsecIntegrity.SHA256, IkeEncryption.AES192, IkeIntegrity.SHA1, DhGroup.DHGroup2, PfsGroup.PFS1)
+            virtualNetworkGatewayConnection.IPsecPolicies.Add(
+                    new IPsecPolicy(300, 1024, IPsecEncryption.AES128, IPsecIntegrity.SHA256, IkeEncryption.AES192, IkeIntegrity.SHA1, DhGroup.DHGroup2, PfsGroup.PFS1)
                 );
 
             virtualNetworkGatewayConnection.UsePolicyBasedTrafficSelectors = true;
@@ -1970,12 +1970,12 @@ namespace Azure.ResourceManager.Network.Tests
             // 2. GetVirtualNetworkGatewayConnection API
             Response<VirtualNetworkGatewayConnection> getVirtualNetworkGatewayConnectionResponse = await virtualNetworkGatewayConnectionCollection.GetAsync(virtualNetworkGatewayConnectionName);
             Console.WriteLine("GatewayConnection details:- GatewayLocation: {0}, GatewayConnectionId:{1}, VirtualNetworkGateway1 name={2} & Id={3}, LocalNetworkGateway2 name={4} & Id={5}, " +
-                              "IpsecPolicies Count={6}, UsePolicyBasedTS={7}",
+                              "IPsecPolicies Count={6}, UsePolicyBasedTS={7}",
                 getVirtualNetworkGatewayConnectionResponse.Value.Data.Location, getVirtualNetworkGatewayConnectionResponse.Value.Id,
                 getVirtualNetworkGatewayConnectionResponse.Value.Data.Name,
                 getVirtualNetworkGatewayConnectionResponse.Value.Data.VirtualNetworkGateway1.Name, getVirtualNetworkGatewayConnectionResponse.Value.Data.VirtualNetworkGateway1.Id,
                 getVirtualNetworkGatewayConnectionResponse.Value.Data.LocalNetworkGateway2.Name, getVirtualNetworkGatewayConnectionResponse.Value.Data.LocalNetworkGateway2.Id,
-                getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.Value.Data.UsePolicyBasedTrafficSelectors);
+                getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.Value.Data.UsePolicyBasedTrafficSelectors);
 
             // List supported Vpn Devices
             Response<string> supportedVpnDevices = await virtualNetworkGatewayCollection.Get(virtualNetworkGatewayName).Value.SupportedVpnDevicesAsync();

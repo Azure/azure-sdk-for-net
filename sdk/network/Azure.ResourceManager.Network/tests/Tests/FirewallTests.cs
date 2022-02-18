@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Tests
                 PublicIPAllocationMethod = IPAllocationMethod.Static,
                 Sku = new PublicIPAddressSku() { Name = PublicIPAddressSkuName.Standard },
             };
-            var ipLro = await rg.GetPublicIPAddresses().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("publicIP-"), ipData);
+            var ipLro = await rg.GetPublicIPAddresses().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("publicIp-"), ipData);
             _publicIPAddress = ipLro.Value;
             _publicIPAddressIdentifier = _publicIPAddress.Id;
 
