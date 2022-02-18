@@ -8,7 +8,7 @@ using System;
 namespace Azure.Core
 {
     /// <summary>
-    /// Polling strategy of <see cref="OperationInternalBase"/>.
+    /// Strategy to control polling behavior of LRO operation.
     /// </summary>
     internal abstract class OperationPollingStrategy
     {

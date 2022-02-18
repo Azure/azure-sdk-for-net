@@ -15,11 +15,11 @@ namespace Azure.Core
     internal abstract class OperationInternalBase
     {
         private static readonly TimeSpan DefaultPollingInterval = TimeSpan.FromSeconds(1);
-        private static readonly OperationPollingStrategy DefaultPollingStrategy = new ConstantPollingStrategy();
 
         private readonly ClientDiagnostics _diagnostics;
         private readonly string _updateStatusScopeName;
         private readonly IReadOnlyDictionary<string, string>? _scopeAttributes;
+        private readonly OperationPoller _operationPoller;
 
         protected OperationInternalBase(ClientDiagnostics clientDiagnostics, Response rawResponse, string operationTypeName, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null, OperationPollingStrategy? defaultPollingStrategy = null)
         {
@@ -27,7 +27,7 @@ namespace Azure.Core
             _updateStatusScopeName = $"{operationTypeName}.UpdateStatus";
             _scopeAttributes = scopeAttributes?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             RawResponse = rawResponse;
-            PollingStrategy = OperationPollingStrategy.ChoosePollingStrategy(rawResponse, defaultPollingStrategy ?? DefaultPollingStrategy);
+            _operationPoller = new OperationPoller(rawResponse, defaultPollingStrategy);
         }
 
         /// <summary>
@@ -51,12 +51,6 @@ namespace Azure.Core
         /// </example>
         /// </summary>
         public bool HasCompleted { get; protected set; }
-
-        /// <summary>
-        /// Gets or sets the polling strategy of <see cref="OperationInternalBase"/>.
-        /// Default to <see cref="ConstantPollingStrategy"/> with 1 second constant polling interval.
-        /// </summary>
-        private OperationPollingStrategy PollingStrategy { get; set; }
 
         protected RequestFailedException? OperationFailedException { get; private set; }
 
@@ -99,7 +93,7 @@ namespace Azure.Core
 
         /// <summary>
         /// Periodically calls <see cref="UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
-        /// between calls is defined by the property <see cref="PollingStrategy"/>, but it can change based on information returned
+        /// between calls is defined by the passed-in <see cref="OperationPollingStrategy"/>, but it can change based on information returned
         /// from the server. After each service call, a retry-after header may be returned to communicate that there is no reason to poll
         /// for status change until the specified time has passed. In this case, the maximum value between the <see cref="DefaultPollingInterval"/>
         /// property and the retry-after header is chosen as the wait interval. Headers supported are: "Retry-After", "retry-after-ms",
@@ -135,20 +129,8 @@ namespace Azure.Core
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
-        public virtual async ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
-        {
-            while (true)
-            {
-                Response response = await UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
-
-                if (HasCompleted)
-                {
-                    return response;
-                }
-
-                await WaitAsync(PollingStrategy.GetNextWait(response, pollingInterval), cancellationToken).ConfigureAwait(false);
-            }
-        }
+        public virtual async ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
+            await _operationPoller.WaitForCompletionResponseAsync(UpdateStatusAsync, () => HasCompleted, () => RawResponse, WaitAsync, pollingInterval, cancellationToken).ConfigureAwait(false);
 
         protected virtual async Task WaitAsync(TimeSpan delay, CancellationToken cancellationToken) =>
             await Task.Delay(delay, cancellationToken).ConfigureAwait(false);

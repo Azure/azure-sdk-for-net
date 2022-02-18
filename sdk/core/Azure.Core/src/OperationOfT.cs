@@ -60,17 +60,8 @@ namespace Azure
         /// </remarks>
         public virtual Response<T> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
-            while (true)
-            {
-                Response response = UpdateStatus(cancellationToken);
-
-                if (HasCompleted)
-                {
-                    return Response.FromValue(Value, GetRawResponse());
-                }
-                TimeSpan delay = GetServerDelay(response, pollingInterval);
-                Thread.Sleep(delay);
-            }
+            OperationPoller<T> poller = new(GetRawResponse());
+            return poller.WaitForCompletion(UpdateStatus, () => HasCompleted, () => Value, GetRawResponse, pollingInterval, cancellationToken);
         }
 
         /// <summary>
@@ -99,16 +90,9 @@ namespace Azure
         /// </remarks>
         public virtual async ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
-            while (true)
-            {
-                Response response = await UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
-                if (HasCompleted)
-                {
-                    return Response.FromValue(Value, GetRawResponse());
-                }
-                TimeSpan delay = GetServerDelay(response, pollingInterval);
-                await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
-            }
+            OperationPoller<T> poller = new(GetRawResponse());
+            return await poller.WaitForCompletionAsync(UpdateStatusAsync, () => HasCompleted, () => Value, GetRawResponse,
+                async (TimeSpan delay, CancellationToken cancellation) => await Task.Delay(delay, cancellationToken).ConfigureAwait(false), pollingInterval, cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />

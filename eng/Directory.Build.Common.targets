@@ -214,6 +214,8 @@
     <Compile Include="$(AzureCoreSharedSources)ExponentialPollingStrategy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ZeroPollingStrategy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)RetryAfterPollingStrategy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationPoller.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationPollerOfT.cs" LinkBase="Shared" />
   </ItemGroup>
 
   <!-- Management Client TEST Project Specific Overrides -->

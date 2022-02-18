@@ -127,9 +127,9 @@ namespace Azure.Core
         }
         /// <summary>
         /// Periodically calls <see cref="OperationInternalBase.UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
-        /// between calls is defined by the property <see cref="OperationInternalBase.PollingStrategy"/>, but it can change based on information returned
+        /// between calls is defined by the passed-in <see cref="OperationPollingStrategy"/>, but it can change based on information returned
         /// from the server. After each service call, a retry-after header may be returned to communicate that there is no reason to poll
-        /// for status change until the specified time has passed. In this case, the maximum value between the <see cref="OperationInternalBase.PollingStrategy"/>
+        /// for status change until the specified time has passed. In this case, the maximum value between the default polling interval
         /// property and the retry-after header is chosen as the wait interval. Headers supported are: "Retry-After", "retry-after-ms",
         /// and "x-ms-retry-after-ms".
         /// <example>Usage example:

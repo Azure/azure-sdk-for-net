@@ -16,9 +16,6 @@ namespace Azure
     public abstract class Operation
 #pragma warning restore AZC0012 // Avoid single word type names
     {
-        private const string RetryAfterHeaderName = "Retry-After";
-        private const string RetryAfterMsHeaderName = "retry-after-ms";
-        private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
         internal static TimeSpan DefaultPollingInterval { get; } = TimeSpan.FromSeconds(1);
 
         /// <summary>
@@ -88,16 +85,9 @@ namespace Azure
         /// </remarks>
         public virtual async ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default)
         {
-            while (true)
-            {
-                Response response = await UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
-                if (HasCompleted)
-                {
-                    return GetRawResponse();
-                }
-                TimeSpan delay = GetServerDelay(response, pollingInterval);
-                await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
-            }
+            OperationPoller poller = new(GetRawResponse());
+            return await poller.WaitForCompletionResponseAsync(UpdateStatusAsync, () => HasCompleted, GetRawResponse,
+                async (TimeSpan delay, CancellationToken cancellationToken) => await Task.Delay(delay, cancellationToken).ConfigureAwait(false), pollingInterval, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -126,52 +116,8 @@ namespace Azure
         /// </remarks>
         public virtual Response WaitForCompletionResponse(TimeSpan pollingInterval, CancellationToken cancellationToken = default)
         {
-            while (true)
-            {
-                Response response = UpdateStatus(cancellationToken);
-
-                if (HasCompleted)
-                {
-                    return GetRawResponse();
-                }
-                TimeSpan delay = GetServerDelay(response, pollingInterval);
-                Thread.Sleep(delay);
-            }
-        }
-
-        /// <summary>
-        /// Calculates the delay to be used for calls to WaitForCompletion.
-        /// </summary>
-        /// <param name="response">The <see cref="Response"/>.</param>
-        /// <param name="pollingInterval">The polling interval specified by the call to WaitForCompletion.</param>
-        /// <returns></returns>
-        internal static TimeSpan GetServerDelay(Response response, TimeSpan pollingInterval)
-        {
-            if (pollingInterval == TimeSpan.Zero)
-            {
-                // Respect when zero is explicitly used (recorded tests use this, for example)
-                return pollingInterval;
-            }
-            TimeSpan serverDelay = pollingInterval;
-            if (response.Headers.TryGetValue(RetryAfterMsHeaderName, out string? retryAfterValue) ||
-                response.Headers.TryGetValue(XRetryAfterMsHeaderName, out retryAfterValue))
-            {
-                if (int.TryParse(retryAfterValue, out int serverDelayInMilliseconds))
-                {
-                    serverDelay = TimeSpan.FromMilliseconds(serverDelayInMilliseconds);
-                }
-            }
-            else if (response.Headers.TryGetValue(RetryAfterHeaderName, out retryAfterValue))
-            {
-                if (int.TryParse(retryAfterValue, out int serverDelayInSeconds))
-                {
-                    serverDelay = TimeSpan.FromSeconds(serverDelayInSeconds);
-                }
-            }
-
-            return serverDelay > pollingInterval
-                ? serverDelay
-                : pollingInterval;
+            OperationPoller poller = new(GetRawResponse());
+            return poller.WaitForCompletionResponse(UpdateStatus, () => HasCompleted, GetRawResponse, pollingInterval, cancellationToken);
         }
 
         internal static T GetValue<T>(ref T? value) where T : class

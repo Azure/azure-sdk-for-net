@@ -58,6 +58,11 @@
     <Compile Include="Shared\NullableAttributes.cs" />
     <Compile Include="Shared\TaskExtensions.cs" />
     <Compile Include="Shared\CancellationHelper.cs" />
+    <Compile Include="Shared\OperationPoller.cs" />
+    <Compile Include="Shared\OperationPollerOfT.cs" />
+    <Compile Include="Shared\OperationPollingStrategy.cs" />
+    <Compile Include="Shared\ConstantPollingStrategy.cs" />
+    <Compile Include="Shared\RetryAfterPollingStrategy.cs" />
   </ItemGroup>
 
 </Project>
