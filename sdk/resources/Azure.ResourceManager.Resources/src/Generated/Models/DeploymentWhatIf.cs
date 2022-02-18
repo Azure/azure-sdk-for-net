@@ -28,6 +28,12 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The location to store the deployment data. </summary>
         public string Location { get; set; }
         /// <summary> The deployment properties. </summary>
-        public DeploymentWhatIfProperties Properties { get; }
+        internal DeploymentWhatIfProperties Properties { get; }
+        /// <summary> The format of the What-If results. </summary>
+        public WhatIfResultFormat? WhatIfResultFormat
+        {
+            get => Properties.WhatIfResultFormat;
+            set => Properties.WhatIfResultFormat = value;
+        }
     }
 }
