@@ -20,7 +20,7 @@ namespace Azure.IoT.Hub.Service.Tests
             // Sanitize SAS tokens in request body
             JsonPathSanitizers.Add("outputBlobContainerUri");
             JsonPathSanitizers.Add("inputBlobContainerUri");
-            ReplaceHostInUri(FakeHost);
+            ReplacementHost = FakeHost;
         }
     }
 }
