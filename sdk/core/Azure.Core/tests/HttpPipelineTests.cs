@@ -288,16 +288,15 @@ namespace Azure.Core.Tests
             var mockTransport = new MockTransport(
                 new MockResponse(404));
 
-            var pipeline = new HttpPipeline(mockTransport, responseClassifier: DpgClassifier.Instance);
+            var pipeline = new HttpPipeline(mockTransport, default);
 
             var context = new RequestContext();
-            context.AddClassifier(404, isError: false);
+            context.AddClassificationHandler(404, isError: false);
 
-            HttpMessage message = pipeline.CreateMessage(context);
+            HttpMessage message = pipeline.CreateMessage(context, DpgClassifier.Instance);
             Request request = message.Request;
             request.Method = RequestMethod.Get;
             request.Uri.Reset(new Uri("https://contoso.a.io"));
-            message.ResponseClassifier = context.Apply(DpgClassifier.Instance);
 
             await pipeline.SendAsync(message, CancellationToken.None);
             Response response = message.Response;
@@ -353,7 +352,7 @@ namespace Azure.Core.Tests
             private static CoreResponseClassifier _instance;
             public static CoreResponseClassifier Instance => _instance ??= new DpgClassifier();
 
-            public DpgClassifier() : base(stackalloc int[] { 200, 204, 304 })
+            public DpgClassifier() : base(new int[] { 200, 204, 304 })
             {
             }
         }

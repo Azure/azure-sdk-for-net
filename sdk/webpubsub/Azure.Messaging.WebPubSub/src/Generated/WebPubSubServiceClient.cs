@@ -2070,8 +2070,7 @@ namespace Azure.Messaging.WebPubSub
 
         internal HttpMessage CreateCheckPermissionRequest(string permission, string connectionId, string targetName, RequestContext context)
         {
-            //var message = _pipeline.CreateMessage(context, ResponseClassifier200404.Instance);
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200404.Instance);
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
@@ -2089,7 +2088,6 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = context.Apply(ResponseClassifier200404.Instance);
             return message;
         }
 

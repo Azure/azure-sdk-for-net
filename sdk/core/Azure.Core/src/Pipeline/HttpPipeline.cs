@@ -97,14 +97,21 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public HttpMessage CreateMessage(RequestContext? context) => CreateMessage(context, default);
+
+        /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
         /// </summary>
         /// <param name="context">Context specifying the message options.</param>
+        /// <param name="classifier"></param>
         /// <returns>The message.</returns>
-        public HttpMessage CreateMessage(RequestContext? context)
+        public HttpMessage CreateMessage(RequestContext? context, CoreResponseClassifier? classifier = default)
         {
             var message = CreateMessage();
-            message.ApplyRequestContext(context);
+            message.ApplyRequestContext(context, classifier);
             return message;
         }
 

@@ -25,7 +25,7 @@ namespace Azure.Core
         /// Creates a new instance of <see cref="CoreResponseClassifier"/>
         /// </summary>
         /// <param name="nonErrors"></param>
-        public CoreResponseClassifier(ReadOnlySpan<int> nonErrors)
+        public CoreResponseClassifier(int[] nonErrors)
         {
             _nonErrors = new ulong[Length];
 

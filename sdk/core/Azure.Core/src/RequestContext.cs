@@ -25,11 +25,6 @@ namespace Azure
         internal ResponseClassificationHandler[]? Handlers => _handlers;
 
         /// <summary>
-        /// Gets a value indicating if classifiers have been added to this <see cref="RequestContext"/>.
-        /// </summary>
-        public bool HasClassifier => _statusCodes != null || _handlers != null;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="RequestContext"/> class.
         /// </summary>
         public RequestContext()
@@ -76,7 +71,7 @@ namespace Azure
         /// </summary>
         /// <param name="statusCode">The status code to customize classification for.</param>
         /// <param name="isError">Whether the passed-in status code should be classified as an error.</param>
-        public void AddClassifier(int statusCode, bool isError)
+        public void AddClassificationHandler(int statusCode, bool isError)
         {
             if (_frozen)
             {
@@ -97,7 +92,7 @@ namespace Azure
         /// logs or distributed traces.
         /// </summary>
         /// <param name="classifier">The custom classifier.</param>
-        public void AddClassifier(ResponseClassificationHandler classifier)
+        public void AddClassificationHandler(ResponseClassificationHandler classifier)
         {
             if (_frozen)
             {
@@ -117,7 +112,7 @@ namespace Azure
         /// <summary>
         /// </summary>
         /// <param name="classifier"></param>
-        public CoreResponseClassifier Apply(CoreResponseClassifier classifier)
+        internal CoreResponseClassifier Apply(CoreResponseClassifier classifier)
         {
             if (_statusCodes == null && _handlers == null)
             {

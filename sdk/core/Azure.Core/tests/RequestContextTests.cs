@@ -201,9 +201,9 @@ namespace Azure.Core.Tests
         public void ThrowsWhenFrozen()
         {
             RequestContext context = new RequestContext();
-            context.AddClassifier(404, false);
+            context.AddClassificationHandler(404, false);
             context.Freeze();
-            Assert.Throws<InvalidOperationException>(() => context.AddClassifier(304, true));
+            Assert.Throws<InvalidOperationException>(() => context.AddClassificationHandler(304, true));
         }
 
         [Test]
@@ -218,12 +218,13 @@ namespace Azure.Core.Tests
             var response = new MockResponse(404);
             var mockTransport = new MockTransport(response);
 
-            var classifier = new CoreResponseClassifier(stackalloc int[] { 200, 204, 304 });
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, HttpMessageSanitizer.Default, "Test SDK") }, classifier);
+            var classifier = new CoreResponseClassifier(new int[] { 200, 204, 304 });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, HttpMessageSanitizer.Default, "Test SDK") });
+
             var context = new RequestContext();
-            context.AddClassifier(404, isError: false);
-            var message = pipeline.CreateMessage(context);
-            message.ResponseClassifier = context.Apply(classifier);
+            context.AddClassificationHandler(404, isError: false);
+
+            var message = pipeline.CreateMessage(context, classifier);
 
             await pipeline.SendAsync(message, context.CancellationToken);
 
@@ -252,12 +253,11 @@ namespace Azure.Core.Tests
                 return mockResponse;
             });
 
-            var classifier = new CoreResponseClassifier(stackalloc int[] { 200, 204, 304 });
-            var pipeline = new HttpPipeline(mockTransport, new[] { new RequestActivityPolicy(true, "Azure.Core.Tests", HttpMessageSanitizer.Default) }, classifier);
+            var classifier = new CoreResponseClassifier(new int[] { 200, 204, 304 });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new RequestActivityPolicy(true, "Azure.Core.Tests", HttpMessageSanitizer.Default) });
             var context = new RequestContext();
-            context.AddClassifier(409, isError: false);
-            var message = pipeline.CreateMessage(context);
-            message.ResponseClassifier = context.Apply(classifier);
+            context.AddClassificationHandler(409, isError: false);
+            var message = pipeline.CreateMessage(context, classifier);
 
             await pipeline.SendAsync(message, context.CancellationToken);
 
