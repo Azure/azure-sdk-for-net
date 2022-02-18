@@ -19,22 +19,22 @@ using Azure.Core.Pipeline;
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 {
     /// <summary>
-    /// A <see cref="SchemaRegistryAvroEncoder"/> uses the <see cref="SchemaRegistryClient"/> to
+    /// A <see cref="SchemaRegistryAvroSerializer"/> uses the <see cref="SchemaRegistryClient"/> to
     /// encode and decode Avro payloads.
     /// </summary>
-    public class SchemaRegistryAvroEncoder
+    public class SchemaRegistryAvroSerializer
     {
         private readonly SchemaRegistryClient _client;
         private readonly string _groupName;
-        private readonly SchemaRegistryAvroEncoderOptions _options;
+        private readonly SchemaRegistryAvroSerializerOptions _options;
         private const string AvroMimeType = "avro/binary";
         private const int CacheCapacity = 128;
         private static readonly Encoding Utf8Encoding = new UTF8Encoding(false);
 
         /// <summary>
-        /// Initializes new instance of <see cref="SchemaRegistryAvroEncoder"/>.
+        /// Initializes new instance of <see cref="SchemaRegistryAvroSerializer"/>.
         /// </summary>
-        public SchemaRegistryAvroEncoder(SchemaRegistryClient client, string groupName, SchemaRegistryAvroEncoderOptions options = null)
+        public SchemaRegistryAvroSerializer(SchemaRegistryClient client, string groupName, SchemaRegistryAvroSerializerOptions options = null)
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
             _groupName = groupName ?? throw new ArgumentNullException(nameof(groupName));
@@ -54,71 +54,71 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             GenericRecord
         }
 
-        #region Encode
+        #region Serialize
 
         /// <summary>
-        /// Encodes the message data as Avro and stores it in <see cref="MessageWithMetadata.Data"/>. The <see cref="MessageWithMetadata.ContentType"/>
+        /// Encodes the message data as Avro and stores it in <see cref="BinaryContent.Data"/>. The <see cref="BinaryContent.ContentType"/>
         /// will be set to "avro/binary+schemaId" where schemaId is the ID of the schema used to encode the data.
         /// </summary>
         /// <param name="data">The data to serialize to Avro and encode into the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        /// <typeparam name="TMessage">The <see cref="MessageWithMetadata"/> type to encode the data into.</typeparam>
+        /// <typeparam name="TEnvelope">The <see cref="BinaryContent"/> type to encode the data into.</typeparam>
         /// <typeparam name="TData">The type of the data to encode.</typeparam>
-        public TMessage EncodeMessageData<TMessage, TData>(
+        public TEnvelope Serialize<TEnvelope, TData>(
             TData data,
-            CancellationToken cancellationToken = default) where TMessage : MessageWithMetadata, new()
-            => (TMessage) EncodeMessageDataInternalAsync(data, typeof(TData), typeof(TMessage), false, cancellationToken).EnsureCompleted();
+            CancellationToken cancellationToken = default) where TEnvelope : BinaryContent, new()
+            => (TEnvelope) SerializeInternalAsync(data, typeof(TData), typeof(TEnvelope), false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Encodes the message data as Avro and stores it in <see cref="MessageWithMetadata.Data"/>. The <see cref="MessageWithMetadata.ContentType"/>
+        /// Encodes the message data as Avro and stores it in <see cref="BinaryContent.Data"/>. The <see cref="BinaryContent.ContentType"/>
         /// will be set to "avro/binary+schemaId" where schemaId is the ID of the schema used to encode the data.
         /// </summary>
         /// <param name="data">The data to serialize to Avro and encode into the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        /// <typeparam name="TMessage">The <see cref="MessageWithMetadata"/> type to encode the data into.</typeparam>
+        /// <typeparam name="TEnvelope">The <see cref="BinaryContent"/> type to encode the data into.</typeparam>
         /// <typeparam name="TData">The type of the data to encode.</typeparam>
-        public async ValueTask<TMessage> EncodeMessageDataAsync<TMessage, TData>(
+        public async ValueTask<TEnvelope> SerializeAsync<TEnvelope, TData>(
             TData data,
-            CancellationToken cancellationToken = default) where TMessage : MessageWithMetadata, new()
-            => (TMessage) await EncodeMessageDataInternalAsync(data, typeof(TData), typeof(TMessage), true, cancellationToken).ConfigureAwait(false);
+            CancellationToken cancellationToken = default) where TEnvelope : BinaryContent, new()
+            => (TEnvelope) await SerializeInternalAsync(data, typeof(TData), typeof(TEnvelope), true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Encodes the message data as Avro and stores it in <see cref="MessageWithMetadata.Data"/>. The <see cref="MessageWithMetadata.ContentType"/>
+        /// Encodes the message data as Avro and stores it in <see cref="BinaryContent.Data"/>. The <see cref="BinaryContent.ContentType"/>
         /// will be set to "avro/binary+schemaId" where schemaId is the ID of the schema used to encode the data.
         /// </summary>
         /// <param name="data">The data to serialize to Avro and encode into the message.</param>
         /// <param name="dataType">The type of the data to encode. If left blank, the type will be determined at runtime by
         /// calling <see cref="Object.GetType"/>.</param>
-        /// <param name="messageType">The type of message to encode the data into. Must extend from <see cref="MessageWithMetadata"/>, and
+        /// <param name="messageType">The type of message to encode the data into. Must extend from <see cref="BinaryContent"/>, and
         /// have a parameterless constructor.
-        /// If left blank, the data will be encoded into a <see cref="MessageWithMetadata"/> instance.</param>
+        /// If left blank, the data will be encoded into a <see cref="BinaryContent"/> instance.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        public MessageWithMetadata EncodeMessageData(
+        public BinaryContent Serialize(
             object data,
             Type dataType = default,
             Type messageType = default,
             CancellationToken cancellationToken = default)
-            => EncodeMessageDataInternalAsync(data, dataType, messageType, false, cancellationToken).EnsureCompleted();
+            => SerializeInternalAsync(data, dataType, messageType, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Encodes the message data as Avro and stores it in <see cref="MessageWithMetadata.Data"/>. The <see cref="MessageWithMetadata.ContentType"/>
+        /// Encodes the message data as Avro and stores it in <see cref="BinaryContent.Data"/>. The <see cref="BinaryContent.ContentType"/>
         /// will be set to "avro/binary+schemaId" where schemaId is the ID of the schema used to encode the data.
         /// </summary>
         /// <param name="data">The data to serialize to Avro and encode into the message.</param>
         /// <param name="dataType">The type of the data to encode. If left blank, the type will be determined at runtime by
         /// calling <see cref="Object.GetType"/>.</param>
-        /// <param name="messageType">The type of message to encode the data into. Must extend from <see cref="MessageWithMetadata"/>, and
+        /// <param name="messageType">The type of message to encode the data into. Must extend from <see cref="BinaryContent"/>, and
         /// have a parameterless constructor.
-        /// If left blank, the data will be encoded into a <see cref="MessageWithMetadata"/> instance.</param>
+        /// If left blank, the data will be encoded into a <see cref="BinaryContent"/> instance.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        public async ValueTask<MessageWithMetadata> EncodeMessageDataAsync(
+        public async ValueTask<BinaryContent> SerializeAsync(
             object data,
             Type dataType = default,
             Type messageType = default,
             CancellationToken cancellationToken = default)
-            => await EncodeMessageDataInternalAsync(data, dataType, messageType, true, cancellationToken).ConfigureAwait(false);
+            => await SerializeInternalAsync(data, dataType, messageType, true, cancellationToken).ConfigureAwait(false);
 
-        internal async ValueTask<MessageWithMetadata> EncodeMessageDataInternalAsync(
+        internal async ValueTask<BinaryContent> SerializeInternalAsync(
             object data,
             Type dataType,
             Type messageType,
@@ -126,17 +126,17 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             CancellationToken cancellationToken)
         {
             (string schemaId, BinaryData bd) = async
-                ? await EncodeInternalAsync(data, dataType, true, cancellationToken).ConfigureAwait(false)
-                : EncodeInternalAsync(data, dataType, false, cancellationToken).EnsureCompleted();
+                ? await SerializeInternalAsync(data, dataType, true, cancellationToken).ConfigureAwait(false)
+                : SerializeInternalAsync(data, dataType, false, cancellationToken).EnsureCompleted();
 
-            messageType ??= typeof(MessageWithMetadata);
-            var message = (MessageWithMetadata)Activator.CreateInstance(messageType);
+            messageType ??= typeof(BinaryContent);
+            var message = (BinaryContent)Activator.CreateInstance(messageType);
             message.Data = bd;
             message.ContentType = $"{AvroMimeType}+{schemaId}";
             return message;
         }
 
-        private async ValueTask<(string SchemaId, BinaryData Data)> EncodeInternalAsync(
+        private async ValueTask<(string SchemaId, BinaryData Data)> SerializeInternalAsync(
             object value,
             Type dataType,
             bool async,
@@ -231,62 +231,62 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 
         #region Decode
         /// <summary>
-        /// Decodes the message data into the specified type using the schema information populated in <see cref="MessageWithMetadata.ContentType"/>.
+        /// Decodes the message data into the specified type using the schema information populated in <see cref="BinaryContent.ContentType"/>.
         /// </summary>
-        /// <param name="message">The message containing the data to decode.</param>
+        /// <param name="content">The message containing the data to decode.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <typeparam name="TData">The type to decode the message data into.</typeparam>
         /// <returns>The deserialized data.</returns>
         /// <exception cref="FormatException">Thrown if the content type is not in the expected format.</exception>
         /// <exception cref="InvalidOperationException">Thrown if an attempt is made to decode non-Avro data.</exception>
-        public TData DecodeMessageData<TData>(
-            MessageWithMetadata message,
+        public TData Deserialize<TData>(
+            BinaryContent content,
             CancellationToken cancellationToken = default)
-            => (TData) DecodeMessageDataInternalAsync(message.Data, typeof(TData), message.ContentType, false, cancellationToken).EnsureCompleted();
+            => (TData) DecodeMessageDataInternalAsync(content.Data, typeof(TData), content.ContentType, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Decodes the message data into the specified type using the schema information populated in <see cref="MessageWithMetadata.ContentType"/>.
+        /// Decodes the message data into the specified type using the schema information populated in <see cref="BinaryContent.ContentType"/>.
         /// </summary>
-        /// <param name="message">The message containing the data to decode.</param>
+        /// <param name="content">The content to deserialize.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <typeparam name="TData">The type to decode the message data into.</typeparam>
         /// <returns>The deserialized data.</returns>
         /// <exception cref="FormatException">Thrown if the content type is not in the expected format.</exception>
         /// <exception cref="InvalidOperationException">Thrown if an attempt is made to decode non-Avro data.</exception>
-        public async ValueTask<TData> DecodeMessageDataAsync<TData>(
-            MessageWithMetadata message,
+        public async ValueTask<TData> DeserializeAsync<TData>(
+            BinaryContent content,
             CancellationToken cancellationToken = default)
-            => (TData) await DecodeMessageDataInternalAsync(message.Data, typeof(TData), message.ContentType, true, cancellationToken).ConfigureAwait(false);
+            => (TData) await DecodeMessageDataInternalAsync(content.Data, typeof(TData), content.ContentType, true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Decodes the message data into the specified type using the schema information populated in <see cref="MessageWithMetadata.ContentType"/>.
+        /// Decodes the message data into the specified type using the schema information populated in <see cref="BinaryContent.ContentType"/>.
         /// </summary>
-        /// <param name="message">The message containing the data to decode.</param>
+        /// <param name="content">The message containing the data to decode.</param>
         /// <param name="dataType">The type to decode the message data into.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>The deserialized data.</returns>
         /// <exception cref="FormatException">Thrown if the content type is not in the expected format.</exception>
         /// <exception cref="InvalidOperationException">Thrown if an attempt is made to decode non-Avro data.</exception>
-        public object DecodeMessageData(
-            MessageWithMetadata message,
+        public object Deserialize(
+            BinaryContent content,
             Type dataType,
             CancellationToken cancellationToken = default)
-            => DecodeMessageDataInternalAsync(message.Data, dataType, message.ContentType, false, cancellationToken).EnsureCompleted();
+            => DecodeMessageDataInternalAsync(content.Data, dataType, content.ContentType, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Decodes the message data into the specified type using the schema information populated in <see cref="MessageWithMetadata.ContentType"/>.
+        /// Decodes the message data into the specified type using the schema information populated in <see cref="BinaryContent.ContentType"/>.
         /// </summary>
-        /// <param name="message">The message containing the data to decode.</param>
+        /// <param name="content">The message containing the data to decode.</param>
         /// <param name="dataType">The type to decode the message data into.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>The deserialized data.</returns>
         /// <exception cref="FormatException">Thrown if the content type is not in the expected format.</exception>
         /// <exception cref="InvalidOperationException">Thrown if an attempt is made to decode non-Avro data.</exception>
-        public async ValueTask<object> DecodeMessageDataAsync(
-            MessageWithMetadata message,
+        public async ValueTask<object> DeserializeAsync(
+            BinaryContent content,
             Type dataType,
             CancellationToken cancellationToken = default)
-            => await DecodeMessageDataInternalAsync(message.Data, dataType, message.ContentType, true, cancellationToken).ConfigureAwait(false);
+            => await DecodeMessageDataInternalAsync(content.Data, dataType, content.ContentType, true, cancellationToken).ConfigureAwait(false);
 
         private async ValueTask<object> DecodeMessageDataInternalAsync(
             BinaryData data,

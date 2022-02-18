@@ -3669,6 +3669,22 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task GetPropertiesAsync_CheckDefaults()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            // Act
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(default, response.Value.BlobCopyStatus); // correct behavior
+            Assert.AreEqual((CopyStatus)0, response.Value.CopyStatus); // legacy facade doesn't break
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task GetPropertiesAsync_Tags()
         {

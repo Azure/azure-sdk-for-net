@@ -8,17 +8,17 @@ using Azure.Core;
 namespace Azure
 {
     /// <summary>
-    /// A message containing a content type along with its data.
+    /// Content containing a content type along with its data.
     /// </summary>
-    public class MessageWithMetadata
+    public class BinaryContent
     {
         /// <summary>
-        /// Gets or sets the message data.
+        /// Gets or sets the data.
         /// </summary>
         public virtual BinaryData? Data { get; set; }
 
         /// <summary>
-        /// Gets or sets the message content type.
+        /// Gets or sets the content type.
         /// </summary>
         public virtual ContentType? ContentType
         {
@@ -35,7 +35,7 @@ namespace Azure
         protected virtual ContentType? ContentTypeCore { get; set; }
 
         /// <summary>
-        /// Gets whether the message is read only or not. This
+        /// Gets whether the content is read only or not. This
         /// can be overriden by inheriting classes to specify whether or
         /// not the message can be modified.
         /// </summary>
