@@ -10,46 +10,83 @@ namespace Azure.Core.Tests
     [Parallelizable]
     public class PollingStrategyTests
     {
-        private static readonly Response mockPendingResponse = new MockResponse(202);
+        private static readonly Response defaultMockResponse = new MockResponse(202);
 
         [Test]
-        public void TestExponentialPollingStrategy()
+        public void TestExponentialPollingStrategy([Values(true, false)] bool retryAfter)
         {
-            var intervals = new int[]{ 1, 1, 1, 2, 4, 8, 16, 32};
+            var intervals = new int[] { 1, 1, 1, 2, 4, 8, 16, 32 };
+            var random = new Random();
 
             var strategy = new ExponentialPollingStrategy();
             foreach (var interval in intervals)
             {
-                Assert.AreEqual(interval, strategy.GetNextWait(mockPendingResponse).TotalSeconds);
+                Assert.AreEqual(interval, strategy.GetNextWait(mockDefaultResponse(retryAfter), TimeSpan.FromSeconds(random.Next(0, 64))).TotalSeconds);
             }
 
             for (int i = 0; i < 6; i++)
             {
-                Assert.AreEqual(32, strategy.GetNextWait(mockPendingResponse).TotalSeconds);
+                Assert.AreEqual(32, strategy.GetNextWait(mockDefaultResponse(retryAfter), TimeSpan.FromSeconds(random.Next(0, 64))).TotalSeconds);
             }
         }
 
         [Test]
-        public void TestDefaultConstantlPollingStrategy()
+        public void TestConstantlPollingStrategy(
+            [Values(true, false)] bool retryAfter,
+            [Values(1, 2, 3)] int initial,
+            [Values(1, 2, 3)] int suggest)
         {
-            var strategy = new ConstantPollingStrategy();
+            var strategy = new ConstantPollingStrategy(TimeSpan.FromSeconds(initial));
 
             for (int i = 0; i < 6; i++)
             {
-                Assert.AreEqual(1, strategy.GetNextWait(mockPendingResponse).TotalSeconds);
+                Assert.AreEqual(Math.Max(initial, suggest), strategy.GetNextWait(mockDefaultResponse(retryAfter), TimeSpan.FromSeconds(suggest)).TotalSeconds);
             }
         }
 
-        [TestCase(2)]
-        [TestCase(3)]
-        public void TestConstantlPollingStrategy(int interval)
+        [Test]
+        public void TestZerolPollingStrategy(
+            [Values(true, false)] bool retryAfter,
+            [Values(1, 2, 3)] int suggest)
         {
-            var strategy = new ConstantPollingStrategy(TimeSpan.FromSeconds(interval));
+            var strategy = new ZeroPollingStrategy();
 
             for (int i = 0; i < 6; i++)
             {
-                Assert.AreEqual(interval, strategy.PollingInterval.TotalSeconds);
+                Assert.AreEqual(0, strategy.GetNextWait(mockDefaultResponse(retryAfter), TimeSpan.FromSeconds(suggest)).TotalSeconds);
             }
+        }
+
+        [Test]
+        public void TestRetryAfterPollingStrategyWithHeader(
+            [Values(1, 2, 3)] int retryAfter,
+            [Values(1, 2, 3)] int suggest)
+        {
+            var strategy = new RetryAfterPollingStrategy(TimeSpan.FromSeconds(1));
+
+            Assert.AreEqual(Math.Max(retryAfter, suggest), strategy.GetNextWait(mockWithRetryAfter(retryAfter), TimeSpan.FromSeconds(suggest)).TotalSeconds);
+        }
+
+        [Test]
+        public void TestRetryAfterPollingStrategyWithoutHeader(
+            [Values(1, 2, 3)] int initial,
+            [Values(1, 2, 3)] int suggest)
+        {
+            var strategy = new RetryAfterPollingStrategy(TimeSpan.FromSeconds(initial));
+
+            Assert.AreEqual(Math.Max(initial, suggest), strategy.GetNextWait(defaultMockResponse, TimeSpan.FromSeconds(suggest)).TotalSeconds);
+        }
+
+        private static Response mockDefaultResponse(bool retryAfter)
+        {
+            return retryAfter ? mockWithRetryAfter(2) : defaultMockResponse;
+        }
+
+        private static Response mockWithRetryAfter(int retryAfter)
+        {
+            var response = new MockResponse(202);
+            response.AddHeader("retry-after", retryAfter.ToString());
+            return response;
         }
     }
 }

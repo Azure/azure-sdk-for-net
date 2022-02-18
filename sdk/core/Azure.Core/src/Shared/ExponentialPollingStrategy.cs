@@ -12,6 +12,7 @@ namespace Azure.Core
     /// Implementation of a <see cref="OperationPollingStrategy"/>. Polling interval changes according to
     /// the sequence {1, 1, 1, 2, 4, ...32}.
     /// </summary>
+    /// <remarks>Polling interval always follows the given sequence.</remarks>
     internal class ExponentialPollingStrategy : OperationPollingStrategy
     {
         private static readonly TimeSpan[] pollingSequence = new TimeSpan[]
@@ -28,7 +29,12 @@ namespace Azure.Core
 
         private int _index;
 
-        public override TimeSpan GetNextWait(Response response)
+        /// <summary>
+        /// Get the polling interval from {1, 1, 1, 2, 4, ...32}.
+        /// </summary>
+        /// <param name="response">Service response.</param>
+        /// <param name="suggestedInterval">Suggested pollingInterval.</param>
+        public override TimeSpan GetNextWait(Response response, TimeSpan suggestedInterval)
         {
             if (_index >= pollingSequence.Length)
             {

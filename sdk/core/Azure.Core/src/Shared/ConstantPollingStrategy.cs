@@ -9,8 +9,8 @@ namespace Azure.Core
 {
     /// <summary>
     /// Implementation of a <see cref="OperationPollingStrategy"/> with constant polling interval.
-    /// Polling interval is always equal to the given polling interval.
     /// </summary>
+    /// <remarks>Polling interval is always equal to the given polling interval.</remarks>
     internal class ConstantPollingStrategy : OperationPollingStrategy
     {
         public TimeSpan PollingInterval { get;  }
@@ -29,6 +29,12 @@ namespace Azure.Core
             PollingInterval = interval;
         }
 
-        public override TimeSpan GetNextWait(Response response) => PollingInterval;
+        /// <summary>
+        /// Get the polling interval from the max value of <see cref="PollingInterval"/> and <paramref name="suggestedInterval"/>.
+        /// </summary>
+        /// <param name="response">Service response.</param>
+        /// <param name="suggestedInterval">Suggested pollingInterval.</param>
+        /// <returns>Max value of <see cref="PollingInterval"/> and <paramref name="suggestedInterval"/>.</returns>
+        public override TimeSpan GetNextWait(Response response, TimeSpan suggestedInterval) => Max(PollingInterval, suggestedInterval);
     }
 }

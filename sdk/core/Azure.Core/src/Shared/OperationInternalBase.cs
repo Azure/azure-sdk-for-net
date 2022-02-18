@@ -14,6 +14,7 @@ namespace Azure.Core
 {
     internal abstract class OperationInternalBase
     {
+        private static readonly TimeSpan DefaultPollingInterval = TimeSpan.FromSeconds(1);
         private static readonly OperationPollingStrategy DefaultPollingStrategy = new ConstantPollingStrategy();
 
         private readonly ClientDiagnostics _diagnostics;
@@ -26,16 +27,7 @@ namespace Azure.Core
             _updateStatusScopeName = $"{operationTypeName}.UpdateStatus";
             _scopeAttributes = scopeAttributes?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             RawResponse = rawResponse;
-            PollingStrategy = ChoosePollingStrategy(rawResponse, defaultPollingStrategy);
-        }
-
-        private static OperationPollingStrategy ChoosePollingStrategy(Response rawResponse, OperationPollingStrategy? defaultPollingStrategy)
-        {
-            if (RetryAfterPollingStrategy.TryParseAndBuild(rawResponse, out RetryAfterPollingStrategy? pollingStrategy))
-            {
-                return pollingStrategy!;
-            }
-            return defaultPollingStrategy ?? DefaultPollingStrategy;
+            PollingStrategy = OperationPollingStrategy.ChoosePollingStrategy(rawResponse, defaultPollingStrategy ?? DefaultPollingStrategy);
         }
 
         /// <summary>
@@ -64,7 +56,7 @@ namespace Azure.Core
         /// Gets or sets the polling strategy of <see cref="OperationInternalBase"/>.
         /// Default to <see cref="ConstantPollingStrategy"/> with 1 second constant polling interval.
         /// </summary>
-        public OperationPollingStrategy PollingStrategy { get; set; }
+        private OperationPollingStrategy PollingStrategy { get; set; }
 
         protected RequestFailedException? OperationFailedException { get; private set; }
 
@@ -109,7 +101,7 @@ namespace Azure.Core
         /// Periodically calls <see cref="UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
         /// between calls is defined by the property <see cref="PollingStrategy"/>, but it can change based on information returned
         /// from the server. After each service call, a retry-after header may be returned to communicate that there is no reason to poll
-        /// for status change until the specified time has passed. In this case, the maximum value between the <see cref="PollingStrategy"/>
+        /// for status change until the specified time has passed. In this case, the maximum value between the <see cref="DefaultPollingInterval"/>
         /// property and the retry-after header is chosen as the wait interval. Headers supported are: "Retry-After", "retry-after-ms",
         /// and "x-ms-retry-after-ms".
         /// <example>Usage example:
@@ -123,7 +115,7 @@ namespace Azure.Core
         /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
         public virtual async ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken) =>
-            await PollingResponseAsync(PollingStrategy, TimeSpan.MinValue, cancellationToken).ConfigureAwait(false);
+            await WaitForCompletionResponseAsync(DefaultPollingInterval, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Periodically calls <see cref="UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
@@ -142,20 +134,8 @@ namespace Azure.Core
         /// <param name="pollingInterval">The interval between status requests to the server. <strong></strong></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
-        /// <remarks>At runtime, the max value of <paramref name="pollingInterval"/> and return value of <see cref="OperationPollingStrategy.GetNextWait(Response)"/> will be used.</remarks>
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
-        public virtual async ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
-            await PollingResponseAsync(PollingStrategy, pollingInterval, cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Polling response according to the given polling strategy.
-        /// </summary>
-        /// <param name="pollingStrategy">Strategy to poll the response.</param>
-        /// <param name="userSpecifiedInterval">Polling interval specified by user.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns></returns>
-        /// <remarks>At runtime, the max value of <paramref name="pollingStrategy.GetNextWait(Response)"/> and <paramref name="userSpecifiedInterval"/> will be used.</remarks>
-        protected async ValueTask<Response> PollingResponseAsync(OperationPollingStrategy pollingStrategy, TimeSpan userSpecifiedInterval, CancellationToken cancellationToken)
+        public virtual async ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
             while (true)
             {
@@ -166,8 +146,7 @@ namespace Azure.Core
                     return response;
                 }
 
-                TimeSpan strategyInterval = pollingStrategy.GetNextWait(response);
-                await WaitAsync((strategyInterval > userSpecifiedInterval ? strategyInterval : userSpecifiedInterval), cancellationToken).ConfigureAwait(false);
+                await WaitAsync(PollingStrategy.GetNextWait(response, pollingInterval), cancellationToken).ConfigureAwait(false);
             }
         }
 

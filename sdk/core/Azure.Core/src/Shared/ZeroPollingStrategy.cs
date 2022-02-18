@@ -8,14 +8,11 @@ using System;
 namespace Azure.Core
 {
     /// <summary>
-    /// Implementation of a <see cref="ConstantPollingStrategy"/> with 0 interval.
+    /// Implementation of a <see cref="OperationPollingStrategy"/> with 0 interval.
     /// This is normally used for testing, like record playback.
     /// </summary>
-    internal class ZeroPollingStrategy : ConstantPollingStrategy
+    internal class ZeroPollingStrategy : OperationPollingStrategy
     {
-        /// <summary>
-        /// Create a <see cref="ConstantPollingStrategy"/> with 0 second polling interval.
-        /// </summary>
-        public ZeroPollingStrategy() : base(TimeSpan.Zero) { }
+        public override TimeSpan GetNextWait(Response response, TimeSpan suggestedInterval) => TimeSpan.Zero;
     }
 }
