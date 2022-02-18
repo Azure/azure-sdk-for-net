@@ -27,6 +27,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Request Units per second. For example, &quot;throughput&quot;: 10000. </summary>
         public int? Throughput { get; set; }
         /// <summary> Specifies the Autoscale settings. </summary>
-        public AutoscaleSettings AutoscaleSettings { get; set; }
+        internal AutoscaleSettings AutoscaleSettings { get; set; }
+        /// <summary> Represents maximum throughput, the resource can scale up to. </summary>
+        public int? AutoscaleMaxThroughput
+        {
+            get => AutoscaleSettings is null ? default : AutoscaleSettings.MaxThroughput;
+            set
+            {
+                if (AutoscaleSettings is null)
+                    AutoscaleSettings = new AutoscaleSettings();
+                AutoscaleSettings.MaxThroughput = value;
+            }
+        }
     }
 }
