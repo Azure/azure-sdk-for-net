@@ -72,7 +72,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Purchase plan information for the the image from which the OS disk was created. </summary>
         public DiskPurchasePlan PurchasePlan { get; }
         /// <summary> List of supported capabilities (like accelerated networking) for the image from which the OS disk was created. </summary>
-        public SupportedCapabilities SupportedCapabilities { get; }
+        internal SupportedCapabilities SupportedCapabilities { get; }
+        /// <summary> True if the image from which the OS disk is created supports accelerated networking. </summary>
+        public bool? AcceleratedNetwork
+        {
+            get => SupportedCapabilities.AcceleratedNetwork;
+            set => SupportedCapabilities.AcceleratedNetwork = value;
+        }
+
         /// <summary> id of the backing snapshot&apos;s MIS family. </summary>
         public string FamilyId { get; }
         /// <summary> unique incarnation id of the source disk. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Cloud service properties. </summary>
@@ -89,13 +91,46 @@ namespace Azure.ResourceManager.Compute.Models
         /// </summary>
         public CloudServiceUpgradeMode? UpgradeMode { get; set; }
         /// <summary> Describes the role profile for the cloud service. </summary>
-        public CloudServiceRoleProfile RoleProfile { get; set; }
+        internal CloudServiceRoleProfile RoleProfile { get; set; }
+        /// <summary> List of roles for the cloud service. </summary>
+        public IList<CloudServiceRoleProfileProperties> Roles
+        {
+            get
+            {
+                if (RoleProfile is null)
+                    RoleProfile = new CloudServiceRoleProfile();
+                return RoleProfile.Roles;
+            }
+        }
+
         /// <summary> Describes the OS profile for the cloud service. </summary>
-        public CloudServiceOSProfile OSProfile { get; set; }
+        internal CloudServiceOSProfile OSProfile { get; set; }
+        /// <summary> Specifies set of certificates that should be installed onto the role instances. </summary>
+        public IList<CloudServiceVaultSecretGroup> OSSecrets
+        {
+            get
+            {
+                if (OSProfile is null)
+                    OSProfile = new CloudServiceOSProfile();
+                return OSProfile.Secrets;
+            }
+        }
+
         /// <summary> Network Profile for the cloud service. </summary>
         public CloudServiceNetworkProfile NetworkProfile { get; set; }
         /// <summary> Describes a cloud service extension profile. </summary>
-        public CloudServiceExtensionProfile ExtensionProfile { get; set; }
+        internal CloudServiceExtensionProfile ExtensionProfile { get; set; }
+        /// <summary> List of extensions for the cloud service. </summary>
+        public IList<Extension> Extensions
+        {
+            get
+            {
+                if (ExtensionProfile is null)
+                    ExtensionProfile = new CloudServiceExtensionProfile();
+                return ExtensionProfile.Extensions;
+            }
+        }
+
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
         /// <summary> The unique identifier for the cloud service. </summary>

@@ -58,7 +58,13 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The properties describe the recommended machine configuration for this Image Definition. These properties are updatable. </summary>
         public RecommendedMachineConfiguration Recommended { get; }
         /// <summary> Describes the disallowed disk types. </summary>
-        public Disallowed Disallowed { get; }
+        internal Disallowed Disallowed { get; }
+        /// <summary> A list of disk types. </summary>
+        public IList<string> DisallowedDiskTypes
+        {
+            get => Disallowed.DiskTypes;
+        }
+
         /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>
         public HyperVGeneration? HyperVGeneration { get; }
         /// <summary> A list of gallery image features. </summary>

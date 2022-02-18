@@ -43,7 +43,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Gets the OS profile. </summary>
         public OSProfile OSProfile { get; }
         /// <summary> Gets the diagnostics profile. </summary>
-        public DiagnosticsProfile DiagnosticsProfile { get; }
+        internal DiagnosticsProfile DiagnosticsProfile { get; }
+        /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. &lt;br&gt;**NOTE**: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. &lt;br&gt;&lt;br&gt; You can easily view the output of your console log. &lt;br&gt;&lt;br&gt; Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
+        public BootDiagnostics BootDiagnostics
+        {
+            get => DiagnosticsProfile.BootDiagnostics;
+            set => DiagnosticsProfile.BootDiagnostics = value;
+        }
+
         /// <summary> Gets the license type, which is for bring your own license scenario. </summary>
         public string LicenseType { get; }
         /// <summary> Gets the virtual machine unique id. </summary>

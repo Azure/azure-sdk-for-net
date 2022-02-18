@@ -108,11 +108,46 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Specifies the network interfaces of the virtual machine. </summary>
         public NetworkProfile NetworkProfile { get; set; }
         /// <summary> Specifies the network profile configuration of the virtual machine. </summary>
-        public VirtualMachineScaleSetVmNetworkProfileConfiguration NetworkProfileConfiguration { get; set; }
+        internal VirtualMachineScaleSetVmNetworkProfileConfiguration NetworkProfileConfiguration { get; set; }
+        /// <summary> The list of network configurations. </summary>
+        public IList<VirtualMachineScaleSetNetworkConfiguration> NetworkInterfaceConfigurations
+        {
+            get
+            {
+                if (NetworkProfileConfiguration is null)
+                    NetworkProfileConfiguration = new VirtualMachineScaleSetVmNetworkProfileConfiguration();
+                return NetworkProfileConfiguration.NetworkInterfaceConfigurations;
+            }
+        }
+
         /// <summary> Specifies the boot diagnostic settings state. &lt;br&gt;&lt;br&gt;Minimum api-version: 2015-06-15. </summary>
-        public DiagnosticsProfile DiagnosticsProfile { get; set; }
+        internal DiagnosticsProfile DiagnosticsProfile { get; set; }
+        /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. &lt;br&gt;**NOTE**: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. &lt;br&gt;&lt;br&gt; You can easily view the output of your console log. &lt;br&gt;&lt;br&gt; Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
+        public BootDiagnostics BootDiagnostics
+        {
+            get => DiagnosticsProfile is null ? default : DiagnosticsProfile.BootDiagnostics;
+            set
+            {
+                if (DiagnosticsProfile is null)
+                    DiagnosticsProfile = new DiagnosticsProfile();
+                DiagnosticsProfile.BootDiagnostics = value;
+            }
+        }
+
         /// <summary> Specifies information about the availability set that the virtual machine should be assigned to. Virtual machines specified in the same availability set are allocated to different nodes to maximize availability. For more information about availability sets, see [Availability sets overview](https://docs.microsoft.com/azure/virtual-machines/availability-set-overview). &lt;br&gt;&lt;br&gt; For more information on Azure planned maintenance, see [Maintenance and updates for Virtual Machines in Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates) &lt;br&gt;&lt;br&gt; Currently, a VM can only be added to availability set at creation time. An existing VM cannot be added to an availability set. </summary>
-        public WritableSubResource AvailabilitySet { get; set; }
+        internal WritableSubResource AvailabilitySet { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier AvailabilitySetId
+        {
+            get => AvailabilitySet is null ? default : AvailabilitySet.Id;
+            set
+            {
+                if (AvailabilitySet is null)
+                    AvailabilitySet = new WritableSubResource();
+                AvailabilitySet.Id = value;
+            }
+        }
+
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
         /// <summary> Specifies that the image or disk that is being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible values for Windows Server operating system are: &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE) &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing) &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux) &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </summary>
