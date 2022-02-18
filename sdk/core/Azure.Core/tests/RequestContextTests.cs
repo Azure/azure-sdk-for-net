@@ -218,11 +218,12 @@ namespace Azure.Core.Tests
             var response = new MockResponse(404);
             var mockTransport = new MockTransport(response);
 
-            var classifier = new StatusCodeClassifier(stackalloc int[] { 200, 204, 304 });
+            var classifier = new CoreResponseClassifier(stackalloc int[] { 200, 204, 304 });
             var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, HttpMessageSanitizer.Default, "Test SDK") }, classifier);
             var context = new RequestContext();
             context.AddClassifier(404, isError: false);
             var message = pipeline.CreateMessage(context);
+            message.ResponseClassifier = context.Apply(classifier);
 
             await pipeline.SendAsync(message, context.CancellationToken);
 
@@ -251,11 +252,12 @@ namespace Azure.Core.Tests
                 return mockResponse;
             });
 
-            var classifier = new StatusCodeClassifier(stackalloc int[] { 200, 204, 304 });
+            var classifier = new CoreResponseClassifier(stackalloc int[] { 200, 204, 304 });
             var pipeline = new HttpPipeline(mockTransport, new[] { new RequestActivityPolicy(true, "Azure.Core.Tests", HttpMessageSanitizer.Default) }, classifier);
             var context = new RequestContext();
             context.AddClassifier(409, isError: false);
             var message = pipeline.CreateMessage(context);
+            message.ResponseClassifier = context.Apply(classifier);
 
             await pipeline.SendAsync(message, context.CancellationToken);
 
@@ -293,7 +295,7 @@ namespace Azure.Core.Tests
             }
         }
 
-        public class HeaderClassifier : HttpMessageClassifier
+        public class HeaderClassifier : ResponseClassificationHandler
         {
             public readonly string HeaderName = "ErrorCode";
             private readonly string _errorCodeValue = "LeaseNotAquired";

@@ -195,9 +195,10 @@ namespace Azure
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
         public bool HasClassifier { get { throw null; } }
-        public void AddClassifier(Azure.Core.HttpMessageClassifier classifier) { }
+        public void AddClassifier(Azure.Core.ResponseClassificationHandler classifier) { }
         public void AddClassifier(int statusCode, bool isError) { }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
+        public Azure.Core.CoreResponseClassifier Apply(Azure.Core.CoreResponseClassifier classifier) { throw null; }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
     public partial class RequestFailedException : System.Exception, System.Runtime.Serialization.ISerializable
@@ -363,6 +364,12 @@ namespace Azure.Core
         public static bool operator !=(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class CoreResponseClassifier : Azure.Core.ResponseClassifier
+    {
+        public CoreResponseClassifier(System.ReadOnlySpan<int> nonErrors) { }
+        public virtual Azure.Core.CoreResponseClassifier Clone() { throw null; }
+        public override bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }
+    }
     public static partial class DelegatedTokenCredential
     {
         public static Azure.Core.TokenCredential Create(System.Func<Azure.Core.TokenRequestContext, System.Threading.CancellationToken, Azure.Core.AccessToken> getToken) { throw null; }
@@ -438,11 +445,6 @@ namespace Azure.Core
         public System.IO.Stream? ExtractResponseContent() { throw null; }
         public void SetProperty(string name, object value) { }
         public bool TryGetProperty(string name, out object? value) { throw null; }
-    }
-    public abstract partial class HttpMessageClassifier
-    {
-        protected HttpMessageClassifier() { }
-        public abstract bool TryClassify(Azure.Core.HttpMessage message, out bool isError);
     }
     public enum HttpPipelinePosition
     {
@@ -590,6 +592,11 @@ namespace Azure.Core
         public static implicit operator Azure.Core.ResourceType (string resourceType) { throw null; }
         public static bool operator !=(Azure.Core.ResourceType left, Azure.Core.ResourceType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public abstract partial class ResponseClassificationHandler
+    {
+        protected ResponseClassificationHandler() { }
+        public abstract bool TryClassify(Azure.Core.HttpMessage message, out bool isError);
     }
     public partial class ResponseClassifier
     {

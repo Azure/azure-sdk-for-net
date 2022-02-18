@@ -21,13 +21,13 @@ namespace Azure
         private (int Status, bool IsError)[]? _statusCodes;
         internal (int Status, bool IsError)[]? StatusCodes => _statusCodes;
 
-        private HttpMessageClassifier[]? _classifiers;
-        internal HttpMessageClassifier[]? MessageClassifiers => _classifiers;
+        private ResponseClassificationHandler[]? _handlers;
+        internal ResponseClassificationHandler[]? Handlers => _handlers;
 
         /// <summary>
         /// Gets a value indicating if classifiers have been added to this <see cref="RequestContext"/>.
         /// </summary>
-        public bool HasClassifier => _statusCodes != null || _classifiers != null;
+        public bool HasClassifier => _statusCodes != null || _handlers != null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestContext"/> class.
@@ -89,7 +89,7 @@ namespace Azure
         }
 
         /// <summary>
-        /// Adds a custom <see cref="HttpMessageClassifier"/> to the <see cref="ResponseClassifier"/> that decides if the response
+        /// Adds a custom <see cref="ResponseClassificationHandler"/> to the <see cref="ResponseClassifier"/> that decides if the response
         /// received from the service should be considered an error response, for this service call.
         /// The custom classifier is applied before the default classifier.
         /// This is useful for cases where you'd like to prevent specific response status codes from being treated as errors by
@@ -97,16 +97,16 @@ namespace Azure
         /// logs or distributed traces.
         /// </summary>
         /// <param name="classifier">The custom classifier.</param>
-        public void AddClassifier(HttpMessageClassifier classifier)
+        public void AddClassifier(ResponseClassificationHandler classifier)
         {
             if (_frozen)
             {
                 throw new InvalidOperationException("Cannot modify this RequestContext after it has been used in a method call.");
             }
 
-            int length = _classifiers == null ? 0 : _classifiers.Length;
-            Array.Resize(ref _classifiers, length + 1);
-            _classifiers[length] = classifier;
+            int length = _handlers == null ? 0 : _handlers.Length;
+            Array.Resize(ref _handlers, length + 1);
+            _handlers[length] = classifier;
         }
 
         internal void Freeze()
@@ -114,20 +114,29 @@ namespace Azure
             _frozen = true;
         }
 
-        //public void ApplyCustomizations(StatusCodeClassifier classifier)
-        //{
-        //    if (_statusCodes != null)
-        //    {
-        //        foreach (var classification in _statusCodes)
-        //        {
-        //            custom.AddClassifier(classification.Status, classification.IsError);
-        //        }
-        //    }
+        /// <summary>
+        /// </summary>
+        /// <param name="classifier"></param>
+        public CoreResponseClassifier Apply(CoreResponseClassifier classifier)
+        {
+            if (_statusCodes == null && _handlers == null)
+            {
+                return classifier;
+            }
 
-        //    if (_messageClassifiers != null)
-        //    {
-        //        custom.TryClassifiers = _messageClassifiers;
-        //    }
-        //}
+            CoreResponseClassifier clone = classifier.Clone();
+
+            clone.Handlers = _handlers;
+
+            if (_statusCodes != null)
+            {
+                foreach (var classification in _statusCodes)
+                {
+                    clone.AddClassifier(classification.Status, classification.IsError);
+                }
+            }
+
+            return clone;
+        }
     }
 }

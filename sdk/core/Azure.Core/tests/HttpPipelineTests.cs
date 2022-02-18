@@ -297,6 +297,8 @@ namespace Azure.Core.Tests
             Request request = message.Request;
             request.Method = RequestMethod.Get;
             request.Uri.Reset(new Uri("https://contoso.a.io"));
+            message.ResponseClassifier = context.Apply(DpgClassifier.Instance);
+
             await pipeline.SendAsync(message, CancellationToken.None);
             Response response = message.Response;
 
@@ -346,10 +348,10 @@ namespace Azure.Core.Tests
         /// <summary>
         /// Example DPG classifier for testing purposes.
         /// </summary>
-        private sealed class DpgClassifier : StatusCodeClassifier
+        private sealed class DpgClassifier : CoreResponseClassifier
         {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new DpgClassifier();
+            private static CoreResponseClassifier _instance;
+            public static CoreResponseClassifier Instance => _instance ??= new DpgClassifier();
 
             public DpgClassifier() : base(stackalloc int[] { 200, 204, 304 })
             {

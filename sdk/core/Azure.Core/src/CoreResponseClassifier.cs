@@ -8,15 +8,24 @@ using System.Diagnostics;
 
 namespace Azure.Core
 {
-    internal class StatusCodeClassifier : ResponseClassifier
+    /// <summary>
+    /// This is the concrete ResponseClassifier type that is designed
+    /// to work with customizations specified in <see cref="RequestContext"/>.
+    /// It implements the Chain of Responsibility design pattern.
+    /// </summary>
+    public class CoreResponseClassifier : ResponseClassifier
     {
         // We need 10 ulongs to represent status codes 100 - 599.
         private const int Length = 10;
         private ulong[] _nonErrors;
 
-        internal HttpMessageClassifier[]? TryClassifiers { get; set; }
+        internal ResponseClassificationHandler[]? Handlers { get; set; }
 
-        public StatusCodeClassifier(ReadOnlySpan<int> nonErrors)
+        /// <summary>
+        /// Creates a new instance of <see cref="CoreResponseClassifier"/>
+        /// </summary>
+        /// <param name="nonErrors"></param>
+        public CoreResponseClassifier(ReadOnlySpan<int> nonErrors)
         {
             _nonErrors = new ulong[Length];
 
@@ -26,31 +35,35 @@ namespace Azure.Core
             }
         }
 
-        private StatusCodeClassifier(ulong[] nonErrors, HttpMessageClassifier[]? tryClassifiers)
+        private CoreResponseClassifier(ulong[] nonErrors, ResponseClassificationHandler[]? handlers)
         {
             Debug.Assert(nonErrors?.Length == Length);
 
             _nonErrors = nonErrors!;
-            TryClassifiers = tryClassifiers;
+            Handlers = handlers;
         }
 
-        public virtual StatusCodeClassifier Clone()
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
+        public virtual CoreResponseClassifier Clone()
         {
             ulong[] nonErrors = new ulong[Length];
             Array.Copy(_nonErrors, nonErrors, Length);
 
-            return new StatusCodeClassifier(nonErrors, TryClassifiers);
+            return new CoreResponseClassifier(nonErrors, Handlers);
         }
 
+        /// <inheritdoc/>
         public override bool IsErrorResponse(HttpMessage message)
         {
             bool isError;
 
-            if (TryClassifiers != null)
+            if (Handlers != null)
             {
-                for (int i = TryClassifiers.Length - 1; i >= 0; i--)
+                for (int i = Handlers.Length - 1; i >= 0; i--)
                 {
-                    if (TryClassifiers[i].TryClassify(message, out isError))
+                    if (Handlers[i].TryClassify(message, out isError))
                     {
                         return isError;
                     }

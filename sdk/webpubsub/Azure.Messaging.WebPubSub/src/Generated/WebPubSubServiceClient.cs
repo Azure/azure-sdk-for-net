@@ -2070,6 +2070,7 @@ namespace Azure.Messaging.WebPubSub
 
         internal HttpMessage CreateCheckPermissionRequest(string permission, string connectionId, string targetName, RequestContext context)
         {
+            //var message = _pipeline.CreateMessage(context, ResponseClassifier200404.Instance);
             var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Head;
@@ -2088,51 +2089,41 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-
-            if (!context.HasClassifier)
-            {
-                message.ResponseClassifier = ResponseClassifier200404.Instance;
-            }
-            else
-            {
-                message.ResponseClassifier = ResponseClassifier200404.Instance.Clone();
-                context.Apply(message);
-            }
-
+            message.ResponseClassifier = context.Apply(ResponseClassifier200404.Instance);
             return message;
         }
 
-        private sealed class ResponseClassifier200 : StatusCodeClassifier
+        private sealed class ResponseClassifier200 : CoreResponseClassifier
         {
-            private static StatusCodeClassifier _instance;
-            public static StatusCodeClassifier Instance => _instance ??= new ResponseClassifier200();
+            private static CoreResponseClassifier _instance;
+            public static CoreResponseClassifier Instance => _instance ??= new ResponseClassifier200();
 
             public ResponseClassifier200() : base(stackalloc int[]{ 200 })
             {
             }
         }
-        private sealed class ResponseClassifier204 : StatusCodeClassifier
+        private sealed class ResponseClassifier204 : CoreResponseClassifier
         {
-            private static StatusCodeClassifier _instance;
-            public static StatusCodeClassifier Instance => _instance ??= new ResponseClassifier204();
+            private static CoreResponseClassifier _instance;
+            public static CoreResponseClassifier Instance => _instance ??= new ResponseClassifier204();
 
             public ResponseClassifier204() : base(stackalloc int[]{ 204 })
             {
             }
         }
-        private sealed class ResponseClassifier202 : StatusCodeClassifier
+        private sealed class ResponseClassifier202 : CoreResponseClassifier
         {
-            private static StatusCodeClassifier _instance;
-            public static StatusCodeClassifier Instance => _instance ??= new ResponseClassifier202();
+            private static CoreResponseClassifier _instance;
+            public static CoreResponseClassifier Instance => _instance ??= new ResponseClassifier202();
 
             public ResponseClassifier202() : base(stackalloc int[]{ 202 })
             {
             }
         }
-        private sealed class ResponseClassifier200404 : StatusCodeClassifier
+        private sealed class ResponseClassifier200404 : CoreResponseClassifier
         {
-            private static StatusCodeClassifier _instance;
-            public static StatusCodeClassifier Instance => _instance ??= new ResponseClassifier200404();
+            private static CoreResponseClassifier _instance;
+            public static CoreResponseClassifier Instance => _instance ??= new ResponseClassifier200404();
 
             public ResponseClassifier200404() : base(stackalloc int[]{ 200, 404 })
             {

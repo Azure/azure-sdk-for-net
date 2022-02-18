@@ -17,7 +17,7 @@ namespace Azure.Core
     /// the response should be treated an error by the pipeline. If it returns true, its classification
     /// will be used and no other classifiers in the chain will be called.
     /// </summary>
-    public abstract class HttpMessageClassifier
+    public abstract class ResponseClassificationHandler
     {
         /// <summary>
         /// Populates the <code>isError</code> out parameter to indicate whether or not
