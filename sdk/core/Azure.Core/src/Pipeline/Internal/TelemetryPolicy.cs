@@ -1,24 +1,22 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Runtime.InteropServices;
-
 namespace Azure.Core.Pipeline
 {
     internal class TelemetryPolicy : HttpPipelineSynchronousPolicy
     {
         private readonly string _defaultHeader;
 
-        public TelemetryPolicy(TelemetryPackageInfo packageInfo)
+        public TelemetryPolicy(UserAgentString userAgentString)
         {
-            _defaultHeader = packageInfo.UserAgentValue;
+            _defaultHeader = userAgentString.ToString();
         }
 
         public override void OnSendingRequest(HttpMessage message)
         {
-            if (message.TryGetInternalProperty(typeof(TelemetryPackageInfo), out var userAgent))
+            if (message.TryGetInternalProperty(typeof(UserAgentString), out var userAgent))
             {
-                message.Request.Headers.Add(HttpHeader.Names.UserAgent, ((TelemetryPackageInfo)userAgent!).UserAgentValue);
+                message.Request.Headers.Add(HttpHeader.Names.UserAgent, ((UserAgentString)userAgent!).ToString());
             }
             else
             {

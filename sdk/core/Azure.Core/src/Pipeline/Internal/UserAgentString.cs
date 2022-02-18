@@ -10,29 +10,36 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Information about the package to be included in UserAgent telemetry
     /// </summary>
-    public class TelemetryPackageInfo
+    public class UserAgentString
     {
-        /// <summary>
-        ///
-        /// </summary>
-        public string UserAgentValue { get; }
+        private string _userAgent;
 
-        internal TelemetryPackageInfo(Assembly assembly, string? applicationId = null)
+        /// <summary>
+        /// Initialize an instance of <see cref="UserAgentString"/>.
+        /// </summary>
+        /// <param name="assembly">The <see cref="Assembly"/> used to generate the package name and version information for the <see cref="UserAgentString"/> value.</param>
+        /// <param name="applicationId">An optional applicationId to be prepended to the <see cref="UserAgentString"/> value. This value behaves exactly like the <see cref="DiagnosticsOptions.ApplicationId"/> property.</param>
+        public UserAgentString(Assembly assembly, string? applicationId = null)
         {
-            UserAgentValue = GenerateUserAgentString(assembly, applicationId);
+            _userAgent = GenerateUserAgentString(assembly, applicationId);
         }
 
         /// <summary>
-        /// Creates an instance of a <see cref="TelemetryPackageInfo"/> based on the Type provided.
+        /// Creates an instance of a <see cref="UserAgentString"/> based on the Type provided.
         /// </summary>
         /// <param name="applicationId"></param>
         /// <typeparam name="T">The type contained by the Assembly used to generate package name and version information.</typeparam>
         /// <returns></returns>
-        public static TelemetryPackageInfo FromType<T>(string? applicationId = null)
+        public static UserAgentString FromType<T>(string? applicationId = null)
         {
             var assembly = Assembly.GetAssembly(typeof(T));
-            return new TelemetryPackageInfo(assembly!, applicationId);
+            return new UserAgentString(assembly!, applicationId);
         }
+
+        /// <summary>
+        /// Returns a formatted UserAgent string
+        /// </summary>
+        public override string ToString() => _userAgent;
 
         internal static string GenerateUserAgentString(Assembly clientAssembly, string? applicationId = null)
         {

@@ -132,7 +132,7 @@ namespace Azure.Core.Tests
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
 
             var message = pipeline.CreateMessage();
-            HttpMessageOptions.SetTelemetryPackage(message, TelemetryPackageInfo.FromType<string>());
+            message.SetUserAgentString(UserAgentString.FromType<string>());
             using Request request = message.Request;
             request.Method = RequestMethod.Get;
             request.Uri.Reset(new Uri("http://example.com"));
