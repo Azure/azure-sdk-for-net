@@ -34,7 +34,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 Constants.ChangeFeed.EventData.AppendBlob => BlobType.Append,
                 _ => default
             };
-            record.TryGetValue(Constants.ChangeFeed.EventData.BlobVersion, out object blobVersionObject);
+            record.TryGetValue(Constants.ChangeFeed.EventData.BlobVersionLower, out object blobVersionObject);
             BlobVersion = (string)blobVersionObject;
             record.TryGetValue(Constants.ChangeFeed.EventData.ContainerVersion, out object containerVersionObject);
             ContainerVersion = (string)containerVersionObject;

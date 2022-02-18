@@ -280,9 +280,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual("application/json", changeFeedEvent.EventData.UpdatedBlobProperties["ContentType"].NewValue);
             Assert.AreEqual("application/octet-stream", changeFeedEvent.EventData.UpdatedBlobProperties["ContentType"].PreviousValue);
 
-            Assert.AreEqual(
-                AccessTier.Hot,
-                changeFeedEvent.EventData.AsyncOperationInfo.DestinationAccessTier);
+            Assert.AreEqual(AccessTier.Hot, changeFeedEvent.EventData.AsyncOperationInfo.DestinationAccessTier);
+            Assert.IsTrue(changeFeedEvent.EventData.AsyncOperationInfo.WasAyncOperation);
+            Assert.AreEqual("copyId", changeFeedEvent.EventData.AsyncOperationInfo.CopyId);
         }
 
         private Dictionary<string, object> DeserializeEvent(string rawText)

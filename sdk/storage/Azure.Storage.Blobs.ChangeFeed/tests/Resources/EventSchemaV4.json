@@ -21,9 +21,9 @@
         "previousInfo": {
             "SoftDeleteSnapshot": "2022-02-17T13:08:42.4825913Z",
             "WasBlobSoftDeleted": true,
-            "BlobVersion": "2024-02-17T16:11:52.0781797Z"
-            "LastVersion" : "2022-02-17T16:11:52.0781797Z"
-            "PreviousTier": "Hot",
+            "BlobVersion": "2024-02-17T16:11:52.0781797Z",
+            "LastVersion" : "2022-02-17T16:11:52.0781797Z",
+            "PreviousTier": "Hot"
         },
         "snapshot": "2022-02-17T16:09:16.7261278Z",
         "blobPropertiesUpdated" : {

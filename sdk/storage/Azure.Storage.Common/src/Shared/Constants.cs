@@ -425,7 +425,7 @@ namespace Azure.Storage
                 public const string ContentType = "contentType";
                 public const string ContentLength = "contentLength";
                 public const string BlobType = "blobType";
-                public const string BlobVersion = "blobVersion";
+                public const string BlobVersionLower = "blobVersion";
                 public const string ContainerVersion = "containerVersion";
                 public const string BlobTier = "blobTier";
                 public const string BlockBlob = "BlockBlob";
@@ -451,6 +451,7 @@ namespace Azure.Storage
 
                 public const string SoftDeletedSnapshot = "SoftDeleteSnapshot";
                 public const string WasBlobSoftDeleted = "WasBlobSoftDeleted";
+                public const string BlobVersion = "BlobVersion";
                 public const string LastVersion = "LastVersion";
                 public const string PreviousTier = "PreviousTier";
             }
