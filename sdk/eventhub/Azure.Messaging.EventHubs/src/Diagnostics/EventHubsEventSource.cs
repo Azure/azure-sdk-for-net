@@ -1835,7 +1835,6 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                // TODO: Discuss. Previously eventCount was not used
                 WriteEvent(91, identifier ?? string.Empty, eventHubName ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty, eventCount, durationSeconds);
             }
         }
