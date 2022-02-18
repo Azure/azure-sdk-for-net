@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Http;
 using OpenTelemetry.Contrib.Extensions.PersistentStorage;
 using Xunit;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class OfflineStorageTests
     {

@@ -7,7 +7,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry.Trace;
 using Xunit;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
+namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class StatusTests
     {
