@@ -54,21 +54,8 @@ namespace Azure.Storage.Files.Shares.Models
         public ShareFileRequestConditions Conditions { get; set; }
 
         /// <summary>
-        /// Optional.  If true, the source file's FileCreatedOn time will be copied to the new file.
-        /// CopySourceCreatedOnTime and <see cref="FileSmbProperties.FileCreatedOn"/> cannot both be set.
+        /// SMB properties to copy from the source file.
         /// </summary>
-        public bool? CopySourceFileCreatedOn { get; set; }
-
-        /// <summary>
-        /// Optional.  If true, the source file's FileLastWrittenOn time will be copied to the new file.
-        /// CopySourceCreatedOnTime and <see cref="FileSmbProperties.FileLastWrittenOn"/> cannot both be set.
-        /// </summary>
-        public bool? CopySourceFileLastWrittenOn { get; set; }
-
-        /// <summary>
-        /// Optional.  If true, the source file's FileAttributes will be copied to the new file.
-        /// CopySourceFileAttributes and <see cref="FileSmbProperties.FileAttributes"/> cannot both be set.
-        /// </summary>
-        public bool? CopySourceFileAttributes { get; set; }
+        public CopyableFileSmbProperties CopyableFileSmbProperties { get; set; }
     }
 }

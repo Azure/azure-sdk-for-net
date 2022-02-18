@@ -1039,9 +1039,7 @@ namespace Azure.Storage.Files.Shares
                 ignoreReadOnly: options?.IgnoreReadOnly,
                 setArchiveAttribute: options?.SetArchiveAttribute,
                 conditions: options?.Conditions,
-                copySourceFileCreatedOn: options?.CopySourceFileCreatedOn,
-                copySourceFileLastWrittenOn: options?.CopySourceFileLastWrittenOn,
-                copySourceFileAttributes: options?.CopySourceFileAttributes,
+                copyableFileSmbProperties: options?.CopyableFileSmbProperties,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -1117,9 +1115,7 @@ namespace Azure.Storage.Files.Shares
                 ignoreReadOnly,
                 setArchiveAttribute,
                 conditions,
-                copySourceFileCreatedOn: default,
-                copySourceFileLastWrittenOn: default,
-                copySourceFileAttributes: default,
+                copyableFileSmbProperties: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1165,9 +1161,7 @@ namespace Azure.Storage.Files.Shares
                 ignoreReadOnly: default,
                 setArchiveAttribute: default,
                 conditions: default,
-                copySourceFileCreatedOn: default,
-                copySourceFileLastWrittenOn: default,
-                copySourceFileAttributes: default,
+                copyableFileSmbProperties: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1210,9 +1204,7 @@ namespace Azure.Storage.Files.Shares
                 ignoreReadOnly: options?.IgnoreReadOnly,
                 setArchiveAttribute: options?.SetArchiveAttribute,
                 conditions: options?.Conditions,
-                copySourceFileCreatedOn: options?.CopySourceFileCreatedOn,
-                copySourceFileLastWrittenOn: options?.CopySourceFileLastWrittenOn,
-                copySourceFileAttributes: options?.CopySourceFileAttributes,
+                copyableFileSmbProperties: options?.CopyableFileSmbProperties,
                 async: true,
                 cancellationToken: cancellationToken).
                 ConfigureAwait(false);
@@ -1288,9 +1280,7 @@ namespace Azure.Storage.Files.Shares
                 ignoreReadOnly,
                 setArchiveAttribute,
                 conditions,
-                copySourceFileCreatedOn: default,
-                copySourceFileLastWrittenOn: default,
-                copySourceFileAttributes: default,
+                copyableFileSmbProperties: default,
                 async: true,
                 cancellationToken).
                 ConfigureAwait(false);
@@ -1336,9 +1326,7 @@ namespace Azure.Storage.Files.Shares
                 ignoreReadOnly: default,
                 setArchiveAttribute: default,
                 conditions: default,
-                copySourceFileCreatedOn: default,
-                copySourceFileLastWrittenOn: default,
-                copySourceFileAttributes: default,
+                copyableFileSmbProperties: default,
                 async: true,
                 cancellationToken).
                 ConfigureAwait(false);
@@ -1380,17 +1368,8 @@ namespace Azure.Storage.Files.Shares
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
-        /// <param name="copySourceFileCreatedOn">
-        /// Optional.  If true, the source file's FileCreatedOn time will be copied to the new file.
-        /// CopySourceCreatedOnTime and <see cref="FileSmbProperties.FileCreatedOn"/> cannot both be set.
-        /// </param>
-        /// <param name="copySourceFileLastWrittenOn">
-        /// Optional.  If true, the source file's FileLastWrittenOn time will be copied to the new file.
-        /// CopySourceCreatedOnTime and <see cref="FileSmbProperties.FileLastWrittenOn"/> cannot both be set.
-        /// </param>
-        /// <param name="copySourceFileAttributes">
-        /// Optional.  If true, the source file's FileAttributes will be copied to the new file.
-        /// CopySourceFileAttributes and <see cref="FileSmbProperties.FileAttributes"/> cannot both be set.
+        /// <param name="copyableFileSmbProperties">
+        /// SMB properties to copy from the source file.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1416,9 +1395,7 @@ namespace Azure.Storage.Files.Shares
             bool? ignoreReadOnly,
             bool? setArchiveAttribute,
             ShareFileRequestConditions conditions,
-            bool? copySourceFileCreatedOn,
-            bool? copySourceFileLastWrittenOn,
-            bool? copySourceFileAttributes,
+            CopyableFileSmbProperties? copyableFileSmbProperties,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1437,23 +1414,38 @@ namespace Azure.Storage.Files.Shares
                     scope.Start();
                     ResponseWithHeaders<FileStartCopyHeaders> response;
 
-                    if (copySourceFileCreatedOn == true && smbProperties?.FileCreatedOn != null)
+                    if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.FileAttributes) == CopyableFileSmbProperties.FileAttributes
+                        && smbProperties?.FileAttributes != null)
                     {
-                        throw new ArgumentException($"{nameof(copySourceFileCreatedOn)} and {nameof(FileSmbProperties.FileCreatedOn)} cannot both be set.");
+                        throw new ArgumentException($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileAttributes)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.FileAttributes)} cannot both be set.");
                     }
 
-                    if (copySourceFileLastWrittenOn == true && smbProperties?.FileLastWrittenOn != null)
+                    if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.CreatedOn) == CopyableFileSmbProperties.CreatedOn
+                        && smbProperties?.FileCreatedOn != null)
                     {
-                        throw new ArgumentException($"{nameof(copySourceFileLastWrittenOn)} and {nameof(FileSmbProperties.FileLastWrittenOn)} cannot both be set.");
+                        throw new ArgumentException($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileCreatedOn)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.CreatedOn)} cannot both be set.");
                     }
 
-                    if (copySourceFileAttributes == true && smbProperties?.FileAttributes != null)
+                    if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.LastWrittenOn) == CopyableFileSmbProperties.LastWrittenOn
+                        && smbProperties?.FileLastWrittenOn != null)
                     {
-                        throw new ArgumentException($"{nameof(copySourceFileAttributes)} and {nameof(FileSmbProperties.FileAttributes)} cannot both be set.");
+                        throw new ArgumentException($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileLastWrittenOn)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.LastWrittenOn)} cannot both be set.");
+                    }
+
+                    string fileAttributes = null;
+                    if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.FileAttributes)
+                        == CopyableFileSmbProperties.FileAttributes)
+                    {
+                        fileAttributes = Constants.File.Source;
+                    }
+                    else
+                    {
+                        fileAttributes = smbProperties?.FileAttributes?.ToAttributesString();
                     }
 
                     string fileCreatedOn = null;
-                    if (copySourceFileCreatedOn == true)
+                    if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.CreatedOn)
+                        == CopyableFileSmbProperties.CreatedOn)
                     {
                         fileCreatedOn = Constants.File.Source;
                     }
@@ -1463,23 +1455,14 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     string fileLastWrittenOn = null;
-                    if (copySourceFileLastWrittenOn == true)
+                    if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.LastWrittenOn)
+                        == CopyableFileSmbProperties.LastWrittenOn)
                     {
                         fileLastWrittenOn = Constants.File.Source;
                     }
                     else
                     {
                         fileLastWrittenOn = smbProperties?.FileLastWrittenOn.ToFileDateTimeString();
-                    }
-
-                    string fileAttributes = null;
-                    if (copySourceFileAttributes == true)
-                    {
-                        fileAttributes = Constants.File.Source;
-                    }
-                    else
-                    {
-                        fileAttributes = smbProperties?.FileAttributes?.ToAttributesString();
                     }
 
                     CopyFileSmbInfo copyFileSmbInfo = new CopyFileSmbInfo

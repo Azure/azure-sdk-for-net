@@ -380,6 +380,15 @@ namespace Azure.Storage.Files.Shares.Models
         public int ClosedHandlesCount { get { throw null; } }
         public int FailedHandlesCount { get { throw null; } }
     }
+    [System.FlagsAttribute]
+    public enum CopyableFileSmbProperties
+    {
+        All = -1,
+        None = 0,
+        FileAttributes = 1,
+        CreatedOn = 2,
+        LastWrittenOn = 4,
+    }
     public enum CopyStatus
     {
         Pending = 0,
@@ -619,9 +628,7 @@ namespace Azure.Storage.Files.Shares.Models
     {
         public ShareFileCopyOptions() { }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions Conditions { get { throw null; } set { } }
-        public bool? CopySourceFileAttributes { get { throw null; } set { } }
-        public bool? CopySourceFileCreatedOn { get { throw null; } set { } }
-        public bool? CopySourceFileLastWrittenOn { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.CopyableFileSmbProperties CopyableFileSmbProperties { get { throw null; } set { } }
         public string FilePermission { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.PermissionCopyMode? FilePermissionCopyMode { get { throw null; } set { } }
         public bool? IgnoreReadOnly { get { throw null; } set { } }

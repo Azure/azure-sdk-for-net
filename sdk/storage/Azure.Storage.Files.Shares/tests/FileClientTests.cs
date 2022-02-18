@@ -1495,7 +1495,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareFileCopyOptions options = new ShareFileCopyOptions
             {
-                CopySourceFileCreatedOn = true,
+                CopyableFileSmbProperties = CopyableFileSmbProperties.CreatedOn,
                 SmbProperties = new FileSmbProperties
                 {
                     FileCreatedOn = Recording.UtcNow
@@ -1507,7 +1507,8 @@ namespace Azure.Storage.Files.Shares.Tests
                 dest.StartCopyAsync(
                     sourceUri: source.Uri,
                     options: options),
-                e => Assert.AreEqual($"copySourceFileCreatedOn and {nameof(FileSmbProperties.FileCreatedOn)} cannot both be set.", e.Message));
+                e => Assert.AreEqual($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileCreatedOn)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.CreatedOn)} cannot both be set.",
+                e.Message));
         }
 
         [RecordedTest]
@@ -1521,7 +1522,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareFileCopyOptions options = new ShareFileCopyOptions
             {
-                CopySourceFileLastWrittenOn = true,
+                CopyableFileSmbProperties = CopyableFileSmbProperties.LastWrittenOn,
                 SmbProperties = new FileSmbProperties
                 {
                     FileLastWrittenOn = Recording.UtcNow
@@ -1533,7 +1534,8 @@ namespace Azure.Storage.Files.Shares.Tests
                 dest.StartCopyAsync(
                     sourceUri: source.Uri,
                     options: options),
-                e => Assert.AreEqual($"copySourceFileLastWrittenOn and {nameof(FileSmbProperties.FileLastWrittenOn)} cannot both be set.", e.Message));
+                e => Assert.AreEqual($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileLastWrittenOn)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.LastWrittenOn)} cannot both be set.",
+                e.Message));
         }
 
         [RecordedTest]
@@ -1547,7 +1549,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareFileCopyOptions options = new ShareFileCopyOptions
             {
-                CopySourceFileAttributes = true,
+                CopyableFileSmbProperties = CopyableFileSmbProperties.FileAttributes,
                 SmbProperties = new FileSmbProperties
                 {
                     FileAttributes = ShareExtensions.ToFileAttributes("Archive|ReadOnly")
@@ -1559,11 +1561,12 @@ namespace Azure.Storage.Files.Shares.Tests
                 dest.StartCopyAsync(
                     sourceUri: source.Uri,
                     options: options),
-                e => Assert.AreEqual($"copySourceFileAttributes and {nameof(FileSmbProperties.FileAttributes)} cannot both be set.", e.Message));
+                e => Assert.AreEqual($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileAttributes)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.FileAttributes)} cannot both be set.",
+                e.Message));
         }
 
         [RecordedTest]
-        public async Task StartCopyAsync_CopySourceFileAttributes()
+        public async Task StartCopyAsync_CopySourceFileSmbPropertiesAll()
         {
             // Arrange
             await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync();
@@ -1573,9 +1576,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareFileCopyOptions options = new ShareFileCopyOptions
             {
-                CopySourceFileCreatedOn = true,
-                CopySourceFileLastWrittenOn = true,
-                CopySourceFileAttributes = true,
+                CopyableFileSmbProperties = CopyableFileSmbProperties.All
             };
 
             // Act
