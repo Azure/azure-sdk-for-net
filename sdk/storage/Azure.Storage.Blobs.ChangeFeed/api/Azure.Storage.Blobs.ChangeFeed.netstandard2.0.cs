@@ -130,7 +130,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
         internal BlobChangeFeedEventAsyncOperationInfo() { }
         public string CopyId { get { throw null; } }
         public Azure.Storage.Blobs.Models.AccessTier? DestinationAccessTier { get { throw null; } }
-        public bool WasAyncOperation { get { throw null; } }
+        public bool WasAsyncOperation { get { throw null; } }
     }
     public partial class BlobChangeFeedEventUpdatedBlobProperty
     {

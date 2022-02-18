@@ -20,7 +20,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
         /// <summary>
         /// If the operation was async.
         /// </summary>
-        public bool WasAyncOperation { get; internal set; }
+        public bool WasAsyncOperation { get; internal set; }
 
         /// <summary>
         /// Copy Id.

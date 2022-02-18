@@ -281,7 +281,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual("application/octet-stream", changeFeedEvent.EventData.UpdatedBlobProperties["ContentType"].PreviousValue);
 
             Assert.AreEqual(AccessTier.Hot, changeFeedEvent.EventData.AsyncOperationInfo.DestinationAccessTier);
-            Assert.IsTrue(changeFeedEvent.EventData.AsyncOperationInfo.WasAyncOperation);
+            Assert.IsTrue(changeFeedEvent.EventData.AsyncOperationInfo.WasAsyncOperation);
             Assert.AreEqual("copyId", changeFeedEvent.EventData.AsyncOperationInfo.CopyId);
         }
 
@@ -390,7 +390,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual("application/octet-stream", changeFeedEvent.EventData.UpdatedBlobProperties["ContentType"].PreviousValue);
 
             Assert.AreEqual(AccessTier.Hot, changeFeedEvent.EventData.AsyncOperationInfo.DestinationAccessTier);
-            Assert.IsTrue(changeFeedEvent.EventData.AsyncOperationInfo.WasAyncOperation);
+            Assert.IsTrue(changeFeedEvent.EventData.AsyncOperationInfo.WasAsyncOperation);
             Assert.AreEqual("copyId", changeFeedEvent.EventData.AsyncOperationInfo.CopyId);
 
             Assert.AreEqual(2, changeFeedEvent.EventData.UpdatedBlobTags.PreviousTags.Count);

@@ -276,7 +276,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             asyncOperationInfoDictionary.TryGetValue(Constants.ChangeFeed.EventData.WasAsyncOperation, out object wasAsyncOperationObject);
             if (wasAsyncOperationObject != null)
             {
-                asyncOperationInfo.WasAyncOperation = (bool)wasAsyncOperationObject;
+                asyncOperationInfo.WasAsyncOperation = (bool)wasAsyncOperationObject;
             }
 
             asyncOperationInfoDictionary.TryGetValue(Constants.ChangeFeed.EventData.CopyId, out object copyIdObject);

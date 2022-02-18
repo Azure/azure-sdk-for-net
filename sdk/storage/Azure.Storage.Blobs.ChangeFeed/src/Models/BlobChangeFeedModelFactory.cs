@@ -129,7 +129,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             => new BlobChangeFeedEventAsyncOperationInfo
             {
                 DestinationAccessTier = destinationAccessTier,
-                WasAyncOperation = wasAsyncOperation,
+                WasAsyncOperation = wasAsyncOperation,
                 CopyId = copyId
             };
 
