@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
-using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Tests
 {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Tests
             ipConfig.Subnet.Id = _subnet.Id;
             ipConfig.PublicIPAddress = new WritableSubResource();
             ipConfig.PublicIPAddress.Id = _publicIPAddress.Id;
-            data.IpConfigurations.Add(ipConfig);
+            data.IPConfigurations.Add(ipConfig);
             var bastionLro = await _resourceGroup.GetBastionHosts().CreateOrUpdateAsync(true, bastionName, data);
             return bastionLro.Value;
         }

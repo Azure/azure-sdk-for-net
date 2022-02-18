@@ -4,8 +4,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
@@ -51,7 +49,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
             string sourceIPAddress = networkInterfaceCollection
-                                                            .GetAsync(networkInterfaceName).Result.Value.Data.IpConfigurations
+                                                            .GetAsync(networkInterfaceName).Result.Value.Data.IPConfigurations
                                                             .FirstOrDefault().PrivateIPAddress;
 
             //Use DestinationIPAddress from Route Table
@@ -70,7 +68,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<RouteTable> routeTable = await resourceGroup.GetRouteTables().GetAsync(resourceGroupName + "RT");
 
             //Validation
-            Assert.AreEqual("10.0.1.2", getNextHop1.Value.NextHopIpAddress);
+            Assert.AreEqual("10.0.1.2", getNextHop1.Value.NextHopIPAddress);
             Assert.AreEqual(routeTable.Value.Id, getNextHop1.Value.RouteTableId);
             Assert.AreEqual("Internet", getNextHop2.Value.NextHopType.ToString());
             Assert.AreEqual("System Route", getNextHop2.Value.RouteTableId);

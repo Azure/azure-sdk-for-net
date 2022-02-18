@@ -5,12 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
@@ -84,7 +82,7 @@ namespace Azure.ResourceManager.Network.Tests
         [Test]
         [RecordedTest]
         [Ignore("Track2: The corresponding configuration is needed, and the account is missing the key configuration")]
-        public async Task ExpressRouteMicrosoftPeeringApiWithIpv6Test()
+        public async Task ExpressRouteMicrosoftPeeringApiWithIPv6Test()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
@@ -98,7 +96,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(circuit.Data.Name, circuitName);
             Assert.AreEqual(circuit.Data.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));
 
-            circuit = await UpdateDefaultExpressRouteCircuitWithIpv6MicrosoftPeering(resourceGroup,
+            circuit = await UpdateDefaultExpressRouteCircuitWithIPv6MicrosoftPeering(resourceGroup,
                 circuitName);
 
             Assert.AreEqual(circuit.Data.Name, circuitName);

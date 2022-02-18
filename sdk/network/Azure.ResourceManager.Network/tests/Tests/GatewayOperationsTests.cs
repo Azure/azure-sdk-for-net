@@ -13,7 +13,6 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
-using SubResource = Azure.ResourceManager.Network.Models.SubResource;
 
 namespace Azure.ResourceManager.Network.Tests
 {
@@ -57,12 +56,12 @@ namespace Azure.ResourceManager.Network.Tests
             Response<Subnet> getSubnetResponse = await (await resourceGroup.GetVirtualNetworks().GetAsync(vnetName)).Value.GetSubnets().GetAsync(subnetName);
             Assert.IsNotNull(getSubnetResponse.Value.Data);
 
-            // Create PublicIpAddress
-            string publicIpName = Recording.GenerateAssetName("azsmnet");
+            // Create PublicIPAddress
+            string publicIPName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, domainNameLabel, location, resourceGroup.GetPublicIPAddresses());
-            Assert.IsNotNull(nic1publicIp.Data);
+            PublicIPAddress nic1publicIP = await CreateDefaultPublicIPAddress(publicIPName, domainNameLabel, location, resourceGroup.GetPublicIPAddresses());
+            Assert.IsNotNull(nic1publicIP.Data);
 
             // Create VirtualNetworkGateway
             string virtualNetworkGatewayName = Recording.GenerateAssetName("azsmnet");
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.Network.Tests
                 EnableBgp = false,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.Network.Tests
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                         PublicIPAddress = new WritableSubResource()
                         {
-                            Id = nic1publicIp.Id
+                            Id = nic1publicIP.Id
                         },
                         Subnet = new WritableSubResource()
                         {
@@ -135,13 +134,13 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create LocalNetworkGateway
             string localNetworkGatewayName = Recording.GenerateAssetName("azsmnet");
-            string gatewayIp = "192.168.3.4";
+            string gatewayIP = "192.168.3.4";
 
             var localNetworkGateway = new LocalNetworkGatewayData()
             {
                 Location = location,
                 Tags = { { "test", "value" } },
-                GatewayIpAddress = gatewayIp,
+                GatewayIPAddress = gatewayIP,
                 LocalNetworkAddressSpace = new AddressSpace()
                 {
                     AddressPrefixes = { "192.168.0.0/16", }
@@ -154,12 +153,12 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual("Succeeded", putLocalNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
             Response<LocalNetworkGateway> getLocalNetworkGatewayResponse = await localNetworkGatewayCollection.GetAsync(localNetworkGatewayName);
 
-            // Create PublicIpAddress
-            string publicIpName = Recording.GenerateAssetName("azsmnet");
+            // Create PublicIPAddress
+            string publicIPName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, domainNameLabel, location, resourceGroup.GetPublicIPAddresses());
-            Assert.IsNotNull(nic1publicIp.Data);
+            PublicIPAddress nic1publicIP = await CreateDefaultPublicIPAddress(publicIPName, domainNameLabel, location, resourceGroup.GetPublicIPAddresses());
+            Assert.IsNotNull(nic1publicIP.Data);
 
             // Create VirtualNetworkGateway
             string virtualNetworkGatewayName = Recording.GenerateAssetName("azsmnet");
@@ -175,7 +174,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -183,7 +182,7 @@ namespace Azure.ResourceManager.Network.Tests
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                         PublicIPAddress = new WritableSubResource()
                         {
-                            Id = nic1publicIp.Id
+                            Id = nic1publicIP.Id
                         },
                         Subnet = new WritableSubResource()
                         {
@@ -285,10 +284,10 @@ namespace Azure.ResourceManager.Network.Tests
             var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(true, vnetName1, vnetData1);
             Response<Subnet> getSubnetResponse1 = await (await resourceGroup1.GetVirtualNetworks().GetAsync(vnetName1)).Value.GetSubnets().GetAsync(subnetName1);
 
-            // Create PublicIpAddress
-            string publicIpName1 = Recording.GenerateAssetName("azsmnet");
+            // Create PublicIPAddress
+            string publicIPName1 = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel1 = Recording.GenerateAssetName("azsmnet");
-            PublicIPAddress nic1publicIp1 = await CreateDefaultPublicIpAddress(publicIpName1, domainNameLabel1, location1, resourceGroup1.GetPublicIPAddresses());
+            PublicIPAddress nic1publicIP1 = await CreateDefaultPublicIPAddress(publicIPName1, domainNameLabel1, location1, resourceGroup1.GetPublicIPAddresses());
 
             // Create VirtualNetworkGateway
             string virtualNetworkGatewayName1 = Recording.GenerateAssetName("azsmnet");
@@ -300,7 +299,7 @@ namespace Azure.ResourceManager.Network.Tests
                 EnableBgp = false,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -308,7 +307,7 @@ namespace Azure.ResourceManager.Network.Tests
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                         PublicIPAddress = new WritableSubResource()
                         {
-                            Id = nic1publicIp1.Id
+                            Id = nic1publicIP1.Id
                         },
                         Subnet = new WritableSubResource()
                         {
@@ -343,10 +342,10 @@ namespace Azure.ResourceManager.Network.Tests
             var putVnetResponseOperation2 = await virtualNetworkCollection2.CreateOrUpdateAsync(true, vnetName2, vnetData2);
             Response<Subnet> getSubnetResponse2 = await (await resourceGroup2.GetVirtualNetworks().GetAsync(vnetName2)).Value.GetSubnets().GetAsync(subnetName2);
 
-            // Create PublicIpAddress
-            string publicIpName2 = Recording.GenerateAssetName("azsmnet");
+            // Create PublicIPAddress
+            string publicIPName2 = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel2 = Recording.GenerateAssetName("azsmnet");
-            PublicIPAddress nic2publicIp2 = await CreateDefaultPublicIpAddress(publicIpName2, domainNameLabel2, location2, resourceGroup2.GetPublicIPAddresses());
+            PublicIPAddress nic2publicIP2 = await CreateDefaultPublicIPAddress(publicIPName2, domainNameLabel2, location2, resourceGroup2.GetPublicIPAddresses());
 
             // Create VirtualNetworkGateway
             string virtualNetworkGatewayName2 = Recording.GenerateAssetName("azsmnet");
@@ -358,7 +357,7 @@ namespace Azure.ResourceManager.Network.Tests
                 EnableBgp = false,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -366,7 +365,7 @@ namespace Azure.ResourceManager.Network.Tests
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                         PublicIPAddress = new WritableSubResource()
                         {
-                            Id = nic2publicIp2.Id
+                            Id = nic2publicIP2.Id
                         },
                         Subnet = new WritableSubResource()
                         {
@@ -434,12 +433,12 @@ namespace Azure.ResourceManager.Network.Tests
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // 1. CreateVirtualNetworkGateway API
-            // A. Prerequisite:- Create PublicIPAddress(Gateway Ip) using Put PublicIPAddress API
-            string publicIpName = Recording.GenerateAssetName("azsmnet");
+            // A. Prerequisite:- Create PublicIPAddress(Gateway IP) using Put PublicIPAddress API
+            string publicIPName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, resourceGroupName, domainNameLabel, location);
-            Console.WriteLine("PublicIPAddress(Gateway Ip) :{0}", nic1publicIp.Id);
+            PublicIPAddress nic1publicIP = await CreateDefaultPublicIPAddress(publicIPName, resourceGroupName, domainNameLabel, location);
+            Console.WriteLine("PublicIPAddress(Gateway IP) :{0}", nic1publicIP.Id);
 
             //B.Prerequisite:-Create Virtual Network using Put VirtualNetwork API
             string vnetName = Recording.GenerateAssetName("azsmnet");
@@ -462,7 +461,7 @@ namespace Azure.ResourceManager.Network.Tests
                 GatewayDefaultSite = null,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -470,7 +469,7 @@ namespace Azure.ResourceManager.Network.Tests
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                         PublicIPAddress = new WritableSubResource()
                         {
-                            Id = nic1publicIp.Id
+                            Id = nic1publicIP.Id
                         },
                         Subnet = new WritableSubResource()
                         {
@@ -557,7 +556,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // 1. CreateLocalNetworkGateway API
             string localNetworkGatewayName = Recording.GenerateAssetName("azsmnet");
-            string gatewayIp = "192.168.3.4";
+            string gatewayIP = "192.168.3.4";
             string addressPrefixes = "192.168.0.0/16";
             string newAddressPrefixes = "200.168.0.0/16";
 
@@ -565,7 +564,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 Tags = { { "test", "value" } },
-                GatewayIpAddress = gatewayIp,
+                GatewayIPAddress = gatewayIP,
                 LocalNetworkAddressSpace = new AddressSpace()
                 {
                     AddressPrefixes = { addressPrefixes, }
@@ -579,11 +578,11 @@ namespace Azure.ResourceManager.Network.Tests
 
             // 2. GetLocalNetworkGateway API
             Response<LocalNetworkGateway> getLocalNetworkGatewayResponse = await localNetworkGatewayCollection.GetAsync(localNetworkGatewayName);
-            Console.WriteLine("Local Network Gateway details:- GatewayLocation: {0}, GatewayId:{1}, GatewayName={2} GatewayIpAddress={3} LocalNetworkAddressSpace={4}",
+            Console.WriteLine("Local Network Gateway details:- GatewayLocation: {0}, GatewayId:{1}, GatewayName={2} GatewayIPAddress={3} LocalNetworkAddressSpace={4}",
                 getLocalNetworkGatewayResponse.Value.Data.Location,
                 getLocalNetworkGatewayResponse.Value.Id, getLocalNetworkGatewayResponse.Value.Data.Name,
-                getLocalNetworkGatewayResponse.Value.Data.GatewayIpAddress, getLocalNetworkGatewayResponse.Value.Data.LocalNetworkAddressSpace.AddressPrefixes[0].ToString());
-            Assert.AreEqual(gatewayIp, getLocalNetworkGatewayResponse.Value.Data.GatewayIpAddress);
+                getLocalNetworkGatewayResponse.Value.Data.GatewayIPAddress, getLocalNetworkGatewayResponse.Value.Data.LocalNetworkAddressSpace.AddressPrefixes[0].ToString());
+            Assert.AreEqual(gatewayIP, getLocalNetworkGatewayResponse.Value.Data.GatewayIPAddress);
             Assert.AreEqual(addressPrefixes, getLocalNetworkGatewayResponse.Value.Data.LocalNetworkAddressSpace.AddressPrefixes[0].ToString());
 
             // 3A. UpdateLocalNetworkgateway API :- LocalNetworkGateway LocalNetworkAddressSpace from "192.168.0.0/16" => "200.168.0.0/16"
@@ -595,9 +594,9 @@ namespace Azure.ResourceManager.Network.Tests
 
             // 3B. GetLocalNetworkGateway API after Updating LocalNetworkGateway LocalNetworkAddressSpace from "192.168.0.0/16" => "200.168.0.0/16"
             getLocalNetworkGatewayResponse = await localNetworkGatewayCollection.GetAsync(localNetworkGatewayName);
-            Console.WriteLine("Local Network Gateway details:- GatewayLocation: {0}, GatewayId:{1}, GatewayName={2} GatewayIpAddress={3} LocalNetworkAddressSpace={4}",
+            Console.WriteLine("Local Network Gateway details:- GatewayLocation: {0}, GatewayId:{1}, GatewayName={2} GatewayIPAddress={3} LocalNetworkAddressSpace={4}",
                 getLocalNetworkGatewayResponse.Value.Data.Location, getLocalNetworkGatewayResponse.Value.Id,
-                getLocalNetworkGatewayResponse.Value.Data.Name, getLocalNetworkGatewayResponse.Value.Data.GatewayIpAddress,
+                getLocalNetworkGatewayResponse.Value.Data.Name, getLocalNetworkGatewayResponse.Value.Data.GatewayIPAddress,
                 getLocalNetworkGatewayResponse.Value.Data.LocalNetworkAddressSpace.AddressPrefixes[0].ToString());
             Assert.AreEqual(newAddressPrefixes, getLocalNetworkGatewayResponse.Value.Data.LocalNetworkAddressSpace.AddressPrefixes[0].ToString());
 
@@ -631,13 +630,13 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create a local network gateway with BGP
             string localNetworkGatewayName = Recording.GenerateAssetName("azsmnet");
-            string gatewayIp = "192.168.3.4";
+            string gatewayIP = "192.168.3.4";
 
             var localNetworkGateway = new LocalNetworkGatewayData()
             {
                 Location = location,
                 Tags = { { "test", "value" } },
-                GatewayIpAddress = gatewayIp,
+                GatewayIPAddress = gatewayIP,
                 LocalNetworkAddressSpace = new AddressSpace()
                 {
                     AddressPrefixes = { "192.168.0.0/16", }
@@ -657,12 +656,12 @@ namespace Azure.ResourceManager.Network.Tests
             Response<LocalNetworkGateway> getLocalNetworkGatewayResponse = await localNetworkGatewayCollection.GetAsync(localNetworkGatewayName);
 
             // B. Prerequisite:- Create VirtualNetworkGateway1
-            // a. Create PublicIPAddress(Gateway Ip) using Put PublicIPAddress API
-            string publicIpName = Recording.GenerateAssetName("azsmnet");
+            // a. Create PublicIPAddress(Gateway IP) using Put PublicIPAddress API
+            string publicIPName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, domainNameLabel, location, resourceGroup.GetPublicIPAddresses());
-            Console.WriteLine("PublicIPAddress(Gateway Ip) :{0}", nic1publicIp.Id);
+            PublicIPAddress nic1publicIP = await CreateDefaultPublicIPAddress(publicIPName, domainNameLabel, location, resourceGroup.GetPublicIPAddresses());
+            Console.WriteLine("PublicIPAddress(Gateway IP) :{0}", nic1publicIP.Id);
 
             // b. Create Virtual Network using Put VirtualNetwork API
             string vnetName = Recording.GenerateAssetName("azsmnet");
@@ -683,7 +682,7 @@ namespace Azure.ResourceManager.Network.Tests
                 EnableBgp = false,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -691,7 +690,7 @@ namespace Azure.ResourceManager.Network.Tests
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                         PublicIPAddress = new WritableSubResource()
                         {
-                            Id = nic1publicIp.Id
+                            Id = nic1publicIP.Id
                         },
                         Subnet = new WritableSubResource()
                         {
@@ -788,13 +787,13 @@ namespace Azure.ResourceManager.Network.Tests
             // 1. CreateVirtualNetworkGatewayConnection API
             //A. Create LocalNetworkGateway2
             string localNetworkGatewayName = Recording.GenerateAssetName("azsmnet");
-            string gatewayIp = "192.168.3.4";
+            string gatewayIP = "192.168.3.4";
 
             var localNetworkGateway = new LocalNetworkGatewayData()
             {
                 Location = location,
                 Tags = { { "test", "value" } },
-                GatewayIpAddress = gatewayIp,
+                GatewayIPAddress = gatewayIP,
                 LocalNetworkAddressSpace = new AddressSpace()
                 {
                     AddressPrefixes = { "192.168.0.0/16", }
@@ -808,12 +807,12 @@ namespace Azure.ResourceManager.Network.Tests
             Response<LocalNetworkGateway> getLocalNetworkGatewayResponse = await localNetworkGatewayCollection.GetAsync(localNetworkGatewayName);
 
             // B. Prerequisite:- Create VirtualNetworkGateway1
-            // a. Create PublicIPAddress(Gateway Ip) using Put PublicIPAddress API
-            string publicIpName = Recording.GenerateAssetName("azsmnet");
+            // a. Create PublicIPAddress(Gateway IP) using Put PublicIPAddress API
+            string publicIPName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, domainNameLabel, location, resourceGroup.GetPublicIPAddresses());
-            Console.WriteLine("PublicIPAddress(Gateway Ip) :{0}", nic1publicIp.Id);
+            PublicIPAddress nic1publicIP = await CreateDefaultPublicIPAddress(publicIPName, domainNameLabel, location, resourceGroup.GetPublicIPAddresses());
+            Console.WriteLine("PublicIPAddress(Gateway IP) :{0}", nic1publicIP.Id);
 
             // b. Create Virtual Network using Put VirtualNetwork API
             string vnetName = Recording.GenerateAssetName("azsmnet");
@@ -834,7 +833,7 @@ namespace Azure.ResourceManager.Network.Tests
                 EnableBgp = false,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -842,7 +841,7 @@ namespace Azure.ResourceManager.Network.Tests
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                         PublicIPAddress = new WritableSubResource()
                         {
-                            Id = nic1publicIp.Id
+                            Id = nic1publicIP.Id
                         },
                         Subnet = new WritableSubResource()
                         {
@@ -990,13 +989,13 @@ namespace Azure.ResourceManager.Network.Tests
             // 1. CreateVirtualNetworkGatewayConnection API
             //A. Create LocalNetworkGateway2
             string localNetworkGatewayName = Recording.GenerateAssetName("azsmnet");
-            string gatewayIp = "192.168.3.4";
+            string gatewayIP = "192.168.3.4";
 
             var localNetworkGateway = new LocalNetworkGatewayData()
             {
                 Location = location,
                 Tags = { { "test", "value" } },
-                GatewayIpAddress = gatewayIp,
+                GatewayIPAddress = gatewayIP,
                 LocalNetworkAddressSpace = new AddressSpace()
                 {
                     AddressPrefixes = { "192.168.0.0/16", }
@@ -1010,12 +1009,12 @@ namespace Azure.ResourceManager.Network.Tests
             Response<LocalNetworkGateway> getLocalNetworkGatewayResponse = await localNetworkGatewayCollection.GetAsync(localNetworkGatewayName);
 
             // B. Prerequisite:- Create VirtualNetworkGateway1
-            // a. Create PublicIPAddress(Gateway Ip) using Put PublicIPAddress API
-            string publicIpName = Recording.GenerateAssetName("azsmnet");
+            // a. Create PublicIPAddress(Gateway IP) using Put PublicIPAddress API
+            string publicIPName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, domainNameLabel, location, resourceGroup.GetPublicIPAddresses());
-            Console.WriteLine("PublicIPAddress(Gateway Ip) :{0}", nic1publicIp.Id);
+            PublicIPAddress nic1publicIP = await CreateDefaultPublicIPAddress(publicIPName, domainNameLabel, location, resourceGroup.GetPublicIPAddresses());
+            Console.WriteLine("PublicIPAddress(Gateway IP) :{0}", nic1publicIP.Id);
 
             // b. Create Virtual Network using Put VirtualNetwork API
             string vnetName = Recording.GenerateAssetName("azsmnet");
@@ -1041,7 +1040,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -1049,7 +1048,7 @@ namespace Azure.ResourceManager.Network.Tests
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                         PublicIPAddress = new WritableSubResource()
                         {
-                            Id = nic1publicIp.Id
+                            Id = nic1publicIP.Id
                         },
                         Subnet = new WritableSubResource()
                         {
@@ -1169,12 +1168,12 @@ namespace Azure.ResourceManager.Network.Tests
             // 1. SetVirtualNetworkGatewayConnectionSharedKey API
             // Pre-requsite:- CreateVirtualNetworkGatewayConnection first
             // Create VirtualNetworkGateway1
-            // a. Create PublicIPAddress(Gateway Ip) using Put PublicIPAddress API
-            string publicIpName = Recording.GenerateAssetName("azsmnet");
+            // a. Create PublicIPAddress(Gateway IP) using Put PublicIPAddress API
+            string publicIPName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, resourceGroupName, domainNameLabel, location);
-            Console.WriteLine("PublicIPAddress(Gateway Ip) :{0}", nic1publicIp.Id);
+            PublicIPAddress nic1publicIP = await CreateDefaultPublicIPAddress(publicIPName, resourceGroupName, domainNameLabel, location);
+            Console.WriteLine("PublicIPAddress(Gateway IP) :{0}", nic1publicIP.Id);
 
             // b. Create Virtual Network using Put VirtualNetwork API
             string vnetName = Recording.GenerateAssetName("azsmnet");
@@ -1196,7 +1195,7 @@ namespace Azure.ResourceManager.Network.Tests
                 GatewayDefaultSite = null,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -1204,7 +1203,7 @@ namespace Azure.ResourceManager.Network.Tests
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                         PublicIPAddress = new WritableSubResource()
                         {
-                            Id = nic1publicIp.Id
+                            Id = nic1publicIP.Id
                         },
                         Subnet = new WritableSubResource()
                         {
@@ -1222,12 +1221,12 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create LocalNetworkGateway2
             string localNetworkGatewayName = Recording.GenerateAssetName("azsmnet");
-            string gatewayIp = "192.168.3.4";
+            string gatewayIP = "192.168.3.4";
             var localNetworkGateway = new LocalNetworkGatewayData()
             {
                 Location = location,
                 Tags = { { "test", "value" } },
-                GatewayIpAddress = gatewayIp,
+                GatewayIPAddress = gatewayIP,
                 LocalNetworkAddressSpace = new AddressSpace()
                 {
                     AddressPrefixes = { "192.168.0.0/16", }
@@ -1296,13 +1295,13 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create LocalNetworkGateway to set as default site
             string localNetworkGatewayName = Recording.GenerateAssetName("azsmnet");
-            string gatewayIp = "192.168.3.4";
+            string gatewayIP = "192.168.3.4";
 
             var localNetworkGateway = new LocalNetworkGatewayData()
             {
                 Location = location,
                 Tags = { { "test", "value" } },
-                GatewayIpAddress = gatewayIp,
+                GatewayIPAddress = gatewayIP,
                 LocalNetworkAddressSpace = new AddressSpace() { AddressPrefixes = { "192.168.0.0/16", } }
             };
 
@@ -1313,12 +1312,12 @@ namespace Azure.ResourceManager.Network.Tests
             Response<LocalNetworkGateway> getLocalNetworkGatewayResponse = await localNetworkGatewayCollection.GetAsync(localNetworkGatewayName);
 
             // 1.CreateVirtualNetworkGateway API
-            // A.Prerequisite:-Create PublicIPAddress(Gateway Ip) using Put PublicIPAddress API
-            string publicIpName = Recording.GenerateAssetName("azsmnet");
+            // A.Prerequisite:-Create PublicIPAddress(Gateway IP) using Put PublicIPAddress API
+            string publicIPName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, resourceGroupName, domainNameLabel, location);
-            Console.WriteLine("PublicIPAddress(Gateway Ip) :{0}", nic1publicIp.Id);
+            PublicIPAddress nic1publicIP = await CreateDefaultPublicIPAddress(publicIPName, resourceGroupName, domainNameLabel, location);
+            Console.WriteLine("PublicIPAddress(Gateway IP) :{0}", nic1publicIP.Id);
 
             // B.Prerequisite:-Create Virtual Network using Put VirtualNetwork API
             string vnetName = Recording.GenerateAssetName("azsmnet");
@@ -1348,13 +1347,13 @@ namespace Azure.ResourceManager.Network.Tests
                 GatewayDefaultSite = new WritableSubResource() { Id = getLocalNetworkGatewayResponse.Value.Id },
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
                         Name = ipConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                        PublicIPAddress = new WritableSubResource() { Id = nic1publicIp.Id },
+                        PublicIPAddress = new WritableSubResource() { Id = nic1publicIP.Id },
                         Subnet = new WritableSubResource() { Id = getSubnetResponse.Value.Id }
                     }
                 },
@@ -1481,18 +1480,18 @@ namespace Azure.ResourceManager.Network.Tests
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // 1. Create Active-Active VirtualNetworkGateway
-            // A. Prerequisite:- Create PublicIPAddress(Gateway Ip) using Put PublicIPAddress API
-            string publicIpName1 = Recording.GenerateAssetName("azsmnet");
+            // A. Prerequisite:- Create PublicIPAddress(Gateway IP) using Put PublicIPAddress API
+            string publicIPName1 = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel1 = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp1 = await CreateDefaultPublicIpAddress(publicIpName1, resourceGroupName, domainNameLabel1, location);
-            Console.WriteLine("PublicIPAddress(Gateway Ip) :{0}", nic1publicIp1.Id);
+            PublicIPAddress nic1publicIP1 = await CreateDefaultPublicIPAddress(publicIPName1, resourceGroupName, domainNameLabel1, location);
+            Console.WriteLine("PublicIPAddress(Gateway IP) :{0}", nic1publicIP1.Id);
 
-            string publicIpName2 = Recording.GenerateAssetName("azsmnet");
+            string publicIPName2 = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel2 = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp2 = await CreateDefaultPublicIpAddress(publicIpName2, resourceGroupName, domainNameLabel2, location);
-            Console.WriteLine("PublicIPAddress(Gateway Ip) :{0}", nic1publicIp2.Id);
+            PublicIPAddress nic1publicIP2 = await CreateDefaultPublicIPAddress(publicIPName2, resourceGroupName, domainNameLabel2, location);
+            Console.WriteLine("PublicIPAddress(Gateway IP) :{0}", nic1publicIP2.Id);
 
             //B.Prerequisite:-Create Virtual Network using Put VirtualNetwork API
 
@@ -1511,7 +1510,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Name = ipConfigName1,
                 PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                PublicIPAddress = new WritableSubResource() { Id = nic1publicIp1.Id },
+                PublicIPAddress = new WritableSubResource() { Id = nic1publicIP1.Id },
                 Subnet = new WritableSubResource() { Id = getSubnetResponse.Value.Id }
             };
 
@@ -1520,7 +1519,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Name = ipConfigName2,
                 PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                PublicIPAddress = new WritableSubResource() { Id = nic1publicIp2.Id },
+                PublicIPAddress = new WritableSubResource() { Id = nic1publicIP2.Id },
                 Subnet = new WritableSubResource() { Id = getSubnetResponse.Value.Id }
             };
 
@@ -1533,7 +1532,7 @@ namespace Azure.ResourceManager.Network.Tests
                 GatewayDefaultSite = null,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations = { ipconfig1, ipconfig2 },
+                IPConfigurations = { ipconfig1, ipconfig2 },
                 Sku = new VirtualNetworkGatewaySku() { Name = VirtualNetworkGatewaySkuName.HighPerformance, Tier = VirtualNetworkGatewaySkuTier.HighPerformance }
             };
 
@@ -1553,30 +1552,30 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(VirtualNetworkGatewayType.Vpn, getVirtualNetworkGatewayResponse.Value.Data.GatewayType);
             Assert.AreEqual(VpnType.RouteBased, getVirtualNetworkGatewayResponse.Value.Data.VpnType);
             Assert.AreEqual(VirtualNetworkGatewaySkuTier.HighPerformance, getVirtualNetworkGatewayResponse.Value.Data.Sku.Tier);
-            Assert.AreEqual(2, getVirtualNetworkGatewayResponse.Value.Data.IpConfigurations.Count);
+            Assert.AreEqual(2, getVirtualNetworkGatewayResponse.Value.Data.IPConfigurations.Count);
             Assert.True(getVirtualNetworkGatewayResponse.Value.Data.Active);
 
             // 3. Update ActiveActive VirtualNetworkGateway to ActiveStandby
             getVirtualNetworkGatewayResponse.Value.Data.Active = false;
-            getVirtualNetworkGatewayResponse.Value.Data.IpConfigurations.Remove(getVirtualNetworkGatewayResponse.Value.Data.IpConfigurations.First(config => config.Name.Equals(ipconfig2.Name)));
+            getVirtualNetworkGatewayResponse.Value.Data.IPConfigurations.Remove(getVirtualNetworkGatewayResponse.Value.Data.IPConfigurations.First(config => config.Name.Equals(ipconfig2.Name)));
             putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(true, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data);
             putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
 
             getVirtualNetworkGatewayResponse = await virtualNetworkGatewayCollection.GetAsync(virtualNetworkGatewayName);
             Assert.False(getVirtualNetworkGatewayResponse.Value.Data.Active);
-            Assert.AreEqual(1, getVirtualNetworkGatewayResponse.Value.Data.IpConfigurations.Count);
+            Assert.AreEqual(1, getVirtualNetworkGatewayResponse.Value.Data.IPConfigurations.Count);
 
             // 4. Update ActiveStandby VirtualNetworkGateway to ActiveActive again
             getVirtualNetworkGatewayResponse.Value.Data.Active = true;
-            getVirtualNetworkGatewayResponse.Value.Data.IpConfigurations.Add(ipconfig2);
+            getVirtualNetworkGatewayResponse.Value.Data.IPConfigurations.Add(ipconfig2);
             putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(true, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data);
             putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
 
             getVirtualNetworkGatewayResponse = await virtualNetworkGatewayCollection.GetAsync(virtualNetworkGatewayName);
             Assert.True(getVirtualNetworkGatewayResponse.Value.Data.Active);
-            Assert.AreEqual(2, getVirtualNetworkGatewayResponse.Value.Data.IpConfigurations.Count);
+            Assert.AreEqual(2, getVirtualNetworkGatewayResponse.Value.Data.IPConfigurations.Count);
         }
 
         [Test]
@@ -1592,15 +1591,15 @@ namespace Azure.ResourceManager.Network.Tests
             string gatewaySubnetName = "GatewaySubnet";
             string gw1Name = Recording.GenerateAssetName("azsmnet");
             string vnet1Name = Recording.GenerateAssetName("azsmnet");
-            string gw1IpName = Recording.GenerateAssetName("azsmnet");
-            string gw1IpDomainNameLabel = Recording.GenerateAssetName("azsmnet");
-            string gw1IpConfigName = Recording.GenerateAssetName("azsmnet");
+            string gw1IPName = Recording.GenerateAssetName("azsmnet");
+            string gw1IPDomainNameLabel = Recording.GenerateAssetName("azsmnet");
+            string gw1IPConfigName = Recording.GenerateAssetName("azsmnet");
 
             string gw2Name = Recording.GenerateAssetName("azsmnet");
             string vnet2Name = Recording.GenerateAssetName("azsmnet");
-            string gw2IpName = Recording.GenerateAssetName("azsmnet");
-            string gw2IpDomainNameLabel = Recording.GenerateAssetName("azsmnet");
-            string gw2IpConfigName = Recording.GenerateAssetName("azsmnet");
+            string gw2IPName = Recording.GenerateAssetName("azsmnet");
+            string gw2IPDomainNameLabel = Recording.GenerateAssetName("azsmnet");
+            string gw2IPConfigName = Recording.GenerateAssetName("azsmnet");
 
             // Deploy two virtual networks with VPN gateways, in parallel
             var vnet1 = new VirtualNetworkData()
@@ -1609,14 +1608,14 @@ namespace Azure.ResourceManager.Network.Tests
                 AddressSpace = new AddressSpace() { AddressPrefixes = { "10.1.0.0/16" } },
                 Subnets = { new SubnetData() { Name = gatewaySubnetName, AddressPrefix = "10.1.1.0/24" } }
             };
-            PublicIPAddress publicIPAddress = await CreateDefaultPublicIpAddress(gw1IpName, resourceGroupName, gw1IpDomainNameLabel, location);
+            PublicIPAddress publicIPAddress = await CreateDefaultPublicIPAddress(gw1IPName, resourceGroupName, gw1IPDomainNameLabel, location);
             var virtualNetworkCollection = GetResourceGroup(resourceGroupName).GetVirtualNetworks();
             var virtualNetworksCreateOrUpdateOperation = await virtualNetworkCollection.CreateOrUpdateAsync(true, vnet1Name, vnet1);
             Response<VirtualNetwork> vnet1Response = await virtualNetworksCreateOrUpdateOperation.WaitForCompletionAsync();
             Response<Subnet> gw1Subnet = await virtualNetworkCollection.Get(vnet1Name).Value.GetSubnets().GetAsync(gatewaySubnetName);
             VirtualNetworkGatewayIPConfiguration ipconfig1 = new VirtualNetworkGatewayIPConfiguration()
             {
-                Name = gw1IpConfigName,
+                Name = gw1IPConfigName,
                 PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                 PublicIPAddress = new WritableSubResource() { Id = publicIPAddress.Id },
                 Subnet = new WritableSubResource() { Id = gw1Subnet.Value.Id }
@@ -1626,12 +1625,12 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations = { ipconfig1 },
+                IPConfigurations = { ipconfig1 },
                 Sku = new VirtualNetworkGatewaySku() { Name = VirtualNetworkGatewaySkuName.Standard, Tier = VirtualNetworkGatewaySkuTier.Standard },
                 BgpSettings = new BgpSettings() { Asn = 1337, BgpPeeringAddress = null, PeerWeight = 5 }
             };
 
-            PublicIPAddress gw2Ip = await CreateDefaultPublicIpAddress(gw2IpName, resourceGroupName, gw2IpDomainNameLabel, location);
+            PublicIPAddress gw2IP = await CreateDefaultPublicIPAddress(gw2IPName, resourceGroupName, gw2IPDomainNameLabel, location);
             var vnet2 = new VirtualNetworkData()
             {
                 Location = location,
@@ -1643,9 +1642,9 @@ namespace Azure.ResourceManager.Network.Tests
             Response<Subnet> gw2Subnet = await virtualNetworkCollection.Get(vnet2Name).Value.GetSubnets().GetAsync(gatewaySubnetName);
             VirtualNetworkGatewayIPConfiguration ipconfig2 = new VirtualNetworkGatewayIPConfiguration()
             {
-                Name = gw2IpConfigName,
+                Name = gw2IPConfigName,
                 PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                PublicIPAddress = new WritableSubResource() { Id = gw2Ip.Id },
+                PublicIPAddress = new WritableSubResource() { Id = gw2IP.Id },
                 Subnet = new WritableSubResource() { Id = gw2Subnet.Value.Id }
             };
             var gw2 = new VirtualNetworkGatewayData()
@@ -1653,7 +1652,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations = { ipconfig2 },
+                IPConfigurations = { ipconfig2 },
                 Sku = new VirtualNetworkGatewaySku() { Name = VirtualNetworkGatewaySkuName.Standard, Tier = VirtualNetworkGatewaySkuTier.Standard },
                 BgpSettings = new BgpSettings() { Asn = 9001, BgpPeeringAddress = null, PeerWeight = 5 }
             };
@@ -1680,7 +1679,7 @@ namespace Azure.ResourceManager.Network.Tests
             // configure both gateways in parallel
             Response<VirtualNetworkGateway> gw1GetResponse = await virtualNetworkGatewayCollection.GetAsync(gw1Name);
             Response<VirtualNetworkGateway> gw2GetResponse = await virtualNetworkGatewayCollection.GetAsync(gw2Name);
-            Response<PublicIPAddress> gw2IpResponse = await GetResourceGroup(resourceGroupName).GetPublicIPAddresses().GetAsync(gw1IpName);
+            Response<PublicIPAddress> gw2IPResponse = await GetResourceGroup(resourceGroupName).GetPublicIPAddresses().GetAsync(gw1IPName);
             string sharedKey = "chocolate";
 
             string conn1Name = Recording.GenerateAssetName("azsmnet");
@@ -1724,7 +1723,7 @@ namespace Azure.ResourceManager.Network.Tests
             var learnedRoutesOperation = await virtualNetworkGatewayCollection.Get(gw1Name).Value.GetLearnedRoutesAsync(true);
             Response<GatewayRouteListResult> learnedRoutes = await learnedRoutesOperation.WaitForCompletionAsync();
             Assert.True(learnedRoutes.Value.Value.Count() > 0, "At least one route should be learned from gw2");
-            var advertisedRoutesOperation = await virtualNetworkGatewayCollection.Get(gw1Name).Value.GetAdvertisedRoutesAsync(true, gw2IpResponse.Value.Data.IpAddress);
+            var advertisedRoutesOperation = await virtualNetworkGatewayCollection.Get(gw1Name).Value.GetAdvertisedRoutesAsync(true, gw2IPResponse.Value.Data.IPAddress);
             Response<GatewayRouteListResult> advertisedRoutes = await advertisedRoutesOperation.WaitForCompletionAsync();
             Assert.True(learnedRoutes.Value.Value.Count() > 0, "At least one route should be advertised to gw2");
             var gw1PeersOperation = await virtualNetworkGatewayCollection.Get(gw1Name).Value.GetBgpPeerStatusAsync(true);
@@ -1743,12 +1742,12 @@ namespace Azure.ResourceManager.Network.Tests
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // 1.CreateVirtualNetworkGateway
-            // A.Prerequisite:-Create PublicIPAddress(Gateway Ip) using Put PublicIPAddress API
-            string publicIpName = Recording.GenerateAssetName("azsmnet");
+            // A.Prerequisite:-Create PublicIPAddress(Gateway IP) using Put PublicIPAddress API
+            string publicIPName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
-            PublicIPAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, resourceGroupName,
+            PublicIPAddress nic1publicIP = await CreateDefaultPublicIPAddress(publicIPName, resourceGroupName,
                 domainNameLabel, location);
-            Console.WriteLine("PublicIPAddress(Gateway Ip) :{0}", nic1publicIp.Id);
+            Console.WriteLine("PublicIPAddress(Gateway IP) :{0}", nic1publicIP.Id);
 
             // B.Prerequisite:-Create Virtual Network using Put VirtualNetwork API
             string vnetName = Recording.GenerateAssetName("azsmnet");
@@ -1773,13 +1772,13 @@ namespace Azure.ResourceManager.Network.Tests
                 EnableBgp = false,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
                         Name = ipConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                        PublicIPAddress = new WritableSubResource() { Id = nic1publicIp.Id },
+                        PublicIPAddress = new WritableSubResource() { Id = nic1publicIP.Id },
                         Subnet = new WritableSubResource() { Id = getSubnetResponse.Value.Id }
                     }
                 },
@@ -1875,13 +1874,13 @@ namespace Azure.ResourceManager.Network.Tests
             // CreateVirtualNetworkGatewayConnection API
             // Create LocalNetworkGateway2
             string localNetworkGatewayName = Recording.GenerateAssetName("azsmnet");
-            string gatewayIp = "192.168.3.4";
+            string gatewayIP = "192.168.3.4";
 
             var localNetworkGateway = new LocalNetworkGatewayData()
             {
                 Location = location,
                 Tags = { { "test", "value" } },
-                GatewayIpAddress = gatewayIp,
+                GatewayIPAddress = gatewayIP,
                 LocalNetworkAddressSpace = new AddressSpace()
                 {
                     AddressPrefixes = { "192.168.0.0/16", }
@@ -1895,12 +1894,12 @@ namespace Azure.ResourceManager.Network.Tests
             Response<LocalNetworkGateway> getLocalNetworkGatewayResponse = await localNetworkGatewayCollection.GetAsync(localNetworkGatewayName);
 
             // B. Prerequisite:- Create VirtualNetworkGateway1
-            // a. Create PublicIPAddress(Gateway Ip) using Put PublicIPAddress API
-            string publicIpName = Recording.GenerateAssetName("azsmnet");
+            // a. Create PublicIPAddress(Gateway IP) using Put PublicIPAddress API
+            string publicIPName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, resourceGroupName, domainNameLabel, location);
-            Console.WriteLine("PublicIPAddress(Gateway Ip) :{0}", nic1publicIp.Id);
+            PublicIPAddress nic1publicIP = await CreateDefaultPublicIPAddress(publicIPName, resourceGroupName, domainNameLabel, location);
+            Console.WriteLine("PublicIPAddress(Gateway IP) :{0}", nic1publicIP.Id);
 
             // b. Create Virtual Network using Put VirtualNetwork API
             string vnetName = Recording.GenerateAssetName("azsmnet");
@@ -1921,13 +1920,13 @@ namespace Azure.ResourceManager.Network.Tests
                 EnableBgp = false,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
                         Name = ipConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                        PublicIPAddress = new WritableSubResource() { Id = nic1publicIp.Id },
+                        PublicIPAddress = new WritableSubResource() { Id = nic1publicIP.Id },
                         Subnet = new WritableSubResource() { Id = getSubnetResponse.Value.Id }
                     }
                 },

@@ -5,12 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
-using SubResource = Azure.ResourceManager.Network.Models.SubResource;
 
 namespace Azure.ResourceManager.Network.Tests
 {
@@ -43,18 +42,18 @@ namespace Azure.ResourceManager.Network.Tests
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create lbPublicIP
-            string lbPublicIpName = Recording.GenerateAssetName("azsmnet");
+            string lbPublicIPName = Recording.GenerateAssetName("azsmnet");
             string lbDomaingNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress lbPublicIp = await CreateDefaultPublicIpAddress(
-                lbPublicIpName,
+            PublicIPAddress lbPublicIP = await CreateDefaultPublicIPAddress(
+                lbPublicIPName,
                 lbDomaingNameLabel,
                 location,
                 resourceGroup.GetPublicIPAddresses());
 
             // Create the LoadBalancer
             string lbName = Recording.GenerateAssetName("azsmnet");
-            string frontendIpConfigName = Recording.GenerateAssetName("azsmnet");
+            string frontendIPConfigName = Recording.GenerateAssetName("azsmnet");
             string backEndAddressPoolName = Recording.GenerateAssetName("azsmnet");
             string loadBalancingRuleName = Recording.GenerateAssetName("azsmnet");
             string probeName = Recording.GenerateAssetName("azsmnet");
@@ -69,10 +68,10 @@ namespace Azure.ResourceManager.Network.Tests
                 FrontendIPConfigurations = {
                     new FrontendIPConfigurationData()
                     {
-                        Name = frontendIpConfigName,
+                        Name = frontendIPConfigName,
                         PublicIPAddress = new PublicIPAddressData()
                         {
-                            Id = lbPublicIp.Id
+                            Id = lbPublicIP.Id
                         }
                     }
                 },
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.Network.Tests
                         FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
+                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIPConfigName)
                         },
                         Protocol = TransportProtocol.Tcp,
                         FrontendPort = 80,
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.Network.Tests
                         FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
+                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIPConfigName)
                         },
                         Protocol = TransportProtocol.Tcp,
                         FrontendPort = 3389,
@@ -140,7 +139,7 @@ namespace Azure.ResourceManager.Network.Tests
                         FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
+                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIPConfigName)
                         },
                         Protocol = TransportProtocol.Tcp,
                         FrontendPort = 3390,
@@ -159,9 +158,9 @@ namespace Azure.ResourceManager.Network.Tests
             // Verify the GET LoadBalancer
             Assert.AreEqual(lbName, getLoadBalancer.Value.Data.Name);
             Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.ProvisioningState.ToString());
-            Assert.AreEqual(frontendIpConfigName, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Name);
+            Assert.AreEqual(frontendIPConfigName, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Name);
             Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.FrontendIPConfigurations[0].ProvisioningState.ToString());
-            Assert.AreEqual(lbPublicIp.Id, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].PublicIPAddress.Id);
+            Assert.AreEqual(lbPublicIP.Id, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].PublicIPAddress.Id);
             Assert.Null(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].PrivateIPAddress);
             Assert.AreEqual(getLoadBalancer.Value.Data.InboundNatRules[0].Id, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].InboundNatRules[0].Id.ToString());
             Assert.AreEqual(getLoadBalancer.Value.Data.InboundNatRules[1].Id, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].InboundNatRules[1].Id.ToString());
@@ -217,13 +216,13 @@ namespace Azure.ResourceManager.Network.Tests
             AsyncPageable<FrontendIPConfiguration> listLoadBalancerFrontendIPConfigurationsAP = loadBalancerOperations.GetFrontendIPConfigurations().GetAllAsync();
             List<FrontendIPConfiguration> listLoadBalancerFrontendIPConfigurations = await listLoadBalancerFrontendIPConfigurationsAP.ToEnumerableAsync();
             Has.One.EqualTo(listLoadBalancerFrontendIPConfigurations);
-            Assert.AreEqual(frontendIpConfigName, listLoadBalancerFrontendIPConfigurations.First().Data.Name);
+            Assert.AreEqual(frontendIPConfigName, listLoadBalancerFrontendIPConfigurations.First().Data.Name);
             Assert.NotNull(listLoadBalancerFrontendIPConfigurations.First().Data.Etag);
 
             // Verify Get FrontendIPConfiguration in LoadBalancer
             // TODO: ADO 5975
             //Response<FrontendIPConfiguration> getLoadBalancerFrontendIPConfiguration = await loadBalancerOperations.GetLoadBalancerFrontendIPConfigurationAsync();
-            //Assert.AreEqual(frontendIpConfigName, getLoadBalancerFrontendIPConfiguration.Value.Name);
+            //Assert.AreEqual(frontendIPConfigName, getLoadBalancerFrontendIPConfiguration.Value.Name);
             //Assert.NotNull(getLoadBalancerFrontendIPConfiguration.Value.Etag);
 
             // Verify List LoadBalancingRules in LoadBalancer
@@ -260,7 +259,7 @@ namespace Azure.ResourceManager.Network.Tests
                 FrontendIPConfiguration = new WritableSubResource()
                 {
                     Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                                resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
+                                resourceGroupName, lbName, "frontendIPConfigurations", frontendIPConfigName)
                 },
                 Protocol = TransportProtocol.Tcp,
                 FrontendPort = 3391,
@@ -312,12 +311,12 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete all PublicIPAddresses
-            await lbPublicIp.DeleteAsync(true);
+            await lbPublicIP.DeleteAsync(true);
         }
 
         [Test]
         [RecordedTest]
-        public async Task LoadBalancerApiTestWithDynamicIp()
+        public async Task LoadBalancerApiTestWithDynamicIP()
         {
             Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
@@ -333,7 +332,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the LoadBalancer
             string lbName = Recording.GenerateAssetName("azsmnet");
-            string frontendIpConfigName = Recording.GenerateAssetName("azsmnet");
+            string frontendIPConfigName = Recording.GenerateAssetName("azsmnet");
             string backEndAddressPoolName = Recording.GenerateAssetName("azsmnet");
             string loadBalancingRuleName = Recording.GenerateAssetName("azsmnet");
             string probeName = Recording.GenerateAssetName("azsmnet");
@@ -347,7 +346,7 @@ namespace Azure.ResourceManager.Network.Tests
                 FrontendIPConfigurations = {
                     new FrontendIPConfigurationData()
                     {
-                        Name = frontendIpConfigName,
+                        Name = frontendIPConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                         Subnet = vnet.Data.Subnets[0]
                     }
@@ -365,7 +364,7 @@ namespace Azure.ResourceManager.Network.Tests
                         FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
+                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIPConfigName)
                         },
                         Protocol = TransportProtocol.Tcp,
                         FrontendPort = 80,
@@ -402,7 +401,7 @@ namespace Azure.ResourceManager.Network.Tests
                         FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
+                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIPConfigName)
                         },
                         Protocol = TransportProtocol.Tcp,
                         FrontendPort = 3389,
@@ -416,7 +415,7 @@ namespace Azure.ResourceManager.Network.Tests
                         FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
+                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIPConfigName)
                         },
                         Protocol = TransportProtocol.Tcp,
                         FrontendPort = 3390,
@@ -437,7 +436,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Verify the GET LoadBalancer
             Assert.AreEqual(lbName, getLoadBalancer.Value.Data.Name);
             Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.ProvisioningState.ToString());
-            Assert.AreEqual(frontendIpConfigName, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Name);
+            Assert.AreEqual(frontendIPConfigName, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Name);
             Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.FrontendIPConfigurations[0].ProvisioningState.ToString());
             Assert.AreEqual(vnet.Data.Subnets[0].Id, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Subnet.Id);
             Assert.NotNull(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].PrivateIPAddress);
@@ -486,7 +485,7 @@ namespace Azure.ResourceManager.Network.Tests
 
         [Test]
         [RecordedTest]
-        public async Task LoadBalancerApiTestWithStaticIp()
+        public async Task LoadBalancerApiTestWithStaticIP()
         {
             Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
@@ -502,7 +501,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the LoadBalancer
             string lbName = Recording.GenerateAssetName("azsmnet");
-            string frontendIpConfigName = Recording.GenerateAssetName("azsmnet");
+            string frontendIPConfigName = Recording.GenerateAssetName("azsmnet");
             string backEndAddressPoolName = Recording.GenerateAssetName("azsmnet");
             string loadBalancingRuleName = Recording.GenerateAssetName("azsmnet");
             string probeName = Recording.GenerateAssetName("azsmnet");
@@ -516,7 +515,7 @@ namespace Azure.ResourceManager.Network.Tests
                 FrontendIPConfigurations = {
                     new FrontendIPConfigurationData()
                     {
-                        Name = frontendIpConfigName,
+                        Name = frontendIPConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Static,
                         PrivateIPAddress = "10.0.0.38",
                         Subnet = vnet.Data.Subnets[0]
@@ -535,7 +534,7 @@ namespace Azure.ResourceManager.Network.Tests
                         FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
+                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIPConfigName)
                         },
                         Protocol = TransportProtocol.Tcp,
                         FrontendPort = 80,
@@ -571,7 +570,7 @@ namespace Azure.ResourceManager.Network.Tests
                         FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
+                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIPConfigName)
                         },
                         Protocol = TransportProtocol.Tcp,
                         FrontendPort = 3389,
@@ -584,7 +583,7 @@ namespace Azure.ResourceManager.Network.Tests
                         FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
+                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIPConfigName)
                         },
                         Protocol = TransportProtocol.Tcp,
                         FrontendPort = 3390,
@@ -604,7 +603,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Verify the GET LoadBalancer
             Assert.AreEqual(lbName, getLoadBalancer.Value.Data.Name);
             Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.ProvisioningState.ToString());
-            Assert.AreEqual(frontendIpConfigName, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Name);
+            Assert.AreEqual(frontendIPConfigName, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Name);
             Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.FrontendIPConfigurations[0].ProvisioningState.ToString());
             Assert.AreEqual(vnet.Data.Subnets[0].Id, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Subnet.Id);
             Assert.NotNull(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].PrivateIPAddress);
@@ -674,7 +673,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the LoadBalancer
             string lbName = Recording.GenerateAssetName("azsmnet");
-            string frontendIpConfigName = Recording.GenerateAssetName("azsmnet");
+            string frontendIPConfigName = Recording.GenerateAssetName("azsmnet");
             string backEndAddressPoolName = Recording.GenerateAssetName("azsmnet");
             string loadBalancingRuleName = Recording.GenerateAssetName("azsmnet");
             string probeName = Recording.GenerateAssetName("azsmnet");
@@ -688,7 +687,7 @@ namespace Azure.ResourceManager.Network.Tests
                 FrontendIPConfigurations = {
                     new FrontendIPConfigurationData()
                     {
-                        Name = frontendIpConfigName,
+                        Name = frontendIPConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Static,
                         PrivateIPAddress = "10.0.0.38",
                         Subnet = vnet.Data.Subnets[0]
@@ -707,7 +706,7 @@ namespace Azure.ResourceManager.Network.Tests
                         FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
+                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIPConfigName)
                         },
                         Protocol = TransportProtocol.Tcp,
                         FrontendPort = 80,
@@ -743,7 +742,7 @@ namespace Azure.ResourceManager.Network.Tests
                         FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
+                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIPConfigName)
                         },
                         Protocol = TransportProtocol.Tcp,
                         FrontendPort = 3389,
@@ -756,7 +755,7 @@ namespace Azure.ResourceManager.Network.Tests
                         FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
+                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIPConfigName)
                         },
                         Protocol = TransportProtocol.Tcp,
                         FrontendPort = 3390,
@@ -775,7 +774,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Verify the GET LoadBalancer
             Assert.AreEqual(lbName, getLoadBalancer.Value.Data.Name);
             Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.ProvisioningState.ToString());
-            Assert.AreEqual(frontendIpConfigName, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Name);
+            Assert.AreEqual(frontendIPConfigName, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Name);
             Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.FrontendIPConfigurations[0].ProvisioningState.ToString());
             Assert.AreEqual(vnet.Data.Subnets[0].Id, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Subnet.Id);
             Assert.NotNull(getLoadBalancer.Value.Data.FrontendIPConfigurations[0].PrivateIPAddress);
@@ -889,7 +888,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the LoadBalancer with an lb rule and no probe
             string lbname = Recording.GenerateAssetName("azsmnet");
-            string frontendIpConfigName = Recording.GenerateAssetName("azsmnet");
+            string frontendIPConfigName = Recording.GenerateAssetName("azsmnet");
             string backEndAddressPoolName = Recording.GenerateAssetName("azsmnet");
             string loadBalancingRuleName = Recording.GenerateAssetName("azsmnet");
             string probeName = Recording.GenerateAssetName("azsmnet");
@@ -901,7 +900,7 @@ namespace Azure.ResourceManager.Network.Tests
                 FrontendIPConfigurations = {
                     new FrontendIPConfigurationData()
                     {
-                        Name = frontendIpConfigName,
+                        Name = frontendIPConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Static,
                         PrivateIPAddress = "10.0.0.38",
                         Subnet = vnet.Data.Subnets[0]
@@ -920,7 +919,7 @@ namespace Azure.ResourceManager.Network.Tests
                         FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbname, "frontendIPConfigurations", frontendIpConfigName)
+                            resourceGroupName, lbname, "frontendIPConfigurations", frontendIPConfigName)
                         },
                         Protocol = TransportProtocol.Tcp,
                         FrontendPort = 80,
@@ -1007,10 +1006,10 @@ namespace Azure.ResourceManager.Network.Tests
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create lbPublicIP
-            string lbPublicIpName = Recording.GenerateAssetName("azsmnet");
+            string lbPublicIPName = Recording.GenerateAssetName("azsmnet");
             string lbDomaingNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress lbPublicIp = await CreateDefaultPublicIpAddress(lbPublicIpName, lbDomaingNameLabel, location, resourceGroup.GetPublicIPAddresses());
+            PublicIPAddress lbPublicIP = await CreateDefaultPublicIPAddress(lbPublicIPName, lbDomaingNameLabel, location, resourceGroup.GetPublicIPAddresses());
 
             // Create Vnet
             string vnetName = Recording.GenerateAssetName("azsmnet");
@@ -1029,7 +1028,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the LoadBalancer
             string lbName = Recording.GenerateAssetName("azsmnet");
-            string frontendIpConfigName = Recording.GenerateAssetName("azsmnet");
+            string frontendIPConfigName = Recording.GenerateAssetName("azsmnet");
             string backEndAddressPoolName = Recording.GenerateAssetName("azsmnet");
             string loadBalancingRuleName = Recording.GenerateAssetName("azsmnet");
             string probeName = Recording.GenerateAssetName("azsmnet");
@@ -1043,10 +1042,10 @@ namespace Azure.ResourceManager.Network.Tests
                 FrontendIPConfigurations = {
                     new FrontendIPConfigurationData()
                     {
-                        Name = frontendIpConfigName,
+                        Name = frontendIPConfigName,
                         PublicIPAddress = new PublicIPAddressData()
                         {
-                            Id = lbPublicIp.Id
+                            Id = lbPublicIP.Id
                         }
                     }
                 },
@@ -1063,7 +1062,7 @@ namespace Azure.ResourceManager.Network.Tests
                         FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
+                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIPConfigName)
                         },
                         Protocol = TransportProtocol.Tcp,
                         FrontendPort = 80,
@@ -1100,7 +1099,7 @@ namespace Azure.ResourceManager.Network.Tests
                         FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
+                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIPConfigName)
                         },
                         Protocol = TransportProtocol.Tcp,
                         FrontendPort = 3389,
@@ -1114,7 +1113,7 @@ namespace Azure.ResourceManager.Network.Tests
                         FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
+                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIPConfigName)
                         },
                         Protocol = TransportProtocol.Tcp,
                         FrontendPort = 3390,
@@ -1133,10 +1132,10 @@ namespace Azure.ResourceManager.Network.Tests
             Response<LoadBalancer> getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
 
             // Associate the nic with LB
-            nic1.Data.IpConfigurations.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.Data.BackendAddressPools.First());
-            nic1.Data.IpConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.Data.InboundNatRules.First());
-            nic2.Data.IpConfigurations.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.Data.BackendAddressPools.First());
-            nic2.Data.IpConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.Data.InboundNatRules[1]);
+            nic1.Data.IPConfigurations.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.Data.BackendAddressPools.First());
+            nic1.Data.IPConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.Data.InboundNatRules.First());
+            nic2.Data.IPConfigurations.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.Data.BackendAddressPools.First());
+            nic2.Data.IPConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.Data.InboundNatRules[1]);
 
             // Put Nics
             var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
@@ -1157,9 +1156,9 @@ namespace Azure.ResourceManager.Network.Tests
             // Verify the associations
             getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
             Assert.AreEqual(2, getLoadBalancer.Value.Data.BackendAddressPools.First().BackendIPConfigurations.Count);
-            Assert.AreEqual(getLoadBalancer.Value.Data.BackendAddressPools.First().BackendIPConfigurations[0].Id, nic1.Data.IpConfigurations[0].Id);
-            Assert.AreEqual(getLoadBalancer.Value.Data.BackendAddressPools.First().BackendIPConfigurations[1].Id, nic2.Data.IpConfigurations[0].Id);
-            Assert.AreEqual(nic1.Data.IpConfigurations[0].Id, getLoadBalancer.Value.Data.InboundNatRules.First().BackendIPConfiguration.Id);
+            Assert.AreEqual(getLoadBalancer.Value.Data.BackendAddressPools.First().BackendIPConfigurations[0].Id, nic1.Data.IPConfigurations[0].Id);
+            Assert.AreEqual(getLoadBalancer.Value.Data.BackendAddressPools.First().BackendIPConfigurations[1].Id, nic2.Data.IPConfigurations[0].Id);
+            Assert.AreEqual(nic1.Data.IPConfigurations[0].Id, getLoadBalancer.Value.Data.InboundNatRules.First().BackendIPConfiguration.Id);
 
             // Verify List NetworkInterfaces in LoadBalancer// Verify List NetworkInterfaces in LoadBalancer
             AsyncPageable<NetworkInterface> listLoadBalancerNetworkInterfacesAP = getLoadBalancer.Value.GetLoadBalancerNetworkInterfacesAsync();
@@ -1181,7 +1180,7 @@ namespace Azure.ResourceManager.Network.Tests
             await nic2.DeleteAsync(true);
 
             // Delete all PublicIPAddresses
-            await lbPublicIp.DeleteAsync(true);
+            await lbPublicIP.DeleteAsync(true);
         }
 
         [Test]
@@ -1194,14 +1193,14 @@ namespace Azure.ResourceManager.Network.Tests
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create lbPublicIP
-            string lbPublicIpName = Recording.GenerateAssetName("azsmnet");
+            string lbPublicIPName = Recording.GenerateAssetName("azsmnet");
             string lbDomaingNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress lbPublicIp = await CreateDefaultPublicIpAddress(lbPublicIpName, lbDomaingNameLabel, location, resourceGroup.GetPublicIPAddresses());
+            PublicIPAddress lbPublicIP = await CreateDefaultPublicIPAddress(lbPublicIPName, lbDomaingNameLabel, location, resourceGroup.GetPublicIPAddresses());
 
             // Create the LoadBalancer
             string lbName = Recording.GenerateAssetName("azsmnet");
-            string frontendIpConfigName = Recording.GenerateAssetName("azsmnet");
+            string frontendIPConfigName = Recording.GenerateAssetName("azsmnet");
             string inboundNatPool1Name = Recording.GenerateAssetName("azsmnet");
             string inboundNatPool2Name = Recording.GenerateAssetName("azsmnet");
 
@@ -1211,10 +1210,10 @@ namespace Azure.ResourceManager.Network.Tests
                 FrontendIPConfigurations = {
                     new FrontendIPConfigurationData()
                     {
-                        Name = frontendIpConfigName,
+                        Name = frontendIPConfigName,
                         PublicIPAddress = new PublicIPAddressData()
                         {
-                            Id = lbPublicIp.Id
+                            Id = lbPublicIP.Id
                         }
                     }
                 },
@@ -1228,7 +1227,7 @@ namespace Azure.ResourceManager.Network.Tests
                         FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
+                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIPConfigName)
                         },
                         Protocol = TransportProtocol.Tcp
                     }
@@ -1243,7 +1242,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Verify the GET LoadBalancer
             Assert.AreEqual(lbName, getLoadBalancer.Value.Data.Name);
             Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.ProvisioningState.ToString());
-            Assert.AreEqual(frontendIpConfigName, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Name);
+            Assert.AreEqual(frontendIPConfigName, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].Name);
             Assert.AreEqual("Succeeded", getLoadBalancer.Value.Data.FrontendIPConfigurations[0].ProvisioningState.ToString());
 
             // Verify the nat pool
@@ -1253,7 +1252,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(100, getLoadBalancer.Value.Data.InboundNatPools[0].FrontendPortRangeStart);
             Assert.AreEqual(105, getLoadBalancer.Value.Data.InboundNatPools[0].FrontendPortRangeEnd);
             Assert.AreEqual(TransportProtocol.Tcp, getLoadBalancer.Value.Data.InboundNatPools[0].Protocol);
-            Assert.AreEqual(GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName), getLoadBalancer.Value.Data.InboundNatPools[0].FrontendIPConfiguration.Id.ToString());
+            Assert.AreEqual(GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIPConfigName), getLoadBalancer.Value.Data.InboundNatPools[0].FrontendIPConfiguration.Id.ToString());
             Assert.AreEqual(getLoadBalancer.Value.Data.InboundNatPools[0].Id, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].InboundNatPools[0].Id.ToString());
 
             // Add a new nat pool
@@ -1263,7 +1262,7 @@ namespace Azure.ResourceManager.Network.Tests
                 BackendPort = 81,
                 FrontendPortRangeStart = 107,
                 FrontendPortRangeEnd = 110,
-                FrontendIPConfiguration = new WritableSubResource() { Id = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName) },
+                FrontendIPConfiguration = new WritableSubResource() { Id = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIPConfigName) },
                 Protocol = TransportProtocol.Tcp
             };
             getLoadBalancer.Value.Data.InboundNatPools.Add(natpool2);
@@ -1283,7 +1282,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete all PublicIPAddresses
-            await lbPublicIp.DeleteAsync(true);
+            await lbPublicIP.DeleteAsync(true);
         }
     }
 }

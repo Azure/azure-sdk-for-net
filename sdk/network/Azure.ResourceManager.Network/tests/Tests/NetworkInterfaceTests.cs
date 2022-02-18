@@ -6,10 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
@@ -41,10 +40,10 @@ namespace Azure.ResourceManager.Network.Tests
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create publicIP
-            string publicIpName = Recording.GenerateAssetName("azsmnet");
+            string publicIPName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            var publicIp = new PublicIPAddressData()
+            var publicIP = new PublicIPAddressData()
             {
                 Location = location,
                 Tags =
@@ -60,12 +59,12 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put PublicIPAddress
             var publicIPAddressCollection = resourceGroup.GetPublicIPAddresses();
-            var putPublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(true, publicIpName, publicIp);
-            Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();
+            var putPublicIPAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(true, publicIPName, publicIP);
+            Response<PublicIPAddress> putPublicIPAddressResponse = await putPublicIPAddressResponseOperation.WaitForCompletionAsync();
             ;
-            Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
+            Assert.AreEqual("Succeeded", putPublicIPAddressResponse.Value.Data.ProvisioningState.ToString());
 
-            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(publicIpName);
+            Response<PublicIPAddress> getPublicIPAddressResponse = await publicIPAddressCollection.GetAsync(publicIPName);
 
             // Create Vnet
             // Populate parameter for Put Vnet
@@ -101,14 +100,14 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 Tags = { { "key", "value" } },
-                IpConfigurations = {
+                IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
                     {
                         Name = ipConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                         PublicIPAddress = new PublicIPAddressData()
                         {
-                            Id = getPublicIpAddressResponse.Value.Id
+                            Id = getPublicIPAddressResponse.Value.Id
                         },
                         Subnet = new SubnetData()
                         {
@@ -129,25 +128,25 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.Null(getNicResponse.Value.Data.MacAddress);
 
             //if single CA, primary flag will be set
-            Assert.True(getNicResponse.Value.Data.IpConfigurations[0].Primary);
-            Assert.AreEqual(1, getNicResponse.Value.Data.IpConfigurations.Count);
-            Assert.AreEqual(ipConfigName, getNicResponse.Value.Data.IpConfigurations[0].Name);
-            Assert.AreEqual(getPublicIpAddressResponse.Value.Data.Id, getNicResponse.Value.Data.IpConfigurations[0].PublicIPAddress.Id);
-            Assert.AreEqual(getSubnetResponse.Value.Data.Id, getNicResponse.Value.Data.IpConfigurations[0].Subnet.Id);
+            Assert.True(getNicResponse.Value.Data.IPConfigurations[0].Primary);
+            Assert.AreEqual(1, getNicResponse.Value.Data.IPConfigurations.Count);
+            Assert.AreEqual(ipConfigName, getNicResponse.Value.Data.IPConfigurations[0].Name);
+            Assert.AreEqual(getPublicIPAddressResponse.Value.Data.Id, getNicResponse.Value.Data.IPConfigurations[0].PublicIPAddress.Id);
+            Assert.AreEqual(getSubnetResponse.Value.Data.Id, getNicResponse.Value.Data.IPConfigurations[0].Subnet.Id);
             Assert.NotNull(getNicResponse.Value.Data.ResourceGuid);
 
-            // Verify List IpConfigurations in NetworkInterface
+            // Verify List IPConfigurations in NetworkInterface
             var networkInterfaceOperations = (await resourceGroup.GetNetworkInterfaces().GetAsync(nicName)).Value;
-            AsyncPageable<NetworkInterfaceIPConfiguration> listNicIpConfigurationsAP = networkInterfaceOperations.GetNetworkInterfaceIPConfigurations().GetAllAsync();
-            List<NetworkInterfaceIPConfiguration> listNicIpConfigurations = await listNicIpConfigurationsAP.ToEnumerableAsync();
-            Assert.AreEqual(ipConfigName, listNicIpConfigurations.First().Data.Name);
-            Assert.NotNull(listNicIpConfigurations.First().Data.Etag);
+            AsyncPageable<NetworkInterfaceIPConfiguration> listNicIPConfigurationsAP = networkInterfaceOperations.GetNetworkInterfaceIPConfigurations().GetAllAsync();
+            List<NetworkInterfaceIPConfiguration> listNicIPConfigurations = await listNicIPConfigurationsAP.ToEnumerableAsync();
+            Assert.AreEqual(ipConfigName, listNicIPConfigurations.First().Data.Name);
+            Assert.NotNull(listNicIPConfigurations.First().Data.Etag);
 
-            // Verify Get IpConfiguration in NetworkInterface
+            // Verify Get IPConfiguration in NetworkInterface
             // TODO: Update after ADO 5975
-            //Response<NetworkInterfaceIPConfiguration> getNicIpConfiguration = await networkInterfaceOperations.GetNetworkInterfaceIPConfigurationAsync();
-            //Assert.AreEqual(ipConfigName, getNicIpConfiguration.Value.Name);
-            //Assert.NotNull(getNicIpConfiguration.Value.Etag);
+            //Response<NetworkInterfaceIPConfiguration> getNicIPConfiguration = await networkInterfaceOperations.GetNetworkInterfaceIPConfigurationAsync();
+            //Assert.AreEqual(ipConfigName, getNicIPConfiguration.Value.Name);
+            //Assert.NotNull(getNicIPConfiguration.Value.Etag);
 
             // Verify List LoadBalancers in NetworkInterface
             AsyncPageable<LoadBalancer> listNicLoadBalancersAP = getNicResponse.Value.GetNetworkInterfaceLoadBalancersAsync();
@@ -159,7 +158,7 @@ namespace Azure.ResourceManager.Network.Tests
             List<NetworkInterface> getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
             Assert.AreEqual(getNicResponse.Value.Data.Name, getListNicResponse.First().Data.Name);
             Assert.AreEqual(getNicResponse.Value.Data.Etag, getListNicResponse.First().Data.Etag);
-            Assert.AreEqual(getNicResponse.Value.Data.IpConfigurations[0].Etag, getListNicResponse.First().Data.IpConfigurations[0].Etag);
+            Assert.AreEqual(getNicResponse.Value.Data.IPConfigurations[0].Etag, getListNicResponse.First().Data.IPConfigurations[0].Etag);
 
             // Get all Nics in subscription
             AsyncPageable<NetworkInterface> listNicSubscriptionAP = _subscription.GetNetworkInterfacesAsync();
@@ -174,7 +173,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(getListNicResponse);
 
             // Delete PublicIPAddress
-            await getPublicIpAddressResponse.Value.DeleteAsync(true);
+            await getPublicIPAddressResponse.Value.DeleteAsync(true);
 
             // Delete VirtualNetwork
             await vnetResponse.Value.DeleteAsync(true);
@@ -231,7 +230,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "key", "value" } },
                 EnableAcceleratedNetworking = true,
-                IpConfigurations = {
+                IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
                     {
                         Primary = true,
@@ -256,7 +255,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
             Assert.Null(getNicResponse.Value.Data.VirtualMachine);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
-            Assert.AreEqual(1, getNicResponse.Value.Data.IpConfigurations.Count);
+            Assert.AreEqual(1, getNicResponse.Value.Data.IPConfigurations.Count);
 
             // Delete Nic
             await getNicResponse.Value.DeleteAsync(true);
@@ -271,7 +270,7 @@ namespace Azure.ResourceManager.Network.Tests
 
         [Test]
         [RecordedTest]
-        public async Task NetworkInterfaceMultiIpConfigTest()
+        public async Task NetworkInterfaceMultiIPConfigTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
@@ -279,10 +278,10 @@ namespace Azure.ResourceManager.Network.Tests
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create publicIP
-            string publicIpName = Recording.GenerateAssetName("azsmnet");
+            string publicIPName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            var publicIp = new PublicIPAddressData()
+            var publicIP = new PublicIPAddressData()
             {
                 Location = location,
                 Tags = { { "key", "value" } },
@@ -295,12 +294,12 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put PublicIPAddress
             var publicIPAddressCollection = resourceGroup.GetPublicIPAddresses();
-            var putPublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(true, publicIpName, publicIp);
-            Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();
+            var putPublicIPAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(true, publicIPName, publicIP);
+            Response<PublicIPAddress> putPublicIPAddressResponse = await putPublicIPAddressResponseOperation.WaitForCompletionAsync();
             ;
-            Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
+            Assert.AreEqual("Succeeded", putPublicIPAddressResponse.Value.Data.ProvisioningState.ToString());
 
-            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(publicIpName);
+            Response<PublicIPAddress> getPublicIPAddressResponse = await publicIPAddressCollection.GetAsync(publicIPName);
 
             // Create Vnet
             // Populate parameter for Put Vnet
@@ -336,7 +335,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 Tags = { { "key", "value" } },
-                IpConfigurations = {
+                IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
                     {
                         Name = ipConfigName,
@@ -344,7 +343,7 @@ namespace Azure.ResourceManager.Network.Tests
                         Primary = true,
                         PublicIPAddress = new PublicIPAddressData()
                         {
-                            Id = getPublicIpAddressResponse.Value.Id
+                            Id = getPublicIPAddressResponse.Value.Id
                         },
                         Subnet = new SubnetData()
                         {
@@ -374,14 +373,14 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
             Assert.Null(getNicResponse.Value.Data.VirtualMachine);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
-            Assert.True(getNicResponse.Value.Data.IpConfigurations[0].Primary);
-            Assert.AreEqual(2, getNicResponse.Value.Data.IpConfigurations.Count);
-            Assert.AreEqual(ipConfigName, getNicResponse.Value.Data.IpConfigurations[0].Name);
-            Assert.AreEqual(ipconfigName2, getNicResponse.Value.Data.IpConfigurations[1].Name);
-            Assert.False(getNicResponse.Value.Data.IpConfigurations[1].Primary);
-            Assert.AreEqual(getPublicIpAddressResponse.Value.Id, getNicResponse.Value.Data.IpConfigurations[0].PublicIPAddress.Id);
-            Assert.AreEqual(getSubnetResponse.Value.Id, getNicResponse.Value.Data.IpConfigurations[0].Subnet.Id);
-            Assert.AreEqual(getSubnetResponse.Value.Id, getNicResponse.Value.Data.IpConfigurations[1].Subnet.Id);
+            Assert.True(getNicResponse.Value.Data.IPConfigurations[0].Primary);
+            Assert.AreEqual(2, getNicResponse.Value.Data.IPConfigurations.Count);
+            Assert.AreEqual(ipConfigName, getNicResponse.Value.Data.IPConfigurations[0].Name);
+            Assert.AreEqual(ipconfigName2, getNicResponse.Value.Data.IPConfigurations[1].Name);
+            Assert.False(getNicResponse.Value.Data.IPConfigurations[1].Primary);
+            Assert.AreEqual(getPublicIPAddressResponse.Value.Id, getNicResponse.Value.Data.IPConfigurations[0].PublicIPAddress.Id);
+            Assert.AreEqual(getSubnetResponse.Value.Id, getNicResponse.Value.Data.IPConfigurations[0].Subnet.Id);
+            Assert.AreEqual(getSubnetResponse.Value.Id, getNicResponse.Value.Data.IPConfigurations[1].Subnet.Id);
             Assert.NotNull(getNicResponse.Value.Data.ResourceGuid);
 
             // Get all Nics
@@ -389,8 +388,8 @@ namespace Azure.ResourceManager.Network.Tests
             List<NetworkInterface> getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
             Assert.AreEqual(getNicResponse.Value.Data.Name, getListNicResponse.First().Data.Name);
             Assert.AreEqual(getNicResponse.Value.Data.Etag, getListNicResponse.First().Data.Etag);
-            Assert.AreEqual(getNicResponse.Value.Data.IpConfigurations[0].Etag, getListNicResponse.First().Data.IpConfigurations[0].Etag);
-            Assert.AreEqual(getNicResponse.Value.Data.IpConfigurations[1].Etag, getListNicResponse.First().Data.IpConfigurations[1].Etag);
+            Assert.AreEqual(getNicResponse.Value.Data.IPConfigurations[0].Etag, getListNicResponse.First().Data.IPConfigurations[0].Etag);
+            Assert.AreEqual(getNicResponse.Value.Data.IPConfigurations[1].Etag, getListNicResponse.First().Data.IPConfigurations[1].Etag);
 
             // Get all Nics in subscription
             AsyncPageable<NetworkInterface> listNicSubscriptionAP = _subscription.GetNetworkInterfacesAsync();
@@ -405,7 +404,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(getListNicResponse);
 
             // Delete PublicIPAddress
-            await getPublicIpAddressResponse.Value.DeleteAsync(true);
+            await getPublicIPAddressResponse.Value.DeleteAsync(true);
 
             // Delete VirtualNetwork
             await putVnetResponseOperation.Value.DeleteAsync(true);
@@ -413,7 +412,7 @@ namespace Azure.ResourceManager.Network.Tests
 
         [Test]
         [RecordedTest]
-        public async Task AssertMultiIpConfigOnDifferentSubnetFails()
+        public async Task AssertMultiIPConfigOnDifferentSubnetFails()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
@@ -456,7 +455,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 Tags = { { "key", "value" } },
-                IpConfigurations = {
+                IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
                     {
                         Name = ipConfigName,
@@ -529,7 +528,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 Tags = { { "key", "value" } },
-                IpConfigurations = {
+                IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
                     {
                         Name = ipConfigName,
@@ -557,14 +556,14 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
             Assert.Null(getNicResponse.Value.Data.VirtualMachine);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
-            Assert.AreEqual(1, getNicResponse.Value.Data.IpConfigurations.Count);
-            Assert.AreEqual(ipConfigName, getNicResponse.Value.Data.IpConfigurations[0].Name);
+            Assert.AreEqual(1, getNicResponse.Value.Data.IPConfigurations.Count);
+            Assert.AreEqual(ipConfigName, getNicResponse.Value.Data.IPConfigurations[0].Name);
             Assert.AreEqual(2, getNicResponse.Value.Data.DnsSettings.DnsServers.Count);
             Assert.IsTrue(getNicResponse.Value.Data.DnsSettings.DnsServers.Contains("1.0.0.1"));
             Assert.IsTrue(getNicResponse.Value.Data.DnsSettings.DnsServers.Contains("1.0.0.2"));
             Assert.AreEqual("idnstest", getNicResponse.Value.Data.DnsSettings.InternalDnsNameLabel);
             Assert.AreEqual(0, getNicResponse.Value.Data.DnsSettings.AppliedDnsServers.Count);
-            Assert.True(getNicResponse.Value.Data.IpConfigurations[0].Primary);
+            Assert.True(getNicResponse.Value.Data.IPConfigurations[0].Primary);
             Assert.NotNull(getNicResponse.Value.Data.DnsSettings.InternalFqdn);
 
             // Delete Nic
@@ -578,7 +577,7 @@ namespace Azure.ResourceManager.Network.Tests
             await putVnetResponseOperation.Value.DeleteAsync(true);
         }
 
-        /// currently this test is failing because of nrp valdiation check:cannot have multiple IPv4 IpConfigurations if it specifies a Ipv6 IpConfigurations. Ipv4 Ipconfig Count: 2
+        /// currently this test is failing because of nrp valdiation check:cannot have multiple IPv4 IPConfigurations if it specifies a IPv6 IPConfigurations. IPv4 IPconfig Count: 2
         /// will remove ignore tag once the check in nrp is removed.
         [Test]
         [RecordedTest]
@@ -590,10 +589,10 @@ namespace Azure.ResourceManager.Network.Tests
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create publicIP
-            string publicIpName = Recording.GenerateAssetName("azsmnet");
+            string publicIPName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            var publicIp = new PublicIPAddressData()
+            var publicIP = new PublicIPAddressData()
             {
                 Location = location,
                 Tags = { { "key", "value" } },
@@ -606,12 +605,12 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put PublicIPAddress
             var publicIPAddressCollection = resourceGroup.GetPublicIPAddresses();
-            var putPublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(true, publicIpName, publicIp);
-            Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();
+            var putPublicIPAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(true, publicIPName, publicIP);
+            Response<PublicIPAddress> putPublicIPAddressResponse = await putPublicIPAddressResponseOperation.WaitForCompletionAsync();
             ;
-            Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
+            Assert.AreEqual("Succeeded", putPublicIPAddressResponse.Value.Data.ProvisioningState.ToString());
 
-            await publicIPAddressCollection.GetAsync(publicIpName);
+            await publicIPAddressCollection.GetAsync(publicIPName);
 
             // Create Vnet
             // Populate parameter for Put Vnet
@@ -642,14 +641,14 @@ namespace Azure.ResourceManager.Network.Tests
             // Create Nic
             string nicName = Recording.GenerateAssetName("dualstacknic");
             string ipConfigName = Recording.GenerateAssetName("ipv4ipconfig");
-            string ipv6IpConfigName = Recording.GenerateAssetName("ipv6ipconfig");
+            string ipv6IPConfigName = Recording.GenerateAssetName("ipv6ipconfig");
             string ipConfigName2 = Recording.GenerateAssetName("ipv4ipconfig2");
 
             var nicParameters = new NetworkInterfaceData()
             {
                 Location = location,
                 Tags = { { "key", "value" } },
-                IpConfigurations = {
+                IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
                     {
                         Primary = true,
@@ -663,7 +662,7 @@ namespace Azure.ResourceManager.Network.Tests
                     },
                     new NetworkInterfaceIPConfigurationData()
                     {
-                        Name = ipv6IpConfigName,
+                        Name = ipv6IPConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                         PrivateIPAddressVersion = IPVersion.IPv6,
                     },
@@ -691,25 +690,25 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
             Assert.Null(getNicResponse.Value.Data.VirtualMachine);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
-            Assert.AreEqual(ipConfigName, getNicResponse.Value.Data.IpConfigurations[0].Name);
+            Assert.AreEqual(ipConfigName, getNicResponse.Value.Data.IPConfigurations[0].Name);
             Assert.NotNull(getNicResponse.Value.Data.ResourceGuid);
-            Assert.AreEqual(getSubnetResponse.Value.Id, getNicResponse.Value.Data.IpConfigurations[0].Subnet.Id);
-            Assert.AreEqual(IPVersion.IPv4, getNicResponse.Value.Data.IpConfigurations[0].PrivateIPAddressVersion);
+            Assert.AreEqual(getSubnetResponse.Value.Id, getNicResponse.Value.Data.IPConfigurations[0].Subnet.Id);
+            Assert.AreEqual(IPVersion.IPv4, getNicResponse.Value.Data.IPConfigurations[0].PrivateIPAddressVersion);
 
-            // Ipv6 specific asserts
-            Assert.AreEqual(3, getNicResponse.Value.Data.IpConfigurations.Count);
-            Assert.AreEqual(ipv6IpConfigName, getNicResponse.Value.Data.IpConfigurations[1].Name);
-            Assert.True(getNicResponse.Value.Data.IpConfigurations[0].Primary);
-            Assert.Null(getNicResponse.Value.Data.IpConfigurations[1].Subnet);
-            Assert.AreEqual(IPVersion.IPv6, getNicResponse.Value.Data.IpConfigurations[1].PrivateIPAddressVersion);
+            // IPv6 specific asserts
+            Assert.AreEqual(3, getNicResponse.Value.Data.IPConfigurations.Count);
+            Assert.AreEqual(ipv6IPConfigName, getNicResponse.Value.Data.IPConfigurations[1].Name);
+            Assert.True(getNicResponse.Value.Data.IPConfigurations[0].Primary);
+            Assert.Null(getNicResponse.Value.Data.IPConfigurations[1].Subnet);
+            Assert.AreEqual(IPVersion.IPv6, getNicResponse.Value.Data.IPConfigurations[1].PrivateIPAddressVersion);
 
             // Get all Nics
             AsyncPageable<NetworkInterface> getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
             List<NetworkInterface> getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
             Assert.AreEqual(getNicResponse.Value.Data.Name, getListNicResponse.First().Data.Name);
             Assert.AreEqual(getNicResponse.Value.Data.Etag, getListNicResponse.First().Data.Etag);
-            Assert.AreEqual(getNicResponse.Value.Data.IpConfigurations[0].Etag, getListNicResponse.First().Data.IpConfigurations[0].Etag);
-            Assert.AreEqual(getNicResponse.Value.Data.IpConfigurations[1].Etag, getListNicResponse.First().Data.IpConfigurations[1].Etag);
+            Assert.AreEqual(getNicResponse.Value.Data.IPConfigurations[0].Etag, getListNicResponse.First().Data.IPConfigurations[0].Etag);
+            Assert.AreEqual(getNicResponse.Value.Data.IPConfigurations[1].Etag, getListNicResponse.First().Data.IPConfigurations[1].Etag);
 
             // Get all Nics in subscription
             AsyncPageable<NetworkInterface> listNicSubscriptionAP = _subscription.GetNetworkInterfacesAsync();
@@ -725,7 +724,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(getListNicResponse);
 
             // Delete PublicIPAddress
-            await putPublicIpAddressResponse.Value.DeleteAsync(true);
+            await putPublicIPAddressResponse.Value.DeleteAsync(true);
 
             // Delete VirtualNetwork
             await putVnetResponseOperation.Value.DeleteAsync(true);
@@ -768,7 +767,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 Tags = { { "key", "value" } },
-                IpConfigurations = {
+                IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
                     {
                         Name = ipConfigName,
@@ -796,8 +795,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
             Assert.Null(getNicResponse.Value.Data.VirtualMachine);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
-            Assert.AreEqual(1, getNicResponse.Value.Data.IpConfigurations.Count);
-            Assert.AreEqual(ipConfigName, getNicResponse.Value.Data.IpConfigurations[0].Name);
+            Assert.AreEqual(1, getNicResponse.Value.Data.IPConfigurations.Count);
+            Assert.AreEqual(ipConfigName, getNicResponse.Value.Data.IPConfigurations[0].Name);
             Assert.AreEqual(2, getNicResponse.Value.Data.DnsSettings.DnsServers.Count);
             Assert.IsTrue(getNicResponse.Value.Data.DnsSettings.DnsServers.Contains("1.0.0.1"));
             Assert.IsTrue(getNicResponse.Value.Data.DnsSettings.DnsServers.Contains("1.0.0.2"));
@@ -855,7 +854,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 Tags = { { "key", "value" } },
-                IpConfigurations = {
+                IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
                     {
                         Name = ipConfigName,
@@ -879,8 +878,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
             Assert.Null(getNicResponse.Value.Data.VirtualMachine);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
-            Assert.AreEqual(1, getNicResponse.Value.Data.IpConfigurations.Count);
-            Assert.AreEqual(ipConfigName, getNicResponse.Value.Data.IpConfigurations[0].Name);
+            Assert.AreEqual(1, getNicResponse.Value.Data.IPConfigurations.Count);
+            Assert.AreEqual(ipConfigName, getNicResponse.Value.Data.IPConfigurations[0].Name);
             Assert.False(getNicResponse.Value.Data.EnableIPForwarding);
 
             getNicResponse.Value.Data.EnableIPForwarding = true;
@@ -965,7 +964,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 Tags = { { "key", "value" } },
-                IpConfigurations = {
+                IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
                     {
                         Name = ipConfigName,
@@ -1073,7 +1072,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 Tags = { { "key", "value" } },
-                IpConfigurations = {
+                IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
                     {
                         Name = ipConfigName,
@@ -1144,7 +1143,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 AddressPrefix = "192.168.1.0/24",
                 Name = route1Name,
-                NextHopIpAddress = "23.108.1.1",
+                NextHopIPAddress = "23.108.1.1",
                 NextHopType = RouteNextHopType.VirtualAppliance
             };
 
@@ -1177,7 +1176,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 Tags = { { "key", "value" } },
-                IpConfigurations = {
+                IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
                     {
                         Name = ipConfigName,

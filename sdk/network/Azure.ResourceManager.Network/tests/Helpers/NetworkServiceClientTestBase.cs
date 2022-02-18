@@ -2,18 +2,13 @@
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using System.Threading.Tasks;
-
-using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.TestFramework;
-
-using NUnit.Framework;
 using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests.Helpers
 {
@@ -374,8 +369,8 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         //        "\"diagnosticsStorageAccountType\": { \"value\": \"Standard_LRS\"}," +
         //        "\"addressPrefix\": { \"value\": \"10.17.3.0/24\"}," +
         //        "\"subnetName\": { \"value\": \"default\"}, \"subnetPrefix\": { \"value\": \"10.17.3.0/24\"}," +
-        //        "\"publicIpAddressName\": { \"value\": \"" + virtualMachineName + "-ip\"}," +
-        //        "\"publicIpAddressType\": { \"value\": \"Dynamic\"}" +
+        //        "\"publicIPAddressName\": { \"value\": \"" + virtualMachineName + "-ip\"}," +
+        //        "\"publicIPAddressType\": { \"value\": \"Dynamic\"}" +
         //        "}";
         //    string templateString = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TestData", "DeploymentTemplate.json"));
 
@@ -466,7 +461,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return getCircuitResponse;
         }
 
-        public async Task<ExpressRouteCircuit> UpdateDefaultExpressRouteCircuitWithIpv6MicrosoftPeering(Resources.ResourceGroup resourceGroup, string circuitName)
+        public async Task<ExpressRouteCircuit> UpdateDefaultExpressRouteCircuitWithIPv6MicrosoftPeering(Resources.ResourceGroup resourceGroup, string circuitName)
         {
             var ipv6Peering = new Ipv6ExpressRouteCircuitPeeringConfig()
             {
@@ -528,9 +523,9 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return getCircuitResponse;
         }
 
-        public async Task<PublicIPAddress> CreateDefaultPublicIpAddress(string name, string domainNameLabel, string location, PublicIPAddressCollection publicIPAddressCollection)
+        public async Task<PublicIPAddress> CreateDefaultPublicIPAddress(string name, string domainNameLabel, string location, PublicIPAddressCollection publicIPAddressCollection)
         {
-            var publicIp = new PublicIPAddressData()
+            var publicIP = new PublicIPAddressData()
             {
                 Location = location,
                 Tags = { { "key", "value" } },
@@ -538,18 +533,18 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 DnsSettings = new PublicIPAddressDnsSettings() { DomainNameLabel = domainNameLabel }
             };
 
-            // Put nic1PublicIpAddress
-            Operation<PublicIPAddress> putPublicIpAddressOperation = await publicIPAddressCollection.CreateOrUpdateAsync(true, name, publicIp);
-            Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressOperation.WaitForCompletionAsync();
-            Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
-            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(name);
+            // Put nic1PublicIPAddress
+            Operation<PublicIPAddress> putPublicIPAddressOperation = await publicIPAddressCollection.CreateOrUpdateAsync(true, name, publicIP);
+            Response<PublicIPAddress> putPublicIPAddressResponse = await putPublicIPAddressOperation.WaitForCompletionAsync();
+            Assert.AreEqual("Succeeded", putPublicIPAddressResponse.Value.Data.ProvisioningState.ToString());
+            Response<PublicIPAddress> getPublicIPAddressResponse = await publicIPAddressCollection.GetAsync(name);
 
-            return getPublicIpAddressResponse;
+            return getPublicIPAddressResponse;
         }
 
-        public async Task<PublicIPAddress> CreateDefaultPublicIpAddress(string name, string resourceGroupName, string domainNameLabel, string location)
+        public async Task<PublicIPAddress> CreateDefaultPublicIPAddress(string name, string resourceGroupName, string domainNameLabel, string location)
         {
-            var publicIp = new PublicIPAddressData()
+            var publicIP = new PublicIPAddressData()
             {
                 Location = location,
                 Tags = { { "key", "value" } },
@@ -557,24 +552,24 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 DnsSettings = new PublicIPAddressDnsSettings() { DomainNameLabel = domainNameLabel }
             };
 
-            // Put nic1PublicIpAddress
+            // Put nic1PublicIPAddress
             var publicIPAddressCollection = GetResourceGroup(resourceGroupName).GetPublicIPAddresses();
-            Operation<PublicIPAddress> putPublicIpAddressOperation = await publicIPAddressCollection.CreateOrUpdateAsync(true, name, publicIp);
-            Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressOperation.WaitForCompletionAsync();
-            Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
-            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(name);
+            Operation<PublicIPAddress> putPublicIPAddressOperation = await publicIPAddressCollection.CreateOrUpdateAsync(true, name, publicIP);
+            Response<PublicIPAddress> putPublicIPAddressResponse = await putPublicIPAddressOperation.WaitForCompletionAsync();
+            Assert.AreEqual("Succeeded", putPublicIPAddressResponse.Value.Data.ProvisioningState.ToString());
+            Response<PublicIPAddress> getPublicIPAddressResponse = await publicIPAddressCollection.GetAsync(name);
 
-            return getPublicIpAddressResponse;
+            return getPublicIPAddressResponse;
         }
 
-        public async Task<NetworkInterface> CreateNetworkInterface(string name, string resourceGroupName, string publicIpAddressId, string subnetId,
+        public async Task<NetworkInterface> CreateNetworkInterface(string name, string resourceGroupName, string publicIPAddressId, string subnetId,
             string location, string ipConfigName)
         {
             var nicParameters = new NetworkInterfaceData()
             {
                 Location = location,
                 Tags = { { "key", "value" } },
-                IpConfigurations = {
+                IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
                     {
                          Name = ipConfigName,
@@ -584,9 +579,9 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 }
             };
 
-            if (!string.IsNullOrEmpty(publicIpAddressId))
+            if (!string.IsNullOrEmpty(publicIPAddressId))
             {
-                nicParameters.IpConfigurations[0].PublicIPAddress = new PublicIPAddressData() { /*Id = publicIpAddressId*/ };
+                nicParameters.IPConfigurations[0].PublicIPAddress = new PublicIPAddressData() { /*Id = publicIPAddressId*/ };
             }
 
             // Test NIC apis
@@ -596,21 +591,21 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             Assert.AreEqual(getNicResponse.Value.Data.Name, name);
 
             // because its a single CA nic, primaryOnCA is always true
-            Assert.True(getNicResponse.Value.Data.IpConfigurations[0].Primary);
+            Assert.True(getNicResponse.Value.Data.IPConfigurations[0].Primary);
 
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
 
             return getNicResponse;
         }
 
-        public async Task<NetworkInterface> CreateNetworkInterface(string name,  string publicIpAddressId, string subnetId,
+        public async Task<NetworkInterface> CreateNetworkInterface(string name,  string publicIPAddressId, string subnetId,
             string location, string ipConfigName, NetworkInterfaceCollection networkInterfaceCollection)
         {
             var nicParameters = new NetworkInterfaceData()
             {
                 Location = location,
                 Tags = { { "key", "value" } },
-                IpConfigurations = {
+                IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
                     {
                          Name = ipConfigName,
@@ -620,9 +615,9 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 }
             };
 
-            if (!string.IsNullOrEmpty(publicIpAddressId))
+            if (!string.IsNullOrEmpty(publicIPAddressId))
             {
-                nicParameters.IpConfigurations[0].PublicIPAddress = new PublicIPAddressData() { /*Id = publicIpAddressId*/ };
+                nicParameters.IPConfigurations[0].PublicIPAddress = new PublicIPAddressData() { /*Id = publicIPAddressId*/ };
             }
 
             // Test NIC apis
@@ -632,7 +627,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             Assert.AreEqual(getNicResponse.Value.Data.Name, name);
 
             // because its a single CA nic, primaryOnCA is always true
-            Assert.True(getNicResponse.Value.Data.IpConfigurations[0].Primary);
+            Assert.True(getNicResponse.Value.Data.IPConfigurations[0].Primary);
 
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
 

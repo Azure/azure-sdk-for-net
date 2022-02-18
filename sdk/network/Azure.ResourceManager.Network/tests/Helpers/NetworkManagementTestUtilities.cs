@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Tests.Helpers
 {
@@ -31,8 +30,8 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 case FeaturesInfo.Type.All:
                     supportedLocations = FeaturesInfo.AllFeaturesSupportedLocations;
                     break;
-                case FeaturesInfo.Type.Ipv6:
-                    supportedLocations = FeaturesInfo.Ipv6SupportedLocations;
+                case FeaturesInfo.Type.IPv6:
+                    supportedLocations = FeaturesInfo.IPv6SupportedLocations;
                     break;
                 case FeaturesInfo.Type.MultiCA:
                     supportedLocations = FeaturesInfo.DefaultLocations;
