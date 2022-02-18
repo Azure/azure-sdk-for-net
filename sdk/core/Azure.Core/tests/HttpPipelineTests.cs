@@ -291,7 +291,7 @@ namespace Azure.Core.Tests
             var pipeline = new HttpPipeline(mockTransport, default);
 
             var context = new RequestContext();
-            context.ChangeClassification(404, isError: false);
+            context.AddClassifier(404, isError: false);
 
             HttpMessage message = pipeline.CreateMessage(context, DpgClassifier.Instance);
             Request request = message.Request;

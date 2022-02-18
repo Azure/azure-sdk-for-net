@@ -9,9 +9,8 @@ using System.Diagnostics;
 namespace Azure.Core
 {
     /// <summary>
-    /// This is the concrete ResponseClassifier type that is designed
-    /// to work with customizations specified in <see cref="RequestContext"/>.
-    /// It implements the Chain of Responsibility design pattern.
+    /// This type inherits from ResponseClassifier and is designed to work
+    /// efficiently with classifier customizations specified in <see cref="RequestContext"/>.
     /// </summary>
     public class CoreResponseClassifier : ResponseClassifier
     {
@@ -43,17 +42,6 @@ namespace Azure.Core
             Handlers = handlers;
         }
 
-        /// <summary>
-        /// </summary>
-        /// <returns></returns>
-        internal virtual CoreResponseClassifier Clone()
-        {
-            ulong[] nonErrors = new ulong[Length];
-            Array.Copy(_nonErrors, nonErrors, Length);
-
-            return new CoreResponseClassifier(nonErrors, Handlers);
-        }
-
         /// <inheritdoc/>
         public override bool IsErrorResponse(HttpMessage message)
         {
@@ -71,6 +59,14 @@ namespace Azure.Core
             }
 
             return !IsNonError(message.Response.Status);
+        }
+
+        internal virtual CoreResponseClassifier Clone()
+        {
+            ulong[] nonErrors = new ulong[Length];
+            Array.Copy(_nonErrors, nonErrors, Length);
+
+            return new CoreResponseClassifier(nonErrors, Handlers);
         }
 
         internal void AddClassifier(int statusCode, bool isError)

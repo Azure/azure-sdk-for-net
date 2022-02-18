@@ -40,7 +40,7 @@ namespace Azure.Core.Tests
         public void AppliesResponseClassifierErrors()
         {
             RequestContext context = new RequestContext();
-            context.ChangeClassification(204, isError: true);
+            context.AddClassifier(204, isError: true);
 
             HttpMessage message = new HttpMessage(new MockRequest(), default);
             message.ApplyRequestContext(context, DpgClassifier.Instance);
@@ -62,7 +62,7 @@ namespace Azure.Core.Tests
         public void AppliesResponseClassifierNonErrors()
         {
             RequestContext context = new RequestContext();
-            context.ChangeClassification(404, isError: false);
+            context.AddClassifier(404, isError: false);
 
             HttpMessage message = new HttpMessage(new MockRequest(), default);
             message.ApplyRequestContext(context, DpgClassifier.Instance);
@@ -84,9 +84,9 @@ namespace Azure.Core.Tests
         public void AppliesResponseClassifierBothErrorsAndNonErrors()
         {
             RequestContext context = new RequestContext();
-            context.ChangeClassification(301, isError: true);
-            context.ChangeClassification(304, isError: true);
-            context.ChangeClassification(404, isError: false);
+            context.AddClassifier(301, isError: true);
+            context.AddClassifier(304, isError: true);
+            context.AddClassifier(404, isError: false);
 
             HttpMessage message = new HttpMessage(new MockRequest(), default);
             message.ApplyRequestContext(context, DpgClassifier.Instance);
@@ -141,7 +141,7 @@ namespace Azure.Core.Tests
             Assert.IsTrue(message.ResponseClassifier.IsErrorResponse(message));
 
             RequestContext context = new RequestContext();
-            context.ChangeClassification(new StatusCodeHandler(304, true));
+            context.AddClassifier(new StatusCodeHandler(304, true));
 
             message.ResponseClassifier = context.Apply(DpgClassifier.Instance);
 
@@ -200,7 +200,7 @@ namespace Azure.Core.Tests
         public void AppliesHandler()
         {
             RequestContext context = new RequestContext();
-            context.ChangeClassification(new StatusCodeHandler(204, isError: true));
+            context.AddClassifier(new StatusCodeHandler(204, isError: true));
 
             HttpMessage message = new HttpMessage(new MockRequest(), default);
             message.ApplyRequestContext(context, DpgClassifier.Instance);
@@ -222,8 +222,8 @@ namespace Azure.Core.Tests
         public void AppliesHandlerBeforeResponseClassifier()
         {
             RequestContext context = new RequestContext();
-            context.ChangeClassification(new StatusCodeHandler(204, true));
-            context.ChangeClassification(204, isError: false);
+            context.AddClassifier(new StatusCodeHandler(204, true));
+            context.AddClassifier(204, isError: false);
 
             HttpMessage message = new HttpMessage(new MockRequest(), default);
             message.ApplyRequestContext(context, DpgClassifier.Instance);
@@ -245,8 +245,8 @@ namespace Azure.Core.Tests
         public void AppliesHandlerWithLastSetWinsSemantics()
         {
             RequestContext context = new RequestContext();
-            context.ChangeClassification(new StatusCodeHandler(204, true));
-            context.ChangeClassification(new StatusCodeHandler(204, false));
+            context.AddClassifier(new StatusCodeHandler(204, true));
+            context.AddClassifier(new StatusCodeHandler(204, false));
 
             HttpMessage message = new HttpMessage(new MockRequest(), default);
             message.ApplyRequestContext(context, DpgClassifier.Instance);

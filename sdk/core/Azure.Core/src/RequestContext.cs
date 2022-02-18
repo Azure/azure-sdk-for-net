@@ -48,7 +48,7 @@ namespace Azure
         public ErrorOptions ErrorOptions { get; set; } = ErrorOptions.Default;
 
         /// <summary>
-        /// Adds an <see cref="HttpPipelinePolicy"/> into the pipeline for the duration of this request.
+        /// Adds an <see cref="HttpPipelinePolicy"/> into the pipeline for the duration of this operation.
         /// The position of policy in the pipeline is controlled by <paramref name="position"/> parameter.
         /// If you want the policy to execute once per client request use <see cref="HttpPipelinePosition.PerCall"/>
         /// otherwise use <see cref="HttpPipelinePosition.PerRetry"/> to run the policy for every retry.
@@ -62,16 +62,16 @@ namespace Azure
         }
 
         /// <summary>
-        /// Adds a custom classifier to the <see cref="ResponseClassifier"/> that decides if the response
-        /// received from the service should be considered an error response, for this service call.
-        /// The custom classifier is applied before the default classifier.
+        /// Customizes the <see cref="ResponseClassifier"/> for this operation.
+        /// Adding a classifier changes the default classification behavior so that it considers
+        /// the passed-in status code to be an error or not, as specified.
         /// This is useful for cases where you'd like to prevent specific response status codes from being treated as errors by
         /// logging and distributed tracing policies -- that is, if a response is not classified as an error, it will not appear as an error in
         /// logs or distributed traces.
         /// </summary>
         /// <param name="statusCode">The status code to customize classification for.</param>
         /// <param name="isError">Whether the passed-in status code should be classified as an error.</param>
-        public void ChangeClassification(int statusCode, bool isError)
+        public void AddClassifier(int statusCode, bool isError)
         {
             Argument.AssertInRange(statusCode, 100, 599, nameof(statusCode));
 
@@ -86,15 +86,17 @@ namespace Azure
         }
 
         /// <summary>
-        /// Adds a custom <see cref="ResponseClassificationHandler"/> to the <see cref="ResponseClassifier"/> that decides if the response
-        /// received from the service should be considered an error response, for this service call.
-        /// The custom classifier is applied before the default classifier.
+        /// Customizes the <see cref="ResponseClassifier"/> for this operation.
+        /// Adding a <see cref="ResponseClassificationHandler"/> changes the classification
+        /// behavior so that it first tries to classify a response via the handler, and if
+        /// the handler doesn't have an opinion, it instead uses the default classifier.
+        /// Handlers are applied in order so the most recently added takes precedence.
         /// This is useful for cases where you'd like to prevent specific response status codes from being treated as errors by
         /// logging and distributed tracing policies -- that is, if a response is not classified as an error, it will not appear as an error in
         /// logs or distributed traces.
         /// </summary>
         /// <param name="classifier">The custom classifier.</param>
-        public void ChangeClassification(ResponseClassificationHandler classifier)
+        public void AddClassifier(ResponseClassificationHandler classifier)
         {
             if (_frozen)
             {

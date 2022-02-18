@@ -11,11 +11,11 @@ namespace Azure.Core
     /// from the request, the response, or other message property to decide
     /// whether and how to classify the message.
     /// <para/>
-    /// This type's <code>TryClassify</code> method allows chaining together classifiers,
-    /// such that if a classifier in the chain returns false from
-    /// <code>TryClassify</code>, it means that the classifier has no opinion regarding whether
-    /// the response should be treated an error by the pipeline. If it returns true, its classification
-    /// will be used and no other classifiers in the chain will be called.
+    /// This type's <code>TryClassify</code> method allows chaining together handlers before
+    /// applying default classifier logic.
+    /// If a handler in the chain returns false from <code>TryClassify</code>,
+    /// the next handler will be tried, and so on.  The first handler that returns true
+    /// will determine whether the response is an error.
     /// </summary>
     public abstract class ResponseClassificationHandler
     {
@@ -25,7 +25,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="message">The message to classify.</param>
         /// <param name="isError">Whether the message's response should be considered an error.</param>
-        /// <returns><code>true</code> if the classifier was able to classify this message; <code>false</code> otherwise.</returns>
+        /// <returns><code>true</code> if the handler had a classification for this message; <code>false</code> otherwise.</returns>
         public abstract bool TryClassify(HttpMessage message, out bool isError);
     }
 }

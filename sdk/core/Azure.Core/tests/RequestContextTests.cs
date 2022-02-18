@@ -201,9 +201,9 @@ namespace Azure.Core.Tests
         public void ThrowsWhenFrozen()
         {
             RequestContext context = new RequestContext();
-            context.ChangeClassification(404, false);
+            context.AddClassifier(404, false);
             context.Freeze();
-            Assert.Throws<InvalidOperationException>(() => context.ChangeClassification(304, true));
+            Assert.Throws<InvalidOperationException>(() => context.AddClassifier(304, true));
         }
 
         [Test]
@@ -222,7 +222,7 @@ namespace Azure.Core.Tests
             var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, HttpMessageSanitizer.Default, "Test SDK") });
 
             var context = new RequestContext();
-            context.ChangeClassification(404, isError: false);
+            context.AddClassifier(404, isError: false);
 
             var message = pipeline.CreateMessage(context, classifier);
 
@@ -256,7 +256,7 @@ namespace Azure.Core.Tests
             var classifier = new CoreResponseClassifier(stackalloc int[] { 200, 204, 304 });
             var pipeline = new HttpPipeline(mockTransport, new[] { new RequestActivityPolicy(true, "Azure.Core.Tests", HttpMessageSanitizer.Default) });
             var context = new RequestContext();
-            context.ChangeClassification(409, isError: false);
+            context.AddClassifier(409, isError: false);
             var message = pipeline.CreateMessage(context, classifier);
 
             await pipeline.SendAsync(message, context.CancellationToken);
