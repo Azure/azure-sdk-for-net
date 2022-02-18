@@ -108,7 +108,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Hardware properties. </summary>
         public HardwareProfile HardwareProfile { get; set; }
         /// <summary> Network properties. </summary>
-        public NetworkProfile NetworkProfile { get; set; }
+        internal NetworkProfile NetworkProfile { get; set; }
+        /// <summary> Gets or sets the list of network interfaces associated with the virtual machine. </summary>
+        public IList<NetworkInterface> NetworkInterfaces
+        {
+            get
+            {
+                if (NetworkProfile is null)
+                    NetworkProfile = new NetworkProfile();
+                return NetworkProfile.NetworkInterfaces;
+            }
+        }
+
         /// <summary> Storage properties. </summary>
         public StorageProfile StorageProfile { get; set; }
         /// <summary> Guest agent status properties. </summary>
