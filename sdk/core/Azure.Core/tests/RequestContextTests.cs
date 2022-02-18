@@ -218,7 +218,7 @@ namespace Azure.Core.Tests
             var response = new MockResponse(404);
             var mockTransport = new MockTransport(response);
 
-            var classifier = new CoreResponseClassifier(new int[] { 200, 204, 304 });
+            var classifier = new CoreResponseClassifier(stackalloc int[] { 200, 204, 304 });
             var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, HttpMessageSanitizer.Default, "Test SDK") });
 
             var context = new RequestContext();
@@ -253,7 +253,7 @@ namespace Azure.Core.Tests
                 return mockResponse;
             });
 
-            var classifier = new CoreResponseClassifier(new int[] { 200, 204, 304 });
+            var classifier = new CoreResponseClassifier(stackalloc int[] { 200, 204, 304 });
             var pipeline = new HttpPipeline(mockTransport, new[] { new RequestActivityPolicy(true, "Azure.Core.Tests", HttpMessageSanitizer.Default) });
             var context = new RequestContext();
             context.AddClassificationHandler(409, isError: false);

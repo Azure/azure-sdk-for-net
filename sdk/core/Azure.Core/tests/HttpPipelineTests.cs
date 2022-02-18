@@ -352,7 +352,7 @@ namespace Azure.Core.Tests
             private static CoreResponseClassifier _instance;
             public static CoreResponseClassifier Instance => _instance ??= new DpgClassifier();
 
-            public DpgClassifier() : base(new int[] { 200, 204, 304 })
+            public DpgClassifier() : base(stackalloc int[] { 200, 204, 304 })
             {
             }
         }

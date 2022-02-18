@@ -117,7 +117,7 @@ namespace Azure.Core.Tests
 
             // This replaces the base classifier with one that thinks
             // only 404 is a non-error.
-            message.ResponseClassifier = new CoreResponseClassifier(new int[] { 404 });
+            message.ResponseClassifier = new CoreResponseClassifier(stackalloc int[] { 404 });
 
             message.Response = new MockResponse(204);
             Assert.IsTrue(message.ResponseClassifier.IsErrorResponse(message));
@@ -147,7 +147,7 @@ namespace Azure.Core.Tests
 
             // This replaces the base classifier with one that only thinks 404 is a non-error
             // and doesn't have opinions on anything else.
-            message.ResponseClassifier = new CoreResponseClassifier(new int[] { 404 });
+            message.ResponseClassifier = new CoreResponseClassifier(stackalloc int[] { 404 });
 
             message.Response = new MockResponse(304);
             Assert.IsTrue(message.ResponseClassifier.IsErrorResponse(message));
@@ -166,7 +166,7 @@ namespace Azure.Core.Tests
                 ClientOptions.Default,
                 new HttpPipelinePolicy[] { },
                 new HttpPipelinePolicy[] { },
-                new CoreResponseClassifier(new int[] { 404 }));
+                new CoreResponseClassifier(stackalloc int[] { 404 }));
 
             var message = pipeline.CreateMessage();
 
@@ -176,7 +176,7 @@ namespace Azure.Core.Tests
             message.Response = new MockResponse(404);
             Assert.IsFalse(message.ResponseClassifier.IsErrorResponse(message));
 
-            message.ResponseClassifier = new CoreResponseClassifier(new int[] { 304 });
+            message.ResponseClassifier = new CoreResponseClassifier(stackalloc int[] { 304 });
 
             message.Response = new MockResponse(304);
             Assert.IsFalse(message.ResponseClassifier.IsErrorResponse(message));
@@ -297,7 +297,7 @@ namespace Azure.Core.Tests
             private static CoreResponseClassifier _instance;
             public static CoreResponseClassifier Instance => _instance ??= new DpgClassifier();
 
-            public DpgClassifier() : base(new int[] { 200, 204, 304 })
+            public DpgClassifier() : base(stackalloc int[] { 200, 204, 304 })
             {
             }
         }
