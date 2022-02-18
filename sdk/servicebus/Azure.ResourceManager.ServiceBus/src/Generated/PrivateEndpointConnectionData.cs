@@ -36,7 +36,19 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary> The Private Endpoint resource for this Connection. </summary>
-        public WritableSubResource PrivateEndpoint { get; set; }
+        internal WritableSubResource PrivateEndpoint { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier PrivateEndpointId
+        {
+            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+            set
+            {
+                if (PrivateEndpoint is null)
+                    PrivateEndpoint = new WritableSubResource();
+                PrivateEndpoint.Id = value;
+            }
+        }
+
         /// <summary> Details about the state of the connection. </summary>
         public ConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> Provisioning state of the Private Endpoint Connection. </summary>
