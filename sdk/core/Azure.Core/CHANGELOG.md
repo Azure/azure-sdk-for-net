@@ -4,9 +4,7 @@
 
 ### Features Added
 
-- Added `MessageClassifier` type, which introduces TryClassify semantics to message classification, allowing chaining of multiple classifiers.
-- Made `ResponseClassifier` a subclass of `MessageClassifier`.
-- Added `AddClassifier` methods to `RequestContext`. These allows callers to set custom classifiers for a given method invocation.
+- Added `AddClassifier` methods to `RequestContext`. These methods allow callers to change the response classification behavior for a given method invocation.
 
 ### Breaking Changes
 
