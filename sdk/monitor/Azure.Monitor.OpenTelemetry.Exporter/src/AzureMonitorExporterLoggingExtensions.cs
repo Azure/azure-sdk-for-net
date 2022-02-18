@@ -16,7 +16,7 @@ namespace Microsoft.Extensions.Logging
     public static class AzureMonitorExporterLoggingExtensions
     {
         /// <summary>
-        /// Adds Azure Monitor Log Exporter as a configuration to the OpenTelemetry ILoggingBuilder.
+        /// Adds Azure Monitor Log Exporter with OpenTelemetryLoggerOptions.
         /// </summary>
         /// <param name="loggerOptions"><see cref="OpenTelemetryLoggerOptions"/> options to use.</param>
         /// <param name="configure">Exporter configuration options.</param>
