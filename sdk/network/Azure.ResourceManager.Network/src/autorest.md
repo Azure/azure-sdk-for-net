@@ -36,6 +36,8 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
 
 #TODO: remove after we resolve why DdosCustomPolicy has no list
 list-exception:

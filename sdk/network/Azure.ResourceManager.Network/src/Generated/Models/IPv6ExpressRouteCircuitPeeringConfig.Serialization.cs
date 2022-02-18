@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class Ipv6ExpressRouteCircuitPeeringConfig : IUtf8JsonSerializable
+    public partial class IPv6ExpressRouteCircuitPeeringConfig : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static Ipv6ExpressRouteCircuitPeeringConfig DeserializeIpv6ExpressRouteCircuitPeeringConfig(JsonElement element)
+        internal static IPv6ExpressRouteCircuitPeeringConfig DeserializeIPv6ExpressRouteCircuitPeeringConfig(JsonElement element)
         {
             Optional<string> primaryPeerAddressPrefix = default;
             Optional<string> secondaryPeerAddressPrefix = default;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new Ipv6ExpressRouteCircuitPeeringConfig(primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, microsoftPeeringConfig.Value, routeFilter, Optional.ToNullable(state));
+            return new IPv6ExpressRouteCircuitPeeringConfig(primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, microsoftPeeringConfig.Value, routeFilter, Optional.ToNullable(state));
         }
     }
 }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class Ipv6CircuitConnectionConfig : IUtf8JsonSerializable
+    public partial class IPv6CircuitConnectionConfig : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static Ipv6CircuitConnectionConfig DeserializeIpv6CircuitConnectionConfig(JsonElement element)
+        internal static IPv6CircuitConnectionConfig DeserializeIPv6CircuitConnectionConfig(JsonElement element)
         {
             Optional<string> addressPrefix = default;
             Optional<CircuitConnectionStatus> circuitConnectionStatus = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new Ipv6CircuitConnectionConfig(addressPrefix.Value, Optional.ToNullable(circuitConnectionStatus));
+            return new IPv6CircuitConnectionConfig(addressPrefix.Value, Optional.ToNullable(circuitConnectionStatus));
         }
     }
 }
