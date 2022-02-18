@@ -7,7 +7,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-save-inputs: true
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
