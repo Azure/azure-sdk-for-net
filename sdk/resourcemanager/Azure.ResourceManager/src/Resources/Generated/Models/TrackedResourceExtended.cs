@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Specified resource. </summary>
-    public partial class TrackedResourceExtended : TrackedResource
+    public partial class TrackedResourceExtended : TrackedResourceData
     {
         /// <summary> Initializes a new instance of TrackedResourceExtended. </summary>
         /// <param name="location"> The location. </param>
@@ -24,10 +24,11 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> Resource extended location. </param>
-        internal TrackedResourceExtended(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation) : base(id, name, type, tags, location)
+        internal TrackedResourceExtended(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation) : base(id, name, type, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
         }

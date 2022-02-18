@@ -17,19 +17,6 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class Subscription : ArmResource
     {
-        /// <summary>
-        /// Provides a way to reuse the protected client context.
-        /// </summary>
-        /// <typeparam name="T"> The actual type returned by the delegate. </typeparam>
-        /// <param name="func"> The method to pass the internal properties to. </param>
-        /// <returns> Whatever the delegate returns. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual T UseClientContext<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, T> func)
-        {
-            return func(BaseUri, Credential, ClientOptions, Pipeline);
-        }
-
         /// RequestPath: /subscriptions/{subscriptionId}/resources
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: Resources_List
@@ -43,12 +30,12 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<GenericResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetGenericResources");
+                using var scope = _subscriptionResourcesClientDiagnostics.CreateScope("Subscription.GetGenericResources");
                 scope.Start();
                 try
                 {
-                    var response = await _resourcesRestClient.ListAsync(Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _subscriptionResourcesRestClient.ListAsync(Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -58,12 +45,12 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<GenericResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetGenericResources");
+                using var scope = _subscriptionResourcesClientDiagnostics.CreateScope("Subscription.GetGenericResources");
                 scope.Start();
                 try
                 {
-                    var response = await _resourcesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _subscriptionResourcesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -87,12 +74,12 @@ namespace Azure.ResourceManager.Resources
         {
             Page<GenericResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetGenericResources");
+                using var scope = _subscriptionResourcesClientDiagnostics.CreateScope("Subscription.GetGenericResources");
                 scope.Start();
                 try
                 {
-                    var response = _resourcesRestClient.List(Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _subscriptionResourcesRestClient.List(Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -102,12 +89,12 @@ namespace Azure.ResourceManager.Resources
             }
             Page<GenericResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetGenericResources");
+                using var scope = _subscriptionResourcesClientDiagnostics.CreateScope("Subscription.GetGenericResources");
                 scope.Start();
                 try
                 {
-                    var response = _resourcesRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _subscriptionResourcesRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

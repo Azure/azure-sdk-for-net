@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Profile cdnProfile = await CreateCdnProfile(rg, cdnProfileName, SkuName.StandardMicrosoft);
             string cdnEndpointName = Recording.GenerateAssetName("endpoint-");
             CdnEndpoint cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
-            EndpointUpdateOptions updateOptions = new EndpointUpdateOptions
+            CdnEndpointUpdateOptions updateOptions = new CdnEndpointUpdateOptions
             {
                 IsHttpAllowed = false,
                 OriginPath = "/path/valid",
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.Cdn.Tests
             CdnEndpoint cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
             Assert.AreEqual(cdnEndpoint.Data.ResourceState, EndpointResourceState.Running);
             var lro1 = await cdnEndpoint.StopAsync(true);
-            Assert.AreEqual(lro1.Value.ResourceState, EndpointResourceState.Stopped);
+            Assert.AreEqual(lro1.Value.Data.ResourceState, EndpointResourceState.Stopped);
             var lro2 = await cdnEndpoint.StartAsync(true);
-            Assert.AreEqual(lro2.Value.ResourceState, EndpointResourceState.Running);
+            Assert.AreEqual(lro2.Value.Data.ResourceState, EndpointResourceState.Running);
         }
 
         [TestCase]

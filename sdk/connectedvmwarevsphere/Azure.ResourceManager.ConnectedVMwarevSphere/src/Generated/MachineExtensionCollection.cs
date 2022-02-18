@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// <summary> A class representing collection of MachineExtension and their operations over its parent. </summary>
     public partial class MachineExtensionCollection : ArmCollection, IEnumerable<MachineExtension>, IAsyncEnumerable<MachineExtension>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly MachineExtensionsRestOperations _machineExtensionsRestClient;
+        private readonly ClientDiagnostics _machineExtensionClientDiagnostics;
+        private readonly MachineExtensionsRestOperations _machineExtensionRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MachineExtensionCollection"/> class for mocking. </summary>
         protected MachineExtensionCollection()
@@ -32,12 +32,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary> Initializes a new instance of the <see cref="MachineExtensionCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal MachineExtensionCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal MachineExtensionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(MachineExtension.ResourceType, out string apiVersion);
-            _machineExtensionsRestClient = new MachineExtensionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _machineExtensionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", MachineExtension.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(MachineExtension.ResourceType, out string machineExtensionApiVersion);
+            _machineExtensionRestClient = new MachineExtensionsRestOperations(_machineExtensionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, machineExtensionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -49,67 +50,28 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VirtualMachine.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{name}/extensions/{extensionName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}
-        /// OperationId: MachineExtensions_CreateOrUpdate
-        /// <summary> The operation to create or update the extension. </summary>
+        /// <summary>
+        /// The operation to create or update the extension.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{name}/extensions/{extensionName}
+        /// Operation Id: MachineExtensions_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="extensionParameters"> Parameters supplied to the Create Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="extensionParameters"/> is null. </exception>
-        public virtual MachineExtensionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string extensionName, MachineExtensionData extensionParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<MachineExtension>> CreateOrUpdateAsync(bool waitForCompletion, string extensionName, MachineExtensionData extensionParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
-            if (extensionParameters == null)
-            {
-                throw new ArgumentNullException(nameof(extensionParameters));
-            }
+            Argument.AssertNotNull(extensionParameters, nameof(extensionParameters));
 
-            using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.CreateOrUpdate");
+            using var scope = _machineExtensionClientDiagnostics.CreateScope("MachineExtensionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _machineExtensionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, extensionParameters, cancellationToken);
-                var operation = new MachineExtensionCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _machineExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, extensionParameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{name}/extensions/{extensionName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}
-        /// OperationId: MachineExtensions_CreateOrUpdate
-        /// <summary> The operation to create or update the extension. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="extensionName"> The name of the machine extension. </param>
-        /// <param name="extensionParameters"> Parameters supplied to the Create Machine Extension operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="extensionParameters"/> is null. </exception>
-        public async virtual Task<MachineExtensionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string extensionName, MachineExtensionData extensionParameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
-            if (extensionParameters == null)
-            {
-                throw new ArgumentNullException(nameof(extensionParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _machineExtensionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, extensionParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineExtensionCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _machineExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, extensionParameters).Request, response);
+                var response = await _machineExtensionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, extensionParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ConnectedVMwarevSphereArmOperation<MachineExtension>(new MachineExtensionOperationSource(Client), _machineExtensionClientDiagnostics, Pipeline, _machineExtensionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, extensionParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,26 +83,31 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{name}/extensions/{extensionName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}
-        /// OperationId: MachineExtensions_Get
-        /// <summary> The operation to get the extension. </summary>
+        /// <summary>
+        /// The operation to create or update the extension.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{name}/extensions/{extensionName}
+        /// Operation Id: MachineExtensions_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="extensionName"> The name of the machine extension. </param>
+        /// <param name="extensionParameters"> Parameters supplied to the Create Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
-        public virtual Response<MachineExtension> Get(string extensionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="extensionParameters"/> is null. </exception>
+        public virtual ArmOperation<MachineExtension> CreateOrUpdate(bool waitForCompletion, string extensionName, MachineExtensionData extensionParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+            Argument.AssertNotNull(extensionParameters, nameof(extensionParameters));
 
-            using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.Get");
+            using var scope = _machineExtensionClientDiagnostics.CreateScope("MachineExtensionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _machineExtensionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, cancellationToken);
-                if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MachineExtension(this, response.Value), response.GetRawResponse());
+                var response = _machineExtensionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, extensionParameters, cancellationToken);
+                var operation = new ConnectedVMwarevSphereArmOperation<MachineExtension>(new MachineExtensionOperationSource(Client), _machineExtensionClientDiagnostics, Pipeline, _machineExtensionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, extensionParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -149,26 +116,27 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{name}/extensions/{extensionName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}
-        /// OperationId: MachineExtensions_Get
-        /// <summary> The operation to get the extension. </summary>
+        /// <summary>
+        /// The operation to get the extension.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{name}/extensions/{extensionName}
+        /// Operation Id: MachineExtensions_Get
+        /// </summary>
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public async virtual Task<Response<MachineExtension>> GetAsync(string extensionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
-            using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.Get");
+            using var scope = _machineExtensionClientDiagnostics.CreateScope("MachineExtensionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _machineExtensionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, cancellationToken).ConfigureAwait(false);
+                var response = await _machineExtensionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new MachineExtension(this, response.Value), response.GetRawResponse());
+                    throw await _machineExtensionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new MachineExtension(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,23 +145,27 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// The operation to get the extension.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{name}/extensions/{extensionName}
+        /// Operation Id: MachineExtensions_Get
+        /// </summary>
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
-        public virtual Response<MachineExtension> GetIfExists(string extensionName, CancellationToken cancellationToken = default)
+        public virtual Response<MachineExtension> Get(string extensionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
-            using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.GetIfExists");
+            using var scope = _machineExtensionClientDiagnostics.CreateScope("MachineExtensionCollection.Get");
             scope.Start();
             try
             {
-                var response = _machineExtensionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, cancellationToken: cancellationToken);
+                var response = _machineExtensionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<MachineExtension>(null, response.GetRawResponse());
-                return Response.FromValue(new MachineExtension(this, response.Value), response.GetRawResponse());
+                    throw _machineExtensionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new MachineExtension(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,64 +174,106 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="extensionName"> The name of the machine extension. </param>
+        /// <summary>
+        /// The operation to get all extensions of a non-Azure machine
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{name}/extensions
+        /// Operation Id: MachineExtensions_List
+        /// </summary>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
-        public async virtual Task<Response<MachineExtension>> GetIfExistsAsync(string extensionName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MachineExtension" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MachineExtension> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
-
-            using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<MachineExtension>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _machineExtensionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<MachineExtension>(null, response.GetRawResponse());
-                return Response.FromValue(new MachineExtension(this, response.Value), response.GetRawResponse());
+                using var scope = _machineExtensionClientDiagnostics.CreateScope("MachineExtensionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _machineExtensionRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new MachineExtension(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<MachineExtension>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _machineExtensionClientDiagnostics.CreateScope("MachineExtensionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _machineExtensionRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new MachineExtension(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="extensionName"> The name of the machine extension. </param>
+        /// <summary>
+        /// The operation to get all extensions of a non-Azure machine
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{name}/extensions
+        /// Operation Id: MachineExtensions_List
+        /// </summary>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
-        public virtual Response<bool> Exists(string extensionName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineExtension" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MachineExtension> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
-
-            using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.Exists");
-            scope.Start();
-            try
+            Page<MachineExtension> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(extensionName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _machineExtensionClientDiagnostics.CreateScope("MachineExtensionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _machineExtensionRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new MachineExtension(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<MachineExtension> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _machineExtensionClientDiagnostics.CreateScope("MachineExtensionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _machineExtensionRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new MachineExtension(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{name}/extensions/{extensionName}
+        /// Operation Id: MachineExtensions_Get
+        /// </summary>
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string extensionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
-            using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.Exists");
+            using var scope = _machineExtensionClientDiagnostics.CreateScope("MachineExtensionCollection.Exists");
             scope.Start();
             try
             {
@@ -273,88 +287,89 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{name}/extensions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}
-        /// OperationId: MachineExtensions_List
-        /// <summary> The operation to get all extensions of a non-Azure machine. </summary>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{name}/extensions/{extensionName}
+        /// Operation Id: MachineExtensions_Get
+        /// </summary>
+        /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineExtension" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineExtension> GetAll(string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
+        public virtual Response<bool> Exists(string extensionName, CancellationToken cancellationToken = default)
         {
-            Page<MachineExtension> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+
+            using var scope = _machineExtensionClientDiagnostics.CreateScope("MachineExtensionCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _machineExtensionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineExtension(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(extensionName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<MachineExtension> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _machineExtensionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineExtension(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{name}/extensions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}
-        /// OperationId: MachineExtensions_List
-        /// <summary> The operation to get all extensions of a non-Azure machine. </summary>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{name}/extensions/{extensionName}
+        /// Operation Id: MachineExtensions_Get
+        /// </summary>
+        /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineExtension" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineExtension> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
+        public async virtual Task<Response<MachineExtension>> GetIfExistsAsync(string extensionName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MachineExtension>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+
+            using var scope = _machineExtensionClientDiagnostics.CreateScope("MachineExtensionCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _machineExtensionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineExtension(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _machineExtensionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<MachineExtension>(null, response.GetRawResponse());
+                return Response.FromValue(new MachineExtension(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<MachineExtension>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _machineExtensionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineExtension(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{name}/extensions/{extensionName}
+        /// Operation Id: MachineExtensions_Get
+        /// </summary>
+        /// <param name="extensionName"> The name of the machine extension. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
+        public virtual Response<MachineExtension> GetIfExists(string extensionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+
+            using var scope = _machineExtensionClientDiagnostics.CreateScope("MachineExtensionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _machineExtensionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<MachineExtension>(null, response.GetRawResponse());
+                return Response.FromValue(new MachineExtension(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<MachineExtension> IEnumerable<MachineExtension>.GetEnumerator()
@@ -371,8 +386,5 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, MachineExtension, MachineExtensionData> Construct() { }
     }
 }

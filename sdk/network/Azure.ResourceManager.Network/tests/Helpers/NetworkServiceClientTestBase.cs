@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         {
             Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             var networkInterface = await CreateNetworkInterface(networkInterfaceName, null, vnet.Data.Subnets[0].Id, location, Recording.GenerateAssetName("ipconfig_"), resourceGroup.GetNetworkInterfaces());
-            var genericResouces = subscription.GetGenericResources();
+            var genericResouces = subscription.GetGenericResourcesAsync();
             var adminUsername = Recording.GenerateAssetName("admin");
             var vmId = new ResourceIdentifier($"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{vmName}");
             GenericResourceData data = new(location)
@@ -245,8 +245,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     }
                 }
             };
-            var operation = await ArmClient.GetGenericResources().CreateOrUpdateAsync(false, vmId, data);
-            await operation.WaitForCompletionAsync();
+            var operation = await ArmClient.GetGenericResources().CreateOrUpdateAsync(true, vmId, data);
             return operation.Value;
         }
 

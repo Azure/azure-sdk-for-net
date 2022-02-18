@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -20,26 +19,28 @@ namespace Azure.ResourceManager.Resources
 {
     internal partial class FeaturesRestOperations
     {
-        private Uri endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
         private readonly string _userAgent;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of FeaturesRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="options"> The client options used to construct the current client. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public FeaturesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, Uri endpoint = null, string apiVersion = default)
+        public FeaturesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            this.apiVersion = apiVersion ?? "2021-07-01";
-            _clientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2021-07-01";
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
-            _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
+            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
 
         internal HttpMessage CreateListAllRequest(string subscriptionId)
@@ -48,14 +49,14 @@ namespace Azure.ResourceManager.Resources
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Features/features", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -119,16 +120,16 @@ namespace Azure.ResourceManager.Resources
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Features/providers/", false);
             uri.AppendPath(resourceProviderNamespace, true);
             uri.AppendPath("/features", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -192,7 +193,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -202,17 +203,17 @@ namespace Azure.ResourceManager.Resources
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Features/providers/", false);
             uri.AppendPath(resourceProviderNamespace, true);
             uri.AppendPath("/features/", false);
             uri.AppendPath(featureName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -221,7 +222,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceProviderNamespace"> The resource provider namespace for the feature. </param>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/>, or <paramref name="featureName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
         public async Task<Response<FeatureData>> GetAsync(string subscriptionId, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -251,7 +252,7 @@ namespace Azure.ResourceManager.Resources
                 case 404:
                     return Response.FromValue((FeatureData)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -260,7 +261,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceProviderNamespace"> The resource provider namespace for the feature. </param>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/>, or <paramref name="featureName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
         public Response<FeatureData> Get(string subscriptionId, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -290,7 +291,7 @@ namespace Azure.ResourceManager.Resources
                 case 404:
                     return Response.FromValue((FeatureData)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -300,7 +301,7 @@ namespace Azure.ResourceManager.Resources
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Features/providers/", false);
@@ -308,10 +309,10 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/features/", false);
             uri.AppendPath(featureName, true);
             uri.AppendPath("/register", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -320,7 +321,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="featureName"> The name of the feature to register. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/>, or <paramref name="featureName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
         public async Task<Response<FeatureData>> RegisterAsync(string subscriptionId, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -348,7 +349,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -357,7 +358,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="featureName"> The name of the feature to register. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/>, or <paramref name="featureName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
         public Response<FeatureData> Register(string subscriptionId, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -385,7 +386,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -395,7 +396,7 @@ namespace Azure.ResourceManager.Resources
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Features/providers/", false);
@@ -403,10 +404,10 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/features/", false);
             uri.AppendPath(featureName, true);
             uri.AppendPath("/unregister", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -415,7 +416,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="featureName"> The name of the feature to unregister. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/>, or <paramref name="featureName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
         public async Task<Response<FeatureData>> UnregisterAsync(string subscriptionId, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -443,7 +444,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -452,7 +453,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="featureName"> The name of the feature to unregister. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/>, or <paramref name="featureName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
         public Response<FeatureData> Unregister(string subscriptionId, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -480,7 +481,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -490,11 +491,11 @@ namespace Azure.ResourceManager.Resources
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -526,7 +527,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -558,7 +559,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -568,11 +569,11 @@ namespace Azure.ResourceManager.Resources
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -581,7 +582,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider for getting features. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceProviderNamespace"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is null. </exception>
         public async Task<Response<FeatureOperationsListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -609,7 +610,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -618,7 +619,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider for getting features. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceProviderNamespace"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is null. </exception>
         public Response<FeatureOperationsListResult> ListNextPage(string nextLink, string subscriptionId, string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -646,7 +647,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

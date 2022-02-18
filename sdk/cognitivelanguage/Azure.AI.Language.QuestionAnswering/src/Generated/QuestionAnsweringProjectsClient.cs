@@ -23,9 +23,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
@@ -46,7 +48,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new QuestionAnsweringClientOptions();
 
-            _clientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options);
             _keyCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
             _endpoint = endpoint;
@@ -57,6 +59,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -95,14 +98,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Response> GetProjectDetailsAsync(string projectName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetProjectDetails");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetProjectDetails");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetProjectDetailsRequest(projectName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -115,6 +118,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -153,14 +157,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Response GetProjectDetails(string projectName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetProjectDetails");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetProjectDetails");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetProjectDetailsRequest(projectName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -174,6 +178,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -222,15 +227,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Response> CreateProjectAsync(string projectName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.CreateProject");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.CreateProject");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateProjectRequest(projectName, content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -244,6 +249,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -292,15 +298,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Response CreateProject(string projectName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.CreateProject");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.CreateProject");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateProjectRequest(projectName, content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -313,6 +319,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -361,14 +368,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Response> GetDeleteStatusAsync(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetDeleteStatus");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetDeleteStatus");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetDeleteStatusRequest(jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -381,6 +388,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -429,14 +437,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Response GetDeleteStatus(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetDeleteStatus");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetDeleteStatus");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetDeleteStatusRequest(jobId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -450,6 +458,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -499,15 +508,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Response> GetExportStatusAsync(string projectName, string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetExportStatus");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetExportStatus");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetExportStatusRequest(projectName, jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -521,6 +530,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -570,15 +580,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Response GetExportStatus(string projectName, string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetExportStatus");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetExportStatus");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetExportStatusRequest(projectName, jobId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -592,6 +602,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -640,15 +651,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Response> GetImportStatusAsync(string projectName, string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetImportStatus");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetImportStatus");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetImportStatusRequest(projectName, jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -662,6 +673,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -710,15 +722,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Response GetImportStatus(string projectName, string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetImportStatus");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetImportStatus");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetImportStatusRequest(projectName, jobId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -732,7 +744,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -781,16 +794,16 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Response> GetDeployStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetDeployStatus");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetDeployStatus");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetDeployStatusRequest(projectName, deploymentName, jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -804,7 +817,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -853,16 +867,16 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Response GetDeployStatus(string projectName, string deploymentName, string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetDeployStatus");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetDeployStatus");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetDeployStatusRequest(projectName, deploymentName, jobId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -876,6 +890,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -910,15 +925,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Response> UpdateSynonymsAsync(string projectName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateSynonyms");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateSynonyms");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUpdateSynonymsRequest(projectName, content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -932,6 +947,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -966,15 +982,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Response UpdateSynonyms(string projectName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateSynonyms");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateSynonyms");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUpdateSynonymsRequest(projectName, content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -988,6 +1004,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1036,15 +1053,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Response> GetUpdateSourcesStatusAsync(string projectName, string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetUpdateSourcesStatus");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetUpdateSourcesStatus");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetUpdateSourcesStatusRequest(projectName, jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1058,6 +1075,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1106,15 +1124,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Response GetUpdateSourcesStatus(string projectName, string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetUpdateSourcesStatus");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetUpdateSourcesStatus");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetUpdateSourcesStatusRequest(projectName, jobId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1128,6 +1146,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1176,15 +1195,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Response> GetUpdateQnasStatusAsync(string projectName, string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetUpdateQnasStatus");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetUpdateQnasStatus");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetUpdateQnasStatusRequest(projectName, jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1198,6 +1217,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1246,15 +1266,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Response GetUpdateQnasStatus(string projectName, string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetUpdateQnasStatus");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetUpdateQnasStatus");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetUpdateQnasStatusRequest(projectName, jobId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1268,6 +1288,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1303,15 +1324,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Response> AddFeedbackAsync(string projectName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.AddFeedback");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.AddFeedback");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAddFeedbackRequest(projectName, content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1325,6 +1346,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1360,15 +1382,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Response AddFeedback(string projectName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.AddFeedback");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.AddFeedback");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAddFeedbackRequest(projectName, content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1425,7 +1447,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual AsyncPageable<BinaryData> GetProjectsAsync(int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "QuestionAnsweringProjectsClient.GetProjects");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetProjects");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1433,7 +1455,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetProjectsRequest(top, skip, maxpagesize, context)
                         : CreateGetProjectsNextPageRequest(nextLink, top, skip, maxpagesize, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1488,7 +1510,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Pageable<BinaryData> GetProjects(int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "QuestionAnsweringProjectsClient.GetProjects");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetProjects");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1496,7 +1518,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetProjectsRequest(top, skip, maxpagesize, context)
                         : CreateGetProjectsNextPageRequest(nextLink, top, skip, maxpagesize, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1510,6 +1532,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1545,9 +1568,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "QuestionAnsweringProjectsClient.GetDeployments");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetDeployments");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1555,7 +1578,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetDeploymentsRequest(projectName, top, skip, maxpagesize, context)
                         : CreateGetDeploymentsNextPageRequest(nextLink, projectName, top, skip, maxpagesize, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1569,6 +1592,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1604,9 +1628,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Pageable<BinaryData> GetDeployments(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "QuestionAnsweringProjectsClient.GetDeployments");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetDeployments");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1614,7 +1638,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetDeploymentsRequest(projectName, top, skip, maxpagesize, context)
                         : CreateGetDeploymentsNextPageRequest(nextLink, projectName, top, skip, maxpagesize, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1628,6 +1652,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1662,9 +1687,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual AsyncPageable<BinaryData> GetSynonymsAsync(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "QuestionAnsweringProjectsClient.GetSynonyms");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetSynonyms");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1672,7 +1697,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetSynonymsRequest(projectName, top, skip, maxpagesize, context)
                         : CreateGetSynonymsNextPageRequest(nextLink, projectName, top, skip, maxpagesize, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1686,6 +1711,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1720,9 +1746,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Pageable<BinaryData> GetSynonyms(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "QuestionAnsweringProjectsClient.GetSynonyms");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetSynonyms");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1730,7 +1756,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetSynonymsRequest(projectName, top, skip, maxpagesize, context)
                         : CreateGetSynonymsNextPageRequest(nextLink, projectName, top, skip, maxpagesize, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1744,6 +1770,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1783,9 +1810,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual AsyncPageable<BinaryData> GetSourcesAsync(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "QuestionAnsweringProjectsClient.GetSources");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetSources");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1793,7 +1820,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetSourcesRequest(projectName, top, skip, maxpagesize, context)
                         : CreateGetSourcesNextPageRequest(nextLink, projectName, top, skip, maxpagesize, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1807,6 +1834,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1846,9 +1874,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Pageable<BinaryData> GetSources(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "QuestionAnsweringProjectsClient.GetSources");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetSources");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1856,7 +1884,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetSourcesRequest(projectName, top, skip, maxpagesize, context)
                         : CreateGetSourcesNextPageRequest(nextLink, projectName, top, skip, maxpagesize, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1871,6 +1899,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1941,9 +1970,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual AsyncPageable<BinaryData> GetQnasAsync(string projectName, string source = null, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "QuestionAnsweringProjectsClient.GetQnas");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetQnas");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1951,7 +1980,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetQnasRequest(projectName, source, top, skip, maxpagesize, context)
                         : CreateGetQnasNextPageRequest(nextLink, projectName, source, top, skip, maxpagesize, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1966,6 +1995,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2036,9 +2066,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Pageable<BinaryData> GetQnas(string projectName, string source = null, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "QuestionAnsweringProjectsClient.GetQnas");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetQnas");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -2046,7 +2076,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetQnasRequest(projectName, source, top, skip, maxpagesize, context)
                         : CreateGetQnasNextPageRequest(nextLink, projectName, source, top, skip, maxpagesize, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -2058,6 +2088,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -2082,14 +2113,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Operation<BinaryData>> DeleteProjectAsync(bool waitForCompletion, string projectName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.DeleteProject");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.DeleteProject");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2103,6 +2134,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -2127,14 +2159,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Operation<BinaryData> DeleteProject(bool waitForCompletion, string projectName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.DeleteProject");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.DeleteProject");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitForCompletion);
             }
             catch (Exception e)
             {
@@ -2150,7 +2182,33 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="assetKind"> Kind of the asset of the project. Allowed values: &quot;qnas&quot; | &quot;synonyms&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   resultUrl: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   expirationDateTime: string (ISO 8601 Format),
+        ///   jobId: string,
+        ///   lastUpdatedDateTime: string (ISO 8601 Format),
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
+        ///       message: string,
+        ///       target: string,
+        ///       details: [Error],
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
+        ///         message: string,
+        ///         details: Dictionary&lt;string, string&gt;,
+        ///         target: string,
+        ///         innererror: InnerErrorModel
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
@@ -2174,14 +2232,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Operation<BinaryData>> ExportAsync(bool waitForCompletion, string projectName, string format = null, string assetKind = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.Export");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.Export");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateExportRequest(projectName, format, assetKind, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.Export", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Export", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2197,7 +2255,33 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="assetKind"> Kind of the asset of the project. Allowed values: &quot;qnas&quot; | &quot;synonyms&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   resultUrl: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   expirationDateTime: string (ISO 8601 Format),
+        ///   jobId: string,
+        ///   lastUpdatedDateTime: string (ISO 8601 Format),
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
+        ///       message: string,
+        ///       target: string,
+        ///       details: [Error],
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
+        ///         message: string,
+        ///         details: Dictionary&lt;string, string&gt;,
+        ///         target: string,
+        ///         innererror: InnerErrorModel
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
@@ -2221,14 +2305,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Operation<BinaryData> Export(bool waitForCompletion, string projectName, string format = null, string assetKind = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.Export");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.Export");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateExportRequest(projectName, format, assetKind, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.Export", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Export", OperationFinalStateVia.Location, context, waitForCompletion);
             }
             catch (Exception e)
             {
@@ -2245,6 +2329,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="assetKind"> Kind of the asset of the project. Allowed values: &quot;qnas&quot; | &quot;synonyms&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2331,14 +2416,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Operation<BinaryData>> ImportAsync(bool waitForCompletion, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.Import");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.Import");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2355,6 +2440,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="assetKind"> Kind of the asset of the project. Allowed values: &quot;qnas&quot; | &quot;synonyms&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2441,14 +2527,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Operation<BinaryData> Import(bool waitForCompletion, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.Import");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.Import");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context, waitForCompletion);
             }
             catch (Exception e)
             {
@@ -2463,6 +2549,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -2487,15 +2574,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Operation<BinaryData>> DeployProjectAsync(bool waitForCompletion, string projectName, string deploymentName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.DeployProject");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.DeployProject");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2510,6 +2597,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -2534,15 +2622,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Operation<BinaryData> DeployProject(bool waitForCompletion, string projectName, string deploymentName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.DeployProject");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.DeployProject");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitForCompletion);
             }
             catch (Exception e)
             {
@@ -2557,6 +2645,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2594,15 +2683,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Operation<BinaryData>> UpdateSourcesAsync(bool waitForCompletion, string projectName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateSources");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateSources");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2617,6 +2706,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2654,15 +2744,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Operation<BinaryData> UpdateSources(bool waitForCompletion, string projectName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateSources");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateSources");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context, waitForCompletion);
             }
             catch (Exception e)
             {
@@ -2677,6 +2767,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2736,15 +2827,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Operation<BinaryData>> UpdateQnasAsync(bool waitForCompletion, string projectName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateQnas");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateQnas");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2759,6 +2850,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2818,15 +2910,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Operation<BinaryData> UpdateQnas(bool waitForCompletion, string projectName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateQnas");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateQnas");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context, waitForCompletion);
             }
             catch (Exception e)
             {
@@ -2955,7 +3047,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier202.Instance;
+            message.ResponseClassifier = ResponseClassifier200202.Instance;
             return message;
         }
 
@@ -3417,6 +3509,20 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             {
                 return message.Response.Status switch
                 {
+                    202 => false,
+                    _ => true
+                };
+            }
+        }
+        private sealed class ResponseClassifier200202 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200202();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    200 => false,
                     202 => false,
                     _ => true
                 };

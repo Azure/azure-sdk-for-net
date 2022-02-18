@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 
@@ -20,26 +19,28 @@ namespace Azure.ResourceManager.Compute
 {
     internal partial class GalleryApplicationVersionsRestOperations
     {
-        private Uri endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
         private readonly string _userAgent;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of GalleryApplicationVersionsRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="options"> The client options used to construct the current client. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public GalleryApplicationVersionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, Uri endpoint = null, string apiVersion = default)
+        public GalleryApplicationVersionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            this.apiVersion = apiVersion ?? "2021-07-01";
-            _clientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2021-07-01";
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
-            _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
+            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionData galleryApplicationVersion)
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Compute
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -59,14 +60,14 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(galleryApplicationName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(galleryApplicationVersionName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(galleryApplicationVersion);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="galleryApplicationVersion"> Parameters supplied to the create or update gallery Application Version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, <paramref name="galleryApplicationVersionName"/>, or <paramref name="galleryApplicationVersion"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, <paramref name="galleryApplicationVersionName"/> or <paramref name="galleryApplicationVersion"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionData galleryApplicationVersion, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Compute
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="galleryApplicationVersion"> Parameters supplied to the create or update gallery Application Version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, <paramref name="galleryApplicationVersionName"/>, or <paramref name="galleryApplicationVersion"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, <paramref name="galleryApplicationVersionName"/> or <paramref name="galleryApplicationVersion"/> is null. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionData galleryApplicationVersion, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -164,17 +165,17 @@ namespace Azure.ResourceManager.Compute
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionUpdate galleryApplicationVersion)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionUpdateOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -185,14 +186,14 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(galleryApplicationName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(galleryApplicationVersionName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(galleryApplicationVersion);
+            content.JsonWriter.WriteObjectValue(options);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -202,10 +203,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition resides. </param>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition in which the Application Version is to be updated. </param>
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be updated. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
-        /// <param name="galleryApplicationVersion"> Parameters supplied to the update gallery Application Version operation. </param>
+        /// <param name="options"> Parameters supplied to the update gallery Application Version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, <paramref name="galleryApplicationVersionName"/>, or <paramref name="galleryApplicationVersion"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionUpdate galleryApplicationVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, <paramref name="galleryApplicationVersionName"/> or <paramref name="options"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -227,19 +228,19 @@ namespace Azure.ResourceManager.Compute
             {
                 throw new ArgumentNullException(nameof(galleryApplicationVersionName));
             }
-            if (galleryApplicationVersion == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(galleryApplicationVersion));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, options);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -249,10 +250,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition resides. </param>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition in which the Application Version is to be updated. </param>
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be updated. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
-        /// <param name="galleryApplicationVersion"> Parameters supplied to the update gallery Application Version operation. </param>
+        /// <param name="options"> Parameters supplied to the update gallery Application Version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, <paramref name="galleryApplicationVersionName"/>, or <paramref name="galleryApplicationVersion"/> is null. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionUpdate galleryApplicationVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, <paramref name="galleryApplicationVersionName"/> or <paramref name="options"/> is null. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -274,19 +275,19 @@ namespace Azure.ResourceManager.Compute
             {
                 throw new ArgumentNullException(nameof(galleryApplicationVersionName));
             }
-            if (galleryApplicationVersion == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(galleryApplicationVersion));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, options);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -296,7 +297,7 @@ namespace Azure.ResourceManager.Compute
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -311,10 +312,10 @@ namespace Azure.ResourceManager.Compute
             {
                 uri.AppendQuery("$expand", expand.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -326,7 +327,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, or <paramref name="galleryApplicationVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/> or <paramref name="galleryApplicationVersionName"/> is null. </exception>
         public async Task<Response<GalleryApplicationVersionData>> GetAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -364,7 +365,7 @@ namespace Azure.ResourceManager.Compute
                 case 404:
                     return Response.FromValue((GalleryApplicationVersionData)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -376,7 +377,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, or <paramref name="galleryApplicationVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/> or <paramref name="galleryApplicationVersionName"/> is null. </exception>
         public Response<GalleryApplicationVersionData> Get(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -414,7 +415,7 @@ namespace Azure.ResourceManager.Compute
                 case 404:
                     return Response.FromValue((GalleryApplicationVersionData)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -424,7 +425,7 @@ namespace Azure.ResourceManager.Compute
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -435,10 +436,10 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(galleryApplicationName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(galleryApplicationVersionName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -449,7 +450,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition in which the Application Version resides. </param>
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, or <paramref name="galleryApplicationVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/> or <paramref name="galleryApplicationVersionName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -482,7 +483,7 @@ namespace Azure.ResourceManager.Compute
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -493,7 +494,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition in which the Application Version resides. </param>
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, or <paramref name="galleryApplicationVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/> or <paramref name="galleryApplicationVersionName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -526,7 +527,7 @@ namespace Azure.ResourceManager.Compute
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -536,7 +537,7 @@ namespace Azure.ResourceManager.Compute
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -546,10 +547,10 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/applications/", false);
             uri.AppendPath(galleryApplicationName, true);
             uri.AppendPath("/versions", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -559,7 +560,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition resides. </param>
         /// <param name="galleryApplicationName"> The name of the Shared Application Gallery Application Definition from which the Application Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryApplicationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="galleryApplicationName"/> is null. </exception>
         public async Task<Response<GalleryApplicationVersionList>> ListByGalleryApplicationAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -591,7 +592,7 @@ namespace Azure.ResourceManager.Compute
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -601,7 +602,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition resides. </param>
         /// <param name="galleryApplicationName"> The name of the Shared Application Gallery Application Definition from which the Application Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryApplicationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="galleryApplicationName"/> is null. </exception>
         public Response<GalleryApplicationVersionList> ListByGalleryApplication(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -633,7 +634,7 @@ namespace Azure.ResourceManager.Compute
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -643,11 +644,11 @@ namespace Azure.ResourceManager.Compute
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -658,7 +659,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition resides. </param>
         /// <param name="galleryApplicationName"> The name of the Shared Application Gallery Application Definition from which the Application Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryApplicationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="galleryApplicationName"/> is null. </exception>
         public async Task<Response<GalleryApplicationVersionList>> ListByGalleryApplicationNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -694,7 +695,7 @@ namespace Azure.ResourceManager.Compute
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -705,7 +706,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition resides. </param>
         /// <param name="galleryApplicationName"> The name of the Shared Application Gallery Application Definition from which the Application Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryApplicationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="galleryApplicationName"/> is null. </exception>
         public Response<GalleryApplicationVersionList> ListByGalleryApplicationNextPage(string nextLink, string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -741,7 +742,7 @@ namespace Azure.ResourceManager.Compute
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

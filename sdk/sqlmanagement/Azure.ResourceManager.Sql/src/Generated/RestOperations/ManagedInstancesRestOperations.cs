@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -20,26 +19,28 @@ namespace Azure.ResourceManager.Sql
 {
     internal partial class ManagedInstancesRestOperations
     {
-        private Uri endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
         private readonly string _userAgent;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of ManagedInstancesRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="options"> The client options used to construct the current client. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public ManagedInstancesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, Uri endpoint = null, string apiVersion = default)
+        public ManagedInstancesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            this.apiVersion = apiVersion ?? "2020-11-01-preview";
-            _clientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2020-11-01-preview";
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
-            _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
+            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
 
         internal HttpMessage CreateListByInstancePoolRequest(string subscriptionId, string resourceGroupName, string instancePoolName, string expand)
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Sql
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -60,10 +61,10 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.AppendQuery("$expand", expand, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="instancePoolName"> The instance pool name. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="instancePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is null. </exception>
         public async Task<Response<ManagedInstanceListResult>> ListByInstancePoolAsync(string subscriptionId, string resourceGroupName, string instancePoolName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Sql
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="instancePoolName"> The instance pool name. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="instancePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is null. </exception>
         public Response<ManagedInstanceListResult> ListByInstancePool(string subscriptionId, string resourceGroupName, string instancePoolName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.Sql
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.Sql
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances", false);
@@ -157,10 +158,10 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.AppendQuery("$expand", expand, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -188,7 +189,7 @@ namespace Azure.ResourceManager.Sql
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -216,7 +217,7 @@ namespace Azure.ResourceManager.Sql
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -226,7 +227,7 @@ namespace Azure.ResourceManager.Sql
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -236,10 +237,10 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.AppendQuery("$expand", expand, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -272,7 +273,7 @@ namespace Azure.ResourceManager.Sql
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -305,7 +306,7 @@ namespace Azure.ResourceManager.Sql
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -315,7 +316,7 @@ namespace Azure.ResourceManager.Sql
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -326,10 +327,10 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.AppendQuery("$expand", expand, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -339,7 +340,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         public async Task<Response<ManagedInstanceData>> GetAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -369,7 +370,7 @@ namespace Azure.ResourceManager.Sql
                 case 404:
                     return Response.FromValue((ManagedInstanceData)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -379,7 +380,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         public Response<ManagedInstanceData> Get(string subscriptionId, string resourceGroupName, string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -409,7 +410,7 @@ namespace Azure.ResourceManager.Sql
                 case 404:
                     return Response.FromValue((ManagedInstanceData)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -419,21 +420,21 @@ namespace Azure.ResourceManager.Sql
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -443,7 +444,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="parameters"> The requested managed instance resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, ManagedInstanceData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -472,7 +473,7 @@ namespace Azure.ResourceManager.Sql
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -482,7 +483,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="parameters"> The requested managed instance resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string managedInstanceName, ManagedInstanceData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -511,7 +512,7 @@ namespace Azure.ResourceManager.Sql
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -521,16 +522,16 @@ namespace Azure.ResourceManager.Sql
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -539,7 +540,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -564,7 +565,7 @@ namespace Azure.ResourceManager.Sql
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -573,7 +574,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -598,31 +599,31 @@ namespace Azure.ResourceManager.Sql
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, ManagedInstanceUpdate parameters)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, ManagedInstanceUpdateOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(options);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -630,10 +631,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="parameters"> The requested managed instance resource state. </param>
+        /// <param name="options"> The requested managed instance resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, ManagedInstanceUpdate parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="options"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, ManagedInstanceUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -647,12 +648,12 @@ namespace Azure.ResourceManager.Sql
             {
                 throw new ArgumentNullException(nameof(managedInstanceName));
             }
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, managedInstanceName, parameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, managedInstanceName, options);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -660,7 +661,7 @@ namespace Azure.ResourceManager.Sql
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -668,10 +669,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="parameters"> The requested managed instance resource state. </param>
+        /// <param name="options"> The requested managed instance resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string managedInstanceName, ManagedInstanceUpdate parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="options"/> is null. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string managedInstanceName, ManagedInstanceUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -685,12 +686,12 @@ namespace Azure.ResourceManager.Sql
             {
                 throw new ArgumentNullException(nameof(managedInstanceName));
             }
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, managedInstanceName, parameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, managedInstanceName, options);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -698,7 +699,7 @@ namespace Azure.ResourceManager.Sql
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -708,7 +709,7 @@ namespace Azure.ResourceManager.Sql
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -744,10 +745,10 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.AppendQuery("observationMetric", observationMetric.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -763,7 +764,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="aggregationFunction"> Aggregation function to be used, default value is &apos;sum&apos;. </param>
         /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is &apos;cpu&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         public async Task<Response<TopQueriesListResult>> ListByManagedInstanceAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, MetricType? observationMetric = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -791,7 +792,7 @@ namespace Azure.ResourceManager.Sql
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -807,7 +808,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="aggregationFunction"> Aggregation function to be used, default value is &apos;sum&apos;. </param>
         /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is &apos;cpu&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         public Response<TopQueriesListResult> ListByManagedInstance(string subscriptionId, string resourceGroupName, string managedInstanceName, int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, MetricType? observationMetric = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -835,7 +836,7 @@ namespace Azure.ResourceManager.Sql
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -845,7 +846,7 @@ namespace Azure.ResourceManager.Sql
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -857,9 +858,9 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.AppendQuery("replicaType", replicaType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -869,7 +870,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance to failover. </param>
         /// <param name="replicaType"> The type of replica to be failed over. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         public async Task<Response> FailoverAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -893,7 +894,7 @@ namespace Azure.ResourceManager.Sql
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -903,7 +904,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance to failover. </param>
         /// <param name="replicaType"> The type of replica to be failed over. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         public Response Failover(string subscriptionId, string resourceGroupName, string managedInstanceName, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -927,7 +928,7 @@ namespace Azure.ResourceManager.Sql
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -937,11 +938,11 @@ namespace Azure.ResourceManager.Sql
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -952,7 +953,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="instancePoolName"> The instance pool name. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="instancePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is null. </exception>
         public async Task<Response<ManagedInstanceListResult>> ListByInstancePoolNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string instancePoolName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -984,7 +985,7 @@ namespace Azure.ResourceManager.Sql
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -995,7 +996,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="instancePoolName"> The instance pool name. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="instancePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is null. </exception>
         public Response<ManagedInstanceListResult> ListByInstancePoolNextPage(string nextLink, string subscriptionId, string resourceGroupName, string instancePoolName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1027,7 +1028,7 @@ namespace Azure.ResourceManager.Sql
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1037,11 +1038,11 @@ namespace Azure.ResourceManager.Sql
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1074,7 +1075,7 @@ namespace Azure.ResourceManager.Sql
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1107,7 +1108,7 @@ namespace Azure.ResourceManager.Sql
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1117,11 +1118,11 @@ namespace Azure.ResourceManager.Sql
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1131,7 +1132,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ManagedInstanceListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1159,7 +1160,7 @@ namespace Azure.ResourceManager.Sql
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1169,7 +1170,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ManagedInstanceListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1197,7 +1198,7 @@ namespace Azure.ResourceManager.Sql
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1207,11 +1208,11 @@ namespace Azure.ResourceManager.Sql
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1228,7 +1229,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="aggregationFunction"> Aggregation function to be used, default value is &apos;sum&apos;. </param>
         /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is &apos;cpu&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         public async Task<Response<TopQueriesListResult>> ListByManagedInstanceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName, int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, MetricType? observationMetric = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1260,7 +1261,7 @@ namespace Azure.ResourceManager.Sql
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1277,7 +1278,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="aggregationFunction"> Aggregation function to be used, default value is &apos;sum&apos;. </param>
         /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is &apos;cpu&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         public Response<TopQueriesListResult> ListByManagedInstanceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName, int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, MetricType? observationMetric = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1309,7 +1310,7 @@ namespace Azure.ResourceManager.Sql
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

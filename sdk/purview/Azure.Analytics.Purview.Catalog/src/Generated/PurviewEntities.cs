@@ -20,8 +20,10 @@ namespace Azure.Analytics.Purview.Catalog
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
@@ -163,12 +165,12 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdate");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -309,12 +311,12 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdate");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -405,12 +407,12 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(guids, nameof(guids));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuids");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetByGuids");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetByGuidsRequest(guids, minExtInfo, ignoreRelationships, excludeRelationshipTypes, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -501,12 +503,12 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(guids, nameof(guids));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuids");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetByGuids");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetByGuidsRequest(guids, minExtInfo, ignoreRelationships, excludeRelationshipTypes, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -649,12 +651,12 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateEntities");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateEntities");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateEntitiesRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -797,12 +799,12 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateEntities");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateEntities");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateEntitiesRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -882,12 +884,12 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(guids, nameof(guids));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuids");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteByGuids");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteByGuidsRequest(guids, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -967,12 +969,12 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(guids, nameof(guids));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuids");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteByGuids");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteByGuidsRequest(guids, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1023,12 +1025,12 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassification");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddClassification");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAddClassificationRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1079,12 +1081,12 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassification");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddClassification");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAddClassificationRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1099,6 +1101,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1170,14 +1173,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetByGuidAsync(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuid");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetByGuid");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetByGuidRequest(guid, minExtInfo, ignoreRelationships, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1192,6 +1195,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1263,14 +1267,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetByGuid(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuid");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetByGuid");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetByGuidRequest(guid, minExtInfo, ignoreRelationships, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1289,7 +1293,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="name"> The name of the attribute. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/>, or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1355,16 +1360,16 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> PartialUpdateEntityAttributeByGuidAsync(string guid, string name, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityAttributeByGuid");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityAttributeByGuid");
             scope.Start();
             try
             {
                 using HttpMessage message = CreatePartialUpdateEntityAttributeByGuidRequest(guid, name, content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1383,7 +1388,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="name"> The name of the attribute. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/>, or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1449,16 +1455,16 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response PartialUpdateEntityAttributeByGuid(string guid, string name, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityAttributeByGuid");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityAttributeByGuid");
             scope.Start();
             try
             {
                 using HttpMessage message = CreatePartialUpdateEntityAttributeByGuidRequest(guid, name, content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1471,6 +1477,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1536,14 +1543,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteByGuidAsync(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuid");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteByGuid");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteByGuidRequest(guid, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1556,6 +1563,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1621,14 +1629,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response DeleteByGuid(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuid");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteByGuid");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteByGuidRequest(guid, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1642,6 +1650,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1675,15 +1684,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetClassificationAsync(string guid, string classificationName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(guid, nameof(guid));
-            Argument.AssertNotNull(classificationName, nameof(classificationName));
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassification");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetClassification");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetClassificationRequest(guid, classificationName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1697,6 +1706,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1730,15 +1740,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetClassification(string guid, string classificationName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(guid, nameof(guid));
-            Argument.AssertNotNull(classificationName, nameof(classificationName));
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassification");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetClassification");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetClassificationRequest(guid, classificationName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1752,6 +1762,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1766,15 +1777,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteClassificationAsync(string guid, string classificationName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(guid, nameof(guid));
-            Argument.AssertNotNull(classificationName, nameof(classificationName));
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassification");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteClassification");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteClassificationRequest(guid, classificationName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1788,6 +1799,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1802,15 +1814,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response DeleteClassification(string guid, string classificationName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(guid, nameof(guid));
-            Argument.AssertNotNull(classificationName, nameof(classificationName));
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassification");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteClassification");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteClassificationRequest(guid, classificationName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1823,6 +1835,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1847,14 +1860,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetClassificationsAsync(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassifications");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetClassifications");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetClassificationsRequest(guid, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1867,6 +1880,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1891,14 +1905,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetClassifications(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassifications");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetClassifications");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetClassificationsRequest(guid, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1912,6 +1926,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1945,15 +1960,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> AddClassificationsAsync(string guid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassifications");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddClassifications");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAddClassificationsRequest(guid, content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1967,6 +1982,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2000,15 +2016,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response AddClassifications(string guid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassifications");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddClassifications");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAddClassificationsRequest(guid, content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2022,6 +2038,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2055,15 +2072,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> UpdateClassificationsAsync(string guid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassifications");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.UpdateClassifications");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUpdateClassificationsRequest(guid, content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2077,6 +2094,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2110,15 +2128,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response UpdateClassifications(string guid, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassifications");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.UpdateClassifications");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUpdateClassificationsRequest(guid, content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2141,6 +2159,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2212,14 +2231,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetByUniqueAttributesAsync(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(typeName, nameof(typeName));
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByUniqueAttributes");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetByUniqueAttributes");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrQualifiedName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2242,6 +2261,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2313,14 +2333,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetByUniqueAttributes(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(typeName, nameof(typeName));
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByUniqueAttributes");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetByUniqueAttributes");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrQualifiedName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2344,6 +2364,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2466,15 +2487,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> PartialUpdateEntityByUniqueAttributesAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(typeName, nameof(typeName));
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityByUniqueAttributes");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityByUniqueAttributes");
             scope.Start();
             try
             {
                 using HttpMessage message = CreatePartialUpdateEntityByUniqueAttributesRequest(typeName, content, attrQualifiedName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2498,6 +2519,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2620,15 +2642,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response PartialUpdateEntityByUniqueAttributes(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(typeName, nameof(typeName));
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityByUniqueAttributes");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityByUniqueAttributes");
             scope.Start();
             try
             {
                 using HttpMessage message = CreatePartialUpdateEntityByUniqueAttributesRequest(typeName, content, attrQualifiedName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2649,6 +2671,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2714,14 +2737,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteByUniqueAttributeAsync(string typeName, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(typeName, nameof(typeName));
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByUniqueAttribute");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteByUniqueAttribute");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attrQualifiedName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2742,6 +2765,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2807,14 +2831,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response DeleteByUniqueAttribute(string typeName, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(typeName, nameof(typeName));
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByUniqueAttribute");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteByUniqueAttribute");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attrQualifiedName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2829,6 +2853,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -2843,15 +2868,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteClassificationByUniqueAttributeAsync(string typeName, string classificationName, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(typeName, nameof(typeName));
-            Argument.AssertNotNull(classificationName, nameof(classificationName));
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassificationByUniqueAttribute");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteClassificationByUniqueAttribute");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteClassificationByUniqueAttributeRequest(typeName, classificationName, attrQualifiedName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2866,6 +2891,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -2880,15 +2906,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response DeleteClassificationByUniqueAttribute(string typeName, string classificationName, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(typeName, nameof(typeName));
-            Argument.AssertNotNull(classificationName, nameof(classificationName));
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassificationByUniqueAttribute");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteClassificationByUniqueAttribute");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteClassificationByUniqueAttributeRequest(typeName, classificationName, attrQualifiedName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2903,6 +2929,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2936,15 +2963,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> AddClassificationsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(typeName, nameof(typeName));
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassificationsByUniqueAttribute");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2959,6 +2986,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2992,15 +3020,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response AddClassificationsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(typeName, nameof(typeName));
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassificationsByUniqueAttribute");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -3015,6 +3043,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -3048,15 +3077,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> UpdateClassificationsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(typeName, nameof(typeName));
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassificationsByUniqueAttribute");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.UpdateClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUpdateClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3071,6 +3100,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -3104,15 +3134,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response UpdateClassificationsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(typeName, nameof(typeName));
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassificationsByUniqueAttribute");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.UpdateClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUpdateClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -3146,12 +3176,12 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.SetClassifications");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.SetClassifications");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateSetClassificationsRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3185,12 +3215,12 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.SetClassifications");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.SetClassifications");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateSetClassificationsRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -3218,6 +3248,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="attrNQualifiedName"> Qualified name of an entity. E.g. to find 2 entities you can set attrs_0:qualifiedName=db1@cl1&amp;attrs_2:qualifiedName=db2@cl1. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3291,14 +3322,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetEntitiesByUniqueAttributesAsync(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(typeName, nameof(typeName));
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetEntitiesByUniqueAttributes");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetEntitiesByUniqueAttributes");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetEntitiesByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3326,6 +3357,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="attrNQualifiedName"> Qualified name of an entity. E.g. to find 2 entities you can set attrs_0:qualifiedName=db1@cl1&amp;attrs_2:qualifiedName=db2@cl1. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3399,14 +3431,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetEntitiesByUniqueAttributes(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(typeName, nameof(typeName));
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetEntitiesByUniqueAttributes");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetEntitiesByUniqueAttributes");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetEntitiesByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -3419,6 +3451,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3478,14 +3511,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetHeaderAsync(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetHeader");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetHeader");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetHeaderRequest(guid, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3498,6 +3531,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3557,14 +3591,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetHeader(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetHeader");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetHeader");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetHeaderRequest(guid, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {

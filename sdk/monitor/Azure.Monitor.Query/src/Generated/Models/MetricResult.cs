@@ -20,7 +20,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="localizedName"> the name and the display name of the metric, i.e. it is localizable string. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="timeSeries"> the time series returned when a data query is performed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceType"/>, <paramref name="localizedName"/>, or <paramref name="timeSeries"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceType"/>, <paramref name="localizedName"/> or <paramref name="timeSeries"/> is null. </exception>
         internal MetricResult(string id, string resourceType, LocalizableString localizedName, MetricUnit unit, IEnumerable<MetricTimeSeriesElement> timeSeries)
         {
             if (id == null)

@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="length"> The length of the target. </param>
         /// <param name="text"> The target text detected. </param>
         /// <param name="relations"> The array of either assessment or target objects which is related to the target. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sentiment"/>, <paramref name="confidenceScores"/>, <paramref name="text"/>, or <paramref name="relations"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sentiment"/>, <paramref name="confidenceScores"/>, <paramref name="text"/> or <paramref name="relations"/> is null. </exception>
         internal SentenceTarget(string sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, IEnumerable<TargetRelation> relations)
         {
             if (sentiment == null)

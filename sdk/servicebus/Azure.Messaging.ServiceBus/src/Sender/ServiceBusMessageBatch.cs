@@ -140,7 +140,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>The set of messages as an enumerable of the requested type.</returns>
         ///
-        internal IEnumerable<T> AsEnumerable<T>() => _innerBatch.AsEnumerable<T>();
+        internal IReadOnlyCollection<T> AsReadOnly<T>() => _innerBatch.AsReadOnly<T>();
 
         /// <summary>
         ///   Locks the batch to prevent new messages from being added while a service

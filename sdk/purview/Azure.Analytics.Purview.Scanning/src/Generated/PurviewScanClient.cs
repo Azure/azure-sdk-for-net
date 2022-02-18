@@ -22,11 +22,13 @@ namespace Azure.Analytics.Purview.Scanning
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _dataSourceName;
         private readonly string _scanName;
         private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
@@ -42,16 +44,17 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="scanName"> The String to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="dataSourceName"/>, <paramref name="scanName"/>, or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="dataSourceName"/>, <paramref name="scanName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataSourceName"/> or <paramref name="scanName"/> is an empty string, and was expected to be non-empty. </exception>
         public PurviewScanClient(Uri endpoint, string dataSourceName, string scanName, TokenCredential credential, PurviewScanningServiceClientOptions options = null)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(dataSourceName, nameof(dataSourceName));
-            Argument.AssertNotNull(scanName, nameof(scanName));
+            Argument.AssertNotNullOrEmpty(dataSourceName, nameof(dataSourceName));
+            Argument.AssertNotNullOrEmpty(scanName, nameof(scanName));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new PurviewScanningServiceClientOptions();
 
-            _clientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
@@ -96,12 +99,12 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> GetFilterAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetFilter");
+            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetFilter");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetFilterRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -146,12 +149,12 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response GetFilter(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetFilter");
+            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetFilter");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetFilterRequest(context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -207,12 +210,12 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> CreateOrUpdateFilterAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateFilter");
+            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateFilter");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateFilterRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -268,12 +271,12 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response CreateOrUpdateFilter(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateFilter");
+            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateFilter");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateFilterRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -410,12 +413,12 @@ namespace Azure.Analytics.Purview.Scanning
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdate");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -552,12 +555,12 @@ namespace Azure.Analytics.Purview.Scanning
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdate");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -641,12 +644,12 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> GetPropertiesAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetProperties");
+            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetProperties");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetPropertiesRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -730,12 +733,12 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response GetProperties(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetProperties");
+            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetProperties");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetPropertiesRequest(context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -819,12 +822,12 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> DeleteAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.Delete");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -908,12 +911,12 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response Delete(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.Delete");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteRequest(context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -927,6 +930,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="scanLevel"> The ScanLevelType to use. Allowed values: &quot;Full&quot; | &quot;Incremental&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -972,14 +976,14 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> RunScanAsync(string runId, string scanLevel = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(runId, nameof(runId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.RunScan");
+            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.RunScan");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateRunScanRequest(runId, scanLevel, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -993,6 +997,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="scanLevel"> The ScanLevelType to use. Allowed values: &quot;Full&quot; | &quot;Incremental&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1038,14 +1043,14 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response RunScan(string runId, string scanLevel = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(runId, nameof(runId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.RunScan");
+            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.RunScan");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateRunScanRequest(runId, scanLevel, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1058,6 +1063,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="runId"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1103,14 +1109,14 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> CancelScanAsync(string runId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(runId, nameof(runId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CancelScan");
+            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.CancelScan");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCancelScanRequest(runId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1123,6 +1129,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="runId"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1168,14 +1175,14 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response CancelScan(string runId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(runId, nameof(runId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CancelScan");
+            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.CancelScan");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCancelScanRequest(runId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1245,12 +1252,12 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> GetTriggerAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetTrigger");
+            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetTrigger");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetTriggerRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1320,12 +1327,12 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response GetTrigger(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetTrigger");
+            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetTrigger");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetTriggerRequest(context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1434,12 +1441,12 @@ namespace Azure.Analytics.Purview.Scanning
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateTrigger");
+            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateTrigger");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateTriggerRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1548,12 +1555,12 @@ namespace Azure.Analytics.Purview.Scanning
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateTrigger");
+            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateTrigger");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateTriggerRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1623,12 +1630,12 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> DeleteTriggerAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.DeleteTrigger");
+            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.DeleteTrigger");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteTriggerRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1698,12 +1705,12 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response DeleteTrigger(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.DeleteTrigger");
+            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.DeleteTrigger");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteTriggerRequest(context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1786,7 +1793,7 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual AsyncPageable<BinaryData> GetRunsAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewScanClient.GetRuns");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewScanClient.GetRuns");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1794,7 +1801,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetRunsRequest(context)
                         : CreateGetRunsNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1875,7 +1882,7 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Pageable<BinaryData> GetRuns(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewScanClient.GetRuns");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewScanClient.GetRuns");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1883,7 +1890,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetRunsRequest(context)
                         : CreateGetRunsNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));

@@ -8,16 +8,27 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    public partial class PrivateLinkResourceData
+    public partial class PrivateLinkResourceData : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties");
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+            writer.WriteEndObject();
+        }
+
         internal static PrivateLinkResourceData DeserializePrivateLinkResourceData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> groupId = default;
             Optional<IReadOnlyList<string>> requiredMembers = default;
             Optional<IReadOnlyList<string>> requiredZoneNames = default;
@@ -36,6 +47,11 @@ namespace Azure.ResourceManager.CosmosDB
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -86,7 +102,7 @@ namespace Azure.ResourceManager.CosmosDB
                     continue;
                 }
             }
-            return new PrivateLinkResourceData(id, name, type, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            return new PrivateLinkResourceData(id, name, type, systemData, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
         }
     }
 }

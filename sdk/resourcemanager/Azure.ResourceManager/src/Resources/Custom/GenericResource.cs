@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 [assembly: CodeGenSuppressType("GenericResourceFilter")]
 [assembly: CodeGenSuppressType("GenericResource")]
+[assembly: CodeGenSuppressType("GenericResourceIdentityType")]
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A Class representing a GenericResource along with the instance operations that can be performed on it. </summary>
@@ -30,56 +30,28 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref = "GenericResource"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal GenericResource(ArmResource options, GenericResourceData data) : base(options, data.Id)
+        internal GenericResource(ArmClient client, GenericResourceData data) : this(client, data.Id)
         {
-            ResourceIdentifier subscription = Id.GetSubscriptionResourceIdentifier();
-            if (subscription == null)
-            {
-                throw new ArgumentException("Only resource in a subscription is supported");
-            }
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(Id.ResourceType, out string apiVersion);
-            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _providerCollection = new ProviderCollection(this, subscription);
         }
 
         /// <summary> Initializes a new instance of the <see cref="GenericResource"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal GenericResource(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal GenericResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             ResourceIdentifier subscription = Id.GetSubscriptionResourceIdentifier();
             if (subscription == null)
             {
                 throw new ArgumentException("Only resource in a subscription is supported");
             }
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(Id.ResourceType, out string apiVersion);
-            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _providerCollection = new ProviderCollection(this, subscription);
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="GenericResource"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal GenericResource(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            ResourceIdentifier subscription = Id.GetSubscriptionResourceIdentifier();
-            if (subscription == null)
-            {
-                throw new ArgumentException("Only resource in a subscription is supported");
-            }
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(Id.ResourceType, out string apiVersion);
-            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _providerCollection = new ProviderCollection(this, subscription);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Id.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(Id.ResourceType, out string apiVersion);
+            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, apiVersion);
+            _providerCollection = new ProviderCollection(Client.GetSubscription(subscription));
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
@@ -97,6 +69,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            //no op but here for code generation
+        }
+
         /// RequestPath: /{resourceId}
         /// ContextualPath: /{resourceId}
         /// OperationId: Resources_GetById
@@ -112,7 +89,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _resourcesRestClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new GenericResource(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GenericResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -136,7 +113,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _resourcesRestClient.GetById(Id, apiVersion, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GenericResource(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GenericResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,7 +128,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Deletes a resource by ID. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<GenericResourceDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("GenericResource.Delete");
             scope.Start();
@@ -159,7 +136,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
                 var response = await _resourcesRestClient.DeleteByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
-                var operation = new GenericResourceDeleteOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateDeleteByIdRequest(Id, apiVersion).Request, response);
+                var operation = new ResourcesArmOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateDeleteByIdRequest(Id, apiVersion).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -177,7 +154,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Deletes a resource by ID. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual GenericResourceDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("GenericResource.Delete");
             scope.Start();
@@ -185,7 +162,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = GetApiVersion(cancellationToken);
                 var response = _resourcesRestClient.DeleteById(Id, apiVersion, cancellationToken);
-                var operation = new GenericResourceDeleteOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateDeleteByIdRequest(Id, apiVersion).Request, response);
+                var operation = new ResourcesArmOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateDeleteByIdRequest(Id, apiVersion).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -218,7 +195,7 @@ namespace Azure.ResourceManager.Resources
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _resourcesRestClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new GenericResource(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new GenericResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -248,7 +225,7 @@ namespace Azure.ResourceManager.Resources
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _resourcesRestClient.GetById(Id, apiVersion, cancellationToken);
-                return Response.FromValue(new GenericResource(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new GenericResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -278,7 +255,7 @@ namespace Azure.ResourceManager.Resources
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _resourcesRestClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new GenericResource(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new GenericResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -308,7 +285,7 @@ namespace Azure.ResourceManager.Resources
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _resourcesRestClient.GetById(Id, apiVersion, cancellationToken);
-                return Response.FromValue(new GenericResource(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new GenericResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -337,7 +314,7 @@ namespace Azure.ResourceManager.Resources
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _resourcesRestClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new GenericResource(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new GenericResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -366,7 +343,7 @@ namespace Azure.ResourceManager.Resources
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _resourcesRestClient.GetById(Id, apiVersion, cancellationToken);
-                return Response.FromValue(new GenericResource(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new GenericResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -383,7 +360,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<GenericResourceUpdateOperation> UpdateAsync(bool waitForCompletion, GenericResourceData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<GenericResource>> UpdateAsync(bool waitForCompletion, GenericResourceData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -396,7 +373,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
                 var response = await _resourcesRestClient.UpdateByIdAsync(Id, apiVersion, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new GenericResourceUpdateOperation(this, _clientDiagnostics, Pipeline, _resourcesRestClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, response);
+                var operation = new ResourcesArmOperation<GenericResource>(new GenericResourceOperationSource(Client), _clientDiagnostics, Pipeline, _resourcesRestClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -416,7 +393,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual GenericResourceUpdateOperation Update(bool waitForCompletion, GenericResourceData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GenericResource> Update(bool waitForCompletion, GenericResourceData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -429,7 +406,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = GetApiVersion(cancellationToken);
                 var response = _resourcesRestClient.UpdateById(Id, apiVersion, parameters, cancellationToken);
-                var operation = new GenericResourceUpdateOperation(this, _clientDiagnostics, Pipeline, _resourcesRestClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, response);
+                var operation = new ResourcesArmOperation<GenericResource>(new GenericResourceOperationSource(Client), _clientDiagnostics, Pipeline, _resourcesRestClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -443,7 +420,7 @@ namespace Azure.ResourceManager.Resources
 
         private string GetApiVersion(CancellationToken cancellationToken)
         {
-            string version = _providerCollection.TryGetApiVersion(Id.ResourceType, cancellationToken);
+            string version = _providerCollection.GetApiVersion(Id.ResourceType, cancellationToken);
             if (version is null)
             {
                 throw new InvalidOperationException($"An invalid resource id was given {Id}");
@@ -453,7 +430,7 @@ namespace Azure.ResourceManager.Resources
 
         private async Task<string> GetApiVersionAsync(CancellationToken cancellationToken)
         {
-            string version = await _providerCollection.TryGetApiVersionAsync(Id.ResourceType, cancellationToken).ConfigureAwait(false);
+            string version = await _providerCollection.GetApiVersionAsync(Id.ResourceType, cancellationToken).ConfigureAwait(false);
             if (version is null)
             {
                 throw new InvalidOperationException($"An invalid resource id was given {Id}");

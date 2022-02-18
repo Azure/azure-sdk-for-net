@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the OutboundFirewallRule data model. </summary>
-    public partial class OutboundFirewallRuleData : Resource
+    public partial class OutboundFirewallRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of OutboundFirewallRuleData. </summary>
         public OutboundFirewallRuleData()
@@ -22,8 +22,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> The state of the outbound rule. </param>
-        internal OutboundFirewallRuleData(ResourceIdentifier id, string name, ResourceType type, string provisioningState) : base(id, name, type)
+        internal OutboundFirewallRuleData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string provisioningState) : base(id, name, type, systemData)
         {
             ProvisioningState = provisioningState;
         }

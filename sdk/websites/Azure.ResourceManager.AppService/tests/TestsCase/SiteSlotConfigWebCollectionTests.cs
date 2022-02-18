@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         {
         }
 
-        private async Task<SiteSlotConfigWeb> GetSiteSlotConfigWebCollectionAsync()
+        private async Task<WebSiteSlotConfig> GetSiteSlotConfigWebCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
             var SiteName = Recording.GenerateAssetName("testSite");
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var Site = lro.Value;
             var lroSiteSlot = await Site.GetSiteSlots().CreateOrUpdateAsync(true, SiteSlotName, SiteInput);
             var siteSlot = lroSiteSlot.Value;
-            return siteSlot.GetSiteSlotConfigWeb();
+            return siteSlot.GetWebSiteSlotConfig();
         }
 
         [TestCase]
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var name = Recording.GenerateAssetName("testSiteSlotConfigWeb");
             var Input = ResourceDataHelper.GetBasicSiteConfigResourceData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(true, Input);
-            SiteSlotConfigWeb siteSlotConfigWeb = lro.Value;
+            WebSiteSlotConfig siteSlotConfigWeb = lro.Value;
             Assert.AreEqual(name, siteSlotConfigWeb.Data.Name);
         }
 
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var siteName = Recording.GenerateAssetName("testSiteSlotConfigWeb");
             var input = ResourceDataHelper.GetBasicSiteConfigResourceData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(true, input);
-            SiteSlotConfigWeb site1 = lro.Value;
-            SiteSlotConfigWeb site2 = await container.GetAsync();
+            WebSiteSlotConfig site1 = lro.Value;
+            WebSiteSlotConfig site2 = await container.GetAsync();
             ResourceDataHelper.AssertSiteSlotConfigWeb(site1.Data, site2.Data);
         }
     }

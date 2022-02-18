@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ServerCommunicationLink data model. </summary>
-    public partial class ServerCommunicationLinkData : Resource
+    public partial class ServerCommunicationLinkData : ResourceData
     {
         /// <summary> Initializes a new instance of ServerCommunicationLinkData. </summary>
         public ServerCommunicationLinkData()
@@ -22,11 +22,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Communication link location. </param>
         /// <param name="kind"> Communication link kind.  This property is used for Azure Portal metadata. </param>
         /// <param name="state"> The state. </param>
         /// <param name="partnerServer"> The name of the partner server. </param>
-        internal ServerCommunicationLinkData(ResourceIdentifier id, string name, ResourceType type, string location, string kind, string state, string partnerServer) : base(id, name, type)
+        internal ServerCommunicationLinkData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, string kind, string state, string partnerServer) : base(id, name, type, systemData)
         {
             Location = location;
             Kind = kind;

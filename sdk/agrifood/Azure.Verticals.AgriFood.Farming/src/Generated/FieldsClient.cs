@@ -22,9 +22,11 @@ namespace Azure.Verticals.AgriFood.Farming
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
@@ -45,7 +47,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new FarmBeatsClientOptions();
 
-            _clientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
@@ -57,6 +59,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="fieldId"> ID of the field. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="fieldId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="fieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -95,15 +98,15 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> GetFieldAsync(string farmerId, string fieldId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
-            Argument.AssertNotNull(fieldId, nameof(fieldId));
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(fieldId, nameof(fieldId));
 
-            using var scope = _clientDiagnostics.CreateScope("FieldsClient.GetField");
+            using var scope = ClientDiagnostics.CreateScope("FieldsClient.GetField");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetFieldRequest(farmerId, fieldId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -117,6 +120,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="fieldId"> ID of the field. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="fieldId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="fieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -155,15 +159,15 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response GetField(string farmerId, string fieldId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
-            Argument.AssertNotNull(fieldId, nameof(fieldId));
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(fieldId, nameof(fieldId));
 
-            using var scope = _clientDiagnostics.CreateScope("FieldsClient.GetField");
+            using var scope = ClientDiagnostics.CreateScope("FieldsClient.GetField");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetFieldRequest(farmerId, fieldId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -178,6 +182,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="fieldId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="fieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -232,15 +237,15 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string fieldId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
-            Argument.AssertNotNull(fieldId, nameof(fieldId));
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(fieldId, nameof(fieldId));
 
-            using var scope = _clientDiagnostics.CreateScope("FieldsClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("FieldsClient.CreateOrUpdate");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, fieldId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -255,6 +260,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="fieldId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="fieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -309,15 +315,15 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response CreateOrUpdate(string farmerId, string fieldId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
-            Argument.AssertNotNull(fieldId, nameof(fieldId));
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(fieldId, nameof(fieldId));
 
-            using var scope = _clientDiagnostics.CreateScope("FieldsClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("FieldsClient.CreateOrUpdate");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, fieldId, content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -331,6 +337,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="fieldId"> ID of the field. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="fieldId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="fieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -353,15 +360,15 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> DeleteAsync(string farmerId, string fieldId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
-            Argument.AssertNotNull(fieldId, nameof(fieldId));
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(fieldId, nameof(fieldId));
 
-            using var scope = _clientDiagnostics.CreateScope("FieldsClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("FieldsClient.Delete");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteRequest(farmerId, fieldId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -375,6 +382,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="fieldId"> ID of the field. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="fieldId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="fieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -397,15 +405,15 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response Delete(string farmerId, string fieldId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
-            Argument.AssertNotNull(fieldId, nameof(fieldId));
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(fieldId, nameof(fieldId));
 
-            using var scope = _clientDiagnostics.CreateScope("FieldsClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("FieldsClient.Delete");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteRequest(farmerId, fieldId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -418,6 +426,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="jobId"> ID of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -458,14 +467,14 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _clientDiagnostics.CreateScope("FieldsClient.GetCascadeDeleteJobDetails");
+            using var scope = ClientDiagnostics.CreateScope("FieldsClient.GetCascadeDeleteJobDetails");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -478,6 +487,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="jobId"> ID of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -518,14 +528,14 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _clientDiagnostics.CreateScope("FieldsClient.GetCascadeDeleteJobDetails");
+            using var scope = ClientDiagnostics.CreateScope("FieldsClient.GetCascadeDeleteJobDetails");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -555,6 +565,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -599,9 +610,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual AsyncPageable<BinaryData> GetFieldsByFarmerIdAsync(string farmerId, IEnumerable<string> farmIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "FieldsClient.GetFieldsByFarmerId");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "FieldsClient.GetFieldsByFarmerId");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -609,7 +620,7 @@ namespace Azure.Verticals.AgriFood.Farming
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetFieldsByFarmerIdRequest(farmerId, farmIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
                         : CreateGetFieldsByFarmerIdNextPageRequest(nextLink, farmerId, farmIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -637,6 +648,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -681,9 +693,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Pageable<BinaryData> GetFieldsByFarmerId(string farmerId, IEnumerable<string> farmIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "FieldsClient.GetFieldsByFarmerId");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "FieldsClient.GetFieldsByFarmerId");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -691,7 +703,7 @@ namespace Azure.Verticals.AgriFood.Farming
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetFieldsByFarmerIdRequest(farmerId, farmIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
                         : CreateGetFieldsByFarmerIdNextPageRequest(nextLink, farmerId, farmIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -761,7 +773,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual AsyncPageable<BinaryData> GetFieldsAsync(IEnumerable<string> farmIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "FieldsClient.GetFields");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "FieldsClient.GetFields");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -769,7 +781,7 @@ namespace Azure.Verticals.AgriFood.Farming
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetFieldsRequest(farmIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
                         : CreateGetFieldsNextPageRequest(nextLink, farmIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -839,7 +851,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Pageable<BinaryData> GetFields(IEnumerable<string> farmIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "FieldsClient.GetFields");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "FieldsClient.GetFields");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -847,7 +859,7 @@ namespace Azure.Verticals.AgriFood.Farming
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetFieldsRequest(farmIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
                         : CreateGetFieldsNextPageRequest(nextLink, farmIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -860,7 +872,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="fieldId"> ID of the field to be deleted. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/>, or <paramref name="fieldId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/> or <paramref name="fieldId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -901,16 +914,16 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(bool waitForCompletion, string jobId, string farmerId, string fieldId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(farmerId, nameof(farmerId));
             Argument.AssertNotNull(fieldId, nameof(fieldId));
 
-            using var scope = _clientDiagnostics.CreateScope("FieldsClient.CreateCascadeDeleteJob");
+            using var scope = ClientDiagnostics.CreateScope("FieldsClient.CreateCascadeDeleteJob");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, fieldId, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "FieldsClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "FieldsClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -925,7 +938,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="fieldId"> ID of the field to be deleted. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/>, or <paramref name="fieldId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/> or <paramref name="fieldId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -966,16 +980,16 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Operation<BinaryData> CreateCascadeDeleteJob(bool waitForCompletion, string jobId, string farmerId, string fieldId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(farmerId, nameof(farmerId));
             Argument.AssertNotNull(fieldId, nameof(fieldId));
 
-            using var scope = _clientDiagnostics.CreateScope("FieldsClient.CreateCascadeDeleteJob");
+            using var scope = ClientDiagnostics.CreateScope("FieldsClient.CreateCascadeDeleteJob");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, fieldId, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "FieldsClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "FieldsClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitForCompletion);
             }
             catch (Exception e)
             {

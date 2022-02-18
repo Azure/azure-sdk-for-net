@@ -252,5 +252,69 @@ namespace EventGrid.Tests.ScenarioTests
                 this.EventGridManagementClient.Domains.DeleteAsync(resourceGroup, domainName).Wait();
             }
         }
+
+        [Fact]
+        public void DomainDisableLocalAuthAndAutoCreateAndAutoDelete()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                this.InitializeClients(context);
+
+                var location = this.ResourceManagementClient.GetLocationFromProvider();
+
+                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
+                if (string.IsNullOrWhiteSpace(resourceGroup))
+                {
+                    resourceGroup = TestUtilities.GenerateName(EventGridManagementHelper.ResourceGroupPrefix);
+                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                }
+
+                var domainName = TestUtilities.GenerateName(EventGridManagementHelper.DomainPrefix);
+                var domainTopicName1 = TestUtilities.GenerateName(EventGridManagementHelper.DomainTopicPrefix);
+                var domainTopicName2 = TestUtilities.GenerateName(EventGridManagementHelper.DomainTopicPrefix);
+
+                // Temporarily commenting this out as this is not yet enabled for the new API version
+                // var operationsResponse = this.EventGridManagementClient.Operations.List();
+
+                var originalTagsDictionary = new Dictionary<string, string>()
+                {
+                    {"originalTag1", "originalValue1"},
+                    {"originalTag2", "originalValue2"}
+                };
+
+                Domain domain = new Domain()
+                {
+                    Location = location,
+                    Tags = originalTagsDictionary,
+                    InputSchema = InputSchema.CloudEventSchemaV10,
+                    DisableLocalAuth = false,
+                    AutoCreateTopicWithFirstSubscription = false,
+                    AutoDeleteTopicWithLastSubscription = false,
+                    InputSchemaMapping = new JsonInputSchemaMapping()
+                    {
+                        Topic = new JsonField("myTopicField")
+                    }
+                };
+
+                var createDomainResponse = this.EventGridManagementClient.Domains.CreateOrUpdateAsync(resourceGroup, domainName, domain).Result;
+                Assert.NotNull(createDomainResponse);
+                Assert.Equal(createDomainResponse.Name, domainName);
+
+                TestUtilities.Wait(TimeSpan.FromSeconds(5));
+
+                // Get the created domain
+                var getDomainResponse = this.EventGridManagementClient.Domains.Get(resourceGroup, domainName);
+                if (string.Compare(getDomainResponse.ProvisioningState, "Succeeded", true) != 0)
+                {
+                    TestUtilities.Wait(TimeSpan.FromSeconds(5));
+                }
+
+                getDomainResponse = this.EventGridManagementClient.Domains.Get(resourceGroup, domainName);
+                Assert.NotNull(getDomainResponse);
+                Assert.False(getDomainResponse.DisableLocalAuth);
+                Assert.False(getDomainResponse.AutoCreateTopicWithFirstSubscription);
+                Assert.False(getDomainResponse.AutoDeleteTopicWithLastSubscription);
+            }
+        }
     }
 }

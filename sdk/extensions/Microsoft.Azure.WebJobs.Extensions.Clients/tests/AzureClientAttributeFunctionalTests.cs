@@ -16,7 +16,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Tests
 {
     public class AzureClientAttributeFunctionalTests : RecordedTestBase<WebJobsTestEnvironment>
     {
-        public AzureClientAttributeFunctionalTests(bool isAsync) : base(isAsync, useLegacyTransport: true)
+        public AzureClientAttributeFunctionalTests(bool isAsync) : base(isAsync)
         {
             Matcher = new RecordMatcher()
             {
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Tests
         [RecordedTest]
         public async Task CanInjectKeyVaultClient()
         {
-            // We don't controll the client creation
+            // We don't control the client creation
             ValidateClientInstrumentation = false;
             var host = new HostBuilder()
                 .ConfigureServices(services => services.AddAzureClients(builder => builder

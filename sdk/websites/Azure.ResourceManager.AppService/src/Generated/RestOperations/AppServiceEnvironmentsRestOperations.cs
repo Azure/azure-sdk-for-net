@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
@@ -21,26 +20,28 @@ namespace Azure.ResourceManager.AppService
 {
     internal partial class AppServiceEnvironmentsRestOperations
     {
-        private Uri endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
         private readonly string _userAgent;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of AppServiceEnvironmentsRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="options"> The client options used to construct the current client. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public AppServiceEnvironmentsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, Uri endpoint = null, string apiVersion = default)
+        public AppServiceEnvironmentsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            this.apiVersion = apiVersion ?? "2021-02-01";
-            _clientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2021-02-01";
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
-            _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
+            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId)
@@ -49,14 +50,14 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -120,16 +121,16 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -161,7 +162,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -193,7 +194,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -203,17 +204,17 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -222,7 +223,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<AppServiceEnvironmentData>> GetAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -252,7 +253,7 @@ namespace Azure.ResourceManager.AppService
                 case 404:
                     return Response.FromValue((AppServiceEnvironmentData)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -261,7 +262,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<AppServiceEnvironmentData> Get(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -291,7 +292,7 @@ namespace Azure.ResourceManager.AppService
                 case 404:
                     return Response.FromValue((AppServiceEnvironmentData)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -301,21 +302,21 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(hostingEnvironmentEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -325,7 +326,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="hostingEnvironmentEnvelope"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="hostingEnvironmentEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="hostingEnvironmentEnvelope"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string name, AppServiceEnvironmentData hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -354,7 +355,7 @@ namespace Azure.ResourceManager.AppService
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -364,7 +365,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="hostingEnvironmentEnvelope"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="hostingEnvironmentEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="hostingEnvironmentEnvelope"/> is null. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string name, AppServiceEnvironmentData hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -393,7 +394,7 @@ namespace Azure.ResourceManager.AppService
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -403,7 +404,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -414,10 +415,10 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("forceDelete", forceDelete.Value, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -427,7 +428,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="forceDelete"> Specify &lt;code&gt;true&lt;/code&gt; to force the deletion even if the App Service Environment contains resources. The default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string name, bool? forceDelete = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -451,7 +452,7 @@ namespace Azure.ResourceManager.AppService
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -461,7 +462,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="forceDelete"> Specify &lt;code&gt;true&lt;/code&gt; to force the deletion even if the App Service Environment contains resources. The default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string name, bool? forceDelete = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -485,31 +486,31 @@ namespace Azure.ResourceManager.AppService
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string name, AppServiceEnvironmentPatchOptions hostingEnvironmentEnvelope)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string name, AppServiceEnvironmentUpdateOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(hostingEnvironmentEnvelope);
+            content.JsonWriter.WriteObjectValue(options);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -517,10 +518,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
-        /// <param name="hostingEnvironmentEnvelope"> Configuration details of the App Service Environment. </param>
+        /// <param name="options"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="hostingEnvironmentEnvelope"/> is null. </exception>
-        public async Task<Response<AppServiceEnvironmentData>> UpdateAsync(string subscriptionId, string resourceGroupName, string name, AppServiceEnvironmentPatchOptions hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="options"/> is null. </exception>
+        public async Task<Response<AppServiceEnvironmentData>> UpdateAsync(string subscriptionId, string resourceGroupName, string name, AppServiceEnvironmentUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -534,12 +535,12 @@ namespace Azure.ResourceManager.AppService
             {
                 throw new ArgumentNullException(nameof(name));
             }
-            if (hostingEnvironmentEnvelope == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(hostingEnvironmentEnvelope));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, name, hostingEnvironmentEnvelope);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, name, options);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -553,7 +554,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -561,10 +562,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
-        /// <param name="hostingEnvironmentEnvelope"> Configuration details of the App Service Environment. </param>
+        /// <param name="options"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="hostingEnvironmentEnvelope"/> is null. </exception>
-        public Response<AppServiceEnvironmentData> Update(string subscriptionId, string resourceGroupName, string name, AppServiceEnvironmentPatchOptions hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="options"/> is null. </exception>
+        public Response<AppServiceEnvironmentData> Update(string subscriptionId, string resourceGroupName, string name, AppServiceEnvironmentUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -578,12 +579,12 @@ namespace Azure.ResourceManager.AppService
             {
                 throw new ArgumentNullException(nameof(name));
             }
-            if (hostingEnvironmentEnvelope == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(hostingEnvironmentEnvelope));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, name, hostingEnvironmentEnvelope);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, name, options);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -597,7 +598,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -607,7 +608,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -615,10 +616,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/capacities/compute", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -627,7 +628,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<StampCapacityCollection>> ListCapacitiesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -655,7 +656,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -664,7 +665,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<StampCapacityCollection> ListCapacities(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -692,7 +693,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -702,7 +703,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -710,10 +711,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/capacities/virtualip", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -722,7 +723,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<AddressResponse>> GetVipInfoAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -750,7 +751,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -759,7 +760,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<AddressResponse> GetVipInfo(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -787,7 +788,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -797,7 +798,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -805,10 +806,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/configurations/networking", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -817,7 +818,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<AseV3NetworkingConfigurationData>> GetAseV3NetworkingConfigurationAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -847,7 +848,7 @@ namespace Azure.ResourceManager.AppService
                 case 404:
                     return Response.FromValue((AseV3NetworkingConfigurationData)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -856,7 +857,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<AseV3NetworkingConfigurationData> GetAseV3NetworkingConfiguration(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -886,7 +887,7 @@ namespace Azure.ResourceManager.AppService
                 case 404:
                     return Response.FromValue((AseV3NetworkingConfigurationData)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -896,7 +897,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -904,14 +905,14 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/configurations/networking", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(aseNetworkingConfiguration);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -921,7 +922,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="aseNetworkingConfiguration"> The AseV3NetworkingConfiguration to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="aseNetworkingConfiguration"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="aseNetworkingConfiguration"/> is null. </exception>
         public async Task<Response<AseV3NetworkingConfigurationData>> UpdateAseNetworkingConfigurationAsync(string subscriptionId, string resourceGroupName, string name, AseV3NetworkingConfigurationData aseNetworkingConfiguration, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -953,7 +954,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -963,7 +964,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="aseNetworkingConfiguration"> The AseV3NetworkingConfiguration to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="aseNetworkingConfiguration"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="aseNetworkingConfiguration"/> is null. </exception>
         public Response<AseV3NetworkingConfigurationData> UpdateAseNetworkingConfiguration(string subscriptionId, string resourceGroupName, string name, AseV3NetworkingConfigurationData aseNetworkingConfiguration, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -995,7 +996,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1005,7 +1006,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1013,10 +1014,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/diagnostics", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1025,7 +1026,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<IReadOnlyList<HostingEnvironmentDiagnostics>>> ListDiagnosticsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1058,7 +1059,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1067,7 +1068,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<IReadOnlyList<HostingEnvironmentDiagnostics>> ListDiagnostics(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1100,7 +1101,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1110,7 +1111,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1119,10 +1120,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/diagnostics/", false);
             uri.AppendPath(diagnosticsName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1132,7 +1133,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="diagnosticsName"> Name of the diagnostics item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="diagnosticsName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="diagnosticsName"/> is null. </exception>
         public async Task<Response<HostingEnvironmentDiagnostics>> GetDiagnosticsItemAsync(string subscriptionId, string resourceGroupName, string name, string diagnosticsName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1164,7 +1165,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1174,7 +1175,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="diagnosticsName"> Name of the diagnostics item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="diagnosticsName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="diagnosticsName"/> is null. </exception>
         public Response<HostingEnvironmentDiagnostics> GetDiagnosticsItem(string subscriptionId, string resourceGroupName, string name, string diagnosticsName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1206,7 +1207,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1216,7 +1217,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1224,10 +1225,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/inboundNetworkDependenciesEndpoints", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1236,7 +1237,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<InboundEnvironmentEndpointCollection>> GetInboundNetworkDependenciesEndpointsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1264,7 +1265,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1273,7 +1274,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<InboundEnvironmentEndpointCollection> GetInboundNetworkDependenciesEndpoints(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1301,7 +1302,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1311,7 +1312,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1319,10 +1320,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/multiRolePools", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1331,7 +1332,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<WorkerPoolCollection>> ListMultiRolePoolsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1359,7 +1360,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1368,7 +1369,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<WorkerPoolCollection> ListMultiRolePools(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1396,7 +1397,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1406,7 +1407,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1414,10 +1415,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/multiRolePools/default", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1426,7 +1427,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<WorkerPoolResourceData>> GetMultiRolePoolAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1456,7 +1457,7 @@ namespace Azure.ResourceManager.AppService
                 case 404:
                     return Response.FromValue((WorkerPoolResourceData)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1465,7 +1466,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<WorkerPoolResourceData> GetMultiRolePool(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1495,7 +1496,7 @@ namespace Azure.ResourceManager.AppService
                 case 404:
                     return Response.FromValue((WorkerPoolResourceData)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1505,7 +1506,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1513,14 +1514,14 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/multiRolePools/default", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(multiRolePoolEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1530,7 +1531,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="multiRolePoolEnvelope"> Properties of the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="multiRolePoolEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="multiRolePoolEnvelope"/> is null. </exception>
         public async Task<Response> CreateOrUpdateMultiRolePoolAsync(string subscriptionId, string resourceGroupName, string name, WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1558,7 +1559,7 @@ namespace Azure.ResourceManager.AppService
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1568,7 +1569,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="multiRolePoolEnvelope"> Properties of the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="multiRolePoolEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="multiRolePoolEnvelope"/> is null. </exception>
         public Response CreateOrUpdateMultiRolePool(string subscriptionId, string resourceGroupName, string name, WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1596,7 +1597,7 @@ namespace Azure.ResourceManager.AppService
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1606,7 +1607,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1614,14 +1615,14 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/multiRolePools/default", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(multiRolePoolEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1631,7 +1632,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="multiRolePoolEnvelope"> Properties of the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="multiRolePoolEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="multiRolePoolEnvelope"/> is null. </exception>
         public async Task<Response<WorkerPoolResourceData>> UpdateMultiRolePoolAsync(string subscriptionId, string resourceGroupName, string name, WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1664,7 +1665,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1674,7 +1675,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="multiRolePoolEnvelope"> Properties of the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="multiRolePoolEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="multiRolePoolEnvelope"/> is null. </exception>
         public Response<WorkerPoolResourceData> UpdateMultiRolePool(string subscriptionId, string resourceGroupName, string name, WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1707,7 +1708,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1717,7 +1718,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1727,10 +1728,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/multiRolePools/default/instances/", false);
             uri.AppendPath(instance, true);
             uri.AppendPath("/metricdefinitions", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1740,7 +1741,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="instance"> Name of the instance in the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="instance"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instance"/> is null. </exception>
         public async Task<Response<ResourceMetricDefinitionCollection>> ListMultiRolePoolInstanceMetricDefinitionsAsync(string subscriptionId, string resourceGroupName, string name, string instance, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1772,7 +1773,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1782,7 +1783,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="instance"> Name of the instance in the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="instance"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instance"/> is null. </exception>
         public Response<ResourceMetricDefinitionCollection> ListMultiRolePoolInstanceMetricDefinitions(string subscriptionId, string resourceGroupName, string name, string instance, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1814,7 +1815,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1824,7 +1825,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1832,10 +1833,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/multiRolePools/default/metricdefinitions", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1844,7 +1845,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<ResourceMetricDefinitionCollection>> ListMultiRoleMetricDefinitionsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1872,7 +1873,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1881,7 +1882,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<ResourceMetricDefinitionCollection> ListMultiRoleMetricDefinitions(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1909,7 +1910,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1919,7 +1920,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1927,10 +1928,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/multiRolePools/default/skus", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1939,7 +1940,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<SkuInfoCollection>> ListMultiRolePoolSkusAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1967,7 +1968,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1976,7 +1977,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<SkuInfoCollection> ListMultiRolePoolSkus(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2004,7 +2005,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2014,7 +2015,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -2022,10 +2023,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/multiRolePools/default/usages", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2034,7 +2035,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<UsageCollection>> ListMultiRoleUsagesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2062,7 +2063,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2071,7 +2072,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<UsageCollection> ListMultiRoleUsages(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2099,7 +2100,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2109,7 +2110,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -2117,10 +2118,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/operations", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2129,7 +2130,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<IReadOnlyList<OperationInformation>>> ListOperationsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2162,7 +2163,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2171,7 +2172,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<IReadOnlyList<OperationInformation>> ListOperations(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2204,7 +2205,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2214,7 +2215,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -2222,10 +2223,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/outboundNetworkDependenciesEndpoints", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2234,7 +2235,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<OutboundEnvironmentEndpointCollection>> GetOutboundNetworkDependenciesEndpointsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2262,7 +2263,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2271,7 +2272,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<OutboundEnvironmentEndpointCollection> GetOutboundNetworkDependenciesEndpoints(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2299,7 +2300,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2309,7 +2310,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -2317,10 +2318,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/privateEndpointConnections", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2329,7 +2330,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<PrivateEndpointConnectionCollection>> GetPrivateEndpointConnectionListAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2357,7 +2358,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2366,7 +2367,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<PrivateEndpointConnectionCollection> GetPrivateEndpointConnectionList(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2394,7 +2395,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2404,7 +2405,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -2413,10 +2414,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/privateEndpointConnections/", false);
             uri.AppendPath(privateEndpointConnectionName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2426,7 +2427,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public async Task<Response<RemotePrivateEndpointConnectionARMResourceData>> GetPrivateEndpointConnectionAsync(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2460,7 +2461,7 @@ namespace Azure.ResourceManager.AppService
                 case 404:
                     return Response.FromValue((RemotePrivateEndpointConnectionARMResourceData)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2470,7 +2471,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public Response<RemotePrivateEndpointConnectionARMResourceData> GetPrivateEndpointConnection(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2504,7 +2505,7 @@ namespace Azure.ResourceManager.AppService
                 case 404:
                     return Response.FromValue((RemotePrivateEndpointConnectionARMResourceData)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2514,7 +2515,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -2523,14 +2524,14 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/privateEndpointConnections/", false);
             uri.AppendPath(privateEndpointConnectionName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(privateEndpointWrapper);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2541,7 +2542,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="privateEndpointConnectionName"> The String to use. </param>
         /// <param name="privateEndpointWrapper"> The PrivateLinkConnectionApprovalRequestResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="privateEndpointConnectionName"/>, or <paramref name="privateEndpointWrapper"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="privateEndpointWrapper"/> is null. </exception>
         public async Task<Response> ApproveOrRejectPrivateEndpointConnectionAsync(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2573,7 +2574,7 @@ namespace Azure.ResourceManager.AppService
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2584,7 +2585,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="privateEndpointConnectionName"> The String to use. </param>
         /// <param name="privateEndpointWrapper"> The PrivateLinkConnectionApprovalRequestResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="privateEndpointConnectionName"/>, or <paramref name="privateEndpointWrapper"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="privateEndpointWrapper"/> is null. </exception>
         public Response ApproveOrRejectPrivateEndpointConnection(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2616,7 +2617,7 @@ namespace Azure.ResourceManager.AppService
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2626,7 +2627,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -2635,10 +2636,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/privateEndpointConnections/", false);
             uri.AppendPath(privateEndpointConnectionName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2648,7 +2649,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="privateEndpointConnectionName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public async Task<Response> DeletePrivateEndpointConnectionAsync(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2677,7 +2678,7 @@ namespace Azure.ResourceManager.AppService
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2687,7 +2688,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="privateEndpointConnectionName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public Response DeletePrivateEndpointConnection(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2716,7 +2717,7 @@ namespace Azure.ResourceManager.AppService
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2726,7 +2727,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -2734,10 +2735,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/privateLinkResources", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2746,7 +2747,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<PrivateLinkResourcesWrapper>> GetPrivateLinkResourcesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2774,7 +2775,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2783,7 +2784,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<PrivateLinkResourcesWrapper> GetPrivateLinkResources(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2811,7 +2812,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2821,7 +2822,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -2829,10 +2830,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/reboot", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2841,7 +2842,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response> RebootAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2864,7 +2865,7 @@ namespace Azure.ResourceManager.AppService
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2873,7 +2874,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response Reboot(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2896,7 +2897,7 @@ namespace Azure.ResourceManager.AppService
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2906,7 +2907,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -2914,10 +2915,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/serverfarms", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2926,7 +2927,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<Models.AppServicePlanCollection>> ListAppServicePlansAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2954,7 +2955,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2963,7 +2964,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<Models.AppServicePlanCollection> ListAppServicePlans(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2991,7 +2992,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -3001,7 +3002,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -3013,10 +3014,10 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("propertiesToInclude", propertiesToInclude, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -3026,7 +3027,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="propertiesToInclude"> Comma separated list of app properties to include. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<WebAppCollection>> ListWebAppsAsync(string subscriptionId, string resourceGroupName, string name, string propertiesToInclude = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3054,7 +3055,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -3064,7 +3065,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="propertiesToInclude"> Comma separated list of app properties to include. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<WebAppCollection> ListWebApps(string subscriptionId, string resourceGroupName, string name, string propertiesToInclude = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3092,7 +3093,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -3102,7 +3103,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -3110,14 +3111,14 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/usages", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, false);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -3127,7 +3128,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<CsmUsageQuotaCollection>> ListUsagesAsync(string subscriptionId, string resourceGroupName, string name, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3155,7 +3156,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -3165,7 +3166,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<CsmUsageQuotaCollection> ListUsages(string subscriptionId, string resourceGroupName, string name, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3193,7 +3194,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -3203,7 +3204,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -3211,10 +3212,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/workerPools", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -3223,7 +3224,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<WorkerPoolCollection>> ListWorkerPoolsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3251,7 +3252,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -3260,7 +3261,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<WorkerPoolCollection> ListWorkerPools(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3288,7 +3289,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -3298,7 +3299,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -3307,10 +3308,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/workerPools/", false);
             uri.AppendPath(workerPoolName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -3320,7 +3321,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="workerPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is null. </exception>
         public async Task<Response<WorkerPoolResourceData>> GetWorkerPoolAsync(string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3354,7 +3355,7 @@ namespace Azure.ResourceManager.AppService
                 case 404:
                     return Response.FromValue((WorkerPoolResourceData)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -3364,7 +3365,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="workerPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is null. </exception>
         public Response<WorkerPoolResourceData> GetWorkerPool(string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3398,7 +3399,7 @@ namespace Azure.ResourceManager.AppService
                 case 404:
                     return Response.FromValue((WorkerPoolResourceData)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -3408,7 +3409,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -3417,14 +3418,14 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/workerPools/", false);
             uri.AppendPath(workerPoolName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(workerPoolEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -3435,7 +3436,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="workerPoolEnvelope"> Properties of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workerPoolName"/>, or <paramref name="workerPoolEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workerPoolName"/> or <paramref name="workerPoolEnvelope"/> is null. </exception>
         public async Task<Response> CreateOrUpdateWorkerPoolAsync(string subscriptionId, string resourceGroupName, string name, string workerPoolName, WorkerPoolResourceData workerPoolEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3467,7 +3468,7 @@ namespace Azure.ResourceManager.AppService
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -3478,7 +3479,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="workerPoolEnvelope"> Properties of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workerPoolName"/>, or <paramref name="workerPoolEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workerPoolName"/> or <paramref name="workerPoolEnvelope"/> is null. </exception>
         public Response CreateOrUpdateWorkerPool(string subscriptionId, string resourceGroupName, string name, string workerPoolName, WorkerPoolResourceData workerPoolEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3510,7 +3511,7 @@ namespace Azure.ResourceManager.AppService
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -3520,7 +3521,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -3529,14 +3530,14 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/workerPools/", false);
             uri.AppendPath(workerPoolName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(workerPoolEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -3547,7 +3548,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="workerPoolEnvelope"> Properties of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workerPoolName"/>, or <paramref name="workerPoolEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workerPoolName"/> or <paramref name="workerPoolEnvelope"/> is null. </exception>
         public async Task<Response<WorkerPoolResourceData>> UpdateWorkerPoolAsync(string subscriptionId, string resourceGroupName, string name, string workerPoolName, WorkerPoolResourceData workerPoolEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3584,7 +3585,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -3595,7 +3596,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="workerPoolEnvelope"> Properties of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workerPoolName"/>, or <paramref name="workerPoolEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workerPoolName"/> or <paramref name="workerPoolEnvelope"/> is null. </exception>
         public Response<WorkerPoolResourceData> UpdateWorkerPool(string subscriptionId, string resourceGroupName, string name, string workerPoolName, WorkerPoolResourceData workerPoolEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3632,7 +3633,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -3642,7 +3643,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -3654,10 +3655,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/instances/", false);
             uri.AppendPath(instance, true);
             uri.AppendPath("/metricdefinitions", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -3668,7 +3669,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="instance"> Name of the instance in the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workerPoolName"/>, or <paramref name="instance"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workerPoolName"/> or <paramref name="instance"/> is null. </exception>
         public async Task<Response<ResourceMetricDefinitionCollection>> ListWorkerPoolInstanceMetricDefinitionsAsync(string subscriptionId, string resourceGroupName, string name, string workerPoolName, string instance, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3704,7 +3705,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -3715,7 +3716,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="instance"> Name of the instance in the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workerPoolName"/>, or <paramref name="instance"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workerPoolName"/> or <paramref name="instance"/> is null. </exception>
         public Response<ResourceMetricDefinitionCollection> ListWorkerPoolInstanceMetricDefinitions(string subscriptionId, string resourceGroupName, string name, string workerPoolName, string instance, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3751,7 +3752,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -3761,7 +3762,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -3771,10 +3772,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/workerPools/", false);
             uri.AppendPath(workerPoolName, true);
             uri.AppendPath("/metricdefinitions", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -3784,7 +3785,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="workerPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is null. </exception>
         public async Task<Response<ResourceMetricDefinitionCollection>> ListWebWorkerMetricDefinitionsAsync(string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3816,7 +3817,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -3826,7 +3827,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="workerPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is null. </exception>
         public Response<ResourceMetricDefinitionCollection> ListWebWorkerMetricDefinitions(string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3858,7 +3859,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -3868,7 +3869,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -3878,10 +3879,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/workerPools/", false);
             uri.AppendPath(workerPoolName, true);
             uri.AppendPath("/skus", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -3891,7 +3892,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="workerPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is null. </exception>
         public async Task<Response<SkuInfoCollection>> ListWorkerPoolSkusAsync(string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3923,7 +3924,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -3933,7 +3934,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="workerPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is null. </exception>
         public Response<SkuInfoCollection> ListWorkerPoolSkus(string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3965,7 +3966,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -3975,7 +3976,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -3985,10 +3986,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/workerPools/", false);
             uri.AppendPath(workerPoolName, true);
             uri.AppendPath("/usages", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -3998,7 +3999,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="workerPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is null. </exception>
         public async Task<Response<UsageCollection>> ListWebWorkerUsagesAsync(string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -4030,7 +4031,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4040,7 +4041,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="workerPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is null. </exception>
         public Response<UsageCollection> ListWebWorkerUsages(string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -4072,7 +4073,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4082,11 +4083,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -4118,7 +4119,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4150,7 +4151,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4160,11 +4161,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -4173,7 +4174,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<Models.AppServiceEnvironmentCollection>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4201,7 +4202,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4210,7 +4211,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<Models.AppServiceEnvironmentCollection> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4238,7 +4239,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4248,11 +4249,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -4262,7 +4263,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<StampCapacityCollection>> ListCapacitiesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4294,7 +4295,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4304,7 +4305,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<StampCapacityCollection> ListCapacitiesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4336,7 +4337,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4346,11 +4347,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -4360,7 +4361,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<InboundEnvironmentEndpointCollection>> GetInboundNetworkDependenciesEndpointsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4392,7 +4393,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4402,7 +4403,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<InboundEnvironmentEndpointCollection> GetInboundNetworkDependenciesEndpointsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4434,7 +4435,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4444,11 +4445,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -4458,7 +4459,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<WorkerPoolCollection>> ListMultiRolePoolsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4490,7 +4491,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4500,7 +4501,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<WorkerPoolCollection> ListMultiRolePoolsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4532,7 +4533,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4542,11 +4543,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -4557,7 +4558,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="instance"> Name of the instance in the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="instance"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instance"/> is null. </exception>
         public async Task<Response<ResourceMetricDefinitionCollection>> ListMultiRolePoolInstanceMetricDefinitionsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string instance, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4593,7 +4594,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4604,7 +4605,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="instance"> Name of the instance in the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="instance"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instance"/> is null. </exception>
         public Response<ResourceMetricDefinitionCollection> ListMultiRolePoolInstanceMetricDefinitionsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string instance, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4640,7 +4641,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4650,11 +4651,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -4664,7 +4665,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<ResourceMetricDefinitionCollection>> ListMultiRoleMetricDefinitionsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4696,7 +4697,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4706,7 +4707,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<ResourceMetricDefinitionCollection> ListMultiRoleMetricDefinitionsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4738,7 +4739,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4748,11 +4749,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -4762,7 +4763,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<SkuInfoCollection>> ListMultiRolePoolSkusNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4794,7 +4795,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4804,7 +4805,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<SkuInfoCollection> ListMultiRolePoolSkusNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4836,7 +4837,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4846,11 +4847,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -4860,7 +4861,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<UsageCollection>> ListMultiRoleUsagesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4892,7 +4893,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4902,7 +4903,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<UsageCollection> ListMultiRoleUsagesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4934,7 +4935,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4944,11 +4945,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -4958,7 +4959,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<OutboundEnvironmentEndpointCollection>> GetOutboundNetworkDependenciesEndpointsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4990,7 +4991,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -5000,7 +5001,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<OutboundEnvironmentEndpointCollection> GetOutboundNetworkDependenciesEndpointsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -5032,7 +5033,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -5042,11 +5043,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -5056,7 +5057,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<PrivateEndpointConnectionCollection>> GetPrivateEndpointConnectionListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -5088,7 +5089,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -5098,7 +5099,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<PrivateEndpointConnectionCollection> GetPrivateEndpointConnectionListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -5130,7 +5131,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -5140,11 +5141,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -5154,7 +5155,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<Models.AppServicePlanCollection>> ListAppServicePlansNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -5186,7 +5187,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -5196,7 +5197,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<Models.AppServicePlanCollection> ListAppServicePlansNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -5228,7 +5229,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -5238,11 +5239,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -5253,7 +5254,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="propertiesToInclude"> Comma separated list of app properties to include. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<WebAppCollection>> ListWebAppsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string propertiesToInclude = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -5285,7 +5286,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -5296,7 +5297,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="propertiesToInclude"> Comma separated list of app properties to include. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<WebAppCollection> ListWebAppsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string propertiesToInclude = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -5328,7 +5329,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -5338,11 +5339,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -5353,7 +5354,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<CsmUsageQuotaCollection>> ListUsagesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -5385,7 +5386,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -5396,7 +5397,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<CsmUsageQuotaCollection> ListUsagesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -5428,7 +5429,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -5438,11 +5439,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -5452,7 +5453,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<WorkerPoolCollection>> ListWorkerPoolsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -5484,7 +5485,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -5494,7 +5495,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<WorkerPoolCollection> ListWorkerPoolsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -5526,7 +5527,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -5536,11 +5537,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -5552,7 +5553,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="instance"> Name of the instance in the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workerPoolName"/>, or <paramref name="instance"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workerPoolName"/> or <paramref name="instance"/> is null. </exception>
         public async Task<Response<ResourceMetricDefinitionCollection>> ListWorkerPoolInstanceMetricDefinitionsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName, string instance, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -5592,7 +5593,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -5604,7 +5605,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="instance"> Name of the instance in the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workerPoolName"/>, or <paramref name="instance"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workerPoolName"/> or <paramref name="instance"/> is null. </exception>
         public Response<ResourceMetricDefinitionCollection> ListWorkerPoolInstanceMetricDefinitionsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName, string instance, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -5644,7 +5645,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -5654,11 +5655,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -5669,7 +5670,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="workerPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is null. </exception>
         public async Task<Response<ResourceMetricDefinitionCollection>> ListWebWorkerMetricDefinitionsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -5705,7 +5706,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -5716,7 +5717,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="workerPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is null. </exception>
         public Response<ResourceMetricDefinitionCollection> ListWebWorkerMetricDefinitionsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -5752,7 +5753,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -5762,11 +5763,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -5777,7 +5778,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="workerPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is null. </exception>
         public async Task<Response<SkuInfoCollection>> ListWorkerPoolSkusNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -5813,7 +5814,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -5824,7 +5825,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="workerPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is null. </exception>
         public Response<SkuInfoCollection> ListWorkerPoolSkusNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -5860,7 +5861,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -5870,11 +5871,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -5885,7 +5886,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="workerPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is null. </exception>
         public async Task<Response<UsageCollection>> ListWebWorkerUsagesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -5921,7 +5922,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -5932,7 +5933,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="workerPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is null. </exception>
         public Response<UsageCollection> ListWebWorkerUsagesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -5968,7 +5969,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

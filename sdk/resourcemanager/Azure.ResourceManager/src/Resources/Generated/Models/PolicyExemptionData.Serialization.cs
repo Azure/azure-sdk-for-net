@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.Resources
 
         internal static PolicyExemptionData DeserializePolicyExemptionData(JsonElement element)
         {
-            Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             string policyAssignmentId = default;
             Optional<IList<string>> policyDefinitionReferenceIds = default;
             ExemptionCategory exemptionCategory = default;
@@ -74,16 +74,6 @@ namespace Azure.ResourceManager.Resources
             Optional<object> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -97,6 +87,11 @@ namespace Azure.ResourceManager.Resources
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

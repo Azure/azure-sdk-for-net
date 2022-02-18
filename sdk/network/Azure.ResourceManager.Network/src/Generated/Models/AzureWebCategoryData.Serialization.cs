@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -18,6 +19,7 @@ namespace Azure.ResourceManager.Network
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> group = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,6 +43,11 @@ namespace Azure.ResourceManager.Network
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -59,7 +66,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new AzureWebCategoryData(id, name, type, etag.Value, group.Value);
+            return new AzureWebCategoryData(id, name, type, systemData, etag.Value, group.Value);
         }
     }
 }

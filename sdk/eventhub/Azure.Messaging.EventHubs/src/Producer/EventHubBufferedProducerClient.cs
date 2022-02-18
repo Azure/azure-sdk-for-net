@@ -1966,8 +1966,14 @@ namespace Azure.Messaging.EventHubs.Producer
 
             _activePublishingHandlers.TryAdd(handlerTask, 0);
 
-            var continationTask = handlerTask.ContinueWith((runTask, trackedTask) => _activePublishingHandlers.TryRemove((Task)trackedTask, out _), handlerTask, TaskScheduler.Default);
-            return continationTask;
+            var continuationTask = handlerTask.ContinueWith(static (runTask, state) =>
+            {
+                var (trackedTask, activeHandlers) = (Tuple<Task, ConcurrentDictionary<Task, byte>>)state;
+                return activeHandlers.TryRemove(trackedTask, out _);
+            },
+            Tuple.Create(handlerTask, _activePublishingHandlers), CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
+
+            return continuationTask;
         }
 
         /// <summary>

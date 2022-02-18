@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,8 +27,9 @@ namespace Azure.ResourceManager.AppService
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebAppsRestOperations _webAppsRestClient;
+
+        private readonly ClientDiagnostics _siteSlotFunctionWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _siteSlotFunctionWebAppsRestClient;
         private readonly FunctionEnvelopeData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotFunction"/> class for mocking. </summary>
@@ -38,44 +38,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SiteSlotFunction"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteSlotFunction(ArmResource options, FunctionEnvelopeData data) : base(options, data.Id)
+        internal SiteSlotFunction(ArmClient client, FunctionEnvelopeData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotFunction"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteSlotFunction(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal SiteSlotFunction(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotFunction"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteSlotFunction(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _siteSlotFunctionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(ResourceType, out string siteSlotFunctionWebAppsApiVersion);
+            _siteSlotFunctionWebAppsRestClient = new WebAppsRestOperations(_siteSlotFunctionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotFunctionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -105,21 +83,22 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
-        /// OperationId: WebApps_GetInstanceFunctionSlot
-        /// <summary> Description for Get function information by its ID for web site, or a deployment slot. </summary>
+        /// <summary>
+        /// Description for Get function information by its ID for web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
+        /// Operation Id: WebApps_GetInstanceFunctionSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SiteSlotFunction>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotFunction.Get");
+            using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunction.Get");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetInstanceFunctionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotFunctionWebAppsRestClient.GetInstanceFunctionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotFunction(this, response.Value), response.GetRawResponse());
+                    throw await _siteSlotFunctionWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SiteSlotFunction(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -128,21 +107,22 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
-        /// OperationId: WebApps_GetInstanceFunctionSlot
-        /// <summary> Description for Get function information by its ID for web site, or a deployment slot. </summary>
+        /// <summary>
+        /// Description for Get function information by its ID for web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
+        /// Operation Id: WebApps_GetInstanceFunctionSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteSlotFunction> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotFunction.Get");
+            using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunction.Get");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetInstanceFunctionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _siteSlotFunctionWebAppsRestClient.GetInstanceFunctionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotFunction(this, response.Value), response.GetRawResponse());
+                    throw _siteSlotFunctionWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteSlotFunction(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,56 +131,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotFunction.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotFunction.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
-        /// OperationId: WebApps_DeleteInstanceFunctionSlot
-        /// <summary> Description for Delete a function for web site, or a deployment slot. </summary>
+        /// <summary>
+        /// Description for Delete a function for web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
+        /// Operation Id: WebApps_DeleteInstanceFunctionSlot
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<SiteSlotFunctionDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotFunction.Delete");
+            using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunction.Delete");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.DeleteInstanceFunctionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteSlotFunctionDeleteOperation(response);
+                var response = await _siteSlotFunctionWebAppsRestClient.DeleteInstanceFunctionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -212,20 +157,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
-        /// OperationId: WebApps_DeleteInstanceFunctionSlot
-        /// <summary> Description for Delete a function for web site, or a deployment slot. </summary>
+        /// <summary>
+        /// Description for Delete a function for web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
+        /// Operation Id: WebApps_DeleteInstanceFunctionSlot
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual SiteSlotFunctionDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotFunction.Delete");
+            using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunction.Delete");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.DeleteInstanceFunctionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SiteSlotFunctionDeleteOperation(response);
+                var response = _siteSlotFunctionWebAppsRestClient.DeleteInstanceFunctionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new AppServiceArmOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -237,28 +183,26 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/keys/{keyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
-        /// OperationId: WebApps_CreateOrUpdateFunctionSecretSlot
-        /// <summary> Description for Add or update a function secret. </summary>
+        /// <summary>
+        /// Description for Add or update a function secret.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/keys/{keyName}
+        /// Operation Id: WebApps_CreateOrUpdateFunctionSecretSlot
+        /// </summary>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="key"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<KeyInfo>> CreateOrUpdateFunctionSecretSlotAsync(string keyName, KeyInfo key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotFunction.CreateOrUpdateFunctionSecretSlot");
+            using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunction.CreateOrUpdateFunctionSecretSlot");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.CreateOrUpdateFunctionSecretSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, keyName, key, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotFunctionWebAppsRestClient.CreateOrUpdateFunctionSecretSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, keyName, key, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -268,28 +212,26 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/keys/{keyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
-        /// OperationId: WebApps_CreateOrUpdateFunctionSecretSlot
-        /// <summary> Description for Add or update a function secret. </summary>
+        /// <summary>
+        /// Description for Add or update a function secret.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/keys/{keyName}
+        /// Operation Id: WebApps_CreateOrUpdateFunctionSecretSlot
+        /// </summary>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="key"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
         public virtual Response<KeyInfo> CreateOrUpdateFunctionSecretSlot(string keyName, KeyInfo key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotFunction.CreateOrUpdateFunctionSecretSlot");
+            using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunction.CreateOrUpdateFunctionSecretSlot");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.CreateOrUpdateFunctionSecretSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, keyName, key, cancellationToken);
+                var response = _siteSlotFunctionWebAppsRestClient.CreateOrUpdateFunctionSecretSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, keyName, key, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -299,23 +241,24 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/keys/{keyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
-        /// OperationId: WebApps_DeleteFunctionSecretSlot
-        /// <summary> Description for Delete a function secret. </summary>
+        /// <summary>
+        /// Description for Delete a function secret.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/keys/{keyName}
+        /// Operation Id: WebApps_DeleteFunctionSecretSlot
+        /// </summary>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public async virtual Task<Response> DeleteFunctionSecretSlotAsync(string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotFunction.DeleteFunctionSecretSlot");
+            using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunction.DeleteFunctionSecretSlot");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.DeleteFunctionSecretSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, keyName, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotFunctionWebAppsRestClient.DeleteFunctionSecretSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, keyName, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -325,23 +268,24 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/keys/{keyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
-        /// OperationId: WebApps_DeleteFunctionSecretSlot
-        /// <summary> Description for Delete a function secret. </summary>
+        /// <summary>
+        /// Description for Delete a function secret.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/keys/{keyName}
+        /// Operation Id: WebApps_DeleteFunctionSecretSlot
+        /// </summary>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public virtual Response DeleteFunctionSecretSlot(string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotFunction.DeleteFunctionSecretSlot");
+            using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunction.DeleteFunctionSecretSlot");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.DeleteFunctionSecretSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, keyName, cancellationToken);
+                var response = _siteSlotFunctionWebAppsRestClient.DeleteFunctionSecretSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, keyName, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -351,18 +295,19 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/listkeys
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
-        /// OperationId: WebApps_ListFunctionKeysSlot
-        /// <summary> Description for Get function keys for a function in a web site, or a deployment slot. </summary>
+        /// <summary>
+        /// Description for Get function keys for a function in a web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/listkeys
+        /// Operation Id: WebApps_ListFunctionKeysSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<StringDictionary>> GetFunctionKeysSlotAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotFunction.GetFunctionKeysSlot");
+            using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunction.GetFunctionKeysSlot");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.ListFunctionKeysSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotFunctionWebAppsRestClient.ListFunctionKeysSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -372,18 +317,19 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/listkeys
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
-        /// OperationId: WebApps_ListFunctionKeysSlot
-        /// <summary> Description for Get function keys for a function in a web site, or a deployment slot. </summary>
+        /// <summary>
+        /// Description for Get function keys for a function in a web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/listkeys
+        /// Operation Id: WebApps_ListFunctionKeysSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<StringDictionary> GetFunctionKeysSlot(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotFunction.GetFunctionKeysSlot");
+            using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunction.GetFunctionKeysSlot");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.ListFunctionKeysSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _siteSlotFunctionWebAppsRestClient.ListFunctionKeysSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -393,18 +339,19 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/listsecrets
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
-        /// OperationId: WebApps_ListFunctionSecretsSlot
-        /// <summary> Description for Get function secrets for a function in a web site, or a deployment slot. </summary>
+        /// <summary>
+        /// Description for Get function secrets for a function in a web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/listsecrets
+        /// Operation Id: WebApps_ListFunctionSecretsSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<FunctionSecrets>> GetFunctionSecretsSlotAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotFunction.GetFunctionSecretsSlot");
+            using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunction.GetFunctionSecretsSlot");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.ListFunctionSecretsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotFunctionWebAppsRestClient.ListFunctionSecretsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -414,18 +361,19 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/listsecrets
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
-        /// OperationId: WebApps_ListFunctionSecretsSlot
-        /// <summary> Description for Get function secrets for a function in a web site, or a deployment slot. </summary>
+        /// <summary>
+        /// Description for Get function secrets for a function in a web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/listsecrets
+        /// Operation Id: WebApps_ListFunctionSecretsSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FunctionSecrets> GetFunctionSecretsSlot(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotFunction.GetFunctionSecretsSlot");
+            using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunction.GetFunctionSecretsSlot");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.ListFunctionSecretsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _siteSlotFunctionWebAppsRestClient.ListFunctionSecretsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

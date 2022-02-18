@@ -22,9 +22,11 @@ namespace Azure.Verticals.AgriFood.Farming
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
@@ -45,7 +47,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new FarmBeatsClientOptions();
 
-            _clientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
@@ -56,6 +58,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="cropId"> ID of the crop. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -91,14 +94,14 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> GetCropAsync(string cropId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(cropId, nameof(cropId));
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
 
-            using var scope = _clientDiagnostics.CreateScope("CropsClient.GetCrop");
+            using var scope = ClientDiagnostics.CreateScope("CropsClient.GetCrop");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetCropRequest(cropId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -111,6 +114,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="cropId"> ID of the crop. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -146,14 +150,14 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response GetCrop(string cropId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(cropId, nameof(cropId));
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
 
-            using var scope = _clientDiagnostics.CreateScope("CropsClient.GetCrop");
+            using var scope = ClientDiagnostics.CreateScope("CropsClient.GetCrop");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetCropRequest(cropId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -167,6 +171,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -215,14 +220,14 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> CreateOrUpdateAsync(string cropId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(cropId, nameof(cropId));
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
 
-            using var scope = _clientDiagnostics.CreateScope("CropsClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("CropsClient.CreateOrUpdate");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateRequest(cropId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -236,6 +241,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -284,14 +290,14 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response CreateOrUpdate(string cropId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(cropId, nameof(cropId));
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
 
-            using var scope = _clientDiagnostics.CreateScope("CropsClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("CropsClient.CreateOrUpdate");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateRequest(cropId, content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -304,6 +310,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="cropId"> ID of crop to be deleted. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -326,14 +333,14 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> DeleteAsync(string cropId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(cropId, nameof(cropId));
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
 
-            using var scope = _clientDiagnostics.CreateScope("CropsClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("CropsClient.Delete");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteRequest(cropId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -346,6 +353,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="cropId"> ID of crop to be deleted. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -368,14 +376,14 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response Delete(string cropId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(cropId, nameof(cropId));
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
 
-            using var scope = _clientDiagnostics.CreateScope("CropsClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("CropsClient.Delete");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteRequest(cropId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -444,7 +452,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual AsyncPageable<BinaryData> GetCropsAsync(IEnumerable<string> phenotypes = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "CropsClient.GetCrops");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "CropsClient.GetCrops");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -452,7 +460,7 @@ namespace Azure.Verticals.AgriFood.Farming
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetCropsRequest(phenotypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
                         : CreateGetCropsNextPageRequest(nextLink, phenotypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -519,7 +527,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Pageable<BinaryData> GetCrops(IEnumerable<string> phenotypes = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "CropsClient.GetCrops");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "CropsClient.GetCrops");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -527,7 +535,7 @@ namespace Azure.Verticals.AgriFood.Farming
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetCropsRequest(phenotypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
                         : CreateGetCropsNextPageRequest(nextLink, phenotypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));

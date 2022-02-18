@@ -15,16 +15,16 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing collection of DisasterRecovery and their operations over its parent. </summary>
     public partial class DisasterRecoveryCollection : ArmCollection, IEnumerable<DisasterRecovery>, IAsyncEnumerable<DisasterRecovery>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DisasterRecoveryConfigsRestOperations _disasterRecoveryConfigsRestClient;
+        private readonly ClientDiagnostics _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics;
+        private readonly DisasterRecoveryConfigsRestOperations _disasterRecoveryDisasterRecoveryConfigsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="DisasterRecoveryCollection"/> class for mocking. </summary>
         protected DisasterRecoveryCollection()
@@ -32,12 +32,13 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary> Initializes a new instance of the <see cref="DisasterRecoveryCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal DisasterRecoveryCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal DisasterRecoveryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(DisasterRecovery.ResourceType, out string apiVersion);
-            _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", DisasterRecovery.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(DisasterRecovery.ResourceType, out string disasterRecoveryDisasterRecoveryConfigsApiVersion);
+            _disasterRecoveryDisasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_disasterRecoveryDisasterRecoveryConfigsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, disasterRecoveryDisasterRecoveryConfigsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -49,61 +50,28 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusNamespace.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// <summary> Creates or updates a new Alias(Disaster Recovery configuration). </summary>
+        /// <summary>
+        /// Creates or updates a new Alias(Disaster Recovery configuration)
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// Operation Id: DisasterRecoveryConfigs_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="parameters"> Parameters required to create an Alias(Disaster Recovery configuration). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alias"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual DisasterRecoveryCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string @alias, DisasterRecoveryData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<DisasterRecovery>> CreateOrUpdateAsync(bool waitForCompletion, string @alias, DisasterRecoveryData parameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alias, nameof(alias));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.CreateOrUpdate");
+            using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _disasterRecoveryConfigsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, parameters, cancellationToken);
-                var operation = new DisasterRecoveryCreateOrUpdateOperation(this, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a new Alias(Disaster Recovery configuration). </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="alias"> The Disaster Recovery configuration name. </param>
-        /// <param name="parameters"> Parameters required to create an Alias(Disaster Recovery configuration). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alias"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DisasterRecoveryCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string @alias, DisasterRecoveryData parameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(alias, nameof(alias));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _disasterRecoveryConfigsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DisasterRecoveryCreateOrUpdateOperation(this, response);
+                var response = await _disasterRecoveryDisasterRecoveryConfigsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceBusArmOperation<DisasterRecovery>(Response.FromValue(new DisasterRecovery(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -115,23 +83,31 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Retrieves Alias(Disaster Recovery configuration) for primary or secondary namespace. </summary>
+        /// <summary>
+        /// Creates or updates a new Alias(Disaster Recovery configuration)
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// Operation Id: DisasterRecoveryConfigs_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
+        /// <param name="parameters"> Parameters required to create an Alias(Disaster Recovery configuration). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alias"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
-        public virtual Response<DisasterRecovery> Get(string @alias, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual ArmOperation<DisasterRecovery> CreateOrUpdate(bool waitForCompletion, string @alias, DisasterRecoveryData parameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alias, nameof(alias));
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.Get");
+            using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _disasterRecoveryConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken);
-                if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DisasterRecovery(this, response.Value), response.GetRawResponse());
+                var response = _disasterRecoveryDisasterRecoveryConfigsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, parameters, cancellationToken);
+                var operation = new ServiceBusArmOperation<DisasterRecovery>(Response.FromValue(new DisasterRecovery(Client, response), response.GetRawResponse()));
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -140,23 +116,27 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Retrieves Alias(Disaster Recovery configuration) for primary or secondary namespace. </summary>
+        /// <summary>
+        /// Retrieves Alias(Disaster Recovery configuration) for primary or secondary namespace
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// Operation Id: DisasterRecoveryConfigs_Get
+        /// </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alias"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public async virtual Task<Response<DisasterRecovery>> GetAsync(string @alias, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alias, nameof(alias));
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
 
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.Get");
+            using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryCollection.Get");
             scope.Start();
             try
             {
-                var response = await _disasterRecoveryConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken).ConfigureAwait(false);
+                var response = await _disasterRecoveryDisasterRecoveryConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DisasterRecovery(this, response.Value), response.GetRawResponse());
+                    throw await _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new DisasterRecovery(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,23 +145,27 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Retrieves Alias(Disaster Recovery configuration) for primary or secondary namespace
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// Operation Id: DisasterRecoveryConfigs_Get
+        /// </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alias"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
-        public virtual Response<DisasterRecovery> GetIfExists(string @alias, CancellationToken cancellationToken = default)
+        public virtual Response<DisasterRecovery> Get(string @alias, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alias, nameof(alias));
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
 
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.GetIfExists");
+            using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryCollection.Get");
             scope.Start();
             try
             {
-                var response = _disasterRecoveryConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken);
+                var response = _disasterRecoveryDisasterRecoveryConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<DisasterRecovery>(null, response.GetRawResponse());
-                return Response.FromValue(new DisasterRecovery(this, response.Value), response.GetRawResponse());
+                    throw _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DisasterRecovery(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,64 +174,104 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="alias"> The Disaster Recovery configuration name. </param>
+        /// <summary>
+        /// Gets all Alias(Disaster Recovery configurations)
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs
+        /// Operation Id: DisasterRecoveryConfigs_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alias"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
-        public async virtual Task<Response<DisasterRecovery>> GetIfExistsAsync(string @alias, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DisasterRecovery" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DisasterRecovery> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alias, nameof(alias));
-
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<DisasterRecovery>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _disasterRecoveryConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<DisasterRecovery>(null, response.GetRawResponse());
-                return Response.FromValue(new DisasterRecovery(this, response.Value), response.GetRawResponse());
+                using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _disasterRecoveryDisasterRecoveryConfigsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DisasterRecovery(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<DisasterRecovery>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _disasterRecoveryDisasterRecoveryConfigsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DisasterRecovery(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="alias"> The Disaster Recovery configuration name. </param>
+        /// <summary>
+        /// Gets all Alias(Disaster Recovery configurations)
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs
+        /// Operation Id: DisasterRecoveryConfigs_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alias"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
-        public virtual Response<bool> Exists(string @alias, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DisasterRecovery" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DisasterRecovery> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alias, nameof(alias));
-
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.Exists");
-            scope.Start();
-            try
+            Page<DisasterRecovery> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(alias, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _disasterRecoveryDisasterRecoveryConfigsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DisasterRecovery(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<DisasterRecovery> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _disasterRecoveryDisasterRecoveryConfigsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DisasterRecovery(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// Operation Id: DisasterRecoveryConfigs_Get
+        /// </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alias"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string @alias, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alias, nameof(alias));
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
 
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.Exists");
+            using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryCollection.Exists");
             scope.Start();
             try
             {
@@ -261,80 +285,89 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Gets all Alias(Disaster Recovery configurations). </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// Operation Id: DisasterRecoveryConfigs_Get
+        /// </summary>
+        /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DisasterRecovery" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DisasterRecovery> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
+        public virtual Response<bool> Exists(string @alias, CancellationToken cancellationToken = default)
         {
-            Page<DisasterRecovery> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
+
+            using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _disasterRecoveryConfigsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DisasterRecovery(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(alias, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<DisasterRecovery> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _disasterRecoveryConfigsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DisasterRecovery(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all Alias(Disaster Recovery configurations). </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// Operation Id: DisasterRecoveryConfigs_Get
+        /// </summary>
+        /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DisasterRecovery" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DisasterRecovery> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
+        public async virtual Task<Response<DisasterRecovery>> GetIfExistsAsync(string @alias, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DisasterRecovery>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
+
+            using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _disasterRecoveryConfigsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DisasterRecovery(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _disasterRecoveryDisasterRecoveryConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<DisasterRecovery>(null, response.GetRawResponse());
+                return Response.FromValue(new DisasterRecovery(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<DisasterRecovery>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _disasterRecoveryConfigsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DisasterRecovery(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// Operation Id: DisasterRecoveryConfigs_Get
+        /// </summary>
+        /// <param name="alias"> The Disaster Recovery configuration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
+        public virtual Response<DisasterRecovery> GetIfExists(string @alias, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
+
+            using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _disasterRecoveryDisasterRecoveryConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<DisasterRecovery>(null, response.GetRawResponse());
+                return Response.FromValue(new DisasterRecovery(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<DisasterRecovery> IEnumerable<DisasterRecovery>.GetEnumerator()
@@ -351,8 +384,5 @@ namespace Azure.ResourceManager.ServiceBus
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, DisasterRecovery, DisasterRecoveryData> Construct() { }
     }
 }

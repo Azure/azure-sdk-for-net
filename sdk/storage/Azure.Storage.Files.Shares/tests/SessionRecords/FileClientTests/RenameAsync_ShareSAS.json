@@ -124,7 +124,7 @@
           "(.NET 5.0.11; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "0ab44115-c3a5-e897-d831-2000549595dc",
-        "x-ms-file-rename-source": "https%3A%2F%2F712xscnapby3pev55a.file.preprod.core.windows.net%2Ftest-share-d53bc2b4-57b4-b7f2-82c5-5d45af382658%2Ftest-directory-530afb0f-9a76-ea9c-3ac7-bc9b59b81e0b%2Ftest-file-bd651404-6df0-d4d6-14dc-4f6f83e34032%3Fsv=2021-04-10\u0026se=2021-10-30T19%3A39%3A35Z\u0026sr=s\u0026sp=rcwdl\u0026sig=Sanitized",
+        "x-ms-file-rename-source": "https://712xscnapby3pev55a.file.preprod.core.windows.net/test-share-d53bc2b4-57b4-b7f2-82c5-5d45af382658/test-directory-530afb0f-9a76-ea9c-3ac7-bc9b59b81e0b/test-file-bd651404-6df0-d4d6-14dc-4f6f83e34032?sv=2021-04-10&se=2021-10-30T19%3A39%3A35Z&sr=s&sp=rcwdl&sig=Sanitized",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2021-04-10"
       },

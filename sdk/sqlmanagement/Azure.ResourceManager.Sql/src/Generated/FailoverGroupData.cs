@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the FailoverGroup data model. </summary>
-    public partial class FailoverGroupData : Resource
+    public partial class FailoverGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of FailoverGroupData. </summary>
         public FailoverGroupData()
@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="readWriteEndpoint"> Read-write endpoint of the failover group instance. </param>
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="replicationState"> Replication state of the failover group instance. </param>
         /// <param name="partnerServers"> List of partner server information for the failover group. </param>
         /// <param name="databases"> List of databases in the failover group. </param>
-        internal FailoverGroupData(ResourceIdentifier id, string name, ResourceType type, string location, IDictionary<string, string> tags, FailoverGroupReadWriteEndpoint readWriteEndpoint, FailoverGroupReadOnlyEndpoint readOnlyEndpoint, FailoverGroupReplicationRole? replicationRole, string replicationState, IList<PartnerInfo> partnerServers, IList<string> databases) : base(id, name, type)
+        internal FailoverGroupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, IDictionary<string, string> tags, FailoverGroupReadWriteEndpoint readWriteEndpoint, FailoverGroupReadOnlyEndpoint readOnlyEndpoint, FailoverGroupReplicationRole? replicationRole, string replicationState, IList<PartnerInfo> partnerServers, IList<string> databases) : base(id, name, type, systemData)
         {
             Location = location;
             Tags = tags;

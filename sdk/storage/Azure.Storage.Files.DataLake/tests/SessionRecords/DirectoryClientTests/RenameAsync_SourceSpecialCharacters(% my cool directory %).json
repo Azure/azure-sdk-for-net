@@ -79,7 +79,7 @@
         ],
         "x-ms-client-request-id": "b0f0d7dc-94c7-ec4c-9aae-c4468f6e2e3b",
         "x-ms-date": "Fri, 19 Feb 2021 18:59:28 GMT",
-        "x-ms-rename-source": "%2Ftest-filesystem-5336a055-a8dc-78bf-2999-36a5126f3c7d%2F+my+cool+directory+=",
+        "x-ms-rename-source": "/test-filesystem-5336a055-a8dc-78bf-2999-36a5126f3c7d/%20my%20cool%20directory%20",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2021-04-10"
       },

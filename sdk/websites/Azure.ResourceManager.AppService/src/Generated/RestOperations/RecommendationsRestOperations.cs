@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
@@ -20,26 +19,28 @@ namespace Azure.ResourceManager.AppService
 {
     internal partial class RecommendationsRestOperations
     {
-        private Uri endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
         private readonly string _userAgent;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of RecommendationsRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="options"> The client options used to construct the current client. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public RecommendationsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, Uri endpoint = null, string apiVersion = default)
+        public RecommendationsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            this.apiVersion = apiVersion ?? "2021-02-01";
-            _clientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2021-02-01";
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
-            _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
+            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, bool? featured, string filter)
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Web/recommendations", false);
@@ -56,14 +57,14 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("featured", featured.Value, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, false);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -131,14 +132,14 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Web/recommendations/reset", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.AppService
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -182,7 +183,7 @@ namespace Azure.ResourceManager.AppService
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -192,16 +193,16 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Web/recommendations/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/disable", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -255,7 +256,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -265,7 +266,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -277,14 +278,14 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("expiredOnly", expiredOnly.Value, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, false);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -295,7 +296,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="expiredOnly"> Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The default is &lt;code&gt;true&lt;/code&gt;, which returns only expired recommendations. </param>
         /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="hostingEnvironmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is null. </exception>
         public async Task<Response<RecommendationCollection>> ListHistoryForHostingEnvironmentAsync(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -323,7 +324,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -334,7 +335,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="expiredOnly"> Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The default is &lt;code&gt;true&lt;/code&gt;, which returns only expired recommendations. </param>
         /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="hostingEnvironmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is null. </exception>
         public Response<RecommendationCollection> ListHistoryForHostingEnvironment(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -362,7 +363,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -372,7 +373,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -384,14 +385,14 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("featured", featured.Value, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, false);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -402,7 +403,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
         /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="hostingEnvironmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is null. </exception>
         public async Task<Response<RecommendationCollection>> ListRecommendedRulesForHostingEnvironmentAsync(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -430,7 +431,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -441,7 +442,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
         /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="hostingEnvironmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is null. </exception>
         public Response<RecommendationCollection> ListRecommendedRulesForHostingEnvironment(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -469,7 +470,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -479,7 +480,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -488,10 +489,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(hostingEnvironmentName, true);
             uri.AppendPath("/recommendations/disable", false);
             uri.AppendQuery("environmentName", environmentName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -501,7 +502,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="hostingEnvironmentName"> The String to use. </param>
         /// <param name="environmentName"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostingEnvironmentName"/>, or <paramref name="environmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostingEnvironmentName"/> or <paramref name="environmentName"/> is null. </exception>
         public async Task<Response> DisableAllForHostingEnvironmentAsync(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, string environmentName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -528,7 +529,7 @@ namespace Azure.ResourceManager.AppService
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -538,7 +539,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="hostingEnvironmentName"> The String to use. </param>
         /// <param name="environmentName"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostingEnvironmentName"/>, or <paramref name="environmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostingEnvironmentName"/> or <paramref name="environmentName"/> is null. </exception>
         public Response DisableAllForHostingEnvironment(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, string environmentName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -565,7 +566,7 @@ namespace Azure.ResourceManager.AppService
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -575,7 +576,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -584,10 +585,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(hostingEnvironmentName, true);
             uri.AppendPath("/recommendations/reset", false);
             uri.AppendQuery("environmentName", environmentName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -597,7 +598,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="hostingEnvironmentName"> The String to use. </param>
         /// <param name="environmentName"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostingEnvironmentName"/>, or <paramref name="environmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostingEnvironmentName"/> or <paramref name="environmentName"/> is null. </exception>
         public async Task<Response> ResetAllFiltersForHostingEnvironmentAsync(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, string environmentName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -624,7 +625,7 @@ namespace Azure.ResourceManager.AppService
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -634,7 +635,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="hostingEnvironmentName"> The String to use. </param>
         /// <param name="environmentName"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostingEnvironmentName"/>, or <paramref name="environmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostingEnvironmentName"/> or <paramref name="environmentName"/> is null. </exception>
         public Response ResetAllFiltersForHostingEnvironment(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, string environmentName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -661,7 +662,7 @@ namespace Azure.ResourceManager.AppService
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -671,7 +672,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -688,10 +689,10 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("recommendationId", recommendationId, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -703,7 +704,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostingEnvironmentName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostingEnvironmentName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<RecommendationRuleData>> GetRuleDetailsByHostingEnvironmentAsync(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -737,7 +738,7 @@ namespace Azure.ResourceManager.AppService
                 case 404:
                     return Response.FromValue((RecommendationRuleData)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -749,7 +750,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostingEnvironmentName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostingEnvironmentName"/> or <paramref name="name"/> is null. </exception>
         public Response<RecommendationRuleData> GetRuleDetailsByHostingEnvironment(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -783,7 +784,7 @@ namespace Azure.ResourceManager.AppService
                 case 404:
                     return Response.FromValue((RecommendationRuleData)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -793,7 +794,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -804,10 +805,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/disable", false);
             uri.AppendQuery("environmentName", environmentName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -818,7 +819,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Rule name. </param>
         /// <param name="environmentName"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostingEnvironmentName"/>, <paramref name="name"/>, or <paramref name="environmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostingEnvironmentName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is null. </exception>
         public async Task<Response> DisableRecommendationForHostingEnvironmentAsync(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, string name, string environmentName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -849,7 +850,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -860,7 +861,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Rule name. </param>
         /// <param name="environmentName"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostingEnvironmentName"/>, <paramref name="name"/>, or <paramref name="environmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostingEnvironmentName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is null. </exception>
         public Response DisableRecommendationForHostingEnvironment(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, string name, string environmentName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -891,7 +892,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -901,7 +902,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -913,14 +914,14 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("expiredOnly", expiredOnly.Value, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, false);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -931,7 +932,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="expiredOnly"> Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The default is &lt;code&gt;true&lt;/code&gt;, which returns only expired recommendations. </param>
         /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         public async Task<Response<RecommendationCollection>> ListHistoryForWebAppAsync(string subscriptionId, string resourceGroupName, string siteName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -959,7 +960,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -970,7 +971,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="expiredOnly"> Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The default is &lt;code&gt;true&lt;/code&gt;, which returns only expired recommendations. </param>
         /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         public Response<RecommendationCollection> ListHistoryForWebApp(string subscriptionId, string resourceGroupName, string siteName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -998,7 +999,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1008,7 +1009,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1020,14 +1021,14 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("featured", featured.Value, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, false);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1038,7 +1039,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
         /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         public async Task<Response<RecommendationCollection>> ListRecommendedRulesForWebAppAsync(string subscriptionId, string resourceGroupName, string siteName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1066,7 +1067,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1077,7 +1078,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
         /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         public Response<RecommendationCollection> ListRecommendedRulesForWebApp(string subscriptionId, string resourceGroupName, string siteName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1105,7 +1106,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1115,7 +1116,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1123,10 +1124,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/sites/", false);
             uri.AppendPath(siteName, true);
             uri.AppendPath("/recommendations/disable", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1135,7 +1136,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         public async Task<Response> DisableAllForWebAppAsync(string subscriptionId, string resourceGroupName, string siteName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1158,7 +1159,7 @@ namespace Azure.ResourceManager.AppService
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1167,7 +1168,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         public Response DisableAllForWebApp(string subscriptionId, string resourceGroupName, string siteName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1190,7 +1191,7 @@ namespace Azure.ResourceManager.AppService
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1200,7 +1201,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1208,10 +1209,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/sites/", false);
             uri.AppendPath(siteName, true);
             uri.AppendPath("/recommendations/reset", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1220,7 +1221,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         public async Task<Response> ResetAllFiltersForWebAppAsync(string subscriptionId, string resourceGroupName, string siteName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1243,7 +1244,7 @@ namespace Azure.ResourceManager.AppService
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1252,7 +1253,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         public Response ResetAllFiltersForWebApp(string subscriptionId, string resourceGroupName, string siteName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1275,7 +1276,7 @@ namespace Azure.ResourceManager.AppService
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1285,7 +1286,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1302,10 +1303,10 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("recommendationId", recommendationId, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1317,7 +1318,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="siteName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="siteName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<RecommendationRuleData>> GetRuleDetailsByWebAppAsync(string subscriptionId, string resourceGroupName, string siteName, string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1351,7 +1352,7 @@ namespace Azure.ResourceManager.AppService
                 case 404:
                     return Response.FromValue((RecommendationRuleData)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1363,7 +1364,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="siteName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="siteName"/> or <paramref name="name"/> is null. </exception>
         public Response<RecommendationRuleData> GetRuleDetailsByWebApp(string subscriptionId, string resourceGroupName, string siteName, string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1397,7 +1398,7 @@ namespace Azure.ResourceManager.AppService
                 case 404:
                     return Response.FromValue((RecommendationRuleData)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1407,7 +1408,7 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1417,10 +1418,10 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/recommendations/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/disable", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1430,7 +1431,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteName"> Site name. </param>
         /// <param name="name"> Rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="siteName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="siteName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response> DisableRecommendationForSiteAsync(string subscriptionId, string resourceGroupName, string siteName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1457,7 +1458,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1467,7 +1468,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteName"> Site name. </param>
         /// <param name="name"> Rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="siteName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="siteName"/> or <paramref name="name"/> is null. </exception>
         public Response DisableRecommendationForSite(string subscriptionId, string resourceGroupName, string siteName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1494,7 +1495,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1504,11 +1505,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1542,7 +1543,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1576,7 +1577,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1586,11 +1587,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1602,7 +1603,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="expiredOnly"> Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The default is &lt;code&gt;true&lt;/code&gt;, which returns only expired recommendations. </param>
         /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="hostingEnvironmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is null. </exception>
         public async Task<Response<RecommendationCollection>> ListHistoryForHostingEnvironmentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1634,7 +1635,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1646,7 +1647,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="expiredOnly"> Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The default is &lt;code&gt;true&lt;/code&gt;, which returns only expired recommendations. </param>
         /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="hostingEnvironmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is null. </exception>
         public Response<RecommendationCollection> ListHistoryForHostingEnvironmentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1678,7 +1679,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1688,11 +1689,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1704,7 +1705,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
         /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="hostingEnvironmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is null. </exception>
         public async Task<Response<RecommendationCollection>> ListRecommendedRulesForHostingEnvironmentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1736,7 +1737,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1748,7 +1749,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
         /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="hostingEnvironmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is null. </exception>
         public Response<RecommendationCollection> ListRecommendedRulesForHostingEnvironmentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1780,7 +1781,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1790,11 +1791,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1806,7 +1807,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="expiredOnly"> Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The default is &lt;code&gt;true&lt;/code&gt;, which returns only expired recommendations. </param>
         /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         public async Task<Response<RecommendationCollection>> ListHistoryForWebAppNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string siteName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1838,7 +1839,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1850,7 +1851,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="expiredOnly"> Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The default is &lt;code&gt;true&lt;/code&gt;, which returns only expired recommendations. </param>
         /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         public Response<RecommendationCollection> ListHistoryForWebAppNextPage(string nextLink, string subscriptionId, string resourceGroupName, string siteName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1882,7 +1883,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1892,11 +1893,11 @@ namespace Azure.ResourceManager.AppService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1908,7 +1909,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
         /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         public async Task<Response<RecommendationCollection>> ListRecommendedRulesForWebAppNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string siteName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1940,7 +1941,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1952,7 +1953,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
         /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         public Response<RecommendationCollection> ListRecommendedRulesForWebAppNextPage(string nextLink, string subscriptionId, string resourceGroupName, string siteName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1984,7 +1985,7 @@ namespace Azure.ResourceManager.AppService
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

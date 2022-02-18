@@ -1270,7 +1270,8 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="Delete"/> operation marks the specified
         /// container for deletion. The container and any blobs contained
-        /// within it are later deleted during garbage collection.
+        /// within it are later deleted during garbage collection which
+        /// could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -1285,7 +1286,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> if successful.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1303,7 +1304,8 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation marks the specified
         /// container for deletion. The container and any blobs contained
-        /// within it are later deleted during garbage collection.
+        /// within it are later deleted during garbage collection which
+        /// could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -1318,7 +1320,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> if successful.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1336,7 +1338,8 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="DeleteIfExists"/> operation marks the specified
         /// container for deletion if it exists. The container and any blobs
-        /// contained within it are later deleted during garbage collection.
+        /// contained within it are later deleted during garbage collection
+        /// which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -1352,7 +1355,7 @@ namespace Azure.Storage.Blobs
         /// </param>
         /// <returns>
         /// A <see cref="Response"/> Returns true if container exists and was
-        /// deleted, return false otherwise.
+        /// marked for deletion, return false otherwise.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1370,7 +1373,8 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="DeleteIfExistsAsync"/> operation marks the specified
         /// container for deletion if it exists. The container and any blobs
-        /// contained within it are later deleted during garbage collection.
+        /// contained within it are later deleted during garbage collection
+        /// which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -1386,7 +1390,7 @@ namespace Azure.Storage.Blobs
         /// </param>
         /// <returns>
         /// A <see cref="Response"/> Returns true if container exists and was
-        /// deleted, return false otherwise.
+        /// marked for deletion, return false otherwise.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1404,7 +1408,8 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="DeleteIfExistsInternal"/> operation marks the specified
         /// container for deletion if it exists. The container and any blobs
-        /// contained within it are later deleted during garbage collection.
+        /// contained within it are later deleted during garbage collection
+        /// which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -1423,7 +1428,7 @@ namespace Azure.Storage.Blobs
         /// </param>
         /// <returns>
         /// A <see cref="Response"/> Returns true if container exists and was
-        /// deleted, return false otherwise.
+        /// marked for deletion, return false otherwise.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1479,7 +1484,8 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation marks the specified
         /// container for deletion. The container and any blobs contained
-        /// within it are later deleted during garbage collection.
+        /// within it are later deleted during garbage collection
+        /// which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -1500,7 +1506,7 @@ namespace Azure.Storage.Blobs
         /// Optional. To indicate if the name of the operation.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> if successful.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -3104,7 +3110,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="DeleteBlob"/> operation marks the specified
         /// blob or snapshot for deletion. The blob is later deleted during
-        /// garbage collection.
+        /// garbage collection which could take several minutes.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -3127,7 +3133,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -3148,7 +3154,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="DeleteBlobAsync"/> operation marks the specified
         /// blob or snapshot for deletion. The blob is later deleted during
-        /// garbage collection.
+        /// garbage collection which could take several minutes.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -3171,7 +3177,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -3193,7 +3199,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="DeleteBlobIfExists"/> operation marks the specified
         /// blob or snapshot for deletion, if the blob or snapshot exists. The blob
-        /// is later deleted during garbage collection.
+        /// is later deleted during garbage collection which could take several minutes.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -3216,7 +3222,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -3237,7 +3243,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="DeleteBlobIfExistsAsync"/> operation marks the specified
         /// blob or snapshot for deletion, if the blob or snapshot exists. The blob
-        /// is later deleted during garbage collection.
+        /// is later deleted during garbage collection which could take several minutes.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -3260,7 +3266,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if

@@ -53,7 +53,7 @@ param (
     [string] $ProvisionerApplicationSecret,
 
     [Parameter()]
-    [ValidateRange(1, [int]::MaxValue)]
+    [ValidateRange(1, 7*24)]
     [int] $DeleteAfterHours = 120,
 
     [Parameter()]
@@ -83,7 +83,14 @@ param (
     [switch] $OutFile,
 
     [Parameter()]
-    [switch] $SuppressVsoCommands = ($null -eq $env:SYSTEM_TEAMPROJECTID)
+    [switch] $SuppressVsoCommands = ($null -eq $env:SYSTEM_TEAMPROJECTID),
+
+    # Captures any arguments not declared here (no parameter errors)
+    # This enables backwards compatibility with old script versions in
+    # hotfix branches if and when the dynamic subscription configuration
+    # secrets get updated to add new parameters.
+    [Parameter(ValueFromRemainingArguments = $true)]
+    $NewTestResourcesRemainingArguments
 )
 
 . $PSScriptRoot/SubConfig-Helpers.ps1
@@ -136,6 +143,14 @@ function Retry([scriptblock] $Action, [int] $Attempts = 5)
 # https://azure.microsoft.com/en-us/updates/update-your-apps-to-use-microsoft-graph-before-30-june-2022/
 function NewServicePrincipalWrapper([string]$subscription, [string]$resourceGroup, [string]$displayName)
 {
+    if ((Get-Module Az.Resources).Version -eq "5.3.0") {
+        # https://github.com/Azure/azure-powershell/issues/17040
+        # New-AzAdServicePrincipal calls will fail with:
+        # "You cannot call a method on a null-valued expression."
+        Write-Warning "Az.Resources version 5.3.0 is not supported. Please update to >= 5.3.1"
+        Write-Warning "Update-Module Az.Resources -RequiredVersion 5.3.1"
+        exit 1
+    }
     $servicePrincipal = Retry {
         New-AzADServicePrincipal -Role "Owner" -Scope "/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroupName" -DisplayName $displayName
     }
