@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.AI.Personalizer
 {
     /// <summary> Response of an event operation </summary>
-    public class EventResponse : Response
+    internal class EventResponse : Response
     {
         private readonly Dictionary<string, List<string>> _headers = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
 

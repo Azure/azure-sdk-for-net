@@ -13,27 +13,15 @@ namespace Azure.AI.Personalizer
     /// <summary> Client options for PersonalizerClient. </summary>
     public partial class PersonalizerClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V1_1_preview_1;
+        private const ServiceVersion LatestVersion = ServiceVersion.V1_1_preview_3;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "1.1-preview.1". </summary>
-            V1_1_preview_1 = 1,
+            /// <summary> Service version "v1.1-preview.3". </summary>
+            V1_1_preview_3 = 1,
         }
 
         internal string Version { get; }
-
-        /// <summary> Initializes new instance of PersonalizerClientOptions. </summary>
-        public PersonalizerClientOptions(ServiceVersion version = LatestVersion)
-        {
-            Version = version switch
-            {
-                ServiceVersion.V1_1_preview_1 => "1.1-preview.1",
-                _ => throw new NotSupportedException()
-            };
-
-            Retry.NetworkTimeout = TimeSpan.FromMinutes(8);
-        }
     }
 }

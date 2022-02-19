@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Personalizer
 {
     /// <summary> The Wrapper for Rl.Net.MultiSlotResponseDetailed </summary>
-    public class MultiSlotResponseDetailedWrapper : IEnumerable<SlotRankingResponseWrapper>
+    internal class MultiSlotResponseDetailedWrapper : IEnumerable<SlotRankingWrapper>
     {
         private readonly MultiSlotResponseDetailed _multiSlotResponse;
 
@@ -25,12 +25,12 @@ namespace Azure.AI.Personalizer
         }
 
         /// <summary> Get the enumerator </summary>
-        public virtual IEnumerator<SlotRankingResponseWrapper> GetEnumerator()
+        public virtual IEnumerator<SlotRankingWrapper> GetEnumerator()
         {
             var enu = _multiSlotResponse.GetEnumerator();
             while (enu.MoveNext())
             {
-                yield return new SlotRankingResponseWrapper(enu.Current);
+                yield return new SlotRankingWrapper(enu.Current);
             }
         }
 

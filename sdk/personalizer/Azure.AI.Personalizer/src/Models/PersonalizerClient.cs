@@ -69,21 +69,11 @@ namespace Azure.AI.Personalizer
             ServiceConfigurationRestClient = new ServiceConfigurationRestClient(clientDiagnostics, pipeline, stringEndpoint);
             PolicyRestClient = new PolicyRestClient(clientDiagnostics, pipeline, stringEndpoint);
             tokenCredential = credential;
-        }
 
-        /// <summary> Initializes a new instance of PersonalizerClient. </summary>
-        /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="isLocalInference"> A flag to determine whether to use local inference. </param>
-        /// <param name="subsampleRate"> Percentage from (0,1] determines how much percentage of interaction and observation events to consider </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        public PersonalizerClient(Uri endpoint, TokenCredential credential, bool isLocalInference, float subsampleRate = 1.0f, PersonalizerClientOptions options = null) :
-            this(endpoint, credential, options)
-        {
-            this.isLocalInference = isLocalInference;
+            this.isLocalInference = options.IsLocalInference;
             if (isLocalInference)
             {
-                validateAndAssignSampleRate(subsampleRate);
+                validateAndAssignSampleRate(options.SubsampleRate);
                 //lazy load Rankprocessor
                 rlNetProcessor = new Lazy<RlNetProcessor>(() => GetConfigurationForRankProcessor());
             }
@@ -119,21 +109,11 @@ namespace Azure.AI.Personalizer
             ServiceConfigurationRestClient = new ServiceConfigurationRestClient(clientDiagnostics, pipeline, stringEndpoint);
             PolicyRestClient = new PolicyRestClient(clientDiagnostics, pipeline, stringEndpoint);
             azureKeyCredential = credential;
-        }
 
-        /// <summary> Initializes a new instance of PersonalizerClient. </summary>
-        /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="isLocalInference"> A flag to determine whether to use local inference. </param>
-        /// <param name="subsampleRate"> Percentage from (0,1] determines how much percentage of interaction and observation events to consider </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        public PersonalizerClient(Uri endpoint, AzureKeyCredential credential, bool isLocalInference, float subsampleRate = 1.0f, PersonalizerClientOptions options = null) :
-            this(endpoint, credential, options)
-        {
-            this.isLocalInference = isLocalInference;
+            this.isLocalInference = options.IsLocalInference;
             if (isLocalInference)
             {
-                validateAndAssignSampleRate(subsampleRate);
+                validateAndAssignSampleRate(options.SubsampleRate);
                 //lazy load Rankprocessor
                 rlNetProcessor = new Lazy<RlNetProcessor>(() => GetConfigurationForRankProcessor());
             }
@@ -653,7 +633,7 @@ namespace Azure.AI.Personalizer
             config["rank.learning.mode"] = Convert.ToString(personalizerServiceProperties.LearningMode, CultureInfo.InvariantCulture);
             LiveModel liveModel = new LiveModel(config);
             liveModel.Init();
-            ILiveModel liveModelAdapter = new LiveModelAdapter(liveModel);
+            LiveModelBase liveModelAdapter = new LiveModelAdapter(liveModel);
             liveModelLastRefresh = DateTimeOffset.UtcNow;
             return new RlNetProcessor(liveModelAdapter);
         }

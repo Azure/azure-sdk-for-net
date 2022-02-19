@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Personalizer
 {
     /// <summary> A wrapper class of Rl.Net.RankingResponse </summary>
-    public class RankingResponseWrapper : IEnumerable<ActionProbabilityWrapper>
+    internal class RankingResponseWrapper : IEnumerable<ActionProbabilityWrapper>
     {
         private readonly RankingResponse _rankingResponse;
 

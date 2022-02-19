@@ -6,7 +6,7 @@ using Rl.Net;
 namespace Azure.AI.Personalizer
 {
     /// <summary> The Wrapper for Rl.Net.ActionProbability </summary>
-    public class ActionProbabilityWrapper
+    internal class ActionProbabilityWrapper
     {
         private readonly ActionProbability _actionProbability;
 

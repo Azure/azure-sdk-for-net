@@ -69,14 +69,14 @@ namespace Azure.AI.Personalizer
             }
 
             // finalize decision response ranking
-            var ranking = rankedIndices?.Select((index, i) =>
+            var rankings = rankedIndices?.Select((index, i) =>
             {
                 var action = originalActions[index - 1];
                 return new PersonalizerRankedAction(action.Id, rankingProbabilities[i]);
             }).ToList();
 
             // setting RewardActionId to be the VW chosen action.
-            var personalizerRankResult = new PersonalizerRankResult(ranking, eventId, originalActions.ElementAt(chosenActionIndex)?.Id);
+            var personalizerRankResult = new PersonalizerRankResult(rankings, eventId, originalActions.ElementAt(chosenActionIndex)?.Id);
 
             return personalizerRankResult;
         }
