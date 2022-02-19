@@ -15,7 +15,7 @@
                 "OSVmImage": "MMSUbuntu20.04",
                 "Pool": "azsdk-pool-mms-ubuntu-2004-general",
                 "TestTargetFramework": "net6.0",
-                "AZURE_TEST_AGENT": "ubuntu_2004_net60",
+                "AZURE_TEST_AGENT": "UBUNTU_2004_NET60",
                 "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "FALSE"
             },
 
@@ -42,7 +42,7 @@
                 "OSVmImage": "macOS-10.15",
                 "Pool": "Azure Pipelines",
                 "TestTargetFramework": "net6.0",
-                "AZURE_TEST_AGENT": "macos_1015_net60",
+                "AZURE_TEST_AGENT": "MACOS_1015_NET60",
                 "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "FALSE"
             }
         },
@@ -68,7 +68,7 @@
                 }
             },
             "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "FALSE",
-            "AZURE_TEST_AGENT": "windows_2019_netcore31"
+            "AZURE_TEST_AGENT": "WINDOWS_2019_NETCORE31"
         }
     ]
 }
