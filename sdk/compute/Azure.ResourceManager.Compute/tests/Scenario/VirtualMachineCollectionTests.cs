@@ -20,12 +20,8 @@ namespace Azure.ResourceManager.Compute.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            var collection = await GetVirtualMachineCollectionAsync();
-            var vmName = Recording.GenerateAssetName("testVM-");
-            var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
-            var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
-            var lro = await collection.CreateOrUpdateAsync(true, vmName, input);
-            VirtualMachine virtualMachine = lro.Value;
+            string vmName = Recording.GenerateAssetName("testVM-");
+            VirtualMachine virtualMachine = await CreateVirtualMachineAsync(vmName);
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
         }
 
