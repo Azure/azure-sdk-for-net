@@ -1,81 +1,5 @@
 namespace Azure.AI.Personalizer
 {
-    public partial class ActionProbabilityWrapper
-    {
-        public ActionProbabilityWrapper() { }
-        public ActionProbabilityWrapper(Rl.Net.ActionProbability actionProbability) { }
-        public virtual long ActionIndex { get { throw null; } }
-        public virtual float Probability { get { throw null; } }
-    }
-    public partial class DecisionContext
-    {
-        public DecisionContext() { }
-        public DecisionContext(Azure.AI.Personalizer.PersonalizerRankMultiSlotOptions rankRequest, System.Collections.Generic.Dictionary<string, System.Collections.Generic.IList<object>> slotIdToFeatures) { }
-        public DecisionContext(System.Collections.Generic.IEnumerable<object> contextFeatures, System.Collections.Generic.List<Azure.AI.Personalizer.PersonalizerRankableAction> rankableActions) { }
-        [System.Text.Json.Serialization.JsonIgnoreAttribute(Condition=System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("FromUrl")]
-        public System.Collections.Generic.List<string> ContextFeatures { get { throw null; } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("_multi")]
-        public System.Collections.Generic.IList<Azure.AI.Personalizer.DecisionContextDocument> Documents { get { throw null; } }
-        [System.Text.Json.Serialization.JsonIgnoreAttribute(Condition=System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("_slots")]
-        public System.Collections.Generic.IList<Azure.AI.Personalizer.DecisionContextDocument> Slots { get { throw null; } }
-    }
-    public partial class DecisionContextDocument
-    {
-        public DecisionContextDocument(string id, System.Collections.Generic.List<string> actionFeatureJsonList, string slotId, System.Collections.Generic.List<string> slotFeatureJsonList) { }
-        [System.Text.Json.Serialization.JsonIgnoreAttribute(Condition=System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("j")]
-        public System.Collections.Generic.List<string> ActionFeatureJsonList { get { throw null; } }
-        [System.Text.Json.Serialization.JsonIgnoreAttribute(Condition=System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("_tag")]
-        public string Id { get { throw null; } }
-        [System.Text.Json.Serialization.JsonIgnoreAttribute(Condition=System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("sj")]
-        public System.Collections.Generic.List<string> SlotFeatureJsonList { get { throw null; } }
-        [System.Text.Json.Serialization.JsonIgnoreAttribute(Condition=System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("_id")]
-        public string SlotId { get { throw null; } }
-    }
-    public partial class EventResponse : Azure.Response
-    {
-        public EventResponse(int status, string reasonPhrase = null) { }
-        public override string ClientRequestId { get { throw null; } set { } }
-        public override System.IO.Stream ContentStream { get { throw null; } set { } }
-        public override string ReasonPhrase { get { throw null; } }
-        public override int Status { get { throw null; } }
-        protected override bool ContainsHeader(string name) { throw null; }
-        public override void Dispose() { }
-        protected override System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders() { throw null; }
-        protected override bool TryGetHeader(string name, out string value) { throw null; }
-        protected override bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string> values) { throw null; }
-    }
-    public partial interface ILiveModel
-    {
-        Azure.AI.Personalizer.RankingResponseWrapper ChooseRank(string eventId, string contextJson, Rl.Net.ActionFlags flags);
-        void Init();
-        void QueueActionTakenEvent(string eventId);
-        void QueueOutcomeEvent(string eventId, float outcome);
-        void QueueOutcomeEvent(string eventId, string slotId, float outcome);
-        Azure.AI.Personalizer.MultiSlotResponseDetailedWrapper RequestMultiSlotDecisionDetailed(string eventId, string contextJson, Rl.Net.ActionFlags flags, int[] baselineActions);
-    }
-    public partial class LiveModelAdapter : Azure.AI.Personalizer.ILiveModel
-    {
-        public LiveModelAdapter(Rl.Net.LiveModel liveModel) { }
-        public Azure.AI.Personalizer.RankingResponseWrapper ChooseRank(string eventId, string contextJson, Rl.Net.ActionFlags flags) { throw null; }
-        public void Init() { }
-        public void QueueActionTakenEvent(string eventId) { }
-        public void QueueOutcomeEvent(string eventId, float outcome) { }
-        public void QueueOutcomeEvent(string eventId, string slotId, float outcome) { }
-        public Azure.AI.Personalizer.MultiSlotResponseDetailedWrapper RequestMultiSlotDecisionDetailed(string eventId, string contextJson, Rl.Net.ActionFlags flags, int[] baselineActions) { throw null; }
-    }
-    public partial class MultiSlotResponseDetailedWrapper : System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.SlotRankingResponseWrapper>, System.Collections.IEnumerable
-    {
-        public MultiSlotResponseDetailedWrapper() { }
-        public MultiSlotResponseDetailedWrapper(Rl.Net.MultiSlotResponseDetailed multiSlotResponse) { }
-        public virtual System.Collections.Generic.IEnumerator<Azure.AI.Personalizer.SlotRankingResponseWrapper> GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
     public partial class PersonalizerAdministrationClient
     {
         protected PersonalizerAdministrationClient() { }
@@ -119,10 +43,8 @@ namespace Azure.AI.Personalizer
         protected PersonalizerClient() { }
         public PersonalizerClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public PersonalizerClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerClientOptions options = null) { }
-        public PersonalizerClient(System.Uri endpoint, Azure.AzureKeyCredential credential, bool isLocalInference, float subsampleRate = 1f, Azure.AI.Personalizer.PersonalizerClientOptions options = null) { }
         public PersonalizerClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public PersonalizerClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerClientOptions options = null) { }
-        public PersonalizerClient(System.Uri endpoint, Azure.Core.TokenCredential credential, bool isLocalInference, float subsampleRate = 1f, Azure.AI.Personalizer.PersonalizerClientOptions options = null) { }
         public virtual Azure.Response Activate(string eventId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ActivateAsync(string eventId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ActivateMultiSlot(string eventId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -144,10 +66,10 @@ namespace Azure.AI.Personalizer
     }
     public partial class PersonalizerClientOptions : Azure.Core.ClientOptions
     {
-        public PersonalizerClientOptions(Azure.AI.Personalizer.PersonalizerClientOptions.ServiceVersion version = Azure.AI.Personalizer.PersonalizerClientOptions.ServiceVersion.V1_1_preview_1) { }
+        public PersonalizerClientOptions(Azure.AI.Personalizer.PersonalizerClientOptions.ServiceVersion version = Azure.AI.Personalizer.PersonalizerClientOptions.ServiceVersion.V1_1_preview_3, bool isLocalInference = false, float subsampleRate = 1f) { }
         public enum ServiceVersion
         {
-            V1_1_preview_1 = 1,
+            V1_1_preview_3 = 1,
         }
     }
     public partial class PersonalizerCreateEvaluationOperation : Azure.Operation<Azure.AI.Personalizer.PersonalizerEvaluation>
@@ -371,7 +293,7 @@ namespace Azure.AI.Personalizer
     {
         internal PersonalizerRankResult() { }
         public string EventId { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Personalizer.PersonalizerRankedAction> Ranking { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Personalizer.PersonalizerRankedAction> Ranking { get { throw null; } }
         public string RewardActionId { get { throw null; } }
     }
     public partial class PersonalizerRewardMultiSlotOptions
@@ -422,22 +344,5 @@ namespace Azure.AI.Personalizer
         public PersonalizerSlotReward(string slotId, float value) { }
         public string SlotId { get { throw null; } }
         public float Value { get { throw null; } }
-    }
-    public partial class RankingResponseWrapper : System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.ActionProbabilityWrapper>, System.Collections.IEnumerable
-    {
-        public RankingResponseWrapper() { }
-        public RankingResponseWrapper(Rl.Net.RankingResponse rankResponse) { }
-        public virtual System.Collections.Generic.IEnumerator<Azure.AI.Personalizer.ActionProbabilityWrapper> GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class SlotRankingResponseWrapper : System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.ActionProbabilityWrapper>, System.Collections.IEnumerable
-    {
-        public SlotRankingResponseWrapper() { }
-        public SlotRankingResponseWrapper(Rl.Net.SlotRanking slotRanking) { }
-        public virtual long ChosenAction { get { throw null; } }
-        public virtual long Count { get { throw null; } }
-        public virtual string SlotId { get { throw null; } }
-        public virtual System.Collections.Generic.IEnumerator<Azure.AI.Personalizer.ActionProbabilityWrapper> GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
 }
