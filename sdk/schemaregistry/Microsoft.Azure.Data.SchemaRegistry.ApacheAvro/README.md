@@ -52,8 +52,7 @@ var schemaRegistryClient = new SchemaRegistryClient(fullyQualifiedNamespace: ful
 
 ### Serializer
 
-This library provides a serializer, [SchemaRegistryAvroSerializer]
-[schema_registry_avro_serializer], that interacts with `EventData` events. The SchemaRegistryAvroSerializer utilizes a SchemaRegistryClient to enrich the `EventData` events with the schema ID for the schema used to serialize the data.
+This library provides a serializer, [SchemaRegistryAvroSerializer][schema_registry_avro_serializer], that interacts with `EventData` events. The SchemaRegistryAvroSerializer utilizes a SchemaRegistryClient to enrich the `EventData` events with the schema ID for the schema used to serialize the data.
 
 This serializer requires the [Apache Avro library][apache_avro_library]. The payload types accepted by this serializer include [GenericRecord][generic_record] and [ISpecificRecord][specific_record].
 
