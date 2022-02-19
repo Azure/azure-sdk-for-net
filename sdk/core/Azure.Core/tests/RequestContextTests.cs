@@ -207,6 +207,15 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void AcceptsFullRangeofStatusCodes()
+        {
+            var context = new RequestContext();
+
+            Assert.DoesNotThrow(() => context.AddClassifier(100, true));
+            Assert.DoesNotThrow(() => context.AddClassifier(599, true));
+        }
+
+        [Test]
         [NonParallelizable]
         public async Task CanSuppressLoggingAsError()
         {
