@@ -15,5 +15,10 @@ namespace Azure.AI.Personalizer
         /// Need to be JSON serializable. https://docs.microsoft.com/azure/cognitive-services/personalizer/concepts-features.
         /// </summary>
         public IList<object> Features { get; }
+
+        /// <summary>
+        /// The index of the action in the original request
+        /// </summary>
+        public int Index { get; set; }
     }
 }
