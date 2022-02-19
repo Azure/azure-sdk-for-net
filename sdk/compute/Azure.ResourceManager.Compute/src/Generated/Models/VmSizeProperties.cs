@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of VmSizeProperties. </summary>
-        /// <param name="vCPUsAvailable"> Specifies the number of vCPUs available for the VM. &lt;br&gt;&lt;br&gt; When this property is not specified in the request body the default behavior is to set it to the value of vCPUs available for that VM size exposed in api response of [List all available virtual machine sizes in a region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list) . </param>
-        /// <param name="vCPUsPerCore"> Specifies the vCPU to physical core ratio. &lt;br&gt;&lt;br&gt; When this property is not specified in the request body the default behavior is set to the value of vCPUsPerCore for the VM Size exposed in api response of [List all available virtual machine sizes in a region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list) &lt;br&gt;&lt;br&gt; Setting this property to 1 also means that hyper-threading is disabled. </param>
-        internal VmSizeProperties(int? vCPUsAvailable, int? vCPUsPerCore)
+        /// <param name="vcpUsAvailable"> Specifies the number of vCPUs available for the VM. &lt;br&gt;&lt;br&gt; When this property is not specified in the request body the default behavior is to set it to the value of vCPUs available for that VM size exposed in api response of [List all available virtual machine sizes in a region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list) . </param>
+        /// <param name="vcpUsPerCore"> Specifies the vCPU to physical core ratio. &lt;br&gt;&lt;br&gt; When this property is not specified in the request body the default behavior is set to the value of vCPUsPerCore for the VM Size exposed in api response of [List all available virtual machine sizes in a region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list) &lt;br&gt;&lt;br&gt; Setting this property to 1 also means that hyper-threading is disabled. </param>
+        internal VmSizeProperties(int? vcpUsAvailable, int? vcpUsPerCore)
         {
-            VCPUsAvailable = vCPUsAvailable;
-            VCPUsPerCore = vCPUsPerCore;
+            VCPUsAvailable = vcpUsAvailable;
+            VCPUsPerCore = vcpUsPerCore;
         }
 
         /// <summary> Specifies the number of vCPUs available for the VM. &lt;br&gt;&lt;br&gt; When this property is not specified in the request body the default behavior is to set it to the value of vCPUs available for that VM size exposed in api response of [List all available virtual machine sizes in a region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list) . </summary>

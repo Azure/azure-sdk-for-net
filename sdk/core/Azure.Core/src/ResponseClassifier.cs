@@ -7,7 +7,8 @@ using System.IO;
 namespace Azure.Core
 {
     /// <summary>
-    /// A type that analyzes HTTP responses and exceptions and determines if they should be retried.
+    /// A type that analyzes HTTP responses and exceptions and determines if they should be retried,
+    /// and/or analyzes responses and determines if they should be treated as error responses.
     /// </summary>
     public class ResponseClassifier
     {

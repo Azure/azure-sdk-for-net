@@ -56,9 +56,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetLedgerIdentityAsync(string ledgerId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(ledgerId, nameof(ledgerId));
 
@@ -99,9 +97,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetLedgerIdentity(string ledgerId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(ledgerId, nameof(ledgerId));
 

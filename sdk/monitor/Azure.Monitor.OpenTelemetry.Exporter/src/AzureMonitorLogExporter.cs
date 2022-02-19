@@ -44,8 +44,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 // TODO: Handle return value, it can be converted as metrics.
                 // TODO: Validate CancellationToken and async pattern here.
-                _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
-                return ExportResult.Success;
+                var exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
+
+                return exportResult;
             }
             catch (Exception ex)
             {

@@ -106,9 +106,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CheckPrincipalAccessAsync(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -181,9 +179,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response CheckPrincipalAccess(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -240,9 +236,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetRoleAssignmentsAsync(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignments");
             scope0.Start();
@@ -297,9 +291,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetRoleAssignments(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignments");
             scope0.Start();
@@ -357,9 +349,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CreateRoleAssignmentAsync(string roleAssignmentId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
             Argument.AssertNotNull(content, nameof(content));
@@ -420,9 +410,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response CreateRoleAssignment(string roleAssignmentId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
             Argument.AssertNotNull(content, nameof(content));
@@ -474,9 +462,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetRoleAssignmentByIdAsync(string roleAssignmentId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
 
@@ -527,9 +513,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetRoleAssignmentById(string roleAssignmentId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
 
@@ -572,9 +556,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> DeleteRoleAssignmentByIdAsync(string roleAssignmentId, string scope = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
 
@@ -617,9 +599,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response DeleteRoleAssignmentById(string roleAssignmentId, string scope = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
 

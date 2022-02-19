@@ -1,26 +1,39 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using BenchmarkDotNet.Attributes;
-using OpenTelemetry.Trace;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using BenchmarkDotNet.Attributes;
+
+/*
+BenchmarkDotNet=v0.13.1, OS=Windows 10.0.22000
+Intel Core i7-8650U CPU 1.90GHz, 1 CPU, 8 logical and 4 physical cores
+.NET SDK=6.0.102
+  [Host]     : .NET 6.0.2 (6.0.222.6406), X64 RyuJIT
+  DefaultJob : .NET 6.0.2 (6.0.222.6406), X64 RyuJIT
+
+
+|                           Method |     Mean |    Error |   StdDev |   Median |  Gen 0 | Allocated |
+|--------------------------------- |---------:|---------:|---------:|---------:|-------:|----------:|
+|      Enumerate_TagObjects_NoItem | 174.5 ns |  3.48 ns | 10.04 ns | 175.0 ns |      - |         - |
+|       Enumerate_TagObjects_PartB | 473.5 ns | 10.38 ns | 30.62 ns | 481.4 ns | 0.0095 |      40 B |
+|       Enumerate_TagObjects_PartC | 759.5 ns | 15.55 ns | 45.86 ns | 773.8 ns | 0.0668 |     280 B |
+| Enumerate_TagObjects_PartB_And_C | 454.3 ns | 11.03 ns | 32.52 ns | 467.0 ns | 0.0095 |      40 B |
+*/
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
 {
     [MemoryDiagnoser]
     public class TagObjectsBenchmarks
     {
-        private TagEnumerationState monitorTags;
-        private IEnumerable<KeyValuePair<string, object>> tagObjects;
-        private IEnumerable<KeyValuePair<string, object>> PartB_tagObjects;
-        private IEnumerable<KeyValuePair<string, object>> PartC_tagObjects;
-        private IEnumerable<KeyValuePair<string, object>> PartB_And_C_tagObjects;
-        private Activity NoItemActivity;
-        private Activity PartBActivity;
-        private Activity PartCActivity;
-        private Activity PartBAndCActivity;
+        private IEnumerable<KeyValuePair<string, object>> _partB_tagObjects;
+        private IEnumerable<KeyValuePair<string, object>> _partC_tagObjects;
+        private IEnumerable<KeyValuePair<string, object>> _partB_And_C_tagObjects;
+        private Activity _noItemActivity;
+        private Activity _partBActivity;
+        private Activity _partCActivity;
+        private Activity _partBAndCActivity;
 
         static TagObjectsBenchmarks()
         {
@@ -39,16 +52,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
         [GlobalSetup]
         public void Setup()
         {
-            monitorTags = new TagEnumerationState
-            {
-                PartBTags = AzMonList.Initialize(),
-                PartCTags = AzMonList.Initialize()
-            };
+            _noItemActivity = CreateTestActivity();
 
-            tagObjects = new Dictionary<string, object>();
-            NoItemActivity = CreateTestActivity();
-
-            PartB_tagObjects = new Dictionary<string, object>
+            _partB_tagObjects = new Dictionary<string, object>
             {
                 [SemanticConventions.AttributeNetHostIp] = "127.0.0.1",
                 [SemanticConventions.AttributeHttpScheme] = "https",
@@ -56,9 +62,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
                 [SemanticConventions.AttributeHttpHostPort] = "8888",
             };
 
-            PartBActivity = CreateTestActivity(PartB_tagObjects);
+            _partBActivity = CreateTestActivity(_partB_tagObjects);
 
-            PartC_tagObjects = new Dictionary<string, object>
+            _partC_tagObjects = new Dictionary<string, object>
             {
                 ["intKey"] = 1,
                 ["doubleKey"] = 1.1,
@@ -67,9 +73,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
                 ["arrayKey"] = new int[] { 1, 2, 3 }
             };
 
-            PartCActivity = CreateTestActivity(PartC_tagObjects);
+            _partCActivity = CreateTestActivity(_partC_tagObjects);
 
-            PartB_And_C_tagObjects = new Dictionary<string, object>
+            _partB_And_C_tagObjects = new Dictionary<string, object>
             {
                 [SemanticConventions.AttributeHttpScheme] = "https",
                 [SemanticConventions.AttributeHttpHost] = "localhost",
@@ -77,7 +83,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
                 ["somekey"] = "value"
             };
 
-            PartBAndCActivity = CreateTestActivity(PartB_And_C_tagObjects);
+            _partBAndCActivity = CreateTestActivity(_partB_And_C_tagObjects);
         }
 
         [GlobalCleanup]
@@ -88,25 +94,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
         [Benchmark]
         public void Enumerate_TagObjects_NoItem()
         {
-            _ = tagObjects.ToAzureMonitorTags(out var _, out var _);
+            var monitorTags = TraceHelper.EnumerateActivityTags(_noItemActivity);
+            monitorTags.Return();
         }
 
         [Benchmark]
         public void Enumerate_TagObjects_PartB()
         {
-            _ = PartB_tagObjects.ToAzureMonitorTags(out var _, out var _);
+            var monitorTags = TraceHelper.EnumerateActivityTags(_partBActivity);
+            monitorTags.Return();
         }
 
         [Benchmark]
         public void Enumerate_TagObjects_PartC()
         {
-            _ = PartC_tagObjects.ToAzureMonitorTags(out var _, out var _);
+            var monitorTags = TraceHelper.EnumerateActivityTags(_partCActivity);
+            monitorTags.Return();
         }
 
         [Benchmark]
         public void Enumerate_TagObjects_PartB_And_C()
         {
-            _ = PartB_And_C_tagObjects.ToAzureMonitorTags(out var _, out var _);
+            var monitorTags = TraceHelper.EnumerateActivityTags(_partBAndCActivity);
+            monitorTags.Return();
         }
 
         private static Activity CreateTestActivity(IEnumerable<KeyValuePair<string, object>> additionalAttributes = null)
