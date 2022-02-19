@@ -13,28 +13,22 @@ namespace Azure.Core
     /// <remarks>Polling interval is always equal to the given polling interval.</remarks>
     internal class ConstantPollingStrategy : OperationPollingStrategy
     {
-        public TimeSpan PollingInterval { get;  }
+        internal static readonly TimeSpan DefaultPollingInterval = TimeSpan.FromSeconds(1);
 
         /// <summary>
         /// Create a <see cref="ConstantPollingStrategy"/> with 1 second polling interval.
         /// </summary>
-        public ConstantPollingStrategy() : this(TimeSpan.FromSeconds(1)) { }
-
-        /// <summary>
-        /// Create a <see cref="ConstantPollingStrategy"/> with given polling interval.
-        /// </summary>
-        /// <param name="interval">Polling interval.</param>
-        public ConstantPollingStrategy(TimeSpan interval)
+        public ConstantPollingStrategy()
         {
-            PollingInterval = interval;
         }
 
         /// <summary>
-        /// Get the polling interval from the max value of <see cref="PollingInterval"/> and <paramref name="suggestedInterval"/>.
+        /// Get the polling interval from the max value of <see cref="DefaultPollingInterval"/> and <paramref name="suggestedInterval"/>.
         /// </summary>
         /// <param name="response">Service response.</param>
         /// <param name="suggestedInterval">Suggested pollingInterval.</param>
-        /// <returns>Max value of <see cref="PollingInterval"/> and <paramref name="suggestedInterval"/>.</returns>
-        public override TimeSpan GetNextWait(Response response, TimeSpan suggestedInterval) => Max(PollingInterval, suggestedInterval);
+        /// <returns>Max value of <see cref="DefaultPollingInterval"/> and <paramref name="suggestedInterval"/>.</returns>
+        public override TimeSpan GetNextWait(Response response, TimeSpan? suggestedInterval)
+            => suggestedInterval.HasValue ? Max(DefaultPollingInterval, suggestedInterval.Value) : DefaultPollingInterval;
     }
 }

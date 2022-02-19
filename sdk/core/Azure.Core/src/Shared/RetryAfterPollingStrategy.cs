@@ -13,16 +13,20 @@ namespace Azure.Core
     /// </summary>
     internal class RetryAfterPollingStrategy : OperationPollingStrategy
     {
+        protected const string RetryAfterHeaderName = "Retry-After";
+        protected const string RetryAfterMsHeaderName = "retry-after-ms";
+        protected const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
+
         private TimeSpan lastRetryAfter { get; set; }
 
         /// <summary>
         /// Create a <see cref="RetryAfterPollingStrategy"/> with a default retry-after value which normally
         /// comes from the initial response of an LRO operation.
         /// </summary>
-        /// <param name="defaultRetryAfter">Default retry-after value.</param>
-        public RetryAfterPollingStrategy(TimeSpan defaultRetryAfter)
+        /// <param name="originalResponse"> Original response for the LRO. </param>
+        public RetryAfterPollingStrategy(Response originalResponse)
         {
-            lastRetryAfter = defaultRetryAfter;
+            lastRetryAfter = GetRetryAfterInterval(originalResponse);
         }
 
         /// <summary>
@@ -32,13 +36,39 @@ namespace Azure.Core
         /// <param name="response">Service response which might carry retry-after header.</param>
         /// <param name="suggestedInterval">Suggested pollingInterval.</param>
         /// <returns>Max value of retry-after header and <paramref name="suggestedInterval"/>.</returns>
-        public override TimeSpan GetNextWait(Response response, TimeSpan suggestedInterval)
+        public override TimeSpan GetNextWait(Response response, TimeSpan? suggestedInterval)
         {
-            if (TryGetRetryAfter(response, out TimeSpan? retryAfter))
+            lastRetryAfter = GetRetryAfterInterval(response);
+            return lastRetryAfter;
+        }
+
+        private TimeSpan GetRetryAfterInterval(Response response)
+        {
+            if (response.Headers.TryGetValue(RetryAfterMsHeaderName, out string? retryAfterValue) ||
+                response.Headers.TryGetValue(XRetryAfterMsHeaderName, out retryAfterValue))
             {
-                lastRetryAfter = retryAfter!.Value;
+                if (int.TryParse(retryAfterValue, out int serverDelayInMilliseconds))
+                {
+                    return TimeSpan.FromMilliseconds(serverDelayInMilliseconds);
+                }
             }
-            return Max(lastRetryAfter, suggestedInterval);
+            else if (response.Headers.TryGetValue(RetryAfterHeaderName, out retryAfterValue))
+            {
+                if (int.TryParse(retryAfterValue, out int serverDelayInSeconds))
+                {
+                    return TimeSpan.FromSeconds(serverDelayInSeconds);
+                }
+            }
+
+            return lastRetryAfter;
+        }
+
+        internal static bool IsRetryAfterPresent(Response response)
+        {
+            return response is not null &&
+                (response.Headers.TryGetValue(RetryAfterMsHeaderName, out string? retryAfterValue) ||
+                response.Headers.TryGetValue(XRetryAfterMsHeaderName, out retryAfterValue) ||
+                response.Headers.TryGetValue(RetryAfterHeaderName, out retryAfterValue));
         }
     }
 }

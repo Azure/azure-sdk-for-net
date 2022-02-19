@@ -28,8 +28,6 @@
     <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" />
     <Compile Include="$(AzureCoreSharedSources)OperationPollingStrategy.cs" />
     <Compile Include="$(AzureCoreSharedSources)ConstantPollingStrategy.cs" />
-    <Compile Include="$(AzureCoreSharedSources)ExponentialPollingStrategy.cs" />
-    <Compile Include="$(AzureCoreSharedSources)ZeroPollingStrategy.cs" />
     <Compile Include="$(AzureCoreSharedSources)RetryAfterPollingStrategy.cs" />
     <Compile Include="$(AzureCoreSharedSources)OperationPoller.cs" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" />

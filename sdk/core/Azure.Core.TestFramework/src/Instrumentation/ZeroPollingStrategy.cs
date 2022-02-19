@@ -13,6 +13,6 @@ namespace Azure.Core
     /// </summary>
     internal class ZeroPollingStrategy : OperationPollingStrategy
     {
-        public override TimeSpan GetNextWait(Response response, TimeSpan suggestedInterval) => TimeSpan.Zero;
+        public override TimeSpan GetNextWait(Response response, TimeSpan? suggestedInterval) => TimeSpan.Zero;
     }
 }

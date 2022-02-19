@@ -16,8 +16,6 @@ namespace Azure
     public abstract class Operation
 #pragma warning restore AZC0012 // Avoid single word type names
     {
-        internal static TimeSpan DefaultPollingInterval { get; } = TimeSpan.FromSeconds(1);
-
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for
         /// the status of the long-running operation.
@@ -67,8 +65,11 @@ namespace Azure
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final response of the operation.
         /// </remarks>
-        public virtual ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default)
-            => WaitForCompletionResponseAsync(DefaultPollingInterval, cancellationToken);
+        public virtual async ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default)
+        {
+            OperationPoller poller = new OperationPoller(GetRawResponse());
+            return await poller.WaitForCompletionResponseAsync(this, null, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Periodically calls the server till the long-running operation completes.
@@ -85,9 +86,8 @@ namespace Azure
         /// </remarks>
         public virtual async ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default)
         {
-            OperationPoller poller = new(GetRawResponse());
-            return await poller.WaitForCompletionResponseAsync(UpdateStatusAsync, () => HasCompleted, GetRawResponse,
-                async (TimeSpan delay, CancellationToken cancellationToken) => await Task.Delay(delay, cancellationToken).ConfigureAwait(false), pollingInterval, cancellationToken).ConfigureAwait(false);
+            OperationPoller poller = new OperationPoller(GetRawResponse());
+            return await poller.WaitForCompletionResponseAsync(this, pollingInterval, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -99,7 +99,10 @@ namespace Azure
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final response of the operation.
         /// </remarks>
         public virtual Response WaitForCompletionResponse(CancellationToken cancellationToken = default)
-            => WaitForCompletionResponse(DefaultPollingInterval, cancellationToken);
+        {
+            OperationPoller poller = new OperationPoller(GetRawResponse());
+            return poller.WaitForCompletionResponse(this, null, cancellationToken);
+        }
 
         /// <summary>
         /// Periodically calls the server till the long-running operation completes.
@@ -116,8 +119,8 @@ namespace Azure
         /// </remarks>
         public virtual Response WaitForCompletionResponse(TimeSpan pollingInterval, CancellationToken cancellationToken = default)
         {
-            OperationPoller poller = new(GetRawResponse());
-            return poller.WaitForCompletionResponse(UpdateStatus, () => HasCompleted, GetRawResponse, pollingInterval, cancellationToken);
+            OperationPoller poller = new OperationPoller(GetRawResponse());
+            return poller.WaitForCompletionResponse(this, pollingInterval, cancellationToken);
         }
 
         internal static T GetValue<T>(ref T? value) where T : class

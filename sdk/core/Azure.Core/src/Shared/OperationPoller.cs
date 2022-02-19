@@ -4,7 +4,6 @@
 #nullable enable
 
 using System;
-using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,15 +14,17 @@ namespace Azure.Core
     /// </summary>
     internal class OperationPoller
     {
-        protected static readonly OperationPollingStrategy DefaultPollingStrategy = new ConstantPollingStrategy();
-        protected OperationPollingStrategy _pollingStrategy;
+        private OperationPollingStrategy _pollingStrategy;
 
         public OperationPoller(Response rawResponse, OperationPollingStrategy? defaultPollingStrategy = null)
         {
-            _pollingStrategy = OperationPollingStrategy.ChoosePollingStrategy(rawResponse, defaultPollingStrategy ?? DefaultPollingStrategy);
+            _pollingStrategy = OperationPollingStrategy.ChoosePollingStrategy(rawResponse, defaultPollingStrategy);
         }
 
-        public virtual async ValueTask<Response> WaitForCompletionResponseAsync(UpdateStatusAsync updateStatusAsync, HasCompleted hasCompleted, GetRawResponse getRawResponse, WaitAsync waitAsync, TimeSpan pollingInterval, CancellationToken cancellationToken)
+        public virtual ValueTask<Response> WaitForCompletionResponseAsync(Operation operation, TimeSpan? pollingInterval, CancellationToken cancellationToken)
+            => WaitForCompletionResponseAsync(operation.UpdateStatusAsync, () => operation.HasCompleted, operation.GetRawResponse, pollingInterval, cancellationToken);
+
+        public virtual async ValueTask<Response> WaitForCompletionResponseAsync(UpdateStatusAsync updateStatusAsync, HasCompleted hasCompleted, GetRawResponse getRawResponse, TimeSpan? pollingInterval, CancellationToken cancellationToken)
         {
             while (true)
             {
@@ -34,11 +35,14 @@ namespace Azure.Core
                     return getRawResponse();
                 }
 
-                await waitAsync(_pollingStrategy.GetNextWait(response, pollingInterval), cancellationToken).ConfigureAwait(false);
+                await Task.Delay(_pollingStrategy.GetNextWait(response, pollingInterval), cancellationToken).ConfigureAwait(false);
             }
         }
 
-        public virtual Response WaitForCompletionResponse(UpdateStatus updateStatus, HasCompleted hasCompleted, GetRawResponse getRawResponse, TimeSpan pollingInterval, CancellationToken cancellationToken)
+        public virtual Response WaitForCompletionResponse(Operation operation, TimeSpan? pollingInterval, CancellationToken cancellationToken)
+            => WaitForCompletionResponse(operation.UpdateStatus, () => operation.HasCompleted, operation.GetRawResponse, pollingInterval, cancellationToken);
+
+        public virtual Response WaitForCompletionResponse(UpdateStatus updateStatus, HasCompleted hasCompleted, GetRawResponse getRawResponse, TimeSpan? pollingInterval, CancellationToken cancellationToken)
         {
             while (true)
             {
@@ -48,6 +52,43 @@ namespace Azure.Core
                 {
                     return getRawResponse();
                 }
+
+                Thread.Sleep(_pollingStrategy.GetNextWait(response, pollingInterval));
+            }
+        }
+
+        public virtual ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T> operation, TimeSpan? pollingInterval, CancellationToken cancellationToken) where T : notnull
+           => WaitForCompletionAsync(operation.UpdateStatusAsync, () => operation.HasCompleted, () => operation.Value, operation.GetRawResponse, pollingInterval, cancellationToken);
+
+        public virtual async ValueTask<Response<T>> WaitForCompletionAsync<T>(UpdateStatusAsync updateStatusAsync, HasCompleted hasCompleted, Value<T> value, GetRawResponse getRawResponse, TimeSpan? pollingInterval, CancellationToken cancellationToken)
+        {
+            while (true)
+            {
+                Response response = await updateStatusAsync(cancellationToken).ConfigureAwait(false);
+
+                if (hasCompleted())
+                {
+                    return Response.FromValue(value(), getRawResponse());
+                }
+
+                await Task.Delay(_pollingStrategy.GetNextWait(response, pollingInterval), cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        public virtual Response<T> WaitForCompletion<T>(Operation<T> operation, TimeSpan? pollingInterval, CancellationToken cancellationToken) where T : notnull
+           => WaitForCompletion(operation.UpdateStatus, () => operation.HasCompleted, () => operation.Value, operation.GetRawResponse, pollingInterval, cancellationToken);
+
+        public virtual Response<T> WaitForCompletion<T>(UpdateStatus updateStatus, HasCompleted hasCompleted, Value<T> value, GetRawResponse getRawResponse, TimeSpan? pollingInterval, CancellationToken cancellationToken)
+        {
+            while (true)
+            {
+                Response response = updateStatus(cancellationToken);
+
+                if (hasCompleted())
+                {
+                    return Response.FromValue(value(), getRawResponse());
+                }
+
                 Thread.Sleep(_pollingStrategy.GetNextWait(response, pollingInterval));
             }
         }
@@ -61,5 +102,7 @@ namespace Azure.Core
         public delegate Response GetRawResponse();
 
         public delegate Task WaitAsync(TimeSpan delay, CancellationToken cancellationToken);
+
+        public delegate T Value<T>();
     }
 }

@@ -34,7 +34,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="response">Service response.</param>
         /// <param name="suggestedInterval">Suggested pollingInterval.</param>
-        public override TimeSpan GetNextWait(Response response, TimeSpan suggestedInterval)
+        public override TimeSpan GetNextWait(Response response, TimeSpan? suggestedInterval)
         {
             if (_index >= pollingSequence.Length)
             {

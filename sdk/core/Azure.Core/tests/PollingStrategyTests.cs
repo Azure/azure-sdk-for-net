@@ -36,7 +36,7 @@ namespace Azure.Core.Tests
             [Values(1, 2, 3)] int initial,
             [Values(1, 2, 3)] int suggest)
         {
-            var strategy = new ConstantPollingStrategy(TimeSpan.FromSeconds(initial));
+            var strategy = new ConstantPollingStrategy();
 
             for (int i = 0; i < 6; i++)
             {
@@ -44,25 +44,25 @@ namespace Azure.Core.Tests
             }
         }
 
-        [Test]
-        public void TestZerolPollingStrategy(
-            [Values(true, false)] bool retryAfter,
-            [Values(1, 2, 3)] int suggest)
-        {
-            var strategy = new ZeroPollingStrategy();
+        //[Test]
+        //public void TestZerolPollingStrategy(
+        //    [Values(true, false)] bool retryAfter,
+        //    [Values(1, 2, 3)] int suggest)
+        //{
+        //    var strategy = new ZeroPollingStrategy();
 
-            for (int i = 0; i < 6; i++)
-            {
-                Assert.AreEqual(0, strategy.GetNextWait(mockDefaultResponse(retryAfter), TimeSpan.FromSeconds(suggest)).TotalSeconds);
-            }
-        }
+        //    for (int i = 0; i < 6; i++)
+        //    {
+        //        Assert.AreEqual(0, strategy.GetNextWait(mockDefaultResponse(retryAfter), TimeSpan.FromSeconds(suggest)).TotalSeconds);
+        //    }
+        //}
 
         [Test]
         public void TestRetryAfterPollingStrategyWithHeader(
             [Values(1, 2, 3)] int retryAfter,
             [Values(1, 2, 3)] int suggest)
         {
-            var strategy = new RetryAfterPollingStrategy(TimeSpan.FromSeconds(1));
+            var strategy = new RetryAfterPollingStrategy(new MockResponse(200));
 
             Assert.AreEqual(Math.Max(retryAfter, suggest), strategy.GetNextWait(mockWithRetryAfter(retryAfter), TimeSpan.FromSeconds(suggest)).TotalSeconds);
         }
@@ -72,7 +72,7 @@ namespace Azure.Core.Tests
             [Values(1, 2, 3)] int initial,
             [Values(1, 2, 3)] int suggest)
         {
-            var strategy = new RetryAfterPollingStrategy(TimeSpan.FromSeconds(initial));
+            var strategy = new RetryAfterPollingStrategy(new MockResponse(200));
 
             Assert.AreEqual(Math.Max(initial, suggest), strategy.GetNextWait(defaultMockResponse, TimeSpan.FromSeconds(suggest)).TotalSeconds);
         }
