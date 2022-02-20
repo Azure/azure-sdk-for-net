@@ -39,7 +39,7 @@ namespace Azure.Core.Tests
 
         public async override ValueTask<Response<TestResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
         {
-            return await WaitForCompletionAsync(OperationInternals.DefaultPollingInterval, cancellationToken);
+            return await WaitForCompletionAsync(TimeSpan.FromSeconds(1), cancellationToken);
         }
 
         public async override ValueTask<Response<TestResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)

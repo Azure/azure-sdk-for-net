@@ -67,13 +67,15 @@ namespace Azure.Core
         /// parameter <paramref name="operation"/>.
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
+        /// <param name="pollingStrategy">Strategy for each iteration of polling.</param>
         public OperationInternal(
             ClientDiagnostics clientDiagnostics,
             IOperation operation,
             Response rawResponse,
             string? operationTypeName = null,
-            IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null)
-            :base(clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes)
+            IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
+            OperationPollingStrategy? pollingStrategy = null)
+            :base(clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, pollingStrategy)
         {
             _operation = operation;
         }

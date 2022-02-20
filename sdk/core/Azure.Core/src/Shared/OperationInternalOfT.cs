@@ -77,8 +77,9 @@ namespace Azure.Core
         /// parameter <paramref name="operation"/>.
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
-        public OperationInternal(ClientDiagnostics clientDiagnostics, IOperation<T> operation, Response rawResponse, string? operationTypeName = null, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null)
-            : base(clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes)
+        /// <param name="pollingStrategy">Strategy for each iteration of polling.</param>
+        public OperationInternal(ClientDiagnostics clientDiagnostics, IOperation<T> operation, Response rawResponse, string? operationTypeName = null, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null, OperationPollingStrategy? pollingStrategy = null)
+            : base(clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, pollingStrategy)
         {
             _operation = operation;
             RawResponse = rawResponse;
@@ -126,9 +127,9 @@ namespace Azure.Core
         }
         /// <summary>
         /// Periodically calls <see cref="OperationInternalBase.UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
-        /// between calls is defined by the property <see cref="OperationInternalBase.DefaultPollingInterval"/>, but it can change based on information returned
+        /// between calls is defined by the passed-in <see cref="OperationPollingStrategy"/>, but it can change based on information returned
         /// from the server. After each service call, a retry-after header may be returned to communicate that there is no reason to poll
-        /// for status change until the specified time has passed. In this case, the maximum value between the <see cref="OperationInternalBase.DefaultPollingInterval"/>
+        /// for status change until the specified time has passed. In this case, the maximum value between the default polling interval
         /// property and the retry-after header is chosen as the wait interval. Headers supported are: "Retry-After", "retry-after-ms",
         /// and "x-ms-retry-after-ms".
         /// <example>Usage example:
@@ -141,8 +142,11 @@ namespace Azure.Core
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
-        public async ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken) =>
-            await WaitForCompletionAsync(DefaultPollingInterval, cancellationToken).ConfigureAwait(false);
+        public async ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken)
+        {
+            var rawResponse = await WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(Value, rawResponse);
+        }
 
         /// <summary>
         /// Periodically calls <see cref="OperationInternalBase.UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval

@@ -49,12 +49,6 @@ namespace Azure.ResourceManager.TestFramework
 
         private void Initialize()
         {
-            if (Mode == RecordedTestMode.Playback)
-            {
-                var pollField = typeof(OperationInternals).GetField("<DefaultPollingInterval>k__BackingField", BindingFlags.Static | BindingFlags.NonPublic);
-                pollField.SetValue(null, TimeSpan.Zero);
-            }
-
             _waitForCleanup = Mode == RecordedTestMode.Live;
         }
 
