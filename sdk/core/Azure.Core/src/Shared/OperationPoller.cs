@@ -14,6 +14,12 @@ namespace Azure.Core
     /// </summary>
     internal class OperationPoller
     {
+        public delegate Response UpdateStatus(CancellationToken cancellationToken = default);
+        public delegate ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken);
+        public delegate bool HasCompleted();
+        public delegate Response GetRawResponse();
+        public delegate T Value<T>();
+
         private OperationPollingStrategy _pollingStrategy;
 
         public OperationPoller(Response rawResponse, OperationPollingStrategy? defaultPollingStrategy = null)
@@ -92,17 +98,5 @@ namespace Azure.Core
                 Thread.Sleep(_pollingStrategy.GetNextWait(response, pollingInterval));
             }
         }
-
-        public delegate Response UpdateStatus(CancellationToken cancellationToken = default);
-
-        public delegate ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken);
-
-        public delegate bool HasCompleted();
-
-        public delegate Response GetRawResponse();
-
-        public delegate Task WaitAsync(TimeSpan delay, CancellationToken cancellationToken);
-
-        public delegate T Value<T>();
     }
 }
