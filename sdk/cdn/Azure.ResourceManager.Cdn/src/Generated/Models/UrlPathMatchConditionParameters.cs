@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for UrlPath match conditions. </summary>
-    public partial class UrlPathMatchConditionParameters
+    internal partial class UrlPathMatchConditionParameters
     {
         /// <summary> Initializes a new instance of UrlPathMatchConditionParameters. </summary>
         /// <param name="odataType"></param>

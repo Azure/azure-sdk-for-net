@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of the application rule protocol. </summary>
-    public partial class FirewallPolicyRuleApplicationProtocol
+    internal partial class FirewallPolicyRuleApplicationProtocol
     {
         /// <summary> Initializes a new instance of FirewallPolicyRuleApplicationProtocol. </summary>
         public FirewallPolicyRuleApplicationProtocol()

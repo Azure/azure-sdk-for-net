@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     /// <summary> Request payload used to update an existing resource&apos;s tags. </summary>
-    public partial class DeviceUpdateInstanceUpdateOptions
+    internal partial class DeviceUpdateInstanceUpdateOptions
     {
         /// <summary> Initializes a new instance of DeviceUpdateInstanceUpdateOptions. </summary>
         public DeviceUpdateInstanceUpdateOptions()

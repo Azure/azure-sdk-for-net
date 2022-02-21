@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for HttpVersion match conditions. </summary>
-    public partial class HttpVersionMatchConditionParameters
+    internal partial class HttpVersionMatchConditionParameters
     {
         /// <summary> Initializes a new instance of HttpVersionMatchConditionParameters. </summary>
         /// <param name="odataType"></param>

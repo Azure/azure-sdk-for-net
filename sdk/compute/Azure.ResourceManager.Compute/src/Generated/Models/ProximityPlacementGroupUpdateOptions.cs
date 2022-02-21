@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the proximity placement group. </summary>
-    public partial class ProximityPlacementGroupUpdateOptions : UpdateResource
+    internal partial class ProximityPlacementGroupUpdateOptions : UpdateResource
     {
         /// <summary> Initializes a new instance of ProximityPlacementGroupUpdateOptions. </summary>
         public ProximityPlacementGroupUpdateOptions()

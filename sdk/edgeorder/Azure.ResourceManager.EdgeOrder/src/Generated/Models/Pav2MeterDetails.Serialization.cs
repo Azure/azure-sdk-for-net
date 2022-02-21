@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class Pav2MeterDetails
+    internal partial class Pav2MeterDetails
     {
         internal static Pav2MeterDetails DeserializePav2MeterDetails(JsonElement element)
         {

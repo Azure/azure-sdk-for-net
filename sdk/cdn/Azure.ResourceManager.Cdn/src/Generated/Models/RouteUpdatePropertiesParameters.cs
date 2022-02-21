@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the domain to create. </summary>
-    public partial class RouteUpdatePropertiesParameters
+    internal partial class RouteUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of RouteUpdatePropertiesParameters. </summary>
         public RouteUpdatePropertiesParameters()

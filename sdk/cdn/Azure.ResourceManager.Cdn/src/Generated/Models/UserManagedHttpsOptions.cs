@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the certificate source parameters using user&apos;s keyvault certificate for enabling SSL. </summary>
-    public partial class UserManagedHttpsOptions : CustomDomainHttpsOptions
+    internal partial class UserManagedHttpsOptions : CustomDomainHttpsOptions
     {
         /// <summary> Initializes a new instance of UserManagedHttpsOptions. </summary>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>

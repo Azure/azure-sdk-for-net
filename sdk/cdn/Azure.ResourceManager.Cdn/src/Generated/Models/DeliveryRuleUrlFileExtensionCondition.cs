@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the UrlFileExtension condition for the delivery rule. </summary>
-    public partial class DeliveryRuleUrlFileExtensionCondition : DeliveryRuleCondition
+    internal partial class DeliveryRuleUrlFileExtensionCondition : DeliveryRuleCondition
     {
         /// <summary> Initializes a new instance of DeliveryRuleUrlFileExtensionCondition. </summary>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
