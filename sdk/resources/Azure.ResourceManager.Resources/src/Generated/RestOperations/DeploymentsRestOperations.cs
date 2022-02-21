@@ -695,194 +695,6 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateWhatIfAtTenantScopeRequest(string deploymentName, string location, DeploymentWhatIfProperties properties)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
-            uri.AppendPath(deploymentName, true);
-            uri.AppendPath("/whatIf", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var model = new ScopedDeploymentWhatIf(location, properties);
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
-            return message;
-        }
-
-        /// <summary> Returns changes that will be made by the deployment if executed at the scope of the tenant group. </summary>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="location"> The location to store the deployment data. </param>
-        /// <param name="properties"> The deployment properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/>, <paramref name="location"/> or <paramref name="properties"/> is null. </exception>
-        public async Task<Response> WhatIfAtTenantScopeAsync(string deploymentName, string location, DeploymentWhatIfProperties properties, CancellationToken cancellationToken = default)
-        {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
-
-            using var message = CreateWhatIfAtTenantScopeRequest(deploymentName, location, properties);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Returns changes that will be made by the deployment if executed at the scope of the tenant group. </summary>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="location"> The location to store the deployment data. </param>
-        /// <param name="properties"> The deployment properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/>, <paramref name="location"/> or <paramref name="properties"/> is null. </exception>
-        public Response WhatIfAtTenantScope(string deploymentName, string location, DeploymentWhatIfProperties properties, CancellationToken cancellationToken = default)
-        {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
-
-            using var message = CreateWhatIfAtTenantScopeRequest(deploymentName, location, properties);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal Azure.Core.HttpMessage CreateWhatIfAtManagementGroupScopeRequest(string groupId, string deploymentName, string location, DeploymentWhatIfProperties properties)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
-            uri.AppendPath(groupId, true);
-            uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
-            uri.AppendPath(deploymentName, true);
-            uri.AppendPath("/whatIf", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var model = new ScopedDeploymentWhatIf(location, properties);
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
-            return message;
-        }
-
-        /// <summary> Returns changes that will be made by the deployment if executed at the scope of the management group. </summary>
-        /// <param name="groupId"> The management group ID. </param>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="location"> The location to store the deployment data. </param>
-        /// <param name="properties"> The deployment properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentName"/>, <paramref name="location"/> or <paramref name="properties"/> is null. </exception>
-        public async Task<Response> WhatIfAtManagementGroupScopeAsync(string groupId, string deploymentName, string location, DeploymentWhatIfProperties properties, CancellationToken cancellationToken = default)
-        {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
-
-            using var message = CreateWhatIfAtManagementGroupScopeRequest(groupId, deploymentName, location, properties);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Returns changes that will be made by the deployment if executed at the scope of the management group. </summary>
-        /// <param name="groupId"> The management group ID. </param>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="location"> The location to store the deployment data. </param>
-        /// <param name="properties"> The deployment properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentName"/>, <paramref name="location"/> or <paramref name="properties"/> is null. </exception>
-        public Response WhatIfAtManagementGroupScope(string groupId, string deploymentName, string location, DeploymentWhatIfProperties properties, CancellationToken cancellationToken = default)
-        {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
-
-            using var message = CreateWhatIfAtManagementGroupScopeRequest(groupId, deploymentName, location, properties);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
         internal Azure.Core.HttpMessage CreateWhatIfAtSubscriptionScopeRequest(string subscriptionId, string deploymentName, DeploymentWhatIfProperties properties, string location)
         {
             var message = _pipeline.CreateMessage();
@@ -1153,6 +965,194 @@ namespace Azure.ResourceManager.Resources
                         value = TemplateHashResult.DeserializeTemplateHashResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal Azure.Core.HttpMessage CreateWhatIfAtTenantScopeRequest(string deploymentName, string location, DeploymentWhatIfProperties properties)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendPath("/whatIf", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new ScopedDeploymentWhatIf(location, properties);
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            message.SetProperty("SDKUserAgent", _userAgent);
+            return message;
+        }
+
+        /// <summary> Returns changes that will be made by the deployment if executed at the scope of the tenant group. </summary>
+        /// <param name="deploymentName"> The name of the deployment. </param>
+        /// <param name="location"> The location to store the deployment data. </param>
+        /// <param name="properties"> The deployment properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/>, <paramref name="location"/> or <paramref name="properties"/> is null. </exception>
+        public async Task<Response> WhatIfAtTenantScopeAsync(string deploymentName, string location, DeploymentWhatIfProperties properties, CancellationToken cancellationToken = default)
+        {
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException(nameof(deploymentName));
+            }
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
+
+            using var message = CreateWhatIfAtTenantScopeRequest(deploymentName, location, properties);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Returns changes that will be made by the deployment if executed at the scope of the tenant group. </summary>
+        /// <param name="deploymentName"> The name of the deployment. </param>
+        /// <param name="location"> The location to store the deployment data. </param>
+        /// <param name="properties"> The deployment properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/>, <paramref name="location"/> or <paramref name="properties"/> is null. </exception>
+        public Response WhatIfAtTenantScope(string deploymentName, string location, DeploymentWhatIfProperties properties, CancellationToken cancellationToken = default)
+        {
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException(nameof(deploymentName));
+            }
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
+
+            using var message = CreateWhatIfAtTenantScopeRequest(deploymentName, location, properties);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal Azure.Core.HttpMessage CreateWhatIfAtManagementGroupScopeRequest(string groupId, string deploymentName, string location, DeploymentWhatIfProperties properties)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendPath("/whatIf", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new ScopedDeploymentWhatIf(location, properties);
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            message.SetProperty("SDKUserAgent", _userAgent);
+            return message;
+        }
+
+        /// <summary> Returns changes that will be made by the deployment if executed at the scope of the management group. </summary>
+        /// <param name="groupId"> The management group ID. </param>
+        /// <param name="deploymentName"> The name of the deployment. </param>
+        /// <param name="location"> The location to store the deployment data. </param>
+        /// <param name="properties"> The deployment properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentName"/>, <paramref name="location"/> or <paramref name="properties"/> is null. </exception>
+        public async Task<Response> WhatIfAtManagementGroupScopeAsync(string groupId, string deploymentName, string location, DeploymentWhatIfProperties properties, CancellationToken cancellationToken = default)
+        {
+            if (groupId == null)
+            {
+                throw new ArgumentNullException(nameof(groupId));
+            }
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException(nameof(deploymentName));
+            }
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
+
+            using var message = CreateWhatIfAtManagementGroupScopeRequest(groupId, deploymentName, location, properties);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Returns changes that will be made by the deployment if executed at the scope of the management group. </summary>
+        /// <param name="groupId"> The management group ID. </param>
+        /// <param name="deploymentName"> The name of the deployment. </param>
+        /// <param name="location"> The location to store the deployment data. </param>
+        /// <param name="properties"> The deployment properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentName"/>, <paramref name="location"/> or <paramref name="properties"/> is null. </exception>
+        public Response WhatIfAtManagementGroupScope(string groupId, string deploymentName, string location, DeploymentWhatIfProperties properties, CancellationToken cancellationToken = default)
+        {
+            if (groupId == null)
+            {
+                throw new ArgumentNullException(nameof(groupId));
+            }
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException(nameof(deploymentName));
+            }
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
+
+            using var message = CreateWhatIfAtManagementGroupScopeRequest(groupId, deploymentName, location, properties);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }

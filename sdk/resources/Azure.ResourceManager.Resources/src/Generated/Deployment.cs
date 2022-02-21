@@ -338,47 +338,30 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Returns changes that will be made by the deployment if executed at the scope of the tenant group.
-        /// Request Path: /providers/Microsoft.Resources/deployments/{deploymentName}/whatIf
-        /// Operation Id: Deployments_WhatIfAtTenantScope
-        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf
-        /// Operation Id: Deployments_WhatIfAtManagementGroupScope
+        /// Returns changes that will be made by the deployment if executed at the scope of the subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf
         /// Operation Id: Deployments_WhatIfAtSubscriptionScope
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf
         /// Operation Id: Deployments_WhatIf
+        /// Request Path: /providers/Microsoft.Resources/deployments/{deploymentName}/whatIf
+        /// Operation Id: Deployments_WhatIfAtTenantScope
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf
+        /// Operation Id: Deployments_WhatIfAtManagementGroupScope
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="location"> The location to store the deployment data. </param>
         /// <param name="properties"> The deployment properties. </param>
+        /// <param name="location"> The location to store the deployment data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="properties"/> is null. </exception>
-        public async virtual Task<ArmOperation<WhatIfOperationResult>> WhatIfAsync(bool waitForCompletion, string location, DeploymentWhatIfProperties properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public async virtual Task<ArmOperation<WhatIfOperationResult>> WhatIfAsync(bool waitForCompletion, DeploymentWhatIfProperties properties, string location = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(location, nameof(location));
             Argument.AssertNotNull(properties, nameof(properties));
 
             using var scope = _deploymentClientDiagnostics.CreateScope("Deployment.WhatIf");
             scope.Start();
             try
             {
-                if (Id.Parent.ResourceType == Tenant.ResourceType)
-                {
-                    var response = await _deploymentRestClient.WhatIfAtTenantScopeAsync(Id.Name, location, properties, cancellationToken).ConfigureAwait(false);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, location, properties).Request, response, OperationFinalStateVia.Location);
-                    if (waitForCompletion)
-                        await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                    return operation;
-                }
-                else if (Id.Parent.ResourceType == ManagementGroup.ResourceType)
-                {
-                    var response = await _deploymentRestClient.WhatIfAtManagementGroupScopeAsync(Id.Parent.Name, Id.Name, location, properties, cancellationToken).ConfigureAwait(false);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, location, properties).Request, response, OperationFinalStateVia.Location);
-                    if (waitForCompletion)
-                        await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                    return operation;
-                }
-                else if (Id.Parent.ResourceType == Subscription.ResourceType)
+                if (Id.Parent.ResourceType == Subscription.ResourceType)
                 {
                     var response = await _deploymentRestClient.WhatIfAtSubscriptionScopeAsync(Id.SubscriptionId, Id.Name, properties, location, cancellationToken).ConfigureAwait(false);
                     var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.SubscriptionId, Id.Name, properties, location).Request, response, OperationFinalStateVia.Location);
@@ -390,6 +373,22 @@ namespace Azure.ResourceManager.Resources
                 {
                     var response = await _deploymentRestClient.WhatIfAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, properties, location, cancellationToken).ConfigureAwait(false);
                     var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, properties, location).Request, response, OperationFinalStateVia.Location);
+                    if (waitForCompletion)
+                        await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    return operation;
+                }
+                else if (Id.Parent.ResourceType == Tenant.ResourceType)
+                {
+                    var response = await _deploymentRestClient.WhatIfAtTenantScopeAsync(Id.Name, location, properties, cancellationToken).ConfigureAwait(false);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, location, properties).Request, response, OperationFinalStateVia.Location);
+                    if (waitForCompletion)
+                        await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    return operation;
+                }
+                else if (Id.Parent.ResourceType == ManagementGroup.ResourceType)
+                {
+                    var response = await _deploymentRestClient.WhatIfAtManagementGroupScopeAsync(Id.Parent.Name, Id.Name, location, properties, cancellationToken).ConfigureAwait(false);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, location, properties).Request, response, OperationFinalStateVia.Location);
                     if (waitForCompletion)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
@@ -407,47 +406,30 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Returns changes that will be made by the deployment if executed at the scope of the tenant group.
-        /// Request Path: /providers/Microsoft.Resources/deployments/{deploymentName}/whatIf
-        /// Operation Id: Deployments_WhatIfAtTenantScope
-        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf
-        /// Operation Id: Deployments_WhatIfAtManagementGroupScope
+        /// Returns changes that will be made by the deployment if executed at the scope of the subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf
         /// Operation Id: Deployments_WhatIfAtSubscriptionScope
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf
         /// Operation Id: Deployments_WhatIf
+        /// Request Path: /providers/Microsoft.Resources/deployments/{deploymentName}/whatIf
+        /// Operation Id: Deployments_WhatIfAtTenantScope
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf
+        /// Operation Id: Deployments_WhatIfAtManagementGroupScope
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="location"> The location to store the deployment data. </param>
         /// <param name="properties"> The deployment properties. </param>
+        /// <param name="location"> The location to store the deployment data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="properties"/> is null. </exception>
-        public virtual ArmOperation<WhatIfOperationResult> WhatIf(bool waitForCompletion, string location, DeploymentWhatIfProperties properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public virtual ArmOperation<WhatIfOperationResult> WhatIf(bool waitForCompletion, DeploymentWhatIfProperties properties, string location = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(location, nameof(location));
             Argument.AssertNotNull(properties, nameof(properties));
 
             using var scope = _deploymentClientDiagnostics.CreateScope("Deployment.WhatIf");
             scope.Start();
             try
             {
-                if (Id.Parent.ResourceType == Tenant.ResourceType)
-                {
-                    var response = _deploymentRestClient.WhatIfAtTenantScope(Id.Name, location, properties, cancellationToken);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, location, properties).Request, response, OperationFinalStateVia.Location);
-                    if (waitForCompletion)
-                        operation.WaitForCompletion(cancellationToken);
-                    return operation;
-                }
-                else if (Id.Parent.ResourceType == ManagementGroup.ResourceType)
-                {
-                    var response = _deploymentRestClient.WhatIfAtManagementGroupScope(Id.Parent.Name, Id.Name, location, properties, cancellationToken);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, location, properties).Request, response, OperationFinalStateVia.Location);
-                    if (waitForCompletion)
-                        operation.WaitForCompletion(cancellationToken);
-                    return operation;
-                }
-                else if (Id.Parent.ResourceType == Subscription.ResourceType)
+                if (Id.Parent.ResourceType == Subscription.ResourceType)
                 {
                     var response = _deploymentRestClient.WhatIfAtSubscriptionScope(Id.SubscriptionId, Id.Name, properties, location, cancellationToken);
                     var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.SubscriptionId, Id.Name, properties, location).Request, response, OperationFinalStateVia.Location);
@@ -459,6 +441,22 @@ namespace Azure.ResourceManager.Resources
                 {
                     var response = _deploymentRestClient.WhatIf(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, properties, location, cancellationToken);
                     var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, properties, location).Request, response, OperationFinalStateVia.Location);
+                    if (waitForCompletion)
+                        operation.WaitForCompletion(cancellationToken);
+                    return operation;
+                }
+                else if (Id.Parent.ResourceType == Tenant.ResourceType)
+                {
+                    var response = _deploymentRestClient.WhatIfAtTenantScope(Id.Name, location, properties, cancellationToken);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, location, properties).Request, response, OperationFinalStateVia.Location);
+                    if (waitForCompletion)
+                        operation.WaitForCompletion(cancellationToken);
+                    return operation;
+                }
+                else if (Id.Parent.ResourceType == ManagementGroup.ResourceType)
+                {
+                    var response = _deploymentRestClient.WhatIfAtManagementGroupScope(Id.Parent.Name, Id.Name, location, properties, cancellationToken);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, location, properties).Request, response, OperationFinalStateVia.Location);
                     if (waitForCompletion)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;

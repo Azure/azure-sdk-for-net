@@ -148,6 +148,19 @@ directive:
       $["Operation"]["properties"]["display"] = undefined;
       $["JitRequestDefinition"]["x-ms-client-name"] = "JitRequest";
       $["JitRequestDefinitionListResult"]["x-ms-client-name"] = "JitRequestListResult";
+  - from: resources.json
+    where: $.paths
+    transform: >
+        for (var key in $)
+        {
+            if (['/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf', '/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf'].includes(key))
+            {
+                var newKey = key
+                var method = $[key]
+                delete $[key]
+                $[newKey] = method
+            }
+        }
 ```
 
 ### Tag: package-track2-preview
