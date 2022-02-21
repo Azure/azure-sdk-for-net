@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Resources.Tests
             ResourceGroup rg = lro.Value;
             ResourceIdentifier deploymentResourceIdentifier = Deployment.CreateResourceIdentifier(rg.Id, "testDeploymentWhatIf");
             Deployment deployment = Client.GetDeployment(deploymentResourceIdentifier);
-            DeploymentWhatIfProperties deploymentWhatIfProperties = new DeploymentWhatIfProperties(DeploymentMode.Incremental)
+            DeploymentWhatIf deploymentWhatIf = new DeploymentWhatIf(new DeploymentWhatIfProperties(DeploymentMode.Incremental)
             {
                 Template = CreateDeploymentPropertiesUsingString().Template,
                 Parameters = CreateDeploymentPropertiesUsingJsonElement().Parameters
-            };
-            WhatIfOperationResult whatIfOperationResult = (await deployment.WhatIfAsync(true, deploymentWhatIfProperties)).Value;
+            });
+            WhatIfOperationResult whatIfOperationResult = (await deployment.WhatIfAsync(true, deploymentWhatIf)).Value;
             Assert.AreEqual(whatIfOperationResult.Status, "Succeeded");
             Assert.AreEqual(whatIfOperationResult.Changes.Count, 1);
             Assert.AreEqual(whatIfOperationResult.Changes[0].ChangeType, ChangeType.Create);
