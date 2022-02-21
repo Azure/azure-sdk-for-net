@@ -36,7 +36,7 @@ namespace Azure.Storage.Blobs.Models
         /// <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob">
         /// REST documentation</a> for range limitation details.
         /// </summary>
-        public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        public DownloadTransferValidationOptions TransactionalHashingOptions { get; set; }
 
         /// <summary>
         /// Default constructor.
@@ -59,7 +59,7 @@ namespace Azure.Storage.Blobs.Models
             // can't access an internal deep copy in Storage.Common
             TransactionalHashingOptions = deepCopySource.TransactionalHashingOptions == default
                 ? default
-                : new DownloadTransactionalHashingOptions()
+                : new DownloadTransferValidationOptions()
                 {
                     Algorithm = deepCopySource.TransactionalHashingOptions.Algorithm,
                     Validate = deepCopySource.TransactionalHashingOptions.Validate

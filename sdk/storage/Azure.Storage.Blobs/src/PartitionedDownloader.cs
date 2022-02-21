@@ -38,14 +38,14 @@ namespace Azure.Storage.Blobs
         /// </summary>
         private readonly long _rangeSize;
 
-        private readonly DownloadTransactionalHashingOptions _hashingOptions;
+        private readonly DownloadTransferValidationOptions _hashingOptions;
 
         private readonly IProgress<long> _progress;
 
         public PartitionedDownloader(
             BlobBaseClient client,
             StorageTransferOptions transferOptions = default,
-            DownloadTransactionalHashingOptions hashingOptions = default,
+            DownloadTransferValidationOptions hashingOptions = default,
             IProgress<long> progress = default)
         {
             _client = client;

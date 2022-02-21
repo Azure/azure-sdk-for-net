@@ -30,11 +30,11 @@ namespace Azure.Storage.Blobs
             BlobHttpHeaders blobHttpHeaders,
             IDictionary<string, string> metadata,
             IDictionary<string, string> tags,
-            UploadTransactionalHashingOptions hashingOptions) : base(
+            UploadTransferValidationOptions validationOptions) : base(
                 position,
                 bufferSize,
                 progressHandler,
-                hashingOptions)
+                validationOptions)
         {
             ValidateBufferSize(bufferSize);
             _blockBlobClient = blockBlobClient;
@@ -68,7 +68,7 @@ namespace Azure.Storage.Blobs
                     content: _buffer,
                     new BlockBlobStageBlockOptions()
                     {
-                        TransactionalHashingOptions = _hashingOptions,
+                        TransactionalValidationOptions = _validationOptions,
                         Conditions = conditions,
                         ProgressHandler = _progressHandler
                     },

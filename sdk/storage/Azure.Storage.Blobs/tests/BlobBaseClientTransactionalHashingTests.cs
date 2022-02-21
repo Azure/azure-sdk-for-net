@@ -39,7 +39,7 @@ namespace Azure.Storage.Blobs.Tests
         protected override async Task<Response> DownloadPartitionAsync(
             TBlobClient client,
             Stream destination,
-            DownloadTransactionalHashingOptions hashingOptions,
+            DownloadTransferValidationOptions hashingOptions,
             HttpRange range = default)
         {
             var response = await client.DownloadStreamingAsync(new BlobDownloadOptions
@@ -55,7 +55,7 @@ namespace Azure.Storage.Blobs.Tests
         protected override async Task ParallelDownloadAsync(
             TBlobClient client,
             Stream destination,
-            DownloadTransactionalHashingOptions hashingOptions,
+            DownloadTransferValidationOptions hashingOptions,
             StorageTransferOptions transferOptions)
             => await client.DownloadToAsync(destination, new BlobDownloadToOptions
             {
@@ -65,7 +65,7 @@ namespace Azure.Storage.Blobs.Tests
 
         protected override async Task<Stream> OpenReadAsync(
             TBlobClient client,
-            DownloadTransactionalHashingOptions hashingOptions,
+            DownloadTransferValidationOptions hashingOptions,
             int internalBufferSize)
             => await client.OpenReadAsync(new BlobOpenReadOptions(false)
             {
@@ -75,11 +75,11 @@ namespace Azure.Storage.Blobs.Tests
 
         #region Added Tests
         // hashing, so we buffered the stream to hash then rewind before returning to user
-        [TestCase(TransactionalHashAlgorithm.MD5, true)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64, true)]
+        [TestCase(ValidationAlgorithm.MD5, true)]
+        [TestCase(ValidationAlgorithm.StorageCrc64, true)]
         // no hashing, so we save users a buffer
-        [TestCase(TransactionalHashAlgorithm.None, false)]
-        public async Task ExpectedDownloadStreamingStreamTypeReturned(TransactionalHashAlgorithm algorithm, bool isBuffered)
+        [TestCase(ValidationAlgorithm.None, false)]
+        public async Task ExpectedDownloadStreamingStreamTypeReturned(ValidationAlgorithm algorithm, bool isBuffered)
         {
             await using var test = await GetDisposingContainerAsync();
 
@@ -91,9 +91,9 @@ namespace Azure.Storage.Blobs.Tests
                 await blob.UploadAsync(stream);
             }
             // don't make options instance at all for no hash request
-            DownloadTransactionalHashingOptions hashingOptions = algorithm == TransactionalHashAlgorithm.None
+            DownloadTransferValidationOptions hashingOptions = algorithm == ValidationAlgorithm.None
                 ? default
-                : new DownloadTransactionalHashingOptions { Algorithm = algorithm };
+                : new DownloadTransferValidationOptions { Algorithm = algorithm };
 
             // Act
             Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(new BlobDownloadOptions

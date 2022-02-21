@@ -4,23 +4,28 @@
 namespace Azure.Storage
 {
     /// <summary>
-    /// Hash algorithm to use for verifying REST contents for an upload or download.
+    /// Algorithm for generating a checksum to be used for verifying REST contents on a transfer.
     /// </summary>
-    public enum TransactionalHashAlgorithm
+    public enum ValidationAlgorithm
     {
+        /// <summary>
+        /// Recommended. Allow the SDK to choose for me.
+        /// </summary>
+        Auto = 0,
+
         /// <summary>
         /// No selected algorithm.
         /// </summary>
-        None = 0,
+        None = 1,
 
         /// <summary>
-        /// Azure Storage custom 64 bit CRC algorithm.
+        /// Azure Storage custom 64 bit CRC.
         /// </summary>
-        StorageCrc64 = 1,
+        StorageCrc64 = 2,
 
         /// <summary>
         /// Standard MD5 hash algorithm.
         /// </summary>
-        MD5 = 2
+        MD5 = 3
     }
 }

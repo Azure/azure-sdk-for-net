@@ -1010,11 +1010,11 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 options = new AppendBlobAppendBlockOptions()
                 {
-                    TransactionalHashingOptions = transactionalContentHash != default
-                        ? new UploadTransactionalHashingOptions()
+                    TransactionalValidationOptions = transactionalContentHash != default
+                        ? new UploadTransferValidationOptions()
                         {
-                            Algorithm = TransactionalHashAlgorithm.MD5,
-                            PrecalculatedHash = transactionalContentHash
+                            Algorithm = ValidationAlgorithm.MD5,
+                            PrecalculatedChecksum = transactionalContentHash
                         }
                         : default,
                     Conditions = conditions,
@@ -1085,11 +1085,11 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 options = new AppendBlobAppendBlockOptions()
                 {
-                    TransactionalHashingOptions = transactionalContentHash != default
-                        ? new UploadTransactionalHashingOptions()
+                    TransactionalValidationOptions = transactionalContentHash != default
+                        ? new UploadTransferValidationOptions()
                         {
-                            Algorithm = TransactionalHashAlgorithm.MD5,
-                            PrecalculatedHash = transactionalContentHash
+                            Algorithm = ValidationAlgorithm.MD5,
+                            PrecalculatedChecksum = transactionalContentHash
                         }
                         : default,
                     Conditions = conditions,
@@ -1243,6 +1243,9 @@ namespace Azure.Storage.Blobs.Specialized
                     operationName: nameof(AppendBlobClient.AppendBlock),
                     parameterName: nameof(options.Conditions));
 
+                // Validation checksum options are valid
+                Errors.VerifyUploadTransferValidationOptions(options?.TransactionalValidationOptions, acceptPrecalculated: true);
+
                 try
                 {
                     scope.Start();
@@ -1250,7 +1253,7 @@ namespace Azure.Storage.Blobs.Specialized
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     // compute hash BEFORE attaching progress handler
-                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalHashingOptions);
+                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalValidationOptions);
 
                     content = content.WithNoDispose().WithProgress(options?.ProgressHandler);
 
@@ -1984,6 +1987,8 @@ namespace Azure.Storage.Blobs.Specialized
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(OpenWrite)}");
 
+            Errors.VerifyUploadTransferValidationOptions(options?.ValidationOptions, acceptPrecalculated: false);
+
             try
             {
                 scope.Start();
@@ -2051,7 +2056,7 @@ namespace Azure.Storage.Blobs.Specialized
                     position: position,
                     conditions: conditions,
                     progressHandler: options?.ProgressHandler,
-                    hashingOptions: options?.TransactionalHashingOptions);
+                    validationOptions: options?.ValidationOptions);
             }
             catch (Exception ex)
             {

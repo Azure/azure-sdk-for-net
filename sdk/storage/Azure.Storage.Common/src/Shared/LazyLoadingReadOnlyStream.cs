@@ -38,7 +38,7 @@ namespace Azure.Storage
         /// </returns>
         public delegate Task<Response<IDownloadedContent>> DownloadInternalAsync(
             HttpRange range,
-            DownloadTransactionalHashingOptions hashingOptions,
+            DownloadTransferValidationOptions hashingOptions,
             bool async,
             CancellationToken cancellationToken);
 
@@ -109,12 +109,12 @@ namespace Azure.Storage
         /// <summary>
         /// Hashing options to use with <see cref="_downloadInternalFunc"/>.
         /// </summary>
-        private readonly DownloadTransactionalHashingOptions _hashingOptions;
+        private readonly DownloadTransferValidationOptions _hashingOptions;
 
         public LazyLoadingReadOnlyStream(
             DownloadInternalAsync downloadInternalFunc,
             GetPropertiesAsync getPropertiesFunc,
-            DownloadTransactionalHashingOptions hashingOptions,
+            DownloadTransferValidationOptions hashingOptions,
             bool allowModifications,
             long initialLenght,
             long position = 0,
@@ -139,7 +139,7 @@ namespace Azure.Storage
             // we defer hash validation on download calls to validate in-place with our existing buffer
             _hashingOptions = hashingOptions == default
                 ? default
-                : new DownloadTransactionalHashingOptions
+                : new DownloadTransferValidationOptions
                 {
                     Algorithm = hashingOptions.Algorithm,
                     Validate = false

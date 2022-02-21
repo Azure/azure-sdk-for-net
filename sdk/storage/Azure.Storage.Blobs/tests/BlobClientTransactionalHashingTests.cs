@@ -31,7 +31,7 @@ namespace Azure.Storage.Blobs.Tests
 
         protected override Task<Stream> OpenWriteAsync(
             BlobClient client,
-            UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions hashingOptions,
             int internalBufferSize)
         {
             /* Need to rerecord? Azure.Core framework won't record inconclusive tests.
@@ -43,7 +43,7 @@ namespace Azure.Storage.Blobs.Tests
         protected override async Task ParallelUploadAsync(
             BlobClient client,
             Stream source,
-            UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions hashingOptions,
             StorageTransferOptions transferOptions)
             => await client.UploadAsync(source, new BlobUploadOptions
             {
@@ -54,7 +54,7 @@ namespace Azure.Storage.Blobs.Tests
         protected override Task<Response> UploadPartitionAsync(
             BlobClient client,
             Stream source,
-            UploadTransactionalHashingOptions hashingOptions)
+            UploadTransferValidationOptions hashingOptions)
         {
             /* Need to rerecord? Azure.Core framework won't record inconclusive tests.
              * Change this to pass for recording and revert when done. */
@@ -92,11 +92,11 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         #region Modified Tests
-        [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
-        public override Task ParallelUploadOneShotSuccessfulHashComputation(TransactionalHashAlgorithm algorithm)
+        [TestCase(ValidationAlgorithm.MD5)]
+        [TestCase(ValidationAlgorithm.StorageCrc64)]
+        public override Task ParallelUploadOneShotSuccessfulHashComputation(ValidationAlgorithm algorithm)
         {
-            if (algorithm == TransactionalHashAlgorithm.StorageCrc64)
+            if (algorithm == ValidationAlgorithm.StorageCrc64)
             {
                 /* Need to rerecord? Azure.Core framework won't record inconclusive tests.
                 * Change this to pass for recording and revert when done. */
@@ -107,9 +107,9 @@ namespace Azure.Storage.Blobs.Tests
         #endregion
 
         #region Added Tests
-        [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
-        public async Task HashingAndClientSideEncryptionIncompatible(TransactionalHashAlgorithm algorithm)
+        [TestCase(ValidationAlgorithm.MD5)]
+        [TestCase(ValidationAlgorithm.StorageCrc64)]
+        public async Task HashingAndClientSideEncryptionIncompatible(ValidationAlgorithm algorithm)
         {
             await using var disposingContainer = await GetDisposingContainerAsync();
 
@@ -117,7 +117,7 @@ namespace Azure.Storage.Blobs.Tests
             const int dataSize = Constants.KB;
             var data = GetRandomBuffer(dataSize);
 
-            var hashingOptions = new UploadTransactionalHashingOptions
+            var hashingOptions = new UploadTransferValidationOptions
             {
                 Algorithm = algorithm
             };

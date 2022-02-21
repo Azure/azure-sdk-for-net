@@ -35,7 +35,7 @@ namespace Azure.Storage.Blobs.Tests
 
         protected override async Task<Stream> OpenWriteAsync(
             PageBlobClient client,
-            UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions hashingOptions,
             int internalBufferSize)
         {
             return await client.OpenWriteAsync(false, 0, new PageBlobOpenWriteOptions
@@ -48,7 +48,7 @@ namespace Azure.Storage.Blobs.Tests
         protected override Task ParallelUploadAsync(
             PageBlobClient client,
             Stream source,
-            UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions hashingOptions,
             StorageTransferOptions transferOptions)
         {
             /* Need to rerecord? Azure.Core framework won't record inconclusive tests.
@@ -60,7 +60,7 @@ namespace Azure.Storage.Blobs.Tests
         protected override async Task<Response> UploadPartitionAsync(
             PageBlobClient client,
             Stream source,
-            UploadTransactionalHashingOptions hashingOptions)
+            UploadTransferValidationOptions hashingOptions)
         {
             return (await client.UploadPagesAsync(source, 0, new PageBlobUploadPagesOptions
             {

@@ -22,7 +22,7 @@ namespace Azure.Storage.Blobs
             long position,
             PageBlobRequestConditions conditions,
             IProgress<long> progressHandler,
-            UploadTransactionalHashingOptions hashingOptions) : base(
+            UploadTransferValidationOptions hashingOptions) : base(
                 position,
                 bufferSize,
                 progressHandler,
@@ -101,7 +101,7 @@ namespace Azure.Storage.Blobs
                     offset: _writeIndex,
                     options: new PageBlobUploadPagesOptions()
                     {
-                        TransactionalHashingOptions = _hashingOptions,
+                        TransactionalHashingOptions = _validationOptions,
                         Conditions = _conditions,
                         ProgressHandler = _progressHandler
                     },

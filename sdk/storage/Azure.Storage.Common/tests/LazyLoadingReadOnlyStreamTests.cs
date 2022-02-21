@@ -32,8 +32,8 @@ namespace Azure.Storage.Tests
         {
             // just mocking a response from injectable behavior
             var downloadMock = new Mock<LazyLoadingReadOnlyStream<int>.DownloadInternalAsync>();
-            downloadMock.Setup(_ => _(It.IsAny<HttpRange>(), It.IsAny<DownloadTransactionalHashingOptions>(), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
-                .Returns<HttpRange, DownloadTransactionalHashingOptions, bool, CancellationToken>((range, hashOptions, async, CancellationToken) =>
+            downloadMock.Setup(_ => _(It.IsAny<HttpRange>(), It.IsAny<DownloadTransferValidationOptions>(), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
+                .Returns<HttpRange, DownloadTransferValidationOptions, bool, CancellationToken>((range, hashOptions, async, CancellationToken) =>
                 {
                     var mockResponse = new Mock<Response<IDownloadedContent>>(MockBehavior.Strict);
                     mockResponse.SetupGet(r => r.Value)

@@ -47,9 +47,9 @@ namespace Azure.Storage.Files.Shares.Tests
             return file;
         }
 
-        private static void AssertSupportsHashAlgorithm(TransactionalHashAlgorithm algorithm)
+        private static void AssertSupportsHashAlgorithm(ValidationAlgorithm algorithm)
         {
-            if (algorithm == TransactionalHashAlgorithm.StorageCrc64)
+            if (algorithm == ValidationAlgorithm.StorageCrc64)
             {
                 /* Need to rerecord? Azure.Core framework won't record inconclusive tests.
                  * Change this to pass for recording and revert when done. */
@@ -57,17 +57,17 @@ namespace Azure.Storage.Files.Shares.Tests
             }
         }
 
-        protected override async Task<Response> UploadPartitionAsync(ShareFileClient client, Stream source, UploadTransactionalHashingOptions hashingOptions)
+        protected override async Task<Response> UploadPartitionAsync(ShareFileClient client, Stream source, UploadTransferValidationOptions hashingOptions)
         {
             AssertSupportsHashAlgorithm(hashingOptions?.Algorithm ?? default);
 
             return (await client.UploadRangeAsync(new HttpRange(0, source.Length), source, new ShareFileUploadRangeOptions
             {
-                TransactionalHashingOptions = hashingOptions
+                TransactionalValidationOptions = hashingOptions
             })).GetRawResponse();
         }
 
-        protected override async Task<Response> DownloadPartitionAsync(ShareFileClient client, Stream destination, DownloadTransactionalHashingOptions hashingOptions, HttpRange range = default)
+        protected override async Task<Response> DownloadPartitionAsync(ShareFileClient client, Stream destination, DownloadTransferValidationOptions hashingOptions, HttpRange range = default)
         {
             AssertSupportsHashAlgorithm(hashingOptions?.Algorithm ?? default);
 
@@ -80,18 +80,18 @@ namespace Azure.Storage.Files.Shares.Tests
             return response.GetRawResponse();
         }
 
-        protected override async Task ParallelUploadAsync(ShareFileClient client, Stream source, UploadTransactionalHashingOptions hashingOptions, StorageTransferOptions transferOptions)
+        protected override async Task ParallelUploadAsync(ShareFileClient client, Stream source, UploadTransferValidationOptions hashingOptions, StorageTransferOptions transferOptions)
         {
             AssertSupportsHashAlgorithm(hashingOptions?.Algorithm ?? default);
 
             await client.UploadAsync(source, new ShareFileUploadOptions
             {
-                TransactionalHashingOptions = hashingOptions,
+                ValidationOptions = hashingOptions,
                 // files ignores transfer options
             });
         }
 
-        protected override Task ParallelDownloadAsync(ShareFileClient client, Stream destination, DownloadTransactionalHashingOptions hashingOptions, StorageTransferOptions transferOptions)
+        protected override Task ParallelDownloadAsync(ShareFileClient client, Stream destination, DownloadTransferValidationOptions hashingOptions, StorageTransferOptions transferOptions)
         {
             AssertSupportsHashAlgorithm(hashingOptions?.Algorithm ?? default);
 
@@ -101,18 +101,18 @@ namespace Azure.Storage.Files.Shares.Tests
             return Task.CompletedTask;
         }
 
-        protected override async Task<Stream> OpenWriteAsync(ShareFileClient client, UploadTransactionalHashingOptions hashingOptions, int internalBufferSize)
+        protected override async Task<Stream> OpenWriteAsync(ShareFileClient client, UploadTransferValidationOptions hashingOptions, int internalBufferSize)
         {
             AssertSupportsHashAlgorithm(hashingOptions?.Algorithm ?? default);
 
             return await client.OpenWriteAsync(false, 0, new ShareFileOpenWriteOptions
             {
-                TransactionalHashingOptions = hashingOptions,
+                ValidationOptions = hashingOptions,
                 BufferSize = internalBufferSize
             });
         }
 
-        protected override async Task<Stream> OpenReadAsync(ShareFileClient client, DownloadTransactionalHashingOptions hashingOptions, int internalBufferSize)
+        protected override async Task<Stream> OpenReadAsync(ShareFileClient client, DownloadTransferValidationOptions hashingOptions, int internalBufferSize)
         {
             AssertSupportsHashAlgorithm(hashingOptions?.Algorithm ?? default);
 

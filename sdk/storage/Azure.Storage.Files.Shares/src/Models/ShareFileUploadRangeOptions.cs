@@ -26,9 +26,12 @@ namespace Azure.Storage.Files.Shares.Models
         public IProgress<long> ProgressHandler { get; set; }
 
         /// <summary>
-        /// Optional <see cref="UploadTransactionalHashingOptions"/> for using transactional
-        /// hashing on uploads.
+        /// Optional <see cref="UploadTransferValidationOptions"/> for using additional
+        /// transactional validation on upload range. Transactional checksums are discarded after use.
+        ///
+        /// UploadRange accepts precalcualted checksums, but the method will calculate
+        /// one if not provided.
         /// </summary>
-        public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        public UploadTransferValidationOptions TransactionalValidationOptions { get; set; }
     }
 }

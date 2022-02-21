@@ -22,7 +22,7 @@ namespace Azure.Storage.Files.DataLake
             long position,
             DataLakeRequestConditions conditions,
             IProgress<long> progressHandler,
-            UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions hashingOptions,
             bool? closeEvent) : base(
                 position,
                 bufferSize,
@@ -47,7 +47,7 @@ namespace Azure.Storage.Files.DataLake
                     offset: _writeIndex,
                     options: new DataLakeFileAppendOptions
                     {
-                        TransactionalHashingOptions = _hashingOptions,
+                        ValidationOptions = _validationOptions,
                         ProgressHandler = _progressHandler,
                         LeaseId = _conditions?.LeaseId
                     },

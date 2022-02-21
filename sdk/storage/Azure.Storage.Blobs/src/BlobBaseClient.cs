@@ -944,9 +944,9 @@ namespace Azure.Storage.Blobs.Specialized
                     Range = range,
                     Conditions = conditions,
                     TransactionalHashingOptions = rangeGetContentHash
-                        ? new DownloadTransactionalHashingOptions()
+                        ? new DownloadTransferValidationOptions()
                         {
-                            Algorithm = TransactionalHashAlgorithm.MD5
+                            Algorithm = ValidationAlgorithm.MD5
                         }
                         : default,
                 };
@@ -1044,9 +1044,9 @@ namespace Azure.Storage.Blobs.Specialized
                     Range = range,
                     Conditions = conditions,
                     TransactionalHashingOptions = rangeGetContentHash
-                        ? new DownloadTransactionalHashingOptions()
+                        ? new DownloadTransferValidationOptions()
                         {
-                            Algorithm = TransactionalHashAlgorithm.MD5
+                            Algorithm = ValidationAlgorithm.MD5
                         }
                         : default
                 };
@@ -1124,9 +1124,9 @@ namespace Azure.Storage.Blobs.Specialized
                     Range = range,
                     Conditions = conditions,
                     TransactionalHashingOptions = rangeGetContentHash
-                        ? new DownloadTransactionalHashingOptions()
+                        ? new DownloadTransferValidationOptions()
                         {
-                            Algorithm = TransactionalHashAlgorithm.MD5
+                            Algorithm = ValidationAlgorithm.MD5
                         }
                         : default
                 };
@@ -1422,8 +1422,8 @@ namespace Azure.Storage.Blobs.Specialized
                 response = await BlobRestClient.DownloadAsync(
                     range: pageRange?.ToString(),
                     leaseId: options?.Conditions?.LeaseId,
-                    rangeGetContentMD5: options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
-                    rangeGetContentCRC64: options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.StorageCrc64 ? true : null,
+                    rangeGetContentMD5: options?.TransactionalHashingOptions?.Algorithm == ValidationAlgorithm.MD5 ? true : null,
+                    rangeGetContentCRC64: options?.TransactionalHashingOptions?.Algorithm == ValidationAlgorithm.StorageCrc64 ? true : null,
                     encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                     encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                     encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
@@ -1440,8 +1440,8 @@ namespace Azure.Storage.Blobs.Specialized
                 response = BlobRestClient.Download(
                     range: pageRange?.ToString(),
                     leaseId: options?.Conditions?.LeaseId,
-                    rangeGetContentMD5: options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
-                    rangeGetContentCRC64: options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.StorageCrc64 ? true : null,
+                    rangeGetContentMD5: options?.TransactionalHashingOptions?.Algorithm == ValidationAlgorithm.MD5 ? true : null,
+                    rangeGetContentCRC64: options?.TransactionalHashingOptions?.Algorithm == ValidationAlgorithm.StorageCrc64 ? true : null,
                     encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                     encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                     encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
@@ -2425,7 +2425,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions = default,
             IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
-            DownloadTransactionalHashingOptions hashingOptions = default,
+            DownloadTransferValidationOptions hashingOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
@@ -2707,7 +2707,7 @@ namespace Azure.Storage.Blobs.Specialized
             int? bufferSize,
             BlobRequestConditions conditions,
             bool allowModifications,
-            DownloadTransactionalHashingOptions hashingOptions,
+            DownloadTransferValidationOptions hashingOptions,
 #pragma warning disable CA1801
             bool async,
             CancellationToken cancellationToken)
@@ -2751,7 +2751,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     return new LazyLoadingReadOnlyStream<BlobProperties>(
                         async (HttpRange range,
-                        DownloadTransactionalHashingOptions hashingOptions,
+                        DownloadTransferValidationOptions hashingOptions,
                         bool async,
                         CancellationToken cancellationToken) =>
                         {

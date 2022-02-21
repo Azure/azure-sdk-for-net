@@ -71,9 +71,12 @@ namespace Azure.Storage.Blobs.Models
         public bool? LegalHold { get; set; }
 
         /// <summary>
-        /// Optional <see cref="UploadTransactionalHashingOptions"/> for using transactional
-        /// hashing on uploads.
+        /// Optional <see cref="UploadTransferValidationOptions"/> for using transfer validation
+        /// on upload. Network transfers will calculate transactional checksums to validate
+        /// transfers. Transactional checksums are discarded after use.
+        ///
+        /// Upload does not accept precalculated checksums.
         /// </summary>
-        public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        public UploadTransferValidationOptions ValidationOptions { get; set; }
     }
 }

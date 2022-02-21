@@ -1118,11 +1118,11 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 options = new PageBlobUploadPagesOptions()
                 {
-                    TransactionalHashingOptions = transactionalContentHash != default
-                        ? new UploadTransactionalHashingOptions()
+                    TransactionalValidationOptions = transactionalContentHash != default
+                        ? new UploadTransferValidationOptions()
                         {
-                            Algorithm = TransactionalHashAlgorithm.MD5,
-                            PrecalculatedHash = transactionalContentHash
+                            Algorithm = ValidationAlgorithm.MD5,
+                            PrecalculatedChecksum = transactionalContentHash
                         }
                         : default,
                     Conditions = conditions,
@@ -1198,11 +1198,11 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 options = new PageBlobUploadPagesOptions()
                 {
-                    TransactionalHashingOptions = transactionalContentHash != default
-                        ? new UploadTransactionalHashingOptions()
+                    TransactionalValidationOptions = transactionalContentHash != default
+                        ? new UploadTransferValidationOptions()
                         {
-                            Algorithm = TransactionalHashAlgorithm.MD5,
-                            PrecalculatedHash = transactionalContentHash
+                            Algorithm = ValidationAlgorithm.MD5,
+                            PrecalculatedChecksum = transactionalContentHash
                         }
                         : default,
                     Conditions = conditions,
@@ -1370,13 +1370,15 @@ namespace Azure.Storage.Blobs.Specialized
                     operationName: nameof(PageBlobClient.UploadPages),
                     parameterName: nameof(options.Conditions));
 
+                Errors.VerifyUploadTransferValidationOptions(options?.TransactionalValidationOptions, acceptPrecalculated: true);
+
                 try
                 {
                     scope.Start();
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     // compute hash BEFORE attaching progress handler
-                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalHashingOptions);
+                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalValidationOptions);
 
                     content = content?.WithNoDispose().WithProgress(options?.ProgressHandler);
                     HttpRange range = new HttpRange(offset, (content?.Length - content?.Position) ?? null);
@@ -3693,6 +3695,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(OpenWrite)}");
+            Errors.VerifyUploadTransferValidationOptions(options?.ValidationOptions, acceptPrecalculated: false);
 
             try
             {
@@ -3771,7 +3774,7 @@ namespace Azure.Storage.Blobs.Specialized
                     position: position,
                     conditions: conditions,
                     progressHandler: options?.ProgressHandler,
-                    hashingOptions: options?.TransactionalHashingOptions);
+                    hashingOptions: options?.ValidationOptions);
             }
             catch (Exception ex)
             {

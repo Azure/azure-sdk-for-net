@@ -28,6 +28,6 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Transactional hashing options for data integrity checks.
         /// </summary>
-        public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        public DownloadTransferValidationOptions TransactionalHashingOptions { get; set; }
     }
 }

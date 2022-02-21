@@ -71,8 +71,13 @@ namespace Azure.Storage.Files.DataLake.Models
         public StorageTransferOptions TransferOptions { get; set; }
 
         /// <summary>
-        /// Options for hashing upload contents for greater data transit integrity protections.
+        /// <summary>
+        /// Optional <see cref="UploadTransferValidationOptions"/> for using transfer validation
+        /// on upload. Network transfers will calculate transactional checksums to validate
+        /// transfers. Transactional checksums are discarded after use.
+        ///
+        /// Upload does not accept precalculated checksums.
         /// </summary>
-        public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        public UploadTransferValidationOptions ValidationOptions { get; set; }
     }
 }

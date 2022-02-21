@@ -25,9 +25,12 @@ namespace Azure.Storage.Files.DataLake.Models
         public IProgress<long> ProgressHandler { get; set; }
 
         /// <summary>
-        /// Optional <see cref="UploadTransactionalHashingOptions"/> for using transactional
-        /// hashing on uploads.
+        /// Optional <see cref="UploadTransferValidationOptions"/> for using additional
+        /// transactional validation on append. Transactional checksums are discarded after use.
+        ///
+        /// Append accepts precalcualted checksums, but the method will calculate
+        /// one if not provided.
         /// </summary>
-        public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        public UploadTransferValidationOptions TransactionalValidationOptions { get; set; }
     }
 }

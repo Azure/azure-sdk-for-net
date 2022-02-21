@@ -21,7 +21,7 @@ namespace Azure.Storage.Files.Shares
             long position,
             ShareFileRequestConditions conditions,
             IProgress<long> progressHandler,
-            UploadTransactionalHashingOptions hashingOptions) : base(
+            UploadTransferValidationOptions hashingOptions) : base(
                 position,
                 bufferSize,
                 progressHandler,
@@ -46,7 +46,7 @@ namespace Azure.Storage.Files.Shares
                     content: _buffer,
                     options: new ShareFileUploadRangeOptions
                     {
-                        TransactionalHashingOptions = _hashingOptions,
+                        TransactionalValidationOptions = _validationOptions,
                         ProgressHandler = _progressHandler,
                         Conditions = _conditions
                     },

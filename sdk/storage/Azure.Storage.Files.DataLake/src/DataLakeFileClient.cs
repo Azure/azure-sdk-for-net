@@ -1839,11 +1839,11 @@ namespace Azure.Storage.Files.DataLake
             {
                 options = new DataLakeFileAppendOptions()
                 {
-                    TransactionalHashingOptions = contentHash != default
-                    ? new UploadTransactionalHashingOptions()
+                    TransactionalValidationOptions = contentHash != default
+                    ? new UploadTransferValidationOptions()
                     {
-                        Algorithm = TransactionalHashAlgorithm.MD5,
-                        PrecalculatedHash = contentHash
+                        Algorithm = ValidationAlgorithm.MD5,
+                        PrecalculatedChecksum = contentHash
                     }
                     : default,
                     LeaseId = leaseId,
@@ -1917,11 +1917,11 @@ namespace Azure.Storage.Files.DataLake
             {
                 options = new DataLakeFileAppendOptions()
                 {
-                    TransactionalHashingOptions = contentHash != default
-                    ? new UploadTransactionalHashingOptions()
+                    TransactionalValidationOptions = contentHash != default
+                    ? new UploadTransferValidationOptions()
                     {
-                        Algorithm = TransactionalHashAlgorithm.MD5,
-                        PrecalculatedHash = contentHash
+                        Algorithm = ValidationAlgorithm.MD5,
+                        PrecalculatedChecksum = contentHash
                     }
                     : default,
                     LeaseId = leaseId,
@@ -1982,8 +1982,9 @@ namespace Azure.Storage.Files.DataLake
         {
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(DataLakeFileClient)))
             {
+                Errors.VerifyUploadTransferValidationOptions(options?.TransactionalValidationOptions, acceptPrecalculated: true);
                 // compute hash BEFORE attaching progress handler
-                ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalHashingOptions);
+                ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalValidationOptions);
 
                 content = content?.WithNoDispose().WithProgress(options?.ProgressHandler);
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -3926,10 +3927,11 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
         {
             DataLakeFileClient client = new DataLakeFileClient(Uri, ClientConfiguration);
+            Errors.VerifyUploadTransferValidationOptions(options?.ValidationOptions, acceptPrecalculated: false);
 
             var uploader = GetPartitionedUploader(
                 options.TransferOptions,
-                options.TransactionalHashingOptions,
+                options.ValidationOptions,
                 operationName: $"{nameof(DataLakeFileClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(
@@ -4603,7 +4605,7 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(OpenWrite)}");
-
+            Errors.VerifyUploadTransferValidationOptions(options?.ValidationOptions, acceptPrecalculated: false);
             try
             {
                 scope.Start();
@@ -4680,7 +4682,7 @@ namespace Azure.Storage.Files.DataLake
                     position: position,
                     conditions: conditions,
                     progressHandler: options?.ProgressHandler,
-                    hashingOptions: options?.TransactionalHashingOptions,
+                    hashingOptions: options?.ValidationOptions,
                     closeEvent: options?.Close);
             }
             catch (Exception ex)
@@ -4698,7 +4700,7 @@ namespace Azure.Storage.Files.DataLake
         #region PartitionedUploader
         internal PartitionedUploader<DataLakeFileUploadOptions, PathInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
-            UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions hashingOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
             => new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
@@ -4738,7 +4740,7 @@ namespace Azure.Storage.Files.DataLake
                         {
                             LeaseId = args.Conditions?.LeaseId,
                             ProgressHandler = progressHandler,
-                            TransactionalHashingOptions = hashingOptions
+                            TransactionalValidationOptions = hashingOptions
                         },
                         async,
                         cancellationToken).ConfigureAwait(false);
@@ -4762,7 +4764,7 @@ namespace Azure.Storage.Files.DataLake
                         {
                             LeaseId = args.Conditions?.LeaseId,
                             ProgressHandler = progressHandler,
-                            TransactionalHashingOptions = hashingOptions
+                            TransactionalValidationOptions = hashingOptions
                         },
                         async,
                         cancellationToken).ConfigureAwait(false),

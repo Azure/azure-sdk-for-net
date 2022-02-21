@@ -1627,7 +1627,7 @@ namespace Azure.Storage.Blobs
             {
                 options ??= new BlobUploadOptions();
 
-                if (UsingClientSideEncryption && options.TransactionalHashingOptions != default)
+                if (UsingClientSideEncryption && options.ValidationOptions != default)
                 {
                     throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
                 }
@@ -1642,9 +1642,11 @@ namespace Azure.Storage.Blobs
                     .ClientSideEncryptInternal(content, options.Metadata, async, cancellationToken).ConfigureAwait(false);
             }
 
+            Errors.VerifyUploadTransferValidationOptions(options?.ValidationOptions, acceptPrecalculated: false);
+
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
-                options?.TransactionalHashingOptions,
+                options?.ValidationOptions,
                 operationName: $"{nameof(BlobClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(
@@ -1797,7 +1799,7 @@ namespace Azure.Storage.Blobs
         {
             if (UsingClientSideEncryption)
             {
-                if (UsingClientSideEncryption && options.TransactionalHashingOptions != default)
+                if (UsingClientSideEncryption && options.ValidationOptions != default)
                 {
                     throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
                 }
@@ -1835,9 +1837,9 @@ namespace Azure.Storage.Blobs
 
         internal PartitionedUploader<BlobUploadOptions, BlobContentInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
-            UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions validationOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
-            => BlockBlobClient.GetPartitionedUploader(transferOptions, hashingOptions, arrayPool, operationName);
+            => BlockBlobClient.GetPartitionedUploader(transferOptions, validationOptions, arrayPool, operationName);
     }
 }

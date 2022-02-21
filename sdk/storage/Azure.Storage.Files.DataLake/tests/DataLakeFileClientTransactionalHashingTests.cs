@@ -48,15 +48,15 @@ namespace Azure.Storage.Files.DataLake.Tests
             return file;
         }
 
-        protected override async Task<Response> UploadPartitionAsync(DataLakeFileClient client, Stream source, UploadTransactionalHashingOptions hashingOptions)
+        protected override async Task<Response> UploadPartitionAsync(DataLakeFileClient client, Stream source, UploadTransferValidationOptions hashingOptions)
         {
             return await client.AppendAsync(source, 0, new DataLakeFileAppendOptions
             {
-                TransactionalHashingOptions = hashingOptions
+                ValidationOptions = hashingOptions
             });
         }
 
-        protected override async Task<Response> DownloadPartitionAsync(DataLakeFileClient client, Stream destination, DownloadTransactionalHashingOptions hashingOptions, HttpRange range = default)
+        protected override async Task<Response> DownloadPartitionAsync(DataLakeFileClient client, Stream destination, DownloadTransferValidationOptions hashingOptions, HttpRange range = default)
         {
             var response = await client.ReadAsync(new DataLakeFileReadOptions
             {
@@ -68,16 +68,16 @@ namespace Azure.Storage.Files.DataLake.Tests
             return response.GetRawResponse();
         }
 
-        protected override async Task ParallelUploadAsync(DataLakeFileClient client, Stream source, UploadTransactionalHashingOptions hashingOptions, StorageTransferOptions transferOptions)
+        protected override async Task ParallelUploadAsync(DataLakeFileClient client, Stream source, UploadTransferValidationOptions hashingOptions, StorageTransferOptions transferOptions)
         {
             await client.UploadAsync(source, new DataLakeFileUploadOptions
             {
-                TransactionalHashingOptions = hashingOptions,
+                ValidationOptions = hashingOptions,
                 TransferOptions = transferOptions
             });
         }
 
-        protected override async Task ParallelDownloadAsync(DataLakeFileClient client, Stream destination, DownloadTransactionalHashingOptions hashingOptions, StorageTransferOptions transferOptions)
+        protected override async Task ParallelDownloadAsync(DataLakeFileClient client, Stream destination, DownloadTransferValidationOptions hashingOptions, StorageTransferOptions transferOptions)
         {
             await client.ReadToAsync(destination, new DataLakeFileReadToOptions
             {
@@ -86,16 +86,16 @@ namespace Azure.Storage.Files.DataLake.Tests
             });
         }
 
-        protected override async Task<Stream> OpenWriteAsync(DataLakeFileClient client, UploadTransactionalHashingOptions hashingOptions, int internalBufferSize)
+        protected override async Task<Stream> OpenWriteAsync(DataLakeFileClient client, UploadTransferValidationOptions hashingOptions, int internalBufferSize)
         {
             return await client.OpenWriteAsync(true, new DataLakeFileOpenWriteOptions
             {
-                TransactionalHashingOptions = hashingOptions,
+                ValidationOptions = hashingOptions,
                 BufferSize = internalBufferSize
             });
         }
 
-        protected override async Task<Stream> OpenReadAsync(DataLakeFileClient client, DownloadTransactionalHashingOptions hashingOptions, int internalBufferSize)
+        protected override async Task<Stream> OpenReadAsync(DataLakeFileClient client, DownloadTransferValidationOptions hashingOptions, int internalBufferSize)
         {
             return await client.OpenReadAsync(new DataLakeOpenReadOptions(false)
             {

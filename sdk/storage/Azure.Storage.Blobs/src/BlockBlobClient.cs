@@ -528,7 +528,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
-                options?.TransactionalHashingOptions,
+                options?.ValidationOptions,
                 operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
 
             return uploader.UploadInternal(
@@ -585,7 +585,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
-                options?.TransactionalHashingOptions,
+                options?.ValidationOptions,
                 operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(
@@ -793,7 +793,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
-        /// <param name="hashingOptions">
+        /// <param name="validationOptions">
         /// Options for transactional hashing.
         /// </param>
         /// <param name="immutabilityPolicy">
@@ -834,7 +834,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobImmutabilityPolicy immutabilityPolicy,
             bool? legalHold,
             IProgress<long> progressHandler,
-            UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions validationOptions,
             string operationName,
             bool async,
             CancellationToken cancellationToken)
@@ -848,6 +848,8 @@ namespace Azure.Storage.Blobs.Specialized
                 invalidConditions: BlobRequestConditionProperty.None,
                 operationName: nameof(BlockBlobClient.Upload),
                 parameterName: nameof(conditions));
+
+            Errors.VerifyUploadTransferValidationOptions(validationOptions, acceptPrecalculated: false);
 
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
@@ -863,7 +865,7 @@ namespace Azure.Storage.Blobs.Specialized
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     // compute hash BEFORE attaching progress handler
-                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, hashingOptions);
+                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, validationOptions);
                     // CRC not currently in generated code
                     if (hashResult?.StorageCrc64 != default)
                     {
@@ -1022,11 +1024,11 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 options = new BlockBlobStageBlockOptions()
                 {
-                    TransactionalHashingOptions = transactionalContentHash != default
-                        ? new UploadTransactionalHashingOptions()
+                    TransactionalValidationOptions = transactionalContentHash != default
+                        ? new UploadTransferValidationOptions()
                         {
-                            Algorithm = TransactionalHashAlgorithm.MD5,
-                            PrecalculatedHash = transactionalContentHash
+                            Algorithm = ValidationAlgorithm.MD5,
+                            PrecalculatedChecksum = transactionalContentHash
                         }
                         : default,
                     Conditions = conditions,
@@ -1106,11 +1108,11 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 options = new BlockBlobStageBlockOptions()
                 {
-                    TransactionalHashingOptions = transactionalContentHash != default
-                        ? new UploadTransactionalHashingOptions()
+                    TransactionalValidationOptions = transactionalContentHash != default
+                        ? new UploadTransferValidationOptions()
                         {
-                            Algorithm = TransactionalHashAlgorithm.MD5,
-                            PrecalculatedHash = transactionalContentHash
+                            Algorithm = ValidationAlgorithm.MD5,
+                            PrecalculatedChecksum = transactionalContentHash
                         }
                         : default,
                     Conditions = conditions,
@@ -1291,6 +1293,8 @@ namespace Azure.Storage.Blobs.Specialized
                     operationName: nameof(BlockBlobClient.StageBlock),
                     parameterName: nameof(options.Conditions));
 
+                Errors.VerifyUploadTransferValidationOptions(options?.TransactionalValidationOptions, acceptPrecalculated: true);
+
                 try
                 {
                     scope.Start();
@@ -1298,7 +1302,7 @@ namespace Azure.Storage.Blobs.Specialized
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     // compute hash BEFORE attaching progress handler
-                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalHashingOptions);
+                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalValidationOptions);
 
                     content = content.WithNoDispose().WithProgress(options?.ProgressHandler);
 
@@ -2751,6 +2755,8 @@ namespace Azure.Storage.Blobs.Specialized
             string operationName = options?.OperationName ?? $"{nameof(BlockBlobClient)}.{nameof(OpenWrite)}";
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
+            Errors.VerifyUploadTransferValidationOptions(options?.ValidationOptions, acceptPrecalculated: false);
+
             try
             {
                 scope.Start();
@@ -2773,7 +2779,7 @@ namespace Azure.Storage.Blobs.Specialized
                     immutabilityPolicy: default,
                     legalHold: default,
                     progressHandler: default,
-                    hashingOptions: default,
+                    validationOptions: default,
                     operationName: default,
                     async: async,
                     cancellationToken: cancellationToken)
@@ -2794,7 +2800,7 @@ namespace Azure.Storage.Blobs.Specialized
                     blobHttpHeaders: options?.HttpHeaders,
                     metadata: options?.Metadata,
                     tags: options?.Tags,
-                    hashingOptions: options?.TransactionalHashingOptions);
+                    validationOptions: options?.ValidationOptions);
             }
             catch (Exception ex)
             {
@@ -3142,13 +3148,13 @@ namespace Azure.Storage.Blobs.Specialized
         #region PartitionedUploader
         internal PartitionedUploader<BlobUploadOptions, BlobContentInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
-            UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions validationOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
             =>  new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(
                 GetPartitionedUploaderBehaviors(this),
                 transferOptions,
-                hashingOptions,
+                validationOptions,
                 arrayPool,
                 operationName);
 
@@ -3188,7 +3194,7 @@ namespace Azure.Storage.Blobs.Specialized
                             stream,
                             new BlockBlobStageBlockOptions()
                             {
-                                TransactionalHashingOptions = hashingOptions,
+                                TransactionalValidationOptions = hashingOptions,
                                 Conditions = conditions,
                                 ProgressHandler = progressHandler
                             },

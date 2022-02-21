@@ -31,7 +31,7 @@ namespace Azure.Storage.Blobs.Tests
 
         protected override async Task<Stream> OpenWriteAsync(
             BlockBlobClient client,
-            UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions hashingOptions,
             int internalBufferSize)
         {
             return await client.OpenWriteAsync(true, new BlockBlobOpenWriteOptions
@@ -44,7 +44,7 @@ namespace Azure.Storage.Blobs.Tests
         protected override async Task ParallelUploadAsync(
             BlockBlobClient client,
             Stream source,
-            UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions hashingOptions,
             StorageTransferOptions transferOptions)
             => await client.UploadAsync(source, new BlobUploadOptions
             {
@@ -55,7 +55,7 @@ namespace Azure.Storage.Blobs.Tests
         protected override async Task<Response> UploadPartitionAsync(
             BlockBlobClient client,
             Stream source,
-            UploadTransactionalHashingOptions hashingOptions)
+            UploadTransferValidationOptions hashingOptions)
         {
             return (await client.StageBlockAsync(
                 Convert.ToBase64String(Recording.Random.NewGuid().ToByteArray()),
@@ -96,11 +96,11 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         #region Modified Tests
-        [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
-        public override Task ParallelUploadOneShotSuccessfulHashComputation(TransactionalHashAlgorithm algorithm)
+        [TestCase(ValidationAlgorithm.MD5)]
+        [TestCase(ValidationAlgorithm.StorageCrc64)]
+        public override Task ParallelUploadOneShotSuccessfulHashComputation(ValidationAlgorithm algorithm)
         {
-            if (algorithm == TransactionalHashAlgorithm.StorageCrc64)
+            if (algorithm == ValidationAlgorithm.StorageCrc64)
             {
                 Assert.Inconclusive("Blob swagger currently doesn't support crc on PUT Blob");
             }

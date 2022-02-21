@@ -71,7 +71,7 @@ namespace Azure.Storage.Test.Shared
         protected abstract Task<Response> UploadPartitionAsync(
             TResourceClient client,
             Stream source,
-            UploadTransactionalHashingOptions hashingOptions);
+            UploadTransferValidationOptions hashingOptions);
 
         /// <summary>
         /// Calls the 1:1 download method for the given resource client.
@@ -83,7 +83,7 @@ namespace Azure.Storage.Test.Shared
         protected abstract Task<Response> DownloadPartitionAsync(
             TResourceClient client,
             Stream destination,
-            DownloadTransactionalHashingOptions hashingOptions,
+            DownloadTransferValidationOptions hashingOptions,
             HttpRange range = default);
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Azure.Storage.Test.Shared
         protected abstract Task ParallelUploadAsync(
             TResourceClient client,
             Stream source,
-            UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions hashingOptions,
             StorageTransferOptions transferOptions);
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Azure.Storage.Test.Shared
         protected abstract Task ParallelDownloadAsync(
             TResourceClient client,
             Stream destination,
-            DownloadTransactionalHashingOptions hashingOptions,
+            DownloadTransferValidationOptions hashingOptions,
             StorageTransferOptions transferOptions);
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.Storage.Test.Shared
         /// <param name="internalBufferSize">Buffer size for the write stream.</param>
         protected abstract Task<Stream> OpenWriteAsync(
             TResourceClient client,
-            UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions hashingOptions,
             int internalBufferSize);
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Azure.Storage.Test.Shared
         /// <param name="internalBufferSize">Buffer size for the read stream.</param>
         protected abstract Task<Stream> OpenReadAsync(
             TResourceClient client,
-            DownloadTransactionalHashingOptions hashingOptions,
+            DownloadTransferValidationOptions hashingOptions,
             int internalBufferSize);
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace Azure.Storage.Test.Shared
         /// The actual hash value expected to be on the request, if known. Defaults to no specific value expected or checked.
         /// </param>
         /// <returns>An assertion to put into a pipeline policy.</returns>
-        internal static Action<Request> GetRequestHashAssertion(TransactionalHashAlgorithm algorithm, Func<Request, bool> isHashExpected = default, byte[] expectedHash = default)
+        internal static Action<Request> GetRequestHashAssertion(ValidationAlgorithm algorithm, Func<Request, bool> isHashExpected = default, byte[] expectedHash = default)
         {
             // action to assert a request header is as expected
             void AssertHash(RequestHeaders headers, string headerName)
@@ -209,10 +209,10 @@ namespace Azure.Storage.Test.Shared
 
                 switch (algorithm)
                 {
-                    case TransactionalHashAlgorithm.MD5:
+                    case ValidationAlgorithm.MD5:
                         AssertHash(request.Headers, "Content-MD5");
                         break;
-                    case TransactionalHashAlgorithm.StorageCrc64:
+                    case ValidationAlgorithm.StorageCrc64:
                         AssertHash(request.Headers, "x-ms-content-crc64");
                         break;
                     default:
@@ -237,7 +237,7 @@ namespace Azure.Storage.Test.Shared
         /// The actual hash value expected to be on the response, if known. Defaults to no specific value expected or checked.
         /// </param>
         /// <returns>An assertion to put into a pipeline policy.</returns>
-        internal static Action<Response> GetResponseHashAssertion(TransactionalHashAlgorithm algorithm, Func<Response, bool> isHashExpected = default, byte[] expectedHash = default)
+        internal static Action<Response> GetResponseHashAssertion(ValidationAlgorithm algorithm, Func<Response, bool> isHashExpected = default, byte[] expectedHash = default)
         {
             // action to assert a response header is as expected
             void AssertHash(ResponseHeaders headers, string headerName)
@@ -265,10 +265,10 @@ namespace Azure.Storage.Test.Shared
 
                 switch (algorithm)
                 {
-                    case TransactionalHashAlgorithm.MD5:
+                    case ValidationAlgorithm.MD5:
                         AssertHash(response.Headers, "Content-MD5");
                         break;
-                    case TransactionalHashAlgorithm.StorageCrc64:
+                    case ValidationAlgorithm.StorageCrc64:
                         AssertHash(response.Headers, "x-ms-content-crc64");
                         break;
                     default:
@@ -282,15 +282,15 @@ namespace Azure.Storage.Test.Shared
         /// </summary>
         /// <param name="writeAction">Async action to upload data to service.</param>
         /// <param name="algorithm">Hash algorithm used.</param>
-        internal static void AssertWriteHashMismatch(AsyncTestDelegate writeAction, TransactionalHashAlgorithm algorithm)
+        internal static void AssertWriteHashMismatch(AsyncTestDelegate writeAction, ValidationAlgorithm algorithm)
         {
             var exception = ThrowsOrInconclusiveAsync<RequestFailedException>(writeAction);
             switch (algorithm)
             {
-                case TransactionalHashAlgorithm.MD5:
+                case ValidationAlgorithm.MD5:
                     Assert.AreEqual("Md5Mismatch", exception.ErrorCode);
                     break;
-                case TransactionalHashAlgorithm.StorageCrc64:
+                case ValidationAlgorithm.StorageCrc64:
                     Assert.AreEqual("Crc64Mismatch", exception.ErrorCode);
                     break;
                 default:
@@ -300,16 +300,16 @@ namespace Azure.Storage.Test.Shared
         #endregion
 
         #region UploadPartition Tests
-        [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
-        public virtual async Task UploadPartitionSuccessfulHashComputation(TransactionalHashAlgorithm algorithm)
+        [TestCase(ValidationAlgorithm.MD5)]
+        [TestCase(ValidationAlgorithm.StorageCrc64)]
+        public virtual async Task UploadPartitionSuccessfulHashComputation(ValidationAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
             const int dataLength = Constants.KB;
             var data = GetRandomBuffer(dataLength);
-            var hashingOptions = new UploadTransactionalHashingOptions
+            var hashingOptions = new UploadTransferValidationOptions
             {
                 Algorithm = algorithm
             };
@@ -336,9 +336,9 @@ namespace Azure.Storage.Test.Shared
             // Assertion was in the pipeline and the service returning success means the hash was correct
         }
 
-        [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
-        public virtual async Task UploadPartitionUsePrecalculatedHash(TransactionalHashAlgorithm algorithm)
+        [TestCase(ValidationAlgorithm.MD5)]
+        [TestCase(ValidationAlgorithm.StorageCrc64)]
+        public virtual async Task UploadPartitionUsePrecalculatedHash(ValidationAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
@@ -348,13 +348,13 @@ namespace Azure.Storage.Test.Shared
             // service throws different error for crc only when hash size in incorrect; we don't want to test that
             var hashSizeBytes = algorithm switch
             {
-                TransactionalHashAlgorithm.MD5 => 16,
-                TransactionalHashAlgorithm.StorageCrc64 => 8,
+                ValidationAlgorithm.MD5 => 16,
+                ValidationAlgorithm.StorageCrc64 => 8,
                 _ => throw new ArgumentException("Cannot determine hash size for provided algorithm type")
             };
             // hash needs to be wrong so we detect difference from auto-SDK correct calculation
             var precalculatedHash = GetRandomBuffer(hashSizeBytes);
-            var hashingOptions = new UploadTransactionalHashingOptions
+            var hashingOptions = new UploadTransferValidationOptions
             {
                 Algorithm = algorithm,
                 PrecalculatedHash = precalculatedHash
@@ -382,16 +382,16 @@ namespace Azure.Storage.Test.Shared
             }
         }
 
-        [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
-        public virtual async Task UploadPartitionMismatchedHashThrows(TransactionalHashAlgorithm algorithm)
+        [TestCase(ValidationAlgorithm.MD5)]
+        [TestCase(ValidationAlgorithm.StorageCrc64)]
+        public virtual async Task UploadPartitionMismatchedHashThrows(ValidationAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
             const int dataLength = Constants.KB;
             var data = GetRandomBuffer(dataLength);
-            var hashingOptions = new UploadTransactionalHashingOptions
+            var hashingOptions = new UploadTransferValidationOptions
             {
                 Algorithm = algorithm
             };
@@ -420,9 +420,9 @@ namespace Azure.Storage.Test.Shared
         #endregion
 
         #region OpenWrite Tests
-        [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
-        public virtual async Task OpenWriteSuccessfulHashComputation(TransactionalHashAlgorithm algorithm)
+        [TestCase(ValidationAlgorithm.MD5)]
+        [TestCase(ValidationAlgorithm.StorageCrc64)]
+        public virtual async Task OpenWriteSuccessfulHashComputation(ValidationAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
@@ -432,7 +432,7 @@ namespace Azure.Storage.Test.Shared
             const int streamWrites = 10;
 
             var data = GetRandomBuffer(dataSize);
-            var hashingOptions = new UploadTransactionalHashingOptions
+            var hashingOptions = new UploadTransferValidationOptions
             {
                 Algorithm = algorithm
             };
@@ -461,9 +461,9 @@ namespace Azure.Storage.Test.Shared
             }
         }
 
-        [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
-        public virtual async Task OpenWriteMismatchedHashThrows(TransactionalHashAlgorithm algorithm)
+        [TestCase(ValidationAlgorithm.MD5)]
+        [TestCase(ValidationAlgorithm.StorageCrc64)]
+        public virtual async Task OpenWriteMismatchedHashThrows(ValidationAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
@@ -473,7 +473,7 @@ namespace Azure.Storage.Test.Shared
             const int streamWrites = 10;
 
             var data = GetRandomBuffer(dataSize);
-            var hashingOptions = new UploadTransactionalHashingOptions
+            var hashingOptions = new UploadTransferValidationOptions
             {
                 Algorithm = algorithm
             };
@@ -506,16 +506,16 @@ namespace Azure.Storage.Test.Shared
         #endregion
 
         #region Parallel Upload Tests
-        [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
-        public virtual async Task ParallelUploadSplitSuccessfulHashComputation(TransactionalHashAlgorithm algorithm)
+        [TestCase(ValidationAlgorithm.MD5)]
+        [TestCase(ValidationAlgorithm.StorageCrc64)]
+        public virtual async Task ParallelUploadSplitSuccessfulHashComputation(ValidationAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
             const int dataLength = Constants.KB;
             var data = GetRandomBuffer(dataLength);
-            var hashingOptions = new UploadTransactionalHashingOptions
+            var hashingOptions = new UploadTransferValidationOptions
             {
                 Algorithm = algorithm
             };
@@ -545,16 +545,16 @@ namespace Azure.Storage.Test.Shared
             // Assertion was in the pipeline and the service returning success means the hash was correct
         }
 
-        [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
-        public virtual async Task ParallelUploadOneShotSuccessfulHashComputation(TransactionalHashAlgorithm algorithm)
+        [TestCase(ValidationAlgorithm.MD5)]
+        [TestCase(ValidationAlgorithm.StorageCrc64)]
+        public virtual async Task ParallelUploadOneShotSuccessfulHashComputation(ValidationAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
             const int dataLength = Constants.KB;
             var data = GetRandomBuffer(dataLength);
-            var hashingOptions = new UploadTransactionalHashingOptions
+            var hashingOptions = new UploadTransferValidationOptions
             {
                 Algorithm = algorithm
             };
@@ -584,16 +584,16 @@ namespace Azure.Storage.Test.Shared
             // Assertion was in the pipeline and the service returning success means the hash was correct
         }
 
-        [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
-        public virtual async Task PrecalculatedHashNotAccepted(TransactionalHashAlgorithm algorithm)
+        [TestCase(ValidationAlgorithm.MD5)]
+        [TestCase(ValidationAlgorithm.StorageCrc64)]
+        public virtual async Task PrecalculatedHashNotAccepted(ValidationAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
             const int dataLength = Constants.KB;
             var data = GetRandomBuffer(dataLength);
-            var hashingOptions = new UploadTransactionalHashingOptions
+            var hashingOptions = new UploadTransferValidationOptions
             {
                 Algorithm = algorithm,
                 PrecalculatedHash = GetRandomBuffer(16)
@@ -613,7 +613,7 @@ namespace Azure.Storage.Test.Shared
         #region Parallel Download Tests
         [Test, Combinatorial]
         public virtual async Task ParallelDownloadSuccessfulHashVerification(
-            [Values(TransactionalHashAlgorithm.MD5, TransactionalHashAlgorithm.StorageCrc64)] TransactionalHashAlgorithm algorithm,
+            [Values(ValidationAlgorithm.MD5, ValidationAlgorithm.StorageCrc64)] ValidationAlgorithm algorithm,
             [Values(512, 2 * Constants.KB)] int chunkSize)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
@@ -640,7 +640,7 @@ namespace Azure.Storage.Test.Shared
                 createResource: false,
                 resourceName: resourceName,
                 options: clientOptions);
-            var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
+            var hashingOptions = new DownloadTransferValidationOptions { Algorithm = algorithm };
             StorageTransferOptions transferOptions = new StorageTransferOptions
             {
                 InitialTransferSize = chunkSize,
@@ -659,7 +659,7 @@ namespace Azure.Storage.Test.Shared
         #region OpenRead Tests
         [Test, Combinatorial]
         public virtual async Task OpenReadSuccessfulHashVerification(
-            [Values(TransactionalHashAlgorithm.MD5, TransactionalHashAlgorithm.StorageCrc64)] TransactionalHashAlgorithm algorithm,
+            [Values(ValidationAlgorithm.MD5, ValidationAlgorithm.StorageCrc64)] ValidationAlgorithm algorithm,
             [Values(
                 // multiple reads that neatly align
                 Constants.KB,
@@ -693,7 +693,7 @@ namespace Azure.Storage.Test.Shared
                 createResource: false,
                 resourceName: resourceName,
                 options: clientOptions);
-            var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
+            var hashingOptions = new DownloadTransferValidationOptions { Algorithm = algorithm };
 
             // Act
             var readStream = await OpenReadAsync(client, hashingOptions, bufferSize);
@@ -705,9 +705,9 @@ namespace Azure.Storage.Test.Shared
         #endregion
 
         #region Download Streaming/Content Tests
-        [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
-        public virtual async Task DownloadSuccessfulHashVerification(TransactionalHashAlgorithm algorithm)
+        [TestCase(ValidationAlgorithm.MD5)]
+        [TestCase(ValidationAlgorithm.StorageCrc64)]
+        public virtual async Task DownloadSuccessfulHashVerification(ValidationAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
@@ -723,7 +723,7 @@ namespace Azure.Storage.Test.Shared
                 resourceName: resourceName);
             await SetupDataAsync(client, new MemoryStream(data));
 
-            var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
+            var hashingOptions = new DownloadTransferValidationOptions { Algorithm = algorithm };
 
             // Act
             var response = await DownloadPartitionAsync(client, Stream.Null, hashingOptions, new HttpRange(length: data.Length));
@@ -732,10 +732,10 @@ namespace Azure.Storage.Test.Shared
             // no policies this time; just check response headers
             switch (algorithm)
             {
-                case TransactionalHashAlgorithm.MD5:
+                case ValidationAlgorithm.MD5:
                     Assert.True(response.Headers.Contains("Content-MD5"));
                     break;
-                case TransactionalHashAlgorithm.StorageCrc64:
+                case ValidationAlgorithm.StorageCrc64:
                     Assert.True(response.Headers.Contains("x-ms-content-crc64"));
                     break;
                 default:
@@ -746,7 +746,7 @@ namespace Azure.Storage.Test.Shared
 
         [Test, Combinatorial]
         public virtual async Task DownloadHashMismatchThrows(
-            [Values(TransactionalHashAlgorithm.MD5, TransactionalHashAlgorithm.StorageCrc64)] TransactionalHashAlgorithm algorithm,
+            [Values(ValidationAlgorithm.MD5, ValidationAlgorithm.StorageCrc64)] ValidationAlgorithm algorithm,
             [Values(true, false)] bool validate)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
@@ -763,7 +763,7 @@ namespace Azure.Storage.Test.Shared
                 resourceName: resourceName);
             await SetupDataAsync(client, new MemoryStream(data));
 
-            var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm, Validate = validate };
+            var hashingOptions = new DownloadTransferValidationOptions { Algorithm = algorithm, Validate = validate };
 
             // alter response contents in pipeline, forcing a hash mismatch on verification step
             var clientOptions = ClientBuilder.GetOptions();
@@ -794,12 +794,12 @@ namespace Azure.Storage.Test.Shared
         [Test]
         public void TestDefaults()
         {
-            var uploadOptions = new UploadTransactionalHashingOptions();
-            Assert.AreEqual(TransactionalHashAlgorithm.StorageCrc64, uploadOptions.Algorithm);
+            var uploadOptions = new UploadTransferValidationOptions();
+            Assert.AreEqual(ValidationAlgorithm.StorageCrc64, uploadOptions.Algorithm);
             Assert.IsNull(uploadOptions.PrecalculatedHash);
 
-            var downloadOptions = new DownloadTransactionalHashingOptions();
-            Assert.AreEqual(TransactionalHashAlgorithm.StorageCrc64, downloadOptions.Algorithm);
+            var downloadOptions = new DownloadTransferValidationOptions();
+            Assert.AreEqual(ValidationAlgorithm.StorageCrc64, downloadOptions.Algorithm);
             Assert.IsTrue(downloadOptions.Validate);
         }
 
@@ -809,11 +809,11 @@ namespace Azure.Storage.Test.Shared
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
-            const TransactionalHashAlgorithm expectedAlgorithm = TransactionalHashAlgorithm.StorageCrc64;
+            const ValidationAlgorithm expectedAlgorithm = ValidationAlgorithm.StorageCrc64;
             const int dataLength = Constants.KB;
             var data = GetRandomBuffer(dataLength);
-            var uploadHashingOptions = new UploadTransactionalHashingOptions();
-            var downloadHashingOptions = new DownloadTransactionalHashingOptions();
+            var uploadHashingOptions = new UploadTransferValidationOptions();
+            var downloadHashingOptions = new DownloadTransferValidationOptions();
             var clientOptions = ClientBuilder.GetOptions();
             StorageTransferOptions transferOptions = new StorageTransferOptions
             {

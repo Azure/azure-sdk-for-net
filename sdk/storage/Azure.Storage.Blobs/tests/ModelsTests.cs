@@ -78,9 +78,9 @@ namespace Azure.Storage.Blobs.Tests
                         IfNoneMatch = new ETag("bar")
                     },
                     Range = new HttpRange(offset: 1, length: 1),
-                    TransactionalHashingOptions = new DownloadTransactionalHashingOptions
+                    TransactionalHashingOptions = new DownloadTransferValidationOptions
                     {
-                        Algorithm = TransactionalHashAlgorithm.MD5,
+                        Algorithm = ValidationAlgorithm.MD5,
                         Validate = true
                     }
                 };

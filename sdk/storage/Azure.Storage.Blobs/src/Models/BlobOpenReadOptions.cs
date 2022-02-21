@@ -31,7 +31,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Optional transactional hashing options.
         /// </summary>
-        public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        public DownloadTransferValidationOptions TransactionalHashingOptions { get; set; }
 
         internal bool AllowModifications { get; }
 

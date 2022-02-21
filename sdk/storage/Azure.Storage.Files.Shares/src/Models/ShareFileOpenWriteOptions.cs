@@ -35,9 +35,12 @@ namespace Azure.Storage.Files.Shares.Models
         public long? MaxSize { get; set; }
 
         /// <summary>
-        /// Optional <see cref="UploadTransactionalHashingOptions"/> for using transactional
-        /// hashing on uploads.
+        /// Optional <see cref="UploadTransferValidationOptions"/> for using transfer validation
+        /// on write. Intermittent flushes will calculate a transactional checksum to validate
+        /// transfers. Transactional checksums are discarded after use.
+        ///
+        /// OpenWrite does not accept precalculated checksums.
         /// </summary>
-        public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        public UploadTransferValidationOptions ValidationOptions { get; set; }
     }
 }

@@ -65,5 +65,26 @@ namespace Azure.Storage
                 throw new ArgumentException($"{streamName}.{nameof(stream.Position)} must be less than {streamName}.{nameof(stream.Length)}. Please set {streamName}.{nameof(stream.Position)} to the start of the data to upload.");
             }
         }
+
+        internal static void VerifyUploadTransferValidationOptions(UploadTransferValidationOptions validationOptions, bool acceptPrecalculated = false)
+        {
+            if (validationOptions == default)
+            {
+                return;
+            }
+
+            if (!acceptPrecalculated && validationOptions.PrecalculatedChecksum != default)
+            {
+                throw InvalidArgument(nameof(validationOptions.PrecalculatedChecksum));
+            }
+            if (validationOptions.Algorithm == ValidationAlgorithm.None || !Enum.IsDefined(typeof(ValidationAlgorithm), validationOptions.Algorithm))
+            {
+                throw new ArgumentException($"{nameof(validationOptions.Algorithm)} must be a supported value that is not {ValidationAlgorithm.None}.");
+            }
+            if (validationOptions.Algorithm == ValidationAlgorithm.Auto && validationOptions.PrecalculatedChecksum != default)
+            {
+                throw new ArgumentException($"{nameof(validationOptions.PrecalculatedChecksum)} cannot be provided when {nameof(validationOptions.Algorithm)} is {ValidationAlgorithm.Auto}.");
+            }
+        }
     }
 }

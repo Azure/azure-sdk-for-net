@@ -34,7 +34,7 @@ namespace Azure.Storage
             Stream contentStream,
             TServiceSpecificData args,
             IProgress<long> progressHandler,
-            UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions hashingOptions,
             string operationName,
             bool async,
             CancellationToken cancellationToken);
@@ -42,7 +42,7 @@ namespace Azure.Storage
             long offset,
             TServiceSpecificData args,
             IProgress<long> progressHandler,
-            UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions hashingOptions,
             bool async,
             CancellationToken cancellationToken);
         public delegate Task<Response<TCompleteUploadReturn>> CommitPartitionedUploadInternal(
@@ -94,7 +94,7 @@ namespace Azure.Storage
         /// <summary>
         /// Hashing options to use for paritioned upload calls.
         /// </summary>
-        private readonly UploadTransactionalHashingOptions _hashingOptions;
+        private readonly UploadTransferValidationOptions _hashingOptions;
 
         /// <summary>
         /// The name of the calling operaiton.
@@ -104,7 +104,7 @@ namespace Azure.Storage
         public PartitionedUploader(
             Behaviors behaviors,
             StorageTransferOptions transferOptions,
-            UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions hashingOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
         {

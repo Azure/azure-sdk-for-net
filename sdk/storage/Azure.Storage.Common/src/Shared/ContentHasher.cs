@@ -38,7 +38,7 @@ namespace Azure.Storage
         /// <exception cref="InvalidDataException">
         /// Throws if the hashes do not match.
         /// </exception>
-        public static void AssertResponseHashMatch(Stream content, TransactionalHashAlgorithm algorithm, Response response)
+        public static void AssertResponseHashMatch(Stream content, ValidationAlgorithm algorithm, Response response)
         {
             GetHashResult computedHash = GetHash(content, algorithm);
             AssertResponseHashMatch(computedHash, algorithm, response);
@@ -58,7 +58,7 @@ namespace Azure.Storage
         /// <exception cref="InvalidDataException">
         /// Throws if the hashes do not match.
         /// </exception>
-        public static void AssertResponseHashMatch(byte[] content, int offset, int count, TransactionalHashAlgorithm algorithm, Response response)
+        public static void AssertResponseHashMatch(byte[] content, int offset, int count, ValidationAlgorithm algorithm, Response response)
         {
             GetHashResult computedHash = GetHash(content, offset, count, algorithm);
             AssertResponseHashMatch(computedHash, algorithm, response);
@@ -76,7 +76,7 @@ namespace Azure.Storage
         /// <exception cref="InvalidDataException">
         /// Throws if the hashes do not match.
         /// </exception>
-        private static void AssertResponseHashMatch(GetHashResult computedHash, TransactionalHashAlgorithm algorithm, Response response)
+        private static void AssertResponseHashMatch(GetHashResult computedHash, ValidationAlgorithm algorithm, Response response)
         {
             if (computedHash == default)
             {
@@ -89,7 +89,7 @@ namespace Azure.Storage
 
             switch (algorithm)
             {
-                case TransactionalHashAlgorithm.MD5:
+                case ValidationAlgorithm.MD5:
                     if (!Enumerable.SequenceEqual(
                         computedHash.MD5,
                         response.Headers.TryGetValue("Content-MD5", out byte[] md5) ? md5 : default))
@@ -97,7 +97,7 @@ namespace Azure.Storage
                         throw Errors.HashMismatch("Content-MD5");
                     }
                     break;
-                case TransactionalHashAlgorithm.StorageCrc64:
+                case ValidationAlgorithm.StorageCrc64:
                     if (!Enumerable.SequenceEqual(
                         computedHash.StorageCrc64,
                         response.Headers.TryGetValue("x-ms-content-crc64", out byte[] crc) ? crc : default))
@@ -120,10 +120,10 @@ namespace Azure.Storage
         /// <paramref name="options"/> are default, then the returned result is default.
         /// </returns>
         /// <exception cref="ArgumentException">
-        /// Throws if <paramref name="options"/> exists and <see cref="UploadTransactionalHashingOptions.Algorithm"/>
+        /// Throws if <paramref name="options"/> exists and <see cref="UploadTransferValidationOptions.Algorithm"/>
         /// is invalid.
         /// </exception>
-        public static GetHashResult GetHashOrDefault(Stream content, UploadTransactionalHashingOptions options)
+        public static GetHashResult GetHashOrDefault(Stream content, UploadTransferValidationOptions options)
         {
             if (options == default)
             {
@@ -134,8 +134,8 @@ namespace Azure.Storage
             {
                 return options.Algorithm switch
                 {
-                    TransactionalHashAlgorithm.StorageCrc64 => new GetHashResult(storageCrc64: options.PrecalculatedHash),
-                    TransactionalHashAlgorithm.MD5 => new GetHashResult(md5: options.PrecalculatedHash),
+                    ValidationAlgorithm.StorageCrc64 => new GetHashResult(storageCrc64: options.PrecalculatedHash),
+                    ValidationAlgorithm.MD5 => new GetHashResult(md5: options.PrecalculatedHash),
                     _ => throw Errors.InvalidArgument(nameof(options.Algorithm))
                 };
             }
@@ -151,14 +151,14 @@ namespace Azure.Storage
         /// <exception cref="ArgumentException">
         /// Throws if <paramref name="algorithmIdentifier"/> is invalid.
         /// </exception>
-        public static GetHashResult GetHash(Stream content, TransactionalHashAlgorithm algorithmIdentifier)
+        public static GetHashResult GetHash(Stream content, ValidationAlgorithm algorithmIdentifier)
         {
             return algorithmIdentifier switch
             {
-                TransactionalHashAlgorithm.StorageCrc64 => new GetHashResult(
+                ValidationAlgorithm.StorageCrc64 => new GetHashResult(
                     storageCrc64: ComputeHash(content, new NonCryptographicHashAlgorithmHasher(StorageCrc64NonCryptographicHashAlgorithm.Create()))),
 #pragma warning disable CA5351 // Do Not Use Broken Cryptographic Algorithms; MD5 being used for content integrity check, not encryption
-                TransactionalHashAlgorithm.MD5 => new GetHashResult(md5: ComputeHash(content, new HashAlgorithmHasher(MD5.Create()))),
+                ValidationAlgorithm.MD5 => new GetHashResult(md5: ComputeHash(content, new HashAlgorithmHasher(MD5.Create()))),
 #pragma warning restore CA5351 // Do Not Use Broken Cryptographic Algorithms
                 _ => throw Errors.InvalidArgument(nameof(algorithmIdentifier))
             };
@@ -175,7 +175,7 @@ namespace Azure.Storage
         /// <exception cref="ArgumentException">
         /// Throws if <paramref name="algorithmIdentifier"/> is invalid.
         /// </exception>
-        public static GetHashResult GetHash(byte[] content, int offset, int count, TransactionalHashAlgorithm algorithmIdentifier)
+        public static GetHashResult GetHash(byte[] content, int offset, int count, ValidationAlgorithm algorithmIdentifier)
         {
             byte[] computeHash(StorageCrc64NonCryptographicHashAlgorithm nonCryptographicHashAlgorithm)
             {
@@ -185,10 +185,10 @@ namespace Azure.Storage
 
             return algorithmIdentifier switch
             {
-                TransactionalHashAlgorithm.StorageCrc64 => new GetHashResult(
+                ValidationAlgorithm.StorageCrc64 => new GetHashResult(
                     storageCrc64: computeHash(StorageCrc64NonCryptographicHashAlgorithm.Create())),
 #pragma warning disable CA5351 // Do Not Use Broken Cryptographic Algorithms; MD5 being used for content integrity check, not encryption
-                TransactionalHashAlgorithm.MD5 => new GetHashResult(md5: MD5.Create().ComputeHash(content, offset, count)),
+                ValidationAlgorithm.MD5 => new GetHashResult(md5: MD5.Create().ComputeHash(content, offset, count)),
 #pragma warning restore CA5351 // Do Not Use Broken Cryptographic Algorithms
                 _ => throw Errors.InvalidArgument(nameof(algorithmIdentifier))
             };

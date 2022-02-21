@@ -50,10 +50,13 @@ namespace Azure.Storage.Blobs.Models
 #pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
-        /// Optional <see cref="UploadTransactionalHashingOptions"/> for using transactional
-        /// hashing on uploads.
+        /// Optional <see cref="UploadTransferValidationOptions"/> for using transfer validation
+        /// on write. Intermittent flushes will calculate a transactional checksum to validate
+        /// transfers. Transactional checksums are discarded after use.
+        ///
+        /// OpenWrite does not accept precalculated checksums.
         /// </summary>
-        public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        public UploadTransferValidationOptions ValidationOptions { get; set; }
 
         internal string OperationName { get; set; }
     }
