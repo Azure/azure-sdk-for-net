@@ -153,6 +153,9 @@ directive:
   - from: resources.json
     where: $.paths['/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf'].post.parameters[2].schema
     transform: $['$ref'] = '#/definitions/DeploymentWhatIf'
+  - from: resources.json
+    where: $.definitions.DeploymentWhatIf.properties.location
+    transform: $['description'] = 'The location to store the deployment data, only required at the tenant and management group scope.'
 ```
 
 ### Tag: package-track2-preview
