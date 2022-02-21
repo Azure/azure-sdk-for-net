@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         internal ServerAutomaticTuning(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverAutomaticTuningClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string serverAutomaticTuningApiVersion);
+            TryGetApiVersion(ResourceType, out string serverAutomaticTuningApiVersion);
             _serverAutomaticTuningRestClient = new ServerAutomaticTuningRestOperations(_serverAutomaticTuningClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverAutomaticTuningApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -83,10 +82,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current
-        /// OperationId: ServerAutomaticTuning_Get
-        /// <summary> Retrieves server automatic tuning options. </summary>
+        /// <summary>
+        /// Retrieves server automatic tuning options.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current
+        /// Operation Id: ServerAutomaticTuning_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ServerAutomaticTuning>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -106,10 +106,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current
-        /// OperationId: ServerAutomaticTuning_Get
-        /// <summary> Retrieves server automatic tuning options. </summary>
+        /// <summary>
+        /// Retrieves server automatic tuning options.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current
+        /// Operation Id: ServerAutomaticTuning_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServerAutomaticTuning> Get(CancellationToken cancellationToken = default)
         {
@@ -129,19 +130,17 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current
-        /// OperationId: ServerAutomaticTuning_Update
-        /// <summary> Update automatic tuning options on server. </summary>
+        /// <summary>
+        /// Update automatic tuning options on server.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current
+        /// Operation Id: ServerAutomaticTuning_Update
+        /// </summary>
         /// <param name="parameters"> The requested automatic tuning resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<Response<ServerAutomaticTuning>> UpdateAsync(ServerAutomaticTuningData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _serverAutomaticTuningClientDiagnostics.CreateScope("ServerAutomaticTuning.Update");
             scope.Start();
@@ -157,19 +156,17 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current
-        /// OperationId: ServerAutomaticTuning_Update
-        /// <summary> Update automatic tuning options on server. </summary>
+        /// <summary>
+        /// Update automatic tuning options on server.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current
+        /// Operation Id: ServerAutomaticTuning_Update
+        /// </summary>
         /// <param name="parameters"> The requested automatic tuning resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual Response<ServerAutomaticTuning> Update(ServerAutomaticTuningData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _serverAutomaticTuningClientDiagnostics.CreateScope("ServerAutomaticTuning.Update");
             scope.Start();
@@ -177,42 +174,6 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _serverAutomaticTuningRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken);
                 return Response.FromValue(new ServerAutomaticTuning(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _serverAutomaticTuningClientDiagnostics.CreateScope("ServerAutomaticTuning.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _serverAutomaticTuningClientDiagnostics.CreateScope("ServerAutomaticTuning.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
             }
             catch (Exception e)
             {

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.Cdn
         internal AfdRule(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _afdRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string afdRuleApiVersion);
+            TryGetApiVersion(ResourceType, out string afdRuleApiVersion);
             _afdRuleRestClient = new AfdRulesRestOperations(_afdRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -84,7 +83,11 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an existing delivery rule within a rule set. </summary>
+        /// <summary>
+        /// Gets an existing delivery rule within a rule set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}/rules/{ruleName}
+        /// Operation Id: AfdRules_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<AfdRule>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -104,7 +107,11 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Gets an existing delivery rule within a rule set. </summary>
+        /// <summary>
+        /// Gets an existing delivery rule within a rule set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}/rules/{ruleName}
+        /// Operation Id: AfdRules_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AfdRule> Get(CancellationToken cancellationToken = default)
         {
@@ -124,17 +131,21 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Deletes an existing delivery rule within a rule set. </summary>
+        /// <summary>
+        /// Deletes an existing delivery rule within a rule set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}/rules/{ruleName}
+        /// Operation Id: AfdRules_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<AfdRuleDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _afdRuleClientDiagnostics.CreateScope("AfdRule.Delete");
             scope.Start();
             try
             {
                 var response = await _afdRuleRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdRuleDeleteOperation(_afdRuleClientDiagnostics, Pipeline, _afdRuleRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new CdnArmOperation(_afdRuleClientDiagnostics, Pipeline, _afdRuleRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -146,17 +157,21 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Deletes an existing delivery rule within a rule set. </summary>
+        /// <summary>
+        /// Deletes an existing delivery rule within a rule set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}/rules/{ruleName}
+        /// Operation Id: AfdRules_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AfdRuleDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _afdRuleClientDiagnostics.CreateScope("AfdRule.Delete");
             scope.Start();
             try
             {
                 var response = _afdRuleRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AfdRuleDeleteOperation(_afdRuleClientDiagnostics, Pipeline, _afdRuleRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new CdnArmOperation(_afdRuleClientDiagnostics, Pipeline, _afdRuleRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -168,24 +183,25 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Updates an existing delivery rule within a rule set. </summary>
+        /// <summary>
+        /// Updates an existing delivery rule within a rule set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}/rules/{ruleName}
+        /// Operation Id: AfdRules_Update
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="ruleUpdateProperties"> Delivery rule properties. </param>
+        /// <param name="options"> Delivery rule properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleUpdateProperties"/> is null. </exception>
-        public async virtual Task<AfdRuleUpdateOperation> UpdateAsync(bool waitForCompletion, RuleUpdateOptions ruleUpdateProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<ArmOperation<AfdRule>> UpdateAsync(bool waitForCompletion, AfdRuleUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (ruleUpdateProperties == null)
-            {
-                throw new ArgumentNullException(nameof(ruleUpdateProperties));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _afdRuleClientDiagnostics.CreateScope("AfdRule.Update");
             scope.Start();
             try
             {
-                var response = await _afdRuleRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleUpdateProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdRuleUpdateOperation(Client, _afdRuleClientDiagnostics, Pipeline, _afdRuleRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleUpdateProperties).Request, response);
+                var response = await _afdRuleRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<AfdRule>(new AfdRuleOperationSource(Client), _afdRuleClientDiagnostics, Pipeline, _afdRuleRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -197,63 +213,28 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Updates an existing delivery rule within a rule set. </summary>
+        /// <summary>
+        /// Updates an existing delivery rule within a rule set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}/rules/{ruleName}
+        /// Operation Id: AfdRules_Update
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="ruleUpdateProperties"> Delivery rule properties. </param>
+        /// <param name="options"> Delivery rule properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleUpdateProperties"/> is null. </exception>
-        public virtual AfdRuleUpdateOperation Update(bool waitForCompletion, RuleUpdateOptions ruleUpdateProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual ArmOperation<AfdRule> Update(bool waitForCompletion, AfdRuleUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (ruleUpdateProperties == null)
-            {
-                throw new ArgumentNullException(nameof(ruleUpdateProperties));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _afdRuleClientDiagnostics.CreateScope("AfdRule.Update");
             scope.Start();
             try
             {
-                var response = _afdRuleRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleUpdateProperties, cancellationToken);
-                var operation = new AfdRuleUpdateOperation(Client, _afdRuleClientDiagnostics, Pipeline, _afdRuleRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleUpdateProperties).Request, response);
+                var response = _afdRuleRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options, cancellationToken);
+                var operation = new CdnArmOperation<AfdRule>(new AfdRuleOperationSource(Client), _afdRuleClientDiagnostics, Pipeline, _afdRuleRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _afdRuleClientDiagnostics.CreateScope("AfdRule.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _afdRuleClientDiagnostics.CreateScope("AfdRule.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
             }
             catch (Exception e)
             {

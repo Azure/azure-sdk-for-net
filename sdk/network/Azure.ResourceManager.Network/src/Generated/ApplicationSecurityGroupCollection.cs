@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -39,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal ApplicationSecurityGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _applicationSecurityGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationSecurityGroup.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ApplicationSecurityGroup.ResourceType, out string applicationSecurityGroupApiVersion);
+            TryGetApiVersion(ApplicationSecurityGroup.ResourceType, out string applicationSecurityGroupApiVersion);
             _applicationSecurityGroupRestClient = new ApplicationSecurityGroupsRestOperations(_applicationSecurityGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationSecurityGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -52,27 +51,28 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates or updates an application security group. </summary>
+        /// <summary>
+        /// Creates or updates an application security group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}
+        /// Operation Id: ApplicationSecurityGroups_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="parameters"> Parameters supplied to the create or update ApplicationSecurityGroup operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ApplicationSecurityGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string applicationSecurityGroupName, ApplicationSecurityGroupData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ApplicationSecurityGroup>> CreateOrUpdateAsync(bool waitForCompletion, string applicationSecurityGroupName, ApplicationSecurityGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationSecurityGroupName, nameof(applicationSecurityGroupName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _applicationSecurityGroupClientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _applicationSecurityGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationSecurityGroupCreateOrUpdateOperation(Client, _applicationSecurityGroupClientDiagnostics, Pipeline, _applicationSecurityGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, parameters).Request, response);
+                var operation = new NetworkArmOperation<ApplicationSecurityGroup>(new ApplicationSecurityGroupOperationSource(Client), _applicationSecurityGroupClientDiagnostics, Pipeline, _applicationSecurityGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -84,27 +84,28 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Creates or updates an application security group. </summary>
+        /// <summary>
+        /// Creates or updates an application security group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}
+        /// Operation Id: ApplicationSecurityGroups_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="parameters"> Parameters supplied to the create or update ApplicationSecurityGroup operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ApplicationSecurityGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string applicationSecurityGroupName, ApplicationSecurityGroupData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApplicationSecurityGroup> CreateOrUpdate(bool waitForCompletion, string applicationSecurityGroupName, ApplicationSecurityGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationSecurityGroupName, nameof(applicationSecurityGroupName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _applicationSecurityGroupClientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _applicationSecurityGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, parameters, cancellationToken);
-                var operation = new ApplicationSecurityGroupCreateOrUpdateOperation(Client, _applicationSecurityGroupClientDiagnostics, Pipeline, _applicationSecurityGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, parameters).Request, response);
+                var operation = new NetworkArmOperation<ApplicationSecurityGroup>(new ApplicationSecurityGroupOperationSource(Client), _applicationSecurityGroupClientDiagnostics, Pipeline, _applicationSecurityGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -116,10 +117,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets information about the specified application security group. </summary>
+        /// <summary>
+        /// Gets information about the specified application security group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}
+        /// Operation Id: ApplicationSecurityGroups_Get
+        /// </summary>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> is null. </exception>
         public async virtual Task<Response<ApplicationSecurityGroup>> GetAsync(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
@@ -141,10 +146,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets information about the specified application security group. </summary>
+        /// <summary>
+        /// Gets information about the specified application security group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}
+        /// Operation Id: ApplicationSecurityGroups_Get
+        /// </summary>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> is null. </exception>
         public virtual Response<ApplicationSecurityGroup> Get(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
@@ -166,7 +175,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets all the application security groups in a resource group. </summary>
+        /// <summary>
+        /// Gets all the application security groups in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups
+        /// Operation Id: ApplicationSecurityGroups_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationSecurityGroup" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationSecurityGroup> GetAllAsync(CancellationToken cancellationToken = default)
@@ -204,7 +217,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the application security groups in a resource group. </summary>
+        /// <summary>
+        /// Gets all the application security groups in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups
+        /// Operation Id: ApplicationSecurityGroups_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationSecurityGroup" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationSecurityGroup> GetAll(CancellationToken cancellationToken = default)
@@ -242,10 +259,14 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}
+        /// Operation Id: ApplicationSecurityGroups_Get
+        /// </summary>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
@@ -265,10 +286,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}
+        /// Operation Id: ApplicationSecurityGroups_Get
+        /// </summary>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
@@ -288,10 +313,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}
+        /// Operation Id: ApplicationSecurityGroups_Get
+        /// </summary>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> is null. </exception>
         public async virtual Task<Response<ApplicationSecurityGroup>> GetIfExistsAsync(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
@@ -313,10 +342,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}
+        /// Operation Id: ApplicationSecurityGroups_Get
+        /// </summary>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> is null. </exception>
         public virtual Response<ApplicationSecurityGroup> GetIfExists(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {

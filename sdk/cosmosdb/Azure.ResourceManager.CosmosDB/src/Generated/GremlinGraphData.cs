@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> A class representing the GremlinGraph data model. </summary>
-    public partial class GremlinGraphData : TrackedResource
+    public partial class GremlinGraphData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of GremlinGraphData. </summary>
         /// <param name="location"> The location. </param>

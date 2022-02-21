@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Network
         internal VpnSiteLinkConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _vpnSiteLinkConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnSiteLinkConnection.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(VpnSiteLinkConnection.ResourceType, out string vpnSiteLinkConnectionApiVersion);
+            TryGetApiVersion(VpnSiteLinkConnection.ResourceType, out string vpnSiteLinkConnectionApiVersion);
             _vpnSiteLinkConnectionRestClient = new VpnSiteLinkConnectionsRestOperations(_vpnSiteLinkConnectionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vpnSiteLinkConnectionApiVersion);
             _vpnSiteLinkConnectionVpnLinkConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnSiteLinkConnection.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(VpnSiteLinkConnection.ResourceType, out string vpnSiteLinkConnectionVpnLinkConnectionsApiVersion);
+            TryGetApiVersion(VpnSiteLinkConnection.ResourceType, out string vpnSiteLinkConnectionVpnLinkConnectionsApiVersion);
             _vpnSiteLinkConnectionVpnLinkConnectionsRestClient = new VpnLinkConnectionsRestOperations(_vpnSiteLinkConnectionVpnLinkConnectionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vpnSiteLinkConnectionVpnLinkConnectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -55,10 +55,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VpnConnection.ResourceType), nameof(id));
         }
 
-        /// <summary> Retrieves the details of a vpn site link connection. </summary>
+        /// <summary>
+        /// Retrieves the details of a vpn site link connection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}
+        /// Operation Id: VpnSiteLinkConnections_Get
+        /// </summary>
         /// <param name="linkConnectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public async virtual Task<Response<VpnSiteLinkConnection>> GetAsync(string linkConnectionName, CancellationToken cancellationToken = default)
         {
@@ -80,10 +84,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves the details of a vpn site link connection. </summary>
+        /// <summary>
+        /// Retrieves the details of a vpn site link connection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}
+        /// Operation Id: VpnSiteLinkConnections_Get
+        /// </summary>
         /// <param name="linkConnectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual Response<VpnSiteLinkConnection> Get(string linkConnectionName, CancellationToken cancellationToken = default)
         {
@@ -105,7 +113,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection. </summary>
+        /// <summary>
+        /// Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections
+        /// Operation Id: VpnLinkConnections_ListByVpnConnection
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VpnSiteLinkConnection" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VpnSiteLinkConnection> GetAllAsync(CancellationToken cancellationToken = default)
@@ -143,7 +155,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection. </summary>
+        /// <summary>
+        /// Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections
+        /// Operation Id: VpnLinkConnections_ListByVpnConnection
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VpnSiteLinkConnection" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VpnSiteLinkConnection> GetAll(CancellationToken cancellationToken = default)
@@ -181,10 +197,14 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}
+        /// Operation Id: VpnSiteLinkConnections_Get
+        /// </summary>
         /// <param name="linkConnectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string linkConnectionName, CancellationToken cancellationToken = default)
         {
@@ -204,10 +224,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}
+        /// Operation Id: VpnSiteLinkConnections_Get
+        /// </summary>
         /// <param name="linkConnectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string linkConnectionName, CancellationToken cancellationToken = default)
         {
@@ -227,10 +251,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}
+        /// Operation Id: VpnSiteLinkConnections_Get
+        /// </summary>
         /// <param name="linkConnectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public async virtual Task<Response<VpnSiteLinkConnection>> GetIfExistsAsync(string linkConnectionName, CancellationToken cancellationToken = default)
         {
@@ -252,10 +280,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}
+        /// Operation Id: VpnSiteLinkConnections_Get
+        /// </summary>
         /// <param name="linkConnectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual Response<VpnSiteLinkConnection> GetIfExists(string linkConnectionName, CancellationToken cancellationToken = default)
         {

@@ -56,13 +56,22 @@ namespace Azure.ResourceManager.Compute.Tests
             var setName = Recording.GenerateAssetName("testAS-");
             var set = await CreateAvailabilitySetAsync(setName);
             var updatedPlatformFaultDomainCount = 3;
-            var update = new AvailabilitySetUpdate()
+            var update = new AvailabilitySetUpdateOptions()
             {
                 PlatformFaultDomainCount = updatedPlatformFaultDomainCount
             };
             AvailabilitySet updatedSet = await set.UpdateAsync(update);
 
             Assert.AreEqual(updatedPlatformFaultDomainCount, updatedSet.Data.PlatformFaultDomainCount);
+        }
+
+        [RecordedTest]
+        public async Task AvailableLocations()
+        {
+            var setName = Recording.GenerateAssetName("testAS-");
+            var set = await CreateAvailabilitySetAsync(setName);
+            var locations = await set.GetAvailableLocationsAsync();
+            Assert.IsNotEmpty(locations);
         }
     }
 }

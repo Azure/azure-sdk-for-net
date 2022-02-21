@@ -406,6 +406,39 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             Assert.IsFalse(client.IsClosed);
         }
 
+        [Test]
+        [TestCase("queue1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=queue1")]
+        [TestCase("queue1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];")]
+        [TestCase("topic1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];")]
+        [TestCase("topic1/Subscriptions/sub1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];")]
+        [TestCase("topic1/Subscriptions/sub1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=topic1")]
+        [TestCase("topic1/Subscriptions/sub1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=topic1/Subscriptions/sub1")]
+        public void ValidateEntityNameAllowsValidPaths(string entityName, string connectionString)
+        {
+            var client = new ServiceBusClient(connectionString);
+            Assert.That(
+                () => client.ValidateEntityName(entityName),
+                Throws.Nothing);
+        }
+
+        [Test]
+        [TestCase("queue1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=queue2")]
+        [TestCase("topic1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=topic2")]
+        [TestCase("topic1/Subscriptions", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=topic1")]
+        [TestCase("topic1/Subscriptions/", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=topic1")]
+        [TestCase("/Subscriptions/sub1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=sub1")]
+        [TestCase("topic1/Subscriptions/sub1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=topic1/Subscriptions")]
+        [TestCase("topic1/Subscriptions/sub1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=topic2")]
+        [TestCase("topic1/Subscriptions/sub1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=topic1/Subscriptions/sub2")]
+        [TestCase("topic1/Subscriptions/sub1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=topic2/Subscriptions/sub1")]
+        public void ValidateEntityNameThrowsForInvalidPaths(string entityName, string connectionString)
+        {
+            var client = new ServiceBusClient(connectionString);
+            Assert.That(
+                () => client.ValidateEntityName(entityName),
+                Throws.InstanceOf<ArgumentException>());
+        }
+
         /// <summary>
         ///   Allows for the options used by the client to be exposed for testing purposes.
         /// </summary>

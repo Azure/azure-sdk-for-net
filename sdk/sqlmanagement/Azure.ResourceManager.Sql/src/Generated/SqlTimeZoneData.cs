@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the SqlTimeZone data model. </summary>
-    public partial class SqlTimeZoneData : Resource
+    public partial class SqlTimeZoneData : ResourceData
     {
         /// <summary> Initializes a new instance of SqlTimeZoneData. </summary>
         public SqlTimeZoneData()

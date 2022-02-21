@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources
         internal FeatureCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _featureClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Feature.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(Feature.ResourceType, out string featureApiVersion);
+            TryGetApiVersion(Feature.ResourceType, out string featureApiVersion);
             _featureRestClient = new FeaturesRestOperations(_featureClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, featureApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -50,13 +50,14 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Provider.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// OperationId: Features_Get
-        /// <summary> Gets the preview feature with the specified name. </summary>
+        /// <summary>
+        /// Gets the preview feature with the specified name.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
+        /// Operation Id: Features_Get
+        /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public async virtual Task<Response<Feature>> GetAsync(string featureName, CancellationToken cancellationToken = default)
         {
@@ -78,13 +79,14 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// OperationId: Features_Get
-        /// <summary> Gets the preview feature with the specified name. </summary>
+        /// <summary>
+        /// Gets the preview feature with the specified name.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
+        /// Operation Id: Features_Get
+        /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public virtual Response<Feature> Get(string featureName, CancellationToken cancellationToken = default)
         {
@@ -106,10 +108,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// OperationId: Features_List
-        /// <summary> Gets all the preview features in a provider namespace that are available through AFEC for the subscription. </summary>
+        /// <summary>
+        /// Gets all the preview features in a provider namespace that are available through AFEC for the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features
+        /// Operation Id: Features_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Feature" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Feature> GetAllAsync(CancellationToken cancellationToken = default)
@@ -147,10 +150,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// OperationId: Features_List
-        /// <summary> Gets all the preview features in a provider namespace that are available through AFEC for the subscription. </summary>
+        /// <summary>
+        /// Gets all the preview features in a provider namespace that are available through AFEC for the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features
+        /// Operation Id: Features_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Feature" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Feature> GetAll(CancellationToken cancellationToken = default)
@@ -188,13 +192,14 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// OperationId: Features_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
+        /// Operation Id: Features_Get
+        /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string featureName, CancellationToken cancellationToken = default)
         {
@@ -214,13 +219,14 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// OperationId: Features_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
+        /// Operation Id: Features_Get
+        /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public virtual Response<bool> Exists(string featureName, CancellationToken cancellationToken = default)
         {
@@ -240,13 +246,14 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// OperationId: Features_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
+        /// Operation Id: Features_Get
+        /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public async virtual Task<Response<Feature>> GetIfExistsAsync(string featureName, CancellationToken cancellationToken = default)
         {
@@ -268,13 +275,14 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// OperationId: Features_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
+        /// Operation Id: Features_Get
+        /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public virtual Response<Feature> GetIfExists(string featureName, CancellationToken cancellationToken = default)
         {

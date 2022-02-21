@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents the activity on an elastic pool. </summary>
-    public partial class ElasticPoolActivity : Resource
+    public partial class ElasticPoolActivity : ResourceData
     {
         /// <summary> Initializes a new instance of ElasticPoolActivity. </summary>
         public ElasticPoolActivity()

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.Cdn
         internal CdnCustomDomain(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _cdnCustomDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string cdnCustomDomainApiVersion);
+            TryGetApiVersion(ResourceType, out string cdnCustomDomainApiVersion);
             _cdnCustomDomainRestClient = new CdnCustomDomainsRestOperations(_cdnCustomDomainClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cdnCustomDomainApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -84,7 +83,11 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an existing custom domain within an endpoint. </summary>
+        /// <summary>
+        /// Gets an existing custom domain within an endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}
+        /// Operation Id: CdnCustomDomains_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<CdnCustomDomain>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -104,7 +107,11 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Gets an existing custom domain within an endpoint. </summary>
+        /// <summary>
+        /// Gets an existing custom domain within an endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}
+        /// Operation Id: CdnCustomDomains_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CdnCustomDomain> Get(CancellationToken cancellationToken = default)
         {
@@ -124,17 +131,21 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Deletes an existing custom domain within an endpoint. </summary>
+        /// <summary>
+        /// Deletes an existing custom domain within an endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}
+        /// Operation Id: CdnCustomDomains_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CdnCustomDomainDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomain.Delete");
             scope.Start();
             try
             {
                 var response = await _cdnCustomDomainRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnCustomDomainDeleteOperation(_cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new CdnArmOperation(_cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -146,17 +157,21 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Deletes an existing custom domain within an endpoint. </summary>
+        /// <summary>
+        /// Deletes an existing custom domain within an endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}
+        /// Operation Id: CdnCustomDomains_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CdnCustomDomainDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomain.Delete");
             scope.Start();
             try
             {
                 var response = _cdnCustomDomainRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnCustomDomainDeleteOperation(_cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new CdnArmOperation(_cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -168,17 +183,21 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Disable https delivery of the custom domain. </summary>
+        /// <summary>
+        /// Disable https delivery of the custom domain.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}/disableCustomHttps
+        /// Operation Id: CdnCustomDomains_DisableCustomHttps
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CdnCustomDomainDisableCustomHttpsOperation> DisableCustomHttpsAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DisableCustomHttpsAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomain.DisableCustomHttps");
             scope.Start();
             try
             {
                 var response = await _cdnCustomDomainRestClient.DisableCustomHttpsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnCustomDomainDisableCustomHttpsOperation(_cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateDisableCustomHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new CdnArmOperation(_cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateDisableCustomHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -190,17 +209,21 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Disable https delivery of the custom domain. </summary>
+        /// <summary>
+        /// Disable https delivery of the custom domain.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}/disableCustomHttps
+        /// Operation Id: CdnCustomDomains_DisableCustomHttps
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CdnCustomDomainDisableCustomHttpsOperation DisableCustomHttps(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation DisableCustomHttps(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomain.DisableCustomHttps");
             scope.Start();
             try
             {
                 var response = _cdnCustomDomainRestClient.DisableCustomHttps(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnCustomDomainDisableCustomHttpsOperation(_cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateDisableCustomHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new CdnArmOperation(_cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateDisableCustomHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -212,18 +235,22 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Enable https delivery of the custom domain. </summary>
+        /// <summary>
+        /// Enable https delivery of the custom domain.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}/enableCustomHttps
+        /// Operation Id: CdnCustomDomains_EnableCustomHttps
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="customDomainHttpsParameters"> The configuration specifying how to enable HTTPS for the custom domain - using CDN managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses CDN managed certificate by default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CdnCustomDomainEnableCustomHttpsOperation> EnableCustomHttpsAsync(bool waitForCompletion, CustomDomainHttpsOptions customDomainHttpsParameters = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> EnableCustomHttpsAsync(bool waitForCompletion, CustomDomainHttpsOptions customDomainHttpsParameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomain.EnableCustomHttps");
             scope.Start();
             try
             {
                 var response = await _cdnCustomDomainRestClient.EnableCustomHttpsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, customDomainHttpsParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnCustomDomainEnableCustomHttpsOperation(_cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateEnableCustomHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, customDomainHttpsParameters).Request, response);
+                var operation = new CdnArmOperation(_cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateEnableCustomHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, customDomainHttpsParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -235,57 +262,25 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Enable https delivery of the custom domain. </summary>
+        /// <summary>
+        /// Enable https delivery of the custom domain.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}/enableCustomHttps
+        /// Operation Id: CdnCustomDomains_EnableCustomHttps
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="customDomainHttpsParameters"> The configuration specifying how to enable HTTPS for the custom domain - using CDN managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses CDN managed certificate by default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CdnCustomDomainEnableCustomHttpsOperation EnableCustomHttps(bool waitForCompletion, CustomDomainHttpsOptions customDomainHttpsParameters = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation EnableCustomHttps(bool waitForCompletion, CustomDomainHttpsOptions customDomainHttpsParameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomain.EnableCustomHttps");
             scope.Start();
             try
             {
                 var response = _cdnCustomDomainRestClient.EnableCustomHttps(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, customDomainHttpsParameters, cancellationToken);
-                var operation = new CdnCustomDomainEnableCustomHttpsOperation(_cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateEnableCustomHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, customDomainHttpsParameters).Request, response);
+                var operation = new CdnArmOperation(_cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateEnableCustomHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, customDomainHttpsParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomain.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomain.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
             }
             catch (Exception e)
             {

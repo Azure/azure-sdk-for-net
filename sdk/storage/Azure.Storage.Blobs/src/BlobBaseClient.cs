@@ -1302,6 +1302,8 @@ namespace Azure.Storage.Blobs.Specialized
                         ClientConfiguration.Pipeline.ResponseClassifier,
                         Constants.MaxReliabilityRetries);
 
+                    stream = stream.WithNoDispose().WithProgress(options?.ProgressHandler);
+
                     /* NOTE: we do not currently support both features together. This remains here for the
                      * potential future where we do.
                      * Comparing hash results comes BEFORE decryption.
@@ -2063,7 +2065,7 @@ namespace Azure.Storage.Blobs.Specialized
             return StagedDownloadAsync(
                 destination,
                 options?.Conditions,
-                //options.ProgressHandler, // TODO: #8506
+                options?.ProgressHandler,
                 options?.TransferOptions ?? default,
                 options?.TransactionalHashingOptions,
                 async: false,
@@ -2102,7 +2104,7 @@ namespace Azure.Storage.Blobs.Specialized
             return StagedDownloadAsync(
                 destination,
                 options?.Conditions,
-                //options.ProgressHandler, // TODO: #8506
+                options?.ProgressHandler,
                 options?.TransferOptions ?? default,
                 options?.TransactionalHashingOptions,
                 async: false,
@@ -2140,7 +2142,7 @@ namespace Azure.Storage.Blobs.Specialized
             return await StagedDownloadAsync(
                 destination,
                 options?.Conditions,
-                //options.ProgressHandler, // TODO: #8506
+                options?.ProgressHandler,
                 options?.TransferOptions ?? default,
                 options?.TransactionalHashingOptions,
                 async: true,
@@ -2179,7 +2181,7 @@ namespace Azure.Storage.Blobs.Specialized
             return await StagedDownloadAsync(
                 destination,
                 options?.Conditions,
-                //options.ProgressHandler, // TODO: #8506
+                options?.ProgressHandler,
                 options?.TransferOptions ?? default,
                 options?.TransactionalHashingOptions,
                 async: true,
@@ -2393,6 +2395,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
         /// <param name="transferOptions">
         /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
@@ -2417,17 +2423,13 @@ namespace Azure.Storage.Blobs.Specialized
         internal async Task<Response> StagedDownloadAsync(
             Stream destination,
             BlobRequestConditions conditions = default,
-            ///// <param name="progressHandler">
-            ///// Optional <see cref="IProgress{Long}"/> to provide
-            ///// progress updates about data transfers.
-            ///// </param>
-            //IProgress<long> progressHandler, // TODO: #8506
+            IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
             DownloadTransactionalHashingOptions hashingOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions, hashingOptions);
+            PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions, hashingOptions, progressHandler);
 
             if (UsingClientSideEncryption)
             {

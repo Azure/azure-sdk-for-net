@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -39,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal ClusterResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _clusterResourceCassandraClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ClusterResource.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ClusterResource.ResourceType, out string clusterResourceCassandraClustersApiVersion);
+            TryGetApiVersion(ClusterResource.ResourceType, out string clusterResourceCassandraClustersApiVersion);
             _clusterResourceCassandraClustersRestClient = new CassandraClustersRestOperations(_clusterResourceCassandraClustersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, clusterResourceCassandraClustersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -52,27 +51,28 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        /// <summary> Create or update a managed Cassandra cluster. When updating, you must specify all writable properties. To update only some properties, use PATCH. </summary>
+        /// <summary>
+        /// Create or update a managed Cassandra cluster. When updating, you must specify all writable properties. To update only some properties, use PATCH.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}
+        /// Operation Id: CassandraClusters_CreateUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="clusterName"> Managed Cassandra cluster name. </param>
         /// <param name="body"> The properties specifying the desired state of the managed Cassandra cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="body"/> is null. </exception>
-        public async virtual Task<ClusterResourceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string clusterName, ClusterResourceData body, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ClusterResource>> CreateOrUpdateAsync(bool waitForCompletion, string clusterName, ClusterResourceData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
+            Argument.AssertNotNull(body, nameof(body));
 
             using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _clusterResourceCassandraClustersRestClient.CreateUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ClusterResourceCreateOrUpdateOperation(Client, _clusterResourceCassandraClustersClientDiagnostics, Pipeline, _clusterResourceCassandraClustersRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, body).Request, response);
+                var operation = new CosmosDBArmOperation<ClusterResource>(new ClusterResourceOperationSource(Client), _clusterResourceCassandraClustersClientDiagnostics, Pipeline, _clusterResourceCassandraClustersRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, body).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -84,27 +84,28 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Create or update a managed Cassandra cluster. When updating, you must specify all writable properties. To update only some properties, use PATCH. </summary>
+        /// <summary>
+        /// Create or update a managed Cassandra cluster. When updating, you must specify all writable properties. To update only some properties, use PATCH.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}
+        /// Operation Id: CassandraClusters_CreateUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="clusterName"> Managed Cassandra cluster name. </param>
         /// <param name="body"> The properties specifying the desired state of the managed Cassandra cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="body"/> is null. </exception>
-        public virtual ClusterResourceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string clusterName, ClusterResourceData body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ClusterResource> CreateOrUpdate(bool waitForCompletion, string clusterName, ClusterResourceData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
+            Argument.AssertNotNull(body, nameof(body));
 
             using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _clusterResourceCassandraClustersRestClient.CreateUpdate(Id.SubscriptionId, Id.ResourceGroupName, clusterName, body, cancellationToken);
-                var operation = new ClusterResourceCreateOrUpdateOperation(Client, _clusterResourceCassandraClustersClientDiagnostics, Pipeline, _clusterResourceCassandraClustersRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, body).Request, response);
+                var operation = new CosmosDBArmOperation<ClusterResource>(new ClusterResourceOperationSource(Client), _clusterResourceCassandraClustersClientDiagnostics, Pipeline, _clusterResourceCassandraClustersRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, body).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -116,10 +117,14 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Get the properties of a managed Cassandra cluster. </summary>
+        /// <summary>
+        /// Get the properties of a managed Cassandra cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}
+        /// Operation Id: CassandraClusters_Get
+        /// </summary>
         /// <param name="clusterName"> Managed Cassandra cluster name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public async virtual Task<Response<ClusterResource>> GetAsync(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -141,10 +146,14 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Get the properties of a managed Cassandra cluster. </summary>
+        /// <summary>
+        /// Get the properties of a managed Cassandra cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}
+        /// Operation Id: CassandraClusters_Get
+        /// </summary>
         /// <param name="clusterName"> Managed Cassandra cluster name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<ClusterResource> Get(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -166,7 +175,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> List all managed Cassandra clusters in this resource group. </summary>
+        /// <summary>
+        /// List all managed Cassandra clusters in this resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters
+        /// Operation Id: CassandraClusters_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -189,7 +202,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> List all managed Cassandra clusters in this resource group. </summary>
+        /// <summary>
+        /// List all managed Cassandra clusters in this resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters
+        /// Operation Id: CassandraClusters_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ClusterResource> GetAll(CancellationToken cancellationToken = default)
@@ -212,10 +229,14 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}
+        /// Operation Id: CassandraClusters_Get
+        /// </summary>
         /// <param name="clusterName"> Managed Cassandra cluster name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -235,10 +256,14 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}
+        /// Operation Id: CassandraClusters_Get
+        /// </summary>
         /// <param name="clusterName"> Managed Cassandra cluster name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<bool> Exists(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -258,10 +283,14 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}
+        /// Operation Id: CassandraClusters_Get
+        /// </summary>
         /// <param name="clusterName"> Managed Cassandra cluster name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public async virtual Task<Response<ClusterResource>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -283,10 +312,14 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}
+        /// Operation Id: CassandraClusters_Get
+        /// </summary>
         /// <param name="clusterName"> Managed Cassandra cluster name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<ClusterResource> GetIfExists(string clusterName, CancellationToken cancellationToken = default)
         {

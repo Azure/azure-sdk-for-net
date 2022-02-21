@@ -16,7 +16,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <param name="serviceEndpoint"></param>
         /// <param name="containerName"></param>
         /// <param name="segment"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="containerName"/>, or <paramref name="segment"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="containerName"/> or <paramref name="segment"/> is null. </exception>
         internal ListBlobsHierarchySegmentResponse(string serviceEndpoint, string containerName, BlobHierarchyListSegment segment)
         {
             if (serviceEndpoint == null)

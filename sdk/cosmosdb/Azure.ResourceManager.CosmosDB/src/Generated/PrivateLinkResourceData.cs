@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> A class representing the PrivateLinkResource data model. </summary>
-    public partial class PrivateLinkResourceData : Resource
+    public partial class PrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of PrivateLinkResourceData. </summary>
         public PrivateLinkResourceData()

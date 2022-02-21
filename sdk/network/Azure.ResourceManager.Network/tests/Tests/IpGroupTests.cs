@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Tests
             }
         }
 
-        private async Task<IpGroupCreateOrUpdateOperation> CreateIpGroup(string ipGroupName)
+        private async Task<ArmOperation<IpGroup>> CreateIpGroup(string ipGroupName)
         {
             var container = _resourceGroup.GetIpGroups();
             var data = new IpGroupData();

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the PolicyExemption data model. </summary>
-    public partial class PolicyExemptionData : Resource
+    public partial class PolicyExemptionData : ResourceData
     {
         /// <summary> Initializes a new instance of PolicyExemptionData. </summary>
         /// <param name="policyAssignmentId"> The ID of the policy assignment that is being exempted. </param>

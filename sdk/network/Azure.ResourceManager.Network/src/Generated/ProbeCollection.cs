@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         internal ProbeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _probeLoadBalancerProbesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", Probe.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(Probe.ResourceType, out string probeLoadBalancerProbesApiVersion);
+            TryGetApiVersion(Probe.ResourceType, out string probeLoadBalancerProbesApiVersion);
             _probeLoadBalancerProbesRestClient = new LoadBalancerProbesRestOperations(_probeLoadBalancerProbesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, probeLoadBalancerProbesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -50,10 +50,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, LoadBalancer.ResourceType), nameof(id));
         }
 
-        /// <summary> Gets load balancer probe. </summary>
+        /// <summary>
+        /// Gets load balancer probe.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}
+        /// Operation Id: LoadBalancerProbes_Get
+        /// </summary>
         /// <param name="probeName"> The name of the probe. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="probeName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="probeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="probeName"/> is null. </exception>
         public async virtual Task<Response<Probe>> GetAsync(string probeName, CancellationToken cancellationToken = default)
         {
@@ -75,10 +79,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets load balancer probe. </summary>
+        /// <summary>
+        /// Gets load balancer probe.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}
+        /// Operation Id: LoadBalancerProbes_Get
+        /// </summary>
         /// <param name="probeName"> The name of the probe. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="probeName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="probeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="probeName"/> is null. </exception>
         public virtual Response<Probe> Get(string probeName, CancellationToken cancellationToken = default)
         {
@@ -100,7 +108,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets all the load balancer probes. </summary>
+        /// <summary>
+        /// Gets all the load balancer probes.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes
+        /// Operation Id: LoadBalancerProbes_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Probe" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Probe> GetAllAsync(CancellationToken cancellationToken = default)
@@ -138,7 +150,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the load balancer probes. </summary>
+        /// <summary>
+        /// Gets all the load balancer probes.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes
+        /// Operation Id: LoadBalancerProbes_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Probe" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Probe> GetAll(CancellationToken cancellationToken = default)
@@ -176,10 +192,14 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}
+        /// Operation Id: LoadBalancerProbes_Get
+        /// </summary>
         /// <param name="probeName"> The name of the probe. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="probeName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="probeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="probeName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string probeName, CancellationToken cancellationToken = default)
         {
@@ -199,10 +219,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}
+        /// Operation Id: LoadBalancerProbes_Get
+        /// </summary>
         /// <param name="probeName"> The name of the probe. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="probeName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="probeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="probeName"/> is null. </exception>
         public virtual Response<bool> Exists(string probeName, CancellationToken cancellationToken = default)
         {
@@ -222,10 +246,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}
+        /// Operation Id: LoadBalancerProbes_Get
+        /// </summary>
         /// <param name="probeName"> The name of the probe. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="probeName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="probeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="probeName"/> is null. </exception>
         public async virtual Task<Response<Probe>> GetIfExistsAsync(string probeName, CancellationToken cancellationToken = default)
         {
@@ -247,10 +275,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}
+        /// Operation Id: LoadBalancerProbes_Get
+        /// </summary>
         /// <param name="probeName"> The name of the probe. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="probeName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="probeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="probeName"/> is null. </exception>
         public virtual Response<Probe> GetIfExists(string probeName, CancellationToken cancellationToken = default)
         {

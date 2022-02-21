@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> A class representing the SqlContainer data model. </summary>
-    public partial class SqlContainerData : TrackedResource
+    public partial class SqlContainerData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SqlContainerData. </summary>
         /// <param name="location"> The location. </param>

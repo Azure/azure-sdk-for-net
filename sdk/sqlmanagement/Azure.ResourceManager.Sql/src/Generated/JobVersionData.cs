@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the JobVersion data model. </summary>
-    public partial class JobVersionData : Resource
+    public partial class JobVersionData : ResourceData
     {
         /// <summary> Initializes a new instance of JobVersionData. </summary>
         public JobVersionData()

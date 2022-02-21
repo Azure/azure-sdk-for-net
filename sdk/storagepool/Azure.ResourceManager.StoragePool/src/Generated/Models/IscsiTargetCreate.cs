@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.StoragePool.Models
 {
     /// <summary> Payload for iSCSI Target create or update requests. </summary>
-    public partial class IscsiTargetCreate : Resource
+    public partial class IscsiTargetCreate : ResourceData
     {
         /// <summary> Initializes a new instance of IscsiTargetCreate. </summary>
         /// <param name="aclMode"> Mode for Target connectivity. </param>

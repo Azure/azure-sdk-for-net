@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the VirtualMachineScaleSetVm data model. </summary>
-    public partial class VirtualMachineScaleSetVmData : TrackedResource
+    public partial class VirtualMachineScaleSetVmData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVmData. </summary>
         /// <param name="location"> The location. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="hardwareProfile"> Specifies the hardware settings for the virtual machine. </param>
         /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
         /// <param name="additionalCapabilities"> Specifies additional capabilities enabled or disabled on the virtual machine in the scale set. For instance: whether the virtual machine has the capability to support attaching managed data disks with UltraSSD_LRS storage account type. </param>
-        /// <param name="oSProfile"> Specifies the operating system settings for the virtual machine. </param>
+        /// <param name="osProfile"> Specifies the operating system settings for the virtual machine. </param>
         /// <param name="securityProfile"> Specifies the Security related profile settings for the virtual machine. </param>
         /// <param name="networkProfile"> Specifies the network interfaces of the virtual machine. </param>
         /// <param name="networkProfileConfiguration"> Specifies the network profile configuration of the virtual machine. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="modelDefinitionApplied"> Specifies whether the model applied to the virtual machine is the model of the virtual machine scale set or the customized model for the virtual machine. </param>
         /// <param name="protectionPolicy"> Specifies the protection policy of the virtual machine. </param>
         /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </param>
-        internal VirtualMachineScaleSetVmData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceId, Models.Sku sku, Models.Plan plan, IReadOnlyList<VirtualMachineExtensionData> resources, IReadOnlyList<string> zones, bool? latestModelApplied, string vmId, VirtualMachineScaleSetVmInstanceView instanceView, HardwareProfile hardwareProfile, StorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, OSProfile oSProfile, SecurityProfile securityProfile, NetworkProfile networkProfile, VirtualMachineScaleSetVmNetworkProfileConfiguration networkProfileConfiguration, DiagnosticsProfile diagnosticsProfile, WritableSubResource availabilitySet, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy, string userData) : base(id, name, type, systemData, tags, location)
+        internal VirtualMachineScaleSetVmData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceId, Models.Sku sku, Models.Plan plan, IReadOnlyList<VirtualMachineExtensionData> resources, IReadOnlyList<string> zones, bool? latestModelApplied, string vmId, VirtualMachineScaleSetVmInstanceView instanceView, HardwareProfile hardwareProfile, StorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, SecurityProfile securityProfile, NetworkProfile networkProfile, VirtualMachineScaleSetVmNetworkProfileConfiguration networkProfileConfiguration, DiagnosticsProfile diagnosticsProfile, WritableSubResource availabilitySet, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy, string userData) : base(id, name, type, systemData, tags, location)
         {
             InstanceId = instanceId;
             Sku = sku;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
             AdditionalCapabilities = additionalCapabilities;
-            OSProfile = oSProfile;
+            OSProfile = osProfile;
             SecurityProfile = securityProfile;
             NetworkProfile = networkProfile;
             NetworkProfileConfiguration = networkProfileConfiguration;

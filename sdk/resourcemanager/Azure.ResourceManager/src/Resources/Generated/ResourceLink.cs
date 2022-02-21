@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -53,7 +51,7 @@ namespace Azure.ResourceManager.Resources
         internal ResourceLink(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _resourceLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string resourceLinkApiVersion);
+            TryGetApiVersion(ResourceType, out string resourceLinkApiVersion);
             _resourceLinkRestClient = new ResourceLinksRestOperations(_resourceLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceLinkApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -84,10 +82,11 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /{linkId}
-        /// ContextualPath: /{linkId}
-        /// OperationId: ResourceLinks_Get
-        /// <summary> Gets a resource link with the specified ID. </summary>
+        /// <summary>
+        /// Gets a resource link with the specified ID.
+        /// Request Path: /{linkId}
+        /// Operation Id: ResourceLinks_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ResourceLink>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -107,10 +106,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{linkId}
-        /// ContextualPath: /{linkId}
-        /// OperationId: ResourceLinks_Get
-        /// <summary> Gets a resource link with the specified ID. </summary>
+        /// <summary>
+        /// Gets a resource link with the specified ID.
+        /// Request Path: /{linkId}
+        /// Operation Id: ResourceLinks_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ResourceLink> Get(CancellationToken cancellationToken = default)
         {
@@ -130,20 +130,21 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{linkId}
-        /// ContextualPath: /{linkId}
-        /// OperationId: ResourceLinks_Delete
-        /// <summary> Deletes a resource link with the specified ID. </summary>
+        /// <summary>
+        /// Deletes a resource link with the specified ID.
+        /// Request Path: /{linkId}
+        /// Operation Id: ResourceLinks_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ResourceLinkDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _resourceLinkClientDiagnostics.CreateScope("ResourceLink.Delete");
             scope.Start();
             try
             {
                 var response = await _resourceLinkRestClient.DeleteAsync(Id, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceLinkDeleteOperation(response);
+                var operation = new ResourcesArmOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -155,59 +156,24 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{linkId}
-        /// ContextualPath: /{linkId}
-        /// OperationId: ResourceLinks_Delete
-        /// <summary> Deletes a resource link with the specified ID. </summary>
+        /// <summary>
+        /// Deletes a resource link with the specified ID.
+        /// Request Path: /{linkId}
+        /// Operation Id: ResourceLinks_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ResourceLinkDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _resourceLinkClientDiagnostics.CreateScope("ResourceLink.Delete");
             scope.Start();
             try
             {
                 var response = _resourceLinkRestClient.Delete(Id, cancellationToken);
-                var operation = new ResourceLinkDeleteOperation(response);
+                var operation = new ResourcesArmOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _resourceLinkClientDiagnostics.CreateScope("ResourceLink.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _resourceLinkClientDiagnostics.CreateScope("ResourceLink.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
             }
             catch (Exception e)
             {

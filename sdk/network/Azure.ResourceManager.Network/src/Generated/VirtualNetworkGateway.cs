@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         internal VirtualNetworkGateway(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualNetworkGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string virtualNetworkGatewayApiVersion);
+            TryGetApiVersion(ResourceType, out string virtualNetworkGatewayApiVersion);
             _virtualNetworkGatewayRestClient = new VirtualNetworkGatewaysRestOperations(_virtualNetworkGatewayClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualNetworkGatewayApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -91,7 +91,11 @@ namespace Azure.ResourceManager.Network
             return new VirtualNetworkGatewayNatRuleCollection(Client, Id);
         }
 
-        /// <summary> Gets the specified virtual network gateway by resource group. </summary>
+        /// <summary>
+        /// Gets the specified virtual network gateway by resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}
+        /// Operation Id: VirtualNetworkGateways_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VirtualNetworkGateway>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -111,7 +115,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified virtual network gateway by resource group. </summary>
+        /// <summary>
+        /// Gets the specified virtual network gateway by resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}
+        /// Operation Id: VirtualNetworkGateways_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VirtualNetworkGateway> Get(CancellationToken cancellationToken = default)
         {
@@ -131,17 +139,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified virtual network gateway. </summary>
+        /// <summary>
+        /// Deletes the specified virtual network gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}
+        /// Operation Id: VirtualNetworkGateways_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualNetworkGatewayDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.Delete");
             scope.Start();
             try
             {
                 var response = await _virtualNetworkGatewayRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkGatewayDeleteOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -153,17 +165,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified virtual network gateway. </summary>
+        /// <summary>
+        /// Deletes the specified virtual network gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}
+        /// Operation Id: VirtualNetworkGateways_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualNetworkGatewayDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.Delete");
             scope.Start();
             try
             {
                 var response = _virtualNetworkGatewayRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new VirtualNetworkGatewayDeleteOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -175,65 +191,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates a virtual network gateway tags. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="parameters"> Parameters supplied to update virtual network gateway tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<VirtualNetworkGatewayUpdateOperation> UpdateAsync(bool waitForCompletion, TagsObject parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.Update");
-            scope.Start();
-            try
-            {
-                var response = await _virtualNetworkGatewayRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkGatewayUpdateOperation(Client, _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Updates a virtual network gateway tags. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="parameters"> Parameters supplied to update virtual network gateway tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual VirtualNetworkGatewayUpdateOperation Update(bool waitForCompletion, TagsObject parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.Update");
-            scope.Start();
-            try
-            {
-                var response = _virtualNetworkGatewayRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new VirtualNetworkGatewayUpdateOperation(Client, _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets all the connections in a virtual network gateway. </summary>
+        /// <summary>
+        /// Gets all the connections in a virtual network gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/connections
+        /// Operation Id: VirtualNetworkGateways_ListConnections
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualNetworkGatewayConnectionListEntity" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualNetworkGatewayConnectionListEntity> GetConnectionsAsync(CancellationToken cancellationToken = default)
@@ -271,7 +233,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the connections in a virtual network gateway. </summary>
+        /// <summary>
+        /// Gets all the connections in a virtual network gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/connections
+        /// Operation Id: VirtualNetworkGateways_ListConnections
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualNetworkGatewayConnectionListEntity" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualNetworkGatewayConnectionListEntity> GetConnections(CancellationToken cancellationToken = default)
@@ -309,18 +275,22 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Resets the primary of the virtual network gateway in the specified resource group. </summary>
+        /// <summary>
+        /// Resets the primary of the virtual network gateway in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/reset
+        /// Operation Id: VirtualNetworkGateways_Reset
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="gatewayVip"> Virtual network gateway vip address supplied to the begin reset of the active-active feature enabled gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualNetworkGatewayResetOperation> ResetAsync(bool waitForCompletion, string gatewayVip = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<VirtualNetworkGateway>> ResetAsync(bool waitForCompletion, string gatewayVip = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.Reset");
             scope.Start();
             try
             {
                 var response = await _virtualNetworkGatewayRestClient.ResetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gatewayVip, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkGatewayResetOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateResetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gatewayVip).Request, response);
+                var operation = new NetworkArmOperation<VirtualNetworkGateway>(new VirtualNetworkGatewayOperationSource(Client), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateResetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gatewayVip).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -332,18 +302,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Resets the primary of the virtual network gateway in the specified resource group. </summary>
+        /// <summary>
+        /// Resets the primary of the virtual network gateway in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/reset
+        /// Operation Id: VirtualNetworkGateways_Reset
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="gatewayVip"> Virtual network gateway vip address supplied to the begin reset of the active-active feature enabled gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualNetworkGatewayResetOperation Reset(bool waitForCompletion, string gatewayVip = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VirtualNetworkGateway> Reset(bool waitForCompletion, string gatewayVip = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.Reset");
             scope.Start();
             try
             {
                 var response = _virtualNetworkGatewayRestClient.Reset(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gatewayVip, cancellationToken);
-                var operation = new VirtualNetworkGatewayResetOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateResetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gatewayVip).Request, response);
+                var operation = new NetworkArmOperation<VirtualNetworkGateway>(new VirtualNetworkGatewayOperationSource(Client), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateResetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gatewayVip).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -355,17 +329,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Resets the VPN client shared key of the virtual network gateway in the specified resource group. </summary>
+        /// <summary>
+        /// Resets the VPN client shared key of the virtual network gateway in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/resetvpnclientsharedkey
+        /// Operation Id: VirtualNetworkGateways_ResetVpnClientSharedKey
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualNetworkGatewayResetVpnClientSharedKeyOperation> ResetVpnClientSharedKeyAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> ResetVpnClientSharedKeyAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.ResetVpnClientSharedKey");
             scope.Start();
             try
             {
                 var response = await _virtualNetworkGatewayRestClient.ResetVpnClientSharedKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkGatewayResetVpnClientSharedKeyOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateResetVpnClientSharedKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateResetVpnClientSharedKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -377,17 +355,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Resets the VPN client shared key of the virtual network gateway in the specified resource group. </summary>
+        /// <summary>
+        /// Resets the VPN client shared key of the virtual network gateway in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/resetvpnclientsharedkey
+        /// Operation Id: VirtualNetworkGateways_ResetVpnClientSharedKey
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualNetworkGatewayResetVpnClientSharedKeyOperation ResetVpnClientSharedKey(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ResetVpnClientSharedKey(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.ResetVpnClientSharedKey");
             scope.Start();
             try
             {
                 var response = _virtualNetworkGatewayRestClient.ResetVpnClientSharedKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new VirtualNetworkGatewayResetVpnClientSharedKeyOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateResetVpnClientSharedKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateResetVpnClientSharedKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -399,24 +381,25 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Generates VPN client package for P2S client of the virtual network gateway in the specified resource group. </summary>
+        /// <summary>
+        /// Generates VPN client package for P2S client of the virtual network gateway in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/generatevpnclientpackage
+        /// Operation Id: VirtualNetworkGateways_Generatevpnclientpackage
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<VirtualNetworkGatewayGeneratevpnclientpackageOperation> GeneratevpnclientpackageAsync(bool waitForCompletion, VpnClientParameters parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<string>> GeneratevpnclientpackageAsync(bool waitForCompletion, VpnClientParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.Generatevpnclientpackage");
             scope.Start();
             try
             {
                 var response = await _virtualNetworkGatewayRestClient.GeneratevpnclientpackageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkGatewayGeneratevpnclientpackageOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGeneratevpnclientpackageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGeneratevpnclientpackageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -428,24 +411,25 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Generates VPN client package for P2S client of the virtual network gateway in the specified resource group. </summary>
+        /// <summary>
+        /// Generates VPN client package for P2S client of the virtual network gateway in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/generatevpnclientpackage
+        /// Operation Id: VirtualNetworkGateways_Generatevpnclientpackage
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual VirtualNetworkGatewayGeneratevpnclientpackageOperation Generatevpnclientpackage(bool waitForCompletion, VpnClientParameters parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<string> Generatevpnclientpackage(bool waitForCompletion, VpnClientParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.Generatevpnclientpackage");
             scope.Start();
             try
             {
                 var response = _virtualNetworkGatewayRestClient.Generatevpnclientpackage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new VirtualNetworkGatewayGeneratevpnclientpackageOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGeneratevpnclientpackageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGeneratevpnclientpackageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -457,24 +441,25 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Generates VPN profile for P2S client of the virtual network gateway in the specified resource group. Used for IKEV2 and radius based authentication. </summary>
+        /// <summary>
+        /// Generates VPN profile for P2S client of the virtual network gateway in the specified resource group. Used for IKEV2 and radius based authentication.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/generatevpnprofile
+        /// Operation Id: VirtualNetworkGateways_GenerateVpnProfile
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<VirtualNetworkGatewayGenerateVpnProfileOperation> GenerateVpnProfileAsync(bool waitForCompletion, VpnClientParameters parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<string>> GenerateVpnProfileAsync(bool waitForCompletion, VpnClientParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.GenerateVpnProfile");
             scope.Start();
             try
             {
                 var response = await _virtualNetworkGatewayRestClient.GenerateVpnProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkGatewayGenerateVpnProfileOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGenerateVpnProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGenerateVpnProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -486,24 +471,25 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Generates VPN profile for P2S client of the virtual network gateway in the specified resource group. Used for IKEV2 and radius based authentication. </summary>
+        /// <summary>
+        /// Generates VPN profile for P2S client of the virtual network gateway in the specified resource group. Used for IKEV2 and radius based authentication.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/generatevpnprofile
+        /// Operation Id: VirtualNetworkGateways_GenerateVpnProfile
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual VirtualNetworkGatewayGenerateVpnProfileOperation GenerateVpnProfile(bool waitForCompletion, VpnClientParameters parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<string> GenerateVpnProfile(bool waitForCompletion, VpnClientParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.GenerateVpnProfile");
             scope.Start();
             try
             {
                 var response = _virtualNetworkGatewayRestClient.GenerateVpnProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new VirtualNetworkGatewayGenerateVpnProfileOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGenerateVpnProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGenerateVpnProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -515,17 +501,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified resource group. The profile needs to be generated first using generateVpnProfile. </summary>
+        /// <summary>
+        /// Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified resource group. The profile needs to be generated first using generateVpnProfile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getvpnprofilepackageurl
+        /// Operation Id: VirtualNetworkGateways_GetVpnProfilePackageUrl
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualNetworkGatewayGetVpnProfilePackageUrlOperation> GetVpnProfilePackageUrlAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<string>> GetVpnProfilePackageUrlAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.GetVpnProfilePackageUrl");
             scope.Start();
             try
             {
                 var response = await _virtualNetworkGatewayRestClient.GetVpnProfilePackageUrlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkGatewayGetVpnProfilePackageUrlOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGetVpnProfilePackageUrlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGetVpnProfilePackageUrlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -537,17 +527,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified resource group. The profile needs to be generated first using generateVpnProfile. </summary>
+        /// <summary>
+        /// Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified resource group. The profile needs to be generated first using generateVpnProfile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getvpnprofilepackageurl
+        /// Operation Id: VirtualNetworkGateways_GetVpnProfilePackageUrl
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualNetworkGatewayGetVpnProfilePackageUrlOperation GetVpnProfilePackageUrl(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<string> GetVpnProfilePackageUrl(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.GetVpnProfilePackageUrl");
             scope.Start();
             try
             {
                 var response = _virtualNetworkGatewayRestClient.GetVpnProfilePackageUrl(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new VirtualNetworkGatewayGetVpnProfilePackageUrlOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGetVpnProfilePackageUrlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGetVpnProfilePackageUrlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -559,18 +553,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> The GetBgpPeerStatus operation retrieves the status of all BGP peers. </summary>
+        /// <summary>
+        /// The GetBgpPeerStatus operation retrieves the status of all BGP peers.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getBgpPeerStatus
+        /// Operation Id: VirtualNetworkGateways_GetBgpPeerStatus
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="peer"> The IP address of the peer to retrieve the status of. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualNetworkGatewayGetBgpPeerStatusOperation> GetBgpPeerStatusAsync(bool waitForCompletion, string peer = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<BgpPeerStatusListResult>> GetBgpPeerStatusAsync(bool waitForCompletion, string peer = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.GetBgpPeerStatus");
             scope.Start();
             try
             {
                 var response = await _virtualNetworkGatewayRestClient.GetBgpPeerStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peer, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkGatewayGetBgpPeerStatusOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGetBgpPeerStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peer).Request, response);
+                var operation = new NetworkArmOperation<BgpPeerStatusListResult>(new BgpPeerStatusListResultOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGetBgpPeerStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peer).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -582,18 +580,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> The GetBgpPeerStatus operation retrieves the status of all BGP peers. </summary>
+        /// <summary>
+        /// The GetBgpPeerStatus operation retrieves the status of all BGP peers.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getBgpPeerStatus
+        /// Operation Id: VirtualNetworkGateways_GetBgpPeerStatus
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="peer"> The IP address of the peer to retrieve the status of. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualNetworkGatewayGetBgpPeerStatusOperation GetBgpPeerStatus(bool waitForCompletion, string peer = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BgpPeerStatusListResult> GetBgpPeerStatus(bool waitForCompletion, string peer = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.GetBgpPeerStatus");
             scope.Start();
             try
             {
                 var response = _virtualNetworkGatewayRestClient.GetBgpPeerStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peer, cancellationToken);
-                var operation = new VirtualNetworkGatewayGetBgpPeerStatusOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGetBgpPeerStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peer).Request, response);
+                var operation = new NetworkArmOperation<BgpPeerStatusListResult>(new BgpPeerStatusListResultOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGetBgpPeerStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peer).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -605,7 +607,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets a xml format representation for supported vpn devices. </summary>
+        /// <summary>
+        /// Gets a xml format representation for supported vpn devices.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/supportedvpndevices
+        /// Operation Id: VirtualNetworkGateways_SupportedVpnDevices
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<string>> SupportedVpnDevicesAsync(CancellationToken cancellationToken = default)
         {
@@ -623,7 +629,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets a xml format representation for supported vpn devices. </summary>
+        /// <summary>
+        /// Gets a xml format representation for supported vpn devices.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/supportedvpndevices
+        /// Operation Id: VirtualNetworkGateways_SupportedVpnDevices
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<string> SupportedVpnDevices(CancellationToken cancellationToken = default)
         {
@@ -641,17 +651,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> This operation retrieves a list of routes the virtual network gateway has learned, including routes learned from BGP peers. </summary>
+        /// <summary>
+        /// This operation retrieves a list of routes the virtual network gateway has learned, including routes learned from BGP peers.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getLearnedRoutes
+        /// Operation Id: VirtualNetworkGateways_GetLearnedRoutes
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualNetworkGatewayGetLearnedRoutesOperation> GetLearnedRoutesAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<GatewayRouteListResult>> GetLearnedRoutesAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.GetLearnedRoutes");
             scope.Start();
             try
             {
                 var response = await _virtualNetworkGatewayRestClient.GetLearnedRoutesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkGatewayGetLearnedRoutesOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGetLearnedRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation<GatewayRouteListResult>(new GatewayRouteListResultOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGetLearnedRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -663,17 +677,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> This operation retrieves a list of routes the virtual network gateway has learned, including routes learned from BGP peers. </summary>
+        /// <summary>
+        /// This operation retrieves a list of routes the virtual network gateway has learned, including routes learned from BGP peers.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getLearnedRoutes
+        /// Operation Id: VirtualNetworkGateways_GetLearnedRoutes
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualNetworkGatewayGetLearnedRoutesOperation GetLearnedRoutes(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GatewayRouteListResult> GetLearnedRoutes(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.GetLearnedRoutes");
             scope.Start();
             try
             {
                 var response = _virtualNetworkGatewayRestClient.GetLearnedRoutes(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new VirtualNetworkGatewayGetLearnedRoutesOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGetLearnedRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation<GatewayRouteListResult>(new GatewayRouteListResultOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGetLearnedRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -685,24 +703,25 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer. </summary>
+        /// <summary>
+        /// This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getAdvertisedRoutes
+        /// Operation Id: VirtualNetworkGateways_GetAdvertisedRoutes
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="peer"> The IP address of the peer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="peer"/> is null. </exception>
-        public async virtual Task<VirtualNetworkGatewayGetAdvertisedRoutesOperation> GetAdvertisedRoutesAsync(bool waitForCompletion, string peer, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<GatewayRouteListResult>> GetAdvertisedRoutesAsync(bool waitForCompletion, string peer, CancellationToken cancellationToken = default)
         {
-            if (peer == null)
-            {
-                throw new ArgumentNullException(nameof(peer));
-            }
+            Argument.AssertNotNull(peer, nameof(peer));
 
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.GetAdvertisedRoutes");
             scope.Start();
             try
             {
                 var response = await _virtualNetworkGatewayRestClient.GetAdvertisedRoutesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peer, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkGatewayGetAdvertisedRoutesOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGetAdvertisedRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peer).Request, response);
+                var operation = new NetworkArmOperation<GatewayRouteListResult>(new GatewayRouteListResultOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGetAdvertisedRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peer).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -714,24 +733,25 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer. </summary>
+        /// <summary>
+        /// This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getAdvertisedRoutes
+        /// Operation Id: VirtualNetworkGateways_GetAdvertisedRoutes
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="peer"> The IP address of the peer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="peer"/> is null. </exception>
-        public virtual VirtualNetworkGatewayGetAdvertisedRoutesOperation GetAdvertisedRoutes(bool waitForCompletion, string peer, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GatewayRouteListResult> GetAdvertisedRoutes(bool waitForCompletion, string peer, CancellationToken cancellationToken = default)
         {
-            if (peer == null)
-            {
-                throw new ArgumentNullException(nameof(peer));
-            }
+            Argument.AssertNotNull(peer, nameof(peer));
 
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.GetAdvertisedRoutes");
             scope.Start();
             try
             {
                 var response = _virtualNetworkGatewayRestClient.GetAdvertisedRoutes(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peer, cancellationToken);
-                var operation = new VirtualNetworkGatewayGetAdvertisedRoutesOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGetAdvertisedRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peer).Request, response);
+                var operation = new NetworkArmOperation<GatewayRouteListResult>(new GatewayRouteListResultOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGetAdvertisedRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peer).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -743,24 +763,25 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider. </summary>
+        /// <summary>
+        /// The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/setvpnclientipsecparameters
+        /// Operation Id: VirtualNetworkGateways_SetVpnclientIpsecParameters
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="vpnclientIpsecParams"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnclientIpsecParams"/> is null. </exception>
-        public async virtual Task<VirtualNetworkGatewaySetVpnclientIpsecParametersOperation> SetVpnclientIpsecParametersAsync(bool waitForCompletion, VpnClientIPsecParameters vpnclientIpsecParams, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<VpnClientIPsecParameters>> SetVpnclientIpsecParametersAsync(bool waitForCompletion, VpnClientIPsecParameters vpnclientIpsecParams, CancellationToken cancellationToken = default)
         {
-            if (vpnclientIpsecParams == null)
-            {
-                throw new ArgumentNullException(nameof(vpnclientIpsecParams));
-            }
+            Argument.AssertNotNull(vpnclientIpsecParams, nameof(vpnclientIpsecParams));
 
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.SetVpnclientIpsecParameters");
             scope.Start();
             try
             {
                 var response = await _virtualNetworkGatewayRestClient.SetVpnclientIpsecParametersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnclientIpsecParams, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkGatewaySetVpnclientIpsecParametersOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateSetVpnclientIpsecParametersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnclientIpsecParams).Request, response);
+                var operation = new NetworkArmOperation<VpnClientIPsecParameters>(new VpnClientIPsecParametersOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateSetVpnclientIpsecParametersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnclientIpsecParams).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -772,24 +793,25 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider. </summary>
+        /// <summary>
+        /// The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/setvpnclientipsecparameters
+        /// Operation Id: VirtualNetworkGateways_SetVpnclientIpsecParameters
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="vpnclientIpsecParams"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnclientIpsecParams"/> is null. </exception>
-        public virtual VirtualNetworkGatewaySetVpnclientIpsecParametersOperation SetVpnclientIpsecParameters(bool waitForCompletion, VpnClientIPsecParameters vpnclientIpsecParams, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VpnClientIPsecParameters> SetVpnclientIpsecParameters(bool waitForCompletion, VpnClientIPsecParameters vpnclientIpsecParams, CancellationToken cancellationToken = default)
         {
-            if (vpnclientIpsecParams == null)
-            {
-                throw new ArgumentNullException(nameof(vpnclientIpsecParams));
-            }
+            Argument.AssertNotNull(vpnclientIpsecParams, nameof(vpnclientIpsecParams));
 
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.SetVpnclientIpsecParameters");
             scope.Start();
             try
             {
                 var response = _virtualNetworkGatewayRestClient.SetVpnclientIpsecParameters(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnclientIpsecParams, cancellationToken);
-                var operation = new VirtualNetworkGatewaySetVpnclientIpsecParametersOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateSetVpnclientIpsecParametersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnclientIpsecParams).Request, response);
+                var operation = new NetworkArmOperation<VpnClientIPsecParameters>(new VpnClientIPsecParametersOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateSetVpnclientIpsecParametersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnclientIpsecParams).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -801,17 +823,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> The Get VpnclientIpsecParameters operation retrieves information about the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider. </summary>
+        /// <summary>
+        /// The Get VpnclientIpsecParameters operation retrieves information about the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getvpnclientipsecparameters
+        /// Operation Id: VirtualNetworkGateways_GetVpnclientIpsecParameters
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualNetworkGatewayGetVpnclientIpsecParametersOperation> GetVpnclientIpsecParametersAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<VpnClientIPsecParameters>> GetVpnclientIpsecParametersAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.GetVpnclientIpsecParameters");
             scope.Start();
             try
             {
                 var response = await _virtualNetworkGatewayRestClient.GetVpnclientIpsecParametersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkGatewayGetVpnclientIpsecParametersOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGetVpnclientIpsecParametersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation<VpnClientIPsecParameters>(new VpnClientIPsecParametersOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGetVpnclientIpsecParametersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -823,17 +849,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> The Get VpnclientIpsecParameters operation retrieves information about the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider. </summary>
+        /// <summary>
+        /// The Get VpnclientIpsecParameters operation retrieves information about the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getvpnclientipsecparameters
+        /// Operation Id: VirtualNetworkGateways_GetVpnclientIpsecParameters
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualNetworkGatewayGetVpnclientIpsecParametersOperation GetVpnclientIpsecParameters(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VpnClientIPsecParameters> GetVpnclientIpsecParameters(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.GetVpnclientIpsecParameters");
             scope.Start();
             try
             {
                 var response = _virtualNetworkGatewayRestClient.GetVpnclientIpsecParameters(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new VirtualNetworkGatewayGetVpnclientIpsecParametersOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGetVpnclientIpsecParametersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation<VpnClientIPsecParameters>(new VpnClientIPsecParametersOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGetVpnclientIpsecParametersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -845,18 +875,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Starts packet capture on virtual network gateway in the specified resource group. </summary>
+        /// <summary>
+        /// Starts packet capture on virtual network gateway in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/startPacketCapture
+        /// Operation Id: VirtualNetworkGateways_StartPacketCapture
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to start packet capture on gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualNetworkGatewayStartPacketCaptureOperation> StartPacketCaptureAsync(bool waitForCompletion, VpnPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<string>> StartPacketCaptureAsync(bool waitForCompletion, VpnPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.StartPacketCapture");
             scope.Start();
             try
             {
                 var response = await _virtualNetworkGatewayRestClient.StartPacketCaptureAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkGatewayStartPacketCaptureOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateStartPacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateStartPacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -868,18 +902,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Starts packet capture on virtual network gateway in the specified resource group. </summary>
+        /// <summary>
+        /// Starts packet capture on virtual network gateway in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/startPacketCapture
+        /// Operation Id: VirtualNetworkGateways_StartPacketCapture
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to start packet capture on gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualNetworkGatewayStartPacketCaptureOperation StartPacketCapture(bool waitForCompletion, VpnPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<string> StartPacketCapture(bool waitForCompletion, VpnPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.StartPacketCapture");
             scope.Start();
             try
             {
                 var response = _virtualNetworkGatewayRestClient.StartPacketCapture(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new VirtualNetworkGatewayStartPacketCaptureOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateStartPacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateStartPacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -891,24 +929,25 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Stops packet capture on virtual network gateway in the specified resource group. </summary>
+        /// <summary>
+        /// Stops packet capture on virtual network gateway in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/stopPacketCapture
+        /// Operation Id: VirtualNetworkGateways_StopPacketCapture
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to stop packet capture on gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<VirtualNetworkGatewayStopPacketCaptureOperation> StopPacketCaptureAsync(bool waitForCompletion, VpnPacketCaptureStopParameters parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<string>> StopPacketCaptureAsync(bool waitForCompletion, VpnPacketCaptureStopParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.StopPacketCapture");
             scope.Start();
             try
             {
                 var response = await _virtualNetworkGatewayRestClient.StopPacketCaptureAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkGatewayStopPacketCaptureOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateStopPacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateStopPacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -920,24 +959,25 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Stops packet capture on virtual network gateway in the specified resource group. </summary>
+        /// <summary>
+        /// Stops packet capture on virtual network gateway in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/stopPacketCapture
+        /// Operation Id: VirtualNetworkGateways_StopPacketCapture
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to stop packet capture on gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual VirtualNetworkGatewayStopPacketCaptureOperation StopPacketCapture(bool waitForCompletion, VpnPacketCaptureStopParameters parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<string> StopPacketCapture(bool waitForCompletion, VpnPacketCaptureStopParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.StopPacketCapture");
             scope.Start();
             try
             {
                 var response = _virtualNetworkGatewayRestClient.StopPacketCapture(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new VirtualNetworkGatewayStopPacketCaptureOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateStopPacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateStopPacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -949,17 +989,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Get VPN client connection health detail per P2S client connection of the virtual network gateway in the specified resource group. </summary>
+        /// <summary>
+        /// Get VPN client connection health detail per P2S client connection of the virtual network gateway in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getVpnClientConnectionHealth
+        /// Operation Id: VirtualNetworkGateways_GetVpnclientConnectionHealth
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualNetworkGatewayGetVpnclientConnectionHealthOperation> GetVpnclientConnectionHealthAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<VpnClientConnectionHealthDetailListResult>> GetVpnclientConnectionHealthAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.GetVpnclientConnectionHealth");
             scope.Start();
             try
             {
                 var response = await _virtualNetworkGatewayRestClient.GetVpnclientConnectionHealthAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkGatewayGetVpnclientConnectionHealthOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGetVpnclientConnectionHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation<VpnClientConnectionHealthDetailListResult>(new VpnClientConnectionHealthDetailListResultOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGetVpnclientConnectionHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -971,17 +1015,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Get VPN client connection health detail per P2S client connection of the virtual network gateway in the specified resource group. </summary>
+        /// <summary>
+        /// Get VPN client connection health detail per P2S client connection of the virtual network gateway in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getVpnClientConnectionHealth
+        /// Operation Id: VirtualNetworkGateways_GetVpnclientConnectionHealth
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualNetworkGatewayGetVpnclientConnectionHealthOperation GetVpnclientConnectionHealth(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VpnClientConnectionHealthDetailListResult> GetVpnclientConnectionHealth(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.GetVpnclientConnectionHealth");
             scope.Start();
             try
             {
                 var response = _virtualNetworkGatewayRestClient.GetVpnclientConnectionHealth(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new VirtualNetworkGatewayGetVpnclientConnectionHealthOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGetVpnclientConnectionHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation<VpnClientConnectionHealthDetailListResult>(new VpnClientConnectionHealthDetailListResultOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateGetVpnclientConnectionHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -993,24 +1041,25 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Disconnect vpn connections of virtual network gateway in the specified resource group. </summary>
+        /// <summary>
+        /// Disconnect vpn connections of virtual network gateway in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/disconnectVirtualNetworkGatewayVpnConnections
+        /// Operation Id: VirtualNetworkGateways_DisconnectVirtualNetworkGatewayVpnConnections
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="request"> The parameters are supplied to disconnect vpn connections. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public async virtual Task<VirtualNetworkGatewayDisconnectVirtualNetworkGatewayVpnConnectionsOperation> DisconnectVirtualNetworkGatewayVpnConnectionsAsync(bool waitForCompletion, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DisconnectVirtualNetworkGatewayVpnConnectionsAsync(bool waitForCompletion, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
+            Argument.AssertNotNull(request, nameof(request));
 
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.DisconnectVirtualNetworkGatewayVpnConnections");
             scope.Start();
             try
             {
                 var response = await _virtualNetworkGatewayRestClient.DisconnectVirtualNetworkGatewayVpnConnectionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkGatewayDisconnectVirtualNetworkGatewayVpnConnectionsOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateDisconnectVirtualNetworkGatewayVpnConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response);
+                var operation = new NetworkArmOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateDisconnectVirtualNetworkGatewayVpnConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1022,24 +1071,25 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Disconnect vpn connections of virtual network gateway in the specified resource group. </summary>
+        /// <summary>
+        /// Disconnect vpn connections of virtual network gateway in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/disconnectVirtualNetworkGatewayVpnConnections
+        /// Operation Id: VirtualNetworkGateways_DisconnectVirtualNetworkGatewayVpnConnections
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="request"> The parameters are supplied to disconnect vpn connections. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual VirtualNetworkGatewayDisconnectVirtualNetworkGatewayVpnConnectionsOperation DisconnectVirtualNetworkGatewayVpnConnections(bool waitForCompletion, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
+        public virtual ArmOperation DisconnectVirtualNetworkGatewayVpnConnections(bool waitForCompletion, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
+            Argument.AssertNotNull(request, nameof(request));
 
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.DisconnectVirtualNetworkGatewayVpnConnections");
             scope.Start();
             try
             {
                 var response = _virtualNetworkGatewayRestClient.DisconnectVirtualNetworkGatewayVpnConnections(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken);
-                var operation = new VirtualNetworkGatewayDisconnectVirtualNetworkGatewayVpnConnectionsOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateDisconnectVirtualNetworkGatewayVpnConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response);
+                var operation = new NetworkArmOperation(_virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateDisconnectVirtualNetworkGatewayVpnConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1051,16 +1101,29 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}
+        /// Operation Id: VirtualNetworkGateways_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public async virtual Task<Response<VirtualNetworkGateway>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.GetAvailableLocations");
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
+            using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.AddTag");
             scope.Start();
             try
             {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _virtualNetworkGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VirtualNetworkGateway(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1069,16 +1132,147 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}
+        /// Operation Id: VirtualNetworkGateways_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual Response<VirtualNetworkGateway> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.GetAvailableLocations");
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
+            using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.AddTag");
             scope.Start();
             try
             {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _virtualNetworkGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new VirtualNetworkGateway(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}
+        /// Operation Id: VirtualNetworkGateways_Get
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public async virtual Task<Response<VirtualNetworkGateway>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.SetTags");
+            scope.Start();
+            try
+            {
+                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _virtualNetworkGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VirtualNetworkGateway(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}
+        /// Operation Id: VirtualNetworkGateways_Get
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual Response<VirtualNetworkGateway> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.SetTags");
+            scope.Start();
+            try
+            {
+                TagResource.Delete(true, cancellationToken: cancellationToken);
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _virtualNetworkGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new VirtualNetworkGateway(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}
+        /// Operation Id: VirtualNetworkGateways_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public async virtual Task<Response<VirtualNetworkGateway>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _virtualNetworkGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VirtualNetworkGateway(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}
+        /// Operation Id: VirtualNetworkGateways_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual Response<VirtualNetworkGateway> RemoveTag(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _virtualNetworkGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new VirtualNetworkGateway(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.Network
         internal VirtualRouterPeeringCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualRouterPeeringClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualRouterPeering.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(VirtualRouterPeering.ResourceType, out string virtualRouterPeeringApiVersion);
+            TryGetApiVersion(VirtualRouterPeering.ResourceType, out string virtualRouterPeeringApiVersion);
             _virtualRouterPeeringRestClient = new VirtualRouterPeeringsRestOperations(_virtualRouterPeeringClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualRouterPeeringApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -51,27 +50,28 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VirtualRouter.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates or updates the specified Virtual Router Peering. </summary>
+        /// <summary>
+        /// Creates or updates the specified Virtual Router Peering.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}/peerings/{peeringName}
+        /// Operation Id: VirtualRouterPeerings_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Virtual Router Peering operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<VirtualRouterPeeringCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string peeringName, VirtualRouterPeeringData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<VirtualRouterPeering>> CreateOrUpdateAsync(bool waitForCompletion, string peeringName, VirtualRouterPeeringData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _virtualRouterPeeringClientDiagnostics.CreateScope("VirtualRouterPeeringCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _virtualRouterPeeringRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualRouterPeeringCreateOrUpdateOperation(Client, _virtualRouterPeeringClientDiagnostics, Pipeline, _virtualRouterPeeringRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringName, parameters).Request, response);
+                var operation = new NetworkArmOperation<VirtualRouterPeering>(new VirtualRouterPeeringOperationSource(Client), _virtualRouterPeeringClientDiagnostics, Pipeline, _virtualRouterPeeringRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -83,27 +83,28 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Creates or updates the specified Virtual Router Peering. </summary>
+        /// <summary>
+        /// Creates or updates the specified Virtual Router Peering.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}/peerings/{peeringName}
+        /// Operation Id: VirtualRouterPeerings_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Virtual Router Peering operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual VirtualRouterPeeringCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string peeringName, VirtualRouterPeeringData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VirtualRouterPeering> CreateOrUpdate(bool waitForCompletion, string peeringName, VirtualRouterPeeringData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _virtualRouterPeeringClientDiagnostics.CreateScope("VirtualRouterPeeringCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _virtualRouterPeeringRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringName, parameters, cancellationToken);
-                var operation = new VirtualRouterPeeringCreateOrUpdateOperation(Client, _virtualRouterPeeringClientDiagnostics, Pipeline, _virtualRouterPeeringRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringName, parameters).Request, response);
+                var operation = new NetworkArmOperation<VirtualRouterPeering>(new VirtualRouterPeeringOperationSource(Client), _virtualRouterPeeringClientDiagnostics, Pipeline, _virtualRouterPeeringRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -115,10 +116,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified Virtual Router Peering. </summary>
+        /// <summary>
+        /// Gets the specified Virtual Router Peering.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}/peerings/{peeringName}
+        /// Operation Id: VirtualRouterPeerings_Get
+        /// </summary>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public async virtual Task<Response<VirtualRouterPeering>> GetAsync(string peeringName, CancellationToken cancellationToken = default)
         {
@@ -140,10 +145,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified Virtual Router Peering. </summary>
+        /// <summary>
+        /// Gets the specified Virtual Router Peering.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}/peerings/{peeringName}
+        /// Operation Id: VirtualRouterPeerings_Get
+        /// </summary>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public virtual Response<VirtualRouterPeering> Get(string peeringName, CancellationToken cancellationToken = default)
         {
@@ -165,7 +174,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Lists all Virtual Router Peerings in a Virtual Router resource. </summary>
+        /// <summary>
+        /// Lists all Virtual Router Peerings in a Virtual Router resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}/peerings
+        /// Operation Id: VirtualRouterPeerings_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualRouterPeering" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualRouterPeering> GetAllAsync(CancellationToken cancellationToken = default)
@@ -203,7 +216,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all Virtual Router Peerings in a Virtual Router resource. </summary>
+        /// <summary>
+        /// Lists all Virtual Router Peerings in a Virtual Router resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}/peerings
+        /// Operation Id: VirtualRouterPeerings_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualRouterPeering" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualRouterPeering> GetAll(CancellationToken cancellationToken = default)
@@ -241,10 +258,14 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}/peerings/{peeringName}
+        /// Operation Id: VirtualRouterPeerings_Get
+        /// </summary>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string peeringName, CancellationToken cancellationToken = default)
         {
@@ -264,10 +285,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}/peerings/{peeringName}
+        /// Operation Id: VirtualRouterPeerings_Get
+        /// </summary>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public virtual Response<bool> Exists(string peeringName, CancellationToken cancellationToken = default)
         {
@@ -287,10 +312,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}/peerings/{peeringName}
+        /// Operation Id: VirtualRouterPeerings_Get
+        /// </summary>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public async virtual Task<Response<VirtualRouterPeering>> GetIfExistsAsync(string peeringName, CancellationToken cancellationToken = default)
         {
@@ -312,10 +341,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}/peerings/{peeringName}
+        /// Operation Id: VirtualRouterPeerings_Get
+        /// </summary>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public virtual Response<VirtualRouterPeering> GetIfExists(string peeringName, CancellationToken cancellationToken = default)
         {

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal CosmosDBLocation(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _cosmosDBLocationLocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string cosmosDBLocationLocationsApiVersion);
+            TryGetApiVersion(ResourceType, out string cosmosDBLocationLocationsApiVersion);
             _cosmosDBLocationLocationsRestClient = new LocationsRestOperations(_cosmosDBLocationLocationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cosmosDBLocationLocationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -90,7 +89,11 @@ namespace Azure.ResourceManager.CosmosDB
             return new RestorableDatabaseAccountCollection(Client, Id);
         }
 
-        /// <summary> Get the properties of an existing Cosmos DB location. </summary>
+        /// <summary>
+        /// Get the properties of an existing Cosmos DB location
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}
+        /// Operation Id: Locations_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<CosmosDBLocation>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -110,7 +113,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Get the properties of an existing Cosmos DB location. </summary>
+        /// <summary>
+        /// Get the properties of an existing Cosmos DB location
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}
+        /// Operation Id: Locations_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CosmosDBLocation> Get(CancellationToken cancellationToken = default)
         {
@@ -122,42 +129,6 @@ namespace Azure.ResourceManager.CosmosDB
                 if (response.Value == null)
                     throw _cosmosDBLocationLocationsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CosmosDBLocation(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _cosmosDBLocationLocationsClientDiagnostics.CreateScope("CosmosDBLocation.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _cosmosDBLocationLocationsClientDiagnostics.CreateScope("CosmosDBLocation.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
             }
             catch (Exception e)
             {

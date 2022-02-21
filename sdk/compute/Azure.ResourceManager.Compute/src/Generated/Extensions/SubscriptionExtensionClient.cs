@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            Client.TryGetApiVersion(resourceType, out string apiVersion);
+            TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
@@ -174,7 +174,11 @@ namespace Azure.ResourceManager.Compute
             return new OSFamilyCollection(Client, Id, location);
         }
 
-        /// <summary> Lists all availability sets in a subscription. </summary>
+        /// <summary>
+        /// Lists all availability sets in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/availabilitySets
+        /// Operation Id: AvailabilitySets_ListBySubscription
+        /// </summary>
         /// <param name="expand"> The expand expression to apply to the operation. Allowed values are &apos;instanceView&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AvailabilitySet" /> that may take multiple service requests to iterate over. </returns>
@@ -213,7 +217,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all availability sets in a subscription. </summary>
+        /// <summary>
+        /// Lists all availability sets in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/availabilitySets
+        /// Operation Id: AvailabilitySets_ListBySubscription
+        /// </summary>
         /// <param name="expand"> The expand expression to apply to the operation. Allowed values are &apos;instanceView&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AvailabilitySet" /> that may take multiple service requests to iterate over. </returns>
@@ -252,7 +260,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all proximity placement groups in a subscription. </summary>
+        /// <summary>
+        /// Lists all proximity placement groups in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/proximityPlacementGroups
+        /// Operation Id: ProximityPlacementGroups_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProximityPlacementGroup" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProximityPlacementGroup> GetProximityPlacementGroupsAsync(CancellationToken cancellationToken = default)
@@ -290,7 +302,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all proximity placement groups in a subscription. </summary>
+        /// <summary>
+        /// Lists all proximity placement groups in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/proximityPlacementGroups
+        /// Operation Id: ProximityPlacementGroups_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProximityPlacementGroup" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProximityPlacementGroup> GetProximityPlacementGroups(CancellationToken cancellationToken = default)
@@ -328,7 +344,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all of the dedicated host groups in the subscription. Use the nextLink property in the response to get the next page of dedicated host groups. </summary>
+        /// <summary>
+        /// Lists all of the dedicated host groups in the subscription. Use the nextLink property in the response to get the next page of dedicated host groups.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/hostGroups
+        /// Operation Id: DedicatedHostGroups_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DedicatedHostGroup" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DedicatedHostGroup> GetDedicatedHostGroupsAsync(CancellationToken cancellationToken = default)
@@ -366,7 +386,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all of the dedicated host groups in the subscription. Use the nextLink property in the response to get the next page of dedicated host groups. </summary>
+        /// <summary>
+        /// Lists all of the dedicated host groups in the subscription. Use the nextLink property in the response to get the next page of dedicated host groups.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/hostGroups
+        /// Operation Id: DedicatedHostGroups_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DedicatedHostGroup" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DedicatedHostGroup> GetDedicatedHostGroups(CancellationToken cancellationToken = default)
@@ -404,7 +428,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all of the SSH public keys in the subscription. Use the nextLink property in the response to get the next page of SSH public keys. </summary>
+        /// <summary>
+        /// Lists all of the SSH public keys in the subscription. Use the nextLink property in the response to get the next page of SSH public keys.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/sshPublicKeys
+        /// Operation Id: SshPublicKeys_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SshPublicKey" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SshPublicKey> GetSshPublicKeysAsync(CancellationToken cancellationToken = default)
@@ -442,7 +470,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all of the SSH public keys in the subscription. Use the nextLink property in the response to get the next page of SSH public keys. </summary>
+        /// <summary>
+        /// Lists all of the SSH public keys in the subscription. Use the nextLink property in the response to get the next page of SSH public keys.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/sshPublicKeys
+        /// Operation Id: SshPublicKeys_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SshPublicKey" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SshPublicKey> GetSshPublicKeys(CancellationToken cancellationToken = default)
@@ -480,7 +512,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets a virtual machine image. </summary>
+        /// <summary>
+        /// Gets a virtual machine image.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions/{version}
+        /// Operation Id: VirtualMachineImages_Get
+        /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
@@ -503,7 +539,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets a virtual machine image. </summary>
+        /// <summary>
+        /// Gets a virtual machine image.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions/{version}
+        /// Operation Id: VirtualMachineImages_Get
+        /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
@@ -526,7 +566,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets a list of all virtual machine image versions for the specified location, publisher, offer, and SKU. </summary>
+        /// <summary>
+        /// Gets a list of all virtual machine image versions for the specified location, publisher, offer, and SKU.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions
+        /// Operation Id: VirtualMachineImages_List
+        /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
@@ -556,7 +600,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets a list of all virtual machine image versions for the specified location, publisher, offer, and SKU. </summary>
+        /// <summary>
+        /// Gets a list of all virtual machine image versions for the specified location, publisher, offer, and SKU.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions
+        /// Operation Id: VirtualMachineImages_List
+        /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
@@ -586,7 +634,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets a list of virtual machine image offers for the specified location and publisher. </summary>
+        /// <summary>
+        /// Gets a list of virtual machine image offers for the specified location and publisher.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers
+        /// Operation Id: VirtualMachineImages_ListOffers
+        /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -611,7 +663,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets a list of virtual machine image offers for the specified location and publisher. </summary>
+        /// <summary>
+        /// Gets a list of virtual machine image offers for the specified location and publisher.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers
+        /// Operation Id: VirtualMachineImages_ListOffers
+        /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -636,7 +692,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets a list of virtual machine image publishers for the specified Azure location. </summary>
+        /// <summary>
+        /// Gets a list of virtual machine image publishers for the specified Azure location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers
+        /// Operation Id: VirtualMachineImages_ListPublishers
+        /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
@@ -660,7 +720,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets a list of virtual machine image publishers for the specified Azure location. </summary>
+        /// <summary>
+        /// Gets a list of virtual machine image publishers for the specified Azure location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers
+        /// Operation Id: VirtualMachineImages_ListPublishers
+        /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
@@ -684,7 +748,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets a list of virtual machine image SKUs for the specified location, publisher, and offer. </summary>
+        /// <summary>
+        /// Gets a list of virtual machine image SKUs for the specified location, publisher, and offer.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus
+        /// Operation Id: VirtualMachineImages_ListSkus
+        /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
@@ -710,7 +778,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets a list of virtual machine image SKUs for the specified location, publisher, and offer. </summary>
+        /// <summary>
+        /// Gets a list of virtual machine image SKUs for the specified location, publisher, and offer.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus
+        /// Operation Id: VirtualMachineImages_ListSkus
+        /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
@@ -736,7 +808,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets a virtual machine image in an edge zone. </summary>
+        /// <summary>
+        /// Gets a virtual machine image in an edge zone.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions/{version}
+        /// Operation Id: VirtualMachineImagesEdgeZone_Get
+        /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
@@ -760,7 +836,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets a virtual machine image in an edge zone. </summary>
+        /// <summary>
+        /// Gets a virtual machine image in an edge zone.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions/{version}
+        /// Operation Id: VirtualMachineImagesEdgeZone_Get
+        /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
@@ -784,7 +864,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets a list of all virtual machine image versions for the specified location, edge zone, publisher, offer, and SKU. </summary>
+        /// <summary>
+        /// Gets a list of all virtual machine image versions for the specified location, edge zone, publisher, offer, and SKU.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions
+        /// Operation Id: VirtualMachineImagesEdgeZone_List
+        /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
@@ -815,7 +899,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets a list of all virtual machine image versions for the specified location, edge zone, publisher, offer, and SKU. </summary>
+        /// <summary>
+        /// Gets a list of all virtual machine image versions for the specified location, edge zone, publisher, offer, and SKU.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions
+        /// Operation Id: VirtualMachineImagesEdgeZone_List
+        /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
@@ -846,7 +934,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets a list of virtual machine image offers for the specified location, edge zone and publisher. </summary>
+        /// <summary>
+        /// Gets a list of virtual machine image offers for the specified location, edge zone and publisher.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers
+        /// Operation Id: VirtualMachineImagesEdgeZone_ListOffers
+        /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
@@ -872,7 +964,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets a list of virtual machine image offers for the specified location, edge zone and publisher. </summary>
+        /// <summary>
+        /// Gets a list of virtual machine image offers for the specified location, edge zone and publisher.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers
+        /// Operation Id: VirtualMachineImagesEdgeZone_ListOffers
+        /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
@@ -898,7 +994,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets a list of virtual machine image publishers for the specified Azure location and edge zone. </summary>
+        /// <summary>
+        /// Gets a list of virtual machine image publishers for the specified Azure location and edge zone.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers
+        /// Operation Id: VirtualMachineImagesEdgeZone_ListPublishers
+        /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -923,7 +1023,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets a list of virtual machine image publishers for the specified Azure location and edge zone. </summary>
+        /// <summary>
+        /// Gets a list of virtual machine image publishers for the specified Azure location and edge zone.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers
+        /// Operation Id: VirtualMachineImagesEdgeZone_ListPublishers
+        /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -948,7 +1052,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets a list of virtual machine image SKUs for the specified location, edge zone, publisher, and offer. </summary>
+        /// <summary>
+        /// Gets a list of virtual machine image SKUs for the specified location, edge zone, publisher, and offer.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus
+        /// Operation Id: VirtualMachineImagesEdgeZone_ListSkus
+        /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
@@ -975,7 +1083,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets a list of virtual machine image SKUs for the specified location, edge zone, publisher, and offer. </summary>
+        /// <summary>
+        /// Gets a list of virtual machine image SKUs for the specified location, edge zone, publisher, and offer.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus
+        /// Operation Id: VirtualMachineImagesEdgeZone_ListSkus
+        /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
@@ -1002,7 +1114,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets, for the specified location, the current compute resource usage information as well as the limits for compute resources under the subscription. </summary>
+        /// <summary>
+        /// Gets, for the specified location, the current compute resource usage information as well as the limits for compute resources under the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/usages
+        /// Operation Id: Usage_List
+        /// </summary>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
@@ -1041,7 +1157,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets, for the specified location, the current compute resource usage information as well as the limits for compute resources under the subscription. </summary>
+        /// <summary>
+        /// Gets, for the specified location, the current compute resource usage information as well as the limits for compute resources under the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/usages
+        /// Operation Id: Usage_List
+        /// </summary>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
@@ -1080,7 +1200,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the virtual machines under the specified subscription for the specified location. </summary>
+        /// <summary>
+        /// Gets all the virtual machines under the specified subscription for the specified location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/virtualMachines
+        /// Operation Id: VirtualMachines_ListByLocation
+        /// </summary>
         /// <param name="location"> The location for which virtual machines under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachine" /> that may take multiple service requests to iterate over. </returns>
@@ -1119,7 +1243,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the virtual machines under the specified subscription for the specified location. </summary>
+        /// <summary>
+        /// Gets all the virtual machines under the specified subscription for the specified location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/virtualMachines
+        /// Operation Id: VirtualMachines_ListByLocation
+        /// </summary>
         /// <param name="location"> The location for which virtual machines under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachine" /> that may take multiple service requests to iterate over. </returns>
@@ -1158,7 +1286,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual machines. </summary>
+        /// <summary>
+        /// Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual machines.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachines
+        /// Operation Id: VirtualMachines_ListAll
+        /// </summary>
         /// <param name="statusOnly"> statusOnly=true enables fetching run time status of all Virtual Machines in the subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachine" /> that may take multiple service requests to iterate over. </returns>
@@ -1197,7 +1329,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual machines. </summary>
+        /// <summary>
+        /// Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual machines.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachines
+        /// Operation Id: VirtualMachines_ListAll
+        /// </summary>
         /// <param name="statusOnly"> statusOnly=true enables fetching run time status of all Virtual Machines in the subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachine" /> that may take multiple service requests to iterate over. </returns>
@@ -1236,7 +1372,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the VM scale sets under the specified subscription for the specified location. </summary>
+        /// <summary>
+        /// Gets all the VM scale sets under the specified subscription for the specified location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/virtualMachineScaleSets
+        /// Operation Id: VirtualMachineScaleSets_ListByLocation
+        /// </summary>
         /// <param name="location"> The location for which VM scale sets under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineScaleSet" /> that may take multiple service requests to iterate over. </returns>
@@ -1275,7 +1415,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the VM scale sets under the specified subscription for the specified location. </summary>
+        /// <summary>
+        /// Gets all the VM scale sets under the specified subscription for the specified location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/virtualMachineScaleSets
+        /// Operation Id: VirtualMachineScaleSets_ListByLocation
+        /// </summary>
         /// <param name="location"> The location for which VM scale sets under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineScaleSet" /> that may take multiple service requests to iterate over. </returns>
@@ -1314,7 +1458,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets a list of all VM Scale Sets in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of VM Scale Sets. Do this till nextLink is null to fetch all the VM Scale Sets. </summary>
+        /// <summary>
+        /// Gets a list of all VM Scale Sets in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of VM Scale Sets. Do this till nextLink is null to fetch all the VM Scale Sets.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachineScaleSets
+        /// Operation Id: VirtualMachineScaleSets_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineScaleSet" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineScaleSet> GetVirtualMachineScaleSetsAsync(CancellationToken cancellationToken = default)
@@ -1352,7 +1500,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets a list of all VM Scale Sets in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of VM Scale Sets. Do this till nextLink is null to fetch all the VM Scale Sets. </summary>
+        /// <summary>
+        /// Gets a list of all VM Scale Sets in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of VM Scale Sets. Do this till nextLink is null to fetch all the VM Scale Sets.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachineScaleSets
+        /// Operation Id: VirtualMachineScaleSets_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineScaleSet" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineScaleSet> GetVirtualMachineScaleSets(CancellationToken cancellationToken = default)
@@ -1390,7 +1542,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> This API is deprecated. Use [Resources Skus](https://docs.microsoft.com/rest/api/compute/resourceskus/list). </summary>
+        /// <summary>
+        /// This API is deprecated. Use [Resources Skus](https://docs.microsoft.com/rest/api/compute/resourceskus/list)
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/vmSizes
+        /// Operation Id: VirtualMachineSizes_List
+        /// </summary>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
@@ -1414,7 +1570,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> This API is deprecated. Use [Resources Skus](https://docs.microsoft.com/rest/api/compute/resourceskus/list). </summary>
+        /// <summary>
+        /// This API is deprecated. Use [Resources Skus](https://docs.microsoft.com/rest/api/compute/resourceskus/list)
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/vmSizes
+        /// Operation Id: VirtualMachineSizes_List
+        /// </summary>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
@@ -1438,7 +1598,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets the list of Images in the subscription. Use nextLink property in the response to get the next page of Images. Do this till nextLink is null to fetch all the Images. </summary>
+        /// <summary>
+        /// Gets the list of Images in the subscription. Use nextLink property in the response to get the next page of Images. Do this till nextLink is null to fetch all the Images.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/images
+        /// Operation Id: Images_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Image" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Image> GetImagesAsync(CancellationToken cancellationToken = default)
@@ -1476,7 +1640,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets the list of Images in the subscription. Use nextLink property in the response to get the next page of Images. Do this till nextLink is null to fetch all the Images. </summary>
+        /// <summary>
+        /// Gets the list of Images in the subscription. Use nextLink property in the response to get the next page of Images. Do this till nextLink is null to fetch all the Images.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/images
+        /// Operation Id: Images_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Image" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Image> GetImages(CancellationToken cancellationToken = default)
@@ -1514,7 +1682,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets the list of restore point collections in the subscription. Use nextLink property in the response to get the next page of restore point collections. Do this till nextLink is not null to fetch all the restore point collections. </summary>
+        /// <summary>
+        /// Gets the list of restore point collections in the subscription. Use nextLink property in the response to get the next page of restore point collections. Do this till nextLink is not null to fetch all the restore point collections.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/restorePointCollections
+        /// Operation Id: RestorePointCollections_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RestorePointGroup" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RestorePointGroup> GetRestorePointGroupsAsync(CancellationToken cancellationToken = default)
@@ -1552,7 +1724,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets the list of restore point collections in the subscription. Use nextLink property in the response to get the next page of restore point collections. Do this till nextLink is not null to fetch all the restore point collections. </summary>
+        /// <summary>
+        /// Gets the list of restore point collections in the subscription. Use nextLink property in the response to get the next page of restore point collections. Do this till nextLink is not null to fetch all the restore point collections.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/restorePointCollections
+        /// Operation Id: RestorePointCollections_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RestorePointGroup" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RestorePointGroup> GetRestorePointGroups(CancellationToken cancellationToken = default)
@@ -1590,7 +1766,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all of the capacity reservation groups in the subscription. Use the nextLink property in the response to get the next page of capacity reservation groups. </summary>
+        /// <summary>
+        /// Lists all of the capacity reservation groups in the subscription. Use the nextLink property in the response to get the next page of capacity reservation groups.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/capacityReservationGroups
+        /// Operation Id: CapacityReservationGroups_ListBySubscription
+        /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CapacityReservationGroup" /> that may take multiple service requests to iterate over. </returns>
@@ -1629,7 +1809,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all of the capacity reservation groups in the subscription. Use the nextLink property in the response to get the next page of capacity reservation groups. </summary>
+        /// <summary>
+        /// Lists all of the capacity reservation groups in the subscription. Use the nextLink property in the response to get the next page of capacity reservation groups.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/capacityReservationGroups
+        /// Operation Id: CapacityReservationGroups_ListBySubscription
+        /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CapacityReservationGroup" /> that may take multiple service requests to iterate over. </returns>
@@ -1668,19 +1852,23 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Export logs that show Api requests made by this subscription in the given time window to show throttling activities. </summary>
+        /// <summary>
+        /// Export logs that show Api requests made by this subscription in the given time window to show throttling activities.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/logAnalytics/apiAccess/getRequestRateByInterval
+        /// Operation Id: LogAnalytics_ExportRequestRateByInterval
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="parameters"> Parameters supplied to the LogAnalytics getRequestRateByInterval Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ExportRequestRateByIntervalLogAnalyticOperation> ExportRequestRateByIntervalLogAnalyticAsync(bool waitForCompletion, string location, RequestRateByIntervalInput parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<LogAnalytics>> ExportRequestRateByIntervalLogAnalyticAsync(bool waitForCompletion, string location, RequestRateByIntervalInput parameters, CancellationToken cancellationToken = default)
         {
             using var scope = LogAnalyticsClientDiagnostics.CreateScope("SubscriptionExtensionClient.ExportRequestRateByIntervalLogAnalytic");
             scope.Start();
             try
             {
                 var response = await LogAnalyticsRestClient.ExportRequestRateByIntervalAsync(Id.SubscriptionId, location, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ExportRequestRateByIntervalLogAnalyticOperation(LogAnalyticsClientDiagnostics, Pipeline, LogAnalyticsRestClient.CreateExportRequestRateByIntervalRequest(Id.SubscriptionId, location, parameters).Request, response);
+                var operation = new ComputeArmOperation<LogAnalytics>(new LogAnalyticsOperationSource(), LogAnalyticsClientDiagnostics, Pipeline, LogAnalyticsRestClient.CreateExportRequestRateByIntervalRequest(Id.SubscriptionId, location, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1692,19 +1880,23 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Export logs that show Api requests made by this subscription in the given time window to show throttling activities. </summary>
+        /// <summary>
+        /// Export logs that show Api requests made by this subscription in the given time window to show throttling activities.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/logAnalytics/apiAccess/getRequestRateByInterval
+        /// Operation Id: LogAnalytics_ExportRequestRateByInterval
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="parameters"> Parameters supplied to the LogAnalytics getRequestRateByInterval Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ExportRequestRateByIntervalLogAnalyticOperation ExportRequestRateByIntervalLogAnalytic(bool waitForCompletion, string location, RequestRateByIntervalInput parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LogAnalytics> ExportRequestRateByIntervalLogAnalytic(bool waitForCompletion, string location, RequestRateByIntervalInput parameters, CancellationToken cancellationToken = default)
         {
             using var scope = LogAnalyticsClientDiagnostics.CreateScope("SubscriptionExtensionClient.ExportRequestRateByIntervalLogAnalytic");
             scope.Start();
             try
             {
                 var response = LogAnalyticsRestClient.ExportRequestRateByInterval(Id.SubscriptionId, location, parameters, cancellationToken);
-                var operation = new ExportRequestRateByIntervalLogAnalyticOperation(LogAnalyticsClientDiagnostics, Pipeline, LogAnalyticsRestClient.CreateExportRequestRateByIntervalRequest(Id.SubscriptionId, location, parameters).Request, response);
+                var operation = new ComputeArmOperation<LogAnalytics>(new LogAnalyticsOperationSource(), LogAnalyticsClientDiagnostics, Pipeline, LogAnalyticsRestClient.CreateExportRequestRateByIntervalRequest(Id.SubscriptionId, location, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1716,19 +1908,23 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Export logs that show total throttled Api requests for this subscription in the given time window. </summary>
+        /// <summary>
+        /// Export logs that show total throttled Api requests for this subscription in the given time window.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/logAnalytics/apiAccess/getThrottledRequests
+        /// Operation Id: LogAnalytics_ExportThrottledRequests
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="parameters"> Parameters supplied to the LogAnalytics getThrottledRequests Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ExportThrottledRequestsLogAnalyticOperation> ExportThrottledRequestsLogAnalyticAsync(bool waitForCompletion, string location, ThrottledRequestsInput parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<LogAnalytics>> ExportThrottledRequestsLogAnalyticAsync(bool waitForCompletion, string location, ThrottledRequestsInput parameters, CancellationToken cancellationToken = default)
         {
             using var scope = LogAnalyticsClientDiagnostics.CreateScope("SubscriptionExtensionClient.ExportThrottledRequestsLogAnalytic");
             scope.Start();
             try
             {
                 var response = await LogAnalyticsRestClient.ExportThrottledRequestsAsync(Id.SubscriptionId, location, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ExportThrottledRequestsLogAnalyticOperation(LogAnalyticsClientDiagnostics, Pipeline, LogAnalyticsRestClient.CreateExportThrottledRequestsRequest(Id.SubscriptionId, location, parameters).Request, response);
+                var operation = new ComputeArmOperation<LogAnalytics>(new LogAnalyticsOperationSource(), LogAnalyticsClientDiagnostics, Pipeline, LogAnalyticsRestClient.CreateExportThrottledRequestsRequest(Id.SubscriptionId, location, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1740,19 +1936,23 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Export logs that show total throttled Api requests for this subscription in the given time window. </summary>
+        /// <summary>
+        /// Export logs that show total throttled Api requests for this subscription in the given time window.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/logAnalytics/apiAccess/getThrottledRequests
+        /// Operation Id: LogAnalytics_ExportThrottledRequests
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="parameters"> Parameters supplied to the LogAnalytics getThrottledRequests Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ExportThrottledRequestsLogAnalyticOperation ExportThrottledRequestsLogAnalytic(bool waitForCompletion, string location, ThrottledRequestsInput parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LogAnalytics> ExportThrottledRequestsLogAnalytic(bool waitForCompletion, string location, ThrottledRequestsInput parameters, CancellationToken cancellationToken = default)
         {
             using var scope = LogAnalyticsClientDiagnostics.CreateScope("SubscriptionExtensionClient.ExportThrottledRequestsLogAnalytic");
             scope.Start();
             try
             {
                 var response = LogAnalyticsRestClient.ExportThrottledRequests(Id.SubscriptionId, location, parameters, cancellationToken);
-                var operation = new ExportThrottledRequestsLogAnalyticOperation(LogAnalyticsClientDiagnostics, Pipeline, LogAnalyticsRestClient.CreateExportThrottledRequestsRequest(Id.SubscriptionId, location, parameters).Request, response);
+                var operation = new ComputeArmOperation<LogAnalytics>(new LogAnalyticsOperationSource(), LogAnalyticsClientDiagnostics, Pipeline, LogAnalyticsRestClient.CreateExportThrottledRequestsRequest(Id.SubscriptionId, location, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1764,7 +1964,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Lists all available run commands for a subscription in a location. </summary>
+        /// <summary>
+        /// Lists all available run commands for a subscription in a location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/runCommands
+        /// Operation Id: VirtualMachineRunCommands_List
+        /// </summary>
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RunCommandDocumentBase" /> that may take multiple service requests to iterate over. </returns>
@@ -1803,7 +2007,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all available run commands for a subscription in a location. </summary>
+        /// <summary>
+        /// Lists all available run commands for a subscription in a location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/runCommands
+        /// Operation Id: VirtualMachineRunCommands_List
+        /// </summary>
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RunCommandDocumentBase" /> that may take multiple service requests to iterate over. </returns>
@@ -1842,7 +2050,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets specific run command for a subscription in a location. </summary>
+        /// <summary>
+        /// Gets specific run command for a subscription in a location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/runCommands/{commandId}
+        /// Operation Id: VirtualMachineRunCommands_Get
+        /// </summary>
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="commandId"> The command id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1862,7 +2074,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets specific run command for a subscription in a location. </summary>
+        /// <summary>
+        /// Gets specific run command for a subscription in a location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/runCommands/{commandId}
+        /// Operation Id: VirtualMachineRunCommands_Get
+        /// </summary>
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="commandId"> The command id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1882,7 +2098,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets the list of Microsoft.Compute SKUs available for your Subscription. </summary>
+        /// <summary>
+        /// Gets the list of Microsoft.Compute SKUs available for your Subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/skus
+        /// Operation Id: ResourceSkus_List
+        /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
         /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1922,7 +2142,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets the list of Microsoft.Compute SKUs available for your Subscription. </summary>
+        /// <summary>
+        /// Gets the list of Microsoft.Compute SKUs available for your Subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/skus
+        /// Operation Id: ResourceSkus_List
+        /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
         /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1962,7 +2186,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the disks under a subscription. </summary>
+        /// <summary>
+        /// Lists all the disks under a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/disks
+        /// Operation Id: Disks_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Disk" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Disk> GetDisksAsync(CancellationToken cancellationToken = default)
@@ -2000,7 +2228,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the disks under a subscription. </summary>
+        /// <summary>
+        /// Lists all the disks under a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/disks
+        /// Operation Id: Disks_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Disk" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Disk> GetDisks(CancellationToken cancellationToken = default)
@@ -2038,7 +2270,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists snapshots under a subscription. </summary>
+        /// <summary>
+        /// Lists snapshots under a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/snapshots
+        /// Operation Id: Snapshots_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Snapshot" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Snapshot> GetSnapshotsAsync(CancellationToken cancellationToken = default)
@@ -2076,7 +2312,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists snapshots under a subscription. </summary>
+        /// <summary>
+        /// Lists snapshots under a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/snapshots
+        /// Operation Id: Snapshots_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Snapshot" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Snapshot> GetSnapshots(CancellationToken cancellationToken = default)
@@ -2114,7 +2354,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the disk encryption sets under a subscription. </summary>
+        /// <summary>
+        /// Lists all the disk encryption sets under a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/diskEncryptionSets
+        /// Operation Id: DiskEncryptionSets_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DiskEncryptionSet" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DiskEncryptionSet> GetDiskEncryptionSetsAsync(CancellationToken cancellationToken = default)
@@ -2152,7 +2396,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the disk encryption sets under a subscription. </summary>
+        /// <summary>
+        /// Lists all the disk encryption sets under a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/diskEncryptionSets
+        /// Operation Id: DiskEncryptionSets_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DiskEncryptionSet" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DiskEncryptionSet> GetDiskEncryptionSets(CancellationToken cancellationToken = default)
@@ -2190,7 +2438,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the disk access resources under a subscription. </summary>
+        /// <summary>
+        /// Lists all the disk access resources under a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/diskAccesses
+        /// Operation Id: DiskAccesses_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DiskAccess" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DiskAccess> GetDiskAccessesAsync(CancellationToken cancellationToken = default)
@@ -2228,7 +2480,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the disk access resources under a subscription. </summary>
+        /// <summary>
+        /// Lists all the disk access resources under a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/diskAccesses
+        /// Operation Id: DiskAccesses_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DiskAccess" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DiskAccess> GetDiskAccesses(CancellationToken cancellationToken = default)
@@ -2266,7 +2522,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> List galleries under a subscription. </summary>
+        /// <summary>
+        /// List galleries under a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/galleries
+        /// Operation Id: Galleries_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Gallery" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Gallery> GetGalleriesAsync(CancellationToken cancellationToken = default)
@@ -2304,7 +2564,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> List galleries under a subscription. </summary>
+        /// <summary>
+        /// List galleries under a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/galleries
+        /// Operation Id: Galleries_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Gallery" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Gallery> GetGalleries(CancellationToken cancellationToken = default)
@@ -2342,7 +2606,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Get a community gallery by gallery public name. </summary>
+        /// <summary>
+        /// Get a community gallery by gallery public name.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}
+        /// Operation Id: CommunityGalleries_Get
+        /// </summary>
         /// <param name="location"> Resource location. </param>
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2362,7 +2630,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Get a community gallery by gallery public name. </summary>
+        /// <summary>
+        /// Get a community gallery by gallery public name.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}
+        /// Operation Id: CommunityGalleries_Get
+        /// </summary>
         /// <param name="location"> Resource location. </param>
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2382,7 +2654,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Get a community gallery image. </summary>
+        /// <summary>
+        /// Get a community gallery image.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}
+        /// Operation Id: CommunityGalleryImages_Get
+        /// </summary>
         /// <param name="location"> Resource location. </param>
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
@@ -2403,7 +2679,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Get a community gallery image. </summary>
+        /// <summary>
+        /// Get a community gallery image.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}
+        /// Operation Id: CommunityGalleryImages_Get
+        /// </summary>
         /// <param name="location"> Resource location. </param>
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
@@ -2424,7 +2704,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Get a community gallery image version. </summary>
+        /// <summary>
+        /// Get a community gallery image version.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}
+        /// Operation Id: CommunityGalleryImageVersions_Get
+        /// </summary>
         /// <param name="location"> Resource location. </param>
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
@@ -2446,7 +2730,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Get a community gallery image version. </summary>
+        /// <summary>
+        /// Get a community gallery image version.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}
+        /// Operation Id: CommunityGalleryImageVersions_Get
+        /// </summary>
         /// <param name="location"> Resource location. </param>
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
@@ -2468,7 +2756,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets a list of all cloud services in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of Cloud Services. Do this till nextLink is null to fetch all the Cloud Services. </summary>
+        /// <summary>
+        /// Gets a list of all cloud services in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of Cloud Services. Do this till nextLink is null to fetch all the Cloud Services.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/cloudServices
+        /// Operation Id: CloudServices_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CloudService" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CloudService> GetCloudServicesAsync(CancellationToken cancellationToken = default)
@@ -2506,7 +2798,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets a list of all cloud services in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of Cloud Services. Do this till nextLink is null to fetch all the Cloud Services. </summary>
+        /// <summary>
+        /// Gets a list of all cloud services in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of Cloud Services. Do this till nextLink is null to fetch all the Cloud Services.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/cloudServices
+        /// Operation Id: CloudServices_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CloudService" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CloudService> GetCloudServices(CancellationToken cancellationToken = default)

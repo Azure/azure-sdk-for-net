@@ -4,13 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal struct TagEnumerationState
     {
-        private static readonly IReadOnlyDictionary<string, PartBType> Part_B_Mapping = new Dictionary<string, PartBType>()
+        private static readonly IReadOnlyDictionary<string, PartBType> s_part_B_Mapping = new Dictionary<string, PartBType>()
         {
             [SemanticConventions.AttributeDbStatement] = PartBType.Db,
             [SemanticConventions.AttributeDbSystem] = PartBType.Db,
@@ -66,7 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public AzMonList PartBTags;
         public AzMonList PartCTags;
 
-        private PartBType tempActivityType;
+        private PartBType _tempActivityType;
         public PartBType activityType;
 
         public void ForEach(IEnumerable<KeyValuePair<string, object>> activityTags)
@@ -100,7 +99,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     continue;
                 }
 
-                if (!Part_B_Mapping.TryGetValue(activityTag.Key, out tempActivityType))
+                if (!s_part_B_Mapping.TryGetValue(activityTag.Key, out _tempActivityType))
                 {
                     AzMonList.Add(ref PartCTags, activityTag);
                     continue;
@@ -108,10 +107,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 if (activityType == PartBType.Unknown || activityType == PartBType.Common)
                 {
-                    activityType = tempActivityType;
+                    activityType = _tempActivityType;
                 }
 
-                if (tempActivityType == activityType || tempActivityType == PartBType.Common)
+                if (_tempActivityType == activityType || _tempActivityType == PartBType.Common)
                 {
                     AzMonList.Add(ref PartBTags, activityTag);
                 }
@@ -120,6 +119,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     AzMonList.Add(ref PartCTags, activityTag);
                 }
             }
+        }
+
+        public void Return()
+        {
+            PartBTags.Return();
+            PartCTags.Return();
         }
     }
 }

@@ -81,7 +81,7 @@ foreach (FormPage page in formPages)
 To recognize the content from a file stream, use the `StartRecognizeContent` method. The returned value is a collection of `FormPage` objects -- one for each page in the submitted document.
 
 ```C# Snippet:FormRecognizerRecognizeFormContentFromFile
-string filePath = "filePath";
+string filePath = "<filePath>";
 using var stream = new FileStream(filePath, FileMode.Open);
 
 Response<FormPageCollection> response = await client.StartRecognizeContentAsync(stream).WaitForCompletionAsync();

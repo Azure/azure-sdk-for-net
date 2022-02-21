@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -39,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal AzureFirewallCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _azureFirewallClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", AzureFirewall.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(AzureFirewall.ResourceType, out string azureFirewallApiVersion);
+            TryGetApiVersion(AzureFirewall.ResourceType, out string azureFirewallApiVersion);
             _azureFirewallRestClient = new AzureFirewallsRestOperations(_azureFirewallClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, azureFirewallApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -52,27 +51,28 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates or updates the specified Azure Firewall. </summary>
+        /// <summary>
+        /// Creates or updates the specified Azure Firewall.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}
+        /// Operation Id: AzureFirewalls_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Azure Firewall operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<AzureFirewallCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string azureFirewallName, AzureFirewallData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<AzureFirewall>> CreateOrUpdateAsync(bool waitForCompletion, string azureFirewallName, AzureFirewallData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _azureFirewallClientDiagnostics.CreateScope("AzureFirewallCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _azureFirewallRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, azureFirewallName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new AzureFirewallCreateOrUpdateOperation(Client, _azureFirewallClientDiagnostics, Pipeline, _azureFirewallRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureFirewallName, parameters).Request, response);
+                var operation = new NetworkArmOperation<AzureFirewall>(new AzureFirewallOperationSource(Client), _azureFirewallClientDiagnostics, Pipeline, _azureFirewallRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureFirewallName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -84,27 +84,28 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Creates or updates the specified Azure Firewall. </summary>
+        /// <summary>
+        /// Creates or updates the specified Azure Firewall.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}
+        /// Operation Id: AzureFirewalls_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Azure Firewall operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual AzureFirewallCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string azureFirewallName, AzureFirewallData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AzureFirewall> CreateOrUpdate(bool waitForCompletion, string azureFirewallName, AzureFirewallData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _azureFirewallClientDiagnostics.CreateScope("AzureFirewallCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _azureFirewallRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, azureFirewallName, parameters, cancellationToken);
-                var operation = new AzureFirewallCreateOrUpdateOperation(Client, _azureFirewallClientDiagnostics, Pipeline, _azureFirewallRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureFirewallName, parameters).Request, response);
+                var operation = new NetworkArmOperation<AzureFirewall>(new AzureFirewallOperationSource(Client), _azureFirewallClientDiagnostics, Pipeline, _azureFirewallRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureFirewallName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -116,10 +117,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified Azure Firewall. </summary>
+        /// <summary>
+        /// Gets the specified Azure Firewall.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}
+        /// Operation Id: AzureFirewalls_Get
+        /// </summary>
         /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> is null. </exception>
         public async virtual Task<Response<AzureFirewall>> GetAsync(string azureFirewallName, CancellationToken cancellationToken = default)
         {
@@ -141,10 +146,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified Azure Firewall. </summary>
+        /// <summary>
+        /// Gets the specified Azure Firewall.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}
+        /// Operation Id: AzureFirewalls_Get
+        /// </summary>
         /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> is null. </exception>
         public virtual Response<AzureFirewall> Get(string azureFirewallName, CancellationToken cancellationToken = default)
         {
@@ -166,7 +175,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Lists all Azure Firewalls in a resource group. </summary>
+        /// <summary>
+        /// Lists all Azure Firewalls in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls
+        /// Operation Id: AzureFirewalls_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AzureFirewall" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AzureFirewall> GetAllAsync(CancellationToken cancellationToken = default)
@@ -204,7 +217,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all Azure Firewalls in a resource group. </summary>
+        /// <summary>
+        /// Lists all Azure Firewalls in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls
+        /// Operation Id: AzureFirewalls_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AzureFirewall" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AzureFirewall> GetAll(CancellationToken cancellationToken = default)
@@ -242,10 +259,14 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}
+        /// Operation Id: AzureFirewalls_Get
+        /// </summary>
         /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string azureFirewallName, CancellationToken cancellationToken = default)
         {
@@ -265,10 +286,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}
+        /// Operation Id: AzureFirewalls_Get
+        /// </summary>
         /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> is null. </exception>
         public virtual Response<bool> Exists(string azureFirewallName, CancellationToken cancellationToken = default)
         {
@@ -288,10 +313,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}
+        /// Operation Id: AzureFirewalls_Get
+        /// </summary>
         /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> is null. </exception>
         public async virtual Task<Response<AzureFirewall>> GetIfExistsAsync(string azureFirewallName, CancellationToken cancellationToken = default)
         {
@@ -313,10 +342,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}
+        /// Operation Id: AzureFirewalls_Get
+        /// </summary>
         /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> is null. </exception>
         public virtual Response<AzureFirewall> GetIfExists(string azureFirewallName, CancellationToken cancellationToken = default)
         {
