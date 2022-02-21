@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment What-if operation parameters. </summary>
-    internal partial class DeploymentWhatIf
+    public partial class DeploymentWhatIf
     {
         /// <summary> Initializes a new instance of DeploymentWhatIf. </summary>
         /// <param name="properties"> The deployment properties. </param>

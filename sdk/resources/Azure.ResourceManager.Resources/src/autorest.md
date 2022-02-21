@@ -15,7 +15,6 @@ skip-csproj: true
 model-namespace: true
 public-clients: false
 head-as-boolean: false
-payload-flattening-threshold: 2
 
 request-path-to-parent:
   /{scope}/providers/Microsoft.Resources/links: /{linkId}
@@ -149,18 +148,11 @@ directive:
       $["JitRequestDefinition"]["x-ms-client-name"] = "JitRequest";
       $["JitRequestDefinitionListResult"]["x-ms-client-name"] = "JitRequestListResult";
   - from: resources.json
-    where: $.paths
-    transform: >
-        for (var key in $)
-        {
-            if (['/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf', '/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf'].includes(key))
-            {
-                var newKey = key
-                var method = $[key]
-                delete $[key]
-                $[newKey] = method
-            }
-        }
+    where: $.paths['/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf'].post.parameters[1].schema
+    transform: $['$ref'] = '#/definitions/DeploymentWhatIf'
+  - from: resources.json
+    where: $.paths['/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf'].post.parameters[2].schema
+    transform: $['$ref'] = '#/definitions/DeploymentWhatIf'
 ```
 
 ### Tag: package-track2-preview
