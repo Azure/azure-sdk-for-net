@@ -99,9 +99,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetDataIngestionJobDetailsAsync(string jobId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -164,9 +162,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetDataIngestionJobDetails(string jobId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -229,9 +225,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetDataDeleteJobDetailsAsync(string jobId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -294,9 +288,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetDataDeleteJobDetails(string jobId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -392,9 +384,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetWeathersAsync(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(farmerId, nameof(farmerId));
             Argument.AssertNotNull(boundaryId, nameof(boundaryId));
@@ -495,9 +485,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetWeathers(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(farmerId, nameof(farmerId));
             Argument.AssertNotNull(boundaryId, nameof(boundaryId));
@@ -589,9 +577,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Operation<BinaryData>> CreateDataIngestionJobAsync(bool waitForCompletion, string jobId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -678,9 +664,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Operation<BinaryData> CreateDataIngestionJob(bool waitForCompletion, string jobId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -767,9 +751,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Operation<BinaryData>> CreateDataDeleteJobAsync(bool waitForCompletion, string jobId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -856,9 +838,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Operation<BinaryData> CreateDataDeleteJob(bool waitForCompletion, string jobId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 

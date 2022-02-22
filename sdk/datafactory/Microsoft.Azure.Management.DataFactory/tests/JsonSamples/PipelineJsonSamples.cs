@@ -7589,5 +7589,37 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+
+        [JsonSample]
+        public const string ExecuteScriptActivityPipeline = @"
+{
+  ""name"": ""##PipelineName##"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""name"": ""MyScriptActivity"",
+        ""type"": ""Script"",
+        ""linkedServiceName"": {
+          ""referenceName"": ""myLinkedService"",
+          ""type"": ""LinkedServiceReference""
+        },
+        ""typeProperties"": {
+          ""scripts"": [
+            {
+              ""text"": ""@pipeline().parameters.query"",
+              ""type"": ""Query""
+            }
+          ]
+        }
+      }
+    ],
+    ""parameters"": {
+      ""query"": {
+          ""type"": ""String""
+        }
+      }
+   }
+}
+";
     }
 }

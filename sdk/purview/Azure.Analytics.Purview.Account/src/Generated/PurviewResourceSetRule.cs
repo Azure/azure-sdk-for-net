@@ -164,9 +164,7 @@ namespace Azure.Analytics.Purview.Account
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetResourceSetRuleAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.GetResourceSetRule");
             scope.Start();
@@ -298,9 +296,7 @@ namespace Azure.Analytics.Purview.Account
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetResourceSetRule(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.GetResourceSetRule");
             scope.Start();
@@ -528,9 +524,7 @@ namespace Azure.Analytics.Purview.Account
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CreateOrUpdateResourceSetRuleAsync(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -760,9 +754,7 @@ namespace Azure.Analytics.Purview.Account
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response CreateOrUpdateResourceSetRule(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -802,9 +794,7 @@ namespace Azure.Analytics.Purview.Account
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> DeleteResourceSetRuleAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.DeleteResourceSetRule");
             scope.Start();
@@ -842,9 +832,7 @@ namespace Azure.Analytics.Purview.Account
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response DeleteResourceSetRule(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.DeleteResourceSetRule");
             scope.Start();

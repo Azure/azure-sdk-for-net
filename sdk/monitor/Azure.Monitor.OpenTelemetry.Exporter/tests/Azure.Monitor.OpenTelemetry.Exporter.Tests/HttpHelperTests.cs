@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Xunit;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class HttpHelperTests
     {

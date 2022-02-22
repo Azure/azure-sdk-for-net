@@ -56,9 +56,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetConstitutionAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
             scope.Start();
@@ -94,9 +92,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetConstitution(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
             scope.Start();
@@ -136,9 +132,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetConsortiumMembersAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConsortiumMembers");
             scope.Start();
@@ -178,9 +172,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetConsortiumMembers(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConsortiumMembers");
             scope.Start();
@@ -216,9 +208,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetEnclaveQuotesAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
             scope.Start();
@@ -254,9 +244,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetEnclaveQuotes(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
             scope.Start();
@@ -300,9 +288,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> PostLedgerEntryAsync(RequestContent content, string subLedgerId = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
             scope.Start();
@@ -346,9 +332,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response PostLedgerEntry(RequestContent content, string subLedgerId = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
             scope.Start();
@@ -392,9 +376,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetLedgerEntryAsync(string transactionId, string subLedgerId = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
@@ -440,9 +422,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetLedgerEntry(string transactionId, string subLedgerId = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
@@ -495,9 +475,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetReceiptAsync(string transactionId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
@@ -550,9 +528,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetReceipt(string transactionId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
@@ -593,9 +569,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetTransactionStatusAsync(string transactionId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
@@ -636,9 +610,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetTransactionStatus(string transactionId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
@@ -678,9 +650,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetCurrentLedgerEntryAsync(string subLedgerId = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
             scope.Start();
@@ -718,9 +688,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetCurrentLedgerEntry(string subLedgerId = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
             scope.Start();
@@ -753,9 +721,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> DeleteUserAsync(string userId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
@@ -790,9 +756,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response DeleteUser(string userId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
@@ -833,9 +797,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetUserAsync(string userId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
@@ -876,9 +838,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetUser(string userId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
@@ -926,9 +886,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CreateOrUpdateUserAsync(string userId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNull(content, nameof(content));
@@ -977,9 +935,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response CreateOrUpdateUser(string userId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNull(content, nameof(content));
@@ -1028,9 +984,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetLedgerEntriesAsync(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "ConfidentialLedgerClient.GetLedgerEntries");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1077,9 +1031,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetLedgerEntries(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "ConfidentialLedgerClient.GetLedgerEntries");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
