@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn
@@ -32,11 +32,12 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Initializes a new instance of the <see cref="AfdSecretCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal AfdSecretCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal AfdSecretCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _afdSecretClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", AfdSecret.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(AfdSecret.ResourceType, out string afdSecretApiVersion);
+            TryGetApiVersion(AfdSecret.ResourceType, out string afdSecretApiVersion);
             _afdSecretRestClient = new AfdSecretsRestOperations(_afdSecretClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdSecretApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -49,61 +50,28 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Profile.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// <summary> Creates a new Secret within the specified profile. </summary>
+        /// <summary>
+        /// Creates a new Secret within the specified profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}
+        /// Operation Id: AfdSecrets_Create
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="secret"> The Secret properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="secret"/> is null. </exception>
-        public virtual AfdSecretCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string secretName, AfdSecretData secret, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<AfdSecret>> CreateOrUpdateAsync(bool waitForCompletion, string secretName, AfdSecretData secret, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-            if (secret == null)
-            {
-                throw new ArgumentNullException(nameof(secret));
-            }
-
-            using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecretCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _afdSecretRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, secret, cancellationToken);
-                var operation = new AfdSecretCreateOrUpdateOperation(ArmClient, _afdSecretClientDiagnostics, Pipeline, _afdSecretRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, secret).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a new Secret within the specified profile. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="secretName"> Name of the Secret under the profile. </param>
-        /// <param name="secret"> The Secret properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="secret"/> is null. </exception>
-        public async virtual Task<AfdSecretCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string secretName, AfdSecretData secret, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-            if (secret == null)
-            {
-                throw new ArgumentNullException(nameof(secret));
-            }
+            Argument.AssertNotNull(secret, nameof(secret));
 
             using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecretCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _afdSecretRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, secret, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdSecretCreateOrUpdateOperation(ArmClient, _afdSecretClientDiagnostics, Pipeline, _afdSecretRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, secret).Request, response);
+                var operation = new CdnArmOperation<AfdSecret>(new AfdSecretOperationSource(Client), _afdSecretClientDiagnostics, Pipeline, _afdSecretRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, secret).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -115,23 +83,31 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Gets an existing Secret within a profile. </summary>
+        /// <summary>
+        /// Creates a new Secret within the specified profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}
+        /// Operation Id: AfdSecrets_Create
+        /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
+        /// <param name="secret"> The Secret properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        public virtual Response<AfdSecret> Get(string secretName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="secret"/> is null. </exception>
+        public virtual ArmOperation<AfdSecret> CreateOrUpdate(bool waitForCompletion, string secretName, AfdSecretData secret, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
+            Argument.AssertNotNull(secret, nameof(secret));
 
-            using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecretCollection.Get");
+            using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecretCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _afdSecretRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken);
-                if (response.Value == null)
-                    throw _afdSecretClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AfdSecret(ArmClient, response.Value), response.GetRawResponse());
+                var response = _afdSecretRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, secret, cancellationToken);
+                var operation = new CdnArmOperation<AfdSecret>(new AfdSecretOperationSource(Client), _afdSecretClientDiagnostics, Pipeline, _afdSecretRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, secret).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -140,10 +116,14 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Gets an existing Secret within a profile. </summary>
+        /// <summary>
+        /// Gets an existing Secret within a profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}
+        /// Operation Id: AfdSecrets_Get
+        /// </summary>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public async virtual Task<Response<AfdSecret>> GetAsync(string secretName, CancellationToken cancellationToken = default)
         {
@@ -156,7 +136,7 @@ namespace Azure.ResourceManager.Cdn
                 var response = await _afdSecretRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _afdSecretClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AfdSecret(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AfdSecret(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,23 +145,27 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets an existing Secret within a profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}
+        /// Operation Id: AfdSecrets_Get
+        /// </summary>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        public virtual Response<AfdSecret> GetIfExists(string secretName, CancellationToken cancellationToken = default)
+        public virtual Response<AfdSecret> Get(string secretName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
-            using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecretCollection.GetIfExists");
+            using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecretCollection.Get");
             scope.Start();
             try
             {
-                var response = _afdSecretRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken);
+                var response = _afdSecretRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<AfdSecret>(null, response.GetRawResponse());
-                return Response.FromValue(new AfdSecret(ArmClient, response.Value), response.GetRawResponse());
+                    throw _afdSecretClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new AfdSecret(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,58 +174,98 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="secretName"> Name of the Secret under the profile. </param>
+        /// <summary>
+        /// Lists existing AzureFrontDoor secrets.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets
+        /// Operation Id: AfdSecrets_ListByProfile
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        public async virtual Task<Response<AfdSecret>> GetIfExistsAsync(string secretName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AfdSecret" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AfdSecret> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
-            using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecretCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<AfdSecret>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _afdSecretRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<AfdSecret>(null, response.GetRawResponse());
-                return Response.FromValue(new AfdSecret(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecretCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _afdSecretRestClient.ListByProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdSecret(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<AfdSecret>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecretCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _afdSecretRestClient.ListByProfileNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdSecret(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="secretName"> Name of the Secret under the profile. </param>
+        /// <summary>
+        /// Lists existing AzureFrontDoor secrets.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets
+        /// Operation Id: AfdSecrets_ListByProfile
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        public virtual Response<bool> Exists(string secretName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AfdSecret" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AfdSecret> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
-            using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecretCollection.Exists");
-            scope.Start();
-            try
+            Page<AfdSecret> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(secretName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecretCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _afdSecretRestClient.ListByProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdSecret(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<AfdSecret> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecretCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _afdSecretRestClient.ListByProfileNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdSecret(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}
+        /// Operation Id: AfdSecrets_Get
+        /// </summary>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string secretName, CancellationToken cancellationToken = default)
         {
@@ -261,80 +285,89 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Lists existing AzureFrontDoor secrets. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}
+        /// Operation Id: AfdSecrets_Get
+        /// </summary>
+        /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AfdSecret" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AfdSecret> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
+        public virtual Response<bool> Exists(string secretName, CancellationToken cancellationToken = default)
         {
-            Page<AfdSecret> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
+
+            using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecretCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecretCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _afdSecretRestClient.ListByProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdSecret(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(secretName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<AfdSecret> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecretCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _afdSecretRestClient.ListByProfileNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdSecret(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists existing AzureFrontDoor secrets. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}
+        /// Operation Id: AfdSecrets_Get
+        /// </summary>
+        /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AfdSecret" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AfdSecret> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
+        public async virtual Task<Response<AfdSecret>> GetIfExistsAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AfdSecret>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
+
+            using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecretCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecretCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _afdSecretRestClient.ListByProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdSecret(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _afdSecretRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<AfdSecret>(null, response.GetRawResponse());
+                return Response.FromValue(new AfdSecret(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<AfdSecret>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecretCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _afdSecretRestClient.ListByProfileNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdSecret(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}
+        /// Operation Id: AfdSecrets_Get
+        /// </summary>
+        /// <param name="secretName"> Name of the Secret under the profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
+        public virtual Response<AfdSecret> GetIfExists(string secretName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
+
+            using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecretCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _afdSecretRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<AfdSecret>(null, response.GetRawResponse());
+                return Response.FromValue(new AfdSecret(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<AfdSecret> IEnumerable<AfdSecret>.GetEnumerator()

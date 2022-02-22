@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The QueryStatistics. </summary>
-    public partial class QueryStatistics : Resource
+    public partial class QueryStatistics : ResourceData
     {
         /// <summary> Initializes a new instance of QueryStatistics. </summary>
         public QueryStatistics()

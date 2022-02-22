@@ -17,6 +17,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
     {
         [RecordedTest]
         [SyncOnly]
+        // TODO: Make this test Sync once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
         public async Task KnowledgeSources()
         {
             QuestionAnsweringProjectsClient client = Client;
@@ -50,6 +51,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion: false, testProjectName, updateSourcesRequestContent);
             updateSourcesOperation.WaitForCompletion();
 #else
+            // TODO: Remove this region once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
             Operation<BinaryData> updateSourcesOperation = InstrumentOperation(client.UpdateSources(waitForCompletion: false, testProjectName, updateSourcesRequestContent));
             await updateSourcesOperation.WaitForCompletionAsync();
 #endif

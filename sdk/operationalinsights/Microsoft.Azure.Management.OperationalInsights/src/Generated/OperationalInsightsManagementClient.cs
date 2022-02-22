@@ -70,6 +70,26 @@ namespace Microsoft.Azure.Management.OperationalInsights
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the IWorkspacesOperations.
+        /// </summary>
+        public virtual IWorkspacesOperations Workspaces { get; private set; }
+
+        /// <summary>
+        /// Gets the IDeletedWorkspacesOperations.
+        /// </summary>
+        public virtual IDeletedWorkspacesOperations DeletedWorkspaces { get; private set; }
+
+        /// <summary>
+        /// Gets the ITablesOperations.
+        /// </summary>
+        public virtual ITablesOperations Tables { get; private set; }
+
+        /// <summary>
         /// Gets the IDataExportsOperations.
         /// </summary>
         public virtual IDataExportsOperations DataExports { get; private set; }
@@ -145,29 +165,9 @@ namespace Microsoft.Azure.Management.OperationalInsights
         public virtual IWorkspacePurgeOperations WorkspacePurge { get; private set; }
 
         /// <summary>
-        /// Gets the ITablesOperations.
-        /// </summary>
-        public virtual ITablesOperations Tables { get; private set; }
-
-        /// <summary>
         /// Gets the IClustersOperations.
         /// </summary>
         public virtual IClustersOperations Clusters { get; private set; }
-
-        /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        public virtual IOperations Operations { get; private set; }
-
-        /// <summary>
-        /// Gets the IWorkspacesOperations.
-        /// </summary>
-        public virtual IWorkspacesOperations Workspaces { get; private set; }
-
-        /// <summary>
-        /// Gets the IDeletedWorkspacesOperations.
-        /// </summary>
-        public virtual IDeletedWorkspacesOperations DeletedWorkspaces { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the OperationalInsightsManagementClient class.
@@ -410,6 +410,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// </summary>
         private void Initialize()
         {
+            Operations = new Operations(this);
+            Workspaces = new WorkspacesOperations(this);
+            DeletedWorkspaces = new DeletedWorkspacesOperations(this);
+            Tables = new TablesOperations(this);
             DataExports = new DataExportsOperations(this);
             DataSources = new DataSourcesOperations(this);
             IntelligencePacks = new IntelligencePacksOperations(this);
@@ -425,11 +429,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             Gateways = new GatewaysOperations(this);
             Schema = new SchemaOperations(this);
             WorkspacePurge = new WorkspacePurgeOperations(this);
-            Tables = new TablesOperations(this);
             Clusters = new ClustersOperations(this);
-            Operations = new Operations(this);
-            Workspaces = new WorkspacesOperations(this);
-            DeletedWorkspaces = new DeletedWorkspacesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

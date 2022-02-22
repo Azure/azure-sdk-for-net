@@ -13,7 +13,7 @@ using Azure.ResourceManager.WebPubSub.Models;
 namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary> A class representing the WebPubSubHub data model. </summary>
-    public partial class WebPubSubHubData : Resource
+    public partial class WebPubSubHubData : ResourceData
     {
         /// <summary> Initializes a new instance of WebPubSubHubData. </summary>
         /// <param name="properties"> Properties of the hub setting. </param>

@@ -5,9 +5,11 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.WebPubSub.Models;
 
@@ -18,70 +20,110 @@ namespace Azure.ResourceManager.WebPubSub
     {
         private static SubscriptionExtensionClient GetExtensionClient(Subscription subscription)
         {
-            return subscription.GetCachedClient((armClient) =>
+            return subscription.GetCachedClient((client) =>
             {
-                return new SubscriptionExtensionClient(armClient, subscription.Id);
+                return new SubscriptionExtensionClient(client, subscription.Id);
             }
             );
         }
 
+        /// <summary>
+        /// Checks that the resource name is valid and is not already in use.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability
+        /// Operation Id: WebPubSub_CheckNameAvailability
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> the region. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public static async Task<Response<NameAvailability>> CheckWebPubSubNameAvailabilityAsync(this Subscription subscription, string location, NameAvailabilityParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
+        public async static Task<Response<NameAvailability>> CheckWebPubSubNameAvailabilityAsync(this Subscription subscription, string location, NameAvailabilityParameters parameters, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
             return await GetExtensionClient(subscription).CheckWebPubSubNameAvailabilityAsync(location, parameters, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Checks that the resource name is valid and is not already in use.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability
+        /// Operation Id: WebPubSub_CheckNameAvailability
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> the region. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
         public static Response<NameAvailability> CheckWebPubSubNameAvailability(this Subscription subscription, string location, NameAvailabilityParameters parameters, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
             return GetExtensionClient(subscription).CheckWebPubSubNameAvailability(location, parameters, cancellationToken);
         }
 
+        /// <summary>
+        /// Handles requests to list all resources in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/webPubSub
+        /// Operation Id: WebPubSub_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WebPubSub" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<WebPubSub> GetWebPubSubsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetWebPubSubsAsync(cancellationToken);
         }
 
+        /// <summary>
+        /// Handles requests to list all resources in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/webPubSub
+        /// Operation Id: WebPubSub_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WebPubSub" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<WebPubSub> GetWebPubSubs(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetWebPubSubs(cancellationToken);
         }
 
+        /// <summary>
+        /// List resource usage quotas by location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages
+        /// Operation Id: Usages_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> the location like &quot;eastus&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SignalRServiceUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SignalRServiceUsage> GetUsagesAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
             return GetExtensionClient(subscription).GetUsagesAsync(location, cancellationToken);
         }
 
+        /// <summary>
+        /// List resource usage quotas by location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages
+        /// Operation Id: Usages_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> the location like &quot;eastus&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> A collection of <see cref="SignalRServiceUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SignalRServiceUsage> GetUsages(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
             return GetExtensionClient(subscription).GetUsages(location, cancellationToken);
         }
     }

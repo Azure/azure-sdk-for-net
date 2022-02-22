@@ -117,10 +117,18 @@ namespace Azure.Core.TestFramework
                         "Connection"
                     };
 
-                    // temporary until custom matcher supports both excluded and ignored
-                    excludedHeaders.AddRange(_matcher.IgnoredHeaders);
-                    await _proxy.Client.AddCustomMatcherAsync(new CustomDefaultMatcher(string.Join(",", excludedHeaders), _matcher.CompareBodies),
-                        RecordingId);
+                    await _proxy.Client.AddCustomMatcherAsync(new CustomDefaultMatcher
+                    {
+                        ExcludedHeaders = string.Join(",", excludedHeaders),
+                        IgnoredHeaders = _matcher.IgnoredHeaders.Count > 0 ? string.Join(",", _matcher.IgnoredHeaders) : null,
+                        IgnoredQueryParameters = _matcher.IgnoredQueryParameters.Count > 0 ? string.Join(",", _matcher.IgnoredQueryParameters): null,
+                        CompareBodies = _matcher.CompareBodies
+                    });
+
+                    foreach (HeaderTransform transform in _sanitizer.HeaderTransforms)
+                    {
+                        await _proxy.Client.AddHeaderTransformAsync(transform, RecordingId);
+                    }
                     break;
             }
         }
@@ -130,6 +138,11 @@ namespace Azure.Core.TestFramework
             foreach (string header in _sanitizer.SanitizedHeaders)
             {
                 await _proxy.Client.AddHeaderSanitizerAsync(new HeaderRegexSanitizer(header, Sanitized), RecordingId);
+            }
+
+            foreach (var header in _sanitizer.HeaderRegexSanitizers)
+            {
+                await _proxy.Client.AddHeaderSanitizerAsync(header, RecordingId);
             }
 
             foreach (string jsonPath in _sanitizer.JsonPathSanitizers.Select(s => s.JsonPath))
@@ -150,11 +163,6 @@ namespace Azure.Core.TestFramework
             foreach (BodyRegexSanitizer sanitizer in _sanitizer.BodyRegexSanitizers)
             {
                 await _proxy.Client.AddBodyRegexSanitizerAsync(sanitizer, RecordingId);
-            }
-
-            foreach (HeaderTransform transform in _sanitizer.HeaderTransforms)
-            {
-                await _proxy.Client.AddHeaderTransformAsync(transform, RecordingId);
             }
         }
 
@@ -335,6 +343,10 @@ namespace Azure.Core.TestFramework
         {
             if (!_useLegacyTransport && Mode != RecordedTestMode.Live)
             {
+                if (currentTransport is ProxyTransport)
+                {
+                    return currentTransport;
+                }
                 return new ProxyTransport(_proxy, currentTransport, this, () => _disableRecording.Value);
             }
             return Mode switch

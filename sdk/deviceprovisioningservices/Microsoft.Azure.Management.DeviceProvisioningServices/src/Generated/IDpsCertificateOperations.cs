@@ -70,13 +70,12 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
         /// <param name='certificateName'>
         /// The name of the certificate create or update.
         /// </param>
+        /// <param name='certificateDescription'>
+        /// The certificate body.
+        /// </param>
         /// <param name='ifMatch'>
         /// ETag of the certificate. This is required to update an existing
         /// certificate, and ignored while creating a brand new certificate.
-        /// </param>
-        /// <param name='certificate'>
-        /// Base-64 representation of the X509 leaf certificate .cer file or
-        /// just .pem file content.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -93,7 +92,7 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CertificateResponse>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string provisioningServiceName, string certificateName, string ifMatch = default(string), string certificate = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CertificateResponse>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string provisioningServiceName, string certificateName, CertificateBodyDescription certificateDescription, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete the Provisioning Service Certificate.
         /// </summary>

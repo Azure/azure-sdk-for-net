@@ -29,6 +29,11 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("allowProtectedAppendWrites");
                 writer.WriteBooleanValue(AllowProtectedAppendWrites.Value);
             }
+            if (Optional.IsDefined(AllowProtectedAppendWritesAll))
+            {
+                writer.WritePropertyName("allowProtectedAppendWritesAll");
+                writer.WriteBooleanValue(AllowProtectedAppendWritesAll.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -43,6 +48,7 @@ namespace Azure.ResourceManager.Storage
             Optional<int> immutabilityPeriodSinceCreationInDays = default;
             Optional<ImmutabilityPolicyState> state = default;
             Optional<bool> allowProtectedAppendWrites = default;
+            Optional<bool> allowProtectedAppendWritesAll = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -109,11 +115,21 @@ namespace Azure.ResourceManager.Storage
                             allowProtectedAppendWrites = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("allowProtectedAppendWritesAll"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            allowProtectedAppendWritesAll = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ImmutabilityPolicyData(id, name, type, systemData, etag.Value, Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(state), Optional.ToNullable(allowProtectedAppendWrites));
+            return new ImmutabilityPolicyData(id, name, type, systemData, etag.Value, Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(state), Optional.ToNullable(allowProtectedAppendWrites), Optional.ToNullable(allowProtectedAppendWritesAll));
         }
     }
 }

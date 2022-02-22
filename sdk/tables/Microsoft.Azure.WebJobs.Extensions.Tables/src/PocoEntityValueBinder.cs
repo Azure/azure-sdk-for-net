@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Data.Tables;
@@ -36,13 +37,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
         public async Task<object> GetValueAsync()
         {
-            var conversionResult = await _entityToPocoConverter(_originalEntity, null, _valueBindingContext).ConfigureAwait(false);
-            // When bound to TableEntity the _entityToPocoConverter will no-op
-            // when it happens make a copy of entity so the change tracking still works
-            if (ReferenceEquals(conversionResult, _originalEntity))
+            // Create a copy of the original entity so that we can properly
+            // track changes to byte arrays. This also handles the case
+            // where the customer binds directly to TableEntity as we return
+            // a new instance with copied values.
+            var copiedEntity = new TableEntity(_originalEntity);
+            // copy the keys to avoid collection modified errors
+            var keys = copiedEntity.Keys.ToList();
+            foreach (var key in keys)
             {
-                return new TableEntity(_originalEntity);
+                if (copiedEntity[key] is byte[] bytes)
+                {
+                    var copy = new byte[bytes.Length];
+                    Array.Copy(bytes, copy, bytes.Length);
+                    copiedEntity[key] = copy;
+                }
             }
+            var conversionResult = await _entityToPocoConverter(copiedEntity, null, _valueBindingContext).ConfigureAwait(false);
 
             return conversionResult;
         }
@@ -105,6 +116,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                     {
                         continue;
                     }
+                }
+
+                // do a by-value comparison when dealing with byte arrays
+                if (originalValue is byte[] originalBytes && newValue is byte[] newBytes)
+                {
+                    return !originalBytes.SequenceEqual(newBytes);
                 }
 
                 if (!originalValue.Equals(newValue))

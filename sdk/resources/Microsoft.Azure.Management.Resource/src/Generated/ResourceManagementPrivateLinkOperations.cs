@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.ResourceManager
     /// <summary>
     /// ResourceManagementPrivateLinkOperations operations.
     /// </summary>
-    internal partial class ResourceManagementPrivateLinkOperations : IServiceOperations<PolicyClient>, IResourceManagementPrivateLinkOperations
+    internal partial class ResourceManagementPrivateLinkOperations : IServiceOperations<ResourcePrivateLinkClient>, IResourceManagementPrivateLinkOperations
     {
         /// <summary>
         /// Initializes a new instance of the ResourceManagementPrivateLinkOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ResourceManagementPrivateLinkOperations(PolicyClient client)
+        internal ResourceManagementPrivateLinkOperations(ResourcePrivateLinkClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets a reference to the PolicyClient
+        /// Gets a reference to the ResourcePrivateLinkClient
         /// </summary>
-        public PolicyClient Client { get; private set; }
+        public ResourcePrivateLinkClient Client { get; private set; }
 
         /// <summary>
         /// Create a resource management group private link.
@@ -105,6 +105,10 @@ namespace Microsoft.Azure.Management.ResourceManager
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (rmplName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "rmplName");
@@ -113,7 +117,6 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2020-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -134,9 +137,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{rmplName}", System.Uri.EscapeDataString(rmplName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -321,11 +324,14 @@ namespace Microsoft.Azure.Management.ResourceManager
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (rmplName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "rmplName");
             }
-            string apiVersion = "2020-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -345,9 +351,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{rmplName}", System.Uri.EscapeDataString(rmplName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -523,11 +529,14 @@ namespace Microsoft.Azure.Management.ResourceManager
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (rmplName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "rmplName");
             }
-            string apiVersion = "2020-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -547,9 +556,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{rmplName}", System.Uri.EscapeDataString(rmplName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -688,7 +697,10 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2020-05-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -704,9 +716,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Authorization/resourceManagementPrivateLinks").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

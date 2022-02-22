@@ -18,7 +18,7 @@ using Azure.ResourceManager.StoragePool.Models;
 
 namespace Azure.ResourceManager.StoragePool
 {
-    /// <summary> An internal class to add extension methods to. </summary>
+    /// <summary> A class to add extension methods to Subscription. </summary>
     internal partial class SubscriptionExtensionClient : ArmResource
     {
         private ClientDiagnostics _diskPoolClientDiagnostics;
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.StoragePool
         }
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionExtensionClient"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionExtensionClient(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SubscriptionExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -49,14 +49,15 @@ namespace Azure.ResourceManager.StoragePool
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            ArmClient.TryGetApiVersion(resourceType, out string apiVersion);
+            TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/diskPools
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DiskPools_ListBySubscription
-        /// <summary> Gets a list of Disk Pools in a subscription. </summary>
+        /// <summary>
+        /// Gets a list of Disk Pools in a subscription
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/diskPools
+        /// Operation Id: DiskPools_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DiskPool" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DiskPool> GetDiskPoolsAsync(CancellationToken cancellationToken = default)
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.StoragePool
                 try
                 {
                     var response = await DiskPoolRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.StoragePool
                 try
                 {
                     var response = await DiskPoolRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -94,10 +95,11 @@ namespace Azure.ResourceManager.StoragePool
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/diskPools
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DiskPools_ListBySubscription
-        /// <summary> Gets a list of Disk Pools in a subscription. </summary>
+        /// <summary>
+        /// Gets a list of Disk Pools in a subscription
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/diskPools
+        /// Operation Id: DiskPools_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DiskPool" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DiskPool> GetDiskPools(CancellationToken cancellationToken = default)
@@ -109,7 +111,7 @@ namespace Azure.ResourceManager.StoragePool
                 try
                 {
                     var response = DiskPoolRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -124,7 +126,7 @@ namespace Azure.ResourceManager.StoragePool
                 try
                 {
                     var response = DiskPoolRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -135,19 +137,16 @@ namespace Azure.ResourceManager.StoragePool
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/locations/{location}/diskPoolZones
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DiskPoolZones_List
-        /// <summary> Lists available Disk Pool Skus in an Azure location. </summary>
+        /// <summary>
+        /// Lists available Disk Pool Skus in an Azure location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/locations/{location}/diskPoolZones
+        /// Operation Id: DiskPoolZones_List
+        /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="DiskPoolZoneInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DiskPoolZoneInfo> GetDiskPoolZonesAsync(string location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             async Task<Page<DiskPoolZoneInfo>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DiskPoolZonesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetDiskPoolZones");
@@ -181,19 +180,16 @@ namespace Azure.ResourceManager.StoragePool
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/locations/{location}/diskPoolZones
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DiskPoolZones_List
-        /// <summary> Lists available Disk Pool Skus in an Azure location. </summary>
+        /// <summary>
+        /// Lists available Disk Pool Skus in an Azure location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/locations/{location}/diskPoolZones
+        /// Operation Id: DiskPoolZones_List
+        /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="DiskPoolZoneInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DiskPoolZoneInfo> GetDiskPoolZones(string location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             Page<DiskPoolZoneInfo> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DiskPoolZonesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetDiskPoolZones");
@@ -227,19 +223,16 @@ namespace Azure.ResourceManager.StoragePool
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/locations/{location}/skus
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ResourceSkus_List
-        /// <summary> Lists available StoragePool resources and skus in an Azure location. </summary>
+        /// <summary>
+        /// Lists available StoragePool resources and skus in an Azure location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/locations/{location}/skus
+        /// Operation Id: ResourceSkus_List
+        /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="ResourceSkuInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceSkuInfo> GetResourceSkusAsync(string location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             async Task<Page<ResourceSkuInfo>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetResourceSkus");
@@ -273,19 +266,16 @@ namespace Azure.ResourceManager.StoragePool
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/locations/{location}/skus
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ResourceSkus_List
-        /// <summary> Lists available StoragePool resources and skus in an Azure location. </summary>
+        /// <summary>
+        /// Lists available StoragePool resources and skus in an Azure location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/locations/{location}/skus
+        /// Operation Id: ResourceSkus_List
+        /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="ResourceSkuInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceSkuInfo> GetResourceSkus(string location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             Page<ResourceSkuInfo> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetResourceSkus");

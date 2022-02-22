@@ -47,6 +47,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             Sanitizer = new CosmosDBManagementRecordedTestSanitizer();
         }
+
+        protected CosmosDBManagementClientBase(bool isAsync, RecordedTestMode mode)
+            : base(isAsync, mode)
+        {
+            Sanitizer = new CosmosDBManagementRecordedTestSanitizer();
+        }
+
         protected async Task<DatabaseAccount> CreateDatabaseAccount(string name, DatabaseAccountKind kind)
         {
             return await CreateDatabaseAccount(name, kind, null);

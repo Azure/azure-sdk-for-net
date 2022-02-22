@@ -18,7 +18,7 @@ using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    /// <summary> An internal class to add extension methods to. </summary>
+    /// <summary> A class to add extension methods to Subscription. </summary>
     internal partial class SubscriptionExtensionClient : ArmResource
     {
         private ClientDiagnostics _webPubSubClientDiagnostics;
@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.WebPubSub
         }
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionExtensionClient"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionExtensionClient(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SubscriptionExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -45,24 +45,20 @@ namespace Azure.ResourceManager.WebPubSub
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            ArmClient.TryGetApiVersion(resourceType, out string apiVersion);
+            TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
-        /// <summary> Checks that the resource name is valid and is not already in use. </summary>
+        /// <summary>
+        /// Checks that the resource name is valid and is not already in use.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability
+        /// Operation Id: WebPubSub_CheckNameAvailability
+        /// </summary>
         /// <param name="location"> the region. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<Response<NameAvailability>> CheckWebPubSubNameAvailabilityAsync(string location, NameAvailabilityParameters parameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
             using var scope = WebPubSubClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckWebPubSubNameAvailability");
             scope.Start();
             try
@@ -77,20 +73,16 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Checks that the resource name is valid and is not already in use. </summary>
+        /// <summary>
+        /// Checks that the resource name is valid and is not already in use.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability
+        /// Operation Id: WebPubSub_CheckNameAvailability
+        /// </summary>
         /// <param name="location"> the region. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
         public virtual Response<NameAvailability> CheckWebPubSubNameAvailability(string location, NameAvailabilityParameters parameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
             using var scope = WebPubSubClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckWebPubSubNameAvailability");
             scope.Start();
             try
@@ -105,7 +97,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Handles requests to list all resources in a subscription. </summary>
+        /// <summary>
+        /// Handles requests to list all resources in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/webPubSub
+        /// Operation Id: WebPubSub_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebPubSub" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebPubSub> GetWebPubSubsAsync(CancellationToken cancellationToken = default)
@@ -117,7 +113,7 @@ namespace Azure.ResourceManager.WebPubSub
                 try
                 {
                     var response = await WebPubSubRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -132,7 +128,7 @@ namespace Azure.ResourceManager.WebPubSub
                 try
                 {
                     var response = await WebPubSubRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -143,7 +139,11 @@ namespace Azure.ResourceManager.WebPubSub
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Handles requests to list all resources in a subscription. </summary>
+        /// <summary>
+        /// Handles requests to list all resources in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/webPubSub
+        /// Operation Id: WebPubSub_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebPubSub" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebPubSub> GetWebPubSubs(CancellationToken cancellationToken = default)
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.WebPubSub
                 try
                 {
                     var response = WebPubSubRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.WebPubSub
                 try
                 {
                     var response = WebPubSubRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -181,16 +181,16 @@ namespace Azure.ResourceManager.WebPubSub
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> List resource usage quotas by location. </summary>
+        /// <summary>
+        /// List resource usage quotas by location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages
+        /// Operation Id: Usages_List
+        /// </summary>
         /// <param name="location"> the location like &quot;eastus&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="SignalRServiceUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SignalRServiceUsage> GetUsagesAsync(string location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             async Task<Page<SignalRServiceUsage>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetUsages");
@@ -224,16 +224,16 @@ namespace Azure.ResourceManager.WebPubSub
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> List resource usage quotas by location. </summary>
+        /// <summary>
+        /// List resource usage quotas by location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages
+        /// Operation Id: Usages_List
+        /// </summary>
         /// <param name="location"> the location like &quot;eastus&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="SignalRServiceUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SignalRServiceUsage> GetUsages(string location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             Page<SignalRServiceUsage> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetUsages");

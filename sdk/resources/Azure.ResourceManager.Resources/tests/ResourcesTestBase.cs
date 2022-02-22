@@ -14,6 +14,7 @@ using Azure.ResourceManager.TestFramework;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using JsonObject = System.Collections.Generic.Dictionary<string, object>;
+using System.Security.Policy;
 
 namespace Azure.ResourceManager.Resources.Tests
 {
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Resources.Tests
         {
             DisplayName = displayName,
             Description = $"{displayName} description",
-            PackageFileUri = "https://raw.githubusercontent.com/Azure/azure-managedapp-samples/master/Managed%20Application%20Sample%20Packages/201-managed-storage-account/managedstorage.zip"
+            PackageFileUri = new Uri("https://raw.githubusercontent.com/Azure/azure-managedapp-samples/master/Managed%20Application%20Sample%20Packages/201-managed-storage-account/managedstorage.zip")
         };
 
         protected static ApplicationData CreateApplicationData(string applicationDefinitionId, string managedResourceGroupId, string storageAccountPrefix) => new ApplicationData(AzureLocation.WestUS2, "ServiceCatalog")
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.Resources.Tests
         {
             DeploymentProperties tmpDeploymentProperties = new DeploymentProperties(DeploymentMode.Incremental);
             tmpDeploymentProperties.TemplateLink = new TemplateLink();
-            tmpDeploymentProperties.TemplateLink.Uri = "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json";
+            tmpDeploymentProperties.TemplateLink.Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json");
             tmpDeploymentProperties.Parameters = new JsonObject()
             {
                 {"storageAccountType", new JsonObject()
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Resources.Tests
         {
             DeploymentProperties tmpDeploymentProperties = new DeploymentProperties(DeploymentMode.Incremental);
             tmpDeploymentProperties.TemplateLink = new TemplateLink();
-            tmpDeploymentProperties.TemplateLink.Uri = "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json";
+            tmpDeploymentProperties.TemplateLink.Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json");
             var parametersObject = new { storageAccountType = new { value = "Standard_GRS" } };
             //convert this object to JsonElement
             var parametersString = JsonSerializer.Serialize(parametersObject);

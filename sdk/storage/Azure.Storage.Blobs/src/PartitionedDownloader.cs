@@ -8,6 +8,7 @@ using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
@@ -39,10 +40,13 @@ namespace Azure.Storage.Blobs
 
         private readonly DownloadTransactionalHashingOptions _hashingOptions;
 
+        private readonly IProgress<long> _progress;
+
         public PartitionedDownloader(
             BlobBaseClient client,
             StorageTransferOptions transferOptions = default,
-            DownloadTransactionalHashingOptions hashingOptions = default)
+            DownloadTransactionalHashingOptions hashingOptions = default,
+            IProgress<long> progress = default)
         {
             _client = client;
 
@@ -86,6 +90,15 @@ namespace Azure.Storage.Blobs
             }
 
             _hashingOptions = hashingOptions;
+            _progress = progress;
+
+            /* Unlike partitioned upload, download cannot tell ahead of time if it will split and/or parallelize
+             * after first call. Instead of applying progress handling to initial download stream after-the-fact,
+             * wrap a given progress handler in an aggregator upfront and accept the overhead. */
+            if (_progress != null && _progress is not AggregatingProgressIncrementer)
+            {
+                _progress = new AggregatingProgressIncrementer(_progress);
+            }
         }
 
         public async Task<Response> DownloadToAsync(
@@ -111,7 +124,8 @@ namespace Azure.Storage.Blobs
                         {
                             Range = initialRange,
                             Conditions = conditions,
-                            TransactionalHashingOptions = _hashingOptions
+                            TransactionalHashingOptions = _hashingOptions,
+                            ProgressHandler = _progress,
                         },
                         cancellationToken);
 
@@ -127,7 +141,8 @@ namespace Azure.Storage.Blobs
                         {
                             Range = default,
                             Conditions = conditions,
-                            TransactionalHashingOptions = _hashingOptions
+                            TransactionalHashingOptions = _hashingOptions,
+                            ProgressHandler = _progress,
                         },
                         cancellationToken)
                         .ConfigureAwait(false);
@@ -183,7 +198,8 @@ namespace Azure.Storage.Blobs
                         {
                             Range = httpRange,
                             Conditions = conditionsWithEtag,
-                            TransactionalHashingOptions = _hashingOptions
+                            TransactionalHashingOptions = _hashingOptions,
+                            ProgressHandler = _progress,
                         },
                         cancellationToken));
 
@@ -265,7 +281,8 @@ namespace Azure.Storage.Blobs
                         {
                             Range = initialRange,
                             Conditions = conditions,
-                            TransactionalHashingOptions = _hashingOptions
+                            TransactionalHashingOptions = _hashingOptions,
+                            ProgressHandler = _progress,
                         },
                         cancellationToken);
                 }
@@ -276,7 +293,8 @@ namespace Azure.Storage.Blobs
                     {
                         Range = default,
                         Conditions = conditions,
-                        TransactionalHashingOptions = _hashingOptions
+                        TransactionalHashingOptions = _hashingOptions,
+                        ProgressHandler = _progress,
                     },
                     cancellationToken);
                 }
@@ -316,7 +334,8 @@ namespace Azure.Storage.Blobs
                         {
                             Range = httpRange,
                             Conditions = conditionsWithEtag,
-                            TransactionalHashingOptions = _hashingOptions
+                            TransactionalHashingOptions = _hashingOptions,
+                            ProgressHandler = _progress,
                         },
                         cancellationToken);
                     CopyTo(result.Value, destination, cancellationToken);
@@ -354,6 +373,7 @@ namespace Azure.Storage.Blobs
             Stream destination,
             CancellationToken cancellationToken)
         {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             using Stream source = result.Content;
 
             await source.CopyToAsync(
@@ -368,9 +388,12 @@ namespace Azure.Storage.Blobs
             Stream destination,
             CancellationToken cancellationToken)
         {
-            cancellationToken.ThrowIfCancellationRequested();
-            result.Content.CopyTo(destination, Constants.DefaultDownloadCopyBufferSize);
-            result.Content.Dispose();
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            using Stream source = result.Content;
+
+            source.CopyTo(
+                destination,
+                Constants.DefaultDownloadCopyBufferSize);
         }
 
         private IEnumerable<HttpRange> GetRanges(long initialLength, long totalLength)

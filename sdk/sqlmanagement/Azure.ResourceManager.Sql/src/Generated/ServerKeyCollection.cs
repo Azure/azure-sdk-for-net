@@ -15,8 +15,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -32,11 +32,12 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref="ServerKeyCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ServerKeyCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal ServerKeyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverKeyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerKey.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ServerKey.ResourceType, out string serverKeyApiVersion);
+            TryGetApiVersion(ServerKey.ResourceType, out string serverKeyApiVersion);
             _serverKeyRestClient = new ServerKeysRestOperations(_serverKeyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverKeyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -49,67 +50,28 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlServer.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/keys/{keyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: ServerKeys_CreateOrUpdate
-        /// <summary> Creates or updates a server key. </summary>
+        /// <summary>
+        /// Creates or updates a server key.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/keys/{keyName}
+        /// Operation Id: ServerKeys_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="keyName"> The name of the server key to be operated on (updated or created). The key name is required to be in the format of &apos;vault_key_version&apos;. For example, if the keyId is https://YourVaultName.vault.azure.net/keys/YourKeyName/YourKeyVersion, then the server key name should be formatted as: YourVaultName_YourKeyName_YourKeyVersion. </param>
         /// <param name="parameters"> The requested server key resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ServerKeyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string keyName, ServerKeyData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ServerKey>> CreateOrUpdateAsync(bool waitForCompletion, string keyName, ServerKeyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _serverKeyClientDiagnostics.CreateScope("ServerKeyCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _serverKeyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters, cancellationToken);
-                var operation = new ServerKeyCreateOrUpdateOperation(ArmClient, _serverKeyClientDiagnostics, Pipeline, _serverKeyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/keys/{keyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: ServerKeys_CreateOrUpdate
-        /// <summary> Creates or updates a server key. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="keyName"> The name of the server key to be operated on (updated or created). The key name is required to be in the format of &apos;vault_key_version&apos;. For example, if the keyId is https://YourVaultName.vault.azure.net/keys/YourKeyName/YourKeyVersion, then the server key name should be formatted as: YourVaultName_YourKeyName_YourKeyVersion. </param>
-        /// <param name="parameters"> The requested server key resource state. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ServerKeyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string keyName, ServerKeyData parameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _serverKeyClientDiagnostics.CreateScope("ServerKeyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _serverKeyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ServerKeyCreateOrUpdateOperation(ArmClient, _serverKeyClientDiagnostics, Pipeline, _serverKeyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters).Request, response);
+                var operation = new SqlArmOperation<ServerKey>(new ServerKeyOperationSource(Client), _serverKeyClientDiagnostics, Pipeline, _serverKeyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,26 +83,31 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/keys/{keyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: ServerKeys_Get
-        /// <summary> Gets a server key. </summary>
-        /// <param name="keyName"> The name of the server key to be retrieved. </param>
+        /// <summary>
+        /// Creates or updates a server key.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/keys/{keyName}
+        /// Operation Id: ServerKeys_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="keyName"> The name of the server key to be operated on (updated or created). The key name is required to be in the format of &apos;vault_key_version&apos;. For example, if the keyId is https://YourVaultName.vault.azure.net/keys/YourKeyName/YourKeyVersion, then the server key name should be formatted as: YourVaultName_YourKeyName_YourKeyVersion. </param>
+        /// <param name="parameters"> The requested server key resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public virtual Response<ServerKey> Get(string keyName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual ArmOperation<ServerKey> CreateOrUpdate(bool waitForCompletion, string keyName, ServerKeyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
-            using var scope = _serverKeyClientDiagnostics.CreateScope("ServerKeyCollection.Get");
+            using var scope = _serverKeyClientDiagnostics.CreateScope("ServerKeyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serverKeyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken);
-                if (response.Value == null)
-                    throw _serverKeyClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerKey(ArmClient, response.Value), response.GetRawResponse());
+                var response = _serverKeyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters, cancellationToken);
+                var operation = new SqlArmOperation<ServerKey>(new ServerKeyOperationSource(Client), _serverKeyClientDiagnostics, Pipeline, _serverKeyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters).Request, response, OperationFinalStateVia.Location);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -149,13 +116,14 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/keys/{keyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: ServerKeys_Get
-        /// <summary> Gets a server key. </summary>
+        /// <summary>
+        /// Gets a server key.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/keys/{keyName}
+        /// Operation Id: ServerKeys_Get
+        /// </summary>
         /// <param name="keyName"> The name of the server key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public async virtual Task<Response<ServerKey>> GetAsync(string keyName, CancellationToken cancellationToken = default)
         {
@@ -168,7 +136,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _serverKeyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _serverKeyClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerKey(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerKey(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,23 +145,27 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets a server key.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/keys/{keyName}
+        /// Operation Id: ServerKeys_Get
+        /// </summary>
         /// <param name="keyName"> The name of the server key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public virtual Response<ServerKey> GetIfExists(string keyName, CancellationToken cancellationToken = default)
+        public virtual Response<ServerKey> Get(string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
-            using var scope = _serverKeyClientDiagnostics.CreateScope("ServerKeyCollection.GetIfExists");
+            using var scope = _serverKeyClientDiagnostics.CreateScope("ServerKeyCollection.Get");
             scope.Start();
             try
             {
-                var response = _serverKeyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken);
+                var response = _serverKeyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ServerKey>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerKey(ArmClient, response.Value), response.GetRawResponse());
+                    throw _serverKeyClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServerKey(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,58 +174,98 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="keyName"> The name of the server key to be retrieved. </param>
+        /// <summary>
+        /// Gets a list of server keys.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/keys
+        /// Operation Id: ServerKeys_ListByServer
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public async virtual Task<Response<ServerKey>> GetIfExistsAsync(string keyName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServerKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServerKey> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-
-            using var scope = _serverKeyClientDiagnostics.CreateScope("ServerKeyCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<ServerKey>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _serverKeyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ServerKey>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerKey(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _serverKeyClientDiagnostics.CreateScope("ServerKeyCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _serverKeyRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerKey(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<ServerKey>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _serverKeyClientDiagnostics.CreateScope("ServerKeyCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _serverKeyRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerKey(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="keyName"> The name of the server key to be retrieved. </param>
+        /// <summary>
+        /// Gets a list of server keys.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/keys
+        /// Operation Id: ServerKeys_ListByServer
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public virtual Response<bool> Exists(string keyName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServerKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServerKey> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-
-            using var scope = _serverKeyClientDiagnostics.CreateScope("ServerKeyCollection.Exists");
-            scope.Start();
-            try
+            Page<ServerKey> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(keyName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _serverKeyClientDiagnostics.CreateScope("ServerKeyCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _serverKeyRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerKey(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<ServerKey> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _serverKeyClientDiagnostics.CreateScope("ServerKeyCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _serverKeyRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerKey(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/keys/{keyName}
+        /// Operation Id: ServerKeys_Get
+        /// </summary>
         /// <param name="keyName"> The name of the server key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string keyName, CancellationToken cancellationToken = default)
         {
@@ -273,86 +285,89 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/keys
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: ServerKeys_ListByServer
-        /// <summary> Gets a list of server keys. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/keys/{keyName}
+        /// Operation Id: ServerKeys_Get
+        /// </summary>
+        /// <param name="keyName"> The name of the server key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerKey" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerKey> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
+        public virtual Response<bool> Exists(string keyName, CancellationToken cancellationToken = default)
         {
-            Page<ServerKey> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
+
+            using var scope = _serverKeyClientDiagnostics.CreateScope("ServerKeyCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _serverKeyClientDiagnostics.CreateScope("ServerKeyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _serverKeyRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerKey(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(keyName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<ServerKey> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _serverKeyClientDiagnostics.CreateScope("ServerKeyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _serverKeyRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerKey(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/keys
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: ServerKeys_ListByServer
-        /// <summary> Gets a list of server keys. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/keys/{keyName}
+        /// Operation Id: ServerKeys_Get
+        /// </summary>
+        /// <param name="keyName"> The name of the server key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerKey" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerKey> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
+        public async virtual Task<Response<ServerKey>> GetIfExistsAsync(string keyName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServerKey>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
+
+            using var scope = _serverKeyClientDiagnostics.CreateScope("ServerKeyCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _serverKeyClientDiagnostics.CreateScope("ServerKeyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serverKeyRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerKey(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _serverKeyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<ServerKey>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerKey(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<ServerKey>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _serverKeyClientDiagnostics.CreateScope("ServerKeyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serverKeyRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerKey(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/keys/{keyName}
+        /// Operation Id: ServerKeys_Get
+        /// </summary>
+        /// <param name="keyName"> The name of the server key to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
+        public virtual Response<ServerKey> GetIfExists(string keyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
+
+            using var scope = _serverKeyClientDiagnostics.CreateScope("ServerKeyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _serverKeyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<ServerKey>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerKey(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<ServerKey> IEnumerable<ServerKey>.GetEnumerator()

@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A recoverable managed database resource. </summary>
-    public partial class UpdateManagedInstanceDnsServersOperation : Resource
+    public partial class UpdateManagedInstanceDnsServersOperation : ResourceData
     {
         /// <summary> Initializes a new instance of UpdateManagedInstanceDnsServersOperation. </summary>
         public UpdateManagedInstanceDnsServersOperation()

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for the ListServiceTags API service call. </summary>
-    public partial class ServiceTagsListResult : ResourceManager.Models.Resource
+    public partial class ServiceTagsListResult : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceTagsListResult. </summary>
         internal ServiceTagsListResult()

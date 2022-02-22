@@ -1302,6 +1302,8 @@ namespace Azure.Storage.Blobs.Specialized
                         ClientConfiguration.Pipeline.ResponseClassifier,
                         Constants.MaxReliabilityRetries);
 
+                    stream = stream.WithNoDispose().WithProgress(options?.ProgressHandler);
+
                     /* NOTE: we do not currently support both features together. This remains here for the
                      * potential future where we do.
                      * Comparing hash results comes BEFORE decryption.
@@ -2063,7 +2065,7 @@ namespace Azure.Storage.Blobs.Specialized
             return StagedDownloadAsync(
                 destination,
                 options?.Conditions,
-                //options.ProgressHandler, // TODO: #8506
+                options?.ProgressHandler,
                 options?.TransferOptions ?? default,
                 options?.TransactionalHashingOptions,
                 async: false,
@@ -2102,7 +2104,7 @@ namespace Azure.Storage.Blobs.Specialized
             return StagedDownloadAsync(
                 destination,
                 options?.Conditions,
-                //options.ProgressHandler, // TODO: #8506
+                options?.ProgressHandler,
                 options?.TransferOptions ?? default,
                 options?.TransactionalHashingOptions,
                 async: false,
@@ -2140,7 +2142,7 @@ namespace Azure.Storage.Blobs.Specialized
             return await StagedDownloadAsync(
                 destination,
                 options?.Conditions,
-                //options.ProgressHandler, // TODO: #8506
+                options?.ProgressHandler,
                 options?.TransferOptions ?? default,
                 options?.TransactionalHashingOptions,
                 async: true,
@@ -2179,7 +2181,7 @@ namespace Azure.Storage.Blobs.Specialized
             return await StagedDownloadAsync(
                 destination,
                 options?.Conditions,
-                //options.ProgressHandler, // TODO: #8506
+                options?.ProgressHandler,
                 options?.TransferOptions ?? default,
                 options?.TransactionalHashingOptions,
                 async: true,
@@ -2393,6 +2395,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
         /// <param name="transferOptions">
         /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
@@ -2417,17 +2423,13 @@ namespace Azure.Storage.Blobs.Specialized
         internal async Task<Response> StagedDownloadAsync(
             Stream destination,
             BlobRequestConditions conditions = default,
-            ///// <param name="progressHandler">
-            ///// Optional <see cref="IProgress{Long}"/> to provide
-            ///// progress updates about data transfers.
-            ///// </param>
-            //IProgress<long> progressHandler, // TODO: #8506
+            IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
             DownloadTransactionalHashingOptions hashingOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions, hashingOptions);
+            PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions, hashingOptions, progressHandler);
 
             if (UsingClientSideEncryption)
             {
@@ -3759,7 +3761,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="Delete"/> operation marks the specified blob
         /// or snapshot for  deletion. The blob is later deleted during
-        /// garbage collection.
+        /// garbage collection which could take several minutes.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -3781,7 +3783,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -3801,7 +3803,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation marks the specified blob
         /// or snapshot for  deletion. The blob is later deleted during
-        /// garbage collection.
+        /// garbage collection which could take several minutes.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -3823,7 +3825,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -3843,7 +3845,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="DeleteIfExists"/> operation marks the specified blob
         /// or snapshot for deletion, if the blob exists. The blob is later deleted
-        /// during garbage collection.
+        /// during garbage collection which could take several minutes.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -3866,7 +3868,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <returns>
         /// A <see cref="Response"/> Returns true if blob exists and was
-        /// deleted, return false otherwise.
+        /// marked for deletion, return false otherwise.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -3886,7 +3888,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="DeleteIfExistsAsync"/> operation marks the specified blob
         /// or snapshot for deletion, if the blob exists. The blob is later deleted
-        /// during garbage collection.
+        /// during garbage collection which could take several minutes.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -3909,7 +3911,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <returns>
         /// A <see cref="Response"/> Returns true if blob exists and was
-        /// deleted, return false otherwise.
+        /// marked for deletion, return false otherwise.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -3929,7 +3931,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="DeleteIfExistsInternal"/> operation marks the specified blob
         /// or snapshot for deletion, if the blob exists. The blob is later deleted
-        /// during garbage collection.
+        /// during garbage collection which could take several minutes.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -3954,7 +3956,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -4010,7 +4012,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="DeleteInternal"/> operation marks the specified blob
         /// or snapshot for  deletion. The blob is later deleted during
-        /// garbage collection.
+        /// garbage collection which could take several minutes.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -4038,7 +4040,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional. To indicate if the name of the operation.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if

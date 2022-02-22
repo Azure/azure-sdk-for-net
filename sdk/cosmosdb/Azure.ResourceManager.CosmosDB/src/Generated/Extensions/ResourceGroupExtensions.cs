@@ -12,23 +12,29 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region DatabaseAccount
-        /// <summary> Gets an object representing a DatabaseAccountCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DatabaseAccountCollection" /> object. </returns>
-        public static DatabaseAccountCollection GetDatabaseAccounts(this ResourceGroup resourceGroup)
-        {
-            return new DatabaseAccountCollection(resourceGroup);
-        }
-        #endregion
-
         private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
         {
-            return resourceGroup.GetCachedClient((armClient) =>
+            return resourceGroup.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(armClient, resourceGroup.Id);
+                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
             }
             );
+        }
+
+        /// <summary> Gets a collection of DatabaseAccounts in the DatabaseAccount. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of DatabaseAccounts and their operations over a DatabaseAccount. </returns>
+        public static DatabaseAccountCollection GetDatabaseAccounts(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetDatabaseAccounts();
+        }
+
+        /// <summary> Gets a collection of ClusterResources in the ClusterResource. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ClusterResources and their operations over a ClusterResource. </returns>
+        public static ClusterResourceCollection GetClusterResources(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetClusterResources();
         }
     }
 }

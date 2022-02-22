@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.AppConfiguration.Models;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -33,11 +33,12 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Initializes a new instance of the <see cref="ConfigurationStoreCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ConfigurationStoreCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal ConfigurationStoreCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _configurationStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ConfigurationStore.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ConfigurationStore.ResourceType, out string configurationStoreApiVersion);
+            TryGetApiVersion(ConfigurationStore.ResourceType, out string configurationStoreApiVersion);
             _configurationStoreRestClient = new ConfigurationStoresRestOperations(_configurationStoreClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, configurationStoreApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -50,61 +51,28 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// <summary> Creates a configuration store with the specified parameters. </summary>
+        /// <summary>
+        /// Creates a configuration store with the specified parameters.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}
+        /// Operation Id: ConfigurationStores_Create
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="configStoreCreationParameters"> The parameters for creating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> or <paramref name="configStoreCreationParameters"/> is null. </exception>
-        public virtual ConfigurationStoreCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string configStoreName, ConfigurationStoreData configStoreCreationParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ConfigurationStore>> CreateOrUpdateAsync(bool waitForCompletion, string configStoreName, ConfigurationStoreData configStoreCreationParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
-            if (configStoreCreationParameters == null)
-            {
-                throw new ArgumentNullException(nameof(configStoreCreationParameters));
-            }
-
-            using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _configurationStoreRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, configStoreCreationParameters, cancellationToken);
-                var operation = new ConfigurationStoreCreateOrUpdateOperation(ArmClient, _configurationStoreClientDiagnostics, Pipeline, _configurationStoreRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, configStoreCreationParameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a configuration store with the specified parameters. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="configStoreName"> The name of the configuration store. </param>
-        /// <param name="configStoreCreationParameters"> The parameters for creating a configuration store. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> or <paramref name="configStoreCreationParameters"/> is null. </exception>
-        public async virtual Task<ConfigurationStoreCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string configStoreName, ConfigurationStoreData configStoreCreationParameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
-            if (configStoreCreationParameters == null)
-            {
-                throw new ArgumentNullException(nameof(configStoreCreationParameters));
-            }
+            Argument.AssertNotNull(configStoreCreationParameters, nameof(configStoreCreationParameters));
 
             using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _configurationStoreRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, configStoreCreationParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ConfigurationStoreCreateOrUpdateOperation(ArmClient, _configurationStoreClientDiagnostics, Pipeline, _configurationStoreRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, configStoreCreationParameters).Request, response);
+                var operation = new AppConfigurationArmOperation<ConfigurationStore>(new ConfigurationStoreOperationSource(Client), _configurationStoreClientDiagnostics, Pipeline, _configurationStoreRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, configStoreCreationParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -116,23 +84,31 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Gets the properties of the specified configuration store. </summary>
+        /// <summary>
+        /// Creates a configuration store with the specified parameters.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}
+        /// Operation Id: ConfigurationStores_Create
+        /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
+        /// <param name="configStoreCreationParameters"> The parameters for creating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
-        public virtual Response<ConfigurationStore> Get(string configStoreName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> or <paramref name="configStoreCreationParameters"/> is null. </exception>
+        public virtual ArmOperation<ConfigurationStore> CreateOrUpdate(bool waitForCompletion, string configStoreName, ConfigurationStoreData configStoreCreationParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
+            Argument.AssertNotNull(configStoreCreationParameters, nameof(configStoreCreationParameters));
 
-            using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.Get");
+            using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _configurationStoreRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, cancellationToken);
-                if (response.Value == null)
-                    throw _configurationStoreClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ConfigurationStore(ArmClient, response.Value), response.GetRawResponse());
+                var response = _configurationStoreRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, configStoreCreationParameters, cancellationToken);
+                var operation = new AppConfigurationArmOperation<ConfigurationStore>(new ConfigurationStoreOperationSource(Client), _configurationStoreClientDiagnostics, Pipeline, _configurationStoreRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, configStoreCreationParameters).Request, response, OperationFinalStateVia.Location);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -141,10 +117,14 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Gets the properties of the specified configuration store. </summary>
+        /// <summary>
+        /// Gets the properties of the specified configuration store.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}
+        /// Operation Id: ConfigurationStores_Get
+        /// </summary>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         public async virtual Task<Response<ConfigurationStore>> GetAsync(string configStoreName, CancellationToken cancellationToken = default)
         {
@@ -157,7 +137,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 var response = await _configurationStoreRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _configurationStoreClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ConfigurationStore(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConfigurationStore(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -166,23 +146,27 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets the properties of the specified configuration store.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}
+        /// Operation Id: ConfigurationStores_Get
+        /// </summary>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
-        public virtual Response<ConfigurationStore> GetIfExists(string configStoreName, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationStore> Get(string configStoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
 
-            using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.GetIfExists");
+            using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.Get");
             scope.Start();
             try
             {
-                var response = _configurationStoreRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, cancellationToken: cancellationToken);
+                var response = _configurationStoreRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ConfigurationStore>(null, response.GetRawResponse());
-                return Response.FromValue(new ConfigurationStore(ArmClient, response.Value), response.GetRawResponse());
+                    throw _configurationStoreClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ConfigurationStore(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -191,58 +175,100 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="configStoreName"> The name of the configuration store. </param>
+        /// <summary>
+        /// Lists the configuration stores for a given resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores
+        /// Operation Id: ConfigurationStores_ListByResourceGroup
+        /// </summary>
+        /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
-        public async virtual Task<Response<ConfigurationStore>> GetIfExistsAsync(string configStoreName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConfigurationStore" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConfigurationStore> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
-
-            using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<ConfigurationStore>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _configurationStoreRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ConfigurationStore>(null, response.GetRawResponse());
-                return Response.FromValue(new ConfigurationStore(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _configurationStoreRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<ConfigurationStore>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _configurationStoreRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="configStoreName"> The name of the configuration store. </param>
+        /// <summary>
+        /// Lists the configuration stores for a given resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores
+        /// Operation Id: ConfigurationStores_ListByResourceGroup
+        /// </summary>
+        /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
-        public virtual Response<bool> Exists(string configStoreName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConfigurationStore" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConfigurationStore> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
-
-            using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.Exists");
-            scope.Start();
-            try
+            Page<ConfigurationStore> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(configStoreName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _configurationStoreRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<ConfigurationStore> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _configurationStoreRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}
+        /// Operation Id: ConfigurationStores_Get
+        /// </summary>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string configStoreName, CancellationToken cancellationToken = default)
         {
@@ -262,82 +288,89 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Lists the configuration stores for a given resource group. </summary>
-        /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}
+        /// Operation Id: ConfigurationStores_Get
+        /// </summary>
+        /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigurationStore" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConfigurationStore> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
+        public virtual Response<bool> Exists(string configStoreName, CancellationToken cancellationToken = default)
         {
-            Page<ConfigurationStore> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
+
+            using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _configurationStoreRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(configStoreName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<ConfigurationStore> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _configurationStoreRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists the configuration stores for a given resource group. </summary>
-        /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}
+        /// Operation Id: ConfigurationStores_Get
+        /// </summary>
+        /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfigurationStore" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConfigurationStore> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
+        public async virtual Task<Response<ConfigurationStore>> GetIfExistsAsync(string configStoreName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ConfigurationStore>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
+
+            using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _configurationStoreRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _configurationStoreRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<ConfigurationStore>(null, response.GetRawResponse());
+                return Response.FromValue(new ConfigurationStore(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<ConfigurationStore>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _configurationStoreRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}
+        /// Operation Id: ConfigurationStores_Get
+        /// </summary>
+        /// <param name="configStoreName"> The name of the configuration store. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
+        public virtual Response<ConfigurationStore> GetIfExists(string configStoreName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
+
+            using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _configurationStoreRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<ConfigurationStore>(null, response.GetRawResponse());
+                return Response.FromValue(new ConfigurationStore(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<ConfigurationStore> IEnumerable<ConfigurationStore>.GetEnumerator()

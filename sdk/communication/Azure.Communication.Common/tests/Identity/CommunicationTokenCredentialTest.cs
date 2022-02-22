@@ -151,12 +151,13 @@ namespace Azure.Communication.Identity
             var refreshCallCount = 0;
 
             var testClock = new TestClock();
+            var expiredToken = GenerateTokenValidForMinutes(testClock.UtcNow, -1);
             using var tokenCredential = CreateTokenCredentialWithTestClock(
                 testClock,
                 true,
                 RefreshToken,
                 _ => throw new NotImplementedException(),
-                ExpiredToken);
+                expiredToken);
 
             Assert.AreEqual(1, testClock.ScheduledActions.Count());
             testClock.Tick();
@@ -317,7 +318,7 @@ namespace Azure.Communication.Identity
 
             Assert.AreEqual(1, testClock.ScheduledActions.Count());
             var firstTimer = testClock.ScheduledActions.First();
-            // go into soon to expire window
+            // Go into the soon-to-expire window
             testClock.Tick(TimeSpan.FromMinutes(20 - ThreadSafeRefreshableAccessTokenCache.ProactiveRefreshIntervalInMinutes + 0.5));
 
             Assert.AreEqual(1, testClock.ScheduledActions.Count());
@@ -341,7 +342,7 @@ namespace Azure.Communication.Identity
                 _ => throw new NotImplementedException(),
                 twentyMinToken);
 
-            // go into soon to expire window
+            // Go into the soon-to-expire window
             testClock.Tick(TimeSpan.FromMinutes(20 - ThreadSafeRefreshableAccessTokenCache.ProactiveRefreshIntervalInMinutes + 0.5));
 
             for (var i = 0; i < 10; i++)
@@ -358,6 +359,71 @@ namespace Azure.Communication.Identity
             {
                 refreshCallCount++;
                 return GenerateTokenValidForMinutes(testClock.UtcNow, 20);
+            }
+        }
+
+        [Test]
+        public Task CommunicationTokenCredential_TokenAboutToExpire_FractionalBackoffApplied()
+        {
+            var refreshCallCount = 0;
+            var expectedTotalCallCounts = 1;
+            var testClock = new TestClock();
+            var twentyMinToken = GenerateTokenValidForMinutes(testClock.UtcNow, 20);
+
+            using var tokenCredential = CreateTokenCredentialWithTestClock(
+                testClock,
+                refreshProactively: true,
+                RefreshToken,
+                _ => throw new NotImplementedException(),
+                twentyMinToken);
+
+            var soonToExpireMs = TimeSpan.FromMinutes(20 - ThreadSafeRefreshableAccessTokenCache.ProactiveRefreshIntervalInMinutes)
+                                         .TotalMilliseconds;
+            // Go into the soon-to-expire window
+            testClock.Tick(TimeSpan.FromMilliseconds(soonToExpireMs));
+            var refreshedToken = tokenCredential.GetToken();
+
+            // Expect the token to be refreshed only once within the first 10 minutes
+            Assert.AreEqual(expectedTotalCallCounts, refreshCallCount);
+
+            // iterate until the penultimate millisecond of the token expiration
+            // to prevent an exception being thrown due to the token being expired
+            var lastMsCall = TimeSpan.FromMilliseconds(1);
+            while (refreshedToken.ExpiresOn - testClock.UtcNow > lastMsCall)
+            {
+                //increase current time by refresher schedule time within soon-to-expire window( ttl/2 )
+                soonToExpireMs = (refreshedToken.ExpiresOn - testClock.UtcNow).TotalMilliseconds / 2;
+                testClock.Tick(TimeSpan.FromMilliseconds(soonToExpireMs));
+                expectedTotalCallCounts++;
+            }
+            Assert.AreEqual(expectedTotalCallCounts, refreshCallCount);
+
+            string RefreshToken(CancellationToken _)
+            {
+                refreshCallCount++;
+                return twentyMinToken;
+            }
+
+            return Task.CompletedTask;
+        }
+
+        [Test]
+        public void CommunicationTokenCredential_ExpiredTokenReturn_ThrowsException()
+        {
+            var expiredToken = GenerateTokenValidForMinutes(DateTimeOffset.UtcNow, -10);
+            using var tokenCredential = new CommunicationTokenCredential(
+                new CommunicationTokenRefreshOptions(
+                    refreshProactively: true,
+                    RefreshToken)
+                {
+                    InitialToken = expiredToken
+                });
+
+            var ex = Assert.Throws<InvalidOperationException>(() => tokenCredential.GetToken());
+            Assert.That(ex?.Message, Is.EqualTo("The token returned from the tokenRefresher is expired."));
+            string RefreshToken(CancellationToken _)
+            {
+                return expiredToken;
             }
         }
 

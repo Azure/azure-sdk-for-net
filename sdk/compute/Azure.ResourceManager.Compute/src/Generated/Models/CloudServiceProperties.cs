@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// If not specified, the default value is Auto. If set to Manual, PUT UpdateDomain must be called to apply the update. If set to Auto, the update is automatically applied to each update domain in sequence.
         /// </param>
         /// <param name="roleProfile"> Describes the role profile for the cloud service. </param>
-        /// <param name="oSProfile"> Describes the OS profile for the cloud service. </param>
+        /// <param name="osProfile"> Describes the OS profile for the cloud service. </param>
         /// <param name="networkProfile"> Network Profile for the cloud service. </param>
         /// <param name="extensionProfile"> Describes a cloud service extension profile. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="uniqueId"> The unique identifier for the cloud service. </param>
-        internal CloudServiceProperties(string packageUrl, string configuration, string configurationUrl, bool? startCloudService, bool? allowModelOverride, CloudServiceUpgradeMode? upgradeMode, CloudServiceRoleProfile roleProfile, CloudServiceOSProfile oSProfile, CloudServiceNetworkProfile networkProfile, CloudServiceExtensionProfile extensionProfile, string provisioningState, string uniqueId)
+        internal CloudServiceProperties(string packageUrl, string configuration, string configurationUrl, bool? startCloudService, bool? allowModelOverride, CloudServiceUpgradeMode? upgradeMode, CloudServiceRoleProfile roleProfile, CloudServiceOSProfile osProfile, CloudServiceNetworkProfile networkProfile, CloudServiceExtensionProfile extensionProfile, string provisioningState, string uniqueId)
         {
             PackageUrl = packageUrl;
             Configuration = configuration;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
             AllowModelOverride = allowModelOverride;
             UpgradeMode = upgradeMode;
             RoleProfile = roleProfile;
-            OSProfile = oSProfile;
+            OSProfile = osProfile;
             NetworkProfile = networkProfile;
             ExtensionProfile = extensionProfile;
             ProvisioningState = provisioningState;

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the ResourceGroup data model. </summary>
-    public partial class ResourceGroupData : TrackedResource
+    public partial class ResourceGroupData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ResourceGroupData. </summary>
         /// <param name="location"> The location. </param>

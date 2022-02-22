@@ -98,7 +98,7 @@
         "x-ms-version": "2021-04-10",
         "x-ms-write": "clear"
       },
-      "RequestBody": [],
+      "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Length": "223",

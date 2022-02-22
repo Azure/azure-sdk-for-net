@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the AfdEndpoint data model. </summary>
-    public partial class AfdEndpointData : TrackedResource
+    public partial class AfdEndpointData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AfdEndpointData. </summary>
         /// <param name="location"> The location. </param>
