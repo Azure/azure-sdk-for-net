@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         internal LongTermRetentionPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _longTermRetentionPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string longTermRetentionPolicyApiVersion);
+            TryGetApiVersion(ResourceType, out string longTermRetentionPolicyApiVersion);
             _longTermRetentionPolicyRestClient = new LongTermRetentionPoliciesRestOperations(_longTermRetentionPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, longTermRetentionPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

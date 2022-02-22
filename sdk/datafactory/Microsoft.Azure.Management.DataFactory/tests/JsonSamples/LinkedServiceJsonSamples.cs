@@ -3305,5 +3305,71 @@ namespace DataFactory.Tests.JsonSamples
         }
     }
 }";
+        [JsonSample]
+        public const string TeamDeskLinkedService = @"
+{
+    name: ""LinkedService-TeamDesk"",
+    properties:
+    {
+        type: ""TeamDesk"",
+        typeProperties: {
+            authenticationType: ""Basic"",
+            userName: ""userName"",
+            password: {
+                value : ""fakePassword"",
+                type : ""SecureString""
+            },
+            url: ""testUrl""
+        }
+    }
+}";
+        [JsonSample]
+        public const string QuickbaseLinkedService = @"
+{
+    name: ""LinkedService-Quickbase"",
+    properties:
+    {
+        type: ""Quickbase"",
+        typeProperties: {
+            userToken: {
+                value : ""fakeUserToken"",
+                type : ""SecureString""
+            },
+            url: ""testUrl""
+        }
+    }
+}";
+        [JsonSample]
+        public const string SmartsheetLinkedService = @"
+{
+    name: ""LinkedService-Smartsheet"",
+    properties:
+    {
+        type: ""Smartsheet"",
+        typeProperties: {
+            apiToken: {
+                value : ""fakeApiToken"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
+        [JsonSample]
+        public const string ZendeskLinkedService = @"
+{
+    name: ""LinkedService-Zendesk"",
+    properties:
+    {
+        type: ""Zendesk"",
+        typeProperties: {
+            authenticationType: ""Token"",
+            apiToken: {
+                value : ""fakeApiToken"",
+                type : ""SecureString""
+            },
+            url: ""testUrl""
+        }
+    }
+}";
     }
 }

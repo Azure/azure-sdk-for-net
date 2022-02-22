@@ -24,7 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             foreach (var activity in batchActivity)
             {
                 MonitorBase telemetryData = new MonitorBase();
-                var monitorTags = TraceHelper.EnumerateActivityTags(activity);
+                var monitorTags = EnumerateActivityTags(activity);
                 telemetryItem = new TelemetryItem(activity, ref monitorTags);
                 telemetryItem.InstrumentationKey = instrumentationKey;
                 telemetryItem.SetResource(roleName, roleInstance);
@@ -41,6 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         break;
                 }
 
+                monitorTags.Return();
                 telemetryItem.Data = telemetryData;
                 telemetryItems.Add(telemetryItem);
             }

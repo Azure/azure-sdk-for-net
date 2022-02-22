@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources
         internal JitRequest(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _jitRequestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string jitRequestApiVersion);
+            TryGetApiVersion(ResourceType, out string jitRequestApiVersion);
             _jitRequestRestClient = new JitRequestsRestOperations(_jitRequestClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jitRequestApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -184,52 +184,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Updates the JIT request.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/jitRequests/{jitRequestName}
-        /// Operation Id: JitRequests_Update
-        /// </summary>
-        /// <param name="tags"> Jit request tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<JitRequest>> UpdateAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequest.Update");
-            scope.Start();
-            try
-            {
-                var response = await _jitRequestRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new JitRequest(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates the JIT request.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/jitRequests/{jitRequestName}
-        /// Operation Id: JitRequests_Update
-        /// </summary>
-        /// <param name="tags"> Jit request tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<JitRequest> Update(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequest.Update");
-            scope.Start();
-            try
-            {
-                var response = _jitRequestRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, cancellationToken);
-                return Response.FromValue(new JitRequest(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/jitRequests/{jitRequestName}
         /// Operation Id: JitRequests_Get
@@ -240,14 +194,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<JitRequest>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequest.AddTag");
             scope.Start();
@@ -277,14 +225,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<JitRequest> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequest.AddTag");
             scope.Start();
@@ -313,10 +255,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<JitRequest>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequest.SetTags");
             scope.Start();
@@ -346,10 +285,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<JitRequest> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequest.SetTags");
             scope.Start();
@@ -379,10 +315,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<JitRequest>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequest.RemoveTag");
             scope.Start();
@@ -411,10 +344,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<JitRequest> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequest.RemoveTag");
             scope.Start();

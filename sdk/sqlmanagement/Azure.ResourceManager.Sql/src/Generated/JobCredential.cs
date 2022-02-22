@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         internal JobCredential(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _jobCredentialClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string jobCredentialApiVersion);
+            TryGetApiVersion(ResourceType, out string jobCredentialApiVersion);
             _jobCredentialRestClient = new JobCredentialsRestOperations(_jobCredentialClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jobCredentialApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

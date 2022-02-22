@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
         internal RouteFilterRule(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _routeFilterRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string routeFilterRuleApiVersion);
+            TryGetApiVersion(ResourceType, out string routeFilterRuleApiVersion);
             _routeFilterRuleRestClient = new RouteFilterRulesRestOperations(_routeFilterRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, routeFilterRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

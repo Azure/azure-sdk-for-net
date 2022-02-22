@@ -567,7 +567,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26605")]
         public async Task StartAnalyzeDocumentPopulatesDocumentPageJpg(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
@@ -623,18 +622,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             DocumentTable sampleTable = result.Tables[1];
 
-            Assert.AreEqual(4, sampleTable.RowCount);
+            Assert.AreEqual(3, sampleTable.RowCount);
             Assert.AreEqual(2, sampleTable.ColumnCount);
 
             var cells = sampleTable.Cells.ToList();
 
-            Assert.AreEqual(8, cells.Count);
+            Assert.AreEqual(6, cells.Count);
 
-            var expectedContent = new string[4, 2]
+            var expectedContent = new string[3, 2]
             {
                 { "SUBTOTAL", "$140.00" },
                 { "TAX", "$4.00" },
-                { "", ""},
                 { "TOTAL", "$144.00" }
             };
 
@@ -1203,7 +1201,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26605")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27083")]
         public async Task StartAnalyzeDocumentPopulatesExtractedReceiptJpg(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
@@ -1313,7 +1311,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26605")]
         public async Task StartAnalyzeDocumentCanParseMultipageReceipt(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
@@ -1359,7 +1356,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 }
                 else if (documentIndex == 1)
                 {
-                    Assert.AreEqual("$ 1203.39", sampleField.Content);
+                    Assert.AreEqual("1203.39", sampleField.Content);
                 }
             }
         }

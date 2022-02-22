@@ -29,10 +29,17 @@ directive:
     transform: $['x-ms-client-name'] = 'privateIPAddress'
   - remove-operation: Accounts_Head  # Not supported yet
   - remove-operation: Instances_Head # Not supported yet
-  - rename-model:
-      from: AccountUpdate
-      to: DeviceUpdateAccountUpdateOptions
-  - rename-model:
-      from: TagUpdate
-      to: TagUpdateOptions
+  - from: swagger-document
+    where: $.definitions.AccountUpdate
+    transform: delete $['allOf']
+  - from: swagger-document
+    where: $.definitions.AccountUpdate.properties
+    transform: >
+      $['tags'] = {
+        "type": "object",
+        "description": "List of key value pairs that describe the resource. This will overwrite the existing tags.",
+        "additionalProperties": {
+          "type": "string"
+        }
+      }
 ```

@@ -158,7 +158,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="refreshToken"> Must be a valid ACR refresh token. </param>
         /// <param name="grantType"> Grant type is expected to be refresh_token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="service"/>, <paramref name="scope"/>, or <paramref name="refreshToken"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="service"/>, <paramref name="scope"/> or <paramref name="refreshToken"/> is null. </exception>
         public async Task<Response<AcrAccessToken>> ExchangeAcrRefreshTokenForAcrAccessTokenAsync(string service, string scope, string refreshToken, TokenGrantType grantType = TokenGrantType.RefreshToken, CancellationToken cancellationToken = default)
         {
             if (service == null)
@@ -196,7 +196,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="refreshToken"> Must be a valid ACR refresh token. </param>
         /// <param name="grantType"> Grant type is expected to be refresh_token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="service"/>, <paramref name="scope"/>, or <paramref name="refreshToken"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="service"/>, <paramref name="scope"/> or <paramref name="refreshToken"/> is null. </exception>
         public Response<AcrAccessToken> ExchangeAcrRefreshTokenForAcrAccessToken(string service, string scope, string refreshToken, TokenGrantType grantType = TokenGrantType.RefreshToken, CancellationToken cancellationToken = default)
         {
             if (service == null)

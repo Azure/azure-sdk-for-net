@@ -11,6 +11,7 @@ using NUnit.Framework;
 using System.Text.Json;
 using System.IO;
 using JsonObject = System.Collections.Generic.Dictionary<string, object>;
+using System.Security.Policy;
 #endregion Manage_Deployments_Namespaces
 
 namespace Azure.ResourceManager.Resources.Tests.Samples
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
             {
                 TemplateLink = new TemplateLink()
                 {
-                    Uri = "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json"
+                    Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json")
                 },
                 Parameters = new JsonObject()
                 {
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
             {
                 TemplateLink = new TemplateLink()
                 {
-                    Uri = "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json"
+                    Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json")
                 },
                 Parameters = parameters
             });

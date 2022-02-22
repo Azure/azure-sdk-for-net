@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         internal ServerTrustGroup(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverTrustGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string serverTrustGroupApiVersion);
+            TryGetApiVersion(ResourceType, out string serverTrustGroupApiVersion);
             _serverTrustGroupRestClient = new ServerTrustGroupsRestOperations(_serverTrustGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverTrustGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EventHubs
         internal SchemaGroup(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _schemaGroupSchemaRegistryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string schemaGroupSchemaRegistryApiVersion);
+            TryGetApiVersion(ResourceType, out string schemaGroupSchemaRegistryApiVersion);
             _schemaGroupSchemaRegistryRestClient = new SchemaRegistryRestOperations(_schemaGroupSchemaRegistryClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, schemaGroupSchemaRegistryApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

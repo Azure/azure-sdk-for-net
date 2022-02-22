@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal NetworkFeatures(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _networkFeaturesWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string networkFeaturesWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string networkFeaturesWebAppsApiVersion);
             _networkFeaturesWebAppsRestClient = new WebAppsRestOperations(_networkFeaturesWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkFeaturesWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

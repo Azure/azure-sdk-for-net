@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="input"> Input blob path. Type: string (or Expression with resultType string). </param>
         /// <param name="output"> Output blob path. Type: string (or Expression with resultType string). </param>
         /// <param name="filePaths"> Paths to streaming job files. Can be directories. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="mapper"/>, <paramref name="reducer"/>, <paramref name="input"/>, <paramref name="output"/>, or <paramref name="filePaths"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="mapper"/>, <paramref name="reducer"/>, <paramref name="input"/>, <paramref name="output"/> or <paramref name="filePaths"/> is null. </exception>
         public HDInsightStreamingActivity(string name, object mapper, object reducer, object input, object output, IEnumerable<object> filePaths) : base(name)
         {
             if (name == null)

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotPrivateAccess(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotPrivateAccessWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteSlotPrivateAccessWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string siteSlotPrivateAccessWebAppsApiVersion);
             _siteSlotPrivateAccessWebAppsRestClient = new WebAppsRestOperations(_siteSlotPrivateAccessWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotPrivateAccessWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -141,10 +141,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="access"/> is null. </exception>
         public async virtual Task<ArmOperation<SiteSlotPrivateAccess>> CreateOrUpdateAsync(bool waitForCompletion, PrivateAccessData access, CancellationToken cancellationToken = default)
         {
-            if (access == null)
-            {
-                throw new ArgumentNullException(nameof(access));
-            }
+            Argument.AssertNotNull(access, nameof(access));
 
             using var scope = _siteSlotPrivateAccessWebAppsClientDiagnostics.CreateScope("SiteSlotPrivateAccess.CreateOrUpdate");
             scope.Start();
@@ -174,10 +171,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="access"/> is null. </exception>
         public virtual ArmOperation<SiteSlotPrivateAccess> CreateOrUpdate(bool waitForCompletion, PrivateAccessData access, CancellationToken cancellationToken = default)
         {
-            if (access == null)
-            {
-                throw new ArgumentNullException(nameof(access));
-            }
+            Argument.AssertNotNull(access, nameof(access));
 
             using var scope = _siteSlotPrivateAccessWebAppsClientDiagnostics.CreateScope("SiteSlotPrivateAccess.CreateOrUpdate");
             scope.Start();

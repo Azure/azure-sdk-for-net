@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         internal ServerDevOpsAuditingSettings(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverDevOpsAuditingSettingsServerDevOpsAuditSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string serverDevOpsAuditingSettingsServerDevOpsAuditSettingsApiVersion);
+            TryGetApiVersion(ResourceType, out string serverDevOpsAuditingSettingsServerDevOpsAuditSettingsApiVersion);
             _serverDevOpsAuditingSettingsServerDevOpsAuditSettingsRestClient = new ServerDevOpsAuditSettingsRestOperations(_serverDevOpsAuditingSettingsServerDevOpsAuditSettingsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDevOpsAuditingSettingsServerDevOpsAuditSettingsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="sparkPoolName"> Name of the spark pool. </param>
         /// <param name="livyApiVersion"> Valid api-version for the request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="sparkPoolName"/>, or <paramref name="livyApiVersion"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="sparkPoolName"/> or <paramref name="livyApiVersion"/> is null. </exception>
         public SparkBatchRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string sparkPoolName, string livyApiVersion = "2019-11-01-preview")
         {
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));

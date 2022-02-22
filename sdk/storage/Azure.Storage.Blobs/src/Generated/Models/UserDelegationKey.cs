@@ -20,7 +20,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="signedService"> Abbreviation of the Azure Storage service that accepts the key. </param>
         /// <param name="signedVersion"> The service version that created the key. </param>
         /// <param name="value"> The key as a base64 string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="signedObjectId"/>, <paramref name="signedTenantId"/>, <paramref name="signedService"/>, <paramref name="signedVersion"/>, or <paramref name="value"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="signedObjectId"/>, <paramref name="signedTenantId"/>, <paramref name="signedService"/>, <paramref name="signedVersion"/> or <paramref name="value"/> is null. </exception>
         internal UserDelegationKey(string signedObjectId, string signedTenantId, DateTimeOffset signedStartsOn, DateTimeOffset signedExpiresOn, string signedService, string signedVersion, string value)
         {
             if (signedObjectId == null)

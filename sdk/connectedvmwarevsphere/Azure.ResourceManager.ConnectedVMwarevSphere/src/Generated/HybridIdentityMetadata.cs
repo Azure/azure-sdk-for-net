@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         internal HybridIdentityMetadata(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string hybridIdentityMetadataHybridIdentityMetadataApiVersion);
+            TryGetApiVersion(ResourceType, out string hybridIdentityMetadataHybridIdentityMetadataApiVersion);
             _hybridIdentityMetadataHybridIdentityMetadataRestClient = new HybridIdentityMetadataRestOperations(_hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hybridIdentityMetadataHybridIdentityMetadataApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

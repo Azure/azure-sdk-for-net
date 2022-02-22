@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="expression"> An expression that would evaluate to Boolean. The loop will continue until this expression evaluates to true. </param>
         /// <param name="activities"> List of activities to execute. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="expression"/>, or <paramref name="activities"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="expression"/> or <paramref name="activities"/> is null. </exception>
         public UntilActivity(string name, Expression expression, IEnumerable<Activity> activities) : base(name)
         {
             if (name == null)

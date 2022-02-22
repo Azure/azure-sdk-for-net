@@ -3,13 +3,13 @@ AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/resources/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --tag=package-subscriptions-2021-01 --csharp.output-folder=C:\dev\azure-sdk-for-net\sdk\resources\Microsoft.Azure.Management.Resource\src\Generated\Subscriptions
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/resources/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --tag=package-privatelinks-2020-05 --csharp.output-folder=C:\dev\azure-sdk-for-net\sdk\resources\Microsoft.Azure.Management.Resource\src\Generated\PrivateLinks
 Autorest CSharp Version: 2.3.82
-2022-02-03 19:37:50 UTC
+2022-02-15 23:51:10 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      main
-Commit:      5582a35deb1bfa4aa22bac8f1d51b7934ead94ac
+Commit:      b7ceedcb657cac760383b17627cd2c1f47dd1521
 AutoRest information
-Requested version: v2
+Requested version: 2.0.4421
 Bootstrapper version:    autorest@3.2.1
