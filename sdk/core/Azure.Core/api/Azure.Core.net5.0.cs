@@ -189,14 +189,11 @@ namespace Azure
         public System.DateTimeOffset? IfModifiedSince { get { throw null; } set { } }
         public System.DateTimeOffset? IfUnmodifiedSince { get { throw null; } set { } }
     }
-    public partial class RequestContext
+    public partial class RequestContext : Azure.RequestOptions
     {
         public RequestContext() { }
+        public RequestContext(Azure.RequestOptions options) { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
-        public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
-        public void AddClassifier(Azure.Core.ResponseClassificationHandler classifier) { }
-        public void AddClassifier(int statusCode, bool isError) { }
-        public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
     public partial class RequestFailedException : System.Exception, System.Runtime.Serialization.ISerializable
@@ -211,6 +208,15 @@ namespace Azure
         public string? ErrorCode { get { throw null; } }
         public int Status { get { throw null; } }
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+    }
+    public partial class RequestOptions
+    {
+        public RequestOptions() { }
+        public RequestOptions(Azure.RequestOptions options) { }
+        public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
+        public void AddClassifier(Azure.Core.ResponseClassificationHandler classifier) { }
+        public void AddClassifier(int statusCode, bool isError) { }
+        public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
     }
     public abstract partial class Response : System.IDisposable
     {
