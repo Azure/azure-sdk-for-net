@@ -21,9 +21,8 @@ namespace Azure.Storage.DataMovement.Blobs
                 JobId = transferJob.JobId,
                 TransferType = BlobTransferType.SingleUpload,
                 Status = StorageJobTransferStatus.Completed, //TODO = update with actual job status
-                SourceLocalPath = transferJob.SourceLocalPath,
-                DestinationBlobClient = transferJob.DestinationBlobClient,
-                SingleUploadOptions = transferJob.UploadOptions,
+                SourcePath = new Uri(transferJob.SourceLocalPath),
+                DestinationUri = transferJob.DestinationBlobClient.Uri,
             };
         }
 
@@ -39,9 +38,8 @@ namespace Azure.Storage.DataMovement.Blobs
                 JobId = transferJob.JobId,
                 TransferType = BlobTransferType.DirectoryUpload,
                 Status = StorageJobTransferStatus.Completed, //TODO = update with actual job status
-                SourceLocalPath = transferJob.SourceLocalPath,
-                DestinationBlobDirectoryClient = transferJob.DestinationBlobDirectoryClient,
-                DirectoryUploadOptions = transferJob.UploadOptions,
+                SourcePath = new Uri(transferJob.SourceLocalPath),
+                DestinationUri = transferJob.DestinationBlobDirectoryClient.Uri,
             };
         }
 
@@ -57,9 +55,8 @@ namespace Azure.Storage.DataMovement.Blobs
                 JobId = transferJob.JobId,
                 TransferType = BlobTransferType.SingleDownload,
                 Status = StorageJobTransferStatus.Completed, //TODO = update with actual job status
-                SourceBlobClient = transferJob.SourceBlobClient,
-                DestinationLocalPath = transferJob.DestinationLocalPath,
-                SingleDownloadOptions = transferJob.Options
+                SourcePath = transferJob.SourceBlobClient.Uri,
+                DestinationUri = new Uri(transferJob.DestinationLocalPath),
             };
         }
 
@@ -75,9 +72,8 @@ namespace Azure.Storage.DataMovement.Blobs
                 JobId = transferJob.JobId,
                 TransferType = BlobTransferType.DirectoryDownload,
                 Status = StorageJobTransferStatus.Completed, //TODO = update with actual job status
-                SourceBlobDirectoryClient = transferJob.SourceBlobDirectoryClient,
-                DestinationLocalPath = transferJob.DestinationLocalPath,
-                DirectoryDownloadOptions = transferJob.Options
+                SourcePath = transferJob.SourceBlobDirectoryClient.Uri,
+                DestinationUri = new Uri(transferJob.DestinationLocalPath),
             };
         }
 
@@ -91,12 +87,10 @@ namespace Azure.Storage.DataMovement.Blobs
             return new BlobTransferJobProperties()
             {
                 JobId = transferJob.JobId,
-                TransferType = BlobTransferType.SingleCopy,
+                TransferType = BlobTransferType.SingleSyncCopy,
                 Status = StorageJobTransferStatus.Completed, //TODO = update with actual job status
-                SourceUri = transferJob.SourceUri,
-                DestinationBlobClient = transferJob.DestinationBlobClient,
-                CopyMethod = transferJob.CopyMethod,
-                SingleCopyFromUriOptions = transferJob.CopyFromUriOptions
+                SourcePath = transferJob.SourceUri,
+                DestinationUri = transferJob.DestinationBlobClient.Uri,
             };
         }
 
@@ -110,12 +104,10 @@ namespace Azure.Storage.DataMovement.Blobs
             return new BlobTransferJobProperties()
             {
                 JobId = transferJob.JobId,
-                TransferType = BlobTransferType.DirectoryCopy,
+                TransferType = BlobTransferType.DirectorySyncCopy,
                 Status = StorageJobTransferStatus.Completed, //TODO = update with actual job status
-                SourceBlobDirectoryClient = transferJob.SourceDirectoryClient,
-                DestinationBlobDirectoryClient = transferJob.DestinationBlobDirectoryClient,
-                CopyMethod = transferJob.CopyMethod,
-                DirectoryCopyFromUriOptions = transferJob.CopyFromUriOptions
+                SourcePath = transferJob.SourceDirectoryClient.Uri,
+                DestinationUri = transferJob.DestinationBlobDirectoryClient.Uri,
             };
         }
     }

@@ -23,23 +23,8 @@ namespace Azure.Storage.DataMovement
         InProgress,
 
         /// <summary>
-        /// The Job has completed with no failures.
+        /// The Job has completed.
         /// </summary>
         Completed,
-
-        /// <summary>
-        /// The Job has completed with errors.
-        /// </summary>
-        CompletedWithErrors,
-
-        /// <summary>
-        /// Completed with failures.
-        /// </summary>
-        CompletedWithFailures,
-
-        /// <summary>
-        /// Completed with errors and skipped files.
-        /// </summary>
-        CompletedWithErrorsAndSkipped
     };
 }

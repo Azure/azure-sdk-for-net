@@ -33,13 +33,43 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         DirectoryDownload,
 
         /// <summary>
-        /// Single Copy Transfer
+        /// Single Sync Copy Transfer
         /// </summary>
-        SingleCopy,
+        SingleSyncCopy,
 
         /// <summary>
-        /// Directory Copy Transfer
+        /// Directory Sync Copy Transfer
         /// </summary>
-        DirectoryCopy
+        DirectorySyncCopy,
+
+        /// <summary>
+        /// Single Async Copy Transfer
+        /// </summary>
+        SingleAsyncCopy,
+
+        /// <summary>
+        /// Directory Async Copy Transfer
+        /// </summary>
+        DirectoryAsyncCopy,
+
+        /// <summary>
+        /// Single Round Trip Copy Transfer
+        /// </summary>
+        SingleRoundTripCopy,
+
+        /// <summary>
+        /// Directory Round Trip Copy Transfer
+        /// </summary>
+        DirectoryRoundTripCopy,
+
+        /// <summary>
+        /// Single Round Trip Copy Transfer
+        /// </summary>
+        SingleSyncUploadUriCopy,
+
+        /// <summary>
+        /// Directory Round Trip Copy Transfer
+        /// </summary>
+        DirectorySyncUploadUriCopy,
     }
 }
