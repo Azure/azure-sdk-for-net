@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal VirtualMachineImage(string id, string name, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PurchasePlan plan, OSDiskImage osDiskImage, IList<DataDiskImage> dataDiskImages, AutomaticOSUpgradeProperties automaticOSUpgradeProperties, HyperVGenerationTypes? hyperVGeneration, DisallowedConfiguration disallowed, IList<VirtualMachineImageFeature> features) : base(id, name, location, tags, extendedLocation)
         {
             Plan = plan;
-            OsDiskImage = osDiskImage;
+            OSDiskImage = osDiskImage;
             DataDiskImages = dataDiskImages;
             AutomaticOSUpgradeProperties = automaticOSUpgradeProperties;
             HyperVGeneration = hyperVGeneration;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Used for establishing the purchase context of any 3rd Party artifact through MarketPlace. </summary>
         public PurchasePlan Plan { get; set; }
         /// <summary> Contains the os disk image information. </summary>
-        public OSDiskImage OsDiskImage { get; set; }
+        public OSDiskImage OSDiskImage { get; set; }
         /// <summary> The list of data disk images information. </summary>
         public IList<DataDiskImage> DataDiskImages { get; }
         /// <summary> Describes automatic OS upgrade properties on the image. </summary>

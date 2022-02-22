@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="vmId"> Gets the virtual machine unique id. </param>
         /// <param name="securityProfile"> Gets the security profile. </param>
         /// <param name="location"> Location of the VM from which the restore point was created. </param>
-        internal RestorePointSourceMetadata(HardwareProfile hardwareProfile, RestorePointSourceVMStorageProfile storageProfile, OSProfile osProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string vmId, SecurityProfile securityProfile, string location)
+        internal RestorePointSourceMetadata(HardwareProfile hardwareProfile, RestorePointSourceVmStorageProfile storageProfile, OSProfile osProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string vmId, SecurityProfile securityProfile, string location)
         {
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             DiagnosticsProfile = diagnosticsProfile;
             LicenseType = licenseType;
             VmId = vmId;
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Gets the hardware profile. </summary>
         public HardwareProfile HardwareProfile { get; }
         /// <summary> Gets the storage profile. </summary>
-        public RestorePointSourceVMStorageProfile StorageProfile { get; }
+        public RestorePointSourceVmStorageProfile StorageProfile { get; }
         /// <summary> Gets the OS profile. </summary>
-        public OSProfile OsProfile { get; }
+        public OSProfile OSProfile { get; }
         /// <summary> Gets the diagnostics profile. </summary>
         public DiagnosticsProfile DiagnosticsProfile { get; }
         /// <summary> Gets the license type, which is for bring your own license scenario. </summary>

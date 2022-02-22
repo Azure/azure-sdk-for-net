@@ -69,7 +69,7 @@ namespace Azure.Core.Pipeline
         /// <inheritdoc />
         public override void Process(HttpMessage message)
         {
-#if NET5_0
+#if NET5_0_OR_GREATER
             ProcessAsync(message, false).EnsureCompleted();
 #else
             // Intentionally blocking here
@@ -92,7 +92,7 @@ namespace Azure.Core.Pipeline
             Stream? contentStream = null;
             try
             {
-#if NET5_0
+#if NET5_0_OR_GREATER
                 if (!async)
                 {
                     // Sync HttpClient.Send is not supported on browser but neither is the sync-over-async
@@ -113,7 +113,7 @@ namespace Azure.Core.Pipeline
 
                 if (responseMessage.Content != null)
                 {
-#if NET5_0
+#if NET5_0_OR_GREATER
                     if (async)
                     {
                         contentStream = await responseMessage.Content.ReadAsStreamAsync(message.CancellationToken).ConfigureAwait(false);
@@ -159,13 +159,14 @@ namespace Azure.Core.Pipeline
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
             {
+                // UseCookies is not supported on "browser"
                 return new HttpClientHandler();
             }
 
 #if NETCOREAPP
-            return ApplyOptionsToHandler(new SocketsHttpHandler { AllowAutoRedirect = false }, options);
+            return ApplyOptionsToHandler(new SocketsHttpHandler { AllowAutoRedirect = false, UseCookies = UseCookies() }, options);
 #else
-            return ApplyOptionsToHandler(new HttpClientHandler { AllowAutoRedirect = false }, options);
+            return ApplyOptionsToHandler(new HttpClientHandler { AllowAutoRedirect = false, UseCookies = UseCookies() }, options);
 #endif
         }
 
@@ -553,7 +554,7 @@ namespace Azure.Core.Pipeline
                     return PipelineContent!.TryComputeLength(out length);
                 }
 
-#if NET5_0
+#if NET5_0_OR_GREATER
                 protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
                 {
                     Debug.Assert(PipelineContent != null);
@@ -665,21 +666,29 @@ namespace Azure.Core.Pipeline
             return httpHandler;
         }
 
-        internal override void DisposeInternal()
+        /// <summary>
+        /// Disposes the underlying <see cref="HttpClient"/>.
+        /// </summary>
+        public void Dispose()
         {
             if (this != Shared)
             {
                 Client.Dispose();
             }
+            GC.SuppressFinalize(this);
         }
 
         private static void SetPropertiesOrOptions<T>(HttpRequestMessage httpRequest, string name, T value)
         {
-#if NET5_0
+#if NET5_0_OR_GREATER
             httpRequest.Options.Set(new HttpRequestOptionsKey<T>(name), value);
 #else
             httpRequest.Properties[name] = value;
 #endif
         }
+
+        private static bool UseCookies() => AppContextSwitchHelper.GetConfigValue(
+            "Azure.Core.Pipeline.HttpClientTransport.EnableCookies",
+            "AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES");
     }
 }

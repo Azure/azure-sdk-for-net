@@ -6,6 +6,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
+        "Content-Length": "0",
         "traceparent": "00-b57fe490c07a0d42b641a6993afca173-5d88d9cd002db644-00",
         "User-Agent": [
           "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211014.1",
@@ -90,6 +91,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
+        "Content-Length": "0",
         "traceparent": "00-21f756cdbf5b1241ba34c9911f594da5-94886c40646a1544-00",
         "User-Agent": [
           "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211014.1",

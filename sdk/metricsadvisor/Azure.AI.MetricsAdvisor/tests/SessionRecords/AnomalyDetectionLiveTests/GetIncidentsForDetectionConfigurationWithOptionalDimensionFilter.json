@@ -18,8 +18,8 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "startTime": "2021-10-01T00:00:00Z",
-        "endTime": "2021-10-31T00:00:00Z",
+        "startTime": "2021-10-01T00:00:00.0000000Z",
+        "endTime": "2021-10-31T00:00:00.0000000Z",
         "filter": {
           "dimensionFilter": [
             {
@@ -51,8 +51,8 @@
         "value": [
           {
             "incidentId": "5dd4e2ae7218115fea669ce9d33161a6-17cce7ef800",
-            "startTime": "2021-10-22T00:00:00Z",
-            "lastTime": "2021-10-30T00:00:00Z",
+            "startTime": "2021-10-22T00:00:00.0000000Z",
+            "lastTime": "2021-10-30T00:00:00.0000000Z",
             "rootNode": {
               "dimension": {
                 "region": "Delhi",
@@ -68,8 +68,8 @@
           },
           {
             "incidentId": "5dd4e2ae7218115fea669ce9d33161a6-17c9aff6000",
-            "startTime": "2021-10-19T00:00:00Z",
-            "lastTime": "2021-10-20T00:00:00Z",
+            "startTime": "2021-10-19T00:00:00.0000000Z",
+            "lastTime": "2021-10-20T00:00:00.0000000Z",
             "rootNode": {
               "dimension": {
                 "region": "Delhi",

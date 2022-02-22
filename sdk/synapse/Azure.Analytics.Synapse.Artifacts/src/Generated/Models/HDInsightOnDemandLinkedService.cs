@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="hostSubscriptionId"> The customer’s subscription to host the cluster. Type: string (or Expression with resultType string). </param>
         /// <param name="tenant"> The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="clusterResourceGroup"> The resource group where the cluster belongs. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterSize"/>, <paramref name="timeToLive"/>, <paramref name="version"/>, <paramref name="linkedServiceName"/>, <paramref name="hostSubscriptionId"/>, <paramref name="tenant"/>, or <paramref name="clusterResourceGroup"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterSize"/>, <paramref name="timeToLive"/>, <paramref name="version"/>, <paramref name="linkedServiceName"/>, <paramref name="hostSubscriptionId"/>, <paramref name="tenant"/> or <paramref name="clusterResourceGroup"/> is null. </exception>
         public HDInsightOnDemandLinkedService(object clusterSize, object timeToLive, object version, LinkedServiceReference linkedServiceName, object hostSubscriptionId, object tenant, object clusterResourceGroup)
         {
             if (clusterSize == null)

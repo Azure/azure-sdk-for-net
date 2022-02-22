@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="toBackupResourceId">Target backup resource id</param>
         /// <param name="targetBackupStorageRedundancy">The storage redundancy
         /// type of the copied backup. Possible values include: 'Geo', 'Local',
-        /// 'Zone'</param>
+        /// 'Zone', 'GeoZone'</param>
         /// <param name="status">Operation status</param>
         /// <param name="message">Progress message</param>
         public LongTermRetentionBackupOperationResult(string id = default(string), string name = default(string), string type = default(string), System.Guid? requestId = default(System.Guid?), string operationType = default(string), string fromBackupResourceId = default(string), string toBackupResourceId = default(string), string targetBackupStorageRedundancy = default(string), string status = default(string), string message = default(string))
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets the storage redundancy type of the copied backup. Possible
-        /// values include: 'Geo', 'Local', 'Zone'
+        /// values include: 'Geo', 'Local', 'Zone', 'GeoZone'
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetBackupStorageRedundancy")]
         public string TargetBackupStorageRedundancy { get; private set; }

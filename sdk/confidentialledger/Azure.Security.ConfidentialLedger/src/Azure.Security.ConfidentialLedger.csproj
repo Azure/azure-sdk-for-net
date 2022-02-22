@@ -13,14 +13,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- TODO: uncomment when Azure.Core ships
     <PackageReference Include="Azure.Core" />
-    end TODO -->
-    <!-- TODO: revert when Azure.Core ships -->
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
-    <!--  end TODO-->
-    <PackageReference Include="System.Text.Json" />
     <PackageReference Include="Azure.Core.Experimental" />
+    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
 <!-- Shared source from Azure.Core -->
@@ -38,6 +33,7 @@
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)PemReader.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)LightweightPkcs8Decoder.cs" LinkBase="Shared" />

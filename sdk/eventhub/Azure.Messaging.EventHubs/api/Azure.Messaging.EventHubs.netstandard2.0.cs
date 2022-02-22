@@ -1,6 +1,6 @@
 namespace Azure.Messaging.EventHubs
 {
-    public partial class EventData
+    public partial class EventData : Azure.BinaryContent
     {
         public EventData() { }
         public EventData(System.BinaryData eventBody) { }
@@ -14,10 +14,16 @@ namespace Azure.Messaging.EventHubs
         public System.ReadOnlyMemory<byte> Body { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.IO.Stream BodyAsStream { get { throw null; } }
-        public string ContentType { get { throw null; } set { } }
+        public new string ContentType { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected override Azure.Core.ContentType? ContentTypeCore { get { throw null; } set { } }
         public string CorrelationId { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override System.BinaryData Data { get { throw null; } set { } }
         public System.DateTimeOffset EnqueuedTime { get { throw null; } }
         public System.BinaryData EventBody { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool IsReadOnly { get { throw null; } }
         public string MessageId { get { throw null; } set { } }
         public long Offset { get { throw null; } }
         public string PartitionKey { get { throw null; } }
@@ -136,7 +142,9 @@ namespace Azure.Messaging.EventHubs
         public static Azure.Messaging.EventHubs.Producer.EventDataBatch EventDataBatch(long batchSizeBytes, System.Collections.Generic.IList<Azure.Messaging.EventHubs.EventData> batchEventStore, Azure.Messaging.EventHubs.Producer.CreateBatchOptions batchOptions = null, System.Func<Azure.Messaging.EventHubs.EventData, bool> tryAddCallback = null) { throw null; }
         public static Azure.Messaging.EventHubs.EventHubProperties EventHubProperties(string name, System.DateTimeOffset createdOn, string[] partitionIds) { throw null; }
         public static Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties LastEnqueuedEventProperties(long? lastSequenceNumber, long? lastOffset, System.DateTimeOffset? lastEnqueuedTime, System.DateTimeOffset? lastReceivedTime) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.EventHubs.Consumer.PartitionContext PartitionContext(string partitionId, Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties lastEnqueuedEventProperties = default(Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties)) { throw null; }
+        public static Azure.Messaging.EventHubs.Consumer.PartitionContext PartitionContext(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties lastEnqueuedEventProperties = default(Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties)) { throw null; }
         public static Azure.Messaging.EventHubs.PartitionProperties PartitionProperties(string eventHubName, string partitionId, bool isEmpty, long beginningSequenceNumber, long lastSequenceNumber, long lastOffset, System.DateTimeOffset lastEnqueuedTime) { throw null; }
     }
     public enum EventHubsRetryMode
@@ -277,7 +285,12 @@ namespace Azure.Messaging.EventHubs.Consumer
     }
     public partial class PartitionContext
     {
-        protected internal PartitionContext(string partitionId) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected PartitionContext(string partitionId) { }
+        protected internal PartitionContext(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId) { }
+        public string ConsumerGroup { get { throw null; } }
+        public string EventHubName { get { throw null; } }
+        public string FullyQualifiedNamespace { get { throw null; } }
         public string PartitionId { get { throw null; } }
         public virtual Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties ReadLastEnqueuedEventProperties() { throw null; }
     }

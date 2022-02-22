@@ -7,6 +7,7 @@ Namespaces for this example:
 ```C# Snippet:Manage_Networks_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
@@ -27,8 +28,8 @@ This is a scoped operations object, and any operations you perform will be done 
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
-Location location = Location.WestUS2;
-ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+AzureLocation location = AzureLocation.WestUS2;
+ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(false, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
 ```
 
 Now that we have the resource group created, we can manage the network interfaces inside this resource group.
@@ -47,7 +48,7 @@ PublicIPAddressData publicIPInput = new PublicIPAddressData()
         DomainNameLabel = "myDomain"
     }
 };
-PublicIPAddress publicIPAddress = await publicIPAddressCollection.CreateOrUpdate(publicIPAddressName, publicIPInput).WaitForCompletionAsync();
+PublicIPAddress publicIPAddress = await publicIPAddressCollection.CreateOrUpdate(true, publicIPAddressName, publicIPInput).WaitForCompletionAsync();
 
 NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
 string networkInterfaceName = "myNetworkInterface";
@@ -55,7 +56,7 @@ NetworkInterfaceData networkInterfaceInput = new NetworkInterfaceData()
 {
     Location = resourceGroup.Data.Location,
     IpConfigurations = {
-        new NetworkInterfaceIPConfiguration()
+        new NetworkInterfaceIPConfigurationData()
         {
             Name = "ipConfig",
             PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
@@ -71,7 +72,7 @@ NetworkInterfaceData networkInterfaceInput = new NetworkInterfaceData()
         }
     }
 };
-NetworkInterface networkInterface = await networkInterfaceCollection.CreateOrUpdate(networkInterfaceName, networkInterfaceInput).WaitForCompletionAsync();
+NetworkInterface networkInterface = await networkInterfaceCollection.CreateOrUpdate(true, networkInterfaceName, networkInterfaceInput).WaitForCompletionAsync();
 ```
 
 ***List all network interfaces***
@@ -106,7 +107,7 @@ if (virtualNetwork != null)
     Console.WriteLine(virtualNetwork.Data.Name);
 }
 
-if (await networkInterfaceCollection.CheckIfExistsAsync("bar"))
+if (await networkInterfaceCollection.ExistsAsync("bar"))
 {
     Console.WriteLine("Network interface 'bar' exists.");
 }
@@ -118,5 +119,5 @@ if (await networkInterfaceCollection.CheckIfExistsAsync("bar"))
 NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
 
 NetworkInterface virtualNetwork = await networkInterfaceCollection.GetAsync("myVnet");
-await virtualNetwork.DeleteAsync();
+await virtualNetwork.DeleteAsync(true);
 ```

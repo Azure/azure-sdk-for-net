@@ -5,7 +5,7 @@
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Type": "application/json",
+        "Content-Length": "0",
         "traceparent": "00-a86b6968675f4d4c977a1a0efb16bb96-4518e105331b7b41-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20210802.1",

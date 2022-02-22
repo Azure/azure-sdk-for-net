@@ -1,7 +1,6 @@
 ```C# Snippet:CreateDataFlowClientPrep
 // Replace the string below with your actual endpoint url.
 string endpoint = "<my-endpoint-url>";
-
 string dataFlowName = "Test-DataFlow";
 ```
 

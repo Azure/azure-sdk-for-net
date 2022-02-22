@@ -116,6 +116,100 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public async Task ProducerCanPublishEventsAfterAnException()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                var cancellationSource = new CancellationTokenSource();
+                cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
+
+                await using var producer = new EventHubProducerClient(connectionString, options);
+
+                var partition = (await producer.GetPartitionIdsAsync()).First();
+                var sendOptions = new SendEventOptions { PartitionId = partition };
+
+                // Publish some events to validate that the initial publish works.
+
+                Assert.That(async () => await producer.SendAsync(EventGenerator.CreateSmallEvents(2), sendOptions, cancellationSource.Token), Throws.Nothing, "The first publishing operation was not successful.");
+
+                // Publish an event too large to succeed; this will force the producer to deal with an exception, which should
+                // update idempotent state.
+
+                using var batch = await producer.CreateBatchAsync(cancellationSource.Token);
+
+                var producerId = (await producer.GetPartitionPublishingPropertiesAsync(partition, cancellationSource.Token)).ProducerGroupId;
+                var badEvent = new EventData(EventGenerator.CreateRandomBody(batch.MaximumSizeInBytes + 1000));
+                Assert.That(async () => await producer.SendAsync(new[] { badEvent }, sendOptions, cancellationSource.Token), Throws.InstanceOf<EventHubsException>(), "The attempt to publish a too-large event should fail.");
+
+                // Publish a second set of events; this will prove that the producer recovered from the exception.
+
+                Assert.That(async () => await producer.SendAsync(EventGenerator.CreateSmallEvents(3), sendOptions, cancellationSource.Token), Throws.Nothing, "The second publishing operation was not successful.");
+
+                var newProducerId = (await producer.GetPartitionPublishingPropertiesAsync(partition, cancellationSource.Token)).ProducerGroupId;
+                Assert.That(newProducerId, Is.Not.Null, "The producer group identifier should have a value.");
+                Assert.That(newProducerId, Is.Not.EqualTo(producerId), "The producer group identifier should have been updated after the exception.");
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducerClient" /> is able to
+        ///   perform operations when the idempotent publishing feature is enabled.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCanPublishBatchesAfterAnException()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                var cancellationSource = new CancellationTokenSource();
+                cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
+
+                await using var producer = new EventHubProducerClient(connectionString, options);
+
+                var partition = (await producer.GetPartitionIdsAsync()).First();
+                var batchOptions = new CreateBatchOptions { PartitionId = partition };
+
+                // Publish a batch to validate that the initial publish works.
+
+                using var firstBatch = await producer.CreateBatchAsync(batchOptions, cancellationSource.Token);
+
+                firstBatch.TryAdd(EventGenerator.CreateEvents(1).First());
+                Assert.That(async () => await producer.SendAsync(firstBatch, cancellationSource.Token), Throws.Nothing, "The first publishing operation was not successful.");
+
+                // Publish an event too large to succeed; this will force the producer to deal with an exception, which should
+                // update idempotent state.
+
+                var producerId = (await producer.GetPartitionPublishingPropertiesAsync(partition, cancellationSource.Token)).ProducerGroupId;
+
+                using var badBatch = EventHubsModelFactory.EventDataBatch(firstBatch.MaximumSizeInBytes + 1000, new List<EventData>(new[] { new EventData(EventGenerator.CreateRandomBody(firstBatch.MaximumSizeInBytes + 1000)) }), new CreateBatchOptions { PartitionId = partition });
+                Assert.That(async () => await producer.SendAsync(badBatch, cancellationSource.Token), Throws.InstanceOf<EventHubsException>(), "The attempt to publish a too-large event should fail.");
+
+                // Publish a second batch of events; this will prove that the producer recovered from the exception.
+
+                using var secondBatch = await producer.CreateBatchAsync(batchOptions, cancellationSource.Token);
+
+                secondBatch.TryAdd(EventGenerator.CreateEvents(1).First());
+                secondBatch.TryAdd(EventGenerator.CreateEvents(1).First());
+                Assert.That(async () => await producer.SendAsync(secondBatch, cancellationSource.Token), Throws.Nothing, "The second publishing operation was not successful.");
+
+                var newProducerId = (await producer.GetPartitionPublishingPropertiesAsync(partition, cancellationSource.Token)).ProducerGroupId;
+                Assert.That(newProducerId, Is.Not.Null, "The producer group identifier should have a value.");
+                Assert.That(newProducerId, Is.Not.EqualTo(producerId), "The producer group identifier should have been updated after the exception.");
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducerClient" /> is able to
+        ///   perform operations when the idempotent publishing feature is enabled.
+        /// </summary>
+        ///
+        [Test]
         public async Task ProducerInitializesPropertiesWhenRequested()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))

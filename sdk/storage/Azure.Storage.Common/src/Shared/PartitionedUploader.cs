@@ -11,9 +11,11 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Storage.Shared;
 
+#pragma warning disable SA1402  // File may only contain a single type
+
 namespace Azure.Storage
 {
-    internal class PartitionedUploader<TServiceSpecificArgs, TCompleteUploadReturn>
+    internal class PartitionedUploader<TServiceSpecificData, TCompleteUploadReturn>
     {
         #region Definitions
         // delegte for getting a partition from a stream based on the selected data management stragegy
@@ -27,10 +29,10 @@ namespace Azure.Storage
 
         // injected behaviors for services to use partitioned uploads
         public delegate DiagnosticScope CreateScope(string operationName);
-        public delegate Task InitializeDestinationInternal(TServiceSpecificArgs args, bool async, CancellationToken cancellationToken);
+        public delegate Task InitializeDestinationInternal(TServiceSpecificData args, bool async, CancellationToken cancellationToken);
         public delegate Task<Response<TCompleteUploadReturn>> SingleUploadInternal(
             Stream contentStream,
-            TServiceSpecificArgs args,
+            TServiceSpecificData args,
             IProgress<long> progressHandler,
             UploadTransactionalHashingOptions hashingOptions,
             string operationName,
@@ -38,14 +40,14 @@ namespace Azure.Storage
             CancellationToken cancellationToken);
         public delegate Task UploadPartitionInternal(Stream contentStream,
             long offset,
-            TServiceSpecificArgs args,
+            TServiceSpecificData args,
             IProgress<long> progressHandler,
             UploadTransactionalHashingOptions hashingOptions,
             bool async,
             CancellationToken cancellationToken);
         public delegate Task<Response<TCompleteUploadReturn>> CommitPartitionedUploadInternal(
             List<(long Offset, long Size)> partitions,
-            TServiceSpecificArgs args,
+            TServiceSpecificData args,
             bool async,
             CancellationToken cancellationToken);
 
@@ -162,7 +164,8 @@ namespace Azure.Storage
 
         public async Task<Response<TCompleteUploadReturn>> UploadInternal(
             Stream content,
-            TServiceSpecificArgs args,
+            long? expectedContentLength,
+            TServiceSpecificData args,
             IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken = default)
@@ -184,11 +187,27 @@ namespace Azure.Storage
             // some strategies are unavailable if we don't know the stream length, and some can still work
             // we may introduce separately provided stream lengths in the future for unseekable streams with
             // an expected length
-            long? length = GetLengthOrDefault(content);
+            long? length = expectedContentLength ?? content.GetLengthOrDefault();
 
             // If we know the length and it's small enough
             if (length < _singleUploadThreshold)
             {
+                // may not be seekable. buffer if that's the case
+                if (!content.CanSeek)
+                {
+                    content = await PooledMemoryStream.BufferStreamPartitionInternal(
+                        content,
+                        // we've passed a comparison on length; we know there is a value
+                        length.Value,
+                        length.Value,
+                        // for the purposes of a one-shot, absolutePosition is always zero
+                        absolutePosition: 0,
+                        _arrayPool,
+                        maxArrayPoolRentalSize: default,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+                }
+
                 // Upload it in a single request
                 return await _singleUploadInternal(
                     content,
@@ -251,7 +270,7 @@ namespace Azure.Storage
             Stream content,
             long? contentLength,
             long partitionSize,
-            TServiceSpecificArgs args,
+            TServiceSpecificData args,
             IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken)
@@ -345,7 +364,7 @@ namespace Azure.Storage
             Stream content,
             long? contentLength,
             long blockSize,
-            TServiceSpecificArgs args,
+            TServiceSpecificData args,
             IProgress<long> progressHandler,
             CancellationToken cancellationToken)
         {
@@ -447,7 +466,7 @@ namespace Azure.Storage
         private async Task StagePartitionAndDisposeInternal(
             SlicedStream partition,
             long offset,
-            TServiceSpecificArgs args,
+            TServiceSpecificData args,
             IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken)
@@ -470,25 +489,6 @@ namespace Azure.Storage
                 // as we've staged it
                 partition.Dispose();
             }
-        }
-
-        /// <summary>
-        /// Some streams will throw if you try to access their length so we wrap
-        /// the check in a TryGet helper.
-        /// </summary>
-        private static long? GetLengthOrDefault(Stream content)
-        {
-            try
-            {
-                if (content.CanSeek)
-                {
-                    return content.Length - content.Position;
-                }
-            }
-            catch (NotSupportedException)
-            {
-            }
-            return default;
         }
 
         #region Stream Splitters
@@ -629,5 +629,27 @@ namespace Azure.Storage
             CancellationToken cancellationToken)
             => Task.FromResult((SlicedStream)WindowStream.GetWindow(stream, maxCount, absolutePosition));
         #endregion
+    }
+
+    internal static partial class StreamExtensions
+    {
+        /// <summary>
+        /// Some streams will throw if you try to access their length so we wrap
+        /// the check in a TryGet helper.
+        /// </summary>
+        public static long? GetLengthOrDefault(this Stream content)
+        {
+            try
+            {
+                if (content.CanSeek)
+                {
+                    return content.Length - content.Position;
+                }
+            }
+            catch (NotSupportedException)
+            {
+            }
+            return default;
+        }
     }
 }

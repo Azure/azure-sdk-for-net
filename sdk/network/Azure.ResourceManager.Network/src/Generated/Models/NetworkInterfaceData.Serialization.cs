@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
 
         internal static NetworkInterfaceData DeserializeNetworkInterfaceData(JsonElement element)
         {
-            Optional<ExtendedLocation> extendedLocation = default;
+            Optional<Models.ExtendedLocation> extendedLocation = default;
             Optional<string> etag = default;
             Optional<string> id = default;
             Optional<string> name = default;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network
             Optional<WritableSubResource> virtualMachine = default;
             Optional<NetworkSecurityGroupData> networkSecurityGroup = default;
             Optional<PrivateEndpointData> privateEndpoint = default;
-            Optional<IList<NetworkInterfaceIPConfiguration>> ipConfigurations = default;
+            Optional<IList<NetworkInterfaceIPConfigurationData>> ipConfigurations = default;
             Optional<IReadOnlyList<NetworkInterfaceTapConfigurationData>> tapConfigurations = default;
             Optional<NetworkInterfaceDnsSettings> dnsSettings = default;
             Optional<string> macAddress = default;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = Models.ExtendedLocation.DeserializeExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"))
@@ -225,10 +225,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<NetworkInterfaceIPConfiguration> array = new List<NetworkInterfaceIPConfiguration>();
+                            List<NetworkInterfaceIPConfigurationData> array = new List<NetworkInterfaceIPConfigurationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkInterfaceIPConfiguration.DeserializeNetworkInterfaceIPConfiguration(item));
+                                array.Add(NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(item));
                             }
                             ipConfigurations = array;
                             continue;

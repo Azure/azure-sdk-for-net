@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="osType"> The Operating System type. </param>
         /// <param name="label"> The VM run command label. </param>
         /// <param name="description"> The VM run command description. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schema"/>, <paramref name="id"/>, <paramref name="label"/>, or <paramref name="description"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="schema"/>, <paramref name="id"/>, <paramref name="label"/> or <paramref name="description"/> is null. </exception>
         internal RunCommandDocumentBase(string schema, string id, OperatingSystemTypes osType, string label, string description)
         {
             if (schema == null)
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
 
             Schema = schema;
             Id = id;
-            OsType = osType;
+            OSType = osType;
             Label = label;
             Description = description;
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The VM run command id. </summary>
         public string Id { get; }
         /// <summary> The Operating System type. </summary>
-        public OperatingSystemTypes OsType { get; }
+        public OperatingSystemTypes OSType { get; }
         /// <summary> The VM run command label. </summary>
         public string Label { get; }
         /// <summary> The VM run command description. </summary>

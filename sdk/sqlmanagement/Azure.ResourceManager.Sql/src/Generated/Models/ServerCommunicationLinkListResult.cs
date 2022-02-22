@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -16,17 +17,17 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ServerCommunicationLinkListResult. </summary>
         internal ServerCommunicationLinkListResult()
         {
-            Value = new ChangeTrackingList<ServerCommunicationLink>();
+            Value = new ChangeTrackingList<ServerCommunicationLinkData>();
         }
 
         /// <summary> Initializes a new instance of ServerCommunicationLinkListResult. </summary>
         /// <param name="value"> The list of server communication links. </param>
-        internal ServerCommunicationLinkListResult(IReadOnlyList<ServerCommunicationLink> value)
+        internal ServerCommunicationLinkListResult(IReadOnlyList<ServerCommunicationLinkData> value)
         {
             Value = value;
         }
 
         /// <summary> The list of server communication links. </summary>
-        public IReadOnlyList<ServerCommunicationLink> Value { get; }
+        public IReadOnlyList<ServerCommunicationLinkData> Value { get; }
     }
 }

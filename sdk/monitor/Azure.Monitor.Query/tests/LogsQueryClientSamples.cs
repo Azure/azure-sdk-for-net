@@ -119,10 +119,11 @@ namespace Azure.Monitor.Query.Tests
         {
             #region Snippet:QueryLogsAsModels
 
-            var client = new LogsQueryClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
 #if SNIPPET
+            var client = new LogsQueryClient(new DefaultAzureCredential());
             string workspaceId = "<workspace_id>";
 #else
+            var client = new LogsQueryClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
             string workspaceId = TestEnvironment.WorkspaceId;
 #endif
 

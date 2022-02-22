@@ -7,7 +7,7 @@
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    /// <summary> An optional field, indicates how we align different variables into the same time-range which is required by the model.{Inner, Outer}. </summary>
+    /// <summary> An optional field, indicating how we align different variables to the same time-range. Either Inner or Outer. </summary>
     public enum AlignMode
     {
         /// <summary> Inner. </summary>

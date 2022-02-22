@@ -2,17 +2,17 @@
 // Licensed under the MIT License.
 
 using Azure.Communication.Pipeline;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
+using Azure.Core.TestFramework.Models;
 
 namespace Azure.Communication.CallingServer.Tests
 {
     public class CallingServerRecordedTestSanitizer : CommunicationRecordedTestSanitizer
     {
-        private static readonly Regex _phoneNumberRegEx = new Regex(@"\\u002B[0-9]{11,15}", RegexOptions.Compiled);
+        private const string PhoneNumberRegEx = @"\\u002B[0-9]{11,15}";
 
-        public override string SanitizeTextBody(string contentType, string body)
-            => base.SanitizeTextBody(contentType, _phoneNumberRegEx.Replace(body, SanitizeValue));
+        public CallingServerRecordedTestSanitizer()
+        {
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(PhoneNumberRegEx, SanitizeValue));
+        }
     }
 }

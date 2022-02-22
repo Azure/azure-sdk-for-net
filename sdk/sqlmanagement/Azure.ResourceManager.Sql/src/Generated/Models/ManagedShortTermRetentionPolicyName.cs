@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ManagedShortTermRetentionPolicyName"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedShortTermRetentionPolicyName"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedShortTermRetentionPolicyName(string value)
         {

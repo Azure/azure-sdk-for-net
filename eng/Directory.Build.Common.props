@@ -24,12 +24,16 @@
 
   <!-- Setup default project properties -->
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>9</LangVersion>
     <!--
       Disable NU5105 NuGet Pack warning that the version is SemVer 2.0.
       SemVer 2.0 is supported by NuGet since 3.0.0 (July 2015) in some capacity, and fully since 3.5.0 (October 2016).
     -->
     <NoWarn>$(NoWarn);NU5105</NoWarn>
+    <!-- 
+      https://github.com/dotnet/roslyn-analyzers/issues/5628
+    -->
+    <NoWarn>$(NoWarn);CA1812</NoWarn>
     <!--
       Disable some FxCop rules
      -->
@@ -80,6 +84,7 @@
     <InheritDocEnabled Condition="'$(InheritDocEnabled)'=='' and '$(DesignTimeBuild)'!='true' and '$(BuildingForLiveUnitTesting)'!='true' and '$(IsShippingClientLibrary)' == true">true</InheritDocEnabled>
     <InheritDocTrimLevel>private</InheritDocTrimLevel>
     <GenerateAPIListing Condition="'$(GenerateAPIListing)' == '' AND '$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
+    <EnableSourceLink Condition="'$(EnableSourceLink)' == ''">true</EnableSourceLink>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsShippingClientLibrary)' == 'true' and '$(TF_BUILD)' == 'true'">
@@ -93,12 +98,6 @@
       CA1812;  <!-- Avoid uninstantiated internal classes. (Result from below including the Azure.Core source) -->
       AZC0012; <!-- Single word class names -->
       AZC0008;
-    </NoWarn>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(InheritDocEnabled)' != 'false' and '$(TargetFramework)' == 'netstandard2.0'">
-    <NoWarn>
-      $(NoWarn);IDT001<!-- InheritDoc related to malformed XML in netstandard.xml -->
     </NoWarn>
   </PropertyGroup>
 
@@ -117,27 +116,15 @@
     <RequiredTargetFrameworks Condition="'$(SupportsNetStandard20)' == 'true'">netstandard2.0</RequiredTargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true'">
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true' or '$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
     <IsPackable>false</IsPackable>
-    <RequiredTargetFrameworks>netcoreapp3.1;net5.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>netcoreapp3.1;net6.0</RequiredTargetFrameworks>
     <!-- Also test net461 on Windows; it's listed first so that coverage reports are for netcoreapp3.1 (the "primary"). -->
-    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">net461;netcoreapp3.1;net5.0</RequiredTargetFrameworks>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
-    <IsPackable>false</IsPackable>
-    <RequiredTargetFrameworks>netcoreapp3.1;net5.0</RequiredTargetFrameworks>
-    <!-- Also test net461 on Windows; it's listed first so that coverage reports are for netcoreapp3.1 (the "primary"). -->
-    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">net461;netcoreapp3.1;net5.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">net461;netcoreapp3.1;net6.0</RequiredTargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(IsMgmtSubLibrary)' == 'true' and !$(MSBuildProjectName.Equals('Azure.ResourceManager.Tests'))">
-    <PackageReference Include="Azure.ResourceManager" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true'">
-    <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)/../sdk/resourcemanager/Azure.ResourceManager/src/Azure.ResourceManager.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -157,7 +144,7 @@
     <Authors>Microsoft</Authors>
     <Product>Azure .NET SDK</Product>
     <PackageIcon>pkgicon.png</PackageIcon>
-    <PackageIconPath>$(RepoEngPath)/images/$(PackageIcon)</PackageIconPath>
+    <PackageIconPath>$(RepoEngPath)/images/$(PackageIcon)</PackageIconPath>  
     <RepositoryUrl>https://github.com/Azure/azure-sdk-for-net</RepositoryUrl>
     <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -221,6 +208,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsClientLibrary)' == 'true'">
+    <PackageIcon>azureicon.png</PackageIcon>
+    <PackageIconPath>$(RepoEngPath)/images/$(PackageIcon)</PackageIconPath>
     <!-- Use a full key for the new client libraries and disable delay signing -->
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzureSDKClient.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>

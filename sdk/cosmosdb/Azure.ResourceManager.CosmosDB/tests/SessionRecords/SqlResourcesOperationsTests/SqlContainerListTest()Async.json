@@ -53,7 +53,7 @@
                       "path": "/pathToNotIndex/*"
                     },
                     {
-                      "path": "/\u0022_etag\u0022/?"
+                      "path": "/\"_etag\"/?"
                     }
                   ],
                   "spatialIndexes": [
@@ -100,7 +100,7 @@
                 "_rid": "GmYtAOqoK1g=",
                 "_ts": 1630403589,
                 "_self": "dbs/GmYtAA==/colls/GmYtAOqoK1g=/",
-                "_etag": "\u002200004b06-0000-0100-0000-612dfc050000\u0022",
+                "_etag": "\"00004b06-0000-0100-0000-612dfc050000\"",
                 "_docs": "docs/",
                 "_sprocs": "sprocs/",
                 "_triggers": "triggers/",
@@ -163,7 +163,7 @@
                   "path": "/pathToNotIndex/*"
                 },
                 {
-                  "path": "/\u0022_etag\u0022/?"
+                  "path": "/\"_etag\"/?"
                 }
               ],
               "spatialIndexes": [
@@ -210,7 +210,7 @@
             "_rid": "GmYtAOqoK1g=",
             "_ts": 1630403589,
             "_self": "dbs/GmYtAA==/colls/GmYtAOqoK1g=/",
-            "_etag": "\u002200004b06-0000-0100-0000-612dfc050000\u0022",
+            "_etag": "\"00004b06-0000-0100-0000-612dfc050000\"",
             "_docs": "docs/",
             "_sprocs": "sprocs/",
             "_triggers": "triggers/",

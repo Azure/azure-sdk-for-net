@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.Sql.Models
         {
             Optional<string> name = default;
             Optional<IReadOnlyList<ManagedInstanceFamilyCapability>> supportedFamilies = default;
+            Optional<IReadOnlyList<StorageCapability>> supportedStorageCapabilities = default;
+            Optional<bool> zoneRedundant = default;
             Optional<CapabilityStatus> status = default;
             Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
@@ -41,6 +43,31 @@ namespace Azure.ResourceManager.Sql.Models
                     supportedFamilies = array;
                     continue;
                 }
+                if (property.NameEquals("supportedStorageCapabilities"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<StorageCapability> array = new List<StorageCapability>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(StorageCapability.DeserializeStorageCapability(item));
+                    }
+                    supportedStorageCapabilities = array;
+                    continue;
+                }
+                if (property.NameEquals("zoneRedundant"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    zoneRedundant = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("status"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -57,7 +84,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ManagedInstanceEditionCapability(name.Value, Optional.ToList(supportedFamilies), Optional.ToNullable(status), reason.Value);
+            return new ManagedInstanceEditionCapability(name.Value, Optional.ToList(supportedFamilies), Optional.ToList(supportedStorageCapabilities), Optional.ToNullable(zoneRedundant), Optional.ToNullable(status), reason.Value);
         }
     }
 }

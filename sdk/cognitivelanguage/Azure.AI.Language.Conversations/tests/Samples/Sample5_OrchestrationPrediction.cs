@@ -47,7 +47,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 foreach (KnowledgeBaseAnswer answer in qnaAnswers.Answers)
                 {
                     Console.WriteLine($"Answer: {answer.Answer}");
-                    Console.WriteLine($"Confidence Score: {answer.ConfidenceScore}");
+                    Console.WriteLine($"Confidence: {answer.Confidence}");
                     Console.WriteLine($"Source: {answer.Source}");
                     Console.WriteLine();
                 }
@@ -88,7 +88,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 foreach (ConversationIntent intent in conversationPrediction.Intents)
                 {
                     Console.WriteLine($"Intent Category: {intent.Category}");
-                    Console.WriteLine($"Confidence Score: {intent.ConfidenceScore}");
+                    Console.WriteLine($"Confidence: {intent.Confidence}");
                     Console.WriteLine();
                 }
 
@@ -97,7 +97,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 {
                     Console.WriteLine($"Entity Text: {entitiy.Text}");
                     Console.WriteLine($"Entity Category: {entitiy.Category}");
-                    Console.WriteLine($"Confidence Score: {entitiy.ConfidenceScore}");
+                    Console.WriteLine($"Confidence: {entitiy.Confidence}");
                     Console.WriteLine($"Starting Position: {entitiy.Offset}");
                     Console.WriteLine($"Length: {entitiy.Length}");
                     Console.WriteLine();
@@ -173,7 +173,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 foreach (KnowledgeBaseAnswer answer in qnaAnswers.Answers)
                 {
                     Console.WriteLine($"Answer: {answer.Answer}");
-                    Console.WriteLine($"Confidence Score: {answer.ConfidenceScore}");
+                    Console.WriteLine($"Confidence: {answer.Confidence}");
                     Console.WriteLine($"Source: {answer.Source}");
                     Console.WriteLine();
                 }
@@ -212,7 +212,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 foreach (ConversationIntent intent in conversationPrediction.Intents)
                 {
                     Console.WriteLine($"Intent Category: {intent.Category}");
-                    Console.WriteLine($"Confidence Score: {intent.ConfidenceScore}");
+                    Console.WriteLine($"Confidence: {intent.Confidence}");
                     Console.WriteLine();
                 }
 
@@ -221,7 +221,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 {
                     Console.WriteLine($"Entity Text: {entitiy.Text}");
                     Console.WriteLine($"Entity Category: {entitiy.Category}");
-                    Console.WriteLine($"Confidence Score: {entitiy.ConfidenceScore}");
+                    Console.WriteLine($"Confidence: {entitiy.Confidence}");
                     Console.WriteLine($"Starting Position: {entitiy.Offset}");
                     Console.WriteLine($"Length: {entitiy.Length}");
                     Console.WriteLine();

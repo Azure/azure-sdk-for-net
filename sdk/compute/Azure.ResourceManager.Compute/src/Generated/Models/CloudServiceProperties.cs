@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="extensionProfile"> Describes a cloud service extension profile. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="uniqueId"> The unique identifier for the cloud service. </param>
-        internal CloudServiceProperties(string packageUrl, string configuration, string configurationUrl, bool? startCloudService, bool? allowModelOverride, CloudServiceUpgradeMode? upgradeMode, CloudServiceRoleProfile roleProfile, CloudServiceOsProfile osProfile, CloudServiceNetworkProfile networkProfile, CloudServiceExtensionProfile extensionProfile, string provisioningState, string uniqueId)
+        internal CloudServiceProperties(string packageUrl, string configuration, string configurationUrl, bool? startCloudService, bool? allowModelOverride, CloudServiceUpgradeMode? upgradeMode, CloudServiceRoleProfile roleProfile, CloudServiceOSProfile osProfile, CloudServiceNetworkProfile networkProfile, CloudServiceExtensionProfile extensionProfile, string provisioningState, string uniqueId)
         {
             PackageUrl = packageUrl;
             Configuration = configuration;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
             AllowModelOverride = allowModelOverride;
             UpgradeMode = upgradeMode;
             RoleProfile = roleProfile;
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             NetworkProfile = networkProfile;
             ExtensionProfile = extensionProfile;
             ProvisioningState = provisioningState;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Describes the role profile for the cloud service. </summary>
         public CloudServiceRoleProfile RoleProfile { get; set; }
         /// <summary> Describes the OS profile for the cloud service. </summary>
-        public CloudServiceOsProfile OsProfile { get; set; }
+        public CloudServiceOSProfile OSProfile { get; set; }
         /// <summary> Network Profile for the cloud service. </summary>
         public CloudServiceNetworkProfile NetworkProfile { get; set; }
         /// <summary> Describes a cloud service extension profile. </summary>

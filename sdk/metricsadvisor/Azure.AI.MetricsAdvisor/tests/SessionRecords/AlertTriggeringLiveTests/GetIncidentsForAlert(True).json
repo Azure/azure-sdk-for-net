@@ -30,8 +30,8 @@
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "0f099f2089162cab683d305ad1a9cba8-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
+            "startTime": "2020-10-29T00:00:00.0000000Z",
+            "lastTime": "2020-10-29T00:00:00.0000000Z",
             "rootNode": {
               "dimension": {
                 "city": "Sao Paulo",
@@ -49,8 +49,8 @@
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "15ee0a88ee90d2b7580b07acac9b5f1b-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
+            "startTime": "2020-10-29T00:00:00.0000000Z",
+            "lastTime": "2020-10-29T00:00:00.0000000Z",
             "rootNode": {
               "dimension": {
                 "city": "Bengaluru",
@@ -69,8 +69,8 @@
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "2b03e492fd98f311dac5754867352e2f-17571a77000",
-            "startTime": "2020-10-28T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
+            "startTime": "2020-10-28T00:00:00.0000000Z",
+            "lastTime": "2020-10-29T00:00:00.0000000Z",
             "rootNode": {
               "dimension": {
                 "city": "Los Angeles",
@@ -89,8 +89,8 @@
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "2dfaa266fcd69f2019345aee741a23a4-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
+            "startTime": "2020-10-29T00:00:00.0000000Z",
+            "lastTime": "2020-10-29T00:00:00.0000000Z",
             "rootNode": {
               "dimension": {
                 "city": "Tehran",
@@ -109,8 +109,8 @@
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "323c79b4e6fc7e6aef0a75852c909fde-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
+            "startTime": "2020-10-29T00:00:00.0000000Z",
+            "lastTime": "2020-10-29T00:00:00.0000000Z",
             "rootNode": {
               "dimension": {
                 "city": "Tokyo",
@@ -129,8 +129,8 @@
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "39545810eabd039e3c5bca795889e4d5-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
+            "startTime": "2020-10-29T00:00:00.0000000Z",
+            "lastTime": "2020-10-29T00:00:00.0000000Z",
             "rootNode": {
               "dimension": {
                 "city": "Jakarta",
@@ -149,8 +149,8 @@
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "596c3ea953875e9e69bfe44b2f9c6d9c-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
+            "startTime": "2020-10-29T00:00:00.0000000Z",
+            "lastTime": "2020-10-29T00:00:00.0000000Z",
             "rootNode": {
               "dimension": {
                 "city": "Istanbul",
@@ -168,8 +168,8 @@
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "5a0692283edccf37ce825b3a8d475f4e-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
+            "startTime": "2020-10-29T00:00:00.0000000Z",
+            "lastTime": "2020-10-29T00:00:00.0000000Z",
             "rootNode": {
               "dimension": {
                 "city": "__SUM__",
@@ -188,8 +188,8 @@
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "740e015e72e8de201191854db904421b-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
+            "startTime": "2020-10-29T00:00:00.0000000Z",
+            "lastTime": "2020-10-29T00:00:00.0000000Z",
             "rootNode": {
               "dimension": {
                 "city": "Mexico City",
@@ -207,8 +207,8 @@
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "ade81d2ff75a21ac9f496133d1484c89-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
+            "startTime": "2020-10-29T00:00:00.0000000Z",
+            "lastTime": "2020-10-29T00:00:00.0000000Z",
             "rootNode": {
               "dimension": {
                 "city": "Rio de Janeiro",
@@ -226,8 +226,8 @@
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "c3b1690cc5c7a724cb728eb74c084a4c-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
+            "startTime": "2020-10-29T00:00:00.0000000Z",
+            "lastTime": "2020-10-29T00:00:00.0000000Z",
             "rootNode": {
               "dimension": {
                 "city": "Houston",
@@ -245,8 +245,8 @@
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "c87ace3b9f582c6a6142026c80f2de44-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
+            "startTime": "2020-10-29T00:00:00.0000000Z",
+            "lastTime": "2020-10-29T00:00:00.0000000Z",
             "rootNode": {
               "dimension": {
                 "city": "Manila",
@@ -265,8 +265,8 @@
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "ca46ba86922052929ece3d4c8794c442-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
+            "startTime": "2020-10-29T00:00:00.0000000Z",
+            "lastTime": "2020-10-29T00:00:00.0000000Z",
             "rootNode": {
               "dimension": {
                 "city": "Mexico City",
@@ -285,8 +285,8 @@
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "dd1566e6ab95777eab6d996389dba73d-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
+            "startTime": "2020-10-29T00:00:00.0000000Z",
+            "lastTime": "2020-10-29T00:00:00.0000000Z",
             "rootNode": {
               "dimension": {
                 "city": "Lahore",
@@ -304,8 +304,8 @@
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "f0b8fda3844b8d12d646fadbad496347-17571a77000",
-            "startTime": "2020-10-29T00:00:00Z",
-            "lastTime": "2020-10-29T00:00:00Z",
+            "startTime": "2020-10-29T00:00:00.0000000Z",
+            "lastTime": "2020-10-29T00:00:00.0000000Z",
             "rootNode": {
               "dimension": {
                 "city": "Cairo",

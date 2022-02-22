@@ -12,7 +12,7 @@ using Azure.Core.Pipeline;
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
     /// <summary>
-    /// A long running asset conversion process for Object Anchors
+    /// A long running asset conversion process for Object Anchors.
     /// </summary>
     public class AssetConversionOperation : Operation<AssetConversionProperties>
     {
@@ -61,7 +61,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         public override bool HasValue => _lastConversionResponse != null;
 
         /// <summary>
-        /// Whether the operation has completed and has a successful final status
+        /// Whether the operation has completed and has a successful final status.
         /// </summary>
         public bool HasCompletedSuccessfully => HasCompleted && HasValue && (this.Value.ConversionStatus == AssetConversionStatus.Succeeded);
 

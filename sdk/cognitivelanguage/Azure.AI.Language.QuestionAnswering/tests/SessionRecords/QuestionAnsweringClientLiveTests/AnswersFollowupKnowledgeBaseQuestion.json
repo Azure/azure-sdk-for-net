@@ -8,19 +8,16 @@
         "Content-Length": "328",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-ec7b0797bd60e747982891071f420775-5a85fa315f8e1b42-00",
-        "User-Agent": [
-          "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20211028.1",
-          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "7247f8716e635a7fbe3a6a4c42039bd6",
+        "traceparent": "00-460445e1001c07abb71adaa9bdf9c78f-46d808af4f9d3b87-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220114.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "a2700dbf6638283dc08f4898a0f4c37b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "question": "How long it takes to charge Surface?",
         "top": 3,
         "userId": "sd53lsY=",
-        "confidenceScoreThreshold": 0.2,
+        "confidenceScoreThreshold": 0.5,
         "context": {
           "previousQnaId": 27,
           "previousUserQuery": "How long should my Surface battery last?"
@@ -34,70 +31,68 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "3ea187c5-69d6-41e6-84c4-7328d42650d2",
-        "Content-Length": "1594",
+        "apim-request-id": "b1ab4b2a-d232-4d28-9019-49846131b0dd",
+        "Content-Length": "1606",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.QuestionAnsweringTextRecords=1",
-        "Date": "Thu, 28 Oct 2021 21:15:36 GMT",
+        "Date": "Fri, 14 Jan 2022 23:16:49 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "2291"
+        "x-envoy-upstream-service-time": "1339"
       },
-      "ResponseBody": [
-        "{\n",
-        "  \u0022answers\u0022: [\n",
-        "    {\n",
-        "      \u0022questions\u0022: [\n",
-        "        \u0022Power and charging\u0022\n",
-        "      ],\n",
-        "      \u0022answer\u0022: \u0022**Power and charging**\\n\\nIt takes two to four hours to charge the Surface Pro 4 battery fully from an empty state. It can take longer if you\u2019re using your Surface for power-intensive activities like gaming or video streaming while you\u2019re charging it.\\n\\nYou can use the USB port on your Surface Pro 4 power supply to charge other devices, like a phone, while your Surface charges. The USB port on the power supply is only for charging, not for data transfer. If you want to use a USB device, plug it into the USB port on your Surface.\u0022,\n",
-        "      \u0022confidenceScore\u0022: 0.6015,\n",
-        "      \u0022id\u0022: 132,\n",
-        "      \u0022source\u0022: \u0022surface-pro-4-user-guide-EN.pdf\u0022,\n",
-        "      \u0022metadata\u0022: {\n",
-        "        \u0022explicitlytaggedheading\u0022: \u0022power and charging\u0022\n",
-        "      },\n",
-        "      \u0022dialog\u0022: {\n",
-        "        \u0022isContextOnly\u0022: false,\n",
-        "        \u0022prompts\u0022: [\n",
-        "          {\n",
-        "            \u0022displayOrder\u0022: 0,\n",
-        "            \u0022qnaId\u0022: 133,\n",
-        "            \u0022displayText\u0022: \u0022Check the battery level\u0022\n",
-        "          },\n",
-        "          {\n",
-        "            \u0022displayOrder\u0022: 1,\n",
-        "            \u0022qnaId\u0022: 134,\n",
-        "            \u0022displayText\u0022: \u0022Lock screen.\u0022\n",
-        "          },\n",
-        "          {\n",
-        "            \u0022displayOrder\u0022: 2,\n",
-        "            \u0022qnaId\u0022: 135,\n",
-        "            \u0022displayText\u0022: \u0022Desktop taskbar.\u0022\n",
-        "          },\n",
-        "          {\n",
-        "            \u0022displayOrder\u0022: 3,\n",
-        "            \u0022qnaId\u0022: 136,\n",
-        "            \u0022displayText\u0022: \u0022Make your battery last\u0022\n",
-        "          }\n",
-        "        ]\n",
-        "      },\n",
-        "      \u0022answerSpan\u0022: {\n",
-        "        \u0022text\u0022: \u0022 two to four hours\u0022,\n",
-        "        \u0022confidenceScore\u0022: 0.3795,\n",
-        "        \u0022offset\u0022: 32,\n",
-        "        \u0022length\u0022: 19\n",
-        "      }\n",
-        "    }\n",
-        "  ]\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "answers": [
+          {
+            "questions": [
+              "Power and charging"
+            ],
+            "answer": "**Power and charging**\n\nIt takes two to four hours to charge the Surface Pro 4 battery fully from an empty state. It can take longer if you\u2019re using your Surface for power-intensive activities like gaming or video streaming while you\u2019re charging it.\n\nYou can use the USB port on your Surface Pro 4 power supply to charge other devices, like a phone, while your Surface charges. The USB port on the power supply is only for charging, not for data transfer. If you want to use a USB device, plug it into the USB port on your Surface.",
+            "confidenceScore": 0.6517000000000001,
+            "id": 132,
+            "source": "surface-pro-4-user-guide-EN.pdf",
+            "metadata": {
+              "explicitlytaggedheading": "power and charging"
+            },
+            "dialog": {
+              "isContextOnly": false,
+              "prompts": [
+                {
+                  "displayOrder": 0,
+                  "qnaId": 133,
+                  "displayText": "Check the battery level"
+                },
+                {
+                  "displayOrder": 1,
+                  "qnaId": 134,
+                  "displayText": "Lock screen."
+                },
+                {
+                  "displayOrder": 2,
+                  "qnaId": 135,
+                  "displayText": "Desktop taskbar."
+                },
+                {
+                  "displayOrder": 3,
+                  "qnaId": 136,
+                  "displayText": "Make your battery last"
+                }
+              ]
+            },
+            "answerSpan": {
+              "text": " two to four hours",
+              "confidenceScore": 0.3795,
+              "offset": 32,
+              "length": 19
+            }
+          }
+        ]
+      }
     }
   ],
   "Variables": {
     "QUESTIONANSWERING_ENDPOINT": "https://wuppe.api.cognitive.microsoft.com",
     "QUESTIONANSWERING_KEY": "Sanitized",
     "QUESTIONANSWERING_PROJECT": "190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c",
-    "RandomSeed": "1573798008"
+    "RandomSeed": "710190814"
   }
 }

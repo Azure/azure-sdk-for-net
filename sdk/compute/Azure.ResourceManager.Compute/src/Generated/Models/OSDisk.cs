@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VM deletion. &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; **Delete** If this value is used, the OS disk is deleted when VM is deleted.&lt;br&gt;&lt;br&gt; **Detach** If this value is used, the os disk is retained after VM is deleted. &lt;br&gt;&lt;br&gt; The default value is set to **detach**. For an ephemeral OS Disk, the default value is set to **Delete**. User cannot change the delete option for ephemeral OS Disk. </param>
         internal OSDisk(OperatingSystemTypes? osType, DiskEncryptionSettings encryptionSettings, string name, VirtualHardDisk vhd, VirtualHardDisk image, CachingTypes? caching, bool? writeAcceleratorEnabled, DiffDiskSettings diffDiskSettings, DiskCreateOptionTypes createOption, int? diskSizeGB, ManagedDiskParameters managedDisk, DiskDeleteOptionTypes? deleteOption)
         {
-            OsType = osType;
+            OSType = osType;
             EncryptionSettings = encryptionSettings;
             Name = name;
             Vhd = vhd;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </summary>
-        public OperatingSystemTypes? OsType { get; set; }
+        public OperatingSystemTypes? OSType { get; set; }
         /// <summary> Specifies the encryption settings for the OS Disk. &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </summary>
         public DiskEncryptionSettings EncryptionSettings { get; set; }
         /// <summary> The disk name. </summary>

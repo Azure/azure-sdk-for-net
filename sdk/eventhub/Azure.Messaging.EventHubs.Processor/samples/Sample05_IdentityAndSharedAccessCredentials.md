@@ -262,18 +262,20 @@ In some scenarios, it may be preferable to supplement token-based authorization 
 This example illustrates parsing the fully qualified namespace and, optionally, the Event Hub name from the connection string and using it with identity-based authorization.
 
 ```C# Snippet:EventHubs_Processor_Sample05_ConnectionStringParse
-TokenCredential credential = new DefaultAzureCredential();
-
-var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
-var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
+var credential = new DefaultAzureCredential();
 
 var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
+var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
 var storageEndpoint = new BlobServiceClient(storageConnectionString).Uri;
-var blobUriBuilder = new BlobUriBuilder(storageEndpoint);
-blobUriBuilder.BlobContainerName = blobContainerName;
+
+var blobUriBuilder = new BlobUriBuilder(storageEndpoint)
+{
+    BlobContainerName = blobContainerName
+};
 
 var storageClient = new BlobContainerClient(
     blobUriBuilder.ToUri(),

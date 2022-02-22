@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of EncryptionService. </summary>
-        /// <param name="enabled"> A boolean indicating whether or not the service encrypts the data as it is stored. </param>
-        /// <param name="lastEnabledTime"> Gets a rough estimate of the date/time when the encryption was last enabled by the user. Only returned when encryption is enabled. There might be some unencrypted blobs which were written after this time, as it is just a rough estimate. </param>
+        /// <param name="enabled"> A boolean indicating whether or not the service encrypts the data as it is stored. Encryption at rest is enabled by default today and cannot be disabled. </param>
+        /// <param name="lastEnabledTime"> Gets a rough estimate of the date/time when the encryption was last enabled by the user. Data is encrypted at rest by default today and cannot be disabled. </param>
         /// <param name="keyType"> Encryption key type to be used for the encryption service. &apos;Account&apos; key type implies that an account-scoped encryption key will be used. &apos;Service&apos; key type implies that a default service key is used. </param>
         internal EncryptionService(bool? enabled, DateTimeOffset? lastEnabledTime, KeyType? keyType)
         {
@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.Storage.Models
             KeyType = keyType;
         }
 
-        /// <summary> A boolean indicating whether or not the service encrypts the data as it is stored. </summary>
+        /// <summary> A boolean indicating whether or not the service encrypts the data as it is stored. Encryption at rest is enabled by default today and cannot be disabled. </summary>
         public bool? Enabled { get; set; }
-        /// <summary> Gets a rough estimate of the date/time when the encryption was last enabled by the user. Only returned when encryption is enabled. There might be some unencrypted blobs which were written after this time, as it is just a rough estimate. </summary>
+        /// <summary> Gets a rough estimate of the date/time when the encryption was last enabled by the user. Data is encrypted at rest by default today and cannot be disabled. </summary>
         public DateTimeOffset? LastEnabledTime { get; }
         /// <summary> Encryption key type to be used for the encryption service. &apos;Account&apos; key type implies that an account-scoped encryption key will be used. &apos;Service&apos; key type implies that a default service key is used. </summary>
         public KeyType? KeyType { get; set; }
