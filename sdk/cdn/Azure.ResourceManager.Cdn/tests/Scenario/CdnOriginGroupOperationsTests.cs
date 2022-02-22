@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             CdnEndpoint cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
             string cdnOriginGroupName = Recording.GenerateAssetName("origingroup-");
             CdnOriginGroup cdnOriginGroup = await CreateCdnOriginGroup(cdnEndpoint, cdnOriginGroupName, cdnEndpoint.Data.Origins[0].Name);
-            await cdnOriginGroup.DeleteAsync();
+            await cdnOriginGroup.DeleteAsync(true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await cdnOriginGroup.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             CdnEndpoint cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
             string cdnOriginGroupName = Recording.GenerateAssetName("origingroup-");
             CdnOriginGroup cdnOriginGroup = await CreateCdnOriginGroup(cdnEndpoint, cdnOriginGroupName, cdnEndpoint.Data.Origins[0].Name);
-            OriginGroupUpdateOptions updateOptions = new OriginGroupUpdateOptions()
+            CdnOriginGroupUpdateOptions updateOptions = new CdnOriginGroupUpdateOptions()
             {
                 HealthProbeSettings = new HealthProbeParameters
                 {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Cdn.Tests
                     ProbeIntervalInSeconds = 60
                 }
             };
-            var lro = await cdnOriginGroup.UpdateAsync(updateOptions);
+            var lro = await cdnOriginGroup.UpdateAsync(true, updateOptions);
             CdnOriginGroup updatedCdnOriginGroup = lro.Value;
             ResourceDataHelper.AssertOriginGroupUpdate(updatedCdnOriginGroup, updateOptions);
         }

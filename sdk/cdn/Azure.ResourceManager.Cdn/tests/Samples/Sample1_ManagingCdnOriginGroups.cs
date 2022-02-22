@@ -4,6 +4,7 @@
 #region Snippet:Manage_OriginGroups_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -24,12 +25,12 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             #region Snippet:Managing_OriginGroups_CreateAnOriginGroup
             // Create a new cdn profile
             string profileName = "myProfile";
-            var input1 = new ProfileData(Location.WestUS, new Sku { Name = SkuName.StandardMicrosoft });
-            ProfileCreateOperation lro1 = await resourceGroup.GetProfiles().CreateOrUpdateAsync(profileName, input1);
+            var input1 = new ProfileData(AzureLocation.WestUS, new Models.Sku { Name = SkuName.StandardMicrosoft });
+            ArmOperation<Profile> lro1 = await resourceGroup.GetProfiles().CreateOrUpdateAsync(true, profileName, input1);
             Profile profile = lro1.Value;
             // Get the cdn endpoint collection from the specific profile and create an endpoint
             string endpointName = "myEndpoint";
-            var input2 = new CdnEndpointData(Location.WestUS)
+            var input2 = new CdnEndpointData(AzureLocation.WestUS)
             {
                 IsHttpAllowed = true,
                 IsHttpsAllowed = true,
@@ -42,16 +43,16 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
                 Weight = 100
             };
             input2.Origins.Add(deepCreatedOrigin);
-            CdnEndpointCreateOperation lro2 = await profile.GetCdnEndpoints().CreateOrUpdateAsync(endpointName, input2);
+            ArmOperation<CdnEndpoint> lro2 = await profile.GetCdnEndpoints().CreateOrUpdateAsync(true, endpointName, input2);
             CdnEndpoint endpoint = lro2.Value;
             // Get the cdn origin group collection from the specific endpoint and create an origin group
             string originGroupName = "myOriginGroup";
             var input3 = new CdnOriginGroupData();
             input3.Origins.Add(new WritableSubResource
             {
-                Id = $"{endpoint.Id}/origins/myOrigin"
+                Id = new ResourceIdentifier($"{endpoint.Id}/origins/myOrigin")
             });
-            CdnOriginGroupCreateOperation lro3 = await endpoint.GetCdnOriginGroups().CreateOrUpdateAsync(originGroupName, input3);
+            ArmOperation<CdnOriginGroup> lro3 = await endpoint.GetCdnOriginGroups().CreateOrUpdateAsync(true, originGroupName, input3);
             CdnOriginGroup originGroup = lro3.Value;
             #endregion Snippet:Managing_OriginGroups_CreateAnOriginGroup
         }
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             // Now we can get the origin group with GetAsync()
             CdnOriginGroup originGroup = await originGroupCollection.GetAsync("myOriginGroup");
             // With UpdateAsync(), we can update the origin group
-            OriginGroupUpdateOptions input = new OriginGroupUpdateOptions()
+            CdnOriginGroupUpdateOptions input = new CdnOriginGroupUpdateOptions()
             {
                 HealthProbeSettings = new HealthProbeParameters
                 {
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
                     ProbeIntervalInSeconds = 60
                 }
             };
-            CdnOriginGroupUpdateOperation lro = await originGroup.UpdateAsync(input);
+            ArmOperation<CdnOriginGroup> lro = await originGroup.UpdateAsync(true, input);
             originGroup = lro.Value;
             #endregion Snippet:Managing_OriginGroups_UpdateAnOriginGroup
         }
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             // Now we can get the origin group with GetAsync()
             CdnOriginGroup originGroup = await originGroupCollection.GetAsync("myOriginGroup");
             // With DeleteAsync(), we can delete the origin group
-            await originGroup.DeleteAsync();
+            await originGroup.DeleteAsync(true);
             #endregion Snippet:Managing_OriginGroups_DeleteAnOriginGroup
         }
 
@@ -129,8 +130,8 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
             // With the collection, we can create a new resource group with a specific name
             string rgName = "myRgName";
-            Location location = Location.WestUS2;
-            ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+            AzureLocation location = AzureLocation.WestUS2;
+            ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = lro.Value;
             #endregion
 

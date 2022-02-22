@@ -5,14 +5,15 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the AfdCustomDomain data model. </summary>
-    public partial class AfdCustomDomainData : ProxyResource
+    public partial class AfdCustomDomainData : ResourceData
     {
         /// <summary> Initializes a new instance of AfdCustomDomainData. </summary>
         public AfdCustomDomainData()
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Read only system data. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tlsSettings"> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </param>
         /// <param name="azureDnsZone"> Resource reference to the Azure DNS zone. </param>
         /// <param name="provisioningState"> Provisioning status. </param>

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             var collection = _resourceGroup.GetGalleries();
             var input = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
-            var lro = await collection.CreateOrUpdateAsync(name, input);
+            var lro = await collection.CreateOrUpdateAsync(true, name, input);
             return lro.Value;
         }
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var name = Recording.GenerateAssetName("testGallery_");
             var gallery = await CreateGalleryAsync(name);
-            await gallery.DeleteAsync();
+            await gallery.DeleteAsync(true);
         }
 
         [TestCase]
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.Compute.Tests
             var name = Recording.GenerateAssetName("testGallery_");
             var gallery = await CreateGalleryAsync(name);
             var description = "This is a gallery for test";
-            var update = new GalleryUpdate()
+            var update = new GalleryUpdateOptions()
             {
                 Description = description
             };
-            var lro = await gallery.UpdateAsync(update);
+            var lro = await gallery.UpdateAsync(true, update);
             Gallery updatedGallery = lro.Value;
 
             Assert.AreEqual(description, updatedGallery.Data.Description);

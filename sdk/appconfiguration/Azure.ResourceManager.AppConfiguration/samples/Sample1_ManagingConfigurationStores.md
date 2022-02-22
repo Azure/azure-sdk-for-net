@@ -7,6 +7,7 @@ Namespaces for this example:
 ```C# Snippet:Manage_ConfigurationStores_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppConfiguration;
 using Azure.ResourceManager.AppConfiguration.Models;
@@ -28,8 +29,8 @@ This is a scoped operations object, and any operations you perform will be done 
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the Collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
-Location location = Location.WestUS2;
-ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+AzureLocation location = AzureLocation.WestUS2;
+ResourceGroup resourceGroup = (await rgCollection.CreateOrUpdateAsync(true ,rgName, new ResourceGroupData(location))).Value;
 ```
 
 Now that we have the resource group created, we can manage the ConfigurationStore inside this resource group.
@@ -38,11 +39,11 @@ Now that we have the resource group created, we can manage the ConfigurationStor
 
 ```C# Snippet:Managing_ConfigurationStores_CreateAConfigurationStore
 string configurationStoreName = ("myApp");
-ConfigurationStoreData configurationStoreData = new ConfigurationStoreData("westus", new Sku("Standard"))
+ConfigurationStoreData configurationStoreData = new ConfigurationStoreData("westus", new Models.Sku("Standard"))
 {
     PublicNetworkAccess = PublicNetworkAccess.Disabled
 };
-ConfigurationStore configurationStore = await (await resourceGroup.GetConfigurationStores().CreateOrUpdateAsync(configurationStoreName, configurationStoreData)).WaitForCompletionAsync();
+ConfigurationStore configurationStore = (await resourceGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName, configurationStoreData)).Value;
 ```
 
 ***List all configurationStores***
@@ -74,7 +75,7 @@ if (configurationStore != null)
     Console.WriteLine(configurationStore.Data.Name);
 }
 
-if (await configurationStoreCollection.CheckIfExistsAsync("myApp"))
+if (await configurationStoreCollection.ExistsAsync("myApp"))
 {
     Console.WriteLine("ConfigurationStore 'myApp' exists.");
 }
@@ -86,5 +87,5 @@ if (await configurationStoreCollection.CheckIfExistsAsync("myApp"))
 ConfigurationStoreCollection configurationStoreCollection = resourceGroup.GetConfigurationStores();
 
 ConfigurationStore configStore = await configurationStoreCollection.GetAsync("myApp");
-await (await configStore.DeleteAsync()).WaitForCompletionResponseAsync();
+await configStore.DeleteAsync(true);
 ```

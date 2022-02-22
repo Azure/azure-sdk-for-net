@@ -15,7 +15,7 @@ using Azure.Storage.Shared;
 
 namespace Azure.Storage
 {
-    internal class PartitionedUploader<TServiceSpecificArgs, TCompleteUploadReturn>
+    internal class PartitionedUploader<TServiceSpecificData, TCompleteUploadReturn>
     {
         #region Definitions
         // delegte for getting a partition from a stream based on the selected data management stragegy
@@ -29,10 +29,10 @@ namespace Azure.Storage
 
         // injected behaviors for services to use partitioned uploads
         public delegate DiagnosticScope CreateScope(string operationName);
-        public delegate Task InitializeDestinationInternal(TServiceSpecificArgs args, bool async, CancellationToken cancellationToken);
+        public delegate Task InitializeDestinationInternal(TServiceSpecificData args, bool async, CancellationToken cancellationToken);
         public delegate Task<Response<TCompleteUploadReturn>> SingleUploadInternal(
             Stream contentStream,
-            TServiceSpecificArgs args,
+            TServiceSpecificData args,
             IProgress<long> progressHandler,
             UploadTransactionalHashingOptions hashingOptions,
             string operationName,
@@ -40,14 +40,14 @@ namespace Azure.Storage
             CancellationToken cancellationToken);
         public delegate Task UploadPartitionInternal(Stream contentStream,
             long offset,
-            TServiceSpecificArgs args,
+            TServiceSpecificData args,
             IProgress<long> progressHandler,
             UploadTransactionalHashingOptions hashingOptions,
             bool async,
             CancellationToken cancellationToken);
         public delegate Task<Response<TCompleteUploadReturn>> CommitPartitionedUploadInternal(
             List<(long Offset, long Size)> partitions,
-            TServiceSpecificArgs args,
+            TServiceSpecificData args,
             bool async,
             CancellationToken cancellationToken);
 
@@ -165,7 +165,7 @@ namespace Azure.Storage
         public async Task<Response<TCompleteUploadReturn>> UploadInternal(
             Stream content,
             long? expectedContentLength,
-            TServiceSpecificArgs args,
+            TServiceSpecificData args,
             IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken = default)
@@ -270,7 +270,7 @@ namespace Azure.Storage
             Stream content,
             long? contentLength,
             long partitionSize,
-            TServiceSpecificArgs args,
+            TServiceSpecificData args,
             IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken)
@@ -364,7 +364,7 @@ namespace Azure.Storage
             Stream content,
             long? contentLength,
             long blockSize,
-            TServiceSpecificArgs args,
+            TServiceSpecificData args,
             IProgress<long> progressHandler,
             CancellationToken cancellationToken)
         {
@@ -466,7 +466,7 @@ namespace Azure.Storage
         private async Task StagePartitionAndDisposeInternal(
             SlicedStream partition,
             long offset,
-            TServiceSpecificArgs args,
+            TServiceSpecificData args,
             IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken)

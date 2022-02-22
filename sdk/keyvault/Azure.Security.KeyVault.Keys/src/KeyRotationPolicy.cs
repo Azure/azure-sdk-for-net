@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Xml;
 
 namespace Azure.Security.KeyVault.Keys
 {
@@ -35,9 +34,26 @@ namespace Azure.Security.KeyVault.Keys
         public IList<KeyRotationLifetimeAction> LifetimeActions { get; } = new List<KeyRotationLifetimeAction>();
 
         /// <summary>
-        /// Gets or sets the <see cref="TimeSpan"/> when the <see cref="KeyRotationPolicy"/> will expire. It should be at least 28 days.
+        /// Gets or sets the ISO 8601 duration when the <see cref="KeyRotationPolicy"/> will expire. It should be at least 28 days.
         /// </summary>
-        public TimeSpan? ExpiresIn { get; set; }
+        /// <remarks>
+        /// ISO 8601 duration examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>P90D</term>
+        /// <description>90 days</description>
+        /// </item>
+        /// <item>
+        /// <term>P3M</term>
+        /// <description>3 months</description>
+        /// </item>
+        /// <item>
+        /// <term>P1Y10D</term>
+        /// <description>1 year and 10 days</description>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        public string ExpiresIn { get; set; }
 
         /// <summary>
         /// Gets a <see cref="DateTimeOffset"/> indicating when the <see cref="KeyRotationPolicy"/> was created.
@@ -83,7 +99,7 @@ namespace Azure.Security.KeyVault.Keys
                 switch (prop.Name)
                 {
                     case ExpiryTimePropertyName:
-                        ExpiresIn = XmlConvert.ToTimeSpan(prop.Value.GetString());
+                        ExpiresIn =prop.Value.GetString();
                         break;
 
                     case CreatedPropertyName:
@@ -113,10 +129,10 @@ namespace Azure.Security.KeyVault.Keys
 
         internal void WriteAttributeProperties(Utf8JsonWriter json)
         {
-            if (ExpiresIn.HasValue)
+            if (ExpiresIn != null)
             {
                 json.WriteStartObject(s_attributesPropertyNameBytes);
-                json.WriteString(s_expiryTimePropertyNameBytes, XmlConvert.ToString(ExpiresIn.Value));
+                json.WriteString(s_expiryTimePropertyNameBytes, ExpiresIn);
                 json.WriteEndObject();
             }
         }

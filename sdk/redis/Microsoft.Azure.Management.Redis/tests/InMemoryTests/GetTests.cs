@@ -60,7 +60,7 @@ namespace AzureRedisCache.Tests.InMemoryTests
             Assert.Equal(SkuFamily.C, response.Sku.Family);
             Assert.Equal(1, response.Sku.Capacity);
             Assert.Equal("2.8", response.RedisVersion);
-            Assert.Equal("allkeys-lru", response.RedisConfiguration["maxmemory-policy"]);
+            Assert.Equal("allkeys-lru", response.RedisConfiguration.MaxmemoryPolicy);
 
             Assert.Equal("hydraradiscache.cache.icbbvt.windows-int.net", response.HostName);
             Assert.Equal(6379, response.Port);

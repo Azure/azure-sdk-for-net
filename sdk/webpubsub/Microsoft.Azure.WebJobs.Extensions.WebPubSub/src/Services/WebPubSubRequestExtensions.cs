@@ -221,7 +221,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 connectionContext = new WebPubSubConnectionContext(eventType, eventName, hub, connectionId, userId, signature, origin, states, headers);
                 return true;
             }
-            catch (Exception)
+            catch
             {
                 connectionContext = null;
                 return false;
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 dataType = mediaType.GetDataType();
                 return true;
             }
-            catch (Exception)
+            catch
             {
                 dataType = WebPubSubDataType.Binary;
                 return false;

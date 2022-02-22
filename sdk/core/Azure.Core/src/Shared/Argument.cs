@@ -35,9 +35,9 @@ namespace Azure.Core
         /// <param name="name">The name of the parameter.</param>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
 #if AZURE_NULLABLE
-        public static void AssertNotNull<T>([AllowNull, NotNull] T value, string name) where T : class?
+        public static void AssertNotNull<T>([AllowNull, NotNull] T value, string name)
 #else
-        public static void AssertNotNull<T>(T value, string name) where T : class
+        public static void AssertNotNull<T>(T value, string name)
 #endif
         {
             if (value is null)

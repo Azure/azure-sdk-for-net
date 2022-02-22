@@ -8,25 +8,21 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the CdnWebApplicationFirewallPolicy data model. </summary>
-    public partial class CdnWebApplicationFirewallPolicyData : TrackedResource
+    public partial class CdnWebApplicationFirewallPolicyData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyData. </summary>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="sku"> The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="sku"/> is null. </exception>
-        public CdnWebApplicationFirewallPolicyData(string location, Sku sku) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
+        public CdnWebApplicationFirewallPolicyData(AzureLocation location, Models.Sku sku) : base(location)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
             if (sku == null)
             {
                 throw new ArgumentNullException(nameof(sku));
@@ -40,9 +36,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Read only system data. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="etag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="sku"> The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy. </param>
         /// <param name="policySettings"> Describes  policySettings for policy. </param>
@@ -52,7 +48,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="endpointLinks"> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </param>
         /// <param name="provisioningState"> Provisioning state of the WebApplicationFirewallPolicy. </param>
         /// <param name="resourceState"> Resource status of the policy. </param>
-        internal CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, IDictionary<string, string> tags, string etag, Sku sku, PolicySettings policySettings, RateLimitRuleList rateLimitRules, CustomRuleList customRules, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> endpointLinks, ProvisioningState? provisioningState, PolicyResourceState? resourceState) : base(id, name, type, systemData, location, tags)
+        internal CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string etag, Models.Sku sku, PolicySettings policySettings, RateLimitRuleList rateLimitRules, CustomRuleList customRules, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> endpointLinks, ProvisioningState? provisioningState, PolicyResourceState? resourceState) : base(id, name, type, systemData, tags, location)
         {
             Etag = etag;
             Sku = sku;
@@ -68,7 +64,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets a unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; set; }
         /// <summary> The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy. </summary>
-        public Sku Sku { get; set; }
+        public Models.Sku Sku { get; set; }
         /// <summary> Describes  policySettings for policy. </summary>
         public PolicySettings PolicySettings { get; set; }
         /// <summary> Describes rate limit rules inside the policy. </summary>

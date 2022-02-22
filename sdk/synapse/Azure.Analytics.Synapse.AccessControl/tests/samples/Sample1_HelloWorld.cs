@@ -33,8 +33,8 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             #endregion
 
             #region Snippet:PrepCreateRoleAssignment
-            Response roleDefinitionsReponse = definitionsClient.GetRoleDefinitions(new());
-            BinaryData roleDefinitionsContent = roleDefinitionsReponse.Content;
+            Response roleDefinitionsResponse = definitionsClient.GetRoleDefinitions(new());
+            BinaryData roleDefinitionsContent = roleDefinitionsResponse.Content;
             JsonDocument roleDefinitionsJson = JsonDocument.Parse(roleDefinitionsContent.ToMemory());
 
             JsonElement adminRoleJson = roleDefinitionsJson.RootElement.EnumerateArray().

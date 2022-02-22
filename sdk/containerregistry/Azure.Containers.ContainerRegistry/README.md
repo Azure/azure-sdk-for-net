@@ -138,7 +138,7 @@ ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new Conta
 RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
 
 // List the set of tags on the hello_world image tagged as "latest"
-Pageable<ArtifactTagProperties> tags = image.GetTagPropertiesCollection();
+Pageable<ArtifactTagProperties> tags = image.GetAllTagProperties();
 
 // Iterate through the image's tags, listing the tagged alias for the image
 Console.WriteLine($"{image.FullyQualifiedReference} has the following aliases:");
@@ -194,7 +194,7 @@ foreach (string repositoryName in repositoryNames)
 
     // Obtain the images ordered from newest to oldest
     Pageable<ArtifactManifestProperties> imageManifests =
-        repository.GetManifestPropertiesCollection(orderBy: ArtifactManifestOrderBy.LastUpdatedOnDescending);
+        repository.GetAllManifestProperties(manifestOrder: ArtifactManifestOrder.LastUpdatedOnDescending);
 
     // Delete images older than the first three.
     foreach (ArtifactManifestProperties imageManifest in imageManifests.Skip(3))
@@ -251,7 +251,7 @@ ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new Conta
 RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
 
 // List the set of tags on the hello_world image tagged as "latest"
-AsyncPageable<ArtifactTagProperties> tags = image.GetTagPropertiesCollectionAsync();
+AsyncPageable<ArtifactTagProperties> tags = image.GetAllTagPropertiesAsync();
 
 // Iterate through the image's tags, listing the tagged alias for the image
 Console.WriteLine($"{image.FullyQualifiedReference} has the following aliases:");
@@ -307,7 +307,7 @@ await foreach (string repositoryName in repositoryNames)
 
     // Obtain the images ordered from newest to oldest
     AsyncPageable<ArtifactManifestProperties> imageManifests =
-        repository.GetManifestPropertiesCollectionAsync(orderBy: ArtifactManifestOrderBy.LastUpdatedOnDescending);
+        repository.GetAllManifestPropertiesAsync(manifestOrder: ArtifactManifestOrder.LastUpdatedOnDescending);
 
     // Delete images older than the first three.
     await foreach (ArtifactManifestProperties imageManifest in imageManifests.Skip(3))

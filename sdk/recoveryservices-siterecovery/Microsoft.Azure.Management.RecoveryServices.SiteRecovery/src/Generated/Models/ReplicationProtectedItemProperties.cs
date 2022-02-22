@@ -59,6 +59,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="testFailoverState">The Test failover state.</param>
         /// <param name="testFailoverStateDescription">The Test failover state
         /// description.</param>
+        /// <param name="switchProviderState">The switch provider
+        /// state.</param>
+        /// <param name="switchProviderStateDescription">The switch provider
+        /// state description.</param>
         /// <param name="allowedOperations">The allowed operations on the
         /// Replication protected item.</param>
         /// <param name="replicationHealth">The consolidated protection health
@@ -85,7 +89,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Id.</param>
         /// <param name="eventCorrelationId">The correlation Id for events
         /// associated with this protected item.</param>
-        public ReplicationProtectedItemProperties(string friendlyName = default(string), string protectedItemType = default(string), string protectableItemId = default(string), string recoveryServicesProviderId = default(string), string primaryFabricFriendlyName = default(string), string primaryFabricProvider = default(string), string recoveryFabricFriendlyName = default(string), string recoveryFabricId = default(string), string primaryProtectionContainerFriendlyName = default(string), string recoveryProtectionContainerFriendlyName = default(string), string protectionState = default(string), string protectionStateDescription = default(string), string activeLocation = default(string), string testFailoverState = default(string), string testFailoverStateDescription = default(string), IList<string> allowedOperations = default(IList<string>), string replicationHealth = default(string), string failoverHealth = default(string), IList<HealthError> healthErrors = default(IList<HealthError>), string policyId = default(string), string policyFriendlyName = default(string), System.DateTime? lastSuccessfulFailoverTime = default(System.DateTime?), System.DateTime? lastSuccessfulTestFailoverTime = default(System.DateTime?), CurrentScenarioDetails currentScenario = default(CurrentScenarioDetails), string failoverRecoveryPointId = default(string), ReplicationProviderSpecificSettings providerSpecificDetails = default(ReplicationProviderSpecificSettings), string recoveryContainerId = default(string), string eventCorrelationId = default(string))
+        public ReplicationProtectedItemProperties(string friendlyName = default(string), string protectedItemType = default(string), string protectableItemId = default(string), string recoveryServicesProviderId = default(string), string primaryFabricFriendlyName = default(string), string primaryFabricProvider = default(string), string recoveryFabricFriendlyName = default(string), string recoveryFabricId = default(string), string primaryProtectionContainerFriendlyName = default(string), string recoveryProtectionContainerFriendlyName = default(string), string protectionState = default(string), string protectionStateDescription = default(string), string activeLocation = default(string), string testFailoverState = default(string), string testFailoverStateDescription = default(string), string switchProviderState = default(string), string switchProviderStateDescription = default(string), IList<string> allowedOperations = default(IList<string>), string replicationHealth = default(string), string failoverHealth = default(string), IList<HealthError> healthErrors = default(IList<HealthError>), string policyId = default(string), string policyFriendlyName = default(string), System.DateTime? lastSuccessfulFailoverTime = default(System.DateTime?), System.DateTime? lastSuccessfulTestFailoverTime = default(System.DateTime?), CurrentScenarioDetails currentScenario = default(CurrentScenarioDetails), string failoverRecoveryPointId = default(string), ReplicationProviderSpecificSettings providerSpecificDetails = default(ReplicationProviderSpecificSettings), string recoveryContainerId = default(string), string eventCorrelationId = default(string))
         {
             FriendlyName = friendlyName;
             ProtectedItemType = protectedItemType;
@@ -102,6 +106,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             ActiveLocation = activeLocation;
             TestFailoverState = testFailoverState;
             TestFailoverStateDescription = testFailoverStateDescription;
+            SwitchProviderState = switchProviderState;
+            SwitchProviderStateDescription = switchProviderStateDescription;
             AllowedOperations = allowedOperations;
             ReplicationHealth = replicationHealth;
             FailoverHealth = failoverHealth;
@@ -213,6 +219,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "testFailoverStateDescription")]
         public string TestFailoverStateDescription { get; set; }
+
+        /// <summary>
+        /// Gets or sets the switch provider state.
+        /// </summary>
+        [JsonProperty(PropertyName = "switchProviderState")]
+        public string SwitchProviderState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the switch provider state description.
+        /// </summary>
+        [JsonProperty(PropertyName = "switchProviderStateDescription")]
+        public string SwitchProviderStateDescription { get; set; }
 
         /// <summary>
         /// Gets or sets the allowed operations on the Replication protected

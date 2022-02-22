@@ -4,7 +4,7 @@ This directory contains the open source subset of the .NET SDK. For documentatio
 
 The Azure Synapse Analytics development client library enables programmatically managing artifacts, offering methods to create, update, list, and delete pipelines, datasets, data flows, notebooks, Spark job definitions, SQL scripts, linked services and triggers.
 
-Azure Synapse is a limitless analytics service that brings together enterprise data warehousing and Big Data analytics. It gives you the freedom to query data on your terms, using either serverless on-demand or provisioned resources—at scale. Azure Synapse brings these two worlds together with a unified experience to ingest, prepare, manage, and serve data for immediate BI and machine learning needs. 
+Azure Synapse is a limitless analytics service that brings together enterprise data warehousing and Big Data analytics. It gives you the freedom to query data on your terms, using either serverless on-demand or provisioned resources—at scale. Azure Synapse brings these two worlds together with a unified experience to ingest, prepare, manage, and serve data for immediate BI and machine learning needs.
 
 ## Getting started
 
@@ -13,6 +13,7 @@ The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Dow
 For the best development experience, developers should use the official Microsoft NuGet packages for libraries. NuGet packages are regularly updated with new functionality and hotfixes.
 
 ### Install the package
+
 Install the Azure Synapse Analytics development client library for .NET with [NuGet](https://www.nuget.org/packages/Azure.Analytics.Synapse.Artifacts/):
 
 ```dotnetcli
@@ -20,7 +21,8 @@ dotnet add package Azure.Analytics.Synapse.Artifacts --version 0.1.0-preview.2
 ```
 
 ### Prerequisites
-- **Azure Subscription:**  To use Azure services, including Azure Synapse, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
+
+- **Azure Subscription:** To use Azure services, including Azure Synapse, you'll need a subscription. If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
 - An existing Azure Synapse workspace. If you need to create an Azure Synapse workspace, you can use the [Azure Portal](https://portal.azure.com/) or [Azure CLI](https://docs.microsoft.com/cli/azure).
 
 If you use the Azure CLI, the command looks like below:
@@ -37,6 +39,7 @@ az synapse workspace create \
 ```
 
 ### Authenticate the client
+
 In order to interact with part of the Azure Synapse Analytics service, you'll need to create an instance of the respective client class:
 
 - [BigDataPoolsClient](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Generated/BigDataPoolsClient.cs)
@@ -56,7 +59,7 @@ In order to interact with part of the Azure Synapse Analytics service, you'll ne
 - [WorkspaceClient](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Generated/WorkspaceClient.cs)
 - [WorkspaceGitRepoManagementClient](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Generated/WorkspaceGitRepoManagementClient.cs)
 
-You need a **workspace endpoint**, which you may see as "Development endpoint" in the portal,  and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
+You need a **workspace endpoint**, which you may see as "Development endpoint" in the portal, and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
 
 Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity). To use the [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#defaultazurecredential) provider shown below,
 or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
@@ -66,13 +69,15 @@ Install-Package Azure.Identity
 ```
 
 ## Examples
+
 The Azure.Analytics.Synapse.Artifacts package supports synchronous and asynchronous APIs. The following section covers some of the most common Azure Synapse Analytics development related tasks:
 
 ### Notebook examples
-* [Create a notebook](#create-a-notebook)
-* [Retrieve a notebook](#retrieve-a-notebook)
-* [List notebooks](#list-notebooks)
-* [Delete a notebook](#delete-a-notebook)
+
+- [Create a notebook](#create-a-notebook)
+- [Retrieve a notebook](#retrieve-a-notebook)
+- [List notebooks](#list-notebooks)
+- [Delete a notebook](#delete-a-notebook)
 
 ### Create a notebook
 
@@ -93,6 +98,7 @@ NotebookResource retrievedNotebook = client.GetNotebook(notebookName);
 ```
 
 ### List notebooks
+
 `GetNotebooksByWorkspace` enumerates the notebooks in the Synapse workspace.
 
 ```C# Snippet:ListNotebooks
@@ -118,18 +124,22 @@ For information on building the Azure Synapse client library, please see [Buildi
 
 ## Target frameworks
 
-For information about the target frameworks of the Azure Synapse client library, please refer to the [Target Frameworks](https://github.com/azure/azure-sdk-for-net#target-frameworks) of the Microsoft Azure SDK for .NET.  
+For information about the target frameworks of the Azure Synapse client library, please refer to the [Target Frameworks](https://github.com/azure/azure-sdk-for-net#target-frameworks) of the Microsoft Azure SDK for .NET.
 
 ## Key concepts
 
 ### NotebookControlClient
+
 With a notebook client you can create, update, list, and delete pipelines, datasets, data flows, notebooks, Spark job definitions, SQL scripts, linked services and triggers.
 
 ### Thread safety
+
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
 
 ### Additional concepts
+
 <!-- CLIENT COMMON BAR -->
+
 [Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
 [Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
@@ -137,6 +147,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
 [Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+
 <!-- CLIENT COMMON BAR -->
 
 ## Troubleshooting

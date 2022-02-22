@@ -9,6 +9,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Tests.Samples
 {
@@ -24,14 +25,14 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
             #endregion
             #region Snippet:Managing_ServiceBusQueues_CreateResourceGroup
             string rgName = "myRgName";
-            Location location = Location.WestUS2;
-            ResourceGroupCreateOrUpdateOperation operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+            AzureLocation location = AzureLocation.WestUS2;
+            ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = operation.Value;
             #endregion
             #region Snippet:Managing_ServiceBusQueues_CreateNamespace
             string namespaceName = "myNamespace";
             ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
-            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new ServiceBusNamespaceData(location))).Value;
+            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new ServiceBusNamespaceData(location))).Value;
             ServiceBusQueueCollection serviceBusQueueCollection = serviceBusNamespace.GetServiceBusQueues();
             #endregion
             this.serviceBusQueueCollection = serviceBusQueueCollection;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
         {
             #region Snippet:Managing_ServiceBusQueues_CreateQueue
             string queueName = "myQueue";
-            ServiceBusQueue serviceBusQueue = (await serviceBusQueueCollection.CreateOrUpdateAsync(queueName, new ServiceBusQueueData())).Value;
+            ServiceBusQueue serviceBusQueue = (await serviceBusQueueCollection.CreateOrUpdateAsync(true, queueName, new ServiceBusQueueData())).Value;
             #endregion
         }
 
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
             {
                 Console.WriteLine("queue 'foo' exists");
             }
-            if (await serviceBusQueueCollection.CheckIfExistsAsync("bar"))
+            if (await serviceBusQueueCollection.ExistsAsync("bar"))
             {
                 Console.WriteLine("queue 'bar' exists");
             }
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
         {
             #region Snippet:Managing_ServiceBusQueues_DeleteQueue
             ServiceBusQueue serviceBusQueue = await serviceBusQueueCollection.GetAsync("myQueue");
-            await serviceBusQueue.DeleteAsync();
+            await serviceBusQueue.DeleteAsync(true);
             #endregion
         }
     }

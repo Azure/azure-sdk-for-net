@@ -6,6 +6,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Security;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
@@ -21,7 +22,9 @@ namespace Azure.Core.TestFramework
         private static readonly RemoteCertificateValidationCallback ServerCertificateCustomValidationCallback =
             (_, certificate, _, _) => certificate.Issuer == TestProxy.DevCertIssuer;
 
-        public ProxyTransport(TestProxy proxy, HttpPipelineTransport transport, TestRecording recording)
+        private readonly Func<EntryRecordModel> _filter;
+
+        public ProxyTransport(TestProxy proxy, HttpPipelineTransport transport, TestRecording recording, Func<EntryRecordModel> filter)
         {
             if (transport is HttpClientTransport)
             {
@@ -39,51 +42,65 @@ namespace Azure.Core.TestFramework
             }
             _recording = recording;
             _proxy = proxy;
+            _filter = filter;
         }
 
-        public override void Process(HttpMessage message)
-        {
-            RedirectToTestProxy(message);
-            _innerTransport.Process(message);
-            ProcessResponseAsync(message, false).EnsureCompleted();
-        }
+        public override void Process(HttpMessage message) =>
+            ProcessAsyncInternalAsync(message, false).EnsureCompleted();
 
-        public override async ValueTask ProcessAsync(HttpMessage message)
+        public override async ValueTask ProcessAsync(HttpMessage message) =>
+            await ProcessAsyncInternalAsync(message, true);
+
+        private async Task ProcessAsyncInternalAsync(HttpMessage message, bool async)
         {
-            RedirectToTestProxy(message);
-            await _innerTransport.ProcessAsync(message);
-            await ProcessResponseAsync(message, true);
+            try
+            {
+                RedirectToTestProxy(message);
+                if (async)
+                {
+                    await _innerTransport.ProcessAsync(message);
+                }
+                else
+                {
+                    _innerTransport.Process(message);
+                }
+
+                await ProcessResponseAsync(message, true);
+            }
+            finally
+            {
+                // revert the original URI - this is important for tests that rely on aspects of the URI in the pipeline
+                // e.g. KeyVault caches tokens based on URI
+                message.Request.Headers.TryGetValue("x-recording-upstream-base-uri", out string original);
+
+                var originalBaseUri = new Uri(original);
+                message.Request.Uri.Scheme = originalBaseUri.Scheme;
+                message.Request.Uri.Host = originalBaseUri.Host;
+                message.Request.Uri.Port = originalBaseUri.Port;
+
+                if (_isWebRequestTransport)
+                {
+                    ServicePointManager.ServerCertificateValidationCallback -= ServerCertificateCustomValidationCallback;
+                }
+            }
         }
 
         private async Task ProcessResponseAsync(HttpMessage message, bool async)
         {
-            if (message.Response.Headers.Contains("x-request-mismatch"))
+            if (message.HasResponse && message.Response.Headers.Contains("x-request-mismatch"))
             {
-                var streamreader = new StreamReader(message.Response.ContentStream);
+                var streamReader = new StreamReader(message.Response.ContentStream);
                 string response;
                 if (async)
                 {
-                    response = await streamreader.ReadToEndAsync();
+                    response = await streamReader.ReadToEndAsync();
                 }
                 else
                 {
-                    response = streamreader.ReadToEnd();
+                    response = streamReader.ReadToEnd();
                 }
-                throw new TestRecordingMismatchException(response);
-            }
-
-            // revert the original URI - this is important for tests that rely on aspects of the URI in the pipeline
-            // e.g. KeyVault caches tokens based on URI
-            message.Request.Headers.TryGetValue("x-recording-upstream-base-uri", out string original);
-
-            var originalBaseUri = new Uri(original);
-            message.Request.Uri.Scheme = originalBaseUri.Scheme;
-            message.Request.Uri.Host = originalBaseUri.Host;
-            message.Request.Uri.Port = originalBaseUri.Port;
-
-            if (_isWebRequestTransport)
-            {
-                ServicePointManager.ServerCertificateValidationCallback -= ServerCertificateCustomValidationCallback;
+                using var doc = JsonDocument.Parse(response);
+                throw new TestRecordingMismatchException(doc.RootElement.GetProperty("Message").GetString());
             }
         }
 
@@ -106,21 +123,40 @@ namespace Azure.Core.TestFramework
         // copied from https://github.com/Azure/azure-sdk-for-net/blob/main/common/Perf/Azure.Test.Perf/TestProxyPolicy.cs
         private void RedirectToTestProxy(HttpMessage message)
         {
+            if (_recording.Mode == RecordedTestMode.Record)
+            {
+                switch (_filter())
+                {
+                    case EntryRecordModel.Record:
+                        break;
+                    case EntryRecordModel.RecordWithoutRequestBody:
+                        message.Request.Headers.Add("x-recording-skip", "request-body");
+                        break;
+                    case EntryRecordModel.DoNotRecord:
+                        message.Request.Headers.Add("x-recording-skip", "request-response");
+                        break;
+                }
+            }
+            else if (_recording.Mode == RecordedTestMode.Playback)
+            {
+                if (_filter() == EntryRecordModel.RecordWithoutRequestBody)
+                {
+                    message.Request.Content = null;
+                }
+            }
+
             var request = message.Request;
             request.Headers.SetValue("x-recording-id", _recording.RecordingId);
             request.Headers.SetValue("x-recording-mode", _recording.Mode.ToString().ToLower());
 
-            // Ensure x-recording-upstream-base-uri header is only set once, since the same HttpMessage will be reused on retries
-            if (!request.Headers.Contains("x-recording-upstream-base-uri"))
+            // Intentionally reset the upstream URI in case the request URI changes between retries - e.g. when using GeoRedundant secondary Storage
+            var baseUri = new RequestUriBuilder()
             {
-                var baseUri = new RequestUriBuilder()
-                {
-                    Scheme = request.Uri.Scheme,
-                    Host = request.Uri.Host,
-                    Port = request.Uri.Port,
-                };
-                request.Headers.SetValue("x-recording-upstream-base-uri", baseUri.ToString());
-            }
+                Scheme = request.Uri.Scheme,
+                Host = request.Uri.Host,
+                Port = request.Uri.Port,
+            };
+            request.Headers.SetValue("x-recording-upstream-base-uri", baseUri.ToString());
 
             // for some reason using localhost instead of the ip address causes slowness when combined with SSL callback being specified
             request.Uri.Host = TestProxy.IpAddress;

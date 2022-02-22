@@ -22,6 +22,10 @@ namespace Azure.Core.TestFramework
         public List<BodyRegexSanitizer> BodyRegexSanitizers { get; } = new();
         public List<UriRegexSanitizer> UriRegexSanitizers { get; } = new();
 
+        public List<HeaderTransform> HeaderTransforms = new();
+
+        public List<HeaderRegexSanitizer> HeaderRegexSanitizers { get; } = new();
+
         /// <summary>
         /// This is just a temporary workaround to avoid breaking tests that need to be re-recorded
         //  when updating the JsonPathSanitizer logic to avoid changing date formats when deserializing requests.
@@ -51,6 +55,15 @@ namespace Azure.Core.TestFramework
         public void AddJsonPathSanitizer(string jsonPath, Func<JToken, JToken> sanitizer = null)
         {
             JsonPathSanitizers.Add((jsonPath, sanitizer ?? (_ => JToken.FromObject(SanitizeValue))));
+        }
+
+        public void ReplaceHostInUri(string replacementHostName)
+        {
+            UriRegexSanitizers.Add(
+                new UriRegexSanitizer(@"https://(?<host>[^/]+)/", replacementHostName)
+                {
+                    GroupForReplace = "host"
+                });
         }
 
         public virtual string SanitizeUri(string uri)

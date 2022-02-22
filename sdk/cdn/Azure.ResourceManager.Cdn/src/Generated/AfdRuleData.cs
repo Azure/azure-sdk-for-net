@@ -7,13 +7,13 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the AfdRule data model. </summary>
-    public partial class AfdRuleData : ProxyResource
+    public partial class AfdRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of AfdRuleData. </summary>
         public AfdRuleData()
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Read only system data. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="order"> The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied. </param>
         /// <param name="conditions"> A list of conditions that must be matched for the actions to be executed. </param>
         /// <param name="actions"> A list of actions that are executed when all the conditions of a rule are satisfied. </param>

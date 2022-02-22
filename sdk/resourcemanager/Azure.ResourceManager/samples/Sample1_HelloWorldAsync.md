@@ -31,7 +31,7 @@ You can also specify the default subscription when creating the ArmClient:
 
 ```C# Snippet:Hello_World_Async_SpecifyDefaultSubscription
 string defaultSubscriptionId = "your-subscription-id";
-ArmClient armClient = new ArmClient(defaultSubscriptionId, new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential(), defaultSubscriptionId);
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 Console.WriteLine(subscription.Id);
 ```

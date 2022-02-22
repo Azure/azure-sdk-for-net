@@ -13,11 +13,14 @@ namespace Azure.Communication.PhoneNumbers.Tests
     public class PhoneNumbersClientLiveTestBase : RecordedTestBase<PhoneNumbersClientTestEnvironment>
     {
         protected const string UnauthorizedNumber = "+14255550123";
-        public PhoneNumbersClientLiveTestBase(bool isAsync) : base(isAsync, useLegacyTransport: true)
+        public PhoneNumbersClientLiveTestBase(bool isAsync) : base(isAsync)
             => Sanitizer = new PhoneNumbersClientRecordedTestSanitizer();
 
         public bool SkipPhoneNumberLiveTests
             => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_PHONENUMBER_LIVE_TESTS") == "TRUE";
+
+        public bool SkipUpdateCapabilitiesLiveTest
+            => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_UPDATE_CAPABILITIES_LIVE_TESTS") == "TRUE";
 
         /// <summary>
         /// Creates a <see cref="PhoneNumbersClient" /> with the connectionstring via environment
@@ -83,9 +86,13 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
         protected string GetTestPhoneNumber()
         {
-            return TestEnvironment.Mode == RecordedTestMode.Playback
-                ? RecordedTestSanitizer.SanitizeValue
-                : TestEnvironment.CommunicationTestPhoneNumber;
+            if (TestEnvironment.Mode == RecordedTestMode.Playback)
+                return RecordedTestSanitizer.SanitizeValue;
+
+            if (!SkipUpdateCapabilitiesLiveTest)
+                return TestEnvironment.TestAgentPhoneNumber;
+
+            return TestEnvironment.DefaultTestPhoneNumber;
         }
 
         protected void SleepIfNotInPlaybackMode()

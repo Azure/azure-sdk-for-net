@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="zoneResilient"> Specifies whether an image is zone resilient or not. Default is false. Zone resilient images can be created only in regions that provide Zone Redundant Storage (ZRS). </param>
         internal ImageStorageProfile(ImageOSDisk osDisk, IList<ImageDataDisk> dataDisks, bool? zoneResilient)
         {
-            OsDisk = osDisk;
+            OSDisk = osDisk;
             DataDisks = dataDisks;
             ZoneResilient = zoneResilient;
         }
 
         /// <summary> Specifies information about the operating system disk used by the virtual machine. &lt;br&gt;&lt;br&gt; For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </summary>
-        public ImageOSDisk OsDisk { get; set; }
+        public ImageOSDisk OSDisk { get; set; }
         /// <summary> Specifies the parameters that are used to add a data disk to a virtual machine. &lt;br&gt;&lt;br&gt; For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </summary>
         public IList<ImageDataDisk> DataDisks { get; }
         /// <summary> Specifies whether an image is zone resilient or not. Default is false. Zone resilient images can be created only in regions that provide Zone Redundant Storage (ZRS). </summary>

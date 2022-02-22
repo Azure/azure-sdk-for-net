@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="remotePort"> The remote port. Acceptable values are a single integer in the range (0-65535). Support for * for the source port, which depends on the direction. </param>
         /// <param name="localIPAddress"> The local IP address. Acceptable values are valid IPv4 addresses. </param>
         /// <param name="remoteIPAddress"> The remote IP address. Acceptable values are valid IPv4 addresses. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="localPort"/>, <paramref name="remotePort"/>, <paramref name="localIPAddress"/>, or <paramref name="remoteIPAddress"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="localPort"/>, <paramref name="remotePort"/>, <paramref name="localIPAddress"/> or <paramref name="remoteIPAddress"/> is null. </exception>
         public VerificationIPFlowParameters(string targetResourceId, Direction direction, IpFlowProtocol protocol, string localPort, string remotePort, string localIPAddress, string remoteIPAddress)
         {
             if (targetResourceId == null)

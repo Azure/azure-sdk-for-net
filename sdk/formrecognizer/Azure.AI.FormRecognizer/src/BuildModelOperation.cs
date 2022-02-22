@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -155,8 +154,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         async ValueTask<OperationState<DocumentModel>> IOperation<DocumentModel>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<ModelOperation> response = async
-                ? await _serviceClient.DocumentAnalysisGetOperationAsync(Id, cancellationToken).ConfigureAwait(false)
-                : _serviceClient.DocumentAnalysisGetOperation(Id, cancellationToken);
+                ? await _serviceClient.GetOperationAsync(Id, cancellationToken).ConfigureAwait(false)
+                : _serviceClient.GetOperation(Id, cancellationToken);
 
             DocumentOperationStatus status = response.Value.Status;
             Response rawResponse = response.GetRawResponse();

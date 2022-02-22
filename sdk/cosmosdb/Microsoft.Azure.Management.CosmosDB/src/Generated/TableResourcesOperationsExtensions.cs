@@ -399,6 +399,58 @@ namespace Microsoft.Azure.Management.CosmosDB
             }
 
             /// <summary>
+            /// Retrieves continuous backup information for a table.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='tableName'>
+            /// Cosmos DB table name.
+            /// </param>
+            /// <param name='location'>
+            /// The name of the continuous backup restore location.
+            /// </param>
+            public static BackupInformation RetrieveContinuousBackupInformation(this ITableResourcesOperations operations, string resourceGroupName, string accountName, string tableName, ContinuousBackupRestoreLocation location)
+            {
+                return operations.RetrieveContinuousBackupInformationAsync(resourceGroupName, accountName, tableName, location).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves continuous backup information for a table.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='tableName'>
+            /// Cosmos DB table name.
+            /// </param>
+            /// <param name='location'>
+            /// The name of the continuous backup restore location.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupInformation> RetrieveContinuousBackupInformationAsync(this ITableResourcesOperations operations, string resourceGroupName, string accountName, string tableName, ContinuousBackupRestoreLocation location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.RetrieveContinuousBackupInformationWithHttpMessagesAsync(resourceGroupName, accountName, tableName, location, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Create or update an Azure Cosmos DB Table
             /// </summary>
             /// <param name='operations'>
@@ -632,6 +684,58 @@ namespace Microsoft.Azure.Management.CosmosDB
             public static async Task<ThroughputSettingsGetResults> BeginMigrateTableToManualThroughputAsync(this ITableResourcesOperations operations, string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginMigrateTableToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, tableName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves continuous backup information for a table.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='tableName'>
+            /// Cosmos DB table name.
+            /// </param>
+            /// <param name='location'>
+            /// The name of the continuous backup restore location.
+            /// </param>
+            public static BackupInformation BeginRetrieveContinuousBackupInformation(this ITableResourcesOperations operations, string resourceGroupName, string accountName, string tableName, ContinuousBackupRestoreLocation location)
+            {
+                return operations.BeginRetrieveContinuousBackupInformationAsync(resourceGroupName, accountName, tableName, location).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves continuous backup information for a table.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='tableName'>
+            /// Cosmos DB table name.
+            /// </param>
+            /// <param name='location'>
+            /// The name of the continuous backup restore location.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupInformation> BeginRetrieveContinuousBackupInformationAsync(this ITableResourcesOperations operations, string resourceGroupName, string accountName, string tableName, ContinuousBackupRestoreLocation location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginRetrieveContinuousBackupInformationWithHttpMessagesAsync(resourceGroupName, accountName, tableName, location, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

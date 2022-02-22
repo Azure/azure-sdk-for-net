@@ -177,9 +177,7 @@ namespace Azure.Core.TestFramework
 
         private static MethodInfo GetMethod(IInvocation invocation, string nonAsyncMethodName, Type[] types)
         {
-            BindingFlags flags = IsInternal(invocation.Method) ?
-                BindingFlags.Instance | BindingFlags.NonPublic :
-                BindingFlags.Instance | BindingFlags.Public;
+            BindingFlags flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic;
 
             // Do our own slow "lightweight binding" in situations where we
             // have generic arguments that aren't factored into the binder for
@@ -244,8 +242,6 @@ namespace Azure.Core.TestFramework
                 return GetMethodSlow();
             }
         }
-
-        private static bool IsInternal(MethodBase method) => method.IsAssembly || method.IsFamilyAndAssembly && !method.IsFamilyOrAssembly;
 
         public class SyncPageableWrapper<T> : AsyncPageable<T>
         {

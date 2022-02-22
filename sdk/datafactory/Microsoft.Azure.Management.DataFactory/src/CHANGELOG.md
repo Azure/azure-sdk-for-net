@@ -1,5 +1,29 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 5.3.0
+###  Feature Additions
+- Added ScriptActivity in ADF
+- Added TeamDesk, Quickbase, Smartsheet, Zendesk connectors in ADF
+
+## Version 5.2.0
+###  Feature Additions
+- Added FailActivity in ADF
+- Fixed update PublicNetworkAccess not work in Factory Update API
+
+## Version 5.1.0
+###  Feature Additions
+- Added support UAMI M2
+- Added connectionProperties in GoogleAdWordsLinkedService
+- Added servicePrincipalCredentialType and servicePrincipalCredential into AzureBlobFSLinkedService
+
+## Version 5.0.0
+###  Feature Additions
+### Breaking Changes
+- Removed unnecessary additional properties for data flow flowlet for bug fix
+- Added optional property disableChunking in FTP and SFTP read settings
+- Added parameters for dataflow activity
+- Added possible values to pipeline run status description
+
 ## Version 4.28.0
 ###  Feature Additions
 - Supported Dataset and LinkedService for Rest call transform

@@ -4,6 +4,7 @@ For this example, you need the following namespaces:
 ```C# Snippet:Managing_Resource_Groups_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -42,9 +43,9 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
-Location location = Location.WestUS2;
+AzureLocation location = AzureLocation.WestUS2;
 ResourceGroupData rgData = new ResourceGroupData(location);
-ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
+ArmOperation<ResourceGroup> operation = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
 ResourceGroup resourceGroup = operation.Value;
 ```
 
@@ -56,8 +57,8 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 // Now we get a ResourceGroup collection for that subscription
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
-// With GetAllAsync(), we can get a list of the resources in the collection
-await foreach (ResourceGroup rg in rgCollection.GetAllAsync())
+// We can then iterate over this collection to get the resources in the collection
+await foreach (ResourceGroup rg in rgCollection)
 {
     Console.WriteLine(rg.Data.Name);
 }
@@ -83,5 +84,5 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 string rgName = "myRgName";
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
-await resourceGroup.DeleteAsync();
+await resourceGroup.DeleteAsync(true);
 ```
