@@ -13,7 +13,8 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
     /// </summary>
     ///
     /// <remarks>
-    ///   When defining Start/Stop tasks, the StopEvent.Id must be exactly StartEvent.Id + 1.
+    ///   When defining Start/Stop tasks, it is strongly recommended that the StopEvent.Id be
+    ///   exactly StartEvent.Id + 1.
     ///
     ///   Do not explicitly include the Guid here, since EventSource has a mechanism to automatically
     ///   map to an EventSource Guid based on the Name (Azure-Messaging-EventHubs-Processor-BlobEventStore).
@@ -453,17 +454,23 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         }
 
         /// <summary>
-        /// Writes an event with three string arguments and a value type into a stack allocated
-        /// <see cref="EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
+        ///   Writes an event with three string arguments and a value type argument into a stack allocated
+        ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
         /// </summary>
-        /// <param name="eventId">The event identifier.</param>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
         /// <param name="arg1">The first argument.</param>
         /// <param name="arg2">The second argument.</param>
         /// <param name="arg3">The third argument.</param>
         /// <param name="arg4">The fourth argument.</param>
+        ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private unsafe void WriteEvent<TValue1>(int eventId, string arg1, string arg2, string arg3, TValue1 arg4)
+        private unsafe void WriteEvent<TValue1, TValue2>(int eventId,
+                                                         string arg1,
+                                                         string arg2,
+                                                         string arg3,
+                                                         TValue2 arg4)
             where TValue1 : struct
         {
             fixed (char* arg1Ptr = arg1)
@@ -489,17 +496,23 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         }
 
         /// <summary>
-        /// Writes an event with four string arguments into a stack allocated <see cref="EventData"/> struct to avoid
-        /// the parameter array allocation on the WriteEvent methods.
+        ///   Writes an event with four string arguments into a stack allocated <see cref="EventSource.EventData"/> struct
+        ///   to avoid the parameter array allocation on the WriteEvent methods.
         /// </summary>
-        /// <param name="eventId">The event identifier.</param>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
         /// <param name="arg1">The first argument.</param>
         /// <param name="arg2">The second argument.</param>
         /// <param name="arg3">The third argument.</param>
         /// <param name="arg4">The fourth argument.</param>
+        ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private unsafe void WriteEvent(int eventId, string arg1, string arg2, string arg3, string arg4)
+        private unsafe void WriteEvent(int eventId,
+                                       string arg1,
+                                       string arg2,
+                                       string arg3,
+                                       string arg4)
         {
             fixed (char* arg1Ptr = arg1)
             fixed (char* arg2Ptr = arg2)
@@ -523,20 +536,26 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                 WriteEventCore(eventId, 4, eventPayload);
             }
         }
-
         /// <summary>
-        /// Writes an event with five string arguments into a stack allocated <see cref="EventData"/> struct to avoid
-        /// the parameter array allocation on the WriteEvent methods.
+        ///   Writes an event with five string arguments into a stack allocated
+        ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
         /// </summary>
-        /// <param name="eventId">The event identifier.</param>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
         /// <param name="arg1">The first argument.</param>
         /// <param name="arg2">The second argument.</param>
         /// <param name="arg3">The third argument.</param>
         /// <param name="arg4">The fourth argument.</param>
         /// <param name="arg5">The fifth argument.</param>
+        ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private unsafe void WriteEvent(int eventId, string arg1, string arg2, string arg3, string arg4, string arg5)
+        private unsafe void WriteEvent(int eventId,
+                                       string arg1,
+                                       string arg2,
+                                       string arg3,
+                                       string arg4,
+                                       string arg5)
         {
             fixed (char* arg1Ptr = arg1)
             fixed (char* arg2Ptr = arg2)
@@ -566,18 +585,27 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         }
 
         /// <summary>
-        /// Writes an event with six string arguments into a stack allocated <see cref="EventData"/> struct to avoid
-        /// the parameter array allocation on the WriteEvent methods.
+        ///   Writes an event with six string arguments into a stack allocated <see cref="EventSource.EventData"/> struct
+        ///   to avoid the parameter array allocation on the WriteEvent methods.
         /// </summary>
-        /// <param name="eventId">The event identifier.</param>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
         /// <param name="arg1">The first argument.</param>
         /// <param name="arg2">The second argument.</param>
         /// <param name="arg3">The third argument.</param>
         /// <param name="arg4">The fourth argument.</param>
         /// <param name="arg5">The fifth argument.</param>
         /// <param name="arg6">The sixth argument.</param>
+        ///
         [NonEvent]
-        private unsafe void WriteEvent(int eventId, string arg1, string arg2, string arg3, string arg4, string arg5, string arg6)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void WriteEvent(int eventId,
+                                       string arg1,
+                                       string arg2,
+                                       string arg3,
+                                       string arg4,
+                                       string arg5,
+                                       string arg6)
         {
             fixed (char* arg1Ptr = arg1)
             fixed (char* arg2Ptr = arg2)
