@@ -176,8 +176,8 @@ namespace Azure.Core.Pipeline
         // internal for testing
         internal static TelemetryPolicy CreateTelemetryPolicy(ClientOptions options)
         {
-            var packageInfo = new UserAgentValue(options.GetType(), options.Diagnostics.ApplicationId);
-            return new TelemetryPolicy(packageInfo);
+            var userAgentValue = new UserAgentValue(options.GetType(), options.Diagnostics.ApplicationId);
+            return new TelemetryPolicy(userAgentValue);
         }
     }
 }
