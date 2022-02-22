@@ -32,25 +32,29 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the OrchestrationServiceStateInput
         /// class.
         /// </summary>
+        /// <param name="serviceName">The name of the service. Possible values
+        /// include: 'AutomaticRepairs',
+        /// 'DummyOrchestrationServiceName'</param>
         /// <param name="action">The action to be performed. Possible values
         /// include: 'Resume', 'Suspend'</param>
-        public OrchestrationServiceStateInput(string action)
+        public OrchestrationServiceStateInput(string serviceName, string action)
         {
+            ServiceName = serviceName;
             Action = action;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for OrchestrationServiceStateInput class.
-        /// </summary>
-        static OrchestrationServiceStateInput()
-        {
-            ServiceName = "AutomaticRepairs";
         }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the name of the service. Possible values include:
+        /// 'AutomaticRepairs'
+        /// </summary>
+        [JsonProperty(PropertyName = "serviceName")]
+        public string ServiceName { get; set; }
 
         /// <summary>
         /// Gets or sets the action to be performed. Possible values include:
@@ -60,12 +64,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string Action { get; set; }
 
         /// <summary>
-        /// The name of the service.
-        /// </summary>
-        [JsonProperty(PropertyName = "serviceName")]
-        public static string ServiceName { get; private set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -73,6 +71,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (ServiceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ServiceName");
+            }
             if (Action == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Action");
