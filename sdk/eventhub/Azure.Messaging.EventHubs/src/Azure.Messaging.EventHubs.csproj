@@ -16,11 +16,12 @@
 
   <ItemGroup>
      <!--
-        TEMP: Move Core to a project reference until the MessageWithMetadata are shipped in Azure.Core.
+        TEMP: Move Core to a project reference until BinaryContent is shipped in Azure.Core.Experimental.
 
-    <PackageReference Include="Azure.Core" />
+        <PackageReference Include="Azure.Core" />
     -->
-    <PackageReference Include="Azure.Core.Experimental" />
+    <ProjectReference Include="..\..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
+    <!--    <PackageReference Include="Azure.Core.Experimental" />-->
     <!-- END TEMP -->
 
     <PackageReference Include="Azure.Core.Amqp" />

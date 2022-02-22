@@ -1734,7 +1734,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 // Create and register the partition processor.  Ownership of the cancellationSource is transferred
                 // to the processor upon creation, including the responsibility for disposal.
 
-                cancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                cancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, CancellationToken.None);
                 var processor = CreatePartitionProcessor(partition, cancellationSource);
 
                 ActivePartitionProcessors.AddOrUpdate(partitionId, processor, (key, value) => processor);

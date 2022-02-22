@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService
         internal AppServiceDomain(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _appServiceDomainDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string appServiceDomainDomainsApiVersion);
+            TryGetApiVersion(ResourceType, out string appServiceDomainDomainsApiVersion);
             _appServiceDomainDomainsRestClient = new DomainsRestOperations(_appServiceDomainDomainsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, appServiceDomainDomainsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -198,21 +198,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}
         /// Operation Id: Domains_Update
         /// </summary>
-        /// <param name="domain"> Domain registration information. </param>
+        /// <param name="options"> Domain registration information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domain"/> is null. </exception>
-        public async virtual Task<Response<AppServiceDomain>> UpdateAsync(DomainPatchResource domain, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<Response<AppServiceDomain>> UpdateAsync(AppServiceDomainUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (domain == null)
-            {
-                throw new ArgumentNullException(nameof(domain));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomain.Update");
             scope.Start();
             try
             {
-                var response = await _appServiceDomainDomainsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domain, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceDomainDomainsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AppServiceDomain(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -227,21 +224,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}
         /// Operation Id: Domains_Update
         /// </summary>
-        /// <param name="domain"> Domain registration information. </param>
+        /// <param name="options"> Domain registration information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domain"/> is null. </exception>
-        public virtual Response<AppServiceDomain> Update(DomainPatchResource domain, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<AppServiceDomain> Update(AppServiceDomainUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (domain == null)
-            {
-                throw new ArgumentNullException(nameof(domain));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomain.Update");
             scope.Start();
             try
             {
-                var response = _appServiceDomainDomainsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domain, cancellationToken);
+                var response = _appServiceDomainDomainsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
                 return Response.FromValue(new AppServiceDomain(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -306,14 +300,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<AppServiceDomain>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomain.AddTag");
             scope.Start();
@@ -343,14 +331,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<AppServiceDomain> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomain.AddTag");
             scope.Start();
@@ -379,10 +361,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<AppServiceDomain>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomain.SetTags");
             scope.Start();
@@ -412,10 +391,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<AppServiceDomain> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomain.SetTags");
             scope.Start();
@@ -445,10 +421,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<AppServiceDomain>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomain.RemoveTag");
             scope.Start();
@@ -477,10 +450,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<AppServiceDomain> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomain.RemoveTag");
             scope.Start();

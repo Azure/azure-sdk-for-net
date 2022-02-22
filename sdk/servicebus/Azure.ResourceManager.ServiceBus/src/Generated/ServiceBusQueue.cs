@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceBus
         internal ServiceBusQueue(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serviceBusQueueQueuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string serviceBusQueueQueuesApiVersion);
+            TryGetApiVersion(ResourceType, out string serviceBusQueueQueuesApiVersion);
             _serviceBusQueueQueuesRestClient = new QueuesRestOperations(_serviceBusQueueQueuesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serviceBusQueueQueuesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

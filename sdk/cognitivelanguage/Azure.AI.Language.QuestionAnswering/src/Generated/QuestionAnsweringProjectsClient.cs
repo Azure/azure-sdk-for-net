@@ -59,6 +59,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -93,11 +94,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetProjectDetailsAsync(string projectName, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetProjectDetails");
             scope.Start();
@@ -117,6 +116,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -151,11 +151,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetProjectDetails(string projectName, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetProjectDetails");
             scope.Start();
@@ -176,6 +174,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -220,11 +219,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CreateProjectAsync(string projectName, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.CreateProject");
@@ -246,6 +243,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -290,11 +288,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response CreateProject(string projectName, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.CreateProject");
@@ -315,6 +311,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -359,11 +356,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetDeleteStatusAsync(string jobId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetDeleteStatus");
             scope.Start();
@@ -383,6 +378,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -427,11 +423,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetDeleteStatus(string jobId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetDeleteStatus");
             scope.Start();
@@ -452,6 +446,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -497,12 +492,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetExportStatusAsync(string projectName, string jobId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetExportStatus");
             scope.Start();
@@ -523,6 +516,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -568,12 +562,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetExportStatus(string projectName, string jobId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetExportStatus");
             scope.Start();
@@ -594,6 +586,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -638,12 +631,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetImportStatusAsync(string projectName, string jobId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetImportStatus");
             scope.Start();
@@ -664,6 +655,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -708,12 +700,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetImportStatus(string projectName, string jobId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetImportStatus");
             scope.Start();
@@ -734,7 +724,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -779,13 +770,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetDeployStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetDeployStatus");
             scope.Start();
@@ -806,7 +795,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -851,13 +841,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetDeployStatus(string projectName, string deploymentName, string jobId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetDeployStatus");
             scope.Start();
@@ -878,6 +866,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -908,11 +897,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> UpdateSynonymsAsync(string projectName, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateSynonyms");
@@ -934,6 +921,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -964,11 +952,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response UpdateSynonyms(string projectName, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateSynonyms");
@@ -990,6 +976,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1034,12 +1021,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetUpdateSourcesStatusAsync(string projectName, string jobId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetUpdateSourcesStatus");
             scope.Start();
@@ -1060,6 +1045,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1104,12 +1090,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetUpdateSourcesStatus(string projectName, string jobId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetUpdateSourcesStatus");
             scope.Start();
@@ -1130,6 +1114,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1174,12 +1159,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetUpdateQnasStatusAsync(string projectName, string jobId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetUpdateQnasStatus");
             scope.Start();
@@ -1200,6 +1183,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1244,12 +1228,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetUpdateQnasStatus(string projectName, string jobId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetUpdateQnasStatus");
             scope.Start();
@@ -1270,6 +1252,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1301,11 +1284,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> AddFeedbackAsync(string projectName, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.AddFeedback");
@@ -1327,6 +1308,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1358,11 +1340,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response AddFeedback(string projectName, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.AddFeedback");
@@ -1423,9 +1403,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetProjectsAsync(int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetProjects");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1486,9 +1464,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetProjects(int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetProjects");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1512,6 +1488,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1543,11 +1520,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetDeployments");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1571,6 +1546,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1602,11 +1578,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetDeployments(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetDeployments");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1630,6 +1604,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1660,11 +1635,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetSynonymsAsync(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetSynonyms");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1688,6 +1661,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1718,11 +1692,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetSynonyms(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetSynonyms");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1746,6 +1718,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1781,11 +1754,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetSourcesAsync(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetSources");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1809,6 +1780,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1844,11 +1816,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetSources(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetSources");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1873,6 +1843,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1939,11 +1910,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetQnasAsync(string projectName, string source = null, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetQnas");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1968,6 +1937,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2034,11 +2004,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetQnas(string projectName, string source = null, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetQnas");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -2060,6 +2028,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -2080,11 +2049,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Operation<BinaryData>> DeleteProjectAsync(bool waitForCompletion, string projectName, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.DeleteProject");
             scope.Start();
@@ -2105,6 +2072,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -2125,11 +2093,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Operation<BinaryData> DeleteProject(bool waitForCompletion, string projectName, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.DeleteProject");
             scope.Start();
@@ -2152,6 +2118,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="assetKind"> Kind of the asset of the project. Allowed values: &quot;qnas&quot; | &quot;synonyms&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2197,11 +2164,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Operation<BinaryData>> ExportAsync(bool waitForCompletion, string projectName, string format = null, string assetKind = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.Export");
             scope.Start();
@@ -2224,6 +2189,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="assetKind"> Kind of the asset of the project. Allowed values: &quot;qnas&quot; | &quot;synonyms&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2269,11 +2235,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Operation<BinaryData> Export(bool waitForCompletion, string projectName, string format = null, string assetKind = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.Export");
             scope.Start();
@@ -2297,6 +2261,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="assetKind"> Kind of the asset of the project. Allowed values: &quot;qnas&quot; | &quot;synonyms&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2379,11 +2344,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Operation<BinaryData>> ImportAsync(bool waitForCompletion, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.Import");
             scope.Start();
@@ -2407,6 +2370,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="assetKind"> Kind of the asset of the project. Allowed values: &quot;qnas&quot; | &quot;synonyms&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2489,11 +2453,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Operation<BinaryData> Import(bool waitForCompletion, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.Import");
             scope.Start();
@@ -2515,6 +2477,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -2535,12 +2498,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Operation<BinaryData>> DeployProjectAsync(bool waitForCompletion, string projectName, string deploymentName, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.DeployProject");
             scope.Start();
@@ -2562,6 +2523,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -2582,12 +2544,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Operation<BinaryData> DeployProject(bool waitForCompletion, string projectName, string deploymentName, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.DeployProject");
             scope.Start();
@@ -2609,6 +2569,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2642,11 +2603,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Operation<BinaryData>> UpdateSourcesAsync(bool waitForCompletion, string projectName, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateSources");
@@ -2669,6 +2628,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2702,11 +2662,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Operation<BinaryData> UpdateSources(bool waitForCompletion, string projectName, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateSources");
@@ -2729,6 +2687,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2784,11 +2743,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Operation<BinaryData>> UpdateQnasAsync(bool waitForCompletion, string projectName, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateQnas");
@@ -2811,6 +2768,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2866,11 +2824,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Operation<BinaryData> UpdateQnas(bool waitForCompletion, string projectName, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateQnas");

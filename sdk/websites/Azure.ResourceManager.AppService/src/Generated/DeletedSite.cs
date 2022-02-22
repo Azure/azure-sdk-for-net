@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         internal DeletedSite(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _deletedSiteGlobalClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string deletedSiteGlobalApiVersion);
+            TryGetApiVersion(ResourceType, out string deletedSiteGlobalApiVersion);
             _deletedSiteGlobalRestClient = new GlobalRestOperations(_deletedSiteGlobalClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedSiteGlobalApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         internal AppServicePlan(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _appServicePlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string appServicePlanApiVersion);
+            TryGetApiVersion(ResourceType, out string appServicePlanApiVersion);
             _appServicePlanRestClient = new AppServicePlansRestOperations(_appServicePlanClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, appServicePlanApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -211,21 +211,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
         /// Operation Id: AppServicePlans_Update
         /// </summary>
-        /// <param name="appServicePlan"> Details of the App Service plan. </param>
+        /// <param name="options"> Details of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="appServicePlan"/> is null. </exception>
-        public async virtual Task<Response<AppServicePlan>> UpdateAsync(AppServicePlanPatchOptions appServicePlan, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<Response<AppServicePlan>> UpdateAsync(AppServicePlanUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (appServicePlan == null)
-            {
-                throw new ArgumentNullException(nameof(appServicePlan));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.Update");
             scope.Start();
             try
             {
-                var response = await _appServicePlanRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appServicePlan, cancellationToken).ConfigureAwait(false);
+                var response = await _appServicePlanRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AppServicePlan(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,21 +237,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
         /// Operation Id: AppServicePlans_Update
         /// </summary>
-        /// <param name="appServicePlan"> Details of the App Service plan. </param>
+        /// <param name="options"> Details of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="appServicePlan"/> is null. </exception>
-        public virtual Response<AppServicePlan> Update(AppServicePlanPatchOptions appServicePlan, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<AppServicePlan> Update(AppServicePlanUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (appServicePlan == null)
-            {
-                throw new ArgumentNullException(nameof(appServicePlan));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.Update");
             scope.Start();
             try
             {
-                var response = _appServicePlanRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appServicePlan, cancellationToken);
+                var response = _appServicePlanRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
                 return Response.FromValue(new AppServicePlan(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -675,7 +669,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="workerName"> Name of worker machine, which typically starts with RD. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workerName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workerName"/> is null. </exception>
         public async virtual Task<Response> RebootWorkerAsync(string workerName, CancellationToken cancellationToken = default)
         {
@@ -702,7 +696,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="workerName"> Name of worker machine, which typically starts with RD. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workerName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workerName"/> is null. </exception>
         public virtual Response RebootWorker(string workerName, CancellationToken cancellationToken = default)
         {
@@ -733,14 +727,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<AppServicePlan>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.AddTag");
             scope.Start();
@@ -770,14 +758,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<AppServicePlan> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.AddTag");
             scope.Start();
@@ -806,10 +788,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<AppServicePlan>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.SetTags");
             scope.Start();
@@ -839,10 +818,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<AppServicePlan> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.SetTags");
             scope.Start();
@@ -872,10 +848,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<AppServicePlan>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.RemoveTag");
             scope.Start();
@@ -904,10 +877,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<AppServicePlan> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.RemoveTag");
             scope.Start();

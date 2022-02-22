@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
         internal InboundNatRule(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _inboundNatRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string inboundNatRuleApiVersion);
+            TryGetApiVersion(ResourceType, out string inboundNatRuleApiVersion);
             _inboundNatRuleRestClient = new InboundNatRulesRestOperations(_inboundNatRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, inboundNatRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

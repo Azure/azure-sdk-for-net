@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteInstanceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteInstanceExtensionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteInstanceExtensionWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string siteInstanceExtensionWebAppsApiVersion);
             _siteInstanceExtensionWebAppsRestClient = new WebAppsRestOperations(_siteInstanceExtensionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteInstanceExtensionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -142,10 +142,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
         public async virtual Task<ArmOperation<SiteInstanceExtension>> CreateOrUpdateAsync(bool waitForCompletion, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
-            if (msDeploy == null)
-            {
-                throw new ArgumentNullException(nameof(msDeploy));
-            }
+            Argument.AssertNotNull(msDeploy, nameof(msDeploy));
 
             using var scope = _siteInstanceExtensionWebAppsClientDiagnostics.CreateScope("SiteInstanceExtension.CreateOrUpdate");
             scope.Start();
@@ -175,10 +172,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
         public virtual ArmOperation<SiteInstanceExtension> CreateOrUpdate(bool waitForCompletion, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
-            if (msDeploy == null)
-            {
-                throw new ArgumentNullException(nameof(msDeploy));
-            }
+            Argument.AssertNotNull(msDeploy, nameof(msDeploy));
 
             using var scope = _siteInstanceExtensionWebAppsClientDiagnostics.CreateScope("SiteInstanceExtension.CreateOrUpdate");
             scope.Start();

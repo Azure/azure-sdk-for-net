@@ -696,7 +696,7 @@ namespace Azure.Messaging.EventHubs.Consumer
             var options = readOptions?.Clone() ?? new ReadEventOptions();
             var startingPosition = startReadingAtEarliestEvent ? EventPosition.Earliest : EventPosition.Latest;
 
-            using var cancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            using var cancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, CancellationToken.None);
 
             try
             {

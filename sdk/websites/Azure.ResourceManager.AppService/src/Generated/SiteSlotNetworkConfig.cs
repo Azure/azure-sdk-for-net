@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotNetworkConfig(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotNetworkConfigWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteSlotNetworkConfigWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string siteSlotNetworkConfigWebAppsApiVersion);
             _siteSlotNetworkConfigWebAppsRestClient = new WebAppsRestOperations(_siteSlotNetworkConfigWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotNetworkConfigWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -193,10 +193,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="connectionEnvelope"/> is null. </exception>
         public async virtual Task<Response<SiteSlotNetworkConfig>> UpdateAsync(SwiftVirtualNetworkData connectionEnvelope, CancellationToken cancellationToken = default)
         {
-            if (connectionEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(connectionEnvelope));
-            }
+            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
 
             using var scope = _siteSlotNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteSlotNetworkConfig.Update");
             scope.Start();
@@ -223,10 +220,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="connectionEnvelope"/> is null. </exception>
         public virtual Response<SiteSlotNetworkConfig> Update(SwiftVirtualNetworkData connectionEnvelope, CancellationToken cancellationToken = default)
         {
-            if (connectionEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(connectionEnvelope));
-            }
+            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
 
             using var scope = _siteSlotNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteSlotNetworkConfig.Update");
             scope.Start();
@@ -254,10 +248,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="connectionEnvelope"/> is null. </exception>
         public async virtual Task<ArmOperation<SiteSlotNetworkConfig>> CreateOrUpdateAsync(bool waitForCompletion, SwiftVirtualNetworkData connectionEnvelope, CancellationToken cancellationToken = default)
         {
-            if (connectionEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(connectionEnvelope));
-            }
+            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
 
             using var scope = _siteSlotNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteSlotNetworkConfig.CreateOrUpdate");
             scope.Start();
@@ -288,10 +279,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="connectionEnvelope"/> is null. </exception>
         public virtual ArmOperation<SiteSlotNetworkConfig> CreateOrUpdate(bool waitForCompletion, SwiftVirtualNetworkData connectionEnvelope, CancellationToken cancellationToken = default)
         {
-            if (connectionEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(connectionEnvelope));
-            }
+            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
 
             using var scope = _siteSlotNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteSlotNetworkConfig.CreateOrUpdate");
             scope.Start();

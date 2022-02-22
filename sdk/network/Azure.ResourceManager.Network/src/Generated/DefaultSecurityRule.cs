@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
         internal DefaultSecurityRule(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _defaultSecurityRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string defaultSecurityRuleApiVersion);
+            TryGetApiVersion(ResourceType, out string defaultSecurityRuleApiVersion);
             _defaultSecurityRuleRestClient = new DefaultSecurityRulesRestOperations(_defaultSecurityRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, defaultSecurityRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

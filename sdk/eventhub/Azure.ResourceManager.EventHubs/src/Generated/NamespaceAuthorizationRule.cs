@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventHubs
         internal NamespaceAuthorizationRule(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _namespaceAuthorizationRuleNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string namespaceAuthorizationRuleNamespacesApiVersion);
+            TryGetApiVersion(ResourceType, out string namespaceAuthorizationRuleNamespacesApiVersion);
             _namespaceAuthorizationRuleNamespacesRestClient = new NamespacesRestOperations(_namespaceAuthorizationRuleNamespacesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, namespaceAuthorizationRuleNamespacesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -237,10 +237,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<Response<AccessKeys>> RegenerateKeysAsync(RegenerateAccessKeyOptions parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _namespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NamespaceAuthorizationRule.RegenerateKeys");
             scope.Start();
@@ -266,10 +263,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual Response<AccessKeys> RegenerateKeys(RegenerateAccessKeyOptions parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _namespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NamespaceAuthorizationRule.RegenerateKeys");
             scope.Start();

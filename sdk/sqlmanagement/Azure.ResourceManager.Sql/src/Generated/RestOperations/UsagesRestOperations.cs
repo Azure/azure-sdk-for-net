@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
         /// <param name="expandChildren"> Optional request parameter to include managed instance usages within the instance pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="instancePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is null. </exception>
         public async Task<Response<InstancePoolUsageListResult>> ListByInstancePoolAsync(string subscriptionId, string resourceGroupName, string instancePoolName, bool? expandChildren = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
         /// <param name="expandChildren"> Optional request parameter to include managed instance usages within the instance pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="instancePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is null. </exception>
         public Response<InstancePoolUsageListResult> ListByInstancePool(string subscriptionId, string resourceGroupName, string instancePoolName, bool? expandChildren = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
         /// <param name="expandChildren"> Optional request parameter to include managed instance usages within the instance pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="instancePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is null. </exception>
         public async Task<Response<InstancePoolUsageListResult>> ListByInstancePoolNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string instancePoolName, bool? expandChildren = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
         /// <param name="expandChildren"> Optional request parameter to include managed instance usages within the instance pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="instancePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is null. </exception>
         public Response<InstancePoolUsageListResult> ListByInstancePoolNextPage(string nextLink, string subscriptionId, string resourceGroupName, string instancePoolName, bool? expandChildren = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EventHubs
         internal NetworkRuleSet(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _networkRuleSetNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string networkRuleSetNamespacesApiVersion);
+            TryGetApiVersion(ResourceType, out string networkRuleSetNamespacesApiVersion);
             _networkRuleSetNamespacesRestClient = new NamespacesRestOperations(_networkRuleSetNamespacesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkRuleSetNamespacesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -141,10 +141,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<NetworkRuleSet>> CreateOrUpdateAsync(bool waitForCompletion, NetworkRuleSetData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _networkRuleSetNamespacesClientDiagnostics.CreateScope("NetworkRuleSet.CreateOrUpdate");
             scope.Start();
@@ -174,10 +171,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<NetworkRuleSet> CreateOrUpdate(bool waitForCompletion, NetworkRuleSetData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _networkRuleSetNamespacesClientDiagnostics.CreateScope("NetworkRuleSet.CreateOrUpdate");
             scope.Start();

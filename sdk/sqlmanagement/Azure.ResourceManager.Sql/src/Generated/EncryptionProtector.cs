@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         internal EncryptionProtector(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _encryptionProtectorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string encryptionProtectorApiVersion);
+            TryGetApiVersion(ResourceType, out string encryptionProtectorApiVersion);
             _encryptionProtectorRestClient = new EncryptionProtectorsRestOperations(_encryptionProtectorClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, encryptionProtectorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

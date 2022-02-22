@@ -40,11 +40,9 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
             Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
-            ProfileUpdateOptions updateOptions = new ProfileUpdateOptions();
-            updateOptions.Tags.Add("newTag", "newValue");
-            var lro = await afdProfile.UpdateAsync(true, updateOptions);
+            var lro = await afdProfile.AddTagAsync("newTag", "newValue");
             Profile updatedAfdProfile = lro.Value;
-            ResourceDataHelper.AssertProfileUpdate(updatedAfdProfile, updateOptions);
+            ResourceDataHelper.AssertProfileUpdate(updatedAfdProfile, "newTag", "newValue");
         }
 
         [TestCase]

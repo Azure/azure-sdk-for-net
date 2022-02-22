@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute
         internal DiskRestorePoint(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _diskRestorePointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string diskRestorePointApiVersion);
+            TryGetApiVersion(ResourceType, out string diskRestorePointApiVersion);
             _diskRestorePointRestClient = new DiskRestorePointRestOperations(_diskRestorePointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diskRestorePointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -142,10 +142,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
         public async virtual Task<ArmOperation<AccessUri>> GrantAccessAsync(bool waitForCompletion, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
         {
-            if (grantAccessData == null)
-            {
-                throw new ArgumentNullException(nameof(grantAccessData));
-            }
+            Argument.AssertNotNull(grantAccessData, nameof(grantAccessData));
 
             using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePoint.GrantAccess");
             scope.Start();
@@ -175,10 +172,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
         public virtual ArmOperation<AccessUri> GrantAccess(bool waitForCompletion, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
         {
-            if (grantAccessData == null)
-            {
-                throw new ArgumentNullException(nameof(grantAccessData));
-            }
+            Argument.AssertNotNull(grantAccessData, nameof(grantAccessData));
 
             using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePoint.GrantAccess");
             scope.Start();

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database to get maintenance windows options for. </param>
         /// <param name="maintenanceWindowOptionsName"> Maintenance window options name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="maintenanceWindowOptionsName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="maintenanceWindowOptionsName"/> is null. </exception>
         public async Task<Response<MaintenanceWindowOptionsData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string maintenanceWindowOptionsName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database to get maintenance windows options for. </param>
         /// <param name="maintenanceWindowOptionsName"> Maintenance window options name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="maintenanceWindowOptionsName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="maintenanceWindowOptionsName"/> is null. </exception>
         public Response<MaintenanceWindowOptionsData> Get(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string maintenanceWindowOptionsName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         internal ServerDatabaseSchema(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverDatabaseSchemaDatabaseSchemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string serverDatabaseSchemaDatabaseSchemasApiVersion);
+            TryGetApiVersion(ResourceType, out string serverDatabaseSchemaDatabaseSchemasApiVersion);
             _serverDatabaseSchemaDatabaseSchemasRestClient = new DatabaseSchemasRestOperations(_serverDatabaseSchemaDatabaseSchemasClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDatabaseSchemaDatabaseSchemasApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Collections.Generic;
 
 namespace Azure.Communication.PhoneNumbers
@@ -29,6 +30,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="amount"> The cost amount. </param>
         /// <param name="currencyCode"> The ISO 4217 currency code for the cost amount. </param>
         /// <param name="billingFrequency"> The frequency with which the cost gets billed. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static PhoneNumberCost PhoneNumberCost(double amount, string currencyCode, string billingFrequency)
             => new PhoneNumberCost(amount, currencyCode, billingFrequency);
 

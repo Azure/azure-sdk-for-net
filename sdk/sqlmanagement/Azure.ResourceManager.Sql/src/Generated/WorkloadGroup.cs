@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         internal WorkloadGroup(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _workloadGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string workloadGroupApiVersion);
+            TryGetApiVersion(ResourceType, out string workloadGroupApiVersion);
             _workloadGroupRestClient = new WorkloadGroupsRestOperations(_workloadGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, workloadGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

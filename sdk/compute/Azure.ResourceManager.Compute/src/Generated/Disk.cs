@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute
         internal Disk(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _diskClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string diskApiVersion);
+            TryGetApiVersion(ResourceType, out string diskApiVersion);
             _diskRestClient = new DisksRestOperations(_diskClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diskApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -190,22 +190,19 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: Disks_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="disk"> Disk object supplied in the body of the Patch disk operation. </param>
+        /// <param name="options"> Disk object supplied in the body of the Patch disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="disk"/> is null. </exception>
-        public async virtual Task<ArmOperation<Disk>> UpdateAsync(bool waitForCompletion, DiskUpdate disk, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<ArmOperation<Disk>> UpdateAsync(bool waitForCompletion, DiskUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (disk == null)
-            {
-                throw new ArgumentNullException(nameof(disk));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _diskClientDiagnostics.CreateScope("Disk.Update");
             scope.Start();
             try
             {
-                var response = await _diskRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, disk, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<Disk>(new DiskOperationSource(Client), _diskClientDiagnostics, Pipeline, _diskRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, disk).Request, response, OperationFinalStateVia.Location);
+                var response = await _diskRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation<Disk>(new DiskOperationSource(Client), _diskClientDiagnostics, Pipeline, _diskRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -223,22 +220,19 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: Disks_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="disk"> Disk object supplied in the body of the Patch disk operation. </param>
+        /// <param name="options"> Disk object supplied in the body of the Patch disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="disk"/> is null. </exception>
-        public virtual ArmOperation<Disk> Update(bool waitForCompletion, DiskUpdate disk, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual ArmOperation<Disk> Update(bool waitForCompletion, DiskUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (disk == null)
-            {
-                throw new ArgumentNullException(nameof(disk));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _diskClientDiagnostics.CreateScope("Disk.Update");
             scope.Start();
             try
             {
-                var response = _diskRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, disk, cancellationToken);
-                var operation = new ComputeArmOperation<Disk>(new DiskOperationSource(Client), _diskClientDiagnostics, Pipeline, _diskRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, disk).Request, response, OperationFinalStateVia.Location);
+                var response = _diskRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var operation = new ComputeArmOperation<Disk>(new DiskOperationSource(Client), _diskClientDiagnostics, Pipeline, _diskRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -261,10 +255,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
         public async virtual Task<ArmOperation<AccessUri>> GrantAccessAsync(bool waitForCompletion, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
         {
-            if (grantAccessData == null)
-            {
-                throw new ArgumentNullException(nameof(grantAccessData));
-            }
+            Argument.AssertNotNull(grantAccessData, nameof(grantAccessData));
 
             using var scope = _diskClientDiagnostics.CreateScope("Disk.GrantAccess");
             scope.Start();
@@ -294,10 +285,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
         public virtual ArmOperation<AccessUri> GrantAccess(bool waitForCompletion, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
         {
-            if (grantAccessData == null)
-            {
-                throw new ArgumentNullException(nameof(grantAccessData));
-            }
+            Argument.AssertNotNull(grantAccessData, nameof(grantAccessData));
 
             using var scope = _diskClientDiagnostics.CreateScope("Disk.GrantAccess");
             scope.Start();
@@ -379,14 +367,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<Disk>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _diskClientDiagnostics.CreateScope("Disk.AddTag");
             scope.Start();
@@ -416,14 +398,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<Disk> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _diskClientDiagnostics.CreateScope("Disk.AddTag");
             scope.Start();
@@ -452,10 +428,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<Disk>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _diskClientDiagnostics.CreateScope("Disk.SetTags");
             scope.Start();
@@ -485,10 +458,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<Disk> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _diskClientDiagnostics.CreateScope("Disk.SetTags");
             scope.Start();
@@ -518,10 +488,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<Disk>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _diskClientDiagnostics.CreateScope("Disk.RemoveTag");
             scope.Start();
@@ -550,10 +517,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<Disk> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _diskClientDiagnostics.CreateScope("Disk.RemoveTag");
             scope.Start();

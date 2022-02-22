@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
         internal HubIpConfiguration(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string hubIpConfigurationVirtualHubIpConfigurationApiVersion);
+            TryGetApiVersion(ResourceType, out string hubIpConfigurationVirtualHubIpConfigurationApiVersion);
             _hubIpConfigurationVirtualHubIpConfigurationRestClient = new VirtualHubIpConfigurationRestOperations(_hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hubIpConfigurationVirtualHubIpConfigurationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

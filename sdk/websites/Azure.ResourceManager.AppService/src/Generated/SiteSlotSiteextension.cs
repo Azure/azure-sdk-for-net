@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotSiteextension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotSiteextensionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteSlotSiteextensionWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string siteSlotSiteextensionWebAppsApiVersion);
             _siteSlotSiteextensionWebAppsRestClient = new WebAppsRestOperations(_siteSlotSiteextensionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotSiteextensionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

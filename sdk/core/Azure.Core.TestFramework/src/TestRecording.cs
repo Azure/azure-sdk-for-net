@@ -343,6 +343,10 @@ namespace Azure.Core.TestFramework
         {
             if (!_useLegacyTransport && Mode != RecordedTestMode.Live)
             {
+                if (currentTransport is ProxyTransport)
+                {
+                    return currentTransport;
+                }
                 return new ProxyTransport(_proxy, currentTransport, this, () => _disableRecording.Value);
             }
             return Mode switch

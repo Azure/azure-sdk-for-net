@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute
         internal CloudServiceRole(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _cloudServiceRoleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string cloudServiceRoleApiVersion);
+            TryGetApiVersion(ResourceType, out string cloudServiceRoleApiVersion);
             _cloudServiceRoleRestClient = new CloudServiceRolesRestOperations(_cloudServiceRoleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cloudServiceRoleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

@@ -57,8 +57,8 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 // Now we get a ResourceGroup collection for that subscription
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
-// With GetAllAsync(), we can get a list of the resources in the collection
-await foreach (ResourceGroup rg in rgCollection.GetAllAsync())
+// We can then iterate over this collection to get the resources in the collection
+await foreach (ResourceGroup rg in rgCollection)
 {
     Console.WriteLine(rg.Data.Name);
 }

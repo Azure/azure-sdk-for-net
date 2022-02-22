@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseRid"/>, or <paramref name="filter"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseRid"/> or <paramref name="filter"/> is null. </exception>
         public async Task<Response<MetricList>> ListMetricsAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string filter, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseRid"/>, or <paramref name="filter"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseRid"/> or <paramref name="filter"/> is null. </exception>
         public Response<MetricList> ListMetrics(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string filter, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseRid"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="databaseRid"/> is null. </exception>
         public async Task<Response<UsageList>> ListUsagesAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseRid"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="databaseRid"/> is null. </exception>
         public Response<UsageList> ListUsages(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseRid"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="databaseRid"/> is null. </exception>
         public async Task<Response<MetricDefinitionList>> ListMetricDefinitionsAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="databaseRid"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="databaseRid"/> is null. </exception>
         public Response<MetricDefinitionList> ListMetricDefinitions(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
