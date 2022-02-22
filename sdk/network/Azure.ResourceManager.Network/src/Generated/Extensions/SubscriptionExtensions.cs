@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.Network
         /// <summary>
         /// Swaps VIPs between two load balancers.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/setLoadBalancerFrontendPublicIpAddresses
-        /// Operation Id: LoadBalancers_SwapPublicIpAddresses
+        /// Operation Id: LoadBalancers_SwapPublicIPAddresses
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -738,18 +738,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public async static Task<ArmOperation> SwapPublicIpAddressesLoadBalancerAsync(this Subscription subscription, bool waitForCompletion, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
+        public async static Task<ArmOperation> SwapPublicIPAddressesLoadBalancerAsync(this Subscription subscription, bool waitForCompletion, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(parameters, nameof(parameters));
 
-            return await GetExtensionClient(subscription).SwapPublicIpAddressesLoadBalancerAsync(waitForCompletion, location, parameters, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscription).SwapPublicIPAddressesLoadBalancerAsync(waitForCompletion, location, parameters, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Swaps VIPs between two load balancers.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/setLoadBalancerFrontendPublicIpAddresses
-        /// Operation Id: LoadBalancers_SwapPublicIpAddresses
+        /// Operation Id: LoadBalancers_SwapPublicIPAddresses
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -758,12 +758,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public static ArmOperation SwapPublicIpAddressesLoadBalancer(this Subscription subscription, bool waitForCompletion, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
+        public static ArmOperation SwapPublicIPAddressesLoadBalancer(this Subscription subscription, bool waitForCompletion, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(parameters, nameof(parameters));
 
-            return GetExtensionClient(subscription).SwapPublicIpAddressesLoadBalancer(waitForCompletion, location, parameters, cancellationToken);
+            return GetExtensionClient(subscription).SwapPublicIPAddressesLoadBalancer(waitForCompletion, location, parameters, cancellationToken);
         }
 
         /// <summary>

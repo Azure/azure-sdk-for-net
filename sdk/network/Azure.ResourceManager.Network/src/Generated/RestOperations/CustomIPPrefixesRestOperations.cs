@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network
             _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string customIpPrefixName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string customIPPrefixName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/customIpPrefixes/", false);
-            uri.AppendPath(customIpPrefixName, true);
+            uri.AppendPath(customIPPrefixName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Deletes the specified custom IP prefix. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="customIpPrefixName"> The name of the CustomIpPrefix. </param>
+        /// <param name="customIPPrefixName"> The name of the CustomIpPrefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="customIpPrefixName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string customIpPrefixName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="customIPPrefixName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string customIPPrefixName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (customIpPrefixName == null)
+            if (customIPPrefixName == null)
             {
-                throw new ArgumentNullException(nameof(customIpPrefixName));
+                throw new ArgumentNullException(nameof(customIPPrefixName));
             }
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, customIpPrefixName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, customIPPrefixName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Deletes the specified custom IP prefix. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="customIpPrefixName"> The name of the CustomIpPrefix. </param>
+        /// <param name="customIPPrefixName"> The name of the CustomIpPrefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="customIpPrefixName"/> is null. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string customIpPrefixName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="customIPPrefixName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string customIPPrefixName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -113,12 +113,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (customIpPrefixName == null)
+            if (customIPPrefixName == null)
             {
-                throw new ArgumentNullException(nameof(customIpPrefixName));
+                throw new ArgumentNullException(nameof(customIPPrefixName));
             }
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, customIpPrefixName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, customIPPrefixName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string customIpPrefixName, string expand)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string customIPPrefixName, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/customIpPrefixes/", false);
-            uri.AppendPath(customIpPrefixName, true);
+            uri.AppendPath(customIPPrefixName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (expand != null)
             {
@@ -158,11 +158,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified custom IP prefix in a specified resource group. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="customIpPrefixName"> The name of the custom IP prefix. </param>
+        /// <param name="customIPPrefixName"> The name of the custom IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="customIpPrefixName"/> is null. </exception>
-        public async Task<Response<CustomIPPrefixData>> GetAsync(string subscriptionId, string resourceGroupName, string customIpPrefixName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="customIPPrefixName"/> is null. </exception>
+        public async Task<Response<CustomIPPrefixData>> GetAsync(string subscriptionId, string resourceGroupName, string customIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -172,12 +172,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (customIpPrefixName == null)
+            if (customIPPrefixName == null)
             {
-                throw new ArgumentNullException(nameof(customIpPrefixName));
+                throw new ArgumentNullException(nameof(customIPPrefixName));
             }
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, customIpPrefixName, expand);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, customIPPrefixName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -198,11 +198,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified custom IP prefix in a specified resource group. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="customIpPrefixName"> The name of the custom IP prefix. </param>
+        /// <param name="customIPPrefixName"> The name of the custom IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="customIpPrefixName"/> is null. </exception>
-        public Response<CustomIPPrefixData> Get(string subscriptionId, string resourceGroupName, string customIpPrefixName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="customIPPrefixName"/> is null. </exception>
+        public Response<CustomIPPrefixData> Get(string subscriptionId, string resourceGroupName, string customIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -212,12 +212,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (customIpPrefixName == null)
+            if (customIPPrefixName == null)
             {
-                throw new ArgumentNullException(nameof(customIpPrefixName));
+                throw new ArgumentNullException(nameof(customIPPrefixName));
             }
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, customIpPrefixName, expand);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, customIPPrefixName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string customIpPrefixName, CustomIPPrefixData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string customIPPrefixName, CustomIPPrefixData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/customIpPrefixes/", false);
-            uri.AppendPath(customIpPrefixName, true);
+            uri.AppendPath(customIPPrefixName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -262,11 +262,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates a custom IP prefix. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="customIpPrefixName"> The name of the custom IP prefix. </param>
+        /// <param name="customIPPrefixName"> The name of the custom IP prefix. </param>
         /// <param name="parameters"> Parameters supplied to the create or update custom IP prefix operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customIpPrefixName"/> or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string customIpPrefixName, CustomIPPrefixData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customIPPrefixName"/> or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string customIPPrefixName, CustomIPPrefixData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -276,16 +276,16 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (customIpPrefixName == null)
+            if (customIPPrefixName == null)
             {
-                throw new ArgumentNullException(nameof(customIpPrefixName));
+                throw new ArgumentNullException(nameof(customIPPrefixName));
             }
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, customIpPrefixName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, customIPPrefixName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -300,11 +300,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates a custom IP prefix. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="customIpPrefixName"> The name of the custom IP prefix. </param>
+        /// <param name="customIPPrefixName"> The name of the custom IP prefix. </param>
         /// <param name="parameters"> Parameters supplied to the create or update custom IP prefix operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customIpPrefixName"/> or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string customIpPrefixName, CustomIPPrefixData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customIPPrefixName"/> or <paramref name="parameters"/> is null. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string customIPPrefixName, CustomIPPrefixData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -314,16 +314,16 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (customIpPrefixName == null)
+            if (customIPPrefixName == null)
             {
-                throw new ArgumentNullException(nameof(customIpPrefixName));
+                throw new ArgumentNullException(nameof(customIPPrefixName));
             }
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, customIpPrefixName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, customIPPrefixName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string customIpPrefixName, TagsObject parameters)
+        internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string customIPPrefixName, TagsObject parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/customIpPrefixes/", false);
-            uri.AppendPath(customIpPrefixName, true);
+            uri.AppendPath(customIPPrefixName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -362,11 +362,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates custom IP prefix tags. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="customIpPrefixName"> The name of the custom IP prefix. </param>
+        /// <param name="customIPPrefixName"> The name of the custom IP prefix. </param>
         /// <param name="parameters"> Parameters supplied to update custom IP prefix tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customIpPrefixName"/> or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<CustomIPPrefixData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string customIpPrefixName, TagsObject parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customIPPrefixName"/> or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<CustomIPPrefixData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string customIPPrefixName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -376,16 +376,16 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (customIpPrefixName == null)
+            if (customIPPrefixName == null)
             {
-                throw new ArgumentNullException(nameof(customIpPrefixName));
+                throw new ArgumentNullException(nameof(customIPPrefixName));
             }
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, customIpPrefixName, parameters);
+            using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, customIPPrefixName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -404,11 +404,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates custom IP prefix tags. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="customIpPrefixName"> The name of the custom IP prefix. </param>
+        /// <param name="customIPPrefixName"> The name of the custom IP prefix. </param>
         /// <param name="parameters"> Parameters supplied to update custom IP prefix tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customIpPrefixName"/> or <paramref name="parameters"/> is null. </exception>
-        public Response<CustomIPPrefixData> UpdateTags(string subscriptionId, string resourceGroupName, string customIpPrefixName, TagsObject parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customIPPrefixName"/> or <paramref name="parameters"/> is null. </exception>
+        public Response<CustomIPPrefixData> UpdateTags(string subscriptionId, string resourceGroupName, string customIPPrefixName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -418,16 +418,16 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (customIpPrefixName == null)
+            if (customIPPrefixName == null)
             {
-                throw new ArgumentNullException(nameof(customIpPrefixName));
+                throw new ArgumentNullException(nameof(customIPPrefixName));
             }
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, customIpPrefixName, parameters);
+            using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, customIPPrefixName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

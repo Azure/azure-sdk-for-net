@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualWan : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualWan"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualWANName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualWanName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Retrieves the details of a VirtualWAN.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}
         /// Operation Id: VirtualWans_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Retrieves the details of a VirtualWAN.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}
         /// Operation Id: VirtualWans_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Deletes a VirtualWAN.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}
         /// Operation Id: VirtualWans_Delete
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Deletes a VirtualWAN.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}
         /// Operation Id: VirtualWans_Delete
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gives the supported security providers for the virtual wan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/supportedSecurityProviders
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}/supportedSecurityProviders
         /// Operation Id: SupportedSecurityProviders
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gives the supported security providers for the virtual wan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/supportedSecurityProviders
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}/supportedSecurityProviders
         /// Operation Id: SupportedSecurityProviders
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/GenerateVpnProfile
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}/GenerateVpnProfile
         /// Operation Id: Generatevirtualwanvpnserverconfigurationvpnprofile
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/GenerateVpnProfile
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}/GenerateVpnProfile
         /// Operation Id: Generatevirtualwanvpnserverconfigurationvpnprofile
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gives the sas-url to download the configurations for vpn-sites in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnConfiguration
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}/vpnConfiguration
         /// Operation Id: VpnSitesConfiguration_Download
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gives the sas-url to download the configurations for vpn-sites in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnConfiguration
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}/vpnConfiguration
         /// Operation Id: VpnSitesConfiguration_Download
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnServerConfigurations
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}/vpnServerConfigurations
         /// Operation Id: VpnServerConfigurationsAssociatedWithVirtualWan_List
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnServerConfigurations
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}/vpnServerConfigurations
         /// Operation Id: VpnServerConfigurationsAssociatedWithVirtualWan_List
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}
         /// Operation Id: VirtualWans_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}
         /// Operation Id: VirtualWans_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}
         /// Operation Id: VirtualWans_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}
         /// Operation Id: VirtualWans_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}
         /// Operation Id: VirtualWans_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}
         /// Operation Id: VirtualWans_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>

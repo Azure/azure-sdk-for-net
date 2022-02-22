@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Network
     public partial class PublicIPPrefix : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PublicIPPrefix"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string publicIpPrefixName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string publicIPPrefixName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets the specified public IP prefix in a specified resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}
         /// Operation Id: PublicIPPrefixes_Get
         /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets the specified public IP prefix in a specified resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}
         /// Operation Id: PublicIPPrefixes_Get
         /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Deletes the specified public IP prefix.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}
         /// Operation Id: PublicIPPrefixes_Delete
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Deletes the specified public IP prefix.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}
         /// Operation Id: PublicIPPrefixes_Delete
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}
         /// Operation Id: PublicIPPrefixes_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}
         /// Operation Id: PublicIPPrefixes_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}
         /// Operation Id: PublicIPPrefixes_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}
         /// Operation Id: PublicIPPrefixes_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}
         /// Operation Id: PublicIPPrefixes_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}
         /// Operation Id: PublicIPPrefixes_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>

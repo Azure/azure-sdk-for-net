@@ -2142,20 +2142,20 @@ namespace Azure.ResourceManager.Network
         /// <summary>
         /// Swaps VIPs between two load balancers.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/setLoadBalancerFrontendPublicIpAddresses
-        /// Operation Id: LoadBalancers_SwapPublicIpAddresses
+        /// Operation Id: LoadBalancers_SwapPublicIPAddresses
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="location"> The region where load balancers are located at. </param>
         /// <param name="parameters"> Parameters that define which VIPs should be swapped. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> SwapPublicIpAddressesLoadBalancerAsync(bool waitForCompletion, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> SwapPublicIPAddressesLoadBalancerAsync(bool waitForCompletion, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
         {
-            using var scope = LoadBalancerClientDiagnostics.CreateScope("SubscriptionExtensionClient.SwapPublicIpAddressesLoadBalancer");
+            using var scope = LoadBalancerClientDiagnostics.CreateScope("SubscriptionExtensionClient.SwapPublicIPAddressesLoadBalancer");
             scope.Start();
             try
             {
-                var response = await LoadBalancerRestClient.SwapPublicIpAddressesAsync(Id.SubscriptionId, location, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(LoadBalancerClientDiagnostics, Pipeline, LoadBalancerRestClient.CreateSwapPublicIpAddressesRequest(Id.SubscriptionId, location, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await LoadBalancerRestClient.SwapPublicIPAddressesAsync(Id.SubscriptionId, location, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation(LoadBalancerClientDiagnostics, Pipeline, LoadBalancerRestClient.CreateSwapPublicIPAddressesRequest(Id.SubscriptionId, location, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -2170,20 +2170,20 @@ namespace Azure.ResourceManager.Network
         /// <summary>
         /// Swaps VIPs between two load balancers.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/setLoadBalancerFrontendPublicIpAddresses
-        /// Operation Id: LoadBalancers_SwapPublicIpAddresses
+        /// Operation Id: LoadBalancers_SwapPublicIPAddresses
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="location"> The region where load balancers are located at. </param>
         /// <param name="parameters"> Parameters that define which VIPs should be swapped. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation SwapPublicIpAddressesLoadBalancer(bool waitForCompletion, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation SwapPublicIPAddressesLoadBalancer(bool waitForCompletion, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
         {
-            using var scope = LoadBalancerClientDiagnostics.CreateScope("SubscriptionExtensionClient.SwapPublicIpAddressesLoadBalancer");
+            using var scope = LoadBalancerClientDiagnostics.CreateScope("SubscriptionExtensionClient.SwapPublicIPAddressesLoadBalancer");
             scope.Start();
             try
             {
-                var response = LoadBalancerRestClient.SwapPublicIpAddresses(Id.SubscriptionId, location, parameters, cancellationToken);
-                var operation = new NetworkArmOperation(LoadBalancerClientDiagnostics, Pipeline, LoadBalancerRestClient.CreateSwapPublicIpAddressesRequest(Id.SubscriptionId, location, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = LoadBalancerRestClient.SwapPublicIPAddresses(Id.SubscriptionId, location, parameters, cancellationToken);
+                var operation = new NetworkArmOperation(LoadBalancerClientDiagnostics, Pipeline, LoadBalancerRestClient.CreateSwapPublicIPAddressesRequest(Id.SubscriptionId, location, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
