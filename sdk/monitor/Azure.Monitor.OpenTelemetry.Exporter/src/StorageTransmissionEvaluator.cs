@@ -38,7 +38,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// Adds current export duration in seconds to the sample size.
         /// Also, removes the oldest record from the sample.
         /// </summary>
-        internal void UpdateExportDuration(double currentExportDuration)
+        internal void AddExportDurationToDataSample(double currentExportDuration)
         {
             _exportDurationIndex++;
 
@@ -57,7 +57,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// Adds current export time interval in seconds to the sample size.
         /// Also, removes the oldest record from the sample.
         /// </summary>
-        internal void UpdateExportInterval()
+        internal void AddExportIntervalToDataSample()
         {
             long curExportTimestampTicks = Stopwatch.GetTimestamp();
 
@@ -89,7 +89,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             _exportIntervalRunningSum += exportIntervalSeconds;
         }
 
-        internal long MaxFilesToTransmitFromStorage()
+        internal long GetNumberOfFilesToTransmitFromStorage()
         {
             long totalFiles = 0;
 
@@ -117,7 +117,5 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
             return (sum / length);
         }
-
-        internal double CurrentBatchExportDuration { get => _currentBatchExportDuration; set => _currentBatchExportDuration = value; }
     }
 }

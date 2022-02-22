@@ -39,7 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public override ExportResult Export(in Batch<Activity> batch)
         {
             // Add export time interval to data sample
-            _storageTransmissionEvaluator?.UpdateExportInterval();
+            _storageTransmissionEvaluator.AddExportIntervalToDataSample();
 
             // Prevent Azure Monitor's HTTP operations from being instrumented.
             using var scope = SuppressInstrumentationScope.Begin();
@@ -62,10 +62,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 // Calculate duration and add it to data sample
                 double currentExportDuration = TimeSpan.FromTicks(ticksAfterExport - ticksBeforeExport).TotalSeconds;
-                _storageTransmissionEvaluator.UpdateExportDuration(currentExportDuration);
+                _storageTransmissionEvaluator.AddExportDurationToDataSample(currentExportDuration);
 
                 // Get max number of files we can transmit in this export and start transmitting
-                long maxFilesToTransmit = _storageTransmissionEvaluator.MaxFilesToTransmitFromStorage();
+                long maxFilesToTransmit = _storageTransmissionEvaluator.GetNumberOfFilesToTransmitFromStorage();
                 _transmitter.TransmitFromStorage(maxFilesToTransmit, false, CancellationToken.None);
 
                 return exportResult;
