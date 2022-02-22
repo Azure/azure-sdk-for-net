@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ApplicationGatewayAvailableSslPredefinedPolicies DeserializeApplicationGatewayAvailableSslPredefinedPolicies(JsonElement element)
         {
-            Optional<IReadOnlyList<ApplicationGatewaySslPredefinedPolicyData>> value = default;
+            Optional<IReadOnlyList<ApplicationGatewaySslPredefinedPolicy>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ApplicationGatewaySslPredefinedPolicyData> array = new List<ApplicationGatewaySslPredefinedPolicyData>();
+                    List<ApplicationGatewaySslPredefinedPolicy> array = new List<ApplicationGatewaySslPredefinedPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewaySslPredefinedPolicyData.DeserializeApplicationGatewaySslPredefinedPolicyData(item));
+                        array.Add(ApplicationGatewaySslPredefinedPolicy.DeserializeApplicationGatewaySslPredefinedPolicy(item));
                     }
                     value = array;
                     continue;

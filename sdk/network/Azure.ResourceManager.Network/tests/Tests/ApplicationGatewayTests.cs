@@ -704,10 +704,10 @@ namespace Azure.ResourceManager.Network.Tests
             // Assert.NotNull(availableWAFRuleSet.RuleGroups[0].Rules[0].RuleId);
 
             // Get availalbe SSL options
-            Response<ApplicationGatewayAvailableSslOptions> sslOptions = await _subscription.GetApplicationGatewayAvailableSslOptions().GetAsync();
-            Assert.NotNull(sslOptions.Value.Data.DefaultPolicy);
-            Assert.NotNull(sslOptions.Value.Data.AvailableCipherSuites);
-            Assert.NotNull(sslOptions.Value.Data.AvailableCipherSuites[20]);
+            //Response<ApplicationGatewayAvailableSslOptions> sslOptions = await _subscription.GetApplicationGatewayAvailableSslOptions().GetAsync();
+            //Assert.NotNull(sslOptions.Value.Data.DefaultPolicy);
+            //Assert.NotNull(sslOptions.Value.Data.AvailableCipherSuites);
+            //Assert.NotNull(sslOptions.Value.Data.AvailableCipherSuites[20]);
 
             //AsyncPageable<ApplicationGatewaySslPredefinedPolicy> policies = _subscription.GetApplicationGatewayAvailableSslPredefinedPoliciesAsync();
             //IAsyncEnumerator<ApplicationGatewaySslPredefinedPolicy> enumerator = policies.GetAsyncEnumerator();
@@ -872,6 +872,25 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Delete AppGw
             await getGateway.Value.DeleteAsync(true);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task AppGatewayAvailableSslOptionsTest()
+        {
+            //Get AppGatewayAvailableSslOptions
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            ApplicationGatewayAvailableSslOptions applicationGatewayAvailableSslOptions = await subscription.GetApplicationGatewayAvailableSslOptionsAsync();
+            Assert.AreEqual(applicationGatewayAvailableSslOptions.Name, "default");
+
+            //List available SslPredefinedPolicies
+            List<ApplicationGatewaySslPredefinedPolicy> sslPredefinedPolicies = await subscription.GetApplicationGatewayAvailableSslPredefinedPoliciesAsync().ToEnumerableAsync();
+            Assert.AreEqual(sslPredefinedPolicies.Count, 3);
+
+            //Get SslPredefinedPolicy
+            string sslPredefinedPolicyName = ApplicationGatewaySslPolicyName.AppGwSslPolicy20170401S.ToString();
+            ApplicationGatewaySslPredefinedPolicy sslPredefinedPolicy = await subscription.GetApplicationGatewaySslPredefinedPolicyAsync(sslPredefinedPolicyName);
+            Assert.AreEqual(sslPredefinedPolicy.Name, sslPredefinedPolicyName);
         }
     }
 }

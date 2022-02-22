@@ -8,12 +8,11 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Network
+namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayAvailableSslOptionsData : IUtf8JsonSerializable
+    public partial class ApplicationGatewayAvailableSslOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.Network
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewayAvailableSslOptionsData DeserializeApplicationGatewayAvailableSslOptionsData(JsonElement element)
+        internal static ApplicationGatewayAvailableSslOptions DeserializeApplicationGatewayAvailableSslOptions(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> name = default;
@@ -196,7 +195,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ApplicationGatewayAvailableSslOptionsData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), Optional.ToList(predefinedPolicies), Optional.ToNullable(defaultPolicy), Optional.ToList(availableCipherSuites), Optional.ToList(availableProtocols));
+            return new ApplicationGatewayAvailableSslOptions(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), Optional.ToList(predefinedPolicies), Optional.ToNullable(defaultPolicy), Optional.ToList(availableCipherSuites), Optional.ToList(availableProtocols));
         }
     }
 }
