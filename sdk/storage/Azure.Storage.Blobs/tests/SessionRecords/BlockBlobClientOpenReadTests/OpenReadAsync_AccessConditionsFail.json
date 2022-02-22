@@ -44,7 +44,7 @@
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2021-04-10"
       },
-      "RequestBody": [],
+      "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
@@ -219,7 +219,7 @@
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2021-04-10"
       },
-      "RequestBody": [],
+      "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
@@ -394,7 +394,7 @@
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2021-04-10"
       },
-      "RequestBody": [],
+      "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
@@ -569,7 +569,7 @@
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2021-04-10"
       },
-      "RequestBody": [],
+      "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
@@ -784,7 +784,7 @@
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2021-04-10"
       },
-      "RequestBody": [],
+      "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",

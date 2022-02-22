@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.EdgeOrder.Models;
 using Azure.ResourceManager.Resources;
 
@@ -69,10 +70,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An async collection of <see cref="ProductFamily" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ProductFamily> GetProductFamiliesAsync(this Subscription subscription, ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (productFamiliesRequest == null)
-            {
-                throw new ArgumentNullException(nameof(productFamiliesRequest));
-            }
+            Argument.AssertNotNull(productFamiliesRequest, nameof(productFamiliesRequest));
 
             return GetExtensionClient(subscription).GetProductFamiliesAsync(productFamiliesRequest, expand, skipToken, cancellationToken);
         }
@@ -91,10 +89,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of <see cref="ProductFamily" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ProductFamily> GetProductFamilies(this Subscription subscription, ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (productFamiliesRequest == null)
-            {
-                throw new ArgumentNullException(nameof(productFamiliesRequest));
-            }
+            Argument.AssertNotNull(productFamiliesRequest, nameof(productFamiliesRequest));
 
             return GetExtensionClient(subscription).GetProductFamilies(productFamiliesRequest, expand, skipToken, cancellationToken);
         }
@@ -112,10 +107,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An async collection of <see cref="ProductConfiguration" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ProductConfiguration> GetConfigurationsAsync(this Subscription subscription, ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (configurationsRequest == null)
-            {
-                throw new ArgumentNullException(nameof(configurationsRequest));
-            }
+            Argument.AssertNotNull(configurationsRequest, nameof(configurationsRequest));
 
             return GetExtensionClient(subscription).GetConfigurationsAsync(configurationsRequest, skipToken, cancellationToken);
         }
@@ -133,10 +125,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of <see cref="ProductConfiguration" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ProductConfiguration> GetConfigurations(this Subscription subscription, ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (configurationsRequest == null)
-            {
-                throw new ArgumentNullException(nameof(configurationsRequest));
-            }
+            Argument.AssertNotNull(configurationsRequest, nameof(configurationsRequest));
 
             return GetExtensionClient(subscription).GetConfigurations(configurationsRequest, skipToken, cancellationToken);
         }

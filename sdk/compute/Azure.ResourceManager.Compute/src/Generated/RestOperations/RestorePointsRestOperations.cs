@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="parameters"> Parameters supplied to the Create restore point operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="restorePointName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="restorePointName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string restorePointName, RestorePointData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="parameters"> Parameters supplied to the Create restore point operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="restorePointName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="restorePointName"/> or <paramref name="parameters"/> is null. </exception>
         public Response Create(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string restorePointName, RestorePointData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="restorePointCollectionName"> The name of the Restore Point Collection. </param>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, or <paramref name="restorePointName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/> or <paramref name="restorePointName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string restorePointName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="restorePointCollectionName"> The name of the Restore Point Collection. </param>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, or <paramref name="restorePointName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/> or <paramref name="restorePointName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string restorePointName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, or <paramref name="restorePointName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/> or <paramref name="restorePointName"/> is null. </exception>
         public async Task<Response<RestorePointData>> GetAsync(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string restorePointName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, or <paramref name="restorePointName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/> or <paramref name="restorePointName"/> is null. </exception>
         public Response<RestorePointData> Get(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string restorePointName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)

@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of ConnectionError. </summary>
         /// <param name="connectionState"> The kind of connection error that occurred. </param>
-        /// <param name="iPFrom"> The IP of host that originated the failed connection. </param>
-        /// <param name="iPTo"> The IP that the connection attempted to reach. </param>
+        /// <param name="ipFrom"> The IP of host that originated the failed connection. </param>
+        /// <param name="ipTo"> The IP that the connection attempted to reach. </param>
         /// <param name="port"> The TCP port the connection was attempted on. </param>
         /// <param name="exception"> Detailed error message about the failed connection. </param>
-        internal ConnectionError(ConnectionState? connectionState, string iPFrom, string iPTo, int? port, string exception)
+        internal ConnectionError(ConnectionState? connectionState, string ipFrom, string ipTo, int? port, string exception)
         {
             ConnectionState = connectionState;
-            IPFrom = iPFrom;
-            IPTo = iPTo;
+            IPFrom = ipFrom;
+            IPTo = ipTo;
             Port = port;
             Exception = exception;
         }

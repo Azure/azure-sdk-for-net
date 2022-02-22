@@ -3101,7 +3101,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public GalleryArtifactVersionSource() { }
         public string Id { get { throw null; } set { } }
-        public string Uri { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
     }
     public partial class GalleryDataDiskImage : Azure.ResourceManager.Compute.Models.GalleryDiskImage
     {
@@ -3364,7 +3364,7 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class ImageOSDisk : Azure.ResourceManager.Compute.Models.ImageDisk
     {
-        public ImageOSDisk(Azure.ResourceManager.Compute.Models.OperatingSystemTypes oSType, Azure.ResourceManager.Compute.Models.OperatingSystemStateTypes oSState) { }
+        public ImageOSDisk(Azure.ResourceManager.Compute.Models.OperatingSystemTypes osType, Azure.ResourceManager.Compute.Models.OperatingSystemStateTypes osState) { }
         public Azure.ResourceManager.Compute.Models.OperatingSystemStateTypes OSState { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OperatingSystemTypes OSType { get { throw null; } set { } }
     }
@@ -4956,7 +4956,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualHardDisk
     {
         public VirtualHardDisk() { }
-        public string Uri { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
     }
     public partial class VirtualMachineAgentInstanceView
     {

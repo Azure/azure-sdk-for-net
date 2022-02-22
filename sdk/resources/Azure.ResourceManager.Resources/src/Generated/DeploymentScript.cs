@@ -16,6 +16,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -201,15 +202,15 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
         /// Operation Id: DeploymentScripts_Update
         /// </summary>
-        /// <param name="tags"> Resource tags to be updated. </param>
+        /// <param name="options"> Deployment script resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DeploymentScript>> UpdateAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<DeploymentScript>> UpdateAsync(DeploymentScriptUpdateOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.Update");
             scope.Start();
             try
             {
-                var response = await _deploymentScriptRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
+                var response = await _deploymentScriptRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DeploymentScript(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,15 +225,15 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
         /// Operation Id: DeploymentScripts_Update
         /// </summary>
-        /// <param name="tags"> Resource tags to be updated. </param>
+        /// <param name="options"> Deployment script resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeploymentScript> Update(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        public virtual Response<DeploymentScript> Update(DeploymentScriptUpdateOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.Update");
             scope.Start();
             try
             {
-                var response = _deploymentScriptRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, cancellationToken);
+                var response = _deploymentScriptRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
                 return Response.FromValue(new DeploymentScript(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -307,14 +308,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<DeploymentScript>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.AddTag");
             scope.Start();
@@ -344,14 +339,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<DeploymentScript> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.AddTag");
             scope.Start();
@@ -380,10 +369,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<DeploymentScript>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.SetTags");
             scope.Start();
@@ -413,10 +399,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DeploymentScript> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.SetTags");
             scope.Start();
@@ -446,10 +429,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<DeploymentScript>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.RemoveTag");
             scope.Start();
@@ -478,10 +458,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<DeploymentScript> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.RemoveTag");
             scope.Start();

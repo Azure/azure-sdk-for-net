@@ -19,7 +19,7 @@ namespace Azure.Communication.NetworkTraversal
         /// <param name="username"> User account name which uniquely identifies the credentials. </param>
         /// <param name="credential"> Credential for the server. </param>
         /// <param name="routeType"> The routing methodology to where the ICE server will be located from the client. &quot;any&quot; will have higher reliability while &quot;nearest&quot; will have lower latency. It is recommended to default to use the &quot;any&quot; routing method unless there are specific scenarios which minimizing latency is critical. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="urls"/>, <paramref name="username"/>, or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="urls"/>, <paramref name="username"/> or <paramref name="credential"/> is null. </exception>
         public CommunicationIceServer(IEnumerable<string> urls, string username, string credential, RouteType routeType)
         {
             if (urls == null)

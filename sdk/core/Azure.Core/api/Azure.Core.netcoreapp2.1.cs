@@ -194,6 +194,8 @@ namespace Azure
         public RequestContext() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
+        public void AddClassifier(Azure.Core.ResponseClassificationHandler classifier) { }
+        public void AddClassifier(int statusCode, bool isError) { }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
@@ -359,6 +361,11 @@ namespace Azure.Core
         public static implicit operator Azure.Core.ContentType (string contentType) { throw null; }
         public static bool operator !=(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class CoreResponseClassifier : Azure.Core.ResponseClassifier
+    {
+        public CoreResponseClassifier(System.ReadOnlySpan<int> nonErrors) { }
+        public override bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }
     }
     public static partial class DelegatedTokenCredential
     {
@@ -582,6 +589,11 @@ namespace Azure.Core
         public static implicit operator Azure.Core.ResourceType (string resourceType) { throw null; }
         public static bool operator !=(Azure.Core.ResourceType left, Azure.Core.ResourceType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public abstract partial class ResponseClassificationHandler
+    {
+        protected ResponseClassificationHandler() { }
+        public abstract bool TryClassify(Azure.Core.HttpMessage message, out bool isError);
     }
     public partial class ResponseClassifier
     {
@@ -884,6 +896,7 @@ namespace Azure.Core.Pipeline
         public static System.IDisposable CreateHttpMessagePropertiesScope(System.Collections.Generic.IDictionary<string, object?> messageProperties) { throw null; }
         public Azure.Core.HttpMessage CreateMessage() { throw null; }
         public Azure.Core.HttpMessage CreateMessage(Azure.RequestContext? context) { throw null; }
+        public Azure.Core.HttpMessage CreateMessage(Azure.RequestContext? context, Azure.Core.CoreResponseClassifier? classifier = null) { throw null; }
         public Azure.Core.Request CreateRequest() { throw null; }
         public void Send(Azure.Core.HttpMessage message, System.Threading.CancellationToken cancellationToken) { }
         public System.Threading.Tasks.ValueTask SendAsync(Azure.Core.HttpMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }

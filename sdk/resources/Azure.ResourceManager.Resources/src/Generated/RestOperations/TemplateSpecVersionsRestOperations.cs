@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
         /// <param name="templateSpecVersionModel"> Template Spec Version supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/>, <paramref name="templateSpecVersion"/>, or <paramref name="templateSpecVersionModel"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/>, <paramref name="templateSpecVersion"/> or <paramref name="templateSpecVersionModel"/> is null. </exception>
         public async Task<Response<TemplateSpecVersionData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionData templateSpecVersionModel, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
         /// <param name="templateSpecVersionModel"> Template Spec Version supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/>, <paramref name="templateSpecVersion"/>, or <paramref name="templateSpecVersionModel"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/>, <paramref name="templateSpecVersion"/> or <paramref name="templateSpecVersionModel"/> is null. </exception>
         public Response<TemplateSpecVersionData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionData templateSpecVersionModel, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -166,7 +165,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, IDictionary<string, string> tags)
+        internal Azure.Core.HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionUpdateOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -184,19 +183,13 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            TemplateSpecVersionUpdateOptions templateSpecVersionUpdateOptions = new TemplateSpecVersionUpdateOptions();
-            if (tags != null)
+            if (options != null)
             {
-                foreach (var value in tags)
-                {
-                    templateSpecVersionUpdateOptions.Tags.Add(value);
-                }
+                request.Headers.Add("Content-Type", "application/json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(options);
+                request.Content = content;
             }
-            var model = templateSpecVersionUpdateOptions;
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
@@ -206,10 +199,10 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="options"> Template Spec Version resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/>, or <paramref name="templateSpecVersion"/> is null. </exception>
-        public async Task<Response<TemplateSpecVersionData>> UpdateAsync(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is null. </exception>
+        public async Task<Response<TemplateSpecVersionData>> UpdateAsync(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionUpdateOptions options = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -228,7 +221,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(templateSpecVersion));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpecVersion, tags);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpecVersion, options);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -249,10 +242,10 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="options"> Template Spec Version resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/>, or <paramref name="templateSpecVersion"/> is null. </exception>
-        public Response<TemplateSpecVersionData> Update(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is null. </exception>
+        public Response<TemplateSpecVersionData> Update(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionUpdateOptions options = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -271,7 +264,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(templateSpecVersion));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpecVersion, tags);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpecVersion, options);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -315,7 +308,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/>, or <paramref name="templateSpecVersion"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is null. </exception>
         public async Task<Response<TemplateSpecVersionData>> GetAsync(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -359,7 +352,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/>, or <paramref name="templateSpecVersion"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is null. </exception>
         public Response<TemplateSpecVersionData> Get(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -425,7 +418,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/>, or <paramref name="templateSpecVersion"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -463,7 +456,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/>, or <paramref name="templateSpecVersion"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -521,7 +514,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="templateSpecName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is null. </exception>
         public async Task<Response<TemplateSpecVersionsListResult>> ListAsync(string subscriptionId, string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -558,7 +551,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="templateSpecName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is null. </exception>
         public Response<TemplateSpecVersionsListResult> List(string subscriptionId, string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -610,7 +603,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="templateSpecName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is null. </exception>
         public async Task<Response<TemplateSpecVersionsListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -652,7 +645,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="templateSpecName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is null. </exception>
         public Response<TemplateSpecVersionsListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

@@ -64,7 +64,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="knowledgeBaseQueryOptions"> Post body of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="knowledgeBaseQueryOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="knowledgeBaseQueryOptions"/> is null. </exception>
         public async Task<Response<AnswersResult>> GetAnswersAsync(string projectName, string deploymentName, AnswersOptions knowledgeBaseQueryOptions, CancellationToken cancellationToken = default)
         {
             if (projectName == null)
@@ -101,7 +101,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="knowledgeBaseQueryOptions"> Post body of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="knowledgeBaseQueryOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="knowledgeBaseQueryOptions"/> is null. </exception>
         public Response<AnswersResult> GetAnswers(string projectName, string deploymentName, AnswersOptions knowledgeBaseQueryOptions, CancellationToken cancellationToken = default)
         {
             if (projectName == null)

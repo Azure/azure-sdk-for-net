@@ -194,10 +194,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public async virtual Task<ArmOperation<IscsiTarget>> UpdateAsync(bool waitForCompletion, IscsiTargetUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _iscsiTargetClientDiagnostics.CreateScope("IscsiTarget.Update");
             scope.Start();
@@ -227,10 +224,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual ArmOperation<IscsiTarget> Update(bool waitForCompletion, IscsiTargetUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _iscsiTargetClientDiagnostics.CreateScope("IscsiTarget.Update");
             scope.Start();

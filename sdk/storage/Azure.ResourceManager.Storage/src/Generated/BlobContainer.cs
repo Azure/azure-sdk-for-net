@@ -200,10 +200,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="blobContainer"/> is null. </exception>
         public async virtual Task<Response<BlobContainer>> UpdateAsync(BlobContainerData blobContainer, CancellationToken cancellationToken = default)
         {
-            if (blobContainer == null)
-            {
-                throw new ArgumentNullException(nameof(blobContainer));
-            }
+            Argument.AssertNotNull(blobContainer, nameof(blobContainer));
 
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainer.Update");
             scope.Start();
@@ -229,10 +226,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="blobContainer"/> is null. </exception>
         public virtual Response<BlobContainer> Update(BlobContainerData blobContainer, CancellationToken cancellationToken = default)
         {
-            if (blobContainer == null)
-            {
-                throw new ArgumentNullException(nameof(blobContainer));
-            }
+            Argument.AssertNotNull(blobContainer, nameof(blobContainer));
 
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainer.Update");
             scope.Start();
@@ -258,10 +252,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="legalHold"/> is null. </exception>
         public async virtual Task<Response<LegalHold>> SetLegalHoldAsync(LegalHold legalHold, CancellationToken cancellationToken = default)
         {
-            if (legalHold == null)
-            {
-                throw new ArgumentNullException(nameof(legalHold));
-            }
+            Argument.AssertNotNull(legalHold, nameof(legalHold));
 
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainer.SetLegalHold");
             scope.Start();
@@ -287,10 +278,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="legalHold"/> is null. </exception>
         public virtual Response<LegalHold> SetLegalHold(LegalHold legalHold, CancellationToken cancellationToken = default)
         {
-            if (legalHold == null)
-            {
-                throw new ArgumentNullException(nameof(legalHold));
-            }
+            Argument.AssertNotNull(legalHold, nameof(legalHold));
 
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainer.SetLegalHold");
             scope.Start();
@@ -316,10 +304,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="legalHold"/> is null. </exception>
         public async virtual Task<Response<LegalHold>> ClearLegalHoldAsync(LegalHold legalHold, CancellationToken cancellationToken = default)
         {
-            if (legalHold == null)
-            {
-                throw new ArgumentNullException(nameof(legalHold));
-            }
+            Argument.AssertNotNull(legalHold, nameof(legalHold));
 
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainer.ClearLegalHold");
             scope.Start();
@@ -345,10 +330,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="legalHold"/> is null. </exception>
         public virtual Response<LegalHold> ClearLegalHold(LegalHold legalHold, CancellationToken cancellationToken = default)
         {
-            if (legalHold == null)
-            {
-                throw new ArgumentNullException(nameof(legalHold));
-            }
+            Argument.AssertNotNull(legalHold, nameof(legalHold));
 
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainer.ClearLegalHold");
             scope.Start();

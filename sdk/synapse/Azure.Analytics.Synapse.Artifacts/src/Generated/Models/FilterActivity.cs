@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="items"> Input array on which filter should be applied. </param>
         /// <param name="condition"> Condition to be used for filtering the input. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="items"/>, or <paramref name="condition"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="items"/> or <paramref name="condition"/> is null. </exception>
         public FilterActivity(string name, Expression items, Expression condition) : base(name)
         {
             if (name == null)

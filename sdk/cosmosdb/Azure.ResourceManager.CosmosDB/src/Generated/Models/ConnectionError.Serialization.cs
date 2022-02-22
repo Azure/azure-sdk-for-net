@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal static ConnectionError DeserializeConnectionError(JsonElement element)
         {
             Optional<ConnectionState> connectionState = default;
-            Optional<string> iPFrom = default;
-            Optional<string> iPTo = default;
+            Optional<string> ipFrom = default;
+            Optional<string> ipTo = default;
             Optional<int> port = default;
             Optional<string> exception = default;
             foreach (var property in element.EnumerateObject())
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("iPFrom"))
                 {
-                    iPFrom = property.Value.GetString();
+                    ipFrom = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("iPTo"))
                 {
-                    iPTo = property.Value.GetString();
+                    ipTo = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("port"))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ConnectionError(Optional.ToNullable(connectionState), iPFrom.Value, iPTo.Value, Optional.ToNullable(port), exception.Value);
+            return new ConnectionError(Optional.ToNullable(connectionState), ipFrom.Value, ipTo.Value, Optional.ToNullable(port), exception.Value);
         }
     }
 }

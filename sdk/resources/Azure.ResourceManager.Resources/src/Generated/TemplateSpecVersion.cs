@@ -15,6 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -188,15 +189,15 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}/versions/{templateSpecVersion}
         /// Operation Id: TemplateSpecVersions_Update
         /// </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="options"> Template Spec Version resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<TemplateSpecVersion>> UpdateAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<TemplateSpecVersion>> UpdateAsync(TemplateSpecVersionUpdateOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersion.Update");
             scope.Start();
             try
             {
-                var response = await _templateSpecVersionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tags, cancellationToken).ConfigureAwait(false);
+                var response = await _templateSpecVersionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new TemplateSpecVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -211,15 +212,15 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}/versions/{templateSpecVersion}
         /// Operation Id: TemplateSpecVersions_Update
         /// </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="options"> Template Spec Version resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TemplateSpecVersion> Update(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        public virtual Response<TemplateSpecVersion> Update(TemplateSpecVersionUpdateOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersion.Update");
             scope.Start();
             try
             {
-                var response = _templateSpecVersionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tags, cancellationToken);
+                var response = _templateSpecVersionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken);
                 return Response.FromValue(new TemplateSpecVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,14 +241,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<TemplateSpecVersion>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersion.AddTag");
             scope.Start();
@@ -277,14 +272,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<TemplateSpecVersion> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersion.AddTag");
             scope.Start();
@@ -313,10 +302,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<TemplateSpecVersion>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersion.SetTags");
             scope.Start();
@@ -346,10 +332,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<TemplateSpecVersion> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersion.SetTags");
             scope.Start();
@@ -379,10 +362,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<TemplateSpecVersion>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersion.RemoveTag");
             scope.Start();
@@ -411,10 +391,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<TemplateSpecVersion> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersion.RemoveTag");
             scope.Start();

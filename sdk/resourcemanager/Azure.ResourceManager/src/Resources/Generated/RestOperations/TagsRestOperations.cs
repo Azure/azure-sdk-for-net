@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/>, or <paramref name="tagValue"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
         public async Task<Response> DeleteValueAsync(string subscriptionId, string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/>, or <paramref name="tagValue"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
         public Response DeleteValue(string subscriptionId, string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/>, or <paramref name="tagValue"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
         public async Task<Response<PredefinedTagValue>> CreateOrUpdateValueAsync(string subscriptionId, string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/>, or <paramref name="tagValue"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
         public Response<PredefinedTagValue> CreateOrUpdateValue(string subscriptionId, string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)

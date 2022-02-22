@@ -9,6 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources;
 
@@ -107,10 +108,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public async static Task<Response<CheckNameAvailabilityResult>> CheckKeyVaultNameAvailabilityAsync(this Subscription subscription, VaultCheckNameAvailabilityParameters vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
+            Argument.AssertNotNull(vaultName, nameof(vaultName));
 
             return await GetExtensionClient(subscription).CheckKeyVaultNameAvailabilityAsync(vaultName, cancellationToken).ConfigureAwait(false);
         }
@@ -126,10 +124,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public static Response<CheckNameAvailabilityResult> CheckKeyVaultNameAvailability(this Subscription subscription, VaultCheckNameAvailabilityParameters vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
+            Argument.AssertNotNull(vaultName, nameof(vaultName));
 
             return GetExtensionClient(subscription).CheckKeyVaultNameAvailability(vaultName, cancellationToken);
         }

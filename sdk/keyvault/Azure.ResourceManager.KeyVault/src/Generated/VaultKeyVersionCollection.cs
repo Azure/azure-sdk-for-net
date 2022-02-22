@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="keyVersion"> The version of the key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
         public async virtual Task<Response<VaultKeyVersion>> GetAsync(string keyVersion, CancellationToken cancellationToken = default)
         {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="keyVersion"> The version of the key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
         public virtual Response<VaultKeyVersion> Get(string keyVersion, CancellationToken cancellationToken = default)
         {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="keyVersion"> The version of the key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string keyVersion, CancellationToken cancellationToken = default)
         {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="keyVersion"> The version of the key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
         public virtual Response<bool> Exists(string keyVersion, CancellationToken cancellationToken = default)
         {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="keyVersion"> The version of the key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
         public async virtual Task<Response<VaultKeyVersion>> GetIfExistsAsync(string keyVersion, CancellationToken cancellationToken = default)
         {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="keyVersion"> The version of the key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
         public virtual Response<VaultKeyVersion> GetIfExists(string keyVersion, CancellationToken cancellationToken = default)
         {
