@@ -14,11 +14,17 @@ namespace Azure.Core
     /// </summary>
     internal class OperationPoller
     {
-        private DelayStrategy _pollingStrategy;
+        public delegate Response UpdateStatus(CancellationToken cancellationToken = default);
+        public delegate ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken);
+        public delegate bool HasCompleted();
+        public delegate Response GetRawResponse();
+        public delegate T Value<T>();
+
+        private DelayStrategy _delayStrategy;
 
         public OperationPoller(DelayStrategy? fallbackStrategy = null)
         {
-            _pollingStrategy = DelayStrategy.ChooseDelayStrategy(fallbackStrategy);
+            _delayStrategy = DelayStrategy.ChooseDelayStrategy(fallbackStrategy);
         }
 
         public virtual ValueTask<Response> WaitForCompletionResponseAsync(Operation operation, TimeSpan? pollingInterval, CancellationToken cancellationToken)
@@ -35,7 +41,7 @@ namespace Azure.Core
                     return getRawResponse();
                 }
 
-                await Task.Delay(_pollingStrategy.GetNextDelay(response, pollingInterval), cancellationToken).ConfigureAwait(false);
+                await Task.Delay(_delayStrategy.GetNextDelay(response, pollingInterval), cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -53,7 +59,7 @@ namespace Azure.Core
                     return getRawResponse();
                 }
 
-                Thread.Sleep(_pollingStrategy.GetNextDelay(response, pollingInterval));
+                Thread.Sleep(_delayStrategy.GetNextDelay(response, pollingInterval));
             }
         }
 
@@ -71,7 +77,7 @@ namespace Azure.Core
                     return Response.FromValue(value(), getRawResponse());
                 }
 
-                await Task.Delay(_pollingStrategy.GetNextDelay(response, pollingInterval), cancellationToken).ConfigureAwait(false);
+                await Task.Delay(_delayStrategy.GetNextDelay(response, pollingInterval), cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -89,20 +95,8 @@ namespace Azure.Core
                     return Response.FromValue(value(), getRawResponse());
                 }
 
-                Thread.Sleep(_pollingStrategy.GetNextDelay(response, pollingInterval));
+                Thread.Sleep(_delayStrategy.GetNextDelay(response, pollingInterval));
             }
         }
-
-        public delegate Response UpdateStatus(CancellationToken cancellationToken = default);
-
-        public delegate ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken);
-
-        public delegate bool HasCompleted();
-
-        public delegate Response GetRawResponse();
-
-        public delegate Task WaitAsync(TimeSpan delay, CancellationToken cancellationToken);
-
-        public delegate T Value<T>();
     }
 }

@@ -28,6 +28,13 @@ namespace Azure.Core
             _fallbackStrategy = fallbackStrategy;
         }
 
+        //TODO: Remove after autorest changes
+        /// <summary>
+        /// Can be set to control the default interval used between service calls in <see cref="WaitForCompletionResponseAsync(CancellationToken)"/>.
+        /// Defaults to 1 second.
+        /// </summary>
+        public TimeSpan DefaultPollingInterval { get; set; }
+
         /// <summary>
         /// The last HTTP response received from the server. Its update already handled in calls to "<c>UpdateStatus</c>" and
         /// "<c>WaitForCompletionAsync</c>", but custom methods not supported by this class, such as "<c>CancelOperation</c>",
