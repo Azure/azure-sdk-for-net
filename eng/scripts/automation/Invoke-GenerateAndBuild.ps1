@@ -4,7 +4,7 @@ param (
   [string]$outputJsonFile="output.json"
 )
 
-. (Join-Path $PSScriptRoot MgmtGenerateLib.ps1)
+. (Join-Path $PSScriptRoot GenerateAndBuildLib.ps1)
 
 $inputJson = Get-Content $inputJsonFile | Out-String | ConvertFrom-Json
 $swaggerDir = $inputJson.specFolder
@@ -12,6 +12,8 @@ $swaggerDir = $swaggerDir -replace "\\", "/"
 $readmeFile = $inputJson.relatedReadmeMdFile
 $readmeFile = $readmeFile -replace "\\", "/"
 $commitid = $inputJson.headSha
+$serviceType = $inputJson.serviceType
+
 Write-Host "swaggerDir:$swaggerDir, readmeFile:$readmeFile"
 
 $packageName = Get-ResourceProviderFromReadme $readmeFile
@@ -20,7 +22,18 @@ $sdkPath = Resolve-Path $sdkPath
 $sdkPath = $sdkPath -replace "\\", "/"
 
 $newpackageoutput = "newPackageOutput.json"
-New-PackageFolder -resourceProvider $resourceProvider -packageName $packageName -sdkPath $sdkPath -commitid $commitid -readme $swaggerDir/$readmeFile -outputJsonFile $newpackageoutput
+if ( $serviceType -eq "resource-manager" ) {
+  Write-Host "Generate resource-manager SDK client library."
+  New-MgmtPackageFolder -service $service -packageName $packageName -sdkPath $sdkPath -commitid $commitid -readme $swaggerDir/$readmeFile -outputJsonFile $newpackageoutput
+} else {
+  Write-Host "Generate data-plane SDK client library."
+  $group = "sample";
+  if ($inputJson.group) {
+    $group = $inputJson.group
+  }
+  $namespace = "Azure.$group.$packageName"
+  New-DataPlanePackageFolder -service $service -namespace $namespace -sdkPath $sdkPath -outputJsonFile $outputJsonFile
+}
 if ( $? -ne $True) {
   Write-Error "Failed to create sdk project folder. exit code: $?"
   exit 1
@@ -31,7 +44,7 @@ $path = $newpackageoutputJson.path
 Write-Host "projectFolder:$projectFolder"
 Remove-Item $newpackageoutput
 
-Invoke-Generate -swaggerPath $swaggerDir -sdkfolder $projectFolder
+Invoke-Generate -sdkfolder $projectFolder
 if ( $? -ne $True) {
   Write-Error "Failed to generate sdk. exit code: $?"
   exit 1
