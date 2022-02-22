@@ -37,7 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 if (ex.InnerException?.Source != "System.Net.Http")
                 {
                     message?.Dispose();
-                    return null;
+                    throw;
                 }
             }
 
@@ -64,7 +64,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 if (ex.InnerException?.Source != "System.Net.Http")
                 {
                     message?.Dispose();
-                    return null;
+                    throw;
                 }
             }
 
