@@ -9,7 +9,7 @@ using Azure.Core.Pipeline;
 namespace Azure
 {
     /// <summary>
-    /// Options which can be used to control the behavior of a request sent by a client.
+    /// Options that can be used to control the behavior of a request sent by a client.
     /// </summary>
     public class RequestOptions
     {
