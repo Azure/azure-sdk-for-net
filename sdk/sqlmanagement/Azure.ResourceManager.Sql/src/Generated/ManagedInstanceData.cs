@@ -14,7 +14,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ManagedInstance data model. </summary>
-    public partial class ManagedInstanceData : TrackedResource
+    public partial class ManagedInstanceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ManagedInstanceData. </summary>
         /// <param name="location"> The location. </param>

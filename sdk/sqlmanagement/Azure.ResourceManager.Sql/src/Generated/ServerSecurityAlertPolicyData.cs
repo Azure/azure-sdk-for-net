@@ -14,7 +14,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ServerSecurityAlertPolicy data model. </summary>
-    public partial class ServerSecurityAlertPolicyData : Resource
+    public partial class ServerSecurityAlertPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of ServerSecurityAlertPolicyData. </summary>
         public ServerSecurityAlertPolicyData()

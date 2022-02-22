@@ -1,6 +1,6 @@
 namespace Azure.Messaging.EventHubs
 {
-    public partial class EventData : Azure.Messaging.MessageWithMetadata
+    public partial class EventData : Azure.BinaryContent
     {
         public EventData() { }
         public EventData(System.BinaryData eventBody) { }
@@ -14,7 +14,9 @@ namespace Azure.Messaging.EventHubs
         public System.ReadOnlyMemory<byte> Body { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.IO.Stream BodyAsStream { get { throw null; } }
-        public override string ContentType { get { throw null; } set { } }
+        public new string ContentType { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected override Azure.Core.ContentType? ContentTypeCore { get { throw null; } set { } }
         public string CorrelationId { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override System.BinaryData Data { get { throw null; } set { } }

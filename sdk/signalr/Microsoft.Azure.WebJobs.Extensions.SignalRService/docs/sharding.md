@@ -30,43 +30,66 @@ Currently multiple-endpoint feature is only supported on `Persistent` transport 
 
 To enable multiple SignalR Service instances, you should:
 
-1. Use `Persistent` transport type.
+### 1. Use `Persistent` transport type
 
-    The default transport type is `Transient` mode. You should add the following entry to your `local.settings.json` file or the application setting on Azure.
+The default transport type is `Transient` mode. You should add the following entry to your `local.settings.json` file or the application setting on Azure.
 
-    ```json
-    {
-        "AzureSignalRServiceTransportType":"Persistent"
-    }
-    ```
-    >Notes for switching from `Transient` mode to `Persistent` mode on **Azure Functions runtime V3** :
-    >
-    > Under `Transient` mode, `Newtonsoft.Json` library is used to serialize arguments of hub methods, however, under `Persistent` mode, `System.Text.Json` library is used as default on Azure Functions runtime V3. `System.Text.Json` has some key differences in default behavior with `Newtonsoft.Json`. If you want to use `Newtonsoft.Json` under `Persistent` mode, you can add a configuration item: `"Azure:SignalR:HubProtocol":"NewtonsoftJson"` in `local.settings.json` file or `Azure__SignalR__HubProtocol=NewtonsoftJson` on Azure portal.
+```json
+{
+    "AzureSignalRServiceTransportType":"Persistent"
+}
+```
+> Notes for switching from `Transient` mode to `Persistent` mode on **Azure Functions runtime v3**:
+>
+> Under `Transient` mode, the `Newtonsoft.Json` library is used to serialize arguments of hub methods. However, under `Persistent` mode, the `System.Text.Json` library is used as default on Azure Functions runtime v3. `System.Text.Json` has some key differences in default behavior with `Newtonsoft.Json`. If you want to use `Newtonsoft.Json` under `Persistent` mode, you can add the configuration item `"Azure:SignalR:HubProtocol": "NewtonsoftJson"` in the `local.settings.json` file or `Azure__SignalR__HubProtocol=NewtonsoftJson` in the Azure portal.
 
 
-2. Configure multiple SignalR Service endpoints entries in your configuration.
+### 2. Configure multiple SignalR Service endpoint entries
 
-    We use a [`ServiceEndpoint`](https://github.com/Azure/azure-signalr/blob/dev/src/Microsoft.Azure.SignalR.Common/Endpoints/ServiceEndpoint.cs) object to represent a SignalR Service instance. You can define an service endpoint with its `<EndpointName>` and `<EndpointType>` in the entry key, and the connection string in the entry value. The keys are in the following format :
+We use a [`ServiceEndpoint`](https://github.com/Azure/azure-signalr/blob/dev/src/Microsoft.Azure.SignalR.Common/Endpoints/ServiceEndpoint.cs) object to represent a SignalR Service instance. You can define a service endpoint with its `<EndpointName>` and `<EndpointType>` in the entry key, and the connection string in the entry value. The keys are in the following format:
 
-    ```
-    Azure:SignalR:Endpoints:<EndpointName>:<EndpointType>
-    ```
+```
+Azure:SignalR:Endpoints:<EndpointName>:<EndpointType>
+```
 
-    `<EndpointType>` is optional and defaults to `primary`. See samples below:
+`<EndpointType>` is optional and defaults to `primary`. See samples below:
 
-    ```json
-    {
-        "Azure:SignalR:Endpoints:EastUs":"<ConnectionString>",
+```json
+{
+    "Azure:SignalR:Endpoints:EndpointName1":"<ConnectionString>",
 
-        "Azure:SignalR:Endpoints:EastUs2:Secondary":"<ConnectionString>",
+    "Azure:SignalR:Endpoints:EndpointName2:Secondary":"<ConnectionString>",
 
-        "Azure:SignalR:Endpoints:WestUs:Primary":"<ConnectionString>"
-    }
-    ```
+    "Azure:SignalR:Endpoints:EndpointName3:Primary":"<ConnectionString>"
+}
+```
 
-    > * When you configure Azure SignalR endpoints in the App Service on Azure portal, don't forget to replace `":"` with `"__"`, the double underscore in the keys. For reasons, see [Environment variables](https://docs.microsoft.com/aspnet/core/fundamentals/configuration/?view=aspnetcore-5.0#environment-variables-1).
-    >
-    > * Connection string configured with the key `{ConnectionStringSetting}` (defaults to "AzureSignalRConnectionString") is also recognized as a primary service endpoint with empty name. But this configuration style is not recommended for multiple endpoints.
+> * When you configure Azure SignalR endpoints in the App Service in the Azure portal, replace `":"` with `"__"` (the double underscore) in the keys. For reasons, see [Environment variables](https://docs.microsoft.com/aspnet/core/fundamentals/configuration/?view=aspnetcore-5.0#environment-variables-1).
+>
+> * A connection string configured with the key `{ConnectionStringSetting}` (defaults to "AzureSignalRConnectionString") is also recognized as a primary service endpoint with empty name. But this configuration style isn't recommended for multiple endpoints.
+
+#### Azure Identity support
+
+The [SignalR Service Owner role](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#signalr-service-owner) is required to use an Identity-based connection.
+
+Here's an example to configure Azure Identity for a SignalR endpoint named "Endpoint1":
+
+```json
+{
+  "Values": {
+    "Azure:SignalR:Endpoints:Endpoint1:serviceUri": "https://<SignalRServiceHost>",
+    "Azure:SignalR:Endpoints:Endpoint1:clientId": "...",
+    "Azure:SignalR:Endpoints:Endpoint1:clientSecret": "...",
+    "Azure:SignalR:Endpoints:Endpoint1:tenantId": "..."
+  }
+}
+```
+
+The `serviceUri` is required. Other items, such as `clientId` and `clientSecret`, are optional depending upon which credentials you want to use.
+
+For more information, see [Common properties for Identity-based connections](https://docs.microsoft.com/azure/azure-functions/functions-reference?tabs=azurewebjobsstorage#common-properties-for-identity-based-connections). Note that you should replace `<CONNECTION_NAME_PREFIX>` there with `Azure__SignalR__Endpoints__<EndpointName>`.
+
+    
 ## Routing
 
 ### Default behavior
@@ -77,7 +100,7 @@ By default, the SDK uses the [DefaultEndpointRouter](https://github.com/Azure/az
 * Server message routing: All service endpoints are returned.
 
 ### Customization
-#### CSharp
+#### Customize routing in .NET
 
 Here are the steps:
 * Implement a customized router. You can leverage information provided from [`ServiceEndpoint`](https://github.com/Azure/azure-signalr/blob/dev/src/Microsoft.Azure.SignalR.Common/Endpoints/ServiceEndpoint.cs) to make routing decision. See guide here: [customize-route-algorithm](https://github.com/Azure/azure-signalr/blob/dev/docs/sharding.md#customize-route-algorithm). **Please note that Http trigger is required in the negotiation function when you need `HttpContext` in custom negotiation method.**
@@ -101,9 +124,9 @@ namespace SimpleChatV3
 }
 ```
 
-#### Other languages
+#### Customize routing in other languages
 
-For languages other than C#, we support specifying target endpoints in each request. You will use new binding types to get endpoint information.
+For non-.NET languages, we support specifying target endpoints in each request. You'll use new binding types to get endpoint information.
 
 ##### Client routing
 The `SignalRConnectionInfo` binding selects one endpoint according the default routing rule. If you want to customize routing rule, you should use `SignalRNegotiation` binding instead of `SignalRConnectionInfo` binding.

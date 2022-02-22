@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Usage metric of a database. </summary>
-    public partial class DatabaseUsage : Resource
+    public partial class DatabaseUsage : ResourceData
     {
         /// <summary> Initializes a new instance of DatabaseUsage. </summary>
         public DatabaseUsage()

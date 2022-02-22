@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
 
             // Update
             contactDetails.ContactName = "Updated contact name";
-            AddressUpdateParameter addressUpdateParameter = new()
+            AddressResourceUpdateOptions addressUpdateParameter = new()
             {
                 ShippingAddress = shippingAddress,
                 ContactDetails = contactDetails

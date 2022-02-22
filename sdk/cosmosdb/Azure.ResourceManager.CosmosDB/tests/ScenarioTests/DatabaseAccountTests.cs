@@ -14,7 +14,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 {
     public class DatabaseAccountTests : CosmosDBManagementClientBase
     {
-        public DatabaseAccountTests(bool isAsync) : base(isAsync)
+        public DatabaseAccountTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

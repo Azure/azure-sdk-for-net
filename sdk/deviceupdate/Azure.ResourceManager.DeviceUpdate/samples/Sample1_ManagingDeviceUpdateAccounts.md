@@ -29,7 +29,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with a specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
 
@@ -41,7 +41,7 @@ Now that we have the resource group created, we can manage the accounts inside t
 // Get the account collection from the specific resource group and create an account
 string accountName = "myAccount";
 DeviceUpdateAccountData input = new DeviceUpdateAccountData(AzureLocation.WestUS2);
-DeviceUpdateAccountCreateOrUpdateOperation lro = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(true, accountName, input);
+ArmOperation<DeviceUpdateAccount> lro = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(true, accountName, input);
 DeviceUpdateAccount account = lro.Value;
 ```
 
@@ -77,7 +77,7 @@ DeviceUpdateAccountUpdateOptions updateOptions = new DeviceUpdateAccountUpdateOp
     Location = AzureLocation.WestUS2,
     Identity = new ManagedServiceIdentity(ResourceManager.Models.ManagedServiceIdentityType.None)
 };
-DeviceUpdateAccountUpdateOperation lro = await account.UpdateAsync(true, updateOptions);
+ArmOperation<DeviceUpdateAccount> lro = await account.UpdateAsync(true, updateOptions);
 account = lro.Value;
 ```
 

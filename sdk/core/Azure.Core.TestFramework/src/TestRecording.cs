@@ -124,6 +124,11 @@ namespace Azure.Core.TestFramework
                         IgnoredQueryParameters = _matcher.IgnoredQueryParameters.Count > 0 ? string.Join(",", _matcher.IgnoredQueryParameters): null,
                         CompareBodies = _matcher.CompareBodies
                     });
+
+                    foreach (HeaderTransform transform in _sanitizer.HeaderTransforms)
+                    {
+                        await _proxy.Client.AddHeaderTransformAsync(transform, RecordingId);
+                    }
                     break;
             }
         }
@@ -158,11 +163,6 @@ namespace Azure.Core.TestFramework
             foreach (BodyRegexSanitizer sanitizer in _sanitizer.BodyRegexSanitizers)
             {
                 await _proxy.Client.AddBodyRegexSanitizerAsync(sanitizer, RecordingId);
-            }
-
-            foreach (HeaderTransform transform in _sanitizer.HeaderTransforms)
-            {
-                await _proxy.Client.AddHeaderTransformAsync(transform, RecordingId);
             }
         }
 
@@ -343,6 +343,10 @@ namespace Azure.Core.TestFramework
         {
             if (!_useLegacyTransport && Mode != RecordedTestMode.Live)
             {
+                if (currentTransport is ProxyTransport)
+                {
+                    return currentTransport;
+                }
                 return new ProxyTransport(_proxy, currentTransport, this, () => _disableRecording.Value);
             }
             return Mode switch

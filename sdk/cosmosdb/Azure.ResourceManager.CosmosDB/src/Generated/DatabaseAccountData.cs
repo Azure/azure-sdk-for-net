@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> A class representing the DatabaseAccount data model. </summary>
-    public partial class DatabaseAccountData : TrackedResource
+    public partial class DatabaseAccountData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DatabaseAccountData. </summary>
         /// <param name="location"> The location. </param>

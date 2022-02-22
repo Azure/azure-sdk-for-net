@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to create and update Cosmos DB database accounts. </summary>
-    public partial class DatabaseAccountCreateUpdateOptions : TrackedResource
+    public partial class DatabaseAccountCreateUpdateOptions : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DatabaseAccountCreateUpdateOptions. </summary>
         /// <param name="location"> The location. </param>

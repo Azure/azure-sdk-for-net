@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> A class representing the SqlUserDefinedFunction data model. </summary>
-    public partial class SqlUserDefinedFunctionData : TrackedResource
+    public partial class SqlUserDefinedFunctionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SqlUserDefinedFunctionData. </summary>
         /// <param name="location"> The location. </param>

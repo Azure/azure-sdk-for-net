@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary> A class representing the DeletedAccount data model. </summary>
-    public partial class DeletedAccountData : Resource
+    public partial class DeletedAccountData : ResourceData
     {
         /// <summary> Initializes a new instance of DeletedAccountData. </summary>
         public DeletedAccountData()

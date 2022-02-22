@@ -14,6 +14,25 @@ namespace Azure.AI.FormRecognizer
         Basic = 0,
         Natural = 1,
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FormRecognizerAudience : System.IEquatable<Azure.AI.FormRecognizer.FormRecognizerAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FormRecognizerAudience(string value) { throw null; }
+        public static Azure.AI.FormRecognizer.FormRecognizerAudience AzureChina { get { throw null; } }
+        public static Azure.AI.FormRecognizer.FormRecognizerAudience AzureGovernment { get { throw null; } }
+        public static Azure.AI.FormRecognizer.FormRecognizerAudience AzurePublicCloud { get { throw null; } }
+        public bool Equals(Azure.AI.FormRecognizer.FormRecognizerAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.FormRecognizer.FormRecognizerAudience left, Azure.AI.FormRecognizer.FormRecognizerAudience right) { throw null; }
+        public static implicit operator Azure.AI.FormRecognizer.FormRecognizerAudience (string value) { throw null; }
+        public static bool operator !=(Azure.AI.FormRecognizer.FormRecognizerAudience left, Azure.AI.FormRecognizer.FormRecognizerAudience right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class FormRecognizerClient
     {
         protected FormRecognizerClient() { }
@@ -49,6 +68,7 @@ namespace Azure.AI.FormRecognizer
     public partial class FormRecognizerClientOptions : Azure.Core.ClientOptions
     {
         public FormRecognizerClientOptions(Azure.AI.FormRecognizer.FormRecognizerClientOptions.ServiceVersion version = Azure.AI.FormRecognizer.FormRecognizerClientOptions.ServiceVersion.V2_1) { }
+        public Azure.AI.FormRecognizer.FormRecognizerAudience? Audience { get { throw null; } set { } }
         public Azure.AI.FormRecognizer.FormRecognizerClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
@@ -349,6 +369,25 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public System.Collections.Generic.IReadOnlyDictionary<string, float> FieldConfidence { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldSchema> FieldSchema { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DocumentAnalysisAudience : System.IEquatable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DocumentAnalysisAudience(string value) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisAudience AzureChina { get { throw null; } }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisAudience AzureGovernment { get { throw null; } }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisAudience AzurePublicCloud { get { throw null; } }
+        public bool Equals(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisAudience left, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisAudience right) { throw null; }
+        public static implicit operator Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisAudience (string value) { throw null; }
+        public static bool operator !=(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisAudience left, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisAudience right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DocumentAnalysisClient
     {
         protected DocumentAnalysisClient() { }
@@ -364,11 +403,52 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public partial class DocumentAnalysisClientOptions : Azure.Core.ClientOptions
     {
         public DocumentAnalysisClientOptions(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisClientOptions.ServiceVersion version = Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisClientOptions.ServiceVersion.V2022_01_30_preview) { }
+        public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisAudience? Audience { get { throw null; } set { } }
         public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
             V2022_01_30_preview = 1,
         }
+    }
+    public static partial class DocumentAnalysisModelFactory
+    {
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.AccountProperties AccountProperties(int count = 0, int limit = 0) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.AnalyzedDocument AnalyzedDocument(string docType = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentField> fields = null, float confidence = 0f) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.AnalyzeResult AnalyzeResult(string modelId = null, string content = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPage> pages = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentTable> tables = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentKeyValuePair> keyValuePairs = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentEntity> entities = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentStyle> styles = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentLanguage> languages = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.AnalyzedDocument> documents = null) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.BoundingBox BoundingBox(System.Collections.Generic.IEnumerable<System.Drawing.PointF> points = null) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion BoundingRegion(int pageNumber = 0, Azure.AI.FormRecognizer.DocumentAnalysis.BoundingBox boundingBox = default(Azure.AI.FormRecognizer.DocumentAnalysis.BoundingBox)) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.CopyAuthorization CopyAuthorization(string targetResourceRegion = null, string targetModelId = null, string targetModelLocation = null, System.DateTimeOffset expirationDateTime = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.CurrencyValue CurrencyValue(double amount = 0, string symbol = null) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocTypeInfo DocTypeInfo(string description = null, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBuildMode? buildMode = default(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBuildMode?), System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldSchema> fieldSchema = null, System.Collections.Generic.IReadOnlyDictionary<string, float> fieldConfidence = null) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentEntity DocumentEntity(string category = null, string subCategory = null, string content = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null, float confidence = 0f) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldSchema DocumentFieldSchema(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldType type = Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldType.String, string description = null, string example = null, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldSchema items = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldSchema> properties = null) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentField DocumentFieldWithCountryRegionFieldType(string value = null, string content = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null, float? confidence = default(float?)) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentField DocumentFieldWithCurrencyFieldType(Azure.AI.FormRecognizer.DocumentAnalysis.CurrencyValue? value = default(Azure.AI.FormRecognizer.DocumentAnalysis.CurrencyValue?), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null, float? confidence = default(float?)) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentField DocumentFieldWithDateFieldType(System.DateTime? value = default(System.DateTime?), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null, float? confidence = default(float?)) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentField DocumentFieldWithDictionaryFieldType(System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentField> value = null, string content = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null, float? confidence = default(float?)) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentField DocumentFieldWithDoubleFieldType(double? value = default(double?), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null, float? confidence = default(float?)) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentField DocumentFieldWithInt64FieldType(int? value = default(int?), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null, float? confidence = default(float?)) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentField DocumentFieldWithListFieldType(System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentField> value = null, string content = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null, float? confidence = default(float?)) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentField DocumentFieldWithPhoneNumberFieldType(string value = null, string content = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null, float? confidence = default(float?)) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentField DocumentFieldWithSelectionMarkFieldType(Azure.AI.FormRecognizer.DocumentAnalysis.SelectionMarkState? value = default(Azure.AI.FormRecognizer.DocumentAnalysis.SelectionMarkState?), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null, float? confidence = default(float?)) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentField DocumentFieldWithSignatureFieldType(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSignatureType? value = default(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSignatureType?), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null, float? confidence = default(float?)) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentField DocumentFieldWithStringFieldType(string value = null, string content = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null, float? confidence = default(float?)) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentField DocumentFieldWithTimeFieldType(System.TimeSpan? value = default(System.TimeSpan?), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null, float? confidence = default(float?)) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentKeyValueElement DocumentKeyValueElement(string content = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentKeyValuePair DocumentKeyValuePair(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentKeyValueElement key = null, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentKeyValueElement value = null, float confidence = 0f) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentLanguage DocumentLanguage(string languageCode = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null, float confidence = 0f) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentLine DocumentLine(string content = null, Azure.AI.FormRecognizer.DocumentAnalysis.BoundingBox boundingBox = default(Azure.AI.FormRecognizer.DocumentAnalysis.BoundingBox), System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentModel DocumentModel(string modelId = null, string description = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.DocTypeInfo> docTypes = null) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentModelInfo DocumentModelInfo(string modelId = null, string description = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPage DocumentPage(int pageNumber = 0, float angle = 0f, float width = 0f, float height = 0f, Azure.AI.FormRecognizer.DocumentAnalysis.LengthUnit unit = Azure.AI.FormRecognizer.DocumentAnalysis.LengthUnit.Pixel, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentWord> words = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSelectionMark> selectionMarks = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentLine> lines = null) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSelectionMark DocumentSelectionMark(Azure.AI.FormRecognizer.DocumentAnalysis.SelectionMarkState state = Azure.AI.FormRecognizer.DocumentAnalysis.SelectionMarkState.Unselected, Azure.AI.FormRecognizer.DocumentAnalysis.BoundingBox boundingBox = default(Azure.AI.FormRecognizer.DocumentAnalysis.BoundingBox), Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan span = null, float confidence = 0f) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan DocumentSpan(int offset = 0, int length = 0) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentStyle DocumentStyle(bool? isHandwritten = default(bool?), System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null, float confidence = 0f) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentTable DocumentTable(int rowCount = 0, int columnCount = 0, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentTableCell> cells = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentTableCell DocumentTableCell(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentTableCellKind? kind = default(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentTableCellKind?), int rowIndex = 0, int columnIndex = 0, int? rowSpan = default(int?), int? columnSpan = default(int?), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentWord DocumentWord(string content = null, Azure.AI.FormRecognizer.DocumentAnalysis.BoundingBox boundingBox = default(Azure.AI.FormRecognizer.DocumentAnalysis.BoundingBox), Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan span = null, float confidence = 0f) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.ModelOperation ModelOperation(string operationId = null, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentOperationStatus status = Azure.AI.FormRecognizer.DocumentAnalysis.DocumentOperationStatus.NotStarted, int? percentCompleted = default(int?), System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), Azure.AI.FormRecognizer.DocumentAnalysis.DocumentOperationKind kind = default(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentOperationKind), string resourceLocation = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.ResponseError error = null, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentModel result = null) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.ModelOperationInfo ModelOperationInfo(string operationId = null, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentOperationStatus status = Azure.AI.FormRecognizer.DocumentAnalysis.DocumentOperationStatus.NotStarted, int? percentCompleted = default(int?), System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), Azure.AI.FormRecognizer.DocumentAnalysis.DocumentOperationKind kind = default(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentOperationKind), string resourceLocation = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DocumentBuildMode : System.IEquatable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBuildMode>

@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the DataWarehouseUserActivities data model. </summary>
-    public partial class DataWarehouseUserActivitiesData : Resource
+    public partial class DataWarehouseUserActivitiesData : ResourceData
     {
         /// <summary> Initializes a new instance of DataWarehouseUserActivitiesData. </summary>
         public DataWarehouseUserActivitiesData()

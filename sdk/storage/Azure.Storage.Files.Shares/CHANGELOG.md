@@ -1,6 +1,9 @@
 # Release History
 
-## 12.9.0-beta.3 (Unreleased)
+## 12.9.0-beta.4 (Unreleased)
+- Fixed bug where ShareFileClient.StartCopy() and .StartCopyAsync() were not sending the ignoreReadonly parameter correctly.
+
+## 12.9.0-beta.3 (2022-02-07)
 - Added support for service version 2021-04-10.
 - Added support for ShareDirectoryClient.Rename() and ShareFileClient.Rename().
 - Fixed a memory leak in ShareFileClient.UploadAsync().

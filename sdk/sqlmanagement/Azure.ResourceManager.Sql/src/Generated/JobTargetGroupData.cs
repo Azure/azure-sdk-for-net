@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the JobTargetGroup data model. </summary>
-    public partial class JobTargetGroupData : Resource
+    public partial class JobTargetGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of JobTargetGroupData. </summary>
         public JobTargetGroupData()

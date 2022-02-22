@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary> A class representing the VirtualNetwork data model. </summary>
-    public partial class VirtualNetworkData : TrackedResource
+    public partial class VirtualNetworkData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualNetworkData. </summary>
         /// <param name="location"> The location. </param>

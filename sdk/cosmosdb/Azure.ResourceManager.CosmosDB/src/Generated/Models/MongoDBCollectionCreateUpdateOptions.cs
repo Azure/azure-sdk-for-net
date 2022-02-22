@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to create and update Cosmos DB MongoDB collection. </summary>
-    public partial class MongoDBCollectionCreateUpdateOptions : TrackedResource
+    public partial class MongoDBCollectionCreateUpdateOptions : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MongoDBCollectionCreateUpdateOptions. </summary>
         /// <param name="location"> The location. </param>

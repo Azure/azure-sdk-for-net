@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> An ImportExport operation result resource. </summary>
-    public partial class ImportExportOperationResult : Resource
+    public partial class ImportExportOperationResult : ResourceData
     {
         /// <summary> Initializes a new instance of ImportExportOperationResult. </summary>
         public ImportExportOperationResult()

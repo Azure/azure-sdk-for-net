@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ManagedInstanceOperation data model. </summary>
-    public partial class ManagedInstanceOperationData : Resource
+    public partial class ManagedInstanceOperationData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedInstanceOperationData. </summary>
         public ManagedInstanceOperationData()

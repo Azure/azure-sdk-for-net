@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ManagedInstanceAdministrator data model. </summary>
-    public partial class ManagedInstanceAdministratorData : Resource
+    public partial class ManagedInstanceAdministratorData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedInstanceAdministratorData. </summary>
         public ManagedInstanceAdministratorData()

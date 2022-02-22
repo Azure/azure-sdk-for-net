@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ManagedTransparentDataEncryption data model. </summary>
-    public partial class ManagedTransparentDataEncryptionData : Resource
+    public partial class ManagedTransparentDataEncryptionData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedTransparentDataEncryptionData. </summary>
         public ManagedTransparentDataEncryptionData()

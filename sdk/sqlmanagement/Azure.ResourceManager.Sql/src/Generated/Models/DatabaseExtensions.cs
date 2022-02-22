@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> An export managed database operation result resource. </summary>
-    public partial class DatabaseExtensions : Resource
+    public partial class DatabaseExtensions : ResourceData
     {
         /// <summary> Initializes a new instance of DatabaseExtensions. </summary>
         public DatabaseExtensions()

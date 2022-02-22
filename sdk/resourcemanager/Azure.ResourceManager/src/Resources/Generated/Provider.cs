@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.Resources
         internal Provider(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _providerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string providerApiVersion);
+            TryGetApiVersion(ResourceType, out string providerApiVersion);
             _providerRestClient = new ProvidersRestOperations(_providerClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, providerApiVersion);
             _providerResourceTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _providerResourceTypesRestClient = new ProviderResourceTypesRestOperations(_providerResourceTypesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
@@ -95,10 +94,11 @@ namespace Azure.ResourceManager.Resources
             return new FeatureCollection(Client, Id);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// OperationId: Providers_Get
-        /// <summary> Gets the specified resource provider. </summary>
+        /// <summary>
+        /// Gets the specified resource provider.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
+        /// Operation Id: Providers_Get
+        /// </summary>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<Provider>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
@@ -119,10 +119,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// OperationId: Providers_Get
-        /// <summary> Gets the specified resource provider. </summary>
+        /// <summary>
+        /// Gets the specified resource provider.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
+        /// Operation Id: Providers_Get
+        /// </summary>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Provider> Get(string expand = null, CancellationToken cancellationToken = default)
@@ -143,10 +144,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/unregister
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// OperationId: Providers_Unregister
-        /// <summary> Unregisters a subscription from a resource provider. </summary>
+        /// <summary>
+        /// Unregisters a subscription from a resource provider.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/unregister
+        /// Operation Id: Providers_Unregister
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<Provider>> UnregisterAsync(CancellationToken cancellationToken = default)
         {
@@ -164,10 +166,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/unregister
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// OperationId: Providers_Unregister
-        /// <summary> Unregisters a subscription from a resource provider. </summary>
+        /// <summary>
+        /// Unregisters a subscription from a resource provider.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/unregister
+        /// Operation Id: Providers_Unregister
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Provider> Unregister(CancellationToken cancellationToken = default)
         {
@@ -185,10 +188,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/providerPermissions
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// OperationId: Providers_ProviderPermissions
-        /// <summary> Get the provider permissions. </summary>
+        /// <summary>
+        /// Get the provider permissions.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/providerPermissions
+        /// Operation Id: Providers_ProviderPermissions
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProviderPermission" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProviderPermission> ProviderPermissionsAsync(CancellationToken cancellationToken = default)
@@ -211,10 +215,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/providerPermissions
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// OperationId: Providers_ProviderPermissions
-        /// <summary> Get the provider permissions. </summary>
+        /// <summary>
+        /// Get the provider permissions.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/providerPermissions
+        /// Operation Id: Providers_ProviderPermissions
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProviderPermission" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProviderPermission> ProviderPermissions(CancellationToken cancellationToken = default)
@@ -237,10 +242,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/register
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// OperationId: Providers_Register
-        /// <summary> Registers a subscription with a resource provider. </summary>
+        /// <summary>
+        /// Registers a subscription with a resource provider.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/register
+        /// Operation Id: Providers_Register
+        /// </summary>
         /// <param name="properties"> The third party consent for S2S. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<Provider>> RegisterAsync(ProviderRegistrationOptions properties = null, CancellationToken cancellationToken = default)
@@ -259,10 +265,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/register
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// OperationId: Providers_Register
-        /// <summary> Registers a subscription with a resource provider. </summary>
+        /// <summary>
+        /// Registers a subscription with a resource provider.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/register
+        /// Operation Id: Providers_Register
+        /// </summary>
         /// <param name="properties"> The third party consent for S2S. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Provider> Register(ProviderRegistrationOptions properties = null, CancellationToken cancellationToken = default)
@@ -281,10 +288,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/resourceTypes
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// OperationId: ProviderResourceTypes_List
-        /// <summary> List the resource types for a specified resource provider. </summary>
+        /// <summary>
+        /// List the resource types for a specified resource provider.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/resourceTypes
+        /// Operation Id: ProviderResourceTypes_List
+        /// </summary>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProviderResourceType" /> that may take multiple service requests to iterate over. </returns>
@@ -308,10 +316,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/resourceTypes
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// OperationId: ProviderResourceTypes_List
-        /// <summary> List the resource types for a specified resource provider. </summary>
+        /// <summary>
+        /// List the resource types for a specified resource provider.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/resourceTypes
+        /// Operation Id: ProviderResourceTypes_List
+        /// </summary>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProviderResourceType" /> that may take multiple service requests to iterate over. </returns>
