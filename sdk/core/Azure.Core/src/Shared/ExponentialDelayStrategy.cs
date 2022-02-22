@@ -9,11 +9,11 @@ using System.Linq;
 namespace Azure.Core
 {
     /// <summary>
-    /// Implementation of a <see cref="OperationPollingStrategy"/>. Polling interval changes according to
+    /// Implementation of a <see cref="DelayStrategy"/>. Polling interval changes according to
     /// the sequence {1, 1, 1, 2, 4, ...32}.
     /// </summary>
     /// <remarks>Polling interval always follows the given sequence.</remarks>
-    internal class ExponentialPollingStrategy : OperationPollingStrategy
+    internal class ExponentialDelayStrategy : DelayStrategy
     {
         private static readonly TimeSpan[] pollingSequence = new TimeSpan[]
             {
@@ -34,7 +34,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="response">Service response.</param>
         /// <param name="suggestedInterval">Suggested pollingInterval.</param>
-        public override TimeSpan GetNextWait(Response response, TimeSpan? suggestedInterval)
+        public override TimeSpan GetNextDelay(Response response, TimeSpan? suggestedInterval)
         {
             if (_index >= pollingSequence.Length)
             {

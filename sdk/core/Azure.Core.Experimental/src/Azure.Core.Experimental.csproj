@@ -26,9 +26,9 @@
     <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" />
-    <Compile Include="$(AzureCoreSharedSources)OperationPollingStrategy.cs" />
-    <Compile Include="$(AzureCoreSharedSources)ConstantPollingStrategy.cs" />
-    <Compile Include="$(AzureCoreSharedSources)RetryAfterPollingStrategy.cs" />
+    <Compile Include="$(AzureCoreSharedSources)DelayStrategy.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ConstantDelayStrategy.cs" />
+    <Compile Include="$(AzureCoreSharedSources)RetryAfterDelayStrategy.cs" />
     <Compile Include="$(AzureCoreSharedSources)OperationPoller.cs" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" />
     <Compile Include="$(AzureCoreSharedSources)NullableAttributes.cs" />

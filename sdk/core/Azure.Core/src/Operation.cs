@@ -67,7 +67,7 @@ namespace Azure
         /// </remarks>
         public virtual async ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default)
         {
-            OperationPoller poller = new OperationPoller(GetRawResponse());
+            OperationPoller poller = new OperationPoller();
             return await poller.WaitForCompletionResponseAsync(this, null, cancellationToken).ConfigureAwait(false);
         }
 
@@ -86,7 +86,7 @@ namespace Azure
         /// </remarks>
         public virtual async ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default)
         {
-            OperationPoller poller = new OperationPoller(GetRawResponse());
+            OperationPoller poller = new OperationPoller();
             return await poller.WaitForCompletionResponseAsync(this, pollingInterval, cancellationToken).ConfigureAwait(false);
         }
 
@@ -100,7 +100,7 @@ namespace Azure
         /// </remarks>
         public virtual Response WaitForCompletionResponse(CancellationToken cancellationToken = default)
         {
-            OperationPoller poller = new OperationPoller(GetRawResponse());
+            OperationPoller poller = new OperationPoller();
             return poller.WaitForCompletionResponse(this, null, cancellationToken);
         }
 
@@ -119,7 +119,7 @@ namespace Azure
         /// </remarks>
         public virtual Response WaitForCompletionResponse(TimeSpan pollingInterval, CancellationToken cancellationToken = default)
         {
-            OperationPoller poller = new OperationPoller(GetRawResponse());
+            OperationPoller poller = new OperationPoller();
             return poller.WaitForCompletionResponse(this, pollingInterval, cancellationToken);
         }
 

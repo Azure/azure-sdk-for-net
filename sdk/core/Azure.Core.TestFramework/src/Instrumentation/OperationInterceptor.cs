@@ -31,7 +31,7 @@ namespace Azure.Core.TestFramework
                 {
                     CheckArguments(invocation.Arguments);
                     Operation<object> operation = invocation.InvocationTarget as Operation<object>;
-                    OperationPoller poller = new OperationPoller(operation.GetRawResponse());
+                    OperationPoller poller = new OperationPoller();
                     poller.GetType().GetField("_pollingStrategy", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(operation, new ZeroPollingStrategy());
                     invocation.ReturnValue = poller.WaitForCompletionAsync(operation, null, default);
                     //invocation.ReturnValue = InvokeWaitForCompletion(invocation.InvocationTarget, invocation.TargetType, invocation.Arguments.Last());

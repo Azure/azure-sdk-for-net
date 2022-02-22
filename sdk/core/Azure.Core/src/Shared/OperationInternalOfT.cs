@@ -78,7 +78,7 @@ namespace Azure.Core
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
         /// <param name="pollingStrategy">Strategy for each iteration of polling.</param>
-        public OperationInternal(ClientDiagnostics clientDiagnostics, IOperation<T> operation, Response rawResponse, string? operationTypeName = null, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null, OperationPollingStrategy? pollingStrategy = null)
+        public OperationInternal(ClientDiagnostics clientDiagnostics, IOperation<T> operation, Response rawResponse, string? operationTypeName = null, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null, DelayStrategy? pollingStrategy = null)
             : base(clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, pollingStrategy)
         {
             _operation = operation;
@@ -127,7 +127,7 @@ namespace Azure.Core
         }
         /// <summary>
         /// Periodically calls <see cref="OperationInternalBase.UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
-        /// between calls is defined by the passed-in <see cref="OperationPollingStrategy"/>, but it can change based on information returned
+        /// between calls is defined by the passed-in <see cref="DelayStrategy"/>, but it can change based on information returned
         /// from the server. After each service call, a retry-after header may be returned to communicate that there is no reason to poll
         /// for status change until the specified time has passed. In this case, the maximum value between the default polling interval
         /// property and the retry-after header is chosen as the wait interval. Headers supported are: "Retry-After", "retry-after-ms",

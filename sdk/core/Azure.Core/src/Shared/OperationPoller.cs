@@ -14,11 +14,11 @@ namespace Azure.Core
     /// </summary>
     internal class OperationPoller
     {
-        private OperationPollingStrategy _pollingStrategy;
+        private DelayStrategy _pollingStrategy;
 
-        public OperationPoller(Response rawResponse, OperationPollingStrategy? defaultPollingStrategy = null)
+        public OperationPoller(DelayStrategy? fallbackStrategy = null)
         {
-            _pollingStrategy = OperationPollingStrategy.ChoosePollingStrategy(rawResponse, defaultPollingStrategy);
+            _pollingStrategy = DelayStrategy.ChooseDelayStrategy(fallbackStrategy);
         }
 
         public virtual ValueTask<Response> WaitForCompletionResponseAsync(Operation operation, TimeSpan? pollingInterval, CancellationToken cancellationToken)
@@ -35,7 +35,7 @@ namespace Azure.Core
                     return getRawResponse();
                 }
 
-                await Task.Delay(_pollingStrategy.GetNextWait(response, pollingInterval), cancellationToken).ConfigureAwait(false);
+                await Task.Delay(_pollingStrategy.GetNextDelay(response, pollingInterval), cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -53,7 +53,7 @@ namespace Azure.Core
                     return getRawResponse();
                 }
 
-                Thread.Sleep(_pollingStrategy.GetNextWait(response, pollingInterval));
+                Thread.Sleep(_pollingStrategy.GetNextDelay(response, pollingInterval));
             }
         }
 
@@ -71,7 +71,7 @@ namespace Azure.Core
                     return Response.FromValue(value(), getRawResponse());
                 }
 
-                await Task.Delay(_pollingStrategy.GetNextWait(response, pollingInterval), cancellationToken).ConfigureAwait(false);
+                await Task.Delay(_pollingStrategy.GetNextDelay(response, pollingInterval), cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -89,7 +89,7 @@ namespace Azure.Core
                     return Response.FromValue(value(), getRawResponse());
                 }
 
-                Thread.Sleep(_pollingStrategy.GetNextWait(response, pollingInterval));
+                Thread.Sleep(_pollingStrategy.GetNextDelay(response, pollingInterval));
             }
         }
 

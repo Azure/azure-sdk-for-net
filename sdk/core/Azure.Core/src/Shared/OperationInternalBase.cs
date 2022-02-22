@@ -17,15 +17,15 @@ namespace Azure.Core
         private readonly ClientDiagnostics _diagnostics;
         private readonly string _updateStatusScopeName;
         private readonly IReadOnlyDictionary<string, string>? _scopeAttributes;
-        private readonly OperationPoller _operationPoller;
+        private readonly DelayStrategy? _fallbackStrategy;
 
-        protected OperationInternalBase(ClientDiagnostics clientDiagnostics, Response rawResponse, string operationTypeName, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null, OperationPollingStrategy? customPollingStrategy = null)
+        protected OperationInternalBase(ClientDiagnostics clientDiagnostics, Response rawResponse, string operationTypeName, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null, DelayStrategy? fallbackStrategy = null)
         {
             _diagnostics = clientDiagnostics;
             _updateStatusScopeName = $"{operationTypeName}.UpdateStatus";
             _scopeAttributes = scopeAttributes?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             RawResponse = rawResponse;
-            _operationPoller = new OperationPoller(rawResponse, customPollingStrategy);
+            _fallbackStrategy = fallbackStrategy;
         }
 
         /// <summary>
@@ -91,9 +91,9 @@ namespace Azure.Core
 
         /// <summary>
         /// Periodically calls <see cref="UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
-        /// between calls is defined by the passed-in <see cref="OperationPollingStrategy"/>, but it can change based on information returned
+        /// between calls is defined by the passed-in <see cref="DelayStrategy"/>, but it can change based on information returned
         /// from the server. After each service call, a retry-after header may be returned to communicate that there is no reason to poll
-        /// for status change until the specified time has passed. In this case, the maximum value between the <see cref="ConstantPollingStrategy.DefaultPollingInterval"/>
+        /// for status change until the specified time has passed. In this case, the maximum value between the <see cref="ConstantDelayStrategy.DefaultPollingInterval"/>
         /// property and the retry-after header is chosen as the wait interval. Headers supported are: "Retry-After", "retry-after-ms",
         /// and "x-ms-retry-after-ms".
         /// <example>Usage example:
@@ -106,8 +106,11 @@ namespace Azure.Core
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
-        public virtual async ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken) =>
-            await _operationPoller.WaitForCompletionResponseAsync(UpdateStatusAsync, () => HasCompleted, () => RawResponse, null, cancellationToken).ConfigureAwait(false);
+        public virtual async ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken)
+        {
+            OperationPoller poller = new OperationPoller(_fallbackStrategy);
+            return await poller.WaitForCompletionResponseAsync(UpdateStatusAsync, () => HasCompleted, () => RawResponse, null, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Periodically calls <see cref="UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
@@ -127,8 +130,11 @@ namespace Azure.Core
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
-        public virtual async ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
-            await _operationPoller.WaitForCompletionResponseAsync(UpdateStatusAsync, () => HasCompleted, () => RawResponse, pollingInterval, cancellationToken).ConfigureAwait(false);
+        public virtual async ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
+        {
+            OperationPoller poller = new OperationPoller(_fallbackStrategy);
+            return await poller.WaitForCompletionResponseAsync(UpdateStatusAsync, () => HasCompleted, () => RawResponse, pollingInterval, cancellationToken).ConfigureAwait(false);
+        }
 
         private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {

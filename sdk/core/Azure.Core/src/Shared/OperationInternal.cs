@@ -74,7 +74,7 @@ namespace Azure.Core
             Response rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            OperationPollingStrategy? pollingStrategy = null)
+            DelayStrategy? pollingStrategy = null)
             :base(clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, pollingStrategy)
         {
             _operation = operation;

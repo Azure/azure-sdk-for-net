@@ -18,15 +18,15 @@ namespace Azure.Core.Tests
             var intervals = new int[] { 1, 1, 1, 2, 4, 8, 16, 32 };
             var random = new Random();
 
-            var strategy = new ExponentialPollingStrategy();
+            var strategy = new ExponentialDelayStrategy();
             foreach (var interval in intervals)
             {
-                Assert.AreEqual(interval, strategy.GetNextWait(mockDefaultResponse(retryAfter), TimeSpan.FromSeconds(random.Next(0, 64))).TotalSeconds);
+                Assert.AreEqual(interval, strategy.GetNextDelay(mockDefaultResponse(retryAfter), TimeSpan.FromSeconds(random.Next(0, 64))).TotalSeconds);
             }
 
             for (int i = 0; i < 6; i++)
             {
-                Assert.AreEqual(32, strategy.GetNextWait(mockDefaultResponse(retryAfter), TimeSpan.FromSeconds(random.Next(0, 64))).TotalSeconds);
+                Assert.AreEqual(32, strategy.GetNextDelay(mockDefaultResponse(retryAfter), TimeSpan.FromSeconds(random.Next(0, 64))).TotalSeconds);
             }
         }
 
@@ -36,11 +36,11 @@ namespace Azure.Core.Tests
             [Values(1, 2, 3)] int initial,
             [Values(1, 2, 3)] int suggest)
         {
-            var strategy = new ConstantPollingStrategy();
+            var strategy = new ConstantDelayStrategy();
 
             for (int i = 0; i < 6; i++)
             {
-                Assert.AreEqual(Math.Max(initial, suggest), strategy.GetNextWait(mockDefaultResponse(retryAfter), TimeSpan.FromSeconds(suggest)).TotalSeconds);
+                Assert.AreEqual(Math.Max(initial, suggest), strategy.GetNextDelay(mockDefaultResponse(retryAfter), TimeSpan.FromSeconds(suggest)).TotalSeconds);
             }
         }
 
@@ -62,9 +62,9 @@ namespace Azure.Core.Tests
             [Values(1, 2, 3)] int retryAfter,
             [Values(1, 2, 3)] int suggest)
         {
-            var strategy = new RetryAfterPollingStrategy(new MockResponse(200));
+            var strategy = new RetryAfterDelayStrategy(new ConstantDelayStrategy());
 
-            Assert.AreEqual(Math.Max(retryAfter, suggest), strategy.GetNextWait(mockWithRetryAfter(retryAfter), TimeSpan.FromSeconds(suggest)).TotalSeconds);
+            Assert.AreEqual(Math.Max(retryAfter, suggest), strategy.GetNextDelay(mockWithRetryAfter(retryAfter), TimeSpan.FromSeconds(suggest)).TotalSeconds);
         }
 
         [Test]
@@ -72,9 +72,9 @@ namespace Azure.Core.Tests
             [Values(1, 2, 3)] int initial,
             [Values(1, 2, 3)] int suggest)
         {
-            var strategy = new RetryAfterPollingStrategy(new MockResponse(200));
+            var strategy = new RetryAfterDelayStrategy(new ConstantDelayStrategy());
 
-            Assert.AreEqual(Math.Max(initial, suggest), strategy.GetNextWait(defaultMockResponse, TimeSpan.FromSeconds(suggest)).TotalSeconds);
+            Assert.AreEqual(Math.Max(initial, suggest), strategy.GetNextDelay(defaultMockResponse, TimeSpan.FromSeconds(suggest)).TotalSeconds);
         }
 
         private static Response mockDefaultResponse(bool retryAfter)

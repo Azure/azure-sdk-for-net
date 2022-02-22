@@ -8,25 +8,25 @@ using System;
 namespace Azure.Core
 {
     /// <summary>
-    /// Implementation of a <see cref="OperationPollingStrategy"/> of which the interval is from
+    /// Implementation of a <see cref="DelayStrategy"/> of which the interval is from
     /// retry-after header of service response.
     /// </summary>
-    internal class RetryAfterPollingStrategy : OperationPollingStrategy
+    internal class RetryAfterDelayStrategy : DelayStrategy
     {
         protected const string RetryAfterHeaderName = "Retry-After";
         protected const string RetryAfterMsHeaderName = "retry-after-ms";
         protected const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
 
-        private TimeSpan lastRetryAfter { get; set; }
+        private DelayStrategy _fallbackStrategy;
 
         /// <summary>
-        /// Create a <see cref="RetryAfterPollingStrategy"/> with a default retry-after value which normally
+        /// Create a <see cref="RetryAfterDelayStrategy"/> with a default retry-after value which normally
         /// comes from the initial response of an LRO operation.
         /// </summary>
-        /// <param name="originalResponse"> Original response for the LRO. </param>
-        public RetryAfterPollingStrategy(Response originalResponse)
+        /// <param name="fallbackStrategy"> Fallback strategy if retry after is not present. </param>
+        public RetryAfterDelayStrategy(DelayStrategy fallbackStrategy)
         {
-            lastRetryAfter = GetRetryAfterInterval(originalResponse);
+            _fallbackStrategy = fallbackStrategy;
         }
 
         /// <summary>
@@ -36,13 +36,7 @@ namespace Azure.Core
         /// <param name="response">Service response which might carry retry-after header.</param>
         /// <param name="suggestedInterval">Suggested pollingInterval.</param>
         /// <returns>Max value of retry-after header and <paramref name="suggestedInterval"/>.</returns>
-        public override TimeSpan GetNextWait(Response response, TimeSpan? suggestedInterval)
-        {
-            lastRetryAfter = GetRetryAfterInterval(response);
-            return lastRetryAfter;
-        }
-
-        private TimeSpan GetRetryAfterInterval(Response response)
+        public override TimeSpan GetNextDelay(Response response, TimeSpan? suggestedInterval)
         {
             if (response.Headers.TryGetValue(RetryAfterMsHeaderName, out string? retryAfterValue) ||
                 response.Headers.TryGetValue(XRetryAfterMsHeaderName, out retryAfterValue))
@@ -60,15 +54,7 @@ namespace Azure.Core
                 }
             }
 
-            return lastRetryAfter;
-        }
-
-        internal static bool IsRetryAfterPresent(Response response)
-        {
-            return response is not null &&
-                (response.Headers.TryGetValue(RetryAfterMsHeaderName, out string? retryAfterValue) ||
-                response.Headers.TryGetValue(XRetryAfterMsHeaderName, out retryAfterValue) ||
-                response.Headers.TryGetValue(RetryAfterHeaderName, out retryAfterValue));
+            return _fallbackStrategy.GetNextDelay(response, suggestedInterval);
         }
     }
 }
