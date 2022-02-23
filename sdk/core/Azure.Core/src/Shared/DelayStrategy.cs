@@ -12,18 +12,6 @@ namespace Azure.Core
     /// </summary>
     internal abstract class DelayStrategy
     {
-        private static readonly DelayStrategy DefaultDelayStrategy = new ConstantDelayStrategy();
-
-        /// <summary>
-        /// Factory method to choose a proper <see cref="DelayStrategy"/>  Currently it will always give you a <see cref="RetryAfterDelayStrategy"/>.
-        /// If retry after is not present it will fallback to the strategy passed in or the default <see cref="ConstantDelayStrategy"/>.
-        /// </summary>
-        /// <param name="fallbackStrategy"> Default <see cref="DelayStrategy"/>. </param>
-        public static DelayStrategy ChooseDelayStrategy(DelayStrategy? fallbackStrategy)
-        {
-            return new RetryAfterDelayStrategy(fallbackStrategy ?? DefaultDelayStrategy);
-        }
-
         /// <summary>
         /// Get the interval of next delay iteration.
         /// </summary>

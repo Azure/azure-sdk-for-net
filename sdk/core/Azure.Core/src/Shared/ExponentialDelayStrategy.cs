@@ -15,17 +15,18 @@ namespace Azure.Core
     /// <remarks>Polling interval always follows the given sequence.</remarks>
     internal class ExponentialDelayStrategy : DelayStrategy
     {
-        private static readonly TimeSpan[] pollingSequence = new TimeSpan[]
-            {
-                TimeSpan.FromSeconds(1),
-                TimeSpan.FromSeconds(1),
-                TimeSpan.FromSeconds(1),
-                TimeSpan.FromSeconds(2),
-                TimeSpan.FromSeconds(4),
-                TimeSpan.FromSeconds(8),
-                TimeSpan.FromSeconds(16),
-                TimeSpan.FromSeconds(32)
-            };
+        private static readonly TimeSpan[] _pollingSequence = new TimeSpan[]
+        {
+            TimeSpan.FromSeconds(1),
+            TimeSpan.FromSeconds(1),
+            TimeSpan.FromSeconds(1),
+            TimeSpan.FromSeconds(2),
+            TimeSpan.FromSeconds(4),
+            TimeSpan.FromSeconds(8),
+            TimeSpan.FromSeconds(16),
+            TimeSpan.FromSeconds(32)
+        };
+        private static readonly TimeSpan _maxDelay = _pollingSequence[_pollingSequence.Length - 1];
 
         private int _index;
 
@@ -36,11 +37,11 @@ namespace Azure.Core
         /// <param name="suggestedInterval">Suggested pollingInterval.</param>
         public override TimeSpan GetNextDelay(Response response, TimeSpan? suggestedInterval)
         {
-            if (_index >= pollingSequence.Length)
+            if (_index >= _pollingSequence.Length)
             {
-                return pollingSequence.Last();
+                return _maxDelay;
             }
-            return pollingSequence[_index++];
+            return _pollingSequence[_index++];
         }
     }
 }

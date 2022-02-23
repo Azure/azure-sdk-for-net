@@ -16,13 +16,6 @@ namespace Azure.Core
         internal static readonly TimeSpan DefaultPollingInterval = TimeSpan.FromSeconds(1);
 
         /// <summary>
-        /// Create a <see cref="ConstantDelayStrategy"/> with 1 second polling interval.
-        /// </summary>
-        public ConstantDelayStrategy()
-        {
-        }
-
-        /// <summary>
         /// Get the polling interval from the max value of <see cref="DefaultPollingInterval"/> and <paramref name="suggestedInterval"/>.
         /// </summary>
         /// <param name="response">Service response.</param>

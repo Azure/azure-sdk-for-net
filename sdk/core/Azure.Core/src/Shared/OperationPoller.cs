@@ -24,7 +24,7 @@ namespace Azure.Core
 
         public OperationPoller(DelayStrategy? fallbackStrategy = null)
         {
-            _delayStrategy = DelayStrategy.ChooseDelayStrategy(fallbackStrategy);
+            _delayStrategy = new RetryAfterDelayStrategy(fallbackStrategy ?? new ConstantDelayStrategy());
         }
 
         public virtual ValueTask<Response> WaitForCompletionResponseAsync(Operation operation, TimeSpan? suggestedInterval, CancellationToken cancellationToken)
