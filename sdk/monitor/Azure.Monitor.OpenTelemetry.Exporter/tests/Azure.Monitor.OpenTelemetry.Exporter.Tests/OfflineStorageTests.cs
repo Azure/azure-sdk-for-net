@@ -63,7 +63,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Empty(transmitter._storage.GetBlobs());
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/26783")]
         public void FailureResponseCode500()
         {
             var activity = CreateActivity("TestActivity");
