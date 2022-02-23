@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A class representing collection of CdnOrigin and their operations over its parent. </summary>
     public partial class CdnOriginCollection : ArmCollection, IEnumerable<CdnOrigin>, IAsyncEnumerable<CdnOrigin>
     {
-        private readonly ClientDiagnostics _cdnOriginOriginsClientDiagnostics;
-        private readonly OriginsRestOperations _cdnOriginOriginsRestClient;
+        private readonly ClientDiagnostics _cdnOriginClientDiagnostics;
+        private readonly CdnOriginsRestOperations _cdnOriginRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="CdnOriginCollection"/> class for mocking. </summary>
         protected CdnOriginCollection()
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CdnOriginCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cdnOriginOriginsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnOrigin.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(CdnOrigin.ResourceType, out string cdnOriginOriginsApiVersion);
-            _cdnOriginOriginsRestClient = new OriginsRestOperations(_cdnOriginOriginsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cdnOriginOriginsApiVersion);
+            _cdnOriginClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnOrigin.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(CdnOrigin.ResourceType, out string cdnOriginApiVersion);
+            _cdnOriginRestClient = new CdnOriginsRestOperations(_cdnOriginClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cdnOriginApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Creates a new origin within the specified endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins/{originName}
-        /// Operation Id: Origins_Create
+        /// Operation Id: CdnOrigins_Create
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="originName"> Name of the origin that is unique within the endpoint. </param>
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
             Argument.AssertNotNull(origin, nameof(origin));
 
-            using var scope = _cdnOriginOriginsClientDiagnostics.CreateScope("CdnOriginCollection.CreateOrUpdate");
+            using var scope = _cdnOriginClientDiagnostics.CreateScope("CdnOriginCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _cdnOriginOriginsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CdnOrigin>(new CdnOriginOperationSource(Client), _cdnOriginOriginsClientDiagnostics, Pipeline, _cdnOriginOriginsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin).Request, response, OperationFinalStateVia.Location);
+                var response = await _cdnOriginRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<CdnOrigin>(new CdnOriginOperationSource(Client), _cdnOriginClientDiagnostics, Pipeline, _cdnOriginRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Creates a new origin within the specified endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins/{originName}
-        /// Operation Id: Origins_Create
+        /// Operation Id: CdnOrigins_Create
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="originName"> Name of the origin that is unique within the endpoint. </param>
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
             Argument.AssertNotNull(origin, nameof(origin));
 
-            using var scope = _cdnOriginOriginsClientDiagnostics.CreateScope("CdnOriginCollection.CreateOrUpdate");
+            using var scope = _cdnOriginClientDiagnostics.CreateScope("CdnOriginCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _cdnOriginOriginsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin, cancellationToken);
-                var operation = new CdnArmOperation<CdnOrigin>(new CdnOriginOperationSource(Client), _cdnOriginOriginsClientDiagnostics, Pipeline, _cdnOriginOriginsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin).Request, response, OperationFinalStateVia.Location);
+                var response = _cdnOriginRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin, cancellationToken);
+                var operation = new CdnArmOperation<CdnOrigin>(new CdnOriginOperationSource(Client), _cdnOriginClientDiagnostics, Pipeline, _cdnOriginRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Gets an existing origin within an endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins/{originName}
-        /// Operation Id: Origins_Get
+        /// Operation Id: CdnOrigins_Get
         /// </summary>
         /// <param name="originName"> Name of the origin which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,13 +129,13 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 
-            using var scope = _cdnOriginOriginsClientDiagnostics.CreateScope("CdnOriginCollection.Get");
+            using var scope = _cdnOriginClientDiagnostics.CreateScope("CdnOriginCollection.Get");
             scope.Start();
             try
             {
-                var response = await _cdnOriginOriginsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken).ConfigureAwait(false);
+                var response = await _cdnOriginRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _cdnOriginOriginsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw await _cdnOriginClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new CdnOrigin(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Gets an existing origin within an endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins/{originName}
-        /// Operation Id: Origins_Get
+        /// Operation Id: CdnOrigins_Get
         /// </summary>
         /// <param name="originName"> Name of the origin which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -158,13 +158,13 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 
-            using var scope = _cdnOriginOriginsClientDiagnostics.CreateScope("CdnOriginCollection.Get");
+            using var scope = _cdnOriginClientDiagnostics.CreateScope("CdnOriginCollection.Get");
             scope.Start();
             try
             {
-                var response = _cdnOriginOriginsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken);
+                var response = _cdnOriginRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken);
                 if (response.Value == null)
-                    throw _cdnOriginOriginsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw _cdnOriginClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CdnOrigin(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Lists all of the existing origins within an endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins
-        /// Operation Id: Origins_ListByEndpoint
+        /// Operation Id: CdnOrigins_ListByEndpoint
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CdnOrigin" /> that may take multiple service requests to iterate over. </returns>
@@ -185,11 +185,11 @@ namespace Azure.ResourceManager.Cdn
         {
             async Task<Page<CdnOrigin>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _cdnOriginOriginsClientDiagnostics.CreateScope("CdnOriginCollection.GetAll");
+                using var scope = _cdnOriginClientDiagnostics.CreateScope("CdnOriginCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _cdnOriginOriginsRestClient.ListByEndpointAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cdnOriginRestClient.ListByEndpointAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CdnOrigin(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -200,11 +200,11 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<CdnOrigin>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _cdnOriginOriginsClientDiagnostics.CreateScope("CdnOriginCollection.GetAll");
+                using var scope = _cdnOriginClientDiagnostics.CreateScope("CdnOriginCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _cdnOriginOriginsRestClient.ListByEndpointNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cdnOriginRestClient.ListByEndpointNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CdnOrigin(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Lists all of the existing origins within an endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins
-        /// Operation Id: Origins_ListByEndpoint
+        /// Operation Id: CdnOrigins_ListByEndpoint
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CdnOrigin" /> that may take multiple service requests to iterate over. </returns>
@@ -227,11 +227,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Page<CdnOrigin> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _cdnOriginOriginsClientDiagnostics.CreateScope("CdnOriginCollection.GetAll");
+                using var scope = _cdnOriginClientDiagnostics.CreateScope("CdnOriginCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _cdnOriginOriginsRestClient.ListByEndpoint(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _cdnOriginRestClient.ListByEndpoint(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CdnOrigin(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -242,11 +242,11 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<CdnOrigin> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _cdnOriginOriginsClientDiagnostics.CreateScope("CdnOriginCollection.GetAll");
+                using var scope = _cdnOriginClientDiagnostics.CreateScope("CdnOriginCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _cdnOriginOriginsRestClient.ListByEndpointNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _cdnOriginRestClient.ListByEndpointNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CdnOrigin(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins/{originName}
-        /// Operation Id: Origins_Get
+        /// Operation Id: CdnOrigins_Get
         /// </summary>
         /// <param name="originName"> Name of the origin which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 
-            using var scope = _cdnOriginOriginsClientDiagnostics.CreateScope("CdnOriginCollection.Exists");
+            using var scope = _cdnOriginClientDiagnostics.CreateScope("CdnOriginCollection.Exists");
             scope.Start();
             try
             {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins/{originName}
-        /// Operation Id: Origins_Get
+        /// Operation Id: CdnOrigins_Get
         /// </summary>
         /// <param name="originName"> Name of the origin which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 
-            using var scope = _cdnOriginOriginsClientDiagnostics.CreateScope("CdnOriginCollection.Exists");
+            using var scope = _cdnOriginClientDiagnostics.CreateScope("CdnOriginCollection.Exists");
             scope.Start();
             try
             {
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Tries to get details for this resource from the service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins/{originName}
-        /// Operation Id: Origins_Get
+        /// Operation Id: CdnOrigins_Get
         /// </summary>
         /// <param name="originName"> Name of the origin which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -325,11 +325,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 
-            using var scope = _cdnOriginOriginsClientDiagnostics.CreateScope("CdnOriginCollection.GetIfExists");
+            using var scope = _cdnOriginClientDiagnostics.CreateScope("CdnOriginCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _cdnOriginOriginsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cdnOriginRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<CdnOrigin>(null, response.GetRawResponse());
                 return Response.FromValue(new CdnOrigin(Client, response.Value), response.GetRawResponse());
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Tries to get details for this resource from the service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins/{originName}
-        /// Operation Id: Origins_Get
+        /// Operation Id: CdnOrigins_Get
         /// </summary>
         /// <param name="originName"> Name of the origin which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -354,11 +354,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 
-            using var scope = _cdnOriginOriginsClientDiagnostics.CreateScope("CdnOriginCollection.GetIfExists");
+            using var scope = _cdnOriginClientDiagnostics.CreateScope("CdnOriginCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _cdnOriginOriginsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken: cancellationToken);
+                var response = _cdnOriginRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<CdnOrigin>(null, response.GetRawResponse());
                 return Response.FromValue(new CdnOrigin(Client, response.Value), response.GetRawResponse());

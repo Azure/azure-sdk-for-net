@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A class representing collection of CdnEndpoint and their operations over its parent. </summary>
     public partial class CdnEndpointCollection : ArmCollection, IEnumerable<CdnEndpoint>, IAsyncEnumerable<CdnEndpoint>
     {
-        private readonly ClientDiagnostics _cdnEndpointEndpointsClientDiagnostics;
-        private readonly EndpointsRestOperations _cdnEndpointEndpointsRestClient;
+        private readonly ClientDiagnostics _cdnEndpointClientDiagnostics;
+        private readonly CdnEndpointsRestOperations _cdnEndpointRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="CdnEndpointCollection"/> class for mocking. </summary>
         protected CdnEndpointCollection()
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CdnEndpointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cdnEndpointEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnEndpoint.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(CdnEndpoint.ResourceType, out string cdnEndpointEndpointsApiVersion);
-            _cdnEndpointEndpointsRestClient = new EndpointsRestOperations(_cdnEndpointEndpointsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cdnEndpointEndpointsApiVersion);
+            _cdnEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnEndpoint.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(CdnEndpoint.ResourceType, out string cdnEndpointApiVersion);
+            _cdnEndpointRestClient = new CdnEndpointsRestOperations(_cdnEndpointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cdnEndpointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Creates a new CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Create
+        /// Operation Id: CdnEndpoints_Create
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNull(endpointInput, nameof(endpointInput));
 
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointCollection.CreateOrUpdate");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _cdnEndpointEndpointsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, endpointInput, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, endpointInput).Request, response, OperationFinalStateVia.Location);
+                var response = await _cdnEndpointRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, endpointInput, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, endpointInput).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Creates a new CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Create
+        /// Operation Id: CdnEndpoints_Create
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNull(endpointInput, nameof(endpointInput));
 
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointCollection.CreateOrUpdate");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _cdnEndpointEndpointsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, endpointInput, cancellationToken);
-                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, endpointInput).Request, response, OperationFinalStateVia.Location);
+                var response = _cdnEndpointRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, endpointInput, cancellationToken);
+                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, endpointInput).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Gets an existing CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Get
+        /// Operation Id: CdnEndpoints_Get
         /// </summary>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,13 +129,13 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointCollection.Get");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.Get");
             scope.Start();
             try
             {
-                var response = await _cdnEndpointEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken).ConfigureAwait(false);
+                var response = await _cdnEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _cdnEndpointEndpointsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw await _cdnEndpointClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new CdnEndpoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Gets an existing CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Get
+        /// Operation Id: CdnEndpoints_Get
         /// </summary>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -158,13 +158,13 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointCollection.Get");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.Get");
             scope.Start();
             try
             {
-                var response = _cdnEndpointEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken);
+                var response = _cdnEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken);
                 if (response.Value == null)
-                    throw _cdnEndpointEndpointsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw _cdnEndpointClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CdnEndpoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Lists existing CDN endpoints.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints
-        /// Operation Id: Endpoints_ListByProfile
+        /// Operation Id: CdnEndpoints_ListByProfile
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CdnEndpoint" /> that may take multiple service requests to iterate over. </returns>
@@ -185,11 +185,11 @@ namespace Azure.ResourceManager.Cdn
         {
             async Task<Page<CdnEndpoint>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointCollection.GetAll");
+                using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _cdnEndpointEndpointsRestClient.ListByProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cdnEndpointRestClient.ListByProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CdnEndpoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -200,11 +200,11 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<CdnEndpoint>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointCollection.GetAll");
+                using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _cdnEndpointEndpointsRestClient.ListByProfileNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cdnEndpointRestClient.ListByProfileNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CdnEndpoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Lists existing CDN endpoints.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints
-        /// Operation Id: Endpoints_ListByProfile
+        /// Operation Id: CdnEndpoints_ListByProfile
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CdnEndpoint" /> that may take multiple service requests to iterate over. </returns>
@@ -227,11 +227,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Page<CdnEndpoint> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointCollection.GetAll");
+                using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _cdnEndpointEndpointsRestClient.ListByProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _cdnEndpointRestClient.ListByProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CdnEndpoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -242,11 +242,11 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<CdnEndpoint> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointCollection.GetAll");
+                using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _cdnEndpointEndpointsRestClient.ListByProfileNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _cdnEndpointRestClient.ListByProfileNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CdnEndpoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Get
+        /// Operation Id: CdnEndpoints_Get
         /// </summary>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointCollection.Exists");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.Exists");
             scope.Start();
             try
             {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Get
+        /// Operation Id: CdnEndpoints_Get
         /// </summary>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointCollection.Exists");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.Exists");
             scope.Start();
             try
             {
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Tries to get details for this resource from the service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Get
+        /// Operation Id: CdnEndpoints_Get
         /// </summary>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -325,11 +325,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointCollection.GetIfExists");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _cdnEndpointEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cdnEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<CdnEndpoint>(null, response.GetRawResponse());
                 return Response.FromValue(new CdnEndpoint(Client, response.Value), response.GetRawResponse());
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Tries to get details for this resource from the service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Get
+        /// Operation Id: CdnEndpoints_Get
         /// </summary>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -354,11 +354,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointCollection.GetIfExists");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _cdnEndpointEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken);
+                var response = _cdnEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<CdnEndpoint>(null, response.GetRawResponse());
                 return Response.FromValue(new CdnEndpoint(Client, response.Value), response.GetRawResponse());

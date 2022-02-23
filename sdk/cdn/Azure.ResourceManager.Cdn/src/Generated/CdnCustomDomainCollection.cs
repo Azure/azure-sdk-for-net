@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A class representing collection of CdnCustomDomain and their operations over its parent. </summary>
     public partial class CdnCustomDomainCollection : ArmCollection, IEnumerable<CdnCustomDomain>, IAsyncEnumerable<CdnCustomDomain>
     {
-        private readonly ClientDiagnostics _cdnCustomDomainCustomDomainsClientDiagnostics;
-        private readonly CustomDomainsRestOperations _cdnCustomDomainCustomDomainsRestClient;
+        private readonly ClientDiagnostics _cdnCustomDomainClientDiagnostics;
+        private readonly CdnCustomDomainsRestOperations _cdnCustomDomainRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="CdnCustomDomainCollection"/> class for mocking. </summary>
         protected CdnCustomDomainCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CdnCustomDomainCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cdnCustomDomainCustomDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnCustomDomain.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(CdnCustomDomain.ResourceType, out string cdnCustomDomainCustomDomainsApiVersion);
-            _cdnCustomDomainCustomDomainsRestClient = new CustomDomainsRestOperations(_cdnCustomDomainCustomDomainsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cdnCustomDomainCustomDomainsApiVersion);
+            _cdnCustomDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnCustomDomain.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(CdnCustomDomain.ResourceType, out string cdnCustomDomainApiVersion);
+            _cdnCustomDomainRestClient = new CdnCustomDomainsRestOperations(_cdnCustomDomainClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cdnCustomDomainApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Creates a new custom domain within an endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}
-        /// Operation Id: CustomDomains_Create
+        /// Operation Id: CdnCustomDomains_Create
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
             Argument.AssertNotNull(customDomainProperties, nameof(customDomainProperties));
 
-            using var scope = _cdnCustomDomainCustomDomainsClientDiagnostics.CreateScope("CdnCustomDomainCollection.CreateOrUpdate");
+            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _cdnCustomDomainCustomDomainsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CdnCustomDomain>(new CdnCustomDomainOperationSource(Client), _cdnCustomDomainCustomDomainsClientDiagnostics, Pipeline, _cdnCustomDomainCustomDomainsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties).Request, response, OperationFinalStateVia.Location);
+                var response = await _cdnCustomDomainRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<CdnCustomDomain>(new CdnCustomDomainOperationSource(Client), _cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Creates a new custom domain within an endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}
-        /// Operation Id: CustomDomains_Create
+        /// Operation Id: CdnCustomDomains_Create
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
             Argument.AssertNotNull(customDomainProperties, nameof(customDomainProperties));
 
-            using var scope = _cdnCustomDomainCustomDomainsClientDiagnostics.CreateScope("CdnCustomDomainCollection.CreateOrUpdate");
+            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _cdnCustomDomainCustomDomainsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties, cancellationToken);
-                var operation = new CdnArmOperation<CdnCustomDomain>(new CdnCustomDomainOperationSource(Client), _cdnCustomDomainCustomDomainsClientDiagnostics, Pipeline, _cdnCustomDomainCustomDomainsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties).Request, response, OperationFinalStateVia.Location);
+                var response = _cdnCustomDomainRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties, cancellationToken);
+                var operation = new CdnArmOperation<CdnCustomDomain>(new CdnCustomDomainOperationSource(Client), _cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Gets an existing custom domain within an endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}
-        /// Operation Id: CustomDomains_Get
+        /// Operation Id: CdnCustomDomains_Get
         /// </summary>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,13 +130,13 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var scope = _cdnCustomDomainCustomDomainsClientDiagnostics.CreateScope("CdnCustomDomainCollection.Get");
+            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.Get");
             scope.Start();
             try
             {
-                var response = await _cdnCustomDomainCustomDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken).ConfigureAwait(false);
+                var response = await _cdnCustomDomainRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _cdnCustomDomainCustomDomainsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw await _cdnCustomDomainClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new CdnCustomDomain(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Gets an existing custom domain within an endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}
-        /// Operation Id: CustomDomains_Get
+        /// Operation Id: CdnCustomDomains_Get
         /// </summary>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var scope = _cdnCustomDomainCustomDomainsClientDiagnostics.CreateScope("CdnCustomDomainCollection.Get");
+            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.Get");
             scope.Start();
             try
             {
-                var response = _cdnCustomDomainCustomDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken);
+                var response = _cdnCustomDomainRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken);
                 if (response.Value == null)
-                    throw _cdnCustomDomainCustomDomainsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw _cdnCustomDomainClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CdnCustomDomain(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Lists all of the existing custom domains within an endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains
-        /// Operation Id: CustomDomains_ListByEndpoint
+        /// Operation Id: CdnCustomDomains_ListByEndpoint
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CdnCustomDomain" /> that may take multiple service requests to iterate over. </returns>
@@ -186,11 +186,11 @@ namespace Azure.ResourceManager.Cdn
         {
             async Task<Page<CdnCustomDomain>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _cdnCustomDomainCustomDomainsClientDiagnostics.CreateScope("CdnCustomDomainCollection.GetAll");
+                using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _cdnCustomDomainCustomDomainsRestClient.ListByEndpointAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cdnCustomDomainRestClient.ListByEndpointAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CdnCustomDomain(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -201,11 +201,11 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<CdnCustomDomain>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _cdnCustomDomainCustomDomainsClientDiagnostics.CreateScope("CdnCustomDomainCollection.GetAll");
+                using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _cdnCustomDomainCustomDomainsRestClient.ListByEndpointNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cdnCustomDomainRestClient.ListByEndpointNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CdnCustomDomain(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Lists all of the existing custom domains within an endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains
-        /// Operation Id: CustomDomains_ListByEndpoint
+        /// Operation Id: CdnCustomDomains_ListByEndpoint
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CdnCustomDomain" /> that may take multiple service requests to iterate over. </returns>
@@ -228,11 +228,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Page<CdnCustomDomain> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _cdnCustomDomainCustomDomainsClientDiagnostics.CreateScope("CdnCustomDomainCollection.GetAll");
+                using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _cdnCustomDomainCustomDomainsRestClient.ListByEndpoint(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _cdnCustomDomainRestClient.ListByEndpoint(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CdnCustomDomain(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -243,11 +243,11 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<CdnCustomDomain> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _cdnCustomDomainCustomDomainsClientDiagnostics.CreateScope("CdnCustomDomainCollection.GetAll");
+                using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _cdnCustomDomainCustomDomainsRestClient.ListByEndpointNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _cdnCustomDomainRestClient.ListByEndpointNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CdnCustomDomain(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}
-        /// Operation Id: CustomDomains_Get
+        /// Operation Id: CdnCustomDomains_Get
         /// </summary>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var scope = _cdnCustomDomainCustomDomainsClientDiagnostics.CreateScope("CdnCustomDomainCollection.Exists");
+            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.Exists");
             scope.Start();
             try
             {
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}
-        /// Operation Id: CustomDomains_Get
+        /// Operation Id: CdnCustomDomains_Get
         /// </summary>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var scope = _cdnCustomDomainCustomDomainsClientDiagnostics.CreateScope("CdnCustomDomainCollection.Exists");
+            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.Exists");
             scope.Start();
             try
             {
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Tries to get details for this resource from the service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}
-        /// Operation Id: CustomDomains_Get
+        /// Operation Id: CdnCustomDomains_Get
         /// </summary>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -326,11 +326,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var scope = _cdnCustomDomainCustomDomainsClientDiagnostics.CreateScope("CdnCustomDomainCollection.GetIfExists");
+            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _cdnCustomDomainCustomDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cdnCustomDomainRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<CdnCustomDomain>(null, response.GetRawResponse());
                 return Response.FromValue(new CdnCustomDomain(Client, response.Value), response.GetRawResponse());
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Tries to get details for this resource from the service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}
-        /// Operation Id: CustomDomains_Get
+        /// Operation Id: CdnCustomDomains_Get
         /// </summary>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -355,11 +355,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var scope = _cdnCustomDomainCustomDomainsClientDiagnostics.CreateScope("CdnCustomDomainCollection.GetIfExists");
+            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _cdnCustomDomainCustomDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken: cancellationToken);
+                var response = _cdnCustomDomainRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<CdnCustomDomain>(null, response.GetRawResponse());
                 return Response.FromValue(new CdnCustomDomain(Client, response.Value), response.GetRawResponse());

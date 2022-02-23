@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Cdn
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _cdnEndpointEndpointsClientDiagnostics;
-        private readonly EndpointsRestOperations _cdnEndpointEndpointsRestClient;
+        private readonly ClientDiagnostics _cdnEndpointClientDiagnostics;
+        private readonly CdnEndpointsRestOperations _cdnEndpointRestClient;
         private readonly CdnEndpointData _data;
 
         /// <summary> Initializes a new instance of the <see cref="CdnEndpoint"/> class for mocking. </summary>
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CdnEndpoint(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cdnEndpointEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ResourceType, out string cdnEndpointEndpointsApiVersion);
-            _cdnEndpointEndpointsRestClient = new EndpointsRestOperations(_cdnEndpointEndpointsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cdnEndpointEndpointsApiVersion);
+            _cdnEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(ResourceType, out string cdnEndpointApiVersion);
+            _cdnEndpointRestClient = new CdnEndpointsRestOperations(_cdnEndpointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cdnEndpointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -108,18 +108,18 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Gets an existing CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Get
+        /// Operation Id: CdnEndpoints_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<CdnEndpoint>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.Get");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Get");
             scope.Start();
             try
             {
-                var response = await _cdnEndpointEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _cdnEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _cdnEndpointEndpointsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw await _cdnEndpointClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new CdnEndpoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,18 +132,18 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Gets an existing CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Get
+        /// Operation Id: CdnEndpoints_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CdnEndpoint> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.Get");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Get");
             scope.Start();
             try
             {
-                var response = _cdnEndpointEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _cdnEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _cdnEndpointEndpointsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw _cdnEndpointClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CdnEndpoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -156,18 +156,18 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Deletes an existing CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Delete
+        /// Operation Id: CdnEndpoints_Delete
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.Delete");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Delete");
             scope.Start();
             try
             {
-                var response = await _cdnEndpointEndpointsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation(_cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _cdnEndpointRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation(_cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -182,18 +182,18 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Deletes an existing CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Delete
+        /// Operation Id: CdnEndpoints_Delete
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.Delete");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Delete");
             scope.Start();
             try
             {
-                var response = _cdnEndpointEndpointsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnArmOperation(_cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _cdnEndpointRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CdnArmOperation(_cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Updates an existing CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile. Only tags can be updated after creating an endpoint. To update origins, use the Update Origin operation. To update origin groups, use the Update Origin group operation. To update custom domains, use the Update Custom Domain operation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Update
+        /// Operation Id: CdnEndpoints_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="options"> Endpoint update properties. </param>
@@ -218,12 +218,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.Update");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Update");
             scope.Start();
             try
             {
-                var response = await _cdnEndpointEndpointsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.Location);
+                var response = await _cdnEndpointRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Updates an existing CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile. Only tags can be updated after creating an endpoint. To update origins, use the Update Origin operation. To update origin groups, use the Update Origin group operation. To update custom domains, use the Update Custom Domain operation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Update
+        /// Operation Id: CdnEndpoints_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="options"> Endpoint update properties. </param>
@@ -248,12 +248,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.Update");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Update");
             scope.Start();
             try
             {
-                var response = _cdnEndpointEndpointsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken);
-                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.Location);
+                var response = _cdnEndpointRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken);
+                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -268,18 +268,18 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Starts an existing CDN endpoint that is on a stopped state.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/start
-        /// Operation Id: Endpoints_Start
+        /// Operation Id: CdnEndpoints_Start
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation<CdnEndpoint>> StartAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.Start");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Start");
             scope.Start();
             try
             {
-                var response = await _cdnEndpointEndpointsRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _cdnEndpointRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -294,18 +294,18 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Starts an existing CDN endpoint that is on a stopped state.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/start
-        /// Operation Id: Endpoints_Start
+        /// Operation Id: CdnEndpoints_Start
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<CdnEndpoint> Start(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.Start");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Start");
             scope.Start();
             try
             {
-                var response = _cdnEndpointEndpointsRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _cdnEndpointRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -320,18 +320,18 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Stops an existing running CDN endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/stop
-        /// Operation Id: Endpoints_Stop
+        /// Operation Id: CdnEndpoints_Stop
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation<CdnEndpoint>> StopAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.Stop");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Stop");
             scope.Start();
             try
             {
-                var response = await _cdnEndpointEndpointsRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _cdnEndpointRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -346,18 +346,18 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Stops an existing running CDN endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/stop
-        /// Operation Id: Endpoints_Stop
+        /// Operation Id: CdnEndpoints_Stop
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<CdnEndpoint> Stop(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.Stop");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Stop");
             scope.Start();
             try
             {
-                var response = _cdnEndpointEndpointsRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _cdnEndpointRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Removes a content from CDN.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/purge
-        /// Operation Id: Endpoints_PurgeContent
+        /// Operation Id: CdnEndpoints_PurgeContent
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="contentFilePaths"> The path to the content to be purged. Path can be a full URL, e.g. &apos;/pictures/city.png&apos; which removes a single file, or a directory with a wildcard, e.g. &apos;/pictures/*&apos; which removes all folders and files in the directory. </param>
@@ -382,12 +382,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(contentFilePaths, nameof(contentFilePaths));
 
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.PurgeContent");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.PurgeContent");
             scope.Start();
             try
             {
-                var response = await _cdnEndpointEndpointsRestClient.PurgeContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation(_cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreatePurgeContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths).Request, response, OperationFinalStateVia.Location);
+                var response = await _cdnEndpointRestClient.PurgeContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation(_cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreatePurgeContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Removes a content from CDN.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/purge
-        /// Operation Id: Endpoints_PurgeContent
+        /// Operation Id: CdnEndpoints_PurgeContent
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="contentFilePaths"> The path to the content to be purged. Path can be a full URL, e.g. &apos;/pictures/city.png&apos; which removes a single file, or a directory with a wildcard, e.g. &apos;/pictures/*&apos; which removes all folders and files in the directory. </param>
@@ -412,12 +412,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(contentFilePaths, nameof(contentFilePaths));
 
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.PurgeContent");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.PurgeContent");
             scope.Start();
             try
             {
-                var response = _cdnEndpointEndpointsRestClient.PurgeContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths, cancellationToken);
-                var operation = new CdnArmOperation(_cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreatePurgeContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths).Request, response, OperationFinalStateVia.Location);
+                var response = _cdnEndpointRestClient.PurgeContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths, cancellationToken);
+                var operation = new CdnArmOperation(_cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreatePurgeContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Pre-loads a content to CDN. Available for Verizon Profiles.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/load
-        /// Operation Id: Endpoints_LoadContent
+        /// Operation Id: CdnEndpoints_LoadContent
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="contentFilePaths"> The path to the content to be loaded. Path should be a full URL, e.g. ‘/pictures/city.png&apos; which loads a single file. </param>
@@ -442,12 +442,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(contentFilePaths, nameof(contentFilePaths));
 
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.LoadContent");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.LoadContent");
             scope.Start();
             try
             {
-                var response = await _cdnEndpointEndpointsRestClient.LoadContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation(_cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreateLoadContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths).Request, response, OperationFinalStateVia.Location);
+                var response = await _cdnEndpointRestClient.LoadContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation(_cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateLoadContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Pre-loads a content to CDN. Available for Verizon Profiles.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/load
-        /// Operation Id: Endpoints_LoadContent
+        /// Operation Id: CdnEndpoints_LoadContent
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="contentFilePaths"> The path to the content to be loaded. Path should be a full URL, e.g. ‘/pictures/city.png&apos; which loads a single file. </param>
@@ -472,12 +472,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(contentFilePaths, nameof(contentFilePaths));
 
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.LoadContent");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.LoadContent");
             scope.Start();
             try
             {
-                var response = _cdnEndpointEndpointsRestClient.LoadContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths, cancellationToken);
-                var operation = new CdnArmOperation(_cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreateLoadContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths).Request, response, OperationFinalStateVia.Location);
+                var response = _cdnEndpointRestClient.LoadContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths, cancellationToken);
+                var operation = new CdnArmOperation(_cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateLoadContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentFilePaths).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/validateCustomDomain
-        /// Operation Id: Endpoints_ValidateCustomDomain
+        /// Operation Id: CdnEndpoints_ValidateCustomDomain
         /// </summary>
         /// <param name="customDomainProperties"> Custom domain to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -501,11 +501,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(customDomainProperties, nameof(customDomainProperties));
 
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.ValidateCustomDomain");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.ValidateCustomDomain");
             scope.Start();
             try
             {
-                var response = await _cdnEndpointEndpointsRestClient.ValidateCustomDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainProperties, cancellationToken).ConfigureAwait(false);
+                var response = await _cdnEndpointRestClient.ValidateCustomDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainProperties, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/validateCustomDomain
-        /// Operation Id: Endpoints_ValidateCustomDomain
+        /// Operation Id: CdnEndpoints_ValidateCustomDomain
         /// </summary>
         /// <param name="customDomainProperties"> Custom domain to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -527,11 +527,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(customDomainProperties, nameof(customDomainProperties));
 
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.ValidateCustomDomain");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.ValidateCustomDomain");
             scope.Start();
             try
             {
-                var response = _cdnEndpointEndpointsRestClient.ValidateCustomDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainProperties, cancellationToken);
+                var response = _cdnEndpointRestClient.ValidateCustomDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainProperties, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Checks the quota and usage of geo filters and custom domains under the given endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/checkResourceUsage
-        /// Operation Id: Endpoints_ListResourceUsage
+        /// Operation Id: CdnEndpoints_ListResourceUsage
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
@@ -552,11 +552,11 @@ namespace Azure.ResourceManager.Cdn
         {
             async Task<Page<ResourceUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.GetResourceUsage");
+                using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.GetResourceUsage");
                 scope.Start();
                 try
                 {
-                    var response = await _cdnEndpointEndpointsRestClient.ListResourceUsageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cdnEndpointRestClient.ListResourceUsageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -567,11 +567,11 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<ResourceUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.GetResourceUsage");
+                using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.GetResourceUsage");
                 scope.Start();
                 try
                 {
-                    var response = await _cdnEndpointEndpointsRestClient.ListResourceUsageNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cdnEndpointRestClient.ListResourceUsageNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Checks the quota and usage of geo filters and custom domains under the given endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/checkResourceUsage
-        /// Operation Id: Endpoints_ListResourceUsage
+        /// Operation Id: CdnEndpoints_ListResourceUsage
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
@@ -594,11 +594,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Page<ResourceUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.GetResourceUsage");
+                using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.GetResourceUsage");
                 scope.Start();
                 try
                 {
-                    var response = _cdnEndpointEndpointsRestClient.ListResourceUsage(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _cdnEndpointRestClient.ListResourceUsage(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -609,11 +609,11 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<ResourceUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.GetResourceUsage");
+                using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.GetResourceUsage");
                 scope.Start();
                 try
                 {
-                    var response = _cdnEndpointEndpointsRestClient.ListResourceUsageNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _cdnEndpointRestClient.ListResourceUsageNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Get
+        /// Operation Id: CdnEndpoints_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -639,14 +639,14 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.AddTag");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _cdnEndpointEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _cdnEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CdnEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Get
+        /// Operation Id: CdnEndpoints_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -670,14 +670,14 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.AddTag");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _cdnEndpointEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var originalResponse = _cdnEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new CdnEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Get
+        /// Operation Id: CdnEndpoints_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.SetTags");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.SetTags");
             scope.Start();
             try
             {
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.Cdn
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _cdnEndpointEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _cdnEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CdnEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Get
+        /// Operation Id: CdnEndpoints_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.SetTags");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.SetTags");
             scope.Start();
             try
             {
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.Cdn
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _cdnEndpointEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var originalResponse = _cdnEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new CdnEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Get
+        /// Operation Id: CdnEndpoints_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -759,14 +759,14 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.RemoveTag");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _cdnEndpointEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _cdnEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CdnEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Get
+        /// Operation Id: CdnEndpoints_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -788,14 +788,14 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpoint.RemoveTag");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _cdnEndpointEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var originalResponse = _cdnEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new CdnEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
