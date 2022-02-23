@@ -14,7 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void MessageIsSetToFormattedMessageWhenIncludeFormattedMessageIsSet()
         {
-            List<LogRecord> logRecords = new List<LogRecord>();
+            var logRecords = new List<LogRecord>();
             using var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder.AddOpenTelemetry(options =>
@@ -45,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void MessageIsSetToOriginalFormatWhenIncludeFormattedMessageIsNotSet()
         {
-            List<LogRecord> logRecords = new List<LogRecord>();
+            var logRecords = new List<LogRecord>();
             using var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder.AddOpenTelemetry(options =>
@@ -74,7 +74,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void PropertiesContainFieldsFromStructuredLogs()
         {
-            List<LogRecord> logRecords = new List<LogRecord>();
+            var logRecords = new List<LogRecord>();
             using var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder.AddOpenTelemetry(options =>
@@ -101,7 +101,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void PropertiesContainFieldsFromStructuredLogsIfParseStateValuesIsSet()
         {
-            List<LogRecord> logRecords = new List<LogRecord>();
+            var logRecords = new List<LogRecord>();
             using var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder.AddOpenTelemetry(options =>
@@ -128,7 +128,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void PropertiesContainEventIdAndEventNameIfSetOnLog()
         {
-            List<LogRecord> logRecords = new List<LogRecord>();
+            var logRecords = new List<LogRecord>();
             using var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder.AddOpenTelemetry(options =>
