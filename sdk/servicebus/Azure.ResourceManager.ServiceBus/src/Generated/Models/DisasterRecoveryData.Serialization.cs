@@ -35,27 +35,17 @@ namespace Azure.ResourceManager.ServiceBus
 
         internal static DisasterRecoveryData DeserializeDisasterRecoveryData(JsonElement element)
         {
-            Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<ProvisioningStateDR> provisioningState = default;
+            SystemData systemData = default;
+            Optional<ProvisioningStateDisasterRecovery> provisioningState = default;
             Optional<long> pendingReplicationOperationsCount = default;
             Optional<string> partnerNamespace = default;
             Optional<string> alternateName = default;
             Optional<RoleDisasterRecovery> role = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -69,6 +59,11 @@ namespace Azure.ResourceManager.ServiceBus
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -87,7 +82,7 @@ namespace Azure.ResourceManager.ServiceBus
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToProvisioningStateDR();
+                            provisioningState = property0.Value.GetString().ToProvisioningStateDisasterRecovery();
                             continue;
                         }
                         if (property0.NameEquals("pendingReplicationOperationsCount"))

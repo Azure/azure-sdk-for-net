@@ -112,7 +112,7 @@
         ],
         "x-ms-client-request-id": "36092299-ba1f-6e6b-56bf-0ef1672dcd77",
         "x-ms-date": "Fri, 19 Feb 2021 19:08:40 GMT",
-        "x-ms-rename-source": "%2Ftest-filesystem-582d2a48-6e96-d9c2-c61d-1c4720908a1e%2Ftest-file-121fedb0-5cd8-f2da-86c9-7a68b5627c32=",
+        "x-ms-rename-source": "/test-filesystem-582d2a48-6e96-d9c2-c61d-1c4720908a1e/test-file-121fedb0-5cd8-f2da-86c9-7a68b5627c32",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2021-04-10"
       },

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Tests.Samples
         {
             #region Snippet:Hello_World_SpecifyDefaultSubscription
             string defaultSubscriptionId = "your-subscription-id";
-            ArmClient armClient = new ArmClient(defaultSubscriptionId, new DefaultAzureCredential());
+            ArmClient armClient = new ArmClient(new DefaultAzureCredential(), defaultSubscriptionId);
             Subscription subscription = armClient.GetDefaultSubscription();
             Console.WriteLine(subscription.Id);
             #endregion

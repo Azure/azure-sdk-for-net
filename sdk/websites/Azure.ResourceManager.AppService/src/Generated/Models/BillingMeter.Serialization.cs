@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -67,6 +68,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> meterId = default;
             Optional<string> billingLocation = default;
             Optional<string> shortName = default;
@@ -94,6 +96,11 @@ namespace Azure.ResourceManager.AppService.Models
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -149,7 +156,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new BillingMeter(id, name, type, kind.Value, meterId.Value, billingLocation.Value, shortName.Value, friendlyName.Value, resourceType.Value, osType.Value, Optional.ToNullable(multiplier));
+            return new BillingMeter(id, name, type, systemData, kind.Value, meterId.Value, billingLocation.Value, shortName.Value, friendlyName.Value, resourceType.Value, osType.Value, Optional.ToNullable(multiplier));
         }
     }
 }

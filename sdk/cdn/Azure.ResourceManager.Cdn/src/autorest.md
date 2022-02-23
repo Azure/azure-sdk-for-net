@@ -14,6 +14,11 @@ input-file:
 clear-output-folder: true
 skip-csproj: true
 output-folder: Generated/
+operation-id-mappings:
+  CdnEndpoint:
+      profileName: Microsoft.Cdn/operationresults/profileresults
+      endpointName: Microsoft.Cdn/operationresults/profileresults/endpointresults
+
 modelerfour:
   naming:
     preserve-uppercase-max-length: 2

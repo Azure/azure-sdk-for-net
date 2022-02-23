@@ -8,7 +8,6 @@ using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -30,21 +29,19 @@ namespace Azure.Identity
         private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/powershellcredential/troubleshoot";
         private const string AzurePowerShellFailedError = "Azure PowerShell authentication failed due to an unknown error. " + Troubleshooting;
         private const string AzurePowerShellTimeoutError = "Azure PowerShell authentication timed out.";
-        internal const string AzurePowerShellNotLogInError = "Please run 'Connect-AzAccount' to set up account.";
-        internal const string AzurePowerShellModuleNotInstalledError = "Az.Account module >= 2.2.0 is not installed.";
-        internal const string PowerShellNotInstalledError = "PowerShell is not installed.";
-
+        private const string RunConnectAzAccountToLogin = "Run Connect-AzAccount to login";
+        private const string NoAccountsWereFoundInTheCache = "No accounts were found in the cache";
+        private const string CannotRetrieveAccessToken = "cannot retrieve access token";
         private const string AzurePowerShellNoAzAccountModule = "NoAzAccountModule";
         private static readonly string DefaultWorkingDirWindows = Environment.GetFolderPath(Environment.SpecialFolder.System);
         private const string DefaultWorkingDirNonWindows = "/bin/";
-
-        private static readonly string DefaultWorkingDir =
-            RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? DefaultWorkingDirWindows : DefaultWorkingDirNonWindows;
-
+        private static readonly string DefaultWorkingDir = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? DefaultWorkingDirWindows : DefaultWorkingDirNonWindows;
         private readonly string _tenantId;
-
         private const int ERROR_FILE_NOT_FOUND = 2;
         private readonly bool _logPII;
+        internal const string AzurePowerShellNotLogInError = "Please run 'Connect-AzAccount' to set up account.";
+        internal const string AzurePowerShellModuleNotInstalledError = "Az.Account module >= 2.2.0 is not installed.";
+        internal const string PowerShellNotInstalledError = "PowerShell is not installed.";
 
         /// <summary>
         /// Creates a new instance of the <see cref="AzurePowerShellCredential"/>.
@@ -139,6 +136,7 @@ namespace Azure.Identity
             {
                 output = async ? await processRunner.RunAsync().ConfigureAwait(false) : processRunner.Run();
                 CheckForErrors(output);
+                ValidateResult(output);
             }
             catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
             {
@@ -146,21 +144,7 @@ namespace Azure.Identity
             }
             catch (InvalidOperationException exception)
             {
-                bool noPowerShell = exception.Message.IndexOf("not found", StringComparison.OrdinalIgnoreCase) != -1 ||
-                                    exception.Message.IndexOf("is not recognized", StringComparison.OrdinalIgnoreCase) != -1;
-
-                if (noPowerShell)
-                {
-                    throw new CredentialUnavailableException(PowerShellNotInstalledError);
-                }
-
-                bool noLogin = exception.Message.IndexOf("Run Connect-AzAccount to login", StringComparison.OrdinalIgnoreCase) != -1;
-
-                if (noLogin)
-                {
-                    throw new CredentialUnavailableException(AzurePowerShellNotLogInError);
-                }
-
+                CheckForErrors(exception.Message);
                 throw new AuthenticationFailedException($"{AzurePowerShellFailedError} {exception.Message}");
             }
             return DeserializeOutput(output);
@@ -168,6 +152,12 @@ namespace Azure.Identity
 
         private static void CheckForErrors(string output)
         {
+            bool noPowerShell = output.IndexOf("not found", StringComparison.OrdinalIgnoreCase) != -1 ||
+                                output.IndexOf("is not recognized", StringComparison.OrdinalIgnoreCase) != -1;
+            if (noPowerShell)
+            {
+                throw new CredentialUnavailableException(PowerShellNotInstalledError);
+            }
             if (output.IndexOf(AzurePowerShellNoAzAccountModule, StringComparison.OrdinalIgnoreCase) != -1)
             {
                 throw new CredentialUnavailableException(AzurePowerShellModuleNotInstalledError);
@@ -176,6 +166,18 @@ namespace Azure.Identity
             {
                 throw new Win32Exception(ERROR_FILE_NOT_FOUND);
             }
+
+            var needsLogin = output.IndexOf(RunConnectAzAccountToLogin, StringComparison.OrdinalIgnoreCase) != -1 ||
+                             output.IndexOf(NoAccountsWereFoundInTheCache, StringComparison.OrdinalIgnoreCase) != -1 ||
+                             output.IndexOf(CannotRetrieveAccessToken, StringComparison.OrdinalIgnoreCase) != -1;
+            if (needsLogin)
+            {
+                throw new CredentialUnavailableException(AzurePowerShellNotLogInError);
+            }
+        }
+
+        private static void ValidateResult(string output)
+        {
             if (output.IndexOf("Microsoft.Azure.Commands.Profile.Models.PSAccessToken", StringComparison.OrdinalIgnoreCase) < 0)
             {
                 throw new CredentialUnavailableException("PowerShell did not return a valid response.");

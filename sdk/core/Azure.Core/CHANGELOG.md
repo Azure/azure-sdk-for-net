@@ -4,7 +4,16 @@
 
 ### Features Added
 
+- Added `AddClassifier` methods to `RequestContext`. These methods allow callers to change the response classification behavior for a given method invocation.
+
 ### Breaking Changes
+
+- Cookies are no longer set on requests by default. Cookies can be re-enabled for `HttpClientTransport` by either setting an AppContext switch named "Azure.Core.Pipeline.HttpClientTransport.EnableCookies" to true or by setting the environment variable, "AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES" to "true". Note: AppContext switches can also be configured via configuration like below:
+```xml
+  <ItemGroup>
+    <RuntimeHostConfigurationOption Include="Azure.Core.Pipeline.HttpClientTransport.EnableCookies" Value="true" />
+  </ItemGroup>
+```
 
 ### Bugs Fixed
 

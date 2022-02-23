@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publishedDate"> The UTC timestamp when the repository published this patch. </param>
         /// <param name="lastModifiedDateTime"> The UTC timestamp of the last update to this patch record. </param>
         /// <param name="assessmentState"> Describes the availability of a given patch. </param>
-        internal VirtualMachineSoftwarePatchProperties(string patchId, string name, string version, string kbId, IReadOnlyList<string> classifications, VMGuestPatchRebootBehavior? rebootBehavior, string activityId, DateTimeOffset? publishedDate, DateTimeOffset? lastModifiedDateTime, PatchAssessmentState? assessmentState)
+        internal VirtualMachineSoftwarePatchProperties(string patchId, string name, string version, string kbId, IReadOnlyList<string> classifications, VmGuestPatchRebootBehavior? rebootBehavior, string activityId, DateTimeOffset? publishedDate, DateTimeOffset? lastModifiedDateTime, PatchAssessmentState? assessmentState)
         {
             PatchId = patchId;
             Name = name;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The classification(s) of the patch as provided by the patch publisher. </summary>
         public IReadOnlyList<string> Classifications { get; }
         /// <summary> Describes the reboot requirements of the patch. </summary>
-        public VMGuestPatchRebootBehavior? RebootBehavior { get; }
+        public VmGuestPatchRebootBehavior? RebootBehavior { get; }
         /// <summary> The activity ID of the operation that produced this result. It is used to correlate across CRP and extension logs. </summary>
         public string ActivityId { get; }
         /// <summary> The UTC timestamp when the repository published this patch. </summary>

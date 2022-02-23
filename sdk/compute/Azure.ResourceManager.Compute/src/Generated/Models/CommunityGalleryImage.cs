@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="purchasePlan"> Describes the gallery image definition purchase plan. This is used by marketplace images. </param>
         internal CommunityGalleryImage(string name, string location, string type, string uniqueId, OperatingSystemTypes? osType, OperatingSystemStateTypes? osState, DateTimeOffset? endOfLifeDate, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, HyperVGeneration? hyperVGeneration, IReadOnlyList<GalleryImageFeature> features, ImagePurchasePlan purchasePlan) : base(name, location, type, uniqueId)
         {
-            OsType = osType;
-            OsState = osState;
+            OSType = osType;
+            OSState = osState;
             EndOfLifeDate = endOfLifeDate;
             Identifier = identifier;
             Recommended = recommended;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </summary>
-        public OperatingSystemTypes? OsType { get; }
+        public OperatingSystemTypes? OSType { get; }
         /// <summary> This property allows the user to specify whether the virtual machines created under this image are &apos;Generalized&apos; or &apos;Specialized&apos;. </summary>
-        public OperatingSystemStateTypes? OsState { get; }
+        public OperatingSystemStateTypes? OSState { get; }
         /// <summary> The end of life date of the gallery image definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
         public DateTimeOffset? EndOfLifeDate { get; }
         /// <summary> This is the gallery image definition identifier. </summary>

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the VirtualMachine data model. </summary>
-    public partial class VirtualMachineData : TrackedResource
+    public partial class VirtualMachineData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineData. </summary>
         /// <param name="location"> The location. </param>
@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="plan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click **Want to deploy programmatically, Get Started -&gt;**. Enter any required information and then click **Save**. </param>
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </param>
         /// <param name="capacityReservation"> Specifies information about the capacity reservation that is used to allocate virtual machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-04-01. </param>
         /// <param name="applicationProfile"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
-        internal VirtualMachineData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, Models.Plan plan, IReadOnlyList<VirtualMachineExtensionData> resources, ResourceIdentity identity, IList<string> zones, Models.ExtendedLocation extendedLocation, HardwareProfile hardwareProfile, StorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, NetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, WritableSubResource availabilitySet, WritableSubResource virtualMachineScaleSet, WritableSubResource proximityPlacementGroup, VirtualMachinePriorityTypes? priority, VirtualMachineEvictionPolicyTypes? evictionPolicy, BillingProfile billingProfile, WritableSubResource host, WritableSubResource hostGroup, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile) : base(id, name, type, tags, location)
+        internal VirtualMachineData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.Plan plan, IReadOnlyList<VirtualMachineExtensionData> resources, ManagedServiceIdentity identity, IList<string> zones, Models.ExtendedLocation extendedLocation, HardwareProfile hardwareProfile, StorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, NetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, WritableSubResource availabilitySet, WritableSubResource virtualMachineScaleSet, WritableSubResource proximityPlacementGroup, VirtualMachinePriorityTypes? priority, VirtualMachineEvictionPolicyTypes? evictionPolicy, BillingProfile billingProfile, WritableSubResource host, WritableSubResource hostGroup, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile) : base(id, name, type, systemData, tags, location)
         {
             Plan = plan;
             Resources = resources;
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.Compute
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
             AdditionalCapabilities = additionalCapabilities;
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             NetworkProfile = networkProfile;
             SecurityProfile = securityProfile;
             DiagnosticsProfile = diagnosticsProfile;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The virtual machine child extension resources. </summary>
         public IReadOnlyList<VirtualMachineExtensionData> Resources { get; }
         /// <summary> The identity of the virtual machine, if configured. </summary>
-        public ResourceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The virtual machine zones. </summary>
         public IList<string> Zones { get; }
         /// <summary> The extended location of the Virtual Machine. </summary>
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Specifies additional capabilities enabled or disabled on the virtual machine. </summary>
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
         /// <summary> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </summary>
-        public OSProfile OsProfile { get; set; }
+        public OSProfile OSProfile { get; set; }
         /// <summary> Specifies the network interfaces of the virtual machine. </summary>
         public NetworkProfile NetworkProfile { get; set; }
         /// <summary> Specifies the Security related profile settings for the virtual machine. </summary>

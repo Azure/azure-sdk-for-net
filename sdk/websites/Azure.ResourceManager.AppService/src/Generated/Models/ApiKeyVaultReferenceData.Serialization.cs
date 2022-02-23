@@ -8,6 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("identityType");
-                writer.WriteObjectValue(IdentityType);
+                JsonSerializer.Serialize(writer, IdentityType);
             }
             if (Optional.IsDefined(Details))
             {
@@ -78,6 +79,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> reference = default;
             Optional<ResolveStatus> status = default;
             Optional<string> vaultName = default;
@@ -107,6 +109,11 @@ namespace Azure.ResourceManager.AppService
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -155,7 +162,7 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            identityType = ManagedServiceIdentity.DeserializeManagedServiceIdentity(property0.Value);
+                            identityType = JsonSerializer.Deserialize<ManagedServiceIdentity>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("details"))
@@ -177,7 +184,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new ApiKeyVaultReferenceData(id, name, type, kind.Value, reference.Value, Optional.ToNullable(status), vaultName.Value, secretName.Value, secretVersion.Value, identityType.Value, details.Value, source.Value, activeVersion.Value);
+            return new ApiKeyVaultReferenceData(id, name, type, systemData, kind.Value, reference.Value, Optional.ToNullable(status), vaultName.Value, secretName.Value, secretVersion.Value, identityType, details.Value, source.Value, activeVersion.Value);
         }
     }
 }

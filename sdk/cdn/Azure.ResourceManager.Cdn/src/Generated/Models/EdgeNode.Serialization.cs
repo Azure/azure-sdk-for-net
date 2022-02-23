@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -34,23 +35,17 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static EdgeNode DeserializeEdgeNode(JsonElement element)
         {
-            Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+<<<<<<< HEAD
             Optional<IList<IPAddressGroup>> ipAddressGroups = default;
+=======
+            SystemData systemData = default;
+            Optional<IList<IpAddressGroup>> ipAddressGroups = default;
+>>>>>>> upstream/main
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = SystemData.DeserializeSystemData(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -64,6 +59,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new EdgeNode(id, name, type, systemData.Value, Optional.ToList(ipAddressGroups));
+            return new EdgeNode(id, name, type, systemData, Optional.ToList(ipAddressGroups));
         }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the Snapshot data model. </summary>
-    public partial class SnapshotData : TrackedResource
+    public partial class SnapshotData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SnapshotData. </summary>
         /// <param name="location"> The location. </param>
@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="managedBy"> Unused. Always Null. </param>
@@ -51,13 +52,13 @@ namespace Azure.ResourceManager.Compute
         /// <param name="supportsHibernation"> Indicates the OS on a snapshot supports hibernation. </param>
         /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
         /// <param name="completionPercent"> Percentage complete for the background copy when a resource is created via the CopyStart operation. </param>
-        internal SnapshotData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string managedBy, SnapshotSku sku, ExtendedLocation extendedLocation, DateTimeOffset? timeCreated, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, CreationData creationData, int? diskSizeGB, long? diskSizeBytes, DiskState? diskState, string uniqueId, EncryptionSettingsCollection encryptionSettingsCollection, string provisioningState, bool? incremental, Encryption encryption, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, DiskSecurityProfile securityProfile, bool? supportsHibernation, PublicNetworkAccess? publicNetworkAccess, float? completionPercent) : base(id, name, type, tags, location)
+        internal SnapshotData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, SnapshotSku sku, ExtendedLocation extendedLocation, DateTimeOffset? timeCreated, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, CreationData creationData, int? diskSizeGB, long? diskSizeBytes, DiskState? diskState, string uniqueId, EncryptionSettingsCollection encryptionSettingsCollection, string provisioningState, bool? incremental, Encryption encryption, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, DiskSecurityProfile securityProfile, bool? supportsHibernation, PublicNetworkAccess? publicNetworkAccess, float? completionPercent) : base(id, name, type, systemData, tags, location)
         {
             ManagedBy = managedBy;
             Sku = sku;
             ExtendedLocation = extendedLocation;
             TimeCreated = timeCreated;
-            OsType = osType;
+            OSType = osType;
             HyperVGeneration = hyperVGeneration;
             PurchasePlan = purchasePlan;
             SupportedCapabilities = supportedCapabilities;
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The time when the snapshot was created. </summary>
         public DateTimeOffset? TimeCreated { get; }
         /// <summary> The Operating System type. </summary>
-        public OperatingSystemTypes? OsType { get; set; }
+        public OperatingSystemTypes? OSType { get; set; }
         /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>
         public HyperVGeneration? HyperVGeneration { get; set; }
         /// <summary> Purchase plan information for the image from which the source disk for the snapshot was originally created. </summary>

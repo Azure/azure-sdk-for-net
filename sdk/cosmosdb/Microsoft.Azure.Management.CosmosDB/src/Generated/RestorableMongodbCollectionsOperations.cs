@@ -66,6 +66,12 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='restorableMongodbDatabaseRid'>
         /// The resource ID of the MongoDB database.
         /// </param>
+        /// <param name='startTime'>
+        /// Restorable MongoDB collections event feed start time.
+        /// </param>
+        /// <param name='endTime'>
+        /// Restorable MongoDB collections event feed end time.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -87,7 +93,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<RestorableMongodbCollectionGetResult>>> ListWithHttpMessagesAsync(string location, string instanceId, string restorableMongodbDatabaseRid = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<RestorableMongodbCollectionGetResult>>> ListWithHttpMessagesAsync(string location, string instanceId, string restorableMongodbDatabaseRid = default(string), string startTime = default(string), string endTime = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -129,6 +135,8 @@ namespace Microsoft.Azure.Management.CosmosDB
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("instanceId", instanceId);
                 tracingParameters.Add("restorableMongodbDatabaseRid", restorableMongodbDatabaseRid);
+                tracingParameters.Add("startTime", startTime);
+                tracingParameters.Add("endTime", endTime);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -146,6 +154,14 @@ namespace Microsoft.Azure.Management.CosmosDB
             if (restorableMongodbDatabaseRid != null)
             {
                 _queryParameters.Add(string.Format("restorableMongodbDatabaseRid={0}", System.Uri.EscapeDataString(restorableMongodbDatabaseRid)));
+            }
+            if (startTime != null)
+            {
+                _queryParameters.Add(string.Format("startTime={0}", System.Uri.EscapeDataString(startTime)));
+            }
+            if (endTime != null)
+            {
+                _queryParameters.Add(string.Format("endTime={0}", System.Uri.EscapeDataString(endTime)));
             }
             if (_queryParameters.Count > 0)
             {

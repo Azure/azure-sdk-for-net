@@ -16,8 +16,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
     {
         [RecordedTest]
         [SyncOnly]
-        [Ignore(reason: "Disabled until deployment lro bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26401")]
-        public void CreateAndDeploy()
+        // TODO: Make this test Sync once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
+        public async Task CreateAndDeploy()
         {
             QuestionAnsweringProjectsClient client = Client;
             #region Snippet:QuestionAnsweringProjectsClient_CreateProject
@@ -75,7 +75,13 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
+#if SNIPPET
             Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion: true, newProjectName, updateSourcesRequestContent);
+#else
+            // TODO: Remove this region once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
+            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion: false, newProjectName, updateSourcesRequestContent);
+            await updateSourcesOperation.WaitForCompletionAsync();
+#endif
 
             // Knowledge Sources can be retrieved as follows
             Pageable<BinaryData> sources = client.GetSources(newProjectName);
@@ -95,7 +101,13 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 #if !SNIPPET
             newDeploymentName = "production";
 #endif
+#if SNIPPET
             Operation<BinaryData> deploymentOperation = client.DeployProject(waitForCompletion: true, newProjectName, newDeploymentName);
+#else
+            // TODO: Remove this region once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
+            Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(waitForCompletion: false, newProjectName, newDeploymentName);
+            await deploymentOperation.WaitForCompletionAsync();
+#endif
 
             // Deployments can be retrieved as follows
             Pageable<BinaryData> deployments = client.GetDeployments(newProjectName);
@@ -114,8 +126,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
         [RecordedTest]
         [AsyncOnly]
-        [Ignore(reason: "Disabled until deployment lro bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26401")]
-
         public async Task CreateAndDeployAsync()
         {
             QuestionAnsweringProjectsClient client = Client;
@@ -177,7 +187,13 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
+#if SNIPPET
             Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion: true, newProjectName, updateSourcesRequestContent);
+#else
+            // TODO: Remove this region once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
+            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion: false, newProjectName, updateSourcesRequestContent);
+            await updateSourcesOperation.WaitForCompletionAsync();
+#endif
 
             Console.WriteLine($"Update Sources operation result: \n{updateSourcesOperation.Value}");
 
@@ -199,7 +215,13 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 #if !SNIPPET
             newDeploymentName = "production";
 #endif
+#if SNIPPET
             Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(waitForCompletion: true, newProjectName, newDeploymentName);
+#else
+            // TODO: Remove this region once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
+            Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(waitForCompletion: false, newProjectName, newDeploymentName);
+            await deploymentOperation.WaitForCompletionAsync();
+#endif
 
             Console.WriteLine($"Update Sources operation result: \n{deploymentOperation.Value}");
 
@@ -210,7 +232,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             {
                 Console.WriteLine(deployment);
             }
-            #endregion
+#endregion
 
             Assert.True(deploymentOperation.HasCompleted);
             Assert.That((await deployments.ToEnumerableAsync()).Any(deployment => deployment.ToString().Contains(newDeploymentName)));

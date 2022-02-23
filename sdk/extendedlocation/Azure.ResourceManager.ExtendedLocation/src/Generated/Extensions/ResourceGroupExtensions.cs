@@ -12,14 +12,21 @@ namespace Azure.ResourceManager.ExtendedLocation
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region CustomLocation
-        /// <summary> Gets an object representing a CustomLocationCollection along with the instance operations that can be performed on it. </summary>
+        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        {
+            return resourceGroup.GetCachedClient((client) =>
+            {
+                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+            }
+            );
+        }
+
+        /// <summary> Gets a collection of CustomLocations in the CustomLocation. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="CustomLocationCollection" /> object. </returns>
+        /// <returns> An object representing collection of CustomLocations and their operations over a CustomLocation. </returns>
         public static CustomLocationCollection GetCustomLocations(this ResourceGroup resourceGroup)
         {
-            return new CustomLocationCollection(resourceGroup);
+            return GetExtensionClient(resourceGroup).GetCustomLocations();
         }
-        #endregion
     }
 }

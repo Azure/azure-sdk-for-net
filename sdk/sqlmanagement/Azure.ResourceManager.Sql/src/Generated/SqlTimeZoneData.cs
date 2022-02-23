@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the SqlTimeZone data model. </summary>
-    public partial class SqlTimeZoneData : Resource
+    public partial class SqlTimeZoneData : ResourceData
     {
         /// <summary> Initializes a new instance of SqlTimeZoneData. </summary>
         public SqlTimeZoneData()
@@ -22,9 +22,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="timeZoneId"> The time zone id. </param>
         /// <param name="displayName"> The time zone display name. </param>
-        internal SqlTimeZoneData(ResourceIdentifier id, string name, ResourceType type, string timeZoneId, string displayName) : base(id, name, type)
+        internal SqlTimeZoneData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string timeZoneId, string displayName) : base(id, name, type, systemData)
         {
             TimeZoneId = timeZoneId;
             DisplayName = displayName;

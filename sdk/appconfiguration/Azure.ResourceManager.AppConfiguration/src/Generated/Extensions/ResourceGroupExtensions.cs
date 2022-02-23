@@ -12,14 +12,21 @@ namespace Azure.ResourceManager.AppConfiguration
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region ConfigurationStore
-        /// <summary> Gets an object representing a ConfigurationStoreCollection along with the instance operations that can be performed on it. </summary>
+        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        {
+            return resourceGroup.GetCachedClient((client) =>
+            {
+                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+            }
+            );
+        }
+
+        /// <summary> Gets a collection of ConfigurationStores in the ConfigurationStore. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ConfigurationStoreCollection" /> object. </returns>
+        /// <returns> An object representing collection of ConfigurationStores and their operations over a ConfigurationStore. </returns>
         public static ConfigurationStoreCollection GetConfigurationStores(this ResourceGroup resourceGroup)
         {
-            return new ConfigurationStoreCollection(resourceGroup);
+            return GetExtensionClient(resourceGroup).GetConfigurationStores();
         }
-        #endregion
     }
 }

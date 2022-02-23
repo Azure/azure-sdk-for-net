@@ -4,9 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.AI.TextAnalytics.Tests;
-using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
@@ -14,7 +11,7 @@ namespace Azure.AI.TextAnalytics.Samples
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    public partial class Snippets: SamplesBase<TextAnalyticsTestEnvironment>
+    public partial class Snippets : TextAnalyticsSampleBase
     {
         [Test]
         public void CreateTextAnalyticsClient()
@@ -52,7 +49,8 @@ namespace Azure.AI.TextAnalytics.Samples
             // Create a text analytics client.
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
 
             #region Snippet:TextAnalyticsExtractSummaryWithoutErrorHandlingAsync
             // Get input document.

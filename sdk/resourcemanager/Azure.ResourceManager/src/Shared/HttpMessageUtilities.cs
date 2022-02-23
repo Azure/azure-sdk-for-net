@@ -28,11 +28,6 @@ namespace Azure.ResourceManager.Core
             return result;
         }
 
-        internal static string GetUserAgentName(object source, ClientOptions options)
-        {
-            return GetUserAgentName(source, options.Diagnostics.ApplicationId);
-        }
-
         internal static string GetUserAgentName(object source, string? applicationId)
         {
             const string PackagePrefix = "Azure.";
