@@ -218,9 +218,10 @@ namespace Azure.Core
         /// </summary>
         /// <param name="value">The value to validate.</param>
         /// <param name="name">The name of the parameter.</param>
+        /// <param name="message">The error message.</param>
         /// <exception cref="ArgumentException"><paramref name="value"/> is not null.</exception>
 #if AZURE_NULLABLE
-        public static void AssertNull<T>([AllowNull] T value, string name)
+        public static void AssertNull<T>([AllowNull] T value, string name, string message)
 #else
         public static void AssertNull<T>(T value, string name, string message)
 #endif
