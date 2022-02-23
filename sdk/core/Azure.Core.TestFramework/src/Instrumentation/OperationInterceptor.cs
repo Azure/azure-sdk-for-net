@@ -41,7 +41,10 @@ namespace Azure.Core.TestFramework
                 if (invocation.Method.Name == WaitForCompletionResponseAsync.Name)
                 {
                     CheckArguments(invocation.Arguments);
-                    invocation.ReturnValue = InvokeWaitForCompletionResponse(invocation.InvocationTarget, invocation.Arguments.Last());
+                    Operation operation = invocation.InvocationTarget as Operation;
+                    OperationPoller poller = new OperationPoller();
+                    poller.GetType().GetField("_pollingStrategy", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(operation, new ZeroPollingStrategy());
+                    invocation.ReturnValue = poller.WaitForCompletionResponseAsync(operation, null, default);
                     return;
                 }
             }
