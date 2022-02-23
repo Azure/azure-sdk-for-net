@@ -240,6 +240,7 @@
     <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.0.0-rc8" />
     <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc8" />
     <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc8" />
+    <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.2.0-rc2" />
     <PackageReference Update="Polly" Version="7.1.0" />
     <PackageReference Update="Portable.BouncyCastle" Version="1.9.0" />
     <PackageReference Update="PublicApiGenerator" Version="10.0.1" />
