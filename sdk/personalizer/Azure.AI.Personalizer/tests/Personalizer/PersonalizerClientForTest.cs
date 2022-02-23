@@ -12,7 +12,7 @@ namespace Azure.AI.Personalizer.Tests
         private RlNetProcessor rlNetProcessor;
 
         public PersonalizerClientForTest(Uri endpoint, AzureKeyCredential credential, bool isLocalInference, RlNetProcessor rlNetProcessor, float subsampleRate = 1.0f, PersonalizerClientOptions options = null) :
-            base(endpoint, credential, isLocalInference, subsampleRate, options)
+            base(endpoint, credential, options)
         {
             this.rlNetProcessor = rlNetProcessor;
         }

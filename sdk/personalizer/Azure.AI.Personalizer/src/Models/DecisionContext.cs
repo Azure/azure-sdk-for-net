@@ -9,7 +9,7 @@ using System.Linq;
 namespace Azure.AI.Personalizer
 {
     /// <summary> The Decision Context. </summary>
-    public class DecisionContext
+    internal class DecisionContext
     {
         /// <summary> The Decision Context used to serialize an object. </summary>
         public DecisionContext()

@@ -7,19 +7,19 @@ using System.Collections.Generic;
 namespace Azure.AI.Personalizer
 {
     /// <summary> The Decision Context Document. </summary>
-    public class DecisionContextDocument
+    internal class DecisionContextDocument
     {
         /// <summary> Initializes a new instance of DecisionContextDocument. </summary>
         /// <param name="id"> Id of the decision context document </param>
-        /// <param name="actionFeatureJsonList"> The json list of action features </param>
+        /// <param name="actionFeatures"> The json list of action features </param>
         /// <param name="slotId"> The slot Id </param>
-        /// <param name="slotFeatureJsonList"> The json list of slot features </param>
-        public DecisionContextDocument(string id, List<string> actionFeatureJsonList, string slotId, List<string> slotFeatureJsonList)
+        /// <param name="slotFeatures"> The json list of slot features </param>
+        public DecisionContextDocument(string id, List<string> actionFeatures, string slotId, List<string> slotFeatures)
         {
             Id = id;
-            ActionFeatureJsonList = actionFeatureJsonList;
+            ActionFeatures = actionFeatures;
             SlotId = slotId;
-            SlotFeatureJsonList = slotFeatureJsonList;
+            SlotFeatures = slotFeatures;
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Azure.AI.Personalizer
         [JsonPropertyName("j")]
         [JsonConverter(typeof(JsonRawStringListConverter))]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public List<string> ActionFeatureJsonList { get; }
+        public List<string> ActionFeatures { get; }
 
         /// <summary>
         /// Slot ID.
@@ -50,6 +50,6 @@ namespace Azure.AI.Personalizer
         [JsonPropertyName("sj")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [JsonConverter(typeof(JsonRawStringListConverter))]
-        public List<string> SlotFeatureJsonList { get; }
+        public List<string> SlotFeatures { get; }
     }
 }

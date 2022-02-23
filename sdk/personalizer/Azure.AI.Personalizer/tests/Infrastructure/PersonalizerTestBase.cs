@@ -15,7 +15,7 @@ namespace Azure.AI.Personalizer.Tests
     {
         public static bool IsTestTenant = false;
 
-        private class ActionProbabilityWrapperForTest : ActionProbabilityWrapper
+        internal class ActionProbabilityWrapperForTest : ActionProbabilityWrapper
         {
             private readonly long index;
             private readonly float prob;
@@ -24,13 +24,13 @@ namespace Azure.AI.Personalizer.Tests
 
             public override float Probability { get { return this.prob; } }
 
-            public ActionProbabilityWrapperForTest(long index, float prob) : base()
+            internal ActionProbabilityWrapperForTest(long index, float prob) : base()
             {
                 this.index = index;
                 this.prob = prob;
             }
         }
-        private class SlotRankingWrapperForTest : SlotRankingResponseWrapper
+        internal class SlotRankingWrapperForTest : SlotRankingWrapper
         {
             private IEnumerable<ActionProbabilityWrapper> ranking;
             private readonly long actionIndex;
@@ -40,7 +40,7 @@ namespace Azure.AI.Personalizer.Tests
 
             public override string SlotId { get { return this.slotId; } }
 
-            public SlotRankingWrapperForTest(long actionIndex, string slotId, IEnumerable<ActionProbabilityWrapper> ranked) : base()
+            internal SlotRankingWrapperForTest(long actionIndex, string slotId, IEnumerable<ActionProbabilityWrapper> ranked) : base()
             {
                 this.actionIndex = actionIndex;
                 this.slotId = slotId;
@@ -53,7 +53,7 @@ namespace Azure.AI.Personalizer.Tests
             }
         }
 
-        private class RankingResponseWrapperForTest : RankingResponseWrapper
+        internal class RankingResponseWrapperForTest : RankingResponseWrapper
         {
             private IEnumerable<ActionProbabilityWrapper> rank;
 
@@ -68,16 +68,16 @@ namespace Azure.AI.Personalizer.Tests
             }
         }
 
-        private class MultiSlotResponseWrapperForTest : MultiSlotResponseDetailedWrapper
+        internal class MultiSlotResponseWrapperForTest : MultiSlotResponseDetailedWrapper
         {
-            private IEnumerable<SlotRankingResponseWrapper> slotRank;
+            private IEnumerable<SlotRankingWrapper> slotRank;
 
-            public MultiSlotResponseWrapperForTest(IEnumerable<SlotRankingResponseWrapper> rankedSlot) : base()
+            public MultiSlotResponseWrapperForTest(IEnumerable<SlotRankingWrapper> rankedSlot) : base()
             {
                 slotRank = rankedSlot;
             }
 
-            public override IEnumerator<SlotRankingResponseWrapper> GetEnumerator()
+            public override IEnumerator<SlotRankingWrapper> GetEnumerator()
             {
                 return slotRank.GetEnumerator();
             }
@@ -100,7 +100,7 @@ namespace Azure.AI.Personalizer.Tests
                 await EnableMultiSlot(adminClient);
             }
             var credential = new AzureKeyCredential(apiKey);
-            var options = InstrumentClientOptions(new PersonalizerClientOptions());
+            var options = InstrumentClientOptions(new PersonalizerClientOptions(isLocalInference: isLocalInference, subsampleRate: subsampleRate));
             PersonalizerClient personalizerClient = null;
             if (isLocalInference)
             {
@@ -112,7 +112,7 @@ namespace Azure.AI.Personalizer.Tests
                 }
                 else
                 {
-                    personalizerClient = new PersonalizerClient(new Uri(endpoint), credential, true, options: options, subsampleRate: subsampleRate);
+                    personalizerClient = new PersonalizerClient(new Uri(endpoint), credential, options: options);
                 }
             }
             else
@@ -148,7 +148,7 @@ namespace Azure.AI.Personalizer.Tests
 
         private RlNetProcessor SetupRlNetProcessor()
         {
-            Mock<ILiveModel> mockLiveModel = new Mock<ILiveModel>();
+            Mock<LiveModelBase> mockLiveModel = new Mock<LiveModelBase>();
 
             List<ActionProbabilityWrapper> actionProbability = new List<ActionProbabilityWrapper>
                     {
@@ -159,7 +159,7 @@ namespace Azure.AI.Personalizer.Tests
             mockLiveModel.Setup(m => m.ChooseRank(It.IsAny<string>(), It.IsAny<string>(), ActionFlags.Default)).Returns(responseWrapper);
 
             Dictionary<string, List<ActionProbabilityWrapper>> slotRankedActions = GetSlotActionProbabilityList();
-            List<SlotRankingResponseWrapper> rankedSlots = new List<SlotRankingResponseWrapper>();
+            List<SlotRankingWrapper> rankedSlots = new List<SlotRankingWrapper>();
 
             foreach (var item in slotRankedActions)
             {

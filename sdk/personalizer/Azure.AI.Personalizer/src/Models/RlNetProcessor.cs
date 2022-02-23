@@ -14,11 +14,11 @@ namespace Azure.AI.Personalizer
     /// <summary> The Rl.Net Processor. </summary>
     internal class RlNetProcessor
     {
-        private readonly ILiveModel liveModel;
+        private readonly LiveModelBase liveModel;
         internal PolicyRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of RlNetProcessor. </summary>
-        public RlNetProcessor(ILiveModel liveModel)
+        public RlNetProcessor(LiveModelBase liveModel)
         {
             this.liveModel = liveModel;
         }

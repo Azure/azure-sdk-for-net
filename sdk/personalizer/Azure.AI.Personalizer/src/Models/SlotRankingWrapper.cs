@@ -8,17 +8,17 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Personalizer
 {
-    /// <summary> The Wrapper for Rl.Net.SlotRankingResponse </summary>
-    public class SlotRankingResponseWrapper : IEnumerable<ActionProbabilityWrapper>
+    /// <summary> The Wrapper for Rl.Net.SlotRanking </summary>
+    internal class SlotRankingWrapper : IEnumerable<ActionProbabilityWrapper>
     {
         private readonly SlotRanking _slotRanking;
 
         /// <summary> Initializes a new instance of SlotRankingResponseWrapper. </summary>
-        public SlotRankingResponseWrapper()
+        public SlotRankingWrapper()
         {}
 
         /// <summary> Initializes a new instance of SlotRankingResponseWrapper. </summary>
-        public SlotRankingResponseWrapper(SlotRanking slotRanking)
+        public SlotRankingWrapper(SlotRanking slotRanking)
         {
             _slotRanking = slotRanking ?? throw new ArgumentNullException(nameof(slotRanking));
         }

@@ -37,13 +37,11 @@ namespace Azure.AI.Personalizer
         }
 
         private static PersonalizerRankResult GenerateRankResultInner(List<PersonalizerRankableAction> originalActions,
-            List<PersonalizerRankableAction> rankableActions, List<PersonalizerRankableAction> excludedActions, int[] rankedIndices, float[] rankingProbabilities, string eventId, int multiSlotChosenActionIndex = -1)
+            List<PersonalizerRankableAction> rankableActions, List<PersonalizerRankableAction> excludedActions, int[] rankedIndices, float[] rankingProbabilities, string eventId)
         {
             // excluded actions are not passed into VW
             // rankedIndices[0] is the index of the VW chosen action (1 based index)
-            // ccb response that is converted into a cb response: the chosen action index is a field in the vw response.
-            // multiSlotChosenActionIndex is part of the multi slot response (0 based index)
-            int chosenActionIndex = multiSlotChosenActionIndex == -1 ? rankedIndices[0] - 1 : multiSlotChosenActionIndex;
+            int chosenActionIndex = rankedIndices[0] - 1;
 
             // take care of actions that are excluded in their original positions
             if (excludedActions != null && excludedActions.Count > 0)
@@ -69,14 +67,14 @@ namespace Azure.AI.Personalizer
             }
 
             // finalize decision response ranking
-            var ranking = rankedIndices?.Select((index, i) =>
+            var rankings = rankedIndices?.Select((index, i) =>
             {
                 var action = originalActions[index - 1];
                 return new PersonalizerRankedAction(action.Id, rankingProbabilities[i]);
             }).ToList();
 
             // setting RewardActionId to be the VW chosen action.
-            var personalizerRankResult = new PersonalizerRankResult(ranking, eventId, originalActions.ElementAt(chosenActionIndex)?.Id);
+            var personalizerRankResult = new PersonalizerRankResult(rankings, eventId, rankableActions.ElementAt(chosenActionIndex)?.Id);
 
             return personalizerRankResult;
         }

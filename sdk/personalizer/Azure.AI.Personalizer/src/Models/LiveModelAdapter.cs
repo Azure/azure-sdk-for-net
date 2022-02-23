@@ -7,33 +7,33 @@ using System;
 namespace Azure.AI.Personalizer
 {
     /// <summary> An adapter class of Rl.Net.LiveModel </summary>
-    public class LiveModelAdapter : ILiveModel
+    internal class LiveModelAdapter : LiveModelBase
     {
         private readonly LiveModel liveModel;
 
         /// <summary> Initializes a new instance of LiveModelAdapter. </summary>
-        public LiveModelAdapter(LiveModel liveModel)
+        internal LiveModelAdapter(LiveModel liveModel)
         {
             this.liveModel = liveModel ?? throw new ArgumentNullException(nameof(liveModel));
         }
 
         /// <summary> Init LiveModel </summary>
-        public void Init()
+        public override void Init()
         {
             liveModel.Init();
         }
 
         /// <summary> Wrapper method of ChooseRank </summary>
-        public RankingResponseWrapper ChooseRank(string eventId, string contextJson, ActionFlags flags)
+        public override RankingResponseWrapper ChooseRank(string eventId, string contextJson, ActionFlags actionFlags)
         {
-            RankingResponse rankingResponse = liveModel.ChooseRank(eventId, contextJson, flags);
+            RankingResponse rankingResponse = liveModel.ChooseRank(eventId, contextJson, actionFlags);
             RankingResponseWrapper rankingResponseWrapper = rankingResponse == null ? null : new RankingResponseWrapper(rankingResponse);
 
             return rankingResponseWrapper;
         }
 
         /// <summary> Wrapper method of RequestMultiSlotDecisionDetailed </summary>
-        public MultiSlotResponseDetailedWrapper RequestMultiSlotDecisionDetailed(string eventId, string contextJson, ActionFlags flags, int[] baselineActions)
+        public override MultiSlotResponseDetailedWrapper RequestMultiSlotDecisionDetailed(string eventId, string contextJson, ActionFlags flags, int[] baselineActions)
         {
             MultiSlotResponseDetailed multiSlotResponse = liveModel.RequestMultiSlotDecisionDetailed(eventId, contextJson, flags, baselineActions);
             MultiSlotResponseDetailedWrapper multiSlotResponseDetailedWrapper = multiSlotResponse == null ? null : new MultiSlotResponseDetailedWrapper(multiSlotResponse);
@@ -41,19 +41,19 @@ namespace Azure.AI.Personalizer
         }
 
         /// <summary> Wrapper method of QueueOutcomeEvent </summary>
-        public void QueueOutcomeEvent(string eventId, float outcome)
+        public override void QueueOutcomeEvent(string eventId, float outcome)
         {
             liveModel.QueueOutcomeEvent(eventId, outcome);
         }
 
         /// <summary> Wrapper method of RequestMultiSlotDecisionDetailed </summary>
-        public void QueueOutcomeEvent(string eventId, string slotId, float outcome)
+        public override void QueueOutcomeEvent(string eventId, string slotId, float outcome)
         {
             liveModel.QueueOutcomeEvent(eventId, slotId, outcome);
         }
 
         /// <summary> Wrapper method of QueueActionTakenEvent </summary>
-        public void QueueActionTakenEvent(string eventId)
+        public override void QueueActionTakenEvent(string eventId)
         {
             liveModel.QueueActionTakenEvent(eventId);
         }
