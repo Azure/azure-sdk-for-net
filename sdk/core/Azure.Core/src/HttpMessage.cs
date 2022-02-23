@@ -14,6 +14,11 @@ namespace Azure.Core
     /// </summary>
     public sealed class HttpMessage : IDisposable
     {
+        /// <summary>
+        /// This dictionary is keyed with <c>Type</c> for a couple of reasons. Primarily, it allows values to be stored such that even if the accessor methods
+        /// become public, storing values keyed by internal types make them inaccessible to other assemblies. This protects internal values from being overwritten
+        /// by external code. See the <see cref="UserAgentValue"/> and <see cref="UserAgentValueKey"/> types for an example of this usage.
+        /// </summary>
         private Dictionary<Type, object>? _typeProperties;
 
         private Response? _response;
@@ -142,7 +147,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Gets a property that modifies the pipeline behavior. Please refer to individual policies documentation on what properties it supports.
+        /// Gets a property that is stored with this <see cref="HttpMessage"/> instance and can be used for modifying pipeline behavior.
         /// </summary>
         /// <param name="type">The property type.</param>
         /// <param name="value">The property value.</param>
@@ -154,7 +159,8 @@ namespace Azure.Core
         }
 
         /// <summary>
-        ///
+        /// Sets a property that is stored with this <see cref="HttpMessage"/> instance and can be used for modifying pipeline behavior.
+        /// Internal properties can be keyed with internal types to prevent external code from overwriting these values.
         /// </summary>
         /// <param name="type">The key for the value.</param>
         /// <param name="value">The property value.</param>
