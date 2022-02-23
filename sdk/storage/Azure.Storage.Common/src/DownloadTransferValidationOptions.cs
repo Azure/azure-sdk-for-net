@@ -18,7 +18,7 @@ namespace Azure.Storage
         /// Defaults to true. Indicates whether the library should validate the content
         /// body against the content checksum before returning contents to the caller
         /// or destination. If set to false, caller is responsible for extracting the
-        /// checsum out of the <see cref="Response{T}"/> and validating it themselves.
+        /// checksum out of the <see cref="Response{T}"/> and validating it themselves.
         /// </summary>
         public bool Validate { get; set; } = true;
     }

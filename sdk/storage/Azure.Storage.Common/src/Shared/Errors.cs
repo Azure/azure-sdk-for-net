@@ -75,7 +75,7 @@ namespace Azure.Storage
 
             if (!acceptPrecalculated && validationOptions.PrecalculatedChecksum != default)
             {
-                throw InvalidArgument(nameof(validationOptions.PrecalculatedChecksum));
+                throw PrecalculatedChecksumNotSupportedOnSplit();
             }
             if (validationOptions.Algorithm == ValidationAlgorithm.None || !Enum.IsDefined(typeof(ValidationAlgorithm), validationOptions.Algorithm))
             {

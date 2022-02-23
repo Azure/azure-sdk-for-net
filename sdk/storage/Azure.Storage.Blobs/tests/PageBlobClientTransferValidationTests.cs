@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Test;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Tests
@@ -51,9 +52,7 @@ namespace Azure.Storage.Blobs.Tests
             UploadTransferValidationOptions hashingOptions,
             StorageTransferOptions transferOptions)
         {
-            /* Need to rerecord? Azure.Core framework won't record inconclusive tests.
-             * Change this to pass for recording and revert when done. */
-            Assert.Inconclusive("PageBlobClient contains no definition for parallel upload.");
+            TestHelper.AssertInconclusiveRecordingFriendly(Recording.Mode, "PageBlobClient contains no definition for parallel upload.");
             return Task.CompletedTask;
         }
 

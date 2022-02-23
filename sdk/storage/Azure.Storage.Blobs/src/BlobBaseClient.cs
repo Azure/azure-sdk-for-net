@@ -1422,8 +1422,8 @@ namespace Azure.Storage.Blobs.Specialized
                 response = await BlobRestClient.DownloadAsync(
                     range: pageRange?.ToString(),
                     leaseId: options?.Conditions?.LeaseId,
-                    rangeGetContentMD5: options?.TransactionalHashingOptions?.Algorithm == ValidationAlgorithm.MD5 ? true : null,
-                    rangeGetContentCRC64: options?.TransactionalHashingOptions?.Algorithm == ValidationAlgorithm.StorageCrc64 ? true : null,
+                    rangeGetContentMD5: options?.TransactionalHashingOptions?.Algorithm.ResolveAuto() == ValidationAlgorithm.MD5 ? true : null,
+                    rangeGetContentCRC64: options?.TransactionalHashingOptions?.Algorithm.ResolveAuto() == ValidationAlgorithm.StorageCrc64 ? true : null,
                     encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                     encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                     encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
@@ -1440,8 +1440,8 @@ namespace Azure.Storage.Blobs.Specialized
                 response = BlobRestClient.Download(
                     range: pageRange?.ToString(),
                     leaseId: options?.Conditions?.LeaseId,
-                    rangeGetContentMD5: options?.TransactionalHashingOptions?.Algorithm == ValidationAlgorithm.MD5 ? true : null,
-                    rangeGetContentCRC64: options?.TransactionalHashingOptions?.Algorithm == ValidationAlgorithm.StorageCrc64 ? true : null,
+                    rangeGetContentMD5: options?.TransactionalHashingOptions?.Algorithm.ResolveAuto() == ValidationAlgorithm.MD5 ? true : null,
+                    rangeGetContentCRC64: options?.TransactionalHashingOptions?.Algorithm.ResolveAuto() == ValidationAlgorithm.StorageCrc64 ? true : null,
                     encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                     encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                     encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,

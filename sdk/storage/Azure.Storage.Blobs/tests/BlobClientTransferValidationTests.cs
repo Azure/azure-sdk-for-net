@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Test;
 using Moq;
 using NUnit.Framework;
 
@@ -34,9 +35,7 @@ namespace Azure.Storage.Blobs.Tests
             UploadTransferValidationOptions hashingOptions,
             int internalBufferSize)
         {
-            /* Need to rerecord? Azure.Core framework won't record inconclusive tests.
-             * Change this to pass for recording and revert when done. */
-            Assert.Inconclusive("BlobClient contains no definition for OpenWriteAsync.");
+            TestHelper.AssertInconclusiveRecordingFriendly(Recording.Mode, "BlobClient contains no definition for OpenWriteAsync.");
             return Task.FromResult<Stream>(null);
         }
 
@@ -56,9 +55,7 @@ namespace Azure.Storage.Blobs.Tests
             Stream source,
             UploadTransferValidationOptions hashingOptions)
         {
-            /* Need to rerecord? Azure.Core framework won't record inconclusive tests.
-             * Change this to pass for recording and revert when done. */
-            Assert.Inconclusive("BlobClient contains no definition for a 1:1 upload.");
+            TestHelper.AssertInconclusiveRecordingFriendly(Recording.Mode, "BlobClient contains no definition for a 1:1 upload.");
             return Task.FromResult<Response>(null);
         }
 

@@ -207,7 +207,7 @@ namespace Azure.Storage.Test.Shared
                     return;
                 }
 
-                switch (algorithm)
+                switch (algorithm.ResolveAuto())
                 {
                     case ValidationAlgorithm.MD5:
                         AssertChecksum(request.Headers, "Content-MD5");
@@ -263,7 +263,7 @@ namespace Azure.Storage.Test.Shared
                     return;
                 }
 
-                switch (algorithm)
+                switch (algorithm.ResolveAuto())
                 {
                     case ValidationAlgorithm.MD5:
                         AssertChecksum(response.Headers, "Content-MD5");
@@ -285,7 +285,7 @@ namespace Azure.Storage.Test.Shared
         internal static void AssertWriteChecksumMismatch(AsyncTestDelegate writeAction, ValidationAlgorithm algorithm)
         {
             var exception = ThrowsOrInconclusiveAsync<RequestFailedException>(writeAction);
-            switch (algorithm)
+            switch (algorithm.ResolveAuto())
             {
                 case ValidationAlgorithm.MD5:
                     Assert.AreEqual("Md5Mismatch", exception.ErrorCode);
@@ -299,9 +299,21 @@ namespace Azure.Storage.Test.Shared
         }
         #endregion
 
+        public static IEnumerable<ValidationAlgorithm> GetValidationAlgorithms()
+        {
+            var values = new HashSet<ValidationAlgorithm>(Enum.GetValues(typeof(ValidationAlgorithm)).Cast<ValidationAlgorithm>());
+            values.Remove(ValidationAlgorithm.None);
+            return values;
+        }
+
+        public static IEnumerable<ValidationAlgorithm> GetValidationAlgorithmsIncludingNone()
+        {
+            var values = new HashSet<ValidationAlgorithm>(Enum.GetValues(typeof(ValidationAlgorithm)).Cast<ValidationAlgorithm>());
+            return values;
+        }
+
         #region UploadPartition Tests
-        [TestCase(ValidationAlgorithm.MD5)]
-        [TestCase(ValidationAlgorithm.StorageCrc64)]
+        [TestCaseSource("GetValidationAlgorithms")]
         public virtual async Task UploadPartitionSuccessfulHashComputation(ValidationAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
@@ -336,17 +348,21 @@ namespace Azure.Storage.Test.Shared
             // Assertion was in the pipeline and the service returning success means the checksum was correct
         }
 
-        [TestCase(ValidationAlgorithm.MD5)]
-        [TestCase(ValidationAlgorithm.StorageCrc64)]
+        [TestCaseSource("GetValidationAlgorithms")]
         public virtual async Task UploadPartitionUsePrecalculatedHash(ValidationAlgorithm algorithm)
         {
+            if (algorithm == ValidationAlgorithm.Auto)
+            {
+                Assert.Inconclusive();
+            }
+
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
             const int dataLength = Constants.KB;
             var data = GetRandomBuffer(dataLength);
             // service throws different error for crc only when checksum size in incorrect; we don't want to test that
-            var checksumSizeBytes = algorithm switch
+            var checksumSizeBytes = algorithm.ResolveAuto() switch
             {
                 ValidationAlgorithm.MD5 => 16,
                 ValidationAlgorithm.StorageCrc64 => 8,
@@ -382,8 +398,7 @@ namespace Azure.Storage.Test.Shared
             }
         }
 
-        [TestCase(ValidationAlgorithm.MD5)]
-        [TestCase(ValidationAlgorithm.StorageCrc64)]
+        [TestCaseSource("GetValidationAlgorithms")]
         public virtual async Task UploadPartitionMismatchedHashThrows(ValidationAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
@@ -420,8 +435,7 @@ namespace Azure.Storage.Test.Shared
         #endregion
 
         #region OpenWrite Tests
-        [TestCase(ValidationAlgorithm.MD5)]
-        [TestCase(ValidationAlgorithm.StorageCrc64)]
+        [TestCaseSource("GetValidationAlgorithms")]
         public virtual async Task OpenWriteSuccessfulHashComputation(ValidationAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
@@ -461,8 +475,7 @@ namespace Azure.Storage.Test.Shared
             }
         }
 
-        [TestCase(ValidationAlgorithm.MD5)]
-        [TestCase(ValidationAlgorithm.StorageCrc64)]
+        [TestCaseSource("GetValidationAlgorithms")]
         public virtual async Task OpenWriteMismatchedHashThrows(ValidationAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
@@ -506,8 +519,7 @@ namespace Azure.Storage.Test.Shared
         #endregion
 
         #region Parallel Upload Tests
-        [TestCase(ValidationAlgorithm.MD5)]
-        [TestCase(ValidationAlgorithm.StorageCrc64)]
+        [TestCaseSource("GetValidationAlgorithms")]
         public virtual async Task ParallelUploadSplitSuccessfulHashComputation(ValidationAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
@@ -545,8 +557,7 @@ namespace Azure.Storage.Test.Shared
             // Assertion was in the pipeline and the service returning success means the checksum was correct
         }
 
-        [TestCase(ValidationAlgorithm.MD5)]
-        [TestCase(ValidationAlgorithm.StorageCrc64)]
+        [TestCaseSource("GetValidationAlgorithms")]
         public virtual async Task ParallelUploadOneShotSuccessfulHashComputation(ValidationAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
@@ -584,8 +595,7 @@ namespace Azure.Storage.Test.Shared
             // Assertion was in the pipeline and the service returning success means the checksum was correct
         }
 
-        [TestCase(ValidationAlgorithm.MD5)]
-        [TestCase(ValidationAlgorithm.StorageCrc64)]
+        [TestCaseSource("GetValidationAlgorithms")]
         public virtual async Task PrecalculatedHashNotAccepted(ValidationAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
@@ -606,14 +616,14 @@ namespace Azure.Storage.Test.Shared
                 async () => await ParallelUploadAsync(client, new MemoryStream(data), validationOptions, transferOptions: default));
 
             // Assert
-            Assert.AreEqual("PrecalculatedChecksum is invalid", exception.Message);
+            Assert.AreEqual("Precalculated checksum not supported when potentially partitioning an upload.", exception.Message);
         }
         #endregion
 
         #region Parallel Download Tests
         [Test, Combinatorial]
         public virtual async Task ParallelDownloadSuccessfulHashVerification(
-            [Values(ValidationAlgorithm.MD5, ValidationAlgorithm.StorageCrc64)] ValidationAlgorithm algorithm,
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm algorithm,
             [Values(512, 2 * Constants.KB)] int chunkSize)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
@@ -659,7 +669,7 @@ namespace Azure.Storage.Test.Shared
         #region OpenRead Tests
         [Test, Combinatorial]
         public virtual async Task OpenReadSuccessfulHashVerification(
-            [Values(ValidationAlgorithm.MD5, ValidationAlgorithm.StorageCrc64)] ValidationAlgorithm algorithm,
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm algorithm,
             [Values(
                 // multiple reads that neatly align
                 Constants.KB,
@@ -705,8 +715,7 @@ namespace Azure.Storage.Test.Shared
         #endregion
 
         #region Download Streaming/Content Tests
-        [TestCase(ValidationAlgorithm.MD5)]
-        [TestCase(ValidationAlgorithm.StorageCrc64)]
+        [TestCaseSource("GetValidationAlgorithms")]
         public virtual async Task DownloadSuccessfulHashVerification(ValidationAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
@@ -730,7 +739,7 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             // no policies this time; just check response headers
-            switch (algorithm)
+            switch (algorithm.ResolveAuto())
             {
                 case ValidationAlgorithm.MD5:
                     Assert.True(response.Headers.Contains("Content-MD5"));
@@ -746,7 +755,7 @@ namespace Azure.Storage.Test.Shared
 
         [Test, Combinatorial]
         public virtual async Task DownloadHashMismatchThrows(
-            [Values(ValidationAlgorithm.MD5, ValidationAlgorithm.StorageCrc64)] ValidationAlgorithm algorithm,
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm algorithm,
             [Values(true, false)] bool validate)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();

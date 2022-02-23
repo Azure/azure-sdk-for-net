@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Models;
+using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
@@ -47,13 +48,11 @@ namespace Azure.Storage.Files.Shares.Tests
             return file;
         }
 
-        private static void AssertSupportsHashAlgorithm(ValidationAlgorithm algorithm)
+        private void AssertSupportsHashAlgorithm(ValidationAlgorithm algorithm)
         {
-            if (algorithm == ValidationAlgorithm.StorageCrc64)
+            if (algorithm.ResolveAuto() == ValidationAlgorithm.StorageCrc64)
             {
-                /* Need to rerecord? Azure.Core framework won't record inconclusive tests.
-                 * Change this to pass for recording and revert when done. */
-                Assert.Inconclusive("Azure File Share does not support CRC64.");
+                TestHelper.AssertInconclusiveRecordingFriendly(Recording.Mode, "Azure File Share does not support CRC64.");
             }
         }
 

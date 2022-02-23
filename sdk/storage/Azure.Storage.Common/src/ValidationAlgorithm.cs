@@ -9,7 +9,7 @@ namespace Azure.Storage
     public enum ValidationAlgorithm
     {
         /// <summary>
-        /// Recommended. Allow the SDK to choose for me.
+        /// Recommended. Allow the SDK to choose an algorithm. This choice may change across library versions.
         /// </summary>
         Auto = 0,
 

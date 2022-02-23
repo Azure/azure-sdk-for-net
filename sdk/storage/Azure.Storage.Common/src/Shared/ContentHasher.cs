@@ -87,7 +87,7 @@ namespace Azure.Storage
                 throw Errors.ArgumentNull(nameof(response));
             }
 
-            switch (algorithm)
+            switch (algorithm.ResolveAuto())
             {
                 case ValidationAlgorithm.MD5:
                     if (!Enumerable.SequenceEqual(
@@ -132,7 +132,7 @@ namespace Azure.Storage
 
             if (options.PrecalculatedChecksum != default)
             {
-                return options.Algorithm switch
+                return options.Algorithm.ResolveAuto() switch
                 {
                     ValidationAlgorithm.StorageCrc64 => new GetHashResult(storageCrc64: options.PrecalculatedChecksum),
                     ValidationAlgorithm.MD5 => new GetHashResult(md5: options.PrecalculatedChecksum),
@@ -153,7 +153,7 @@ namespace Azure.Storage
         /// </exception>
         public static GetHashResult GetHash(Stream content, ValidationAlgorithm algorithmIdentifier)
         {
-            return algorithmIdentifier switch
+            return algorithmIdentifier.ResolveAuto() switch
             {
                 ValidationAlgorithm.StorageCrc64 => new GetHashResult(
                     storageCrc64: ComputeHash(content, new NonCryptographicHashAlgorithmHasher(StorageCrc64NonCryptographicHashAlgorithm.Create()))),
@@ -183,7 +183,7 @@ namespace Azure.Storage
                 return nonCryptographicHashAlgorithm.GetCurrentHash();
             }
 
-            return algorithmIdentifier switch
+            return algorithmIdentifier.ResolveAuto() switch
             {
                 ValidationAlgorithm.StorageCrc64 => new GetHashResult(
                     storageCrc64: computeHash(StorageCrc64NonCryptographicHashAlgorithm.Create())),
