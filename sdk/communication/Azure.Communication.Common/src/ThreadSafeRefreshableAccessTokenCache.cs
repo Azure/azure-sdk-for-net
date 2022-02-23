@@ -78,13 +78,22 @@ namespace Azure.Communication
             Schedule = scheduler is null ? (Action action, TimeSpan period) => new ScheduledAction(action, period) : scheduler;
             UtcNow = utcNowProvider is null ? () => DateTimeOffset.UtcNow : utcNowProvider;
 
-            if (refreshProactively)
-            {
-                TimeSpan dueTime = IsCurrentTokenInRefreshZone()
-                       ? TimeSpan.Zero
-                       : _currentToken.ExpiresOn - UtcNow() - _proactiveRefreshingInterval;
-                _scheduledProactiveRefreshing = ScheduleProactiveRefreshing(dueTime);
-            }
+            if (_scheduleProactivelyRefreshing)
+                ScheduleRefresher();
+        }
+
+        private void ScheduleRefresher()
+        {
+            var tokenTtl = _currentToken.ExpiresOn - UtcNow();
+            TimeSpan dueTime;
+            if (!IsTokenValid(_currentToken))
+                dueTime = TimeSpan.Zero;
+            else if (IsCurrentTokenInRefreshZone())
+                dueTime = TimeSpan.FromTicks(tokenTtl.Ticks / 2);
+            else
+                dueTime = tokenTtl - _proactiveRefreshingInterval;
+            _scheduledProactiveRefreshing?.Dispose();
+            _scheduledProactiveRefreshing = ScheduleProactiveRefreshing(dueTime);
         }
 
         public AccessToken GetValue(CancellationToken cancellationToken)
@@ -109,7 +118,7 @@ namespace Azure.Communication
                 {
                     if (_someThreadIsRefreshing)
                     {
-                        if (IsCurrentTokenValid())
+                        if (IsTokenValid(_currentToken))
                             return _currentToken;
 
                         WaitTillInProgressThreadFinishesRefreshing();
@@ -130,19 +139,15 @@ namespace Azure.Communication
                     AccessToken result = async
                         ? await RefreshAsync(cancellationToken).ConfigureAwait(false)
                         : Refresh(cancellationToken);
-
-                    if (_scheduleProactivelyRefreshing)
-                    {
-                        TimeSpan schedulingTime = result.ExpiresOn - (UtcNow() + _proactiveRefreshingInterval);
-
-                        _scheduledProactiveRefreshing?.Dispose();
-                        _scheduledProactiveRefreshing = ScheduleProactiveRefreshing(schedulingTime);
-                    }
+                    if (!IsTokenValid(result))
+                        throw new InvalidOperationException("The token returned from the tokenRefresher is expired.");
 
                     lock (_syncLock)
                     {
                         _currentToken = result;
                         _valueIsInitialized = true;
+                        if (_scheduleProactivelyRefreshing)
+                            ScheduleRefresher();
                         Thread.MemoryBarrier();
                         _someThreadIsRefreshing = false;
                         NotifyOtherThreadsThatTokenRefreshingFinished();
@@ -172,8 +177,8 @@ namespace Azure.Communication
         private IScheduledAction ScheduleProactiveRefreshing(TimeSpan schedulingTime)
             => Schedule(() => GetValueAsync(async: false, shouldRefresh: IsCurrentTokenInRefreshZone, cancellationToken: new CancellationToken()).EnsureCompleted(), schedulingTime > TimeSpan.Zero ? schedulingTime : TimeSpan.Zero);
 
-        private bool IsCurrentTokenValid()
-            => _valueIsInitialized && UtcNow() < _currentToken.ExpiresOn;
+        private bool IsTokenValid(AccessToken? token)
+            => token != null && UtcNow() < token?.ExpiresOn;
 
         private bool IsCurrentTokenExpiryingSoon()
             => !_valueIsInitialized || UtcNow() >= _currentToken.ExpiresOn - _onDemandRefreshInterval;

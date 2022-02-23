@@ -19,6 +19,7 @@ pr:
   paths:
     include:
     - sdk/webpubsub/
+    - sdk/resourcemanager/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -34,3 +35,5 @@ extends:
       safeName: MicrosoftAzureWebPubSubAspNetCore
     - name: Microsoft.Azure.WebPubSub.Common
       safeName: MicrosoftAzureWebPubSubCommon
+    - name: Azure.ResourceManager.WebPubSub
+      safeName: AzureResourceManagerWebPubSub

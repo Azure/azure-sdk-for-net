@@ -13,20 +13,25 @@ namespace Azure.Communication.Tests
         public const string AzurePhoneNumber = "AZURE_PHONE_NUMBER";
         private const string SkipIntSmsTestEnvironmentVariableName = "SKIP_INT_SMS_TEST";
         private const string SkipIntPhoneNumbersTestEnvironmentVariableName = "SKIP_INT_PHONENUMBERS_TEST";
+        private const string AzureTestAgentVariableName = "AZURE_TEST_AGENT";
 
-        public string LiveTestDynamicConnectionString => GetRecordedVariable(LiveTestDynamicConnectionStringEnvironmentVariableName);
+        public string LiveTestDynamicConnectionString => GetRecordedVariable(
+            LiveTestDynamicConnectionStringEnvironmentVariableName,
+            options => options.HasSecretConnectionStringParameter("accessKey", SanitizedValue.Base64));
 
         public Uri LiveTestDynamicEndpoint => new Uri(Core.ConnectionString.Parse(LiveTestDynamicConnectionString).GetRequired("endpoint"));
 
         public string LiveTestDynamicAccessKey => Core.ConnectionString.Parse(LiveTestDynamicConnectionString).GetRequired("accesskey");
 
-        public string LiveTestStaticConnectionString => GetRecordedVariable(LiveTestStaticConnectionStringEnvironmentVariableName);
+        public string LiveTestStaticConnectionString => GetRecordedVariable(
+                LiveTestStaticConnectionStringEnvironmentVariableName,
+                options => options.HasSecretConnectionStringParameter("accessKey", SanitizedValue.Base64));
 
         public Uri LiveTestStaticEndpoint => new Uri(Core.ConnectionString.Parse(LiveTestStaticConnectionString).GetRequired("endpoint"));
 
         public string LiveTestStaticAccessKey => Core.ConnectionString.Parse(LiveTestStaticConnectionString).GetRequired("accesskey");
 
-        public string CommunicationTestPhoneNumber => GetVariable(AzurePhoneNumber);
+        public string DefaultTestPhoneNumber => GetRecordedVariable(AzurePhoneNumber, options => options.IsSecret("+14255550123"));
 
         public string SkipSmsTest => GetOptionalVariable(SkipIntSmsTestEnvironmentVariableName) ?? "False";
 
@@ -35,5 +40,9 @@ namespace Azure.Communication.Tests
         public bool ShouldIgnoreSMSTests => bool.Parse(SkipSmsTest);
 
         public bool ShouldIgnorePhoneNumbersTests => bool.Parse(SkipPhoneNumbersTest);
+
+        public string TestAgentPhoneNumber => GetRecordedVariable($"{AzurePhoneNumber}_{AzureTestAgent}", options => options.IsSecret("+14255550123"));
+
+        private string AzureTestAgent => GetVariable(AzureTestAgentVariableName);
     }
 }

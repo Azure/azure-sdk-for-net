@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.Storage.Tests
     {
         private ResourceGroup _resourceGroup;
         private StorageAccount _storageAccount;
-        private FileServiceCollection _fileServiceCollection;
         private FileService _fileService;
         private FileShareCollection _fileShareCollection;
 
@@ -29,9 +28,9 @@ namespace Azure.ResourceManager.Storage.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             string accountName = await CreateValidAccountNameAsync("teststoragemgmt");
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
-            _storageAccount = (await storageAccountCollection.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters())).Value;
-            _fileServiceCollection = _storageAccount.GetFileServices();
-            _fileService = await _fileServiceCollection.GetAsync("default");
+            _storageAccount = (await storageAccountCollection.CreateOrUpdateAsync(true, accountName, GetDefaultStorageAccountParameters())).Value;
+            _fileService = _storageAccount.GetFileService();
+            _fileService = await _fileService.GetAsync();
             _fileShareCollection = _fileService.GetFileShares();
         }
 
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 var storageAccountCollection = _resourceGroup.GetStorageAccounts();
                 await foreach (StorageAccount account in storageAccountCollection.GetAllAsync())
                 {
-                    await account.DeleteAsync();
+                    await account.DeleteAsync(true);
                 }
                 _resourceGroup = null;
                 _storageAccount = null;
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.Storage.Tests
         {
             //create file share
             string fileShareName = Recording.GenerateAssetName("testfileshare");
-            FileShare share1 = (await _fileShareCollection.CreateOrUpdateAsync(fileShareName, new FileShareData())).Value;
+            FileShare share1 = (await _fileShareCollection.CreateOrUpdateAsync(true, fileShareName, new FileShareData())).Value;
             Assert.AreEqual(share1.Id.Name, fileShareName);
 
             //validate if created successfully
@@ -64,16 +63,16 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsEmpty(shareData.Metadata);
             FileShare share2 = await _fileShareCollection.GetAsync(fileShareName);
             AssertFileShareEqual(share1, share2);
-            Assert.IsTrue(await _fileShareCollection.CheckIfExistsAsync(fileShareName));
-            Assert.IsFalse(await _fileShareCollection.CheckIfExistsAsync(fileShareName + "1"));
+            Assert.IsTrue(await _fileShareCollection.ExistsAsync(fileShareName));
+            Assert.IsFalse(await _fileShareCollection.ExistsAsync(fileShareName + "1"));
 
             //delete file share
-            await share1.DeleteAsync();
+            await share1.DeleteAsync(true);
 
             //validate if deleted successfully
             FileShare fileShare3 = await _fileShareCollection.GetIfExistsAsync(fileShareName);
             Assert.IsNull(fileShare3);
-            Assert.IsFalse(await _fileShareCollection.CheckIfExistsAsync(fileShareName));
+            Assert.IsFalse(await _fileShareCollection.ExistsAsync(fileShareName));
         }
 
         [Test]
@@ -81,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task CreateDeleteListFileShareSnapshot()
         {
             //update storage account to v2
-            StorageAccountUpdateParameters updateParameters = new StorageAccountUpdateParameters()
+            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions()
             {
                 Kind = Kind.StorageV2
             };
@@ -97,18 +96,18 @@ namespace Azure.ResourceManager.Storage.Tests
                     Days = 5
                 }
             };
-            _fileService = await _fileService.SetServicePropertiesAsync(properties);
+            _fileService = (await _fileService.CreateOrUpdateAsync(true, properties)).Value;
 
             //create 2 file share and delete 1
             string fileShareName1 = Recording.GenerateAssetName("testfileshare1");
             string fileShareName2 = Recording.GenerateAssetName("testfileshare2");
-            FileShare share1 = (await _fileShareCollection.CreateOrUpdateAsync(fileShareName1, new FileShareData())).Value;
-            FileShare share2 = (await _fileShareCollection.CreateOrUpdateAsync(fileShareName2, new FileShareData())).Value;
-            await share2.DeleteAsync();
+            FileShare share1 = (await _fileShareCollection.CreateOrUpdateAsync(true, fileShareName1, new FileShareData())).Value;
+            FileShare share2 = (await _fileShareCollection.CreateOrUpdateAsync(true, fileShareName2, new FileShareData())).Value;
+            await share2.DeleteAsync(true);
 
             //create 2 share snapshots
-            FileShare shareSnapshot1 = (await _fileShareCollection.CreateOrUpdateAsync(fileShareName1, new FileShareData(), expand: "snapshots")).Value;
-            FileShare shareSnapshot2 = (await _fileShareCollection.CreateOrUpdateAsync(fileShareName1, new FileShareData(), expand: "snapshots")).Value;
+            FileShare shareSnapshot1 = (await _fileShareCollection.CreateOrUpdateAsync(true, fileShareName1, new FileShareData(), expand: "snapshots")).Value;
+            FileShare shareSnapshot2 = (await _fileShareCollection.CreateOrUpdateAsync(true, fileShareName1, new FileShareData(), expand: "snapshots")).Value;
 
             //get single share snapshot
             FileShare shareSnapshot = await _fileShareCollection.GetAsync(fileShareName1, "stats", shareSnapshot1.Data.SnapshotTime.Value.UtcDateTime.ToString("o"));
@@ -119,7 +118,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(3, fileShares.Count);
 
             //delete share snapshot
-            await shareSnapshot.DeleteAsync();
+            await shareSnapshot.DeleteAsync(true);
 
             // List share with deleted
             fileShares = await _fileShareCollection.GetAllAsync(expand: "deleted").ToEnumerableAsync();
@@ -133,8 +132,8 @@ namespace Azure.ResourceManager.Storage.Tests
             //create two file shares
             string fileShareName1 = Recording.GenerateAssetName("testfileshare1");
             string fileShareName2 = Recording.GenerateAssetName("testfileshare2");
-            FileShare share1 = (await _fileShareCollection.CreateOrUpdateAsync(fileShareName1, new FileShareData())).Value;
-            FileShare share2 = (await _fileShareCollection.CreateOrUpdateAsync(fileShareName2, new FileShareData())).Value;
+            FileShare share1 = (await _fileShareCollection.CreateOrUpdateAsync(true, fileShareName1, new FileShareData())).Value;
+            FileShare share2 = (await _fileShareCollection.CreateOrUpdateAsync(true, fileShareName2, new FileShareData())).Value;
 
             //validate if there are two file shares
             FileShare share3 = null;
@@ -159,7 +158,7 @@ namespace Azure.ResourceManager.Storage.Tests
         {
             //create file share
             string fileShareName = Recording.GenerateAssetName("testfileshare");
-            FileShare share1 = (await _fileShareCollection.CreateOrUpdateAsync(fileShareName, new FileShareData())).Value;
+            FileShare share1 = (await _fileShareCollection.CreateOrUpdateAsync(true, fileShareName, new FileShareData())).Value;
             Assert.AreEqual(share1.Id.Name, fileShareName);
 
             //update metadata and share quota
@@ -192,7 +191,7 @@ namespace Azure.ResourceManager.Storage.Tests
                     Days = 5
                 }
             };
-            _fileService = await _fileService.SetServicePropertiesAsync(parameter);
+            _fileService = (await _fileService.CreateOrUpdateAsync(true, parameter)).Value;
 
             //validate
             Assert.IsTrue(_fileService.Data.ShareDeleteRetentionPolicy.Enabled);
@@ -212,15 +211,15 @@ namespace Azure.ResourceManager.Storage.Tests
                     Days = 5
                 }
             };
-            _fileService = await _fileService.SetServicePropertiesAsync(parameter);
+            _fileService = (await _fileService.CreateOrUpdateAsync(true, parameter)).Value;
 
             //create file share
             string fileShareName = Recording.GenerateAssetName("testfileshare");
-            FileShare share1 = (await _fileShareCollection.CreateOrUpdateAsync(fileShareName, new FileShareData())).Value;
+            FileShare share1 = (await _fileShareCollection.CreateOrUpdateAsync(true, fileShareName, new FileShareData())).Value;
             Assert.AreEqual(share1.Id.Name, fileShareName);
 
             //delete this share
-            await share1.DeleteAsync();
+            await share1.DeleteAsync(true);
 
             //get the deleted share version
             string deletedShareVersion = null;
@@ -246,7 +245,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task FileShareAccessPolicy()
         {
             //update storage account to v2
-            StorageAccountUpdateParameters updateParameters = new StorageAccountUpdateParameters()
+            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions()
             {
                 Kind = Kind.StorageV2
             };
@@ -254,7 +253,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //create share
             string fileShareName = Recording.GenerateAssetName("testfileshare");
-            FileShare share = (await _fileShareCollection.CreateOrUpdateAsync(fileShareName, new FileShareData())).Value;
+            FileShare share = (await _fileShareCollection.CreateOrUpdateAsync(true, fileShareName, new FileShareData())).Value;
 
             // Prepare signedIdentifiers to set
             List<SignedIdentifier> sigs = new List<SignedIdentifier>();
@@ -287,7 +286,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task FileShareLease()
         {
             //update storage account to v2
-            StorageAccountUpdateParameters updateParameters = new StorageAccountUpdateParameters()
+            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions()
             {
                 Kind = Kind.StorageV2
             };
@@ -295,10 +294,10 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //create base share
             string fileShareName = Recording.GenerateAssetName("testfileshare");
-            FileShare share = (await _fileShareCollection.CreateOrUpdateAsync(fileShareName, new FileShareData())).Value;
+            FileShare share = (await _fileShareCollection.CreateOrUpdateAsync(true, fileShareName, new FileShareData())).Value;
 
             //create share snapshots
-            FileShare shareSnapshot = (await _fileShareCollection.CreateOrUpdateAsync(fileShareName, new FileShareData(), "snapshots")).Value;
+            FileShare shareSnapshot = (await _fileShareCollection.CreateOrUpdateAsync(true, fileShareName, new FileShareData(), "snapshots")).Value;
 
             // Acquire lease share
             string proposedLeaseID1 = "ca761232-ed42-11ce-bacd-00aa0057b223";
@@ -342,7 +341,7 @@ namespace Azure.ResourceManager.Storage.Tests
             // try delete with include = none
             try
             {
-                await share.DeleteAsync(include: "none");
+                await share.DeleteAsync(true, include: "none");
             }
             catch (RequestFailedException e) when (e.Status == 409)
             {
@@ -354,7 +353,7 @@ namespace Azure.ResourceManager.Storage.Tests
             // try delete with include = snapshots
             try
             {
-                await share.DeleteAsync(include: "snapshots");
+                await share.DeleteAsync(true, include: "snapshots");
             }
             catch (RequestFailedException e) when (e.Status == 409)
             {
@@ -363,7 +362,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsTrue(DeleteFail, "Delete should fail with include = snapshots");
 
             //delete with include = leased-snapshots
-            await share.DeleteAsync(include: "leased-snapshots");
+            await share.DeleteAsync(true, include: "leased-snapshots");
         }
 
         [Test]
@@ -389,7 +388,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }
                 ));
 
-            _fileService = await _fileService.SetServicePropertiesAsync(properties2);
+            _fileService = (await _fileService.CreateOrUpdateAsync(true, properties2)).Value;
             FileServiceData properties3 = _fileService.Data;
 
             //validate CORS rules

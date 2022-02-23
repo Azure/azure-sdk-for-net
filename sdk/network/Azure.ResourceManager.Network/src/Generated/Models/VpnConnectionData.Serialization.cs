@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network
             Optional<bool> enableInternetSecurity = default;
             Optional<bool> useLocalAzureIpAddress = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<IList<VpnSiteLinkConnection>> vpnLinkConnections = default;
+            Optional<IList<VpnSiteLinkConnectionData>> vpnLinkConnections = default;
             Optional<RoutingConfiguration> routingConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -356,10 +356,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<VpnSiteLinkConnection> array = new List<VpnSiteLinkConnection>();
+                            List<VpnSiteLinkConnectionData> array = new List<VpnSiteLinkConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnSiteLinkConnection.DeserializeVpnSiteLinkConnection(item));
+                                array.Add(VpnSiteLinkConnectionData.DeserializeVpnSiteLinkConnectionData(item));
                             }
                             vpnLinkConnections = array;
                             continue;

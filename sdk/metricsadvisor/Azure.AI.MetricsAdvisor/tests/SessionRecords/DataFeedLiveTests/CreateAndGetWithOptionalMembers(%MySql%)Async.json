@@ -46,7 +46,7 @@
           }
         ],
         "timestampColumn": "timestamp",
-        "dataStartFrom": "2021-07-26T19:59:00Z",
+        "dataStartFrom": "2021-07-26T19:59:00.0000000Z",
         "startOffsetInSeconds": 1800,
         "maxConcurrency": 5,
         "minRetryIntervalInSeconds": 80,
@@ -126,7 +126,7 @@
             "dimensionDisplayName": "city"
           }
         ],
-        "dataStartFrom": "2021-07-26T19:59:00Z",
+        "dataStartFrom": "2021-07-26T19:59:00.0000000Z",
         "dataSourceType": "MySql",
         "timestampColumn": "timestamp",
         "startOffsetInSeconds": 1800,

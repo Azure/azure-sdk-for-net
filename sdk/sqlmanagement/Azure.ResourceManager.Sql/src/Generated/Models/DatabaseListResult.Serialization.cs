@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static DatabaseListResult DeserializeDatabaseListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<Database>> value = default;
+            Optional<IReadOnlyList<SqlDatabaseData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Database> array = new List<Database>();
+                    List<SqlDatabaseData> array = new List<SqlDatabaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Database.DeserializeDatabase(item));
+                        array.Add(SqlDatabaseData.DeserializeSqlDatabaseData(item));
                     }
                     value = array;
                     continue;

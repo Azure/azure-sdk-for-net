@@ -10,7 +10,7 @@ using Microsoft.Azure.SignalR.Management;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
-    internal class ServiceHubContextStore : IInternalServiceHubContextStore
+    internal sealed class ServiceHubContextStore : IInternalServiceHubContextStore
     {
         private readonly ConcurrentDictionary<string, (Lazy<Task<IServiceHubContext>> Lazy, IServiceHubContext Value)> _store = new(StringComparer.OrdinalIgnoreCase);
         private readonly ConcurrentDictionary<string, Lazy<Task<object>>> _stronglyTypedStore = new(StringComparer.OrdinalIgnoreCase);
@@ -69,6 +69,37 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 _store.TryRemove(hubName, out _);
                 throw;
             }
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            _serviceManager.Dispose();
+            foreach (var tuple in _store.Values)
+            {
+                if (tuple.Value is not null)
+                {
+                    await tuple.Value.DisposeAsync().ConfigureAwait(false);
+                }
+                if (tuple.Lazy is not null && tuple.Lazy.IsValueCreated)
+                {
+                    await (await tuple.Lazy.Value.ConfigureAwait(false)).DisposeAsync().ConfigureAwait(false);
+                }
+            }
+            foreach (var lazy in _stronglyTypedStore.Values)
+            {
+                if (lazy.IsValueCreated)
+                {
+                    // The IAsyncDisposable interface doesn't apply to ServiceHubContext<T> on netstandard2.0 yet.
+                    ((IDisposable)await lazy.Value.ConfigureAwait(false)).Dispose();
+                }
+            }
+        }
+
+        public void Dispose()
+        {
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+            DisposeAsync().GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
         }
     }
 }

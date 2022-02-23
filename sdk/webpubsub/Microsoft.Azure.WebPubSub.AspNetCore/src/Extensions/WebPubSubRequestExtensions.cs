@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -23,38 +22,29 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     /// </summary>
     internal static class WebPubSubRequestExtensions
     {
+        private static JsonSerializerOptions _innerSerializer => CreateSystemTextJsonSerializer();
         /// <summary>
         /// Parse request to system/user type ServiceRequest.
         /// </summary>
         /// <param name="request">Upstream HttpRequest.</param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns>Deserialize <see cref="WebPubSubEventRequest"/></returns>
-        internal static async Task<WebPubSubEventRequest> ReadWebPubSubEventAsync(this HttpRequest request, WebPubSubValidationOptions options = null, CancellationToken cancellationToken = default)
+        /// <returns>Deserialize <see cref="WebPubSubEventRequest"/>.</returns>
+        internal static async Task<WebPubSubEventRequest> ReadWebPubSubEventAsync(this HttpRequest request, RequestValidator options, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
                 throw new ArgumentNullException(nameof(request));
             }
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
             // validation request.
-            if (request.IsPreflightRequest(out var requestHosts))
+            if (request.IsPreflightRequest(out var requestOrigins))
             {
-                if (options == null || !options.ContainsHost())
-                {
-                    return new PreflightRequest(true);
-                }
-                else
-                {
-                    foreach (var item in requestHosts)
-                    {
-                        if (options.ContainsHost(item))
-                        {
-                            return new PreflightRequest(true);
-                        }
-                    }
-                }
-                return new PreflightRequest(false);
+                return new PreflightRequest(options.IsValidOrigin(requestOrigins));
             }
 
             if (!request.TryParseCloudEvents(out var context))
@@ -62,7 +52,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 throw new ArgumentException("Invalid Web PubSub upstream request missing required fields in header.");
             }
 
-            if (!context.IsValidSignature(options))
+            if (!options.IsValidSignature(context))
             {
                 throw new UnauthorizedAccessException("Signature validation failed.");
             }
@@ -103,72 +93,32 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             }
         }
 
-        internal static bool IsPreflightRequest(this HttpRequest request, out List<string> requestHosts)
+        internal static bool IsPreflightRequest(this HttpRequest request, out IReadOnlyList<string> requestOrigins)
         {
             if (HttpMethods.IsOptions(request.Method))
             {
                 request.Headers.TryGetValue(Constants.Headers.WebHookRequestOrigin, out StringValues requestOrigin);
                 if (requestOrigin.Count > 0)
                 {
-                    requestHosts = requestOrigin.ToList();
+                    requestOrigins = requestOrigin;
                     return true;
                 }
             }
-            requestHosts = null;
+            requestOrigins = null;
             return false;
         }
 
-        internal static bool IsValidSignature(this WebPubSubConnectionContext connectionContext, WebPubSubValidationOptions options)
-        {
-            // no options skip validation.
-            if (options == null || !options.ContainsHost())
-            {
-                return true;
-            }
-
-            // TODO: considering add cache to improve.
-            if (options.TryGetKey(connectionContext.Origin, out var accessKey))
-            {
-                // server side disable signature checks.
-                if (string.IsNullOrEmpty(accessKey))
-                {
-                    return true;
-                }
-
-                var signatures = connectionContext.Signature.ToHeaderList();
-                if (signatures == null)
-                {
-                    return false;
-                }
-                using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(accessKey));
-                var hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(connectionContext.ConnectionId));
-                var hash = "sha256=" + BitConverter.ToString(hashBytes).Replace("-", "");
-                if (signatures.Contains(hash, StringComparer.OrdinalIgnoreCase))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        internal static Dictionary<string, object> DecodeConnectionStates(this string connectionStates)
+        internal static Dictionary<string, BinaryData> DecodeConnectionStates(this string connectionStates)
         {
             if (!string.IsNullOrEmpty(connectionStates))
             {
-                var states = new Dictionary<string, object>();
-                var parsedStates = Encoding.UTF8.GetString(Convert.FromBase64String(connectionStates));
-                var statesObj = JsonDocument.Parse(parsedStates);
-                foreach (var item in statesObj.RootElement.EnumerateObject())
-                {
-                    // Use ToString() to set pure value without ValueKind.
-                    states.Add(item.Name, item.Value.ToString());
-                }
-                return states;
+                var strongTyped = JsonSerializer.Deserialize<IReadOnlyDictionary<string, BinaryData>>(Convert.FromBase64String(connectionStates), _innerSerializer);
+                return new Dictionary<string, BinaryData>(strongTyped);
             }
             return null;
         }
 
-        internal static Dictionary<string,object> UpdateStates(this WebPubSubConnectionContext connectionContext, IReadOnlyDictionary<string, object> newStates)
+        internal static Dictionary<string, BinaryData> UpdateStates(this WebPubSubConnectionContext connectionContext, IReadOnlyDictionary<string, BinaryData> newStates)
         {
             // states cleared.
             if (newStates == null)
@@ -176,12 +126,12 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 return null;
             }
 
-            if (connectionContext.States?.Count > 0 || newStates.Count > 0)
+            if (connectionContext.ConnectionStates?.Count > 0 || newStates.Count > 0)
             {
-                var states = new Dictionary<string, object>();
-                if (connectionContext.States?.Count > 0)
+                var states = new Dictionary<string, BinaryData>();
+                if (connectionContext.ConnectionStates?.Count > 0)
                 {
-                    states = connectionContext.States.ToDictionary(x => x.Key, y => y.Value);
+                    states = connectionContext.ConnectionStates.ToDictionary(x => x.Key, y => y.Value);
                 }
 
                 // response states keep empty is no change.
@@ -199,9 +149,9 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             return null;
         }
 
-        internal static string EncodeConnectionStates(this Dictionary<string, object> value)
+        internal static string EncodeConnectionStates(this IReadOnlyDictionary<string, BinaryData> value)
         {
-            return Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(value)));
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(value, _innerSerializer)));
         }
 
         private static bool TryParseCloudEvents(this HttpRequest request, out WebPubSubConnectionContext connectionContext)
@@ -223,7 +173,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                     userId = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.UserId);
                 }
 
-                Dictionary<string, object> states = null;
+                Dictionary<string, BinaryData> states = null;
                 // connection states.
                 if (request.Headers.ContainsKey(Constants.Headers.CloudEvents.State))
                 {
@@ -280,16 +230,6 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             }
         }
 
-        private static IReadOnlyList<string> ToHeaderList(this string signatures)
-        {
-            if (string.IsNullOrEmpty(signatures))
-            {
-                return default;
-            }
-
-            return signatures.Split(Constants.HeaderSeparator, StringSplitOptions.RemoveEmptyEntries);
-        }
-
         private static WebPubSubEventType GetEventType(this string ceType)
         {
             return ceType.StartsWith(Constants.Headers.CloudEvents.TypeSystemPrefix, StringComparison.OrdinalIgnoreCase) ?
@@ -305,5 +245,12 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 Constants.ContentTypes.JsonContentType => WebPubSubDataType.Json,
                 _ => throw new ArgumentException($"Invalid content type: {mediaType}")
             };
+
+        private static JsonSerializerOptions CreateSystemTextJsonSerializer()
+        {
+            var options = new JsonSerializerOptions();
+            options.Converters.Add(new ConnectionStatesConverter());
+            return options;
+        }
     }
 }

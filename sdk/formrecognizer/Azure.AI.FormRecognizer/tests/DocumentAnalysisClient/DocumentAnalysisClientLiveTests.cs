@@ -21,7 +21,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     /// Azure subscription.
     /// </remarks>
     [ClientTestFixture(
-     DocumentAnalysisClientOptions.ServiceVersion.V2021_09_30_preview)]
+     DocumentAnalysisClientOptions.ServiceVersion.V2022_01_30_preview)]
     public class DocumentAnalysisClientLiveTests : DocumentAnalysisLiveTestBase
     {
         /// <summary>
@@ -74,7 +74,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the business card. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual("prebuilt:businesscard", document.DocType);
+            Assert.AreEqual("businessCard", document.DocType);
 
             Assert.NotNull(document.Fields);
 
@@ -622,18 +622,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             DocumentTable sampleTable = result.Tables[1];
 
-            Assert.AreEqual(4, sampleTable.RowCount);
+            Assert.AreEqual(3, sampleTable.RowCount);
             Assert.AreEqual(2, sampleTable.ColumnCount);
 
             var cells = sampleTable.Cells.ToList();
 
-            Assert.AreEqual(8, cells.Count);
+            Assert.AreEqual(6, cells.Count);
 
-            var expectedContent = new string[4, 2]
+            var expectedContent = new string[3, 2]
             {
                 { "SUBTOTAL", "$140.00" },
                 { "TAX", "$4.00" },
-                { "", ""},
                 { "TOTAL", "$144.00" }
             };
 
@@ -700,7 +699,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the ID document. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual("prebuilt:idDocument:driverLicense", document.DocType);
+            Assert.AreEqual("idDocument.driverLicense", document.DocType);
 
             Assert.NotNull(document.Fields);
 
@@ -777,7 +776,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the invoice. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual("prebuilt:invoice", document.DocType);
+            Assert.AreEqual("invoice", document.DocType);
 
             Assert.NotNull(document.Fields);
 
@@ -809,7 +808,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.True(document.Fields.ContainsKey("VendorAddressRecipient"));
             Assert.True(document.Fields.ContainsKey("VendorName"));
 
-            Assert.That(document.Fields["AmountDue"].AsDouble(), Is.EqualTo(610.00).Within(0.0001));
+            ValidateCurrencyValue(document.Fields["AmountDue"].AsCurrency(), 610.00, "$");
             Assert.AreEqual("123 Bill St, Redmond WA, 98052", document.Fields["BillingAddress"].AsString());
             Assert.AreEqual("Microsoft Finance", document.Fields["BillingAddressRecipient"].AsString());
             Assert.AreEqual("123 Other St, Redmond WA, 98052", document.Fields["CustomerAddress"].AsString());
@@ -828,8 +827,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual(2019, invoiceDate.Year);
 
             Assert.AreEqual("INV-100", document.Fields["InvoiceId"].AsString());
-            Assert.That(document.Fields["InvoiceTotal"].AsDouble(), Is.EqualTo(110.00).Within(0.0001));
-            Assert.That(document.Fields["PreviousUnpaidBalance"].AsDouble(), Is.EqualTo(500.00).Within(0.0001));
+            ValidateCurrencyValue(document.Fields["InvoiceTotal"].AsCurrency(), 110.00, "$");
+            ValidateCurrencyValue(document.Fields["PreviousUnpaidBalance"].AsCurrency(), 500.00, "$");
             Assert.AreEqual("PO-3333", document.Fields["PurchaseOrder"].AsString());
             Assert.AreEqual("123 Remit St New York, NY, 10001", document.Fields["RemittanceAddress"].AsString());
             Assert.AreEqual("Contoso Billing", document.Fields["RemittanceAddressRecipient"].AsString());
@@ -848,13 +847,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.AreEqual("123 Ship St, Redmond WA, 98052", document.Fields["ShippingAddress"].AsString());
             Assert.AreEqual("Microsoft Delivery", document.Fields["ShippingAddressRecipient"].AsString());
-            Assert.That(document.Fields["SubTotal"].AsDouble(), Is.EqualTo(100.00).Within(0.0001));
-            Assert.That(document.Fields["TotalTax"].AsDouble(), Is.EqualTo(10.00).Within(0.0001));
+            ValidateCurrencyValue(document.Fields["SubTotal"].AsCurrency(), 100.00, "$");
+            ValidateCurrencyValue(document.Fields["TotalTax"].AsCurrency(), 10.00, "$");
             Assert.AreEqual("123 456th St New York, NY, 10001", document.Fields["VendorAddress"].AsString());
             Assert.AreEqual("Contoso Headquarters", document.Fields["VendorAddressRecipient"].AsString());
             Assert.AreEqual("CONTOSO LTD.", document.Fields["VendorName"].AsString());
 
-            var expectedItems = new List<(double? Amount, DateTime Date, string Description, string ProductCode, double? Quantity, string Unit, double? UnitPrice)>()
+            var expectedItems = new List<(double Amount, DateTime Date, string Description, string ProductCode, double Quantity, string Unit, double UnitPrice)>()
             {
                 (60f, DateTime.Parse("2021-03-04 00:00:00"), "Consulting Services", "A123", 2, "hours", 30),
                 (30f, DateTime.Parse("2021-03-05 00:00:00"), "Document Fee", "B456", 3, null, 10),
@@ -879,11 +878,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 receiptItemInfo.TryGetValue("UnitPrice", out var unitPricefield);
                 receiptItemInfo.TryGetValue("Unit", out var unitfield);
 
-                double? amount = amountField.AsDouble();
+                CurrencyValue amount = amountField.AsCurrency();
                 string description = descriptionField.AsString();
                 string productCode = productCodeField.AsString();
-                double? quantity = quantityField?.AsDouble();
-                double? unitPrice = unitPricefield.AsDouble();
+                double quantity = quantityField.AsDouble();
+                CurrencyValue unitPrice = unitPricefield.AsCurrency();
                 string unit = unitfield?.AsString();
 
                 Assert.IsNotNull(dateField);
@@ -891,13 +890,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
                 var expectedItem = expectedItems[itemIndex];
 
-                Assert.That(amount, Is.EqualTo(expectedItem.Amount).Within(0.0001), $"Amount mismatch in item with index {itemIndex}.");
+                ValidateCurrencyValue(amount, expectedItem.Amount, "$", $"Amount mismatch in item with index {itemIndex}.");
                 Assert.AreEqual(expectedItem.Date, date, $"Date mismatch in item with index {itemIndex}.");
                 Assert.AreEqual(expectedItem.Description, description, $"Description mismatch in item with index {itemIndex}.");
                 Assert.AreEqual(expectedItem.ProductCode, productCode, $"ProductCode mismatch in item with index {itemIndex}.");
                 Assert.AreEqual(expectedItem.Unit, unit, $"Unit mismatch in item with index {itemIndex}.");
                 Assert.That(quantity, Is.EqualTo(expectedItem.Quantity).Within(0.0001), $"Quantity mismatch in item with index {itemIndex}.");
-                Assert.That(unitPrice, Is.EqualTo(expectedItem.UnitPrice).Within(0.0001), $"UnitPrice price mismatch in item with index {itemIndex}.");
+                ValidateCurrencyValue(unitPrice, expectedItem.UnitPrice, "$", $"UnitPrice mismatch in item with index {itemIndex}.");
             }
         }
 
@@ -938,7 +937,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the invoice. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual("prebuilt:invoice", document.DocType);
+            Assert.AreEqual("invoice", document.DocType);
 
             Assert.NotNull(document.Fields);
 
@@ -1145,11 +1144,64 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         #endregion
 
+        #region Read
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task StartAnalyzeDocumentCanReadPageAndLanguage(bool useStream)
+        {
+            var client = CreateDocumentAnalysisClient();
+            AnalyzeDocumentOperation operation;
+
+            if (useStream)
+            {
+                using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoicePdf);
+                using (Recording.DisableRequestBodyRecording())
+                {
+                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-read", stream);
+                }
+            }
+            else
+            {
+                var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.InvoicePdf);
+                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-read", uri);
+            }
+
+            await operation.WaitForCompletionAsync();
+            Assert.IsTrue(operation.HasValue);
+
+            AnalyzeResult result = operation.Value;
+
+            ValidateAnalyzeResult(
+                result,
+                "prebuilt-read",
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
+
+            DocumentPage page = result.Pages.Single();
+
+            // The expected values are based on the values returned by the service, and not the actual
+            // values present in the form. We are not testing the service here, but the SDK.
+
+            Assert.AreEqual(LengthUnit.Inch, page.Unit);
+            Assert.AreEqual(8.5, page.Width);
+            Assert.AreEqual(11, page.Height);
+            Assert.AreEqual(0, page.Angle);
+            Assert.AreEqual(18, page.Lines.Count);
+            Assert.IsEmpty(result.Tables);
+
+            Assert.IsNotEmpty(result.Languages);
+        }
+
+        #endregion
+
         #region Receipts
 
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27083")]
         public async Task StartAnalyzeDocumentPopulatesExtractedReceiptJpg(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
@@ -1186,7 +1238,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the receipt. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual("prebuilt:receipt", document.DocType);
+            Assert.AreEqual("receipt.retailMeal", document.DocType);
 
             Assert.NotNull(document.Fields);
 
@@ -1304,7 +1356,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 }
                 else if (documentIndex == 1)
                 {
-                    Assert.AreEqual("$ 1203.39", sampleField.Content);
+                    Assert.AreEqual("1203.39", sampleField.Content);
                 }
             }
         }
@@ -1567,6 +1619,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             {
                 ValidateTable(table, expectedFirstPageNumber, expectedLastPageNumber);
             }
+
+            // Check Document Languages.
+
+            foreach (DocumentLanguage language in result.Languages)
+            {
+                Assert.That(language.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
+                Assert.That(language.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
+                Assert.NotNull(language.LanguageCode);
+            }
         }
 
         private void ValidateAnalyzedDocument(AnalyzedDocument document, int expectedFirstPageNumber, int expectedLastPageNumber)
@@ -1694,6 +1755,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 Assert.GreaterOrEqual(cell.RowSpan, 1);
                 Assert.NotNull(cell.Content);
             }
+        }
+
+        private void ValidateCurrencyValue(CurrencyValue value, double expectedAmount, string expectedSymbol, string message = null)
+        {
+            Assert.That(value.Amount, Is.EqualTo(expectedAmount).Within(0.0001), message);
+            Assert.AreEqual(expectedSymbol, value.Symbol, message);
         }
     }
 }

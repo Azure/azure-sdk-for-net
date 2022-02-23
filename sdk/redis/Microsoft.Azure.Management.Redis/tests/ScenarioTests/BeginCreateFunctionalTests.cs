@@ -6,6 +6,7 @@ using Microsoft.Azure.Management.Redis;
 using Microsoft.Azure.Management.Redis.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace AzureRedisCache.Tests
@@ -38,9 +39,14 @@ namespace AzureRedisCache.Tests
                                             MinimumTlsVersion = TlsVersion.OneFullStopTwo,
                                             ReplicasPerMaster = 2,
                                             RedisVersion = "6",
+                                            RedisConfiguration = new RedisCommonPropertiesRedisConfiguration(
+                                                maxmemoryPolicy: "allkeys-lru",
+                                            additionalProperties: new Dictionary<string, object>() { { "maxmemory-reserved", "210" } })
                                         });
 
                 Assert.Contains(redisCacheName, response.Id);
+                Assert.Equal("210", response.RedisConfiguration.MaxmemoryDelta);
+                Assert.Equal("210", response.RedisConfiguration.MaxmemoryReserved);
                 Assert.Equal(redisCacheName, response.Name);
                 Assert.Equal(ProvisioningState.Creating, response.ProvisioningState, ignoreCase: true);
                 Assert.Equal(SkuName.Premium, response.Sku.Name);

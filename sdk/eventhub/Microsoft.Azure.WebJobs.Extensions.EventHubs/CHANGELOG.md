@@ -3,6 +3,7 @@
 ## 5.1.0-beta.1 (Unreleased)
 
 ### Features Added
+- Add listener details
 
 ### Breaking Changes
 

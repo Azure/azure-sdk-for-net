@@ -215,15 +215,12 @@ namespace Microsoft.Azure.Management.DataBox
             /// <param name='location'>
             /// The location of the resource
             /// </param>
-            /// <param name='scheduleAvailabilityRequest'>
-            /// Request body to get the availability for scheduling orders.
+            /// <param name='regionConfigurationRequest'>
+            /// Request body to get the configuration for the region.
             /// </param>
-            /// <param name='transportAvailabilityRequest'>
-            /// Request body to get the transport availability for given sku.
-            /// </param>
-            public static RegionConfigurationResponse RegionConfiguration(this IServiceOperations operations, string location, ScheduleAvailabilityRequest scheduleAvailabilityRequest = default(ScheduleAvailabilityRequest), TransportAvailabilityRequest transportAvailabilityRequest = default(TransportAvailabilityRequest))
+            public static RegionConfigurationResponse RegionConfiguration(this IServiceOperations operations, string location, RegionConfigurationRequest regionConfigurationRequest)
             {
-                return operations.RegionConfigurationAsync(location, scheduleAvailabilityRequest, transportAvailabilityRequest).GetAwaiter().GetResult();
+                return operations.RegionConfigurationAsync(location, regionConfigurationRequest).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -236,18 +233,15 @@ namespace Microsoft.Azure.Management.DataBox
             /// <param name='location'>
             /// The location of the resource
             /// </param>
-            /// <param name='scheduleAvailabilityRequest'>
-            /// Request body to get the availability for scheduling orders.
-            /// </param>
-            /// <param name='transportAvailabilityRequest'>
-            /// Request body to get the transport availability for given sku.
+            /// <param name='regionConfigurationRequest'>
+            /// Request body to get the configuration for the region.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RegionConfigurationResponse> RegionConfigurationAsync(this IServiceOperations operations, string location, ScheduleAvailabilityRequest scheduleAvailabilityRequest = default(ScheduleAvailabilityRequest), TransportAvailabilityRequest transportAvailabilityRequest = default(TransportAvailabilityRequest), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RegionConfigurationResponse> RegionConfigurationAsync(this IServiceOperations operations, string location, RegionConfigurationRequest regionConfigurationRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RegionConfigurationWithHttpMessagesAsync(location, scheduleAvailabilityRequest, transportAvailabilityRequest, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.RegionConfigurationWithHttpMessagesAsync(location, regionConfigurationRequest, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -266,15 +260,13 @@ namespace Microsoft.Azure.Management.DataBox
             /// <param name='location'>
             /// The location of the resource
             /// </param>
-            /// <param name='scheduleAvailabilityRequest'>
-            /// Request body to get the availability for scheduling orders.
+            /// <param name='regionConfigurationRequest'>
+            /// Request body to get the configuration for the region at resource group
+            /// level.
             /// </param>
-            /// <param name='transportAvailabilityRequest'>
-            /// Request body to get the transport availability for given sku.
-            /// </param>
-            public static RegionConfigurationResponse RegionConfigurationByResourceGroup(this IServiceOperations operations, string resourceGroupName, string location, ScheduleAvailabilityRequest scheduleAvailabilityRequest = default(ScheduleAvailabilityRequest), TransportAvailabilityRequest transportAvailabilityRequest = default(TransportAvailabilityRequest))
+            public static RegionConfigurationResponse RegionConfigurationByResourceGroup(this IServiceOperations operations, string resourceGroupName, string location, RegionConfigurationRequest regionConfigurationRequest)
             {
-                return operations.RegionConfigurationByResourceGroupAsync(resourceGroupName, location, scheduleAvailabilityRequest, transportAvailabilityRequest).GetAwaiter().GetResult();
+                return operations.RegionConfigurationByResourceGroupAsync(resourceGroupName, location, regionConfigurationRequest).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -290,18 +282,16 @@ namespace Microsoft.Azure.Management.DataBox
             /// <param name='location'>
             /// The location of the resource
             /// </param>
-            /// <param name='scheduleAvailabilityRequest'>
-            /// Request body to get the availability for scheduling orders.
-            /// </param>
-            /// <param name='transportAvailabilityRequest'>
-            /// Request body to get the transport availability for given sku.
+            /// <param name='regionConfigurationRequest'>
+            /// Request body to get the configuration for the region at resource group
+            /// level.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RegionConfigurationResponse> RegionConfigurationByResourceGroupAsync(this IServiceOperations operations, string resourceGroupName, string location, ScheduleAvailabilityRequest scheduleAvailabilityRequest = default(ScheduleAvailabilityRequest), TransportAvailabilityRequest transportAvailabilityRequest = default(TransportAvailabilityRequest), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RegionConfigurationResponse> RegionConfigurationByResourceGroupAsync(this IServiceOperations operations, string resourceGroupName, string location, RegionConfigurationRequest regionConfigurationRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RegionConfigurationByResourceGroupWithHttpMessagesAsync(resourceGroupName, location, scheduleAvailabilityRequest, transportAvailabilityRequest, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.RegionConfigurationByResourceGroupWithHttpMessagesAsync(resourceGroupName, location, regionConfigurationRequest, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

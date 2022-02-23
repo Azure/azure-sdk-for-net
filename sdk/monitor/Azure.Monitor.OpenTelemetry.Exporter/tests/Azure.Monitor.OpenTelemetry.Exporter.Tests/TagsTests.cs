@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using OpenTelemetry.Trace;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,6 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             ActivitySource.AddActivityListener(listener);
         }
+
         [Fact]
         public void TagObjects_NoItem()
         {

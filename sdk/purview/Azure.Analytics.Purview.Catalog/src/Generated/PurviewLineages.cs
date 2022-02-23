@@ -19,9 +19,11 @@ namespace Azure.Analytics.Purview.Catalog
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
@@ -38,8 +40,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="width"> The number of max expanding width in lineage. </param>
         /// <param name="includeParent"> True to include the parent chain in the response. </param>
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="direction"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -76,16 +79,17 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetLineageGraphAsync(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewLineages.GetLineageGraph");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNull(direction, nameof(direction));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewLineages.GetLineageGraph");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -101,8 +105,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="width"> The number of max expanding width in lineage. </param>
         /// <param name="includeParent"> True to include the parent chain in the response. </param>
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="direction"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -139,16 +144,17 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetLineageGraph(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewLineages.GetLineageGraph");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNull(direction, nameof(direction));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewLineages.GetLineageGraph");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -163,8 +169,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="direction"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -201,16 +208,17 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> NextPageLineageAsync(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewLineages.NextPageLineage");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNull(direction, nameof(direction));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewLineages.NextPageLineage");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -225,8 +233,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="direction"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -263,16 +272,17 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response NextPageLineage(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewLineages.NextPageLineage");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNull(direction, nameof(direction));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewLineages.NextPageLineage");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -281,9 +291,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        internal HttpMessage CreateGetLineageGraphRequest(string guid, string direction, int? depth, int? width, bool? includeParent, bool? getDerivedLineage)
+        internal HttpMessage CreateGetLineageGraphRequest(string guid, string direction, int? depth, int? width, bool? includeParent, bool? getDerivedLineage, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -291,6 +301,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/lineage/", false);
             uri.AppendPath(guid, true);
+            uri.AppendQuery("direction", direction, true);
             if (depth != null)
             {
                 uri.AppendQuery("depth", depth.Value, true);
@@ -299,7 +310,6 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 uri.AppendQuery("width", width.Value, true);
             }
-            uri.AppendQuery("direction", direction, true);
             if (includeParent != null)
             {
                 uri.AppendQuery("includeParent", includeParent.Value, true);
@@ -314,9 +324,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateNextPageLineageRequest(string guid, string direction, bool? getDerivedLineage, int? offset, int? limit)
+        internal HttpMessage CreateNextPageLineageRequest(string guid, string direction, bool? getDerivedLineage, int? offset, int? limit, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

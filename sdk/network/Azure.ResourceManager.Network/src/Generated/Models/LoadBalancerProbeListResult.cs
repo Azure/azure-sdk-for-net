@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of LoadBalancerProbeListResult. </summary>
         internal LoadBalancerProbeListResult()
         {
-            Value = new ChangeTrackingList<Probe>();
+            Value = new ChangeTrackingList<ProbeData>();
         }
 
         /// <summary> Initializes a new instance of LoadBalancerProbeListResult. </summary>
         /// <param name="value"> A list of probes in a load balancer. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal LoadBalancerProbeListResult(IReadOnlyList<Probe> value, string nextLink)
+        internal LoadBalancerProbeListResult(IReadOnlyList<ProbeData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of probes in a load balancer. </summary>
-        public IReadOnlyList<Probe> Value { get; }
+        public IReadOnlyList<ProbeData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

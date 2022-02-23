@@ -11,6 +11,8 @@ using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
 using Sku = Azure.ResourceManager.Storage.Models.Sku;
 using SkuTier = Azure.ResourceManager.Storage.Models.SkuTier;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Storage.Tests.Helpers
 {
@@ -18,7 +20,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
     [ClientTestFixture]
     public class StorageTestBase : ManagementRecordedTestBase<StorageManagementTestEnvironment>
     {
-        public static Location DefaultLocation => Location.EastUS2;
+        public static AzureLocation DefaultLocation => AzureLocation.EastUS2;
         public static string DefaultLocationString = "eastus2";
         public static bool IsTestTenant = false;
         // These are used to create default accounts
@@ -39,13 +41,14 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         {
         }
 
-        public static StorageAccountCreateParameters GetDefaultStorageAccountParameters(Sku sku = null, Kind? kind = null, string location = null)
+        public static StorageAccountCreateParameters GetDefaultStorageAccountParameters(Sku sku = null, Kind? kind = null, string location = null, ManagedServiceIdentity identity = null)
         {
             Sku skuParameters = sku ?? DefaultSkuNameStandardGRS;
             Kind kindParameters = kind ?? DefaultKindStorage;
             string locationParameters = location ?? DefaultLocationString;
             StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(skuParameters, kindParameters, locationParameters);
             parameters.Tags.InitializeFrom(DefaultTags);
+            parameters.Identity = identity;
             return parameters;
         }
 
@@ -68,7 +71,8 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         public async Task<ResourceGroup> CreateResourceGroupAsync()
         {
             string resourceGroupName = Recording.GenerateAssetName("teststorageRG-");
-            ResourceGroupCreateOrUpdateOperation operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            ArmOperation<ResourceGroup> operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+                true,
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)
                 {

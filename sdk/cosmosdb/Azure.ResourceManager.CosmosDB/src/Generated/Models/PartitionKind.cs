@@ -10,12 +10,12 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> Indicates the kind of algorithm used for partitioning. </summary>
+    /// <summary> Indicates the kind of algorithm used for partitioning. For MultiHash, multiple partition keys (upto three maximum) are supported for container create. </summary>
     public readonly partial struct PartitionKind : IEquatable<PartitionKind>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="PartitionKind"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartitionKind"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PartitionKind(string value)
         {
@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         private const string HashValue = "Hash";
         private const string RangeValue = "Range";
+        private const string MultiHashValue = "MultiHash";
 
         /// <summary> Hash. </summary>
         public static PartitionKind Hash { get; } = new PartitionKind(HashValue);
         /// <summary> Range. </summary>
         public static PartitionKind Range { get; } = new PartitionKind(RangeValue);
+        /// <summary> MultiHash. </summary>
+        public static PartitionKind MultiHash { get; } = new PartitionKind(MultiHashValue);
         /// <summary> Determines if two <see cref="PartitionKind"/> values are the same. </summary>
         public static bool operator ==(PartitionKind left, PartitionKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PartitionKind"/> values are not the same. </summary>

@@ -9,9 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -45,12 +44,12 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(PrivacyStatementUri))
             {
                 writer.WritePropertyName("privacyStatementUri");
-                writer.WriteStringValue(PrivacyStatementUri);
+                writer.WriteStringValue(PrivacyStatementUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ReleaseNoteUri))
             {
                 writer.WritePropertyName("releaseNoteUri");
-                writer.WriteStringValue(ReleaseNoteUri);
+                writer.WriteStringValue(ReleaseNoteUri.AbsoluteUri);
             }
             if (Optional.IsDefined(EndOfLifeDate))
             {
@@ -69,14 +68,15 @@ namespace Azure.ResourceManager.Compute
         internal static GalleryApplicationData DeserializeGalleryApplicationData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> description = default;
             Optional<string> eula = default;
-            Optional<string> privacyStatementUri = default;
-            Optional<string> releaseNoteUri = default;
+            Optional<Uri> privacyStatementUri = default;
+            Optional<Uri> releaseNoteUri = default;
             Optional<DateTimeOffset> endOfLifeDate = default;
             Optional<OperatingSystemTypes> supportedOSType = default;
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -109,6 +109,11 @@ namespace Azure.ResourceManager.Compute
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -132,12 +137,22 @@ namespace Azure.ResourceManager.Compute
                         }
                         if (property0.NameEquals("privacyStatementUri"))
                         {
-                            privacyStatementUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            privacyStatementUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("releaseNoteUri"))
                         {
-                            releaseNoteUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            releaseNoteUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("endOfLifeDate"))
@@ -164,7 +179,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new GalleryApplicationData(id, name, type, tags, location, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(endOfLifeDate), Optional.ToNullable(supportedOSType));
+            return new GalleryApplicationData(id, name, type, systemData, tags, location, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(endOfLifeDate), Optional.ToNullable(supportedOSType));
         }
     }
 }

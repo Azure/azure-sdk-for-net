@@ -20,6 +20,8 @@
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\..\..\eventhub\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.csproj" />
+    <ProjectReference Include="..\..\..\servicebus\Azure.Messaging.ServiceBus\src\Azure.Messaging.ServiceBus.csproj" />
     <ProjectReference Include="..\src\Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.csproj" />
   </ItemGroup>
 </Project>

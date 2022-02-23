@@ -533,6 +533,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             return uploader.UploadInternal(
                 content,
+                expectedContentLength: default,
                 options,
                 options.ProgressHandler,
                 async: false,
@@ -589,6 +590,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             return await uploader.UploadInternal(
                 content,
+                expectedContentLength: default,
                 options,
                 options.ProgressHandler,
                 async: true,
@@ -2740,13 +2742,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Stream> OpenWriteInternal(
+        internal async Task<Stream> OpenWriteInternal(
             bool overwrite,
             BlockBlobOpenWriteOptions options,
             bool async,
             CancellationToken cancellationToken)
         {
-            string operationName = $"{nameof(BlockBlobClient)}.{nameof(OpenWrite)}";
+            string operationName = options?.OperationName ?? $"{nameof(BlockBlobClient)}.{nameof(OpenWrite)}";
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
             try

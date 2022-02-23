@@ -291,9 +291,9 @@ namespace Azure.Data.Tables
                 UriHostNameType hostNameType = Uri.CheckHostName(uri.Host);
                 int expectedSegments = hostNameType switch
                 {
-                    // This is a dns name such as contoso.core.windows.net/tableName
+                    // This is a dns name such as accountName.core.windows.net/tableName
                     UriHostNameType.Dns => 2,
-                    // This is most likely Azurite, which looks like this: https://126.0.0.1:10002/contoso/tableName
+                    // This is most likely Azurite, which looks like this: https://127.0.0.1:10002/accountName/tableName
                     UriHostNameType.IPv4 => 3,
                     _ when uri.IsLoopback => 3,
                     _ => 0
@@ -328,8 +328,15 @@ namespace Azure.Data.Tables
             {
                 // This is most likely Azurite, which looks like this: https://127.0.0.1:10002/contoso/
                 var segments = uri.Segments;
-
-                accountName = segments[1].EndsWith("/", StringComparison.OrdinalIgnoreCase) ? segments[1].Substring(0, segments[1].Length - 1) : segments[1];
+                if (segments.Length == 1)
+                {
+                    // This is most likely the Cosmos emulator.
+                    accountName = "localhost";
+                }
+                else
+                {
+                    accountName = segments[1].EndsWith("/", StringComparison.OrdinalIgnoreCase) ? segments[1].Substring(0, segments[1].Length - 1) : segments[1];
+                }
             }
 
             return accountName;

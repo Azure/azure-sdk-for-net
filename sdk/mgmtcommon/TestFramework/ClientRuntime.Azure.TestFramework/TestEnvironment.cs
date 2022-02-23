@@ -265,8 +265,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             string spnSecret = this.ConnectionString.GetValue(ConnectionStringKeys.ServicePrincipalSecretKey);
             //We use this because when login silently using userTokenProvider, we need to provide a well known ClientId for an app that has delegating permissions.
             //All first party app have that permissions, so we use PowerShell app ClientId
+#if net452
             string PowerShellClientId = "1950a258-227b-4e31-a9cf-717495945fc2";
-
+#endif
             /*
             Currently we prioritize login as below:
             1) ServicePrincipal/ServicePrincipal Secret Key

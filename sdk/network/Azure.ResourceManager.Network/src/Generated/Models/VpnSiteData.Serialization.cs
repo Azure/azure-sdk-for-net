@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network
             Optional<BgpSettings> bgpProperties = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<bool> isSecuritySite = default;
-            Optional<IList<VpnSiteLink>> vpnSiteLinks = default;
+            Optional<IList<VpnSiteLinkData>> vpnSiteLinks = default;
             Optional<O365PolicyProperties> o365Policy = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -241,10 +241,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<VpnSiteLink> array = new List<VpnSiteLink>();
+                            List<VpnSiteLinkData> array = new List<VpnSiteLinkData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnSiteLink.DeserializeVpnSiteLink(item));
+                                array.Add(VpnSiteLinkData.DeserializeVpnSiteLinkData(item));
                             }
                             vpnSiteLinks = array;
                             continue;

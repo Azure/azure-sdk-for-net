@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VpnSiteData. </summary>
         public VpnSiteData()
         {
-            VpnSiteLinks = new ChangeTrackingList<VpnSiteLink>();
+            VpnSiteLinks = new ChangeTrackingList<VpnSiteLinkData>();
         }
 
         /// <summary> Initializes a new instance of VpnSiteData. </summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="isSecuritySite"> IsSecuritySite flag. </param>
         /// <param name="vpnSiteLinks"> List of all vpn site links. </param>
         /// <param name="o365Policy"> Office365 Policy. </param>
-        internal VpnSiteData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, WritableSubResource virtualWan, DeviceProperties deviceProperties, string ipAddress, string siteKey, AddressSpace addressSpace, BgpSettings bgpProperties, ProvisioningState? provisioningState, bool? isSecuritySite, IList<VpnSiteLink> vpnSiteLinks, O365PolicyProperties o365Policy) : base(id, name, type, location, tags)
+        internal VpnSiteData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, WritableSubResource virtualWan, DeviceProperties deviceProperties, string ipAddress, string siteKey, AddressSpace addressSpace, BgpSettings bgpProperties, ProvisioningState? provisioningState, bool? isSecuritySite, IList<VpnSiteLinkData> vpnSiteLinks, O365PolicyProperties o365Policy) : base(id, name, type, location, tags)
         {
             Etag = etag;
             VirtualWan = virtualWan;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> IsSecuritySite flag. </summary>
         public bool? IsSecuritySite { get; set; }
         /// <summary> List of all vpn site links. </summary>
-        public IList<VpnSiteLink> VpnSiteLinks { get; }
+        public IList<VpnSiteLinkData> VpnSiteLinks { get; }
         /// <summary> Office365 Policy. </summary>
         public O365PolicyProperties O365Policy { get; set; }
     }

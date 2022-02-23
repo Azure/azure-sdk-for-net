@@ -16,10 +16,6 @@
     <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
-    <DefineConstants>netcoreapp11</DefineConstants>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio" />

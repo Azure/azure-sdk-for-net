@@ -117,15 +117,16 @@ namespace Azure.Core.TestFramework
 
             foreach (KeyValuePair<string, string[]> responseHeader in recordEntry.Response.Headers)
             {
-                foreach (string value in responseHeader.Value)
-                {
-                    response.AddHeader(new HttpHeader(responseHeader.Key, value));
-                }
-
-                // Ignore the Retry-After header wait time for 429 responses during playback.
-                if (response.Status == 429 && response.Headers.TryGetValue("Retry-After", out _))
+                if (responseHeader.Key == "Retry-After")
                 {
                     response.AddHeader(new HttpHeader("Retry-After", "0"));
+                }
+                else
+                {
+                    foreach (string value in responseHeader.Value)
+                    {
+                        response.AddHeader(new HttpHeader(responseHeader.Key, value));
+                    }
                 }
             }
 

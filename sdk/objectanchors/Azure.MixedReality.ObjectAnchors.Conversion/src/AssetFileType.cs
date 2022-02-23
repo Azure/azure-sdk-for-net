@@ -8,7 +8,7 @@ using System.IO;
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
     /// <summary>
-    /// An extensible enum representing the filetype of the asset
+    /// An extensible enum representing the filetype of the asset.
     /// </summary>
     public readonly struct AssetFileType : IEquatable<AssetFileType>
     {
@@ -22,44 +22,44 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <summary>
         /// Initializes a new instance of the <see cref="AssetFileType"/> struct.
         /// </summary>
-        /// <param name="value">The asset file type</param>
+        /// <param name="value">The asset file type.</param>
         public AssetFileType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
-        /// Returns an AssetFileType derived from the extension of a provided file name
+        /// Returns an AssetFileType derived from the extension of a provided file name.
         /// </summary>
-        /// <param name="assetFilePath">The asset file name</param>
-        /// <returns>The AssetFileType derived from the extension of a provided file name</returns>
+        /// <param name="assetFilePath">The asset file name.</param>
+        /// <returns>The AssetFileType derived from the extension of a provided file name.</returns>
         public static AssetFileType FromFilePath(string assetFilePath)
         {
             return new AssetFileType(Path.GetExtension(assetFilePath));
         }
 
         /// <summary>
-        /// Fbx
+        /// The FBX asset file type.
         /// </summary>
         public static AssetFileType Fbx { get; } = new AssetFileType(FbxValue);
 
         /// <summary>
-        /// Glb
+        /// The GLB asset file type.
         /// </summary>
         public static AssetFileType Glb { get; } = new AssetFileType(GlbValue);
 
         /// <summary>
-        /// Gltf
+        /// The GLTF asset file type.
         /// </summary>
         public static AssetFileType Gltf { get; } = new AssetFileType(GltfValue);
 
         /// <summary>
-        /// Obj
+        /// The OBJ asset file type.
         /// </summary>
         public static AssetFileType Obj { get; } = new AssetFileType(ObjValue);
 
         /// <summary>
-        /// Ply
+        /// The PLY asset file type.
         /// </summary>
         public static AssetFileType Ply { get; } = new AssetFileType(PlyValue);
 

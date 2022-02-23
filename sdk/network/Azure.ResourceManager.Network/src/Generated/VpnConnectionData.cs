@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
         {
             IpsecPolicies = new ChangeTrackingList<IpsecPolicy>();
             TrafficSelectorPolicies = new ChangeTrackingList<TrafficSelectorPolicy>();
-            VpnLinkConnections = new ChangeTrackingList<VpnSiteLinkConnection>();
+            VpnLinkConnections = new ChangeTrackingList<VpnSiteLinkConnectionData>();
         }
 
         /// <summary> Initializes a new instance of VpnConnectionData. </summary>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the VPN connection resource. </param>
         /// <param name="vpnLinkConnections"> List of all vpn site link connections to the gateway. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
-        internal VpnConnectionData(string id, string name, string etag, WritableSubResource remoteVpnSite, int? routingWeight, int? dpdTimeoutSeconds, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, bool? usePolicyBasedTrafficSelectors, IList<IpsecPolicy> ipsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, bool? enableRateLimiting, bool? enableInternetSecurity, bool? useLocalAzureIpAddress, ProvisioningState? provisioningState, IList<VpnSiteLinkConnection> vpnLinkConnections, RoutingConfiguration routingConfiguration) : base(id)
+        internal VpnConnectionData(string id, string name, string etag, WritableSubResource remoteVpnSite, int? routingWeight, int? dpdTimeoutSeconds, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, bool? usePolicyBasedTrafficSelectors, IList<IpsecPolicy> ipsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, bool? enableRateLimiting, bool? enableInternetSecurity, bool? useLocalAzureIpAddress, ProvisioningState? provisioningState, IList<VpnSiteLinkConnectionData> vpnLinkConnections, RoutingConfiguration routingConfiguration) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The provisioning state of the VPN connection resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> List of all vpn site link connections to the gateway. </summary>
-        public IList<VpnSiteLinkConnection> VpnLinkConnections { get; }
+        public IList<VpnSiteLinkConnectionData> VpnLinkConnections { get; }
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
         public RoutingConfiguration RoutingConfiguration { get; set; }
     }
