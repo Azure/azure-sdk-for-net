@@ -33,14 +33,13 @@ namespace Azure.Core.Tests
         [Test]
         public void TestConstantlPollingStrategy(
             [Values(true, false)] bool retryAfter,
-            [Values(1, 2, 3)] int initial,
-            [Values(1, 2, 3)] int suggest)
+            [Values(0, 0.5, 1, 2, 3)] double suggest)
         {
             var strategy = new ConstantDelayStrategy();
 
             for (int i = 0; i < 6; i++)
             {
-                Assert.AreEqual(Math.Max(initial, suggest), strategy.GetNextDelay(mockDefaultResponse(retryAfter), TimeSpan.FromSeconds(suggest)).TotalSeconds);
+                Assert.AreEqual(Math.Max(1, suggest), strategy.GetNextDelay(mockDefaultResponse(retryAfter), TimeSpan.FromSeconds(suggest)).TotalSeconds);
             }
         }
 
@@ -60,21 +59,20 @@ namespace Azure.Core.Tests
         [Test]
         public void TestRetryAfterPollingStrategyWithHeader(
             [Values(1, 2, 3)] int retryAfter,
-            [Values(1, 2, 3)] int suggest)
+            [Values(0, 0.5, 1, 2, 3)] double suggest)
         {
             var strategy = new RetryAfterDelayStrategy(new ConstantDelayStrategy());
 
-            Assert.AreEqual(Math.Max(retryAfter, suggest), strategy.GetNextDelay(mockWithRetryAfter(retryAfter), TimeSpan.FromSeconds(suggest)).TotalSeconds);
+            Assert.AreEqual(retryAfter, strategy.GetNextDelay(mockWithRetryAfter(retryAfter), TimeSpan.FromSeconds(suggest)).TotalSeconds);
         }
 
         [Test]
         public void TestRetryAfterPollingStrategyWithoutHeader(
-            [Values(1, 2, 3)] int initial,
-            [Values(1, 2, 3)] int suggest)
+            [Values(0, 0.5, 1, 2, 3)] double suggest)
         {
             var strategy = new RetryAfterDelayStrategy(new ConstantDelayStrategy());
 
-            Assert.AreEqual(Math.Max(initial, suggest), strategy.GetNextDelay(defaultMockResponse, TimeSpan.FromSeconds(suggest)).TotalSeconds);
+            Assert.AreEqual(Math.Max(1, suggest), strategy.GetNextDelay(defaultMockResponse, TimeSpan.FromSeconds(suggest)).TotalSeconds);
         }
 
         private static Response mockDefaultResponse(bool retryAfter)
