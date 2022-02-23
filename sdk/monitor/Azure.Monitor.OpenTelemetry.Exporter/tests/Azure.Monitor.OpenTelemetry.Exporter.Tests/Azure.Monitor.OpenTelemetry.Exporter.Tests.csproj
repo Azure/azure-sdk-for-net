@@ -15,5 +15,6 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />
+    <PackageReference Include="Microsoft.Extensions.Logging" VersionOverride="6.0.0" />
   </ItemGroup>
 </Project>
