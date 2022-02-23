@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.DnsResolver.csproj" />
-    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
   </ItemGroup>
 </Project>

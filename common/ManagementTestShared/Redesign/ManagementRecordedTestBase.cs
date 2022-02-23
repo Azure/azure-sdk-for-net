@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.TestFramework
 
             return CreateClient<ArmClient>(
                 TestEnvironment.Credential,
-                subscriptionId ?? TestEnvironment.SubscriptionId,
+                TestEnvironment.SubscriptionId,
                 GetUri(TestEnvironment.ResourceManagerUrl),
                 options);
         }
