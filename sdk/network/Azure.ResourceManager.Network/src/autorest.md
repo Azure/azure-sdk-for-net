@@ -55,6 +55,9 @@ directive:
   - remove-operation: "GetBastionShareableLink"
   - remove-operation: "GetActiveSessions"
   - remove-operation: "DisconnectActiveSessions"
+  - from: networkWatcher.json
+    where: $.definitions.ProtocolConfiguration.properties.HTTPConfiguration
+    transform: $['x-ms-client-name'] = 'HttpProtocolConfiguration' 
 ```
 
 ### Tag: package-track2-preview
