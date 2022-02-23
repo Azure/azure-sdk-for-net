@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the network manager.
         /// </param>
         /// <param name='configurationName'>
-        /// The name of the network manager security Configuration.
+        /// The name of the network manager Security Configuration.
         /// </param>
         /// <param name='ruleCollectionName'>
         /// The name of the network manager security Configuration rule collection.
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "top", 1);
             }
-            string apiVersion = "2021-02-01-preview";
+            string apiVersion = "2021-05-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -300,7 +300,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the network manager.
         /// </param>
         /// <param name='configurationName'>
-        /// The name of the network manager security Configuration.
+        /// The name of the network manager Security Configuration.
         /// </param>
         /// <param name='ruleCollectionName'>
         /// The name of the network manager security Configuration rule collection.
@@ -355,7 +355,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ruleName");
             }
-            string apiVersion = "2021-02-01-preview";
+            string apiVersion = "2021-05-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -524,7 +524,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the network manager.
         /// </param>
         /// <param name='configurationName'>
-        /// The name of the network manager security Configuration.
+        /// The name of the network manager Security Configuration.
         /// </param>
         /// <param name='ruleCollectionName'>
         /// The name of the network manager security Configuration rule collection.
@@ -583,7 +583,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ruleName");
             }
-            string apiVersion = "2021-02-01-preview";
+            string apiVersion = "2021-05-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -774,13 +774,18 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the network manager.
         /// </param>
         /// <param name='configurationName'>
-        /// The name of the network manager security Configuration.
+        /// The name of the network manager Security Configuration.
         /// </param>
         /// <param name='ruleCollectionName'>
         /// The name of the network manager security Configuration rule collection.
         /// </param>
         /// <param name='ruleName'>
         /// The name of the rule.
+        /// </param>
+        /// <param name='force'>
+        /// Deletes the resource even if it is part of a deployed configuration. If the
+        /// configuration has been deployed, the service will do a cleanup deployment
+        /// in the background, prior to the delete.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -800,7 +805,7 @@ namespace Microsoft.Azure.Management.Network
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, string ruleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, string ruleName, bool? force = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -826,7 +831,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ruleName");
             }
-            string apiVersion = "2021-02-01-preview";
+            string apiVersion = "2021-05-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -834,6 +839,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("force", force);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("networkManagerName", networkManagerName);
@@ -853,6 +859,10 @@ namespace Microsoft.Azure.Management.Network
             _url = _url.Replace("{ruleCollectionName}", System.Uri.EscapeDataString(ruleCollectionName));
             _url = _url.Replace("{ruleName}", System.Uri.EscapeDataString(ruleName));
             List<string> _queryParameters = new List<string>();
+            if (force != null)
+            {
+                _queryParameters.Add(string.Format("force={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(force, Client.SerializationSettings).Trim('"'))));
+            }
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));

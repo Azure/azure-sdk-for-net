@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='configurationName'>
-            /// The name of the network manager security Configuration.
+            /// The name of the network manager Security Configuration.
             /// </param>
             public static SecurityConfiguration Get(this ISecurityAdminConfigurationsOperations operations, string resourceGroupName, string networkManagerName, string configurationName)
             {
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='configurationName'>
-            /// The name of the network manager security Configuration.
+            /// The name of the network manager Security Configuration.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='configurationName'>
-            /// The name of the network manager security Configuration.
+            /// The name of the network manager Security Configuration.
             /// </param>
             public static SecurityConfiguration CreateOrUpdate(this ISecurityAdminConfigurationsOperations operations, SecurityConfiguration securityAdminConfiguration, string resourceGroupName, string networkManagerName, string configurationName)
             {
@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='configurationName'>
-            /// The name of the network manager security Configuration.
+            /// The name of the network manager Security Configuration.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -194,11 +194,22 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='configurationName'>
-            /// The name of the network manager security Configuration.
+            /// The name of the network manager Security Configuration.
             /// </param>
-            public static void Delete(this ISecurityAdminConfigurationsOperations operations, string resourceGroupName, string networkManagerName, string configurationName)
+            /// <param name='force'>
+            /// Deletes the resource even if it is part of a deployed configuration. If the
+            /// configuration has been deployed, the service will do a cleanup deployment
+            /// in the background, prior to the delete.
+            /// </param>
+            /// <param name='recursive'>
+            /// Deletes the resource recursively. When present in a security configuration
+            /// delete, all rule collections and rules within the configuration will be
+            /// deleted. When present in a rule collection delete, all rules within the
+            /// collection will be deleted.
+            /// </param>
+            public static void Delete(this ISecurityAdminConfigurationsOperations operations, string resourceGroupName, string networkManagerName, string configurationName, bool? force = default(bool?), bool? recursive = default(bool?))
             {
-                operations.DeleteAsync(resourceGroupName, networkManagerName, configurationName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, networkManagerName, configurationName, force, recursive).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -214,14 +225,25 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='configurationName'>
-            /// The name of the network manager security Configuration.
+            /// The name of the network manager Security Configuration.
+            /// </param>
+            /// <param name='force'>
+            /// Deletes the resource even if it is part of a deployed configuration. If the
+            /// configuration has been deployed, the service will do a cleanup deployment
+            /// in the background, prior to the delete.
+            /// </param>
+            /// <param name='recursive'>
+            /// Deletes the resource recursively. When present in a security configuration
+            /// delete, all rule collections and rules within the configuration will be
+            /// deleted. When present in a rule collection delete, all rules within the
+            /// collection will be deleted.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this ISecurityAdminConfigurationsOperations operations, string resourceGroupName, string networkManagerName, string configurationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this ISecurityAdminConfigurationsOperations operations, string resourceGroupName, string networkManagerName, string configurationName, bool? force = default(bool?), bool? recursive = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, networkManagerName, configurationName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, networkManagerName, configurationName, force, recursive, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

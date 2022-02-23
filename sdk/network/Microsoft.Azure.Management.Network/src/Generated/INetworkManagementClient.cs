@@ -96,39 +96,24 @@ namespace Microsoft.Azure.Management.Network
         IEffectiveVirtualNetworksOperations EffectiveVirtualNetworks { get; }
 
         /// <summary>
-        /// Gets the IActiveConnectivityConfigurationsOperations.
-        /// </summary>
-        IActiveConnectivityConfigurationsOperations ActiveConnectivityConfigurations { get; }
-
-        /// <summary>
-        /// Gets the IActiveSecurityAdminRulesOperations.
-        /// </summary>
-        IActiveSecurityAdminRulesOperations ActiveSecurityAdminRules { get; }
-
-        /// <summary>
-        /// Gets the IActiveSecurityUserRulesOperations.
-        /// </summary>
-        IActiveSecurityUserRulesOperations ActiveSecurityUserRules { get; }
-
-        /// <summary>
         /// Gets the IConnectivityConfigurationsOperations.
         /// </summary>
         IConnectivityConfigurationsOperations ConnectivityConfigurations { get; }
 
         /// <summary>
-        /// Gets the IEffectiveConnectivityConfigurationsOperations.
-        /// </summary>
-        IEffectiveConnectivityConfigurationsOperations EffectiveConnectivityConfigurations { get; }
-
-        /// <summary>
-        /// Gets the INetworkManagerEffectiveSecurityAdminRulesOperations.
-        /// </summary>
-        INetworkManagerEffectiveSecurityAdminRulesOperations NetworkManagerEffectiveSecurityAdminRules { get; }
-
-        /// <summary>
         /// Gets the INetworkGroupsOperations.
         /// </summary>
         INetworkGroupsOperations NetworkGroups { get; }
+
+        /// <summary>
+        /// Gets the IListEffectiveVirtualNetworksOperations.
+        /// </summary>
+        IListEffectiveVirtualNetworksOperations ListEffectiveVirtualNetworks { get; }
+
+        /// <summary>
+        /// Gets the IStaticMembersOperations.
+        /// </summary>
+        IStaticMembersOperations StaticMembers { get; }
 
         /// <summary>
         /// Gets the ISecurityUserConfigurationsOperations.
@@ -161,14 +146,19 @@ namespace Microsoft.Azure.Management.Network
         IAdminRulesOperations AdminRules { get; }
 
         /// <summary>
-        /// Gets the INetworkSecurityPerimetersOperations.
+        /// Gets the ISubscriptionNetworkManagerConnectionsOperations.
         /// </summary>
-        INetworkSecurityPerimetersOperations NetworkSecurityPerimeters { get; }
+        ISubscriptionNetworkManagerConnectionsOperations SubscriptionNetworkManagerConnections { get; }
 
         /// <summary>
-        /// Gets the IPerimeterAssociableResourceTypesOperations.
+        /// Gets the IManagementGroupNetworkManagerConnectionsOperations.
         /// </summary>
-        IPerimeterAssociableResourceTypesOperations PerimeterAssociableResourceTypes { get; }
+        IManagementGroupNetworkManagerConnectionsOperations ManagementGroupNetworkManagerConnections { get; }
+
+        /// <summary>
+        /// Gets the IScopeConnectionsOperations.
+        /// </summary>
+        IScopeConnectionsOperations ScopeConnections { get; }
 
         /// <summary>
         /// Gets the IApplicationGatewaysOperations.
@@ -324,6 +314,21 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IFirewallPolicyRuleCollectionGroupsOperations.
         /// </summary>
         IFirewallPolicyRuleCollectionGroupsOperations FirewallPolicyRuleCollectionGroups { get; }
+
+        /// <summary>
+        /// Gets the IFirewallPolicyIdpsSignaturesOperations.
+        /// </summary>
+        IFirewallPolicyIdpsSignaturesOperations FirewallPolicyIdpsSignatures { get; }
+
+        /// <summary>
+        /// Gets the IFirewallPolicyIdpsSignaturesOverridesOperations.
+        /// </summary>
+        IFirewallPolicyIdpsSignaturesOverridesOperations FirewallPolicyIdpsSignaturesOverrides { get; }
+
+        /// <summary>
+        /// Gets the IFirewallPolicyIdpsSignaturesFilterValuesOperations.
+        /// </summary>
+        IFirewallPolicyIdpsSignaturesFilterValuesOperations FirewallPolicyIdpsSignaturesFilterValues { get; }
 
         /// <summary>
         /// Gets the IIpAllocationsOperations.
@@ -706,9 +711,116 @@ namespace Microsoft.Azure.Management.Network
         IHubRouteTablesOperations HubRouteTables { get; }
 
         /// <summary>
+        /// Gets the IRoutingIntentOperations.
+        /// </summary>
+        IRoutingIntentOperations RoutingIntent { get; }
+
+        /// <summary>
         /// Gets the IWebApplicationFirewallPoliciesOperations.
         /// </summary>
         IWebApplicationFirewallPoliciesOperations WebApplicationFirewallPolicies { get; }
+
+        /// <summary>
+        /// Lists active connectivity configurations in a network manager.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Active Configuration Parameter.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='networkManagerName'>
+        /// The name of the network manager.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ActiveConnectivityConfigurationsListResult>> ListActiveConnectivityConfigurationsWithHttpMessagesAsync(ActiveConfigurationParameter parameters, string resourceGroupName, string networkManagerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Lists active security admin rules in a network manager.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Active Configuration Parameter.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='networkManagerName'>
+        /// The name of the network manager.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ActiveSecurityAdminRulesListResult>> ListActiveSecurityAdminRulesWithHttpMessagesAsync(ActiveConfigurationParameter parameters, string resourceGroupName, string networkManagerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Lists Active Security User Rules in a network manager.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Active Configuration Parameter.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='networkManagerName'>
+        /// The name of the network manager.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ActiveSecurityUserRulesListResult>> ListActiveSecurityUserRulesWithHttpMessagesAsync(ActiveConfigurationParameter parameters, string resourceGroupName, string networkManagerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// List all effective connectivity configurations applied on a virtual
+        /// network.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to list correct page.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<NetworkManagerEffectiveConnectivityConfigurationListResult>> ListNetworkManagerEffectiveConnectivityConfigurationsWithHttpMessagesAsync(QueryRequestOptions parameters, string resourceGroupName, string virtualNetworkName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// List all effective security admin rules applied on a virtual
+        /// network.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to list correct page.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<NetworkManagerEffectiveSecurityAdminRulesListResult>> ListNetworkManagerEffectiveSecurityAdminRulesWithHttpMessagesAsync(QueryRequestOptions parameters, string resourceGroupName, string virtualNetworkName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Creates a Bastion Shareable Links for all the VMs specified in the

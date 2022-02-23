@@ -145,13 +145,13 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Patch a NetworkManager Tags.
+            /// Patch NetworkManager.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to update network manager tags.
+            /// Parameters supplied to specify which network manager is.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -159,19 +159,19 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='networkManagerName'>
             /// The name of the network manager.
             /// </param>
-            public static NetworkManager PatchTags(this INetworkManagersOperations operations, TagsObject parameters, string resourceGroupName, string networkManagerName)
+            public static NetworkManager Patch(this INetworkManagersOperations operations, PatchObject parameters, string resourceGroupName, string networkManagerName)
             {
-                return operations.PatchTagsAsync(parameters, resourceGroupName, networkManagerName).GetAwaiter().GetResult();
+                return operations.PatchAsync(parameters, resourceGroupName, networkManagerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Patch a NetworkManager Tags.
+            /// Patch NetworkManager.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to update network manager tags.
+            /// Parameters supplied to specify which network manager is.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -182,9 +182,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NetworkManager> PatchTagsAsync(this INetworkManagersOperations operations, TagsObject parameters, string resourceGroupName, string networkManagerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NetworkManager> PatchAsync(this INetworkManagersOperations operations, PatchObject parameters, string resourceGroupName, string networkManagerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PatchTagsWithHttpMessagesAsync(parameters, resourceGroupName, networkManagerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PatchWithHttpMessagesAsync(parameters, resourceGroupName, networkManagerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

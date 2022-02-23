@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='configurationName'>
-            /// The name of the network manager security Configuration.
+            /// The name of the network manager Security Configuration.
             /// </param>
             /// <param name='ruleCollectionName'>
             /// The name of the network manager security Configuration rule collection.
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='configurationName'>
-            /// The name of the network manager security Configuration.
+            /// The name of the network manager Security Configuration.
             /// </param>
             /// <param name='ruleCollectionName'>
             /// The name of the network manager security Configuration rule collection.
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='configurationName'>
-            /// The name of the network manager security Configuration.
+            /// The name of the network manager Security Configuration.
             /// </param>
             /// <param name='ruleCollectionName'>
             /// The name of the network manager security Configuration rule collection.
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='configurationName'>
-            /// The name of the network manager security Configuration.
+            /// The name of the network manager Security Configuration.
             /// </param>
             /// <param name='ruleCollectionName'>
             /// The name of the network manager security Configuration rule collection.
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='configurationName'>
-            /// The name of the network manager security Configuration.
+            /// The name of the network manager Security Configuration.
             /// </param>
             /// <param name='ruleCollectionName'>
             /// The name of the network manager security Configuration rule collection.
@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='configurationName'>
-            /// The name of the network manager security Configuration.
+            /// The name of the network manager Security Configuration.
             /// </param>
             /// <param name='ruleCollectionName'>
             /// The name of the network manager security Configuration rule collection.
@@ -228,7 +228,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='configurationName'>
-            /// The name of the network manager security Configuration.
+            /// The name of the network manager Security Configuration.
             /// </param>
             /// <param name='ruleCollectionName'>
             /// The name of the network manager security Configuration rule collection.
@@ -236,9 +236,14 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='ruleName'>
             /// The name of the rule.
             /// </param>
-            public static void Delete(this IAdminRulesOperations operations, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, string ruleName)
+            /// <param name='force'>
+            /// Deletes the resource even if it is part of a deployed configuration. If the
+            /// configuration has been deployed, the service will do a cleanup deployment
+            /// in the background, prior to the delete.
+            /// </param>
+            public static void Delete(this IAdminRulesOperations operations, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, string ruleName, bool? force = default(bool?))
             {
-                operations.DeleteAsync(resourceGroupName, networkManagerName, configurationName, ruleCollectionName, ruleName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, networkManagerName, configurationName, ruleCollectionName, ruleName, force).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -254,7 +259,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network manager.
             /// </param>
             /// <param name='configurationName'>
-            /// The name of the network manager security Configuration.
+            /// The name of the network manager Security Configuration.
             /// </param>
             /// <param name='ruleCollectionName'>
             /// The name of the network manager security Configuration rule collection.
@@ -262,12 +267,17 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='ruleName'>
             /// The name of the rule.
             /// </param>
+            /// <param name='force'>
+            /// Deletes the resource even if it is part of a deployed configuration. If the
+            /// configuration has been deployed, the service will do a cleanup deployment
+            /// in the background, prior to the delete.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IAdminRulesOperations operations, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, string ruleName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IAdminRulesOperations operations, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, string ruleName, bool? force = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, networkManagerName, configurationName, ruleCollectionName, ruleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, networkManagerName, configurationName, ruleCollectionName, ruleName, force, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

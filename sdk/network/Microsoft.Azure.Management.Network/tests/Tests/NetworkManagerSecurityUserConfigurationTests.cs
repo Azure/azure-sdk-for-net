@@ -17,7 +17,7 @@ namespace Networks.Tests
 {
     public class NetworkManagerSecurityUserConfigurationTests
     {
-        [Fact(Skip = "Disable tests")]
+        [Fact]
         public void NetworkManagerSecurityUserConfigurationTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -37,6 +37,7 @@ namespace Networks.Tests
                     {
                         Location = location
                     });
+
                 NetworkManagerPropertiesNetworkManagerScopes scope = new NetworkManagerPropertiesNetworkManagerScopes();
                 string subscriptionId = "/subscriptions/08615b4b-bc9c-4a70-be1b-2ea10bc97b52";
                 List<string> subList = new List<string>();
@@ -90,10 +91,13 @@ namespace Networks.Tests
 
                 // Delete NetworkManager
                 networkManagementClient.NetworkManagers.Delete(resourceGroupName, networkManagerName);
+
+                // Delete Resource Group
+                resourcesClient.ResourceGroups.Delete(resourceGroupName);
             }
         }
 
-        [Fact(Skip = "Disable tests")]
+        [Fact]
         public void NetworkManagerSecuirtyUserRuleCollectionsTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -145,14 +149,10 @@ namespace Networks.Tests
                 var putNmscResponse = networkManagementClient.SecurityUserConfigurations.CreateOrUpdate(networkmanagerSecurityUserConfig, resourceGroupName, networkManagerName, networkmanagerSecurityUserConfigName);
                 Assert.Equal("Succeeded", putNmscResponse.ProvisioningState);
 
-                string groupName = TestUtilities.GenerateName();
-                List<GroupMembersItem> groupMember = new List<GroupMembersItem>();
-                string vnetId = "/subscriptions/08615b4b-bc9c-4a70-be1b-2ea10bc97b52/resourceGroups/ANMRG3495/providers/Microsoft.Network/virtualNetworks/testvnet";
-                GroupMembersItem groupMembersItem = new GroupMembersItem(vnetId);
-                groupMember.Add(groupMembersItem);
+                string groupName = TestUtilities.GenerateName("ANMNG");
                 var networkManagerGroup = new NetworkGroup()
                 {
-                    GroupMembers = groupMember,
+                    MemberType = "Microsoft.Network/virtualNetworks"
                 };
 
                 // Put NetworkManagerGroup
@@ -160,13 +160,27 @@ namespace Networks.Tests
                 Assert.Equal(groupName, putNmGroupResponse.Name);
                 Assert.Equal("Succeeded", putNmGroupResponse.ProvisioningState);
 
+
+                string staticMemberName = TestUtilities.GenerateName("ANMStatMem");
+                string vnetId = "/subscriptions/08615b4b-bc9c-4a70-be1b-2ea10bc97b52/resourceGroups/SDKTestResources/providers/Microsoft.Network/virtualNetworks/SDKTestVnet";
+                var staticMember = new StaticMember()
+                {
+                    ResourceId = vnetId,
+                };
+
+                // Put NetworkManagerStaticMember
+                var putStaticMemberResponse = networkManagementClient.StaticMembers.CreateOrUpdate(staticMember, resourceGroupName, networkManagerName, groupName, staticMemberName);
+                Assert.Equal(staticMemberName, putStaticMemberResponse.Name);
+                Assert.Equal(vnetId, putStaticMemberResponse.ResourceId);
+
                 NetworkManagerSecurityGroupItem sgItem = new NetworkManagerSecurityGroupItem(putNmGroupResponse.Id);
                 List<NetworkManagerSecurityGroupItem> appliesToGroups = new List<NetworkManagerSecurityGroupItem>();
                 appliesToGroups.Add(sgItem);
 
                 string networkSecurityRuleCollectionName = TestUtilities.GenerateName("ANMSUCRC");
-                var securityConfigurationRuleCollection = new RuleCollection(networkSecurityRuleCollectionName);
-                securityConfigurationRuleCollection.AppliesToGroups = appliesToGroups;
+                var securityConfigurationRuleCollection = new RuleCollection(appliesToGroups, name: networkSecurityRuleCollectionName);
+                securityConfigurationRuleCollection.DisplayName = "Sample DisplayName";
+                securityConfigurationRuleCollection.Description = "Sample Description";
 
                 // Put NetworkManagerSecurityRuleCollection
                 var putRuleCollectionResponse = networkManagementClient.UserRuleCollections.CreateOrUpdate(securityConfigurationRuleCollection,
@@ -174,12 +188,15 @@ namespace Networks.Tests
                     networkManagerName,
                     networkmanagerSecurityUserConfigName,
                     networkSecurityRuleCollectionName);
+                Assert.Equal("Succeeded", putRuleCollectionResponse.ProvisioningState);
 
                 // Get NetworkManagerSecurityRuleCollection
                 var getRuleCollectionResponse = networkManagementClient.UserRuleCollections.Get(resourceGroupName, networkManagerName, networkmanagerSecurityUserConfigName, networkSecurityRuleCollectionName);
                 Assert.Equal(networkSecurityRuleCollectionName, getRuleCollectionResponse.Name);
                 Assert.Single(getRuleCollectionResponse.AppliesToGroups);
                 Assert.Equal(putNmGroupResponse.Id, getRuleCollectionResponse.AppliesToGroups.First().NetworkGroupId);
+                Assert.Equal(securityConfigurationRuleCollection.DisplayName, getRuleCollectionResponse.DisplayName);
+                Assert.Equal(securityConfigurationRuleCollection.Description, getRuleCollectionResponse.Description);
 
                 // List NetworkManagerSecurityRuleCollection
                 var listRuleCollectionResponse = networkManagementClient.UserRuleCollections.List(resourceGroupName, networkManagerName, networkmanagerSecurityUserConfigName);
@@ -188,8 +205,6 @@ namespace Networks.Tests
 
                 // Delete RuleCollection
                 networkManagementClient.UserRuleCollections.Delete(resourceGroupName, networkManagerName, networkmanagerSecurityUserConfigName, networkSecurityRuleCollectionName);
-                
-
 
                 // List NetworkManagerSecurityRuleCollection
                 listRuleCollectionResponse = networkManagementClient.UserRuleCollections.List(resourceGroupName, networkManagerName, networkmanagerSecurityUserConfigName);
@@ -198,17 +213,23 @@ namespace Networks.Tests
                 // Delete NetworkManagerSecurityConfigurations
                 networkManagementClient.SecurityUserConfigurations.Delete(resourceGroupName, networkManagerName, networkmanagerSecurityUserConfigName);
 
+                // Delete NetworkManager Static Member
+                networkManagementClient.StaticMembers.Delete(resourceGroupName, networkManagerName, groupName, staticMemberName);
+
                 // Delete NetworkManager NetworkGroup
                 networkManagementClient.NetworkGroups.Delete(resourceGroupName, networkManagerName, groupName);
 
                 // Delete NetworkManager
                 networkManagementClient.NetworkManagers.Delete(resourceGroupName, networkManagerName);
+
+                // Delete Resource Group
+                resourcesClient.ResourceGroups.Delete(resourceGroupName);
             }
         }
 
 
-        [Fact(Skip = "Disable tests")]
-        public void NetworkManagerSecuirtyUserRulesTest()
+        [Fact]
+        public void NetworkManagerSecurityUserRulesTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -226,7 +247,6 @@ namespace Networks.Tests
                     {
                         Location = location
                     });
-
 
                 NetworkManagerPropertiesNetworkManagerScopes scope = new NetworkManagerPropertiesNetworkManagerScopes();
                 string subscriptionId = "/subscriptions/08615b4b-bc9c-4a70-be1b-2ea10bc97b52";
@@ -260,27 +280,36 @@ namespace Networks.Tests
                 var putNmscResponse = networkManagementClient.SecurityUserConfigurations.CreateOrUpdate(networkmanagerSecurityUserConfig, resourceGroupName, networkManagerName, networkmanagerSecurityConfigName);
                 Assert.Equal("Succeeded", putNmscResponse.ProvisioningState);
 
-                // Put NetworkManagerGroup
                 string groupName = TestUtilities.GenerateName("ANMNG");
-                List<GroupMembersItem> groupMember = new List<GroupMembersItem>();
-                string vnetId = "/subscriptions/08615b4b-bc9c-4a70-be1b-2ea10bc97b52/resourceGroups/ANMRG3495/providers/Microsoft.Network/virtualNetworks/testvnet";
-                GroupMembersItem groupMembersItem = new GroupMembersItem(vnetId);
-                groupMember.Add(groupMembersItem);
                 var networkManagerGroup = new NetworkGroup()
                 {
-                    GroupMembers = groupMember,
+                    MemberType = "Microsoft.Network/virtualNetworks"
                 };
+
+                // Put NetworkManagerGroup
                 var putNmGroupResponse = networkManagementClient.NetworkGroups.CreateOrUpdate(networkManagerGroup, resourceGroupName, networkManagerName, groupName);
                 Assert.Equal(groupName, putNmGroupResponse.Name);
                 Assert.Equal("Succeeded", putNmGroupResponse.ProvisioningState);
+
+
+                string staticMemberName = TestUtilities.GenerateName("ANMStatMem");
+                string vnetId = "/subscriptions/08615b4b-bc9c-4a70-be1b-2ea10bc97b52/resourceGroups/SDKTestResources/providers/Microsoft.Network/virtualNetworks/SDKTestVnet";
+                var staticMember = new StaticMember()
+                {
+                    ResourceId = vnetId,
+                };
+
+                // Put NetworkManagerStaticMember
+                var putStaticMemberResponse = networkManagementClient.StaticMembers.CreateOrUpdate(staticMember, resourceGroupName, networkManagerName, groupName, staticMemberName);
+                Assert.Equal(staticMemberName, putStaticMemberResponse.Name);
+                Assert.Equal(vnetId, putStaticMemberResponse.ResourceId);
 
                 NetworkManagerSecurityGroupItem sgItem = new NetworkManagerSecurityGroupItem(putNmGroupResponse.Id);
                 List<NetworkManagerSecurityGroupItem> appliesToGroups = new List<NetworkManagerSecurityGroupItem>();
                 appliesToGroups.Add(sgItem);
 
                 string networkSecurityRuleCollectionName = TestUtilities.GenerateName("ANMSARC");
-                var securityConfigurationRuleCollection = new RuleCollection(networkSecurityRuleCollectionName);
-                securityConfigurationRuleCollection.AppliesToGroups = appliesToGroups;
+                var securityConfigurationRuleCollection = new RuleCollection(appliesToGroups, name: networkSecurityRuleCollectionName);
 
                 // Put NetworkManagerSecurityRuleCollection
                 var putRuleCollectionResponse = networkManagementClient.UserRuleCollections.CreateOrUpdate(securityConfigurationRuleCollection,
@@ -310,7 +339,7 @@ namespace Networks.Tests
                 };
                 securityUserRule.Destinations = new List<AddressPrefixItem>() { destAddressPrefixItem };
                 securityUserRule.Sources = new List<AddressPrefixItem>() { sourceAddressPrefixItem };
-                
+
                 // Put NetworkManagerSecurityRule
                 var putRuleResponse = (UserRule)networkManagementClient.UserRules.CreateOrUpdate(securityUserRule, resourceGroupName, networkManagerName, networkmanagerSecurityConfigName, networkSecurityRuleCollectionName, networkSecurityRuleName);
 
@@ -336,7 +365,6 @@ namespace Networks.Tests
                 Assert.Single(listRuleResponse);
                 Assert.Equal(networkSecurityRuleName, listRuleResponse.First().Name);
 
-                /*
                 NetworkManagerCommit commit = new NetworkManagerCommit();
                 commit.CommitType = "SecurityUser";
                 commit.ConfigurationIds = new List<string>();
@@ -345,12 +373,12 @@ namespace Networks.Tests
                 commit.ConfigurationIds.Add(putNmscResponse.Id);
                 networkManagementClient.NetworkManagerCommits.Post(commit, resourceGroupName, networkManagerName);
 
-                Thread.Sleep(40000);
+                Thread.Sleep(100000);
 
                 ActiveConfigurationParameter activeConfigurationParameter = new ActiveConfigurationParameter();
                 activeConfigurationParameter.Regions = new List<string>();
                 activeConfigurationParameter.Regions.Add(location);
-                var activeSecurityUserConfigrautionsResponse = networkManagementClient.ActiveSecurityUserRules.List(resourceGroupName, networkManagerName, activeConfigurationParameter);
+                var activeSecurityUserConfigrautionsResponse = networkManagementClient.ListActiveSecurityUserRules(activeConfigurationParameter, resourceGroupName, networkManagerName);
                 try
                 {
                     Assert.Single(activeSecurityUserConfigrautionsResponse.Value);
@@ -363,7 +391,6 @@ namespace Networks.Tests
                 {
                     Console.WriteLine(ex);
                 }
-                
 
                 NetworkManagerCommit unCommit = new NetworkManagerCommit();
                 unCommit.CommitType = "SecurityUser";
@@ -372,8 +399,10 @@ namespace Networks.Tests
                 unCommit.TargetLocations.Add(location);
                 networkManagementClient.NetworkManagerCommits.Post(unCommit, resourceGroupName, networkManagerName);
 
-                Thread.Sleep(40000);
-                */
+                Thread.Sleep(100000);
+
+                activeSecurityUserConfigrautionsResponse = networkManagementClient.ListActiveSecurityUserRules(activeConfigurationParameter, resourceGroupName, networkManagerName);
+                Assert.Empty(activeSecurityUserConfigrautionsResponse.Value);
 
                 // Delete Rules
                 networkManagementClient.UserRules.Delete(resourceGroupName, networkManagerName, networkmanagerSecurityConfigName, networkSecurityRuleCollectionName, networkSecurityRuleName);
@@ -388,11 +417,17 @@ namespace Networks.Tests
                 // Delete NetworkManagerSecurityConfigurations
                 networkManagementClient.SecurityUserConfigurations.Delete(resourceGroupName, networkManagerName, networkmanagerSecurityConfigName);
 
+                // Delete NetworkManager Static Member
+                networkManagementClient.StaticMembers.Delete(resourceGroupName, networkManagerName, groupName, staticMemberName);
+
                 // Delete NetworkManager NetworkGroup
                 networkManagementClient.NetworkGroups.Delete(resourceGroupName, networkManagerName, groupName);
 
                 // Delete NetworkManager
                 networkManagementClient.NetworkManagers.Delete(resourceGroupName, networkManagerName);
+
+                // Delete Resource Group
+                resourcesClient.ResourceGroups.Delete(resourceGroupName);
             }
         }
     }

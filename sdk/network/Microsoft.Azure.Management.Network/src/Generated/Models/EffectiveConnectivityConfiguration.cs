@@ -38,6 +38,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="connectivityTopology">Connectivity topology type.
         /// Possible values include: 'HubAndSpoke', 'Mesh'</param>
+        /// <param name="appliesToGroups">Groups for configuration</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="displayName">A friendly name for the resource.</param>
         /// <param name="description">A description of the connectivity
@@ -45,7 +46,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="hubs">List of hubItems</param>
         /// <param name="isGlobal">Flag if global mesh is supported. Possible
         /// values include: 'False', 'True'</param>
-        /// <param name="appliesToGroups">Groups for configuration</param>
         /// <param name="provisioningState">The provisioning state of the
         /// connectivity configuration resource. Possible values include:
         /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// existing peerings. Possible values include: 'False', 'True'</param>
         /// <param name="configurationGroups">Effective configuration
         /// groups.</param>
-        public EffectiveConnectivityConfiguration(string connectivityTopology, string id = default(string), string displayName = default(string), string description = default(string), IList<Hub> hubs = default(IList<Hub>), string isGlobal = default(string), IList<ConnectivityGroupItem> appliesToGroups = default(IList<ConnectivityGroupItem>), string provisioningState = default(string), string deleteExistingPeering = default(string), IList<ConfigurationGroup> configurationGroups = default(IList<ConfigurationGroup>))
+        public EffectiveConnectivityConfiguration(string connectivityTopology, IList<ConnectivityGroupItem> appliesToGroups, string id = default(string), string displayName = default(string), string description = default(string), IList<Hub> hubs = default(IList<Hub>), string isGlobal = default(string), string provisioningState = default(string), string deleteExistingPeering = default(string), IList<ConfigurationGroup> configurationGroups = default(IList<ConfigurationGroup>))
         {
             Id = id;
             DisplayName = displayName;
@@ -149,6 +149,30 @@ namespace Microsoft.Azure.Management.Network.Models
             if (ConnectivityTopology == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ConnectivityTopology");
+            }
+            if (AppliesToGroups == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "AppliesToGroups");
+            }
+            if (AppliesToGroups != null)
+            {
+                foreach (var element in AppliesToGroups)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (ConfigurationGroups != null)
+            {
+                foreach (var element1 in ConfigurationGroups)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
             }
         }
     }

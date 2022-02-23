@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the network manager.
         /// </param>
         /// <param name='configurationName'>
-        /// The name of the network manager security Configuration.
+        /// The name of the network manager Security Configuration.
         /// </param>
         /// <param name='top'>
         /// An optional query parameter which specifies the maximum number of
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the network manager.
         /// </param>
         /// <param name='configurationName'>
-        /// The name of the network manager security Configuration.
+        /// The name of the network manager Security Configuration.
         /// </param>
         /// <param name='ruleCollectionName'>
         /// The name of the network manager security Configuration rule
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the network manager.
         /// </param>
         /// <param name='configurationName'>
-        /// The name of the network manager security Configuration.
+        /// The name of the network manager Security Configuration.
         /// </param>
         /// <param name='ruleCollectionName'>
         /// The name of the network manager security Configuration rule
@@ -140,11 +140,23 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the network manager.
         /// </param>
         /// <param name='configurationName'>
-        /// The name of the network manager security Configuration.
+        /// The name of the network manager Security Configuration.
         /// </param>
         /// <param name='ruleCollectionName'>
         /// The name of the network manager security Configuration rule
         /// collection.
+        /// </param>
+        /// <param name='force'>
+        /// Deletes the resource even if it is part of a deployed
+        /// configuration. If the configuration has been deployed, the service
+        /// will do a cleanup deployment in the background, prior to the
+        /// delete.
+        /// </param>
+        /// <param name='recursive'>
+        /// Deletes the resource recursively. When present in a security
+        /// configuration delete, all rule collections and rules within the
+        /// configuration will be deleted. When present in a rule collection
+        /// delete, all rules within the collection will be deleted.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -158,7 +170,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, bool? force = default(bool?), bool? recursive = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all the rule collections in a security admin configuration,
         /// in a paginated format.

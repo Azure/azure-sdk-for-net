@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the network manager.
         /// </param>
         /// <param name='configurationName'>
-        /// The name of the network manager security Configuration.
+        /// The name of the network manager Security Configuration.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the network manager.
         /// </param>
         /// <param name='configurationName'>
-        /// The name of the network manager security Configuration.
+        /// The name of the network manager Security Configuration.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the network manager.
         /// </param>
         /// <param name='configurationName'>
-        /// The name of the network manager security Configuration.
+        /// The name of the network manager Security Configuration.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

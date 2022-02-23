@@ -139,9 +139,14 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='configurationName'>
             /// The name of the network manager connectivity configuration.
             /// </param>
-            public static void Delete(this IConnectivityConfigurationsOperations operations, string resourceGroupName, string networkManagerName, string configurationName)
+            /// <param name='force'>
+            /// Deletes the resource even if it is part of a deployed configuration. If the
+            /// configuration has been deployed, the service will do a cleanup deployment
+            /// in the background, prior to the delete.
+            /// </param>
+            public static void Delete(this IConnectivityConfigurationsOperations operations, string resourceGroupName, string networkManagerName, string configurationName, bool? force = default(bool?))
             {
-                operations.DeleteAsync(resourceGroupName, networkManagerName, configurationName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, networkManagerName, configurationName, force).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -160,12 +165,17 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='configurationName'>
             /// The name of the network manager connectivity configuration.
             /// </param>
+            /// <param name='force'>
+            /// Deletes the resource even if it is part of a deployed configuration. If the
+            /// configuration has been deployed, the service will do a cleanup deployment
+            /// in the background, prior to the delete.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IConnectivityConfigurationsOperations operations, string resourceGroupName, string networkManagerName, string configurationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IConnectivityConfigurationsOperations operations, string resourceGroupName, string networkManagerName, string configurationName, bool? force = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, networkManagerName, configurationName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, networkManagerName, configurationName, force, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

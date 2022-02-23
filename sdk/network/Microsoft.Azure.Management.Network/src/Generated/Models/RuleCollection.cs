@@ -34,6 +34,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the RuleCollection class.
         /// </summary>
+        /// <param name="appliesToGroups">Groups for configuration</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
@@ -43,13 +44,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// collection.</param>
         /// <param name="description">A description of the rule
         /// collection.</param>
-        /// <param name="appliesToGroups">Groups for configuration</param>
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
         /// <param name="systemData">The system metadata related to this
         /// resource.</param>
-        public RuleCollection(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string displayName = default(string), string description = default(string), IList<NetworkManagerSecurityGroupItem> appliesToGroups = default(IList<NetworkManagerSecurityGroupItem>), string provisioningState = default(string), SystemData systemData = default(SystemData))
+        public RuleCollection(IList<NetworkManagerSecurityGroupItem> appliesToGroups, string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string displayName = default(string), string description = default(string), string provisioningState = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type, etag)
         {
             DisplayName = displayName;
@@ -96,5 +96,28 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "systemData")]
         public SystemData SystemData { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (AppliesToGroups == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "AppliesToGroups");
+            }
+            if (AppliesToGroups != null)
+            {
+                foreach (var element in AppliesToGroups)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+        }
     }
 }

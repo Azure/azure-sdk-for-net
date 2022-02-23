@@ -99,10 +99,10 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string networkManagerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Patch a NetworkManager Tags.
+        /// Patch NetworkManager.
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to update network manager tags.
+        /// Parameters supplied to specify which network manager is.
         /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<NetworkManager>> PatchTagsWithHttpMessagesAsync(TagsObject parameters, string resourceGroupName, string networkManagerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NetworkManager>> PatchWithHttpMessagesAsync(PatchObject parameters, string resourceGroupName, string networkManagerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all network managers in a subscription.
         /// </summary>

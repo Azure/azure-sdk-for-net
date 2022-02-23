@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the network manager.
         /// </param>
         /// <param name='configurationName'>
-        /// The name of the network manager security Configuration.
+        /// The name of the network manager Security Configuration.
         /// </param>
         /// <param name='top'>
         /// An optional query parameter which specifies the maximum number of
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the network manager.
         /// </param>
         /// <param name='configurationName'>
-        /// The name of the network manager security Configuration.
+        /// The name of the network manager Security Configuration.
         /// </param>
         /// <param name='ruleCollectionName'>
         /// The name of the network manager security Configuration rule
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the network manager.
         /// </param>
         /// <param name='configurationName'>
-        /// The name of the network manager security Configuration.
+        /// The name of the network manager Security Configuration.
         /// </param>
         /// <param name='ruleCollectionName'>
         /// The name of the network manager security Configuration rule
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the network manager.
         /// </param>
         /// <param name='configurationName'>
-        /// The name of the network manager security Configuration.
+        /// The name of the network manager Security Configuration.
         /// </param>
         /// <param name='ruleCollectionName'>
         /// The name of the network manager security Configuration rule
