@@ -47,7 +47,7 @@ namespace Azure.Storage.Blobs.Tests
             StorageTransferOptions transferOptions)
             => await client.UploadAsync(source, new BlobUploadOptions
             {
-                TransactionalHashingOptions = hashingOptions,
+                ValidationOptions = hashingOptions,
                 TransferOptions = transferOptions
             });
 
@@ -67,7 +67,7 @@ namespace Azure.Storage.Blobs.Tests
             await client.UploadAsync(data);
         }
 
-        protected override bool ParallelUploadIsHashExpected(Request request)
+        protected override bool ParallelUploadIsChecksumExpected(Request request)
         {
             // PUT Blob request
             // this doesn't catch a timeout on the query but we aren't adding a timeout in these tests

@@ -13,7 +13,7 @@ using NUnit.Framework;
 namespace Azure.Storage.Files.Shares.Tests
 {
     [ShareClientTestFixture]
-    public class ShareFileClientTransactionalHashingTests : TransactionalHashingTestBase<
+    public class ShareFileClientTransactionalHashingTests : TransferValidationTestBase<
         ShareServiceClient,
         ShareClient,
         ShareFileClient,
@@ -128,7 +128,7 @@ namespace Azure.Storage.Files.Shares.Tests
             await client.UploadAsync(data);
         }
 
-        protected override bool ParallelUploadIsHashExpected(Request request)
+        protected override bool ParallelUploadIsChecksumExpected(Request request)
         {
             return true;
         }

@@ -47,7 +47,7 @@ namespace Azure.Storage.Files.DataLake
                     offset: _writeIndex,
                     options: new DataLakeFileAppendOptions
                     {
-                        ValidationOptions = _validationOptions,
+                        TransactionalValidationOptions = _validationOptions,
                         ProgressHandler = _progressHandler,
                         LeaseId = _conditions?.LeaseId
                     },

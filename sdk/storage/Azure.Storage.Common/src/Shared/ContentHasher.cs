@@ -130,12 +130,12 @@ namespace Azure.Storage
                 return default;
             }
 
-            if (options.PrecalculatedHash != default)
+            if (options.PrecalculatedChecksum != default)
             {
                 return options.Algorithm switch
                 {
-                    ValidationAlgorithm.StorageCrc64 => new GetHashResult(storageCrc64: options.PrecalculatedHash),
-                    ValidationAlgorithm.MD5 => new GetHashResult(md5: options.PrecalculatedHash),
+                    ValidationAlgorithm.StorageCrc64 => new GetHashResult(storageCrc64: options.PrecalculatedChecksum),
+                    ValidationAlgorithm.MD5 => new GetHashResult(md5: options.PrecalculatedChecksum),
                     _ => throw Errors.InvalidArgument(nameof(options.Algorithm))
                 };
             }

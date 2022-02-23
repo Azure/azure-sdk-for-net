@@ -16,7 +16,7 @@ namespace Azure.Storage.Test.Shared
     /// We're going to make our tests retry a few additional error types that
     /// may be more wasteful, but are less likely to cause test failures.
     /// </summary>
-    public abstract class TransactionalHashingTestBase<TServiceClient, TContainerClient, TResourceClient, TClientOptions, TEnvironment> : StorageTestBase<TEnvironment>
+    public abstract class TransferValidationTestBase<TServiceClient, TContainerClient, TResourceClient, TClientOptions, TEnvironment> : StorageTestBase<TEnvironment>
         where TServiceClient : class
         where TContainerClient : class
         where TResourceClient : class
@@ -27,7 +27,7 @@ namespace Azure.Storage.Test.Shared
 
         public ClientBuilder<TServiceClient, TClientOptions> ClientBuilder { get; protected set; }
 
-        public TransactionalHashingTestBase(
+        public TransferValidationTestBase(
             bool async,
             string generatedResourceNamePrefix = default,
             RecordedTestMode? mode = null)
@@ -67,23 +67,23 @@ namespace Azure.Storage.Test.Shared
         /// </summary>
         /// <param name="client">Client to call upload on.</param>
         /// <param name="source">Data to upload.</param>
-        /// <param name="hashingOptions">Transactional hashing options to use on upload.</param>
+        /// <param name="validationOptions">Validation options to use on upload.</param>
         protected abstract Task<Response> UploadPartitionAsync(
             TResourceClient client,
             Stream source,
-            UploadTransferValidationOptions hashingOptions);
+            UploadTransferValidationOptions validationOptions);
 
         /// <summary>
         /// Calls the 1:1 download method for the given resource client.
         /// </summary>
         /// <param name="client">Client to call the download on.</param>
         /// <param name="destination">Where to send downloaded data.</param>
-        /// <param name="hashingOptions">Transactional hashing options to use on download.</param>
-        /// <param name="range">Range parameter for download, necessary for transactional hash request to be accepted by service.</param>
+        /// <param name="validationOptions">Validation options to use on download.</param>
+        /// <param name="range">Range parameter for download, necessary for transactional checksum request to be accepted by service.</param>
         protected abstract Task<Response> DownloadPartitionAsync(
             TResourceClient client,
             Stream destination,
-            DownloadTransferValidationOptions hashingOptions,
+            DownloadTransferValidationOptions validationOptions,
             HttpRange range = default);
 
         /// <summary>
@@ -91,12 +91,12 @@ namespace Azure.Storage.Test.Shared
         /// </summary>
         /// <param name="client">Client to call upload on.</param>
         /// <param name="source">Data to upload.</param>
-        /// <param name="hashingOptions">Transactional hashing options to use on upload.</param>
+        /// <param name="validationOptions">Validation options to use on upload.</param>
         /// <param name="transferOptions">Storage transfer options to use on upload.</param>
         protected abstract Task ParallelUploadAsync(
             TResourceClient client,
             Stream source,
-            UploadTransferValidationOptions hashingOptions,
+            UploadTransferValidationOptions validationOptions,
             StorageTransferOptions transferOptions);
 
         /// <summary>
@@ -104,34 +104,34 @@ namespace Azure.Storage.Test.Shared
         /// </summary>
         /// <param name="client">Client to call download on.</param>
         /// <param name="destination">Where to send downloaded data.</param>
-        /// <param name="hashingOptions">Transactional hashing options to use on download.</param>
+        /// <param name="validationOptions">Validation options to use on download.</param>
         /// <param name="transferOptions">Storage transfer options to use on download.</param>
         protected abstract Task ParallelDownloadAsync(
             TResourceClient client,
             Stream destination,
-            DownloadTransferValidationOptions hashingOptions,
+            DownloadTransferValidationOptions validationOptions,
             StorageTransferOptions transferOptions);
 
         /// <summary>
         /// Calls the open write method for the given resource client.
         /// </summary>
         /// <param name="client">Client to call open write on.</param>
-        /// <param name="hashingOptions">Transactinal hashing options to use in the write stream.</param>
+        /// <param name="validationOptions">Validation options to use in the write stream.</param>
         /// <param name="internalBufferSize">Buffer size for the write stream.</param>
         protected abstract Task<Stream> OpenWriteAsync(
             TResourceClient client,
-            UploadTransferValidationOptions hashingOptions,
+            UploadTransferValidationOptions validationOptions,
             int internalBufferSize);
 
         /// <summary>
         /// Calls the open read method for the given resource client.
         /// </summary>
         /// <param name="client">Client to call open read on.</param>
-        /// <param name="hashingOptions">Transactinal hashing options to use in the read stream.</param>
+        /// <param name="validationOptions">Validation options to use in the read stream.</param>
         /// <param name="internalBufferSize">Buffer size for the read stream.</param>
         protected abstract Task<Stream> OpenReadAsync(
             TResourceClient client,
-            DownloadTransferValidationOptions hashingOptions,
+            DownloadTransferValidationOptions validationOptions,
             int internalBufferSize);
 
         /// <summary>
@@ -150,15 +150,15 @@ namespace Azure.Storage.Test.Shared
         #region Service-Specific Predicates
         /// <summary>
         /// Service-specific check on the given request to determine if this is a request to perform
-        /// a hash assertion on in a parallel upload.
+        /// a checksum assertion on in a parallel upload.
         /// </summary>
         /// <remarks>
-        /// Not every request sent in a parallel upload has a hash on it. To correctly test whether hashes
+        /// Not every request sent in a parallel upload has a checksum on it. To correctly test whether checksums
         /// are going out on requests as expected, we need to determine which requests are expected to have
-        /// hashes on them in the first place. E.g. BlobClient sends out PutBlock calls which DO have a hash
-        /// and a PutBlockList call which does NOT have a hash on it.
+        /// checksums on them in the first place. E.g. BlobClient sends out PutBlock calls which DO have a checksum
+        /// and a PutBlockList call which does NOT have a checksum on it.
         /// </remarks>
-        protected abstract bool ParallelUploadIsHashExpected(Request request);
+        protected abstract bool ParallelUploadIsChecksumExpected(Request request);
         #endregion
 
         protected string GetNewResourceName()
@@ -166,31 +166,31 @@ namespace Azure.Storage.Test.Shared
 
         #region Assertions
         /// <summary>
-        /// Gets an assertion as to whether a transactional hash appeared on an outgoing request.
+        /// Gets an assertion as to whether a checksum appeared on an outgoing request.
         /// Meant to be injected into a pipeline.
         /// </summary>
         /// <param name="algorithm">
-        /// Hash algorithm to look for.
+        /// Algorithm to search by.
         /// </param>
-        /// <param name="isHashExpected">
-        /// Predicate to determine wheter a hash is expected on that particular request. E.g. on a block blob
-        /// partitioned upload, stage block requests are expected to have a hash but commit block list is not.
-        /// Defaults to all requests expected to have the hash.
+        /// <param name="isChecksumExpected">
+        /// Predicate to determine wheter a checksum is expected on that particular request. E.g. on a block blob
+        /// partitioned upload, stage block requests are expected to have a checksum but commit block list is not.
+        /// Defaults to all requests expected to have a checksum.
         /// </param>
-        /// <param name="expectedHash">
-        /// The actual hash value expected to be on the request, if known. Defaults to no specific value expected or checked.
+        /// <param name="expectedChecksum">
+        /// The actual checksum value expected to be on the request, if known. Defaults to no specific value expected or checked.
         /// </param>
         /// <returns>An assertion to put into a pipeline policy.</returns>
-        internal static Action<Request> GetRequestHashAssertion(ValidationAlgorithm algorithm, Func<Request, bool> isHashExpected = default, byte[] expectedHash = default)
+        internal static Action<Request> GetRequestChecksumAssertion(ValidationAlgorithm algorithm, Func<Request, bool> isChecksumExpected = default, byte[] expectedChecksum = default)
         {
             // action to assert a request header is as expected
-            void AssertHash(RequestHeaders headers, string headerName)
+            void AssertChecksum(RequestHeaders headers, string headerName)
             {
-                if (headers.TryGetValue(headerName, out string hash))
+                if (headers.TryGetValue(headerName, out string checksum))
                 {
-                    if (expectedHash != default)
+                    if (expectedChecksum != default)
                     {
-                        Assert.AreEqual(Convert.ToBase64String(expectedHash), hash);
+                        Assert.AreEqual(Convert.ToBase64String(expectedChecksum), checksum);
                     }
                 }
                 else
@@ -202,7 +202,7 @@ namespace Azure.Storage.Test.Shared
             return request =>
             {
                 // filter some requests out with predicate
-                if (isHashExpected != default && !isHashExpected(request))
+                if (isChecksumExpected != default && !isChecksumExpected(request))
                 {
                     return;
                 }
@@ -210,43 +210,43 @@ namespace Azure.Storage.Test.Shared
                 switch (algorithm)
                 {
                     case ValidationAlgorithm.MD5:
-                        AssertHash(request.Headers, "Content-MD5");
+                        AssertChecksum(request.Headers, "Content-MD5");
                         break;
                     case ValidationAlgorithm.StorageCrc64:
-                        AssertHash(request.Headers, "x-ms-content-crc64");
+                        AssertChecksum(request.Headers, "x-ms-content-crc64");
                         break;
                     default:
-                        throw new Exception("Bad TransactionalHashAlgorithm provided to Request hash assertion.");
+                        throw new Exception($"Bad {nameof(ValidationAlgorithm)} provided to {nameof(GetRequestChecksumAssertion)}.");
                 }
             };
         }
 
         /// <summary>
-        /// Gets an assertion as to whether a transactional hash appeared on a returned response.
+        /// Gets an assertion as to whether a transactional checksum appeared on a returned response.
         /// Meant to be injected into a pipeline.
         /// </summary>
         /// <param name="algorithm">
-        /// Hash algorithm to look for.
+        /// Algorithm to search by.
         /// </param>
-        /// <param name="isHashExpected">
-        /// Predicate to determine wheter a hash is expected on that particular response. E.g. on OpenRead,
-        /// the initial GetProperties is not expected to have a hash, but download responses are.
-        /// Defaults to all requests expected to have the hash.
+        /// <param name="isChecksumExpected">
+        /// Predicate to determine wheter a checksum is expected on that particular response. E.g. on OpenRead,
+        /// the initial GetProperties is not expected to have a checksum, but download responses are.
+        /// Defaults to all requests expected to have the checksum.
         /// </param>
-        /// <param name="expectedHash">
-        /// The actual hash value expected to be on the response, if known. Defaults to no specific value expected or checked.
+        /// <param name="expectedChecksum">
+        /// The actual checksum value expected to be on the response, if known. Defaults to no specific value expected or checked.
         /// </param>
         /// <returns>An assertion to put into a pipeline policy.</returns>
-        internal static Action<Response> GetResponseHashAssertion(ValidationAlgorithm algorithm, Func<Response, bool> isHashExpected = default, byte[] expectedHash = default)
+        internal static Action<Response> GetResponseChecksumAssertion(ValidationAlgorithm algorithm, Func<Response, bool> isChecksumExpected = default, byte[] expectedChecksum = default)
         {
             // action to assert a response header is as expected
-            void AssertHash(ResponseHeaders headers, string headerName)
+            void AssertChecksum(ResponseHeaders headers, string headerName)
             {
-                if (headers.TryGetValue(headerName, out string hash))
+                if (headers.TryGetValue(headerName, out string checksum))
                 {
-                    if (expectedHash != default)
+                    if (expectedChecksum != default)
                     {
-                        Assert.AreEqual(Convert.ToBase64String(expectedHash), hash);
+                        Assert.AreEqual(Convert.ToBase64String(expectedChecksum), checksum);
                     }
                 }
                 else
@@ -258,7 +258,7 @@ namespace Azure.Storage.Test.Shared
             return response =>
             {
                 // filter some requests out with predicate
-                if (isHashExpected != default && !isHashExpected(response))
+                if (isChecksumExpected != default && !isChecksumExpected(response))
                 {
                     return;
                 }
@@ -266,23 +266,23 @@ namespace Azure.Storage.Test.Shared
                 switch (algorithm)
                 {
                     case ValidationAlgorithm.MD5:
-                        AssertHash(response.Headers, "Content-MD5");
+                        AssertChecksum(response.Headers, "Content-MD5");
                         break;
                     case ValidationAlgorithm.StorageCrc64:
-                        AssertHash(response.Headers, "x-ms-content-crc64");
+                        AssertChecksum(response.Headers, "x-ms-content-crc64");
                         break;
                     default:
-                        throw new Exception("Bad TransactionalHashAlgorithm provided to Response hash assertion.");
+                        throw new Exception($"Bad {nameof(ValidationAlgorithm)} provided to {nameof(GetRequestChecksumAssertion)}.");
                 }
             };
         }
 
         /// <summary>
-        /// Asserts the service returned an error that expected hash did not match hash on upload.
+        /// Asserts the service returned an error that expected checksum did not match checksum on upload.
         /// </summary>
         /// <param name="writeAction">Async action to upload data to service.</param>
-        /// <param name="algorithm">Hash algorithm used.</param>
-        internal static void AssertWriteHashMismatch(AsyncTestDelegate writeAction, ValidationAlgorithm algorithm)
+        /// <param name="algorithm">Checksum algorithm used.</param>
+        internal static void AssertWriteChecksumMismatch(AsyncTestDelegate writeAction, ValidationAlgorithm algorithm)
         {
             var exception = ThrowsOrInconclusiveAsync<RequestFailedException>(writeAction);
             switch (algorithm)
@@ -309,15 +309,15 @@ namespace Azure.Storage.Test.Shared
             // Arrange
             const int dataLength = Constants.KB;
             var data = GetRandomBuffer(dataLength);
-            var hashingOptions = new UploadTransferValidationOptions
+            var validationOptions = new UploadTransferValidationOptions
             {
                 Algorithm = algorithm
             };
 
-            // make pipeline assertion for checking hash was present on upload
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestHashAssertion(algorithm));
+            // make pipeline assertion for checking checksum was present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestChecksumAssertion(algorithm));
             var clientOptions = ClientBuilder.GetOptions();
-            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
 
             var client = await GetResourceClientAsync(
                 disposingContainer.Container,
@@ -328,42 +328,42 @@ namespace Azure.Storage.Test.Shared
             // Act
             using (var stream = new MemoryStream(data))
             {
-                hashPipelineAssertion.CheckRequest = true;
-                await UploadPartitionAsync(client, stream, hashingOptions);
+                checksumPipelineAssertion.CheckRequest = true;
+                await UploadPartitionAsync(client, stream, validationOptions);
             }
 
             // Assert
-            // Assertion was in the pipeline and the service returning success means the hash was correct
+            // Assertion was in the pipeline and the service returning success means the checksum was correct
         }
 
         [TestCase(ValidationAlgorithm.MD5)]
         [TestCase(ValidationAlgorithm.StorageCrc64)]
-        public virtual async Task UploadPartitionUsePrecalculatedHash(ValidationAlgorithm algorithm)
+        public virtual async Task UploadPartitionUsePrecalculatedChecksum(ValidationAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
             const int dataLength = Constants.KB;
             var data = GetRandomBuffer(dataLength);
-            // service throws different error for crc only when hash size in incorrect; we don't want to test that
-            var hashSizeBytes = algorithm switch
+            // service throws different error for crc only when checksum size in incorrect; we don't want to test that
+            var checksumSizeBytes = algorithm switch
             {
                 ValidationAlgorithm.MD5 => 16,
                 ValidationAlgorithm.StorageCrc64 => 8,
                 _ => throw new ArgumentException("Cannot determine hash size for provided algorithm type")
             };
-            // hash needs to be wrong so we detect difference from auto-SDK correct calculation
-            var precalculatedHash = GetRandomBuffer(hashSizeBytes);
-            var hashingOptions = new UploadTransferValidationOptions
+            // checksum needs to be wrong so we detect difference from auto-SDK correct calculation
+            var precalculatedChecksum = GetRandomBuffer(checksumSizeBytes);
+            var validationOptions = new UploadTransferValidationOptions
             {
                 Algorithm = algorithm,
-                PrecalculatedHash = precalculatedHash
+                PrecalculatedChecksum = precalculatedChecksum
             };
 
-            // make pipeline assertion for checking precalculated hash was present on upload
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestHashAssertion(algorithm, expectedHash: precalculatedHash));
+            // make pipeline assertion for checking precalculated checksum was present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestChecksumAssertion(algorithm, expectedChecksum: precalculatedChecksum));
             var clientOptions = ClientBuilder.GetOptions();
-            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
 
             var client = await GetResourceClientAsync(
                 disposingContainer.Container,
@@ -371,14 +371,14 @@ namespace Azure.Storage.Test.Shared
                 createResource: true,
                 options: clientOptions);
 
-            hashPipelineAssertion.CheckRequest = true;
+            checksumPipelineAssertion.CheckRequest = true;
             using (var stream = new MemoryStream(data))
             {
                 // Act
-                AsyncTestDelegate operation = async () => await UploadPartitionAsync(client, stream, hashingOptions);
+                AsyncTestDelegate operation = async () => await UploadPartitionAsync(client, stream, validationOptions);
 
                 // Assert
-                AssertWriteHashMismatch(operation, algorithm);
+                AssertWriteChecksumMismatch(operation, algorithm);
             }
         }
 
@@ -391,7 +391,7 @@ namespace Azure.Storage.Test.Shared
             // Arrange
             const int dataLength = Constants.KB;
             var data = GetRandomBuffer(dataLength);
-            var hashingOptions = new UploadTransferValidationOptions
+            var validationOptions = new UploadTransferValidationOptions
             {
                 Algorithm = algorithm
             };
@@ -411,10 +411,10 @@ namespace Azure.Storage.Test.Shared
             {
                 // Act
                 streamTamperPolicy.TransformRequestBody = true;
-                AsyncTestDelegate operation = async () => await UploadPartitionAsync(client, stream, hashingOptions);
+                AsyncTestDelegate operation = async () => await UploadPartitionAsync(client, stream, validationOptions);
 
                 // Assert
-                AssertWriteHashMismatch(operation, algorithm);
+                AssertWriteChecksumMismatch(operation, algorithm);
             }
         }
         #endregion
@@ -432,15 +432,15 @@ namespace Azure.Storage.Test.Shared
             const int streamWrites = 10;
 
             var data = GetRandomBuffer(dataSize);
-            var hashingOptions = new UploadTransferValidationOptions
+            var validationOptions = new UploadTransferValidationOptions
             {
                 Algorithm = algorithm
             };
 
-            // make pipeline assertion for checking hash was present on upload
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestHashAssertion(algorithm));
+            // make pipeline assertion for checking checksum was present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestChecksumAssertion(algorithm));
             var clientOptions = ClientBuilder.GetOptions();
-            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
 
             var client = await GetResourceClientAsync(
                 disposingContainer.Container,
@@ -450,10 +450,10 @@ namespace Azure.Storage.Test.Shared
                 options: clientOptions);
 
             // Act
-            var writeStream = await OpenWriteAsync(client, hashingOptions, streamBufferSize);
+            var writeStream = await OpenWriteAsync(client, validationOptions, streamBufferSize);
 
             // Assert
-            hashPipelineAssertion.CheckRequest = true;
+            checksumPipelineAssertion.CheckRequest = true;
             foreach (var _ in Enumerable.Range(0, streamWrites))
             {
                 // triggers pipeline assertion
@@ -473,7 +473,7 @@ namespace Azure.Storage.Test.Shared
             const int streamWrites = 10;
 
             var data = GetRandomBuffer(dataSize);
-            var hashingOptions = new UploadTransferValidationOptions
+            var validationOptions = new UploadTransferValidationOptions
             {
                 Algorithm = algorithm
             };
@@ -491,10 +491,10 @@ namespace Azure.Storage.Test.Shared
                 options: clientOptions);
 
             // Act
-            var writeStream = await OpenWriteAsync(client, hashingOptions, streamBufferSize);
+            var writeStream = await OpenWriteAsync(client, validationOptions, streamBufferSize);
 
             // Assert
-            AssertWriteHashMismatch(async () =>
+            AssertWriteChecksumMismatch(async () =>
             {
                 tamperPolicy.TransformRequestBody = true;
                 foreach (var _ in Enumerable.Range(0, streamWrites))
@@ -515,7 +515,7 @@ namespace Azure.Storage.Test.Shared
             // Arrange
             const int dataLength = Constants.KB;
             var data = GetRandomBuffer(dataLength);
-            var hashingOptions = new UploadTransferValidationOptions
+            var validationOptions = new UploadTransferValidationOptions
             {
                 Algorithm = algorithm
             };
@@ -526,23 +526,23 @@ namespace Azure.Storage.Test.Shared
                 MaximumTransferSize = 512
             };
 
-            // make pipeline assertion for checking hash was present on upload
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(
-                checkRequest: GetRequestHashAssertion(algorithm, isHashExpected: ParallelUploadIsHashExpected));
+            // make pipeline assertion for checking checksum was present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(
+                checkRequest: GetRequestChecksumAssertion(algorithm, isChecksumExpected: ParallelUploadIsChecksumExpected));
             var clientOptions = ClientBuilder.GetOptions();
-            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
 
             var client = await GetResourceClientAsync(disposingContainer.Container, resourceLength: dataLength, createResource: true, options: clientOptions);
 
             // Act
             using (var stream = new MemoryStream(data))
             {
-                hashPipelineAssertion.CheckRequest = true;
-                await ParallelUploadAsync(client, stream, hashingOptions, transferOptions);
+                checksumPipelineAssertion.CheckRequest = true;
+                await ParallelUploadAsync(client, stream, validationOptions, transferOptions);
             }
 
             // Assert
-            // Assertion was in the pipeline and the service returning success means the hash was correct
+            // Assertion was in the pipeline and the service returning success means the checksum was correct
         }
 
         [TestCase(ValidationAlgorithm.MD5)]
@@ -554,7 +554,7 @@ namespace Azure.Storage.Test.Shared
             // Arrange
             const int dataLength = Constants.KB;
             var data = GetRandomBuffer(dataLength);
-            var hashingOptions = new UploadTransferValidationOptions
+            var validationOptions = new UploadTransferValidationOptions
             {
                 Algorithm = algorithm
             };
@@ -565,48 +565,48 @@ namespace Azure.Storage.Test.Shared
                 MaximumTransferSize = Constants.MB
             };
 
-            // make pipeline assertion for checking hash was present on upload
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(
-                checkRequest: GetRequestHashAssertion(algorithm, isHashExpected: ParallelUploadIsHashExpected));
+            // make pipeline assertion for checking checksum was present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(
+                checkRequest: GetRequestChecksumAssertion(algorithm, isChecksumExpected: ParallelUploadIsChecksumExpected));
             var clientOptions = ClientBuilder.GetOptions();
-            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
 
             var client = await GetResourceClientAsync(disposingContainer.Container, resourceLength: dataLength, createResource: true, options: clientOptions);
 
             // Act
             using (var stream = new MemoryStream(data))
             {
-                hashPipelineAssertion.CheckRequest = true;
-                await ParallelUploadAsync(client, stream, hashingOptions, transferOptions);
+                checksumPipelineAssertion.CheckRequest = true;
+                await ParallelUploadAsync(client, stream, validationOptions, transferOptions);
             }
 
             // Assert
-            // Assertion was in the pipeline and the service returning success means the hash was correct
+            // Assertion was in the pipeline and the service returning success means the checksum was correct
         }
 
         [TestCase(ValidationAlgorithm.MD5)]
         [TestCase(ValidationAlgorithm.StorageCrc64)]
-        public virtual async Task PrecalculatedHashNotAccepted(ValidationAlgorithm algorithm)
+        public virtual async Task PrecalculatedChecksumNotAccepted(ValidationAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
             const int dataLength = Constants.KB;
             var data = GetRandomBuffer(dataLength);
-            var hashingOptions = new UploadTransferValidationOptions
+            var validationOptions = new UploadTransferValidationOptions
             {
                 Algorithm = algorithm,
-                PrecalculatedHash = GetRandomBuffer(16)
+                PrecalculatedChecksum = GetRandomBuffer(16)
             };
 
             var client = await GetResourceClientAsync(disposingContainer.Container, dataLength);
 
             // Act
             var exception = ThrowsOrInconclusiveAsync<ArgumentException>(
-                async () => await ParallelUploadAsync(client, new MemoryStream(data), hashingOptions, transferOptions: default));
+                async () => await ParallelUploadAsync(client, new MemoryStream(data), validationOptions, transferOptions: default));
 
             // Assert
-            Assert.AreEqual("Precalculated hash not supported when potentially partitioning an upload.", exception.Message);
+            Assert.AreEqual("Precalculated checksum not supported when potentially partitioning an upload.", exception.Message);
         }
         #endregion
 
@@ -630,17 +630,17 @@ namespace Azure.Storage.Test.Shared
                 resourceName: resourceName);
             await SetupDataAsync(client, new MemoryStream(data));
 
-            // make pipeline assertion for checking hash was present on download
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseHashAssertion(algorithm));
+            // make pipeline assertion for checking checksum was present on download
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseChecksumAssertion(algorithm));
             var clientOptions = ClientBuilder.GetOptions();
-            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
 
             client = await GetResourceClientAsync(
                 disposingContainer.Container,
                 createResource: false,
                 resourceName: resourceName,
                 options: clientOptions);
-            var hashingOptions = new DownloadTransferValidationOptions { Algorithm = algorithm };
+            var validationOptions = new DownloadTransferValidationOptions { Algorithm = algorithm };
             StorageTransferOptions transferOptions = new StorageTransferOptions
             {
                 InitialTransferSize = chunkSize,
@@ -648,11 +648,11 @@ namespace Azure.Storage.Test.Shared
             };
 
             // Act
-            hashPipelineAssertion.CheckResponse = true;
-            await ParallelDownloadAsync(client, Stream.Null, hashingOptions, transferOptions);
+            checksumPipelineAssertion.CheckResponse = true;
+            await ParallelDownloadAsync(client, Stream.Null, validationOptions, transferOptions);
 
             // Assert
-            // Assertion was in the pipeline and the SDK not throwing means the hash was validated
+            // Assertion was in the pipeline and the SDK not throwing means the checksum was validated
         }
         #endregion
 
@@ -683,23 +683,23 @@ namespace Azure.Storage.Test.Shared
                 resourceName: resourceName);
             await SetupDataAsync(client, new MemoryStream(data));
 
-            // make pipeline assertion for checking hash was present on download
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseHashAssertion(algorithm));
+            // make pipeline assertion for checking checksum was present on download
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseChecksumAssertion(algorithm));
             var clientOptions = ClientBuilder.GetOptions();
-            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
 
             client = await GetResourceClientAsync(
                 disposingContainer.Container,
                 createResource: false,
                 resourceName: resourceName,
                 options: clientOptions);
-            var hashingOptions = new DownloadTransferValidationOptions { Algorithm = algorithm };
+            var validationOptions = new DownloadTransferValidationOptions { Algorithm = algorithm };
 
             // Act
-            var readStream = await OpenReadAsync(client, hashingOptions, bufferSize);
+            var readStream = await OpenReadAsync(client, validationOptions, bufferSize);
 
             // Assert
-            hashPipelineAssertion.CheckResponse = true;
+            checksumPipelineAssertion.CheckResponse = true;
             await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(Stream.Null));
         }
         #endregion
@@ -723,10 +723,10 @@ namespace Azure.Storage.Test.Shared
                 resourceName: resourceName);
             await SetupDataAsync(client, new MemoryStream(data));
 
-            var hashingOptions = new DownloadTransferValidationOptions { Algorithm = algorithm };
+            var validationOptions = new DownloadTransferValidationOptions { Algorithm = algorithm };
 
             // Act
-            var response = await DownloadPartitionAsync(client, Stream.Null, hashingOptions, new HttpRange(length: data.Length));
+            var response = await DownloadPartitionAsync(client, Stream.Null, validationOptions, new HttpRange(length: data.Length));
 
             // Assert
             // no policies this time; just check response headers
@@ -763,9 +763,9 @@ namespace Azure.Storage.Test.Shared
                 resourceName: resourceName);
             await SetupDataAsync(client, new MemoryStream(data));
 
-            var hashingOptions = new DownloadTransferValidationOptions { Algorithm = algorithm, Validate = validate };
+            var validationOptions = new DownloadTransferValidationOptions { Algorithm = algorithm, Validate = validate };
 
-            // alter response contents in pipeline, forcing a hash mismatch on verification step
+            // alter response contents in pipeline, forcing a checksum mismatch on verification step
             var clientOptions = ClientBuilder.GetOptions();
             clientOptions.AddPolicy(new TamperStreamContentsPolicy() { TransformResponseBody = true }, HttpPipelinePosition.PerCall);
             client = await GetResourceClientAsync(
@@ -775,17 +775,17 @@ namespace Azure.Storage.Test.Shared
                 options: clientOptions);
 
             // Act
-            AsyncTestDelegate operation = async () => await DownloadPartitionAsync(client, Stream.Null, hashingOptions, new HttpRange(length: data.Length));
+            AsyncTestDelegate operation = async () => await DownloadPartitionAsync(client, Stream.Null, validationOptions, new HttpRange(length: data.Length));
 
             // Assert
             if (validate)
             {
-                // SDK responsible for finding bad hash. Throw.
+                // SDK responsible for finding bad checksum. Throw.
                 ThrowsOrInconclusiveAsync<InvalidDataException>(operation);
             }
             else
             {
-                // bad hash is for caller to find. Don't throw.
+                // bad checksum is for caller to find. Don't throw.
                 await DoesNotThrowOrInconclusiveAsync(operation);
             }
         }
@@ -796,7 +796,7 @@ namespace Azure.Storage.Test.Shared
         {
             var uploadOptions = new UploadTransferValidationOptions();
             Assert.AreEqual(ValidationAlgorithm.StorageCrc64, uploadOptions.Algorithm);
-            Assert.IsNull(uploadOptions.PrecalculatedHash);
+            Assert.IsNull(uploadOptions.PrecalculatedChecksum);
 
             var downloadOptions = new DownloadTransferValidationOptions();
             Assert.AreEqual(ValidationAlgorithm.StorageCrc64, downloadOptions.Algorithm);
@@ -812,8 +812,8 @@ namespace Azure.Storage.Test.Shared
             const ValidationAlgorithm expectedAlgorithm = ValidationAlgorithm.StorageCrc64;
             const int dataLength = Constants.KB;
             var data = GetRandomBuffer(dataLength);
-            var uploadHashingOptions = new UploadTransferValidationOptions();
-            var downloadHashingOptions = new DownloadTransferValidationOptions();
+            var uploadvalidationOptions = new UploadTransferValidationOptions();
+            var downloadvalidationOptions = new DownloadTransferValidationOptions();
             var clientOptions = ClientBuilder.GetOptions();
             StorageTransferOptions transferOptions = new StorageTransferOptions
             {
@@ -821,27 +821,27 @@ namespace Azure.Storage.Test.Shared
                 MaximumTransferSize = 512
             };
 
-            // make pipeline assertion for checking hash was present on upload AND download
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(
-                checkRequest: GetRequestHashAssertion(expectedAlgorithm, isHashExpected: ParallelUploadIsHashExpected),
-                checkResponse: GetResponseHashAssertion(expectedAlgorithm));
-            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+            // make pipeline assertion for checking checksum was present on upload AND download
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(
+                checkRequest: GetRequestChecksumAssertion(expectedAlgorithm, isChecksumExpected: ParallelUploadIsChecksumExpected),
+                checkResponse: GetResponseChecksumAssertion(expectedAlgorithm));
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
 
             var client = await GetResourceClientAsync(disposingContainer.Container, resourceLength: dataLength, createResource: true, options: clientOptions);
 
             // Act
             using (var stream = new MemoryStream(data))
             {
-                hashPipelineAssertion.CheckRequest = true;
-                await ParallelUploadAsync(client, stream, uploadHashingOptions, transferOptions);
-                hashPipelineAssertion.CheckRequest = false;
+                checksumPipelineAssertion.CheckRequest = true;
+                await ParallelUploadAsync(client, stream, uploadvalidationOptions, transferOptions);
+                checksumPipelineAssertion.CheckRequest = false;
             }
 
-            hashPipelineAssertion.CheckResponse = true;
-            await ParallelDownloadAsync(client, Stream.Null, downloadHashingOptions, transferOptions);
+            checksumPipelineAssertion.CheckResponse = true;
+            await ParallelDownloadAsync(client, Stream.Null, downloadvalidationOptions, transferOptions);
 
             // Assert
-            // Assertion was in the pipeline and the service returning success means the hash was correct
+            // Assertion was in the pipeline and the service returning success means the checksum was correct
         }
 
         /// <summary>

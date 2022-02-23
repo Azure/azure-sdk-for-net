@@ -71,7 +71,6 @@ namespace Azure.Storage.Files.DataLake.Models
         public StorageTransferOptions TransferOptions { get; set; }
 
         /// <summary>
-        /// <summary>
         /// Optional <see cref="UploadTransferValidationOptions"/> for using transfer validation
         /// on upload. Network transfers will calculate transactional checksums to validate
         /// transfers. Transactional checksums are discarded after use.

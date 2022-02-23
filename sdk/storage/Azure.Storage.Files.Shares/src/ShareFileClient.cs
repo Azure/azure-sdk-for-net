@@ -3786,7 +3786,7 @@ namespace Azure.Storage.Files.Shares
                         ? new UploadTransferValidationOptions()
                         {
                             Algorithm = ValidationAlgorithm.MD5,
-                            PrecalculatedHash = transactionalContentHash
+                            PrecalculatedChecksum = transactionalContentHash
                         }
                         : default,
                     Conditions = conditions,
@@ -3862,7 +3862,7 @@ namespace Azure.Storage.Files.Shares
                         ? new UploadTransferValidationOptions()
                         {
                             Algorithm = ValidationAlgorithm.MD5,
-                            PrecalculatedHash = transactionalContentHash
+                            PrecalculatedChecksum = transactionalContentHash
                         }
                         : default,
                     Conditions = conditions,
@@ -3937,7 +3937,7 @@ namespace Azure.Storage.Files.Shares
                         ? new UploadTransferValidationOptions()
                         {
                             Algorithm = ValidationAlgorithm.MD5,
-                            PrecalculatedHash = transactionalContentHash
+                            PrecalculatedChecksum = transactionalContentHash
                         }
                         : default,
                     ProgressHandler = progressHandler
@@ -4011,7 +4011,7 @@ namespace Azure.Storage.Files.Shares
                         ? new UploadTransferValidationOptions()
                         {
                             Algorithm = ValidationAlgorithm.MD5,
-                            PrecalculatedHash = transactionalContentHash
+                            PrecalculatedChecksum = transactionalContentHash
                         }
                         : default,
                     ProgressHandler = progressHandler

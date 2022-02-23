@@ -154,9 +154,9 @@ namespace Azure.Storage
 
             _hashingOptions = hashingOptions;
             // partitioned uploads don't support pre-calculated hashes
-            if (_hashingOptions?.PrecalculatedHash != default)
+            if (_hashingOptions?.PrecalculatedChecksum != default)
             {
-                throw Errors.PrecalculatedHashNotSupportedOnSplit();
+                throw Errors.PrecalculatedChecksumNotSupportedOnSplit();
             }
 
             _operationName = operationName;

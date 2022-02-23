@@ -12,7 +12,7 @@ using NUnit.Framework;
 namespace Azure.Storage.Blobs.Tests
 {
     [BlobsClientTestFixture]
-    public abstract class BlobBaseClientTransactionalHashingTests<TBlobClient> : TransactionalHashingTestBase<
+    public abstract class BlobBaseClientTransactionalHashingTests<TBlobClient> : TransferValidationTestBase<
         BlobServiceClient,
         BlobContainerClient,
         TBlobClient,

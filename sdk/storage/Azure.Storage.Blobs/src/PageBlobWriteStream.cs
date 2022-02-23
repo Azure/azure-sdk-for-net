@@ -101,7 +101,7 @@ namespace Azure.Storage.Blobs
                     offset: _writeIndex,
                     options: new PageBlobUploadPagesOptions()
                     {
-                        TransactionalHashingOptions = _validationOptions,
+                        TransactionalValidationOptions = _validationOptions,
                         Conditions = _conditions,
                         ProgressHandler = _progressHandler
                     },

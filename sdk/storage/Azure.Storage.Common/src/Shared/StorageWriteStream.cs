@@ -39,7 +39,7 @@ namespace Azure.Storage.Shared
             // write streams don't support pre-calculated hashes
             if (_validationOptions?.PrecalculatedChecksum != default)
             {
-                throw Errors.PrecalculatedHashNotSupportedOnSplit();
+                throw Errors.PrecalculatedChecksumNotSupportedOnSplit();
             }
 
             if (buffer != null)

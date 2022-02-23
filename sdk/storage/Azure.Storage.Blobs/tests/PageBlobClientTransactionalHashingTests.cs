@@ -40,7 +40,7 @@ namespace Azure.Storage.Blobs.Tests
         {
             return await client.OpenWriteAsync(false, 0, new PageBlobOpenWriteOptions
             {
-                TransactionalHashingOptions = hashingOptions,
+                ValidationOptions = hashingOptions,
                 BufferSize = internalBufferSize
             });
         }
@@ -64,7 +64,7 @@ namespace Azure.Storage.Blobs.Tests
         {
             return (await client.UploadPagesAsync(source, 0, new PageBlobUploadPagesOptions
             {
-                TransactionalHashingOptions = hashingOptions
+                TransactionalValidationOptions = hashingOptions
             })).GetRawResponse();
         }
 
@@ -75,7 +75,7 @@ namespace Azure.Storage.Blobs.Tests
             await writestream.FlushAsync();
         }
 
-        protected override bool ParallelUploadIsHashExpected(Request request)
+        protected override bool ParallelUploadIsChecksumExpected(Request request)
         {
             return true;
         }

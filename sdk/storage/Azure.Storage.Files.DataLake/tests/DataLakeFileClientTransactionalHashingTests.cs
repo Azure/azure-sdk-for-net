@@ -12,7 +12,7 @@ using Azure.Storage.Test.Shared;
 namespace Azure.Storage.Files.DataLake.Tests
 {
     [DataLakeClientTestFixture]
-    public class DataLakeFileClientTransactionalHashingTests : TransactionalHashingTestBase<
+    public class DataLakeFileClientTransactionalHashingTests : TransferValidationTestBase<
         DataLakeServiceClient,
         DataLakeFileSystemClient,
         DataLakeFileClient,
@@ -52,7 +52,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             return await client.AppendAsync(source, 0, new DataLakeFileAppendOptions
             {
-                ValidationOptions = hashingOptions
+                TransactionalValidationOptions = hashingOptions
             });
         }
 
@@ -110,7 +110,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await client.FlushAsync(data.Length);
         }
 
-        protected override bool ParallelUploadIsHashExpected(Request request)
+        protected override bool ParallelUploadIsChecksumExpected(Request request)
         {
             return request.Uri.Query.Contains("action=append");
         }
