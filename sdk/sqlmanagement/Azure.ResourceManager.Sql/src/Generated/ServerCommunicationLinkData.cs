@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ServerCommunicationLink data model. </summary>
-    public partial class ServerCommunicationLinkData : Resource
+    public partial class ServerCommunicationLinkData : ResourceData
     {
         /// <summary> Initializes a new instance of ServerCommunicationLinkData. </summary>
         public ServerCommunicationLinkData()

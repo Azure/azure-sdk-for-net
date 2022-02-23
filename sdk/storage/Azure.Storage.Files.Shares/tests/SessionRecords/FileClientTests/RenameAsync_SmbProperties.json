@@ -162,7 +162,7 @@
         "x-ms-file-creation-time": "2019-08-15T05:15:25.0600000Z",
         "x-ms-file-last-write-time": "2019-08-26T05:15:25.0600000Z",
         "x-ms-file-permission-key": "12075044870606081650*23892369358363523",
-        "x-ms-file-rename-source": "https%3A%2F%2Ffp8xscnapby3pev24a.file.preprod.core.windows.net%2Ftest-share-02c52e7a-b045-24cf-7d75-f79e58ce27da%2Ftest-directory-4bc90310-135f-6d83-a038-3dd7afdba3db%2Ftest-file-c9151155-2157-8641-5c2d-490dda774c3b=",
+        "x-ms-file-rename-source": "https://fp8xscnapby3pev24a.file.preprod.core.windows.net/test-share-02c52e7a-b045-24cf-7d75-f79e58ce27da/test-directory-4bc90310-135f-6d83-a038-3dd7afdba3db/test-file-c9151155-2157-8641-5c2d-490dda774c3b",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2021-04-10"
       },

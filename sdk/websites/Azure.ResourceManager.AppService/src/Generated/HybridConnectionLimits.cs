@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal HybridConnectionLimits(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _hybridConnectionLimitsAppServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string hybridConnectionLimitsAppServicePlansApiVersion);
+            TryGetApiVersion(ResourceType, out string hybridConnectionLimitsAppServicePlansApiVersion);
             _hybridConnectionLimitsAppServicePlansRestClient = new AppServicePlansRestOperations(_hybridConnectionLimitsAppServicePlansClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hybridConnectionLimitsAppServicePlansApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -82,10 +82,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionPlanLimits/limit
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionPlanLimits/limit
-        /// OperationId: AppServicePlans_GetHybridConnectionPlanLimit
-        /// <summary> Description for Get the maximum number of Hybrid Connections allowed in an App Service plan. </summary>
+        /// <summary>
+        /// Description for Get the maximum number of Hybrid Connections allowed in an App Service plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionPlanLimits/limit
+        /// Operation Id: AppServicePlans_GetHybridConnectionPlanLimit
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<HybridConnectionLimits>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -105,10 +106,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionPlanLimits/limit
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionPlanLimits/limit
-        /// OperationId: AppServicePlans_GetHybridConnectionPlanLimit
-        /// <summary> Description for Get the maximum number of Hybrid Connections allowed in an App Service plan. </summary>
+        /// <summary>
+        /// Description for Get the maximum number of Hybrid Connections allowed in an App Service plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionPlanLimits/limit
+        /// Operation Id: AppServicePlans_GetHybridConnectionPlanLimit
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HybridConnectionLimits> Get(CancellationToken cancellationToken = default)
         {

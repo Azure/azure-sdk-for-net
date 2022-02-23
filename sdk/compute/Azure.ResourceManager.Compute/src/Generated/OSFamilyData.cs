@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the OSFamily data model. </summary>
-    public partial class OSFamilyData : Resource
+    public partial class OSFamilyData : ResourceData
     {
         /// <summary> Initializes a new instance of OSFamilyData. </summary>
         internal OSFamilyData()

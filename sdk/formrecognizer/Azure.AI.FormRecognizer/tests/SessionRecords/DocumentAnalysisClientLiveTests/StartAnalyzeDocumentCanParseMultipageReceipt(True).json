@@ -1,200 +1,173 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-01-30-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "252365",
         "Content-Type": "application/octet-stream",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-b362cb631064184a9588ab92eafedde5-0e87b7448c2c8c44-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "d2ccd1a511954adb12961c1158812ff1",
+        "traceparent": "00-b4ef1de924cb804b8a4479653e65e89c-b3e480c722a30f4b-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220217.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "dda3cdf21cd64f079759d398727a0256",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "8d21f73a-0d08-4582-8ea5-e6529245f039",
+        "apim-request-id": "ee3dfb54-8b2c-46e3-9e4a-1df0df8b248d",
         "Content-Length": "0",
-        "Date": "Tue, 28 Sep 2021 14:22:01 GMT",
-        "Operation-Location": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/8d21f73a-0d08-4582-8ea5-e6529245f039?api-version=2021-09-30-preview",
+        "Date": "Thu, 17 Feb 2022 19:15:05 GMT",
+        "Operation-Location": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/ee3dfb54-8b2c-46e3-9e4a-1df0df8b248d?api-version=2022-01-30-preview",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "368"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "410"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/8d21f73a-0d08-4582-8ea5-e6529245f039?api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/ee3dfb54-8b2c-46e3-9e4a-1df0df8b248d?api-version=2022-01-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "cac83d8007ebb0e03424bdd1c86e5f27",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220217.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "1b12569fafa0e714db9e38c7e818b26e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "ce285f4c-3fc8-4d2c-bb35-2d7635cec5f1",
+        "apim-request-id": "134f3ec5-9cce-444b-b4a5-03f880ac3095",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:22:02 GMT",
+        "Date": "Thu, 17 Feb 2022 19:15:05 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "65"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "41"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-09-28T14:22:02Z",
-        "lastUpdatedDateTime": "2021-09-28T14:22:02Z"
+        "createdDateTime": "2022-02-17T19:15:05Z",
+        "lastUpdatedDateTime": "2022-02-17T19:15:05Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/8d21f73a-0d08-4582-8ea5-e6529245f039?api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/ee3dfb54-8b2c-46e3-9e4a-1df0df8b248d?api-version=2022-01-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "7212b06d13459a44dc0f1e1f004445c6",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220217.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "0fff488b45250de9421c1756982febcf",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "f5d6e605-05b6-4d5f-b607-6c0df3dd154d",
+        "apim-request-id": "e379f8dd-92e2-4cbe-8709-729c9e0ce899",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:22:04 GMT",
+        "Date": "Thu, 17 Feb 2022 19:15:06 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "66"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "42"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-09-28T14:22:02Z",
-        "lastUpdatedDateTime": "2021-09-28T14:22:02Z"
+        "createdDateTime": "2022-02-17T19:15:05Z",
+        "lastUpdatedDateTime": "2022-02-17T19:15:05Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/8d21f73a-0d08-4582-8ea5-e6529245f039?api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/ee3dfb54-8b2c-46e3-9e4a-1df0df8b248d?api-version=2022-01-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "6c2fa729af699d46f01b9e70530a81a4",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220217.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "aedac3159a4f4368b8bb0237e43f677e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "5cc2872e-4fc7-449c-858c-a51b5021b9cc",
+        "apim-request-id": "be6a2fed-30b9-4830-883a-fbddded98390",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:22:05 GMT",
+        "Date": "Thu, 17 Feb 2022 19:15:08 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "72"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "35"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-09-28T14:22:02Z",
-        "lastUpdatedDateTime": "2021-09-28T14:22:02Z"
+        "createdDateTime": "2022-02-17T19:15:05Z",
+        "lastUpdatedDateTime": "2022-02-17T19:15:05Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/8d21f73a-0d08-4582-8ea5-e6529245f039?api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/ee3dfb54-8b2c-46e3-9e4a-1df0df8b248d?api-version=2022-01-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "a7a3f537bc6f6dacf92eeddbe9c1afef",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220217.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "2a0c65a7f27b59316c05d98397be4eac",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "9deb3e3f-14c0-41fd-a54a-28060f548ac0",
+        "apim-request-id": "448817d8-9d1a-4ffc-9be2-740f61046398",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:22:06 GMT",
+        "Date": "Thu, 17 Feb 2022 19:15:09 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "78"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "43"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-09-28T14:22:02Z",
-        "lastUpdatedDateTime": "2021-09-28T14:22:02Z"
+        "createdDateTime": "2022-02-17T19:15:05Z",
+        "lastUpdatedDateTime": "2022-02-17T19:15:09Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/8d21f73a-0d08-4582-8ea5-e6529245f039?api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/ee3dfb54-8b2c-46e3-9e4a-1df0df8b248d?api-version=2022-01-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "21a8f6dff23fbebd6974812974d446d2",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220217.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "24b168b2033df11edfbb566943b22902",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4321b3e5-99ab-4a75-8edf-e997554eb0d0",
+        "apim-request-id": "58062fb0-ff4e-4223-ac63-0d306621cbb1",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:22:07 GMT",
+        "Date": "Thu, 17 Feb 2022 19:15:10 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "77"
-      },
-      "ResponseBody": {
-        "status": "running",
-        "createdDateTime": "2021-09-28T14:22:02Z",
-        "lastUpdatedDateTime": "2021-09-28T14:22:06Z"
-      }
-    },
-    {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/8d21f73a-0d08-4582-8ea5-e6529245f039?api-version=2021-09-30-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "0be7798e9da16c57fbc1733bc16ab32f",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "54c8f597-d487-47c4-b900-6326f6b285a2",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:22:08 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "356"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "215"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2021-09-28T14:22:02Z",
-        "lastUpdatedDateTime": "2021-09-28T14:22:07Z",
+        "createdDateTime": "2022-02-17T19:15:05Z",
+        "lastUpdatedDateTime": "2022-02-17T19:15:09Z",
         "analyzeResult": {
-          "apiVersion": "2021-09-30-preview",
+          "apiVersion": "2022-01-30-preview",
           "modelId": "prebuilt-receipt",
           "stringIndexType": "utf16CodeUnit",
-          "content": "Contoso\nContoso\n123 Main Street\nRedmond, WA 98052\n987-654-3210\n6/10/2019 13:59\nSales Associate: Paul\n-\n1 Cappuccino\n1 BACON \u0026 EGGS\n$2.20\nSunny-side-up\n$9.5\n--\n-\nSub-Total\n$ 11.70\nTax\n1.17\nTip\nTotal\n$ 1.63\n$14,50\nContoso\nContoso\n123 Main Street\nRedmond, WA 98052\n123-456-7890\n6/10/2019 13:59\nSales Associate: Paul\n1 Surface Pro 6\n256GB / Intel Core i5 /\n8GB RAM (Black)\n1 SurfacePen\n--\nSub-Total\nTax\nTotal\n$ 999.00\n$ 99.99\n1098.99\n$ 104.40\n$ 1203.39",
+          "content": "Contoso\nContoso\n123 Main Street\nRedmond, WA 98052\n987-654-3210\n6/10/2019 13:59\nSales Associate: Paul\n1 Cappuccino\n1 BACON \u0026 EGGS\n$2.20\nSunny-side-up\n$9.5\n-\n-\nSub-Total\n11.70\nTax\nTip\nTotal\n31.17\n$ 1.63\n$14,50\nContoso\nContoso\n123 Main Street\nRedmond, WA 98052\n123-456-7890\n6/10/2019 13:59\nSales Associate: Paul\n1 Surface Pro 6\n256GB / Intel Core i5 /\n8GB RAM (Black)\n---\n$ 999.00\n1 SurfacePen\n99.99\nSub-Total\nTax\nTotal\n1098.99\n$ 104.40\n1203.39",
           "pages": [
             {
               "pageNumber": 1,
-              "angle": 1.5064,
+              "angle": 0,
               "width": 8.5,
               "height": 11,
               "unit": "inch",
@@ -202,16 +175,16 @@
                 {
                   "content": "Contoso",
                   "boundingBox": [
-                    2.9177,
+                    2.8986,
                     2.5352,
-                    4.1688,
-                    2.4158,
-                    4.207,
-                    2.6641,
+                    4.1831,
+                    2.3919,
+                    4.2118,
+                    2.6784,
                     2.9129,
-                    2.793
+                    2.7977
                   ],
-                  "confidence": 0.997,
+                  "confidence": 0.998,
                   "span": {
                     "offset": 0,
                     "length": 7
@@ -220,16 +193,16 @@
                 {
                   "content": "Contoso",
                   "boundingBox": [
-                    1.9197,
+                    1.9292,
                     2.7166,
-                    2.5404,
-                    2.8789,
+                    2.5452,
+                    2.8837,
                     2.4975,
-                    3.0508,
-                    1.8767,
-                    2.8885
+                    3.0556,
+                    1.891,
+                    2.898
                   ],
-                  "confidence": 0.747,
+                  "confidence": 0.941,
                   "span": {
                     "offset": 8,
                     "length": 7
@@ -238,16 +211,16 @@
                 {
                   "content": "123",
                   "boundingBox": [
-                    1.9101,
-                    3.0317,
-                    2.1393,
-                    3.0842,
-                    2.0963,
-                    3.2799,
-                    1.8624,
-                    3.2274
+                    1.9244,
+                    3.0221,
+                    2.1537,
+                    3.0794,
+                    2.1059,
+                    3.2847,
+                    1.8719,
+                    3.2322
                   ],
-                  "confidence": 0.998,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 16,
                     "length": 3
@@ -256,16 +229,16 @@
                 {
                   "content": "Main",
                   "boundingBox": [
-                    2.1775,
-                    3.0938,
-                    2.55,
+                    2.1919,
+                    3.089,
+                    2.5787,
                     3.1797,
-                    2.507,
-                    3.3754,
-                    2.1346,
-                    3.2895
+                    2.5309,
+                    3.3802,
+                    2.1441,
+                    3.2943
                   ],
-                  "confidence": 0.992,
+                  "confidence": 0.994,
                   "span": {
                     "offset": 20,
                     "length": 4
@@ -274,16 +247,16 @@
                 {
                   "content": "Street",
                   "boundingBox": [
-                    2.5882,
-                    3.1845,
-                    3.0992,
-                    3.3038,
-                    3.0562,
+                    2.6216,
+                    3.1892,
+                    3.0944,
+                    3.2895,
+                    3.0514,
                     3.49,
-                    2.5452,
-                    3.385
+                    2.5739,
+                    3.3898
                   ],
-                  "confidence": 0.997,
+                  "confidence": 0.999,
                   "span": {
                     "offset": 25,
                     "length": 6
@@ -292,16 +265,16 @@
                 {
                   "content": "Redmond,",
                   "boundingBox": [
-                    1.8767,
-                    3.3468,
-                    2.6216,
-                    3.4948,
-                    2.5978,
-                    3.7049,
+                    1.8815,
+                    3.3516,
+                    2.6312,
+                    3.4709,
+                    2.6025,
+                    3.7144,
                     1.8433,
-                    3.5378
+                    3.5521
                   ],
-                  "confidence": 0.911,
+                  "confidence": 0.994,
                   "span": {
                     "offset": 32,
                     "length": 8
@@ -310,14 +283,14 @@
                 {
                   "content": "WA",
                   "boundingBox": [
-                    2.6646,
-                    3.5043,
-                    2.9034,
-                    3.5282,
-                    2.8843,
-                    3.7383,
-                    2.6407,
-                    3.7096
+                    2.6742,
+                    3.4805,
+                    2.9177,
+                    3.5091,
+                    2.8938,
+                    3.7526,
+                    2.6455,
+                    3.724
                   ],
                   "confidence": 0.998,
                   "span": {
@@ -328,16 +301,16 @@
                 {
                   "content": "98052",
                   "boundingBox": [
-                    2.9416,
-                    3.533,
-                    3.4525,
+                    2.9654,
+                    3.5139,
+                    3.443,
                     3.5569,
-                    3.4382,
-                    3.7622,
-                    2.9225,
-                    3.7431
+                    3.4287,
+                    3.786,
+                    2.9416,
+                    3.7574
                   ],
-                  "confidence": 0.995,
+                  "confidence": 0.99,
                   "span": {
                     "offset": 44,
                     "length": 5
@@ -346,16 +319,16 @@
                 {
                   "content": "987-654-3210",
                   "boundingBox": [
-                    1.8242,
+                    1.8289,
                     4.0056,
-                    2.9511,
-                    4.1584,
+                    2.9607,
+                    4.1536,
                     2.9272,
-                    4.3637,
-                    1.8003,
-                    4.2109
+                    4.3685,
+                    1.8051,
+                    4.2253
                   ],
-                  "confidence": 0.98,
+                  "confidence": 0.984,
                   "span": {
                     "offset": 50,
                     "length": 12
@@ -364,16 +337,16 @@
                 {
                   "content": "6/10/2019",
                   "boundingBox": [
-                    1.786,
-                    4.6836,
-                    2.5213,
-                    4.7409,
-                    2.507,
-                    4.9939,
-                    1.7669,
-                    4.9366
+                    1.8051,
+                    4.6979,
+                    2.5787,
+                    4.76,
+                    2.5596,
+                    4.9844,
+                    1.7812,
+                    4.9128
                   ],
-                  "confidence": 0.993,
+                  "confidence": 0.98,
                   "span": {
                     "offset": 63,
                     "length": 9
@@ -382,16 +355,16 @@
                 {
                   "content": "13:59",
                   "boundingBox": [
-                    2.5739,
-                    4.7457,
+                    2.6216,
+                    4.7648,
                     3.0323,
-                    4.7839,
+                    4.7982,
                     3.0228,
-                    5.0178,
-                    2.5596,
-                    4.9987
+                    5.0226,
+                    2.6073,
+                    4.9844
                   ],
-                  "confidence": 0.983,
+                  "confidence": 0.994,
                   "span": {
                     "offset": 73,
                     "length": 5
@@ -402,14 +375,14 @@
                   "boundingBox": [
                     1.7716,
                     5.0417,
-                    2.2157,
-                    5.0799,
-                    2.2014,
-                    5.2852,
+                    2.2444,
+                    5.0751,
+                    2.2301,
+                    5.2947,
                     1.7525,
-                    5.247
+                    5.2517
                   ],
-                  "confidence": 0.995,
+                  "confidence": 0.998,
                   "span": {
                     "offset": 79,
                     "length": 5
@@ -418,16 +391,16 @@
                 {
                   "content": "Associate:",
                   "boundingBox": [
-                    2.2587,
-                    5.0799,
-                    3.1087,
-                    5.1276,
-                    3.1039,
-                    5.3281,
-                    2.2444,
-                    5.2899
+                    2.2874,
+                    5.0751,
+                    3.123,
+                    5.1181,
+                    3.1183,
+                    5.3377,
+                    2.273,
+                    5.2995
                   ],
-                  "confidence": 0.993,
+                  "confidence": 0.95,
                   "span": {
                     "offset": 85,
                     "length": 10
@@ -436,72 +409,54 @@
                 {
                   "content": "Paul",
                   "boundingBox": [
-                    3.1469,
-                    5.1276,
-                    3.5815,
-                    5.1372,
-                    3.5815,
-                    5.3329,
-                    3.1421,
-                    5.3329
+                    3.1612,
+                    5.1181,
+                    3.5671,
+                    5.1324,
+                    3.5671,
+                    5.3377,
+                    3.1612,
+                    5.3377
                   ],
-                  "confidence": 0.991,
+                  "confidence": 0.992,
                   "span": {
                     "offset": 96,
                     "length": 4
                   }
                 },
                 {
-                  "content": "-",
+                  "content": "1",
                   "boundingBox": [
-                    1.7573,
-                    5.4905,
-                    1.7907,
-                    5.4952,
-                    1.786,
-                    5.5477,
-                    1.7525,
-                    5.543
+                    1.7287,
+                    5.7339,
+                    1.8671,
+                    5.7387,
+                    1.8624,
+                    6.0204,
+                    1.7239,
+                    6.0061
                   ],
-                  "confidence": 0.972,
+                  "confidence": 0.941,
                   "span": {
                     "offset": 101,
                     "length": 1
                   }
                 },
                 {
-                  "content": "1",
-                  "boundingBox": [
-                    1.7334,
-                    5.7578,
-                    1.8337,
-                    5.7626,
-                    1.8289,
-                    6.0204,
-                    1.7287,
-                    6.0156
-                  ],
-                  "confidence": 0.971,
-                  "span": {
-                    "offset": 103,
-                    "length": 1
-                  }
-                },
-                {
                   "content": "Cappuccino",
                   "boundingBox": [
-                    1.8862,
-                    5.7626,
-                    2.9654,
-                    5.8151,
-                    2.9654,
+                    1.9244,
+                    5.7435,
+                    2.9559,
+                    5.7912,
+                    2.9416,
                     6.0681,
-                    1.8815,
+                    1.9149,
                     6.0252
                   ],
-                  "confidence": 0.984,
+                  "confidence": 0.991,
                   "span": {
-                    "offset": 105,
+                    "offset": 103,
                     "length": 10
                   }
                 },
@@ -509,269 +464,233 @@
                   "content": "1",
                   "boundingBox": [
                     1.6857,
-                    6.5169,
+                    6.5122,
                     1.8242,
-                    6.5169,
-                    1.8146,
-                    6.7509,
-                    1.6761,
-                    6.7509
+                    6.5122,
+                    1.8337,
+                    6.7604,
+                    1.7,
+                    6.7604
                   ],
-                  "confidence": 0.995,
+                  "confidence": 0.994,
                   "span": {
-                    "offset": 116,
+                    "offset": 114,
                     "length": 1
                   }
                 },
                 {
                   "content": "BACON",
                   "boundingBox": [
-                    1.8671,
+                    1.8958,
+                    6.5122,
+                    2.507,
                     6.5169,
-                    2.4927,
-                    6.5217,
-                    2.4831,
-                    6.7556,
-                    1.8624,
-                    6.7509
+                    2.5118,
+                    6.7652,
+                    1.9101,
+                    6.7604
                   ],
-                  "confidence": 0.995,
+                  "confidence": 0.999,
                   "span": {
-                    "offset": 118,
+                    "offset": 116,
                     "length": 5
                   }
                 },
                 {
                   "content": "\u0026",
                   "boundingBox": [
-                    2.5404,
-                    6.5217,
-                    2.6742,
-                    6.5217,
-                    2.6646,
-                    6.7556,
-                    2.5309,
-                    6.7556
+                    2.5548,
+                    6.5169,
+                    2.6885,
+                    6.5169,
+                    2.6885,
+                    6.7652,
+                    2.5596,
+                    6.7652
                   ],
-                  "confidence": 0.97,
+                  "confidence": 0.981,
                   "span": {
-                    "offset": 124,
+                    "offset": 122,
                     "length": 1
                   }
                 },
                 {
                   "content": "EGGS",
                   "boundingBox": [
-                    2.7219,
-                    6.5265,
-                    3.209,
-                    6.5313,
-                    3.1994,
-                    6.7556,
-                    2.7124,
-                    6.7556
+                    2.7362,
+                    6.5169,
+                    3.2185,
+                    6.5122,
+                    3.2138,
+                    6.77,
+                    2.7362,
+                    6.7652
                   ],
-                  "confidence": 0.991,
+                  "confidence": 0.994,
                   "span": {
-                    "offset": 126,
+                    "offset": 124,
                     "length": 4
                   }
                 },
                 {
                   "content": "$2.20",
                   "boundingBox": [
-                    4.3169,
-                    5.753,
-                    4.8087,
-                    5.7387,
-                    4.8183,
-                    5.9536,
                     4.3216,
-                    5.9727
+                    5.753,
+                    4.7801,
+                    5.7292,
+                    4.7944,
+                    5.9488,
+                    4.3312,
+                    5.9774
                   ],
-                  "confidence": 0.983,
+                  "confidence": 0.994,
                   "span": {
-                    "offset": 131,
+                    "offset": 129,
                     "length": 5
                   }
                 },
                 {
                   "content": "Sunny-side-up",
                   "boundingBox": [
-                    2.0438,
-                    6.9323,
+                    2.0343,
+                    6.9275,
+                    3.2424,
+                    6.9275,
                     3.2376,
-                    6.9371,
-                    3.2376,
-                    7.1758,
-                    2.0486,
-                    7.1615
+                    7.1806,
+                    2.039,
+                    7.1806
                   ],
-                  "confidence": 0.993,
+                  "confidence": 0.994,
                   "span": {
-                    "offset": 137,
+                    "offset": 135,
                     "length": 13
                   }
                 },
                 {
                   "content": "$9.5",
                   "boundingBox": [
-                    4.4076,
-                    6.8559,
-                    4.7848,
+                    4.4028,
+                    6.8607,
+                    4.7562,
                     6.8511,
-                    4.7896,
-                    7.1042,
-                    4.4124,
-                    7.1137
+                    4.7657,
+                    7.1185,
+                    4.4076,
+                    7.128
                   ],
-                  "confidence": 0.992,
+                  "confidence": 0.984,
                   "span": {
-                    "offset": 151,
+                    "offset": 149,
                     "length": 4
                   }
                 },
                 {
-                  "content": "--",
+                  "content": "-",
                   "boundingBox": [
-                    4.7848,
+                    4.8899,
                     7.3906,
-                    4.9042,
+                    4.9185,
                     7.3906,
-                    4.9042,
-                    7.4336,
-                    4.7801,
-                    7.4336
+                    4.9185,
+                    7.424,
+                    4.8899,
+                    7.424
                   ],
-                  "confidence": 0.997,
+                  "confidence": 0.973,
                   "span": {
-                    "offset": 156,
-                    "length": 2
+                    "offset": 154,
+                    "length": 1
                   }
                 },
                 {
                   "content": "-",
                   "boundingBox": [
                     1.6618,
-                    7.4288,
+                    7.4336,
                     1.6904,
-                    7.4288,
+                    7.4336,
                     1.6904,
-                    7.4813,
+                    7.4766,
                     1.6618,
-                    7.4813
+                    7.4766
                   ],
-                  "confidence": 0.988,
+                  "confidence": 0.99,
                   "span": {
-                    "offset": 159,
+                    "offset": 156,
                     "length": 1
                   }
                 },
                 {
                   "content": "Sub-Total",
                   "boundingBox": [
-                    2.3112,
-                    7.701,
-                    3.2949,
-                    7.6723,
-                    3.3045,
+                    2.3017,
+                    7.6962,
+                    3.2902,
+                    7.6675,
+                    3.2997,
                     7.9444,
                     2.3208,
-                    7.9779
+                    7.9731
                   ],
-                  "confidence": 0.993,
+                  "confidence": 0.994,
                   "span": {
-                    "offset": 161,
+                    "offset": 158,
                     "length": 9
-                  }
-                },
-                {
-                  "content": "$",
-                  "boundingBox": [
-                    4.2787,
-                    7.6532,
-                    4.3455,
-                    7.6532,
-                    4.336,
-                    7.9588,
-                    4.2691,
-                    7.954
-                  ],
-                  "confidence": 0.964,
-                  "span": {
-                    "offset": 171,
-                    "length": 1
                   }
                 },
                 {
                   "content": "11.70",
                   "boundingBox": [
-                    4.4076,
-                    7.6532,
-                    4.9329,
-                    7.6628,
-                    4.9233,
-                    7.9779,
-                    4.398,
-                    7.9588
+                    4.4124,
+                    7.6293,
+                    4.8994,
+                    7.6293,
+                    4.8994,
+                    7.954,
+                    4.4124,
+                    7.954
                   ],
-                  "confidence": 0.994,
+                  "confidence": 0.997,
                   "span": {
-                    "offset": 173,
+                    "offset": 168,
                     "length": 5
                   }
                 },
                 {
                   "content": "Tax",
                   "boundingBox": [
-                    2.3256,
-                    8.1211,
-                    2.6598,
-                    8.1306,
-                    2.6551,
-                    8.3503,
-                    2.3256,
-                    8.3407
+                    2.316,
+                    8.102,
+                    2.6646,
+                    8.0877,
+                    2.6789,
+                    8.3646,
+                    2.3303,
+                    8.3837
                   ],
                   "confidence": 0.994,
                   "span": {
-                    "offset": 179,
+                    "offset": 174,
                     "length": 3
-                  }
-                },
-                {
-                  "content": "1.17",
-                  "boundingBox": [
-                    4.5843,
-                    8.0924,
-                    4.9138,
-                    8.102,
-                    4.909,
-                    8.3264,
-                    4.5795,
-                    8.3168
-                  ],
-                  "confidence": 0.956,
-                  "span": {
-                    "offset": 183,
-                    "length": 4
                   }
                 },
                 {
                   "content": "Tip",
                   "boundingBox": [
-                    2.2874,
-                    8.4935,
-                    2.636,
-                    8.4744,
-                    2.6503,
-                    8.8086,
-                    2.2969,
-                    8.8277
+                    2.3208,
+                    8.5078,
+                    2.5882,
+                    8.5078,
+                    2.593,
+                    8.8325,
+                    2.3208,
+                    8.8325
                   ],
-                  "confidence": 0.994,
+                  "confidence": 0.997,
                   "span": {
-                    "offset": 188,
+                    "offset": 178,
                     "length": 3
                   }
                 },
@@ -780,70 +699,88 @@
                   "boundingBox": [
                     2.2969,
                     8.9518,
-                    2.8174,
-                    8.9375,
-                    2.827,
-                    9.2192,
-                    2.3017,
-                    9.2335
+                    2.7888,
+                    8.9184,
+                    2.8079,
+                    9.2096,
+                    2.316,
+                    9.2431
                   ],
-                  "confidence": 0.977,
+                  "confidence": 0.96,
                   "span": {
-                    "offset": 192,
+                    "offset": 182,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "31.17",
+                  "boundingBox": [
+                    4.4649,
+                    8.0399,
+                    4.9281,
+                    8.0399,
+                    4.9281,
+                    8.355,
+                    4.4649,
+                    8.355
+                  ],
+                  "confidence": 0.902,
+                  "span": {
+                    "offset": 188,
                     "length": 5
                   }
                 },
                 {
                   "content": "$",
                   "boundingBox": [
-                    4.0494,
-                    8.4171,
+                    4.1115,
+                    8.4028,
                     4.164,
-                    8.4171,
-                    4.1545,
-                    8.7752,
-                    4.0447,
-                    8.7704
+                    8.4028,
+                    4.1497,
+                    8.7704,
+                    4.1115,
+                    8.7656
                   ],
-                  "confidence": 0.988,
+                  "confidence": 0.754,
                   "span": {
-                    "offset": 198,
+                    "offset": 194,
                     "length": 1
                   }
                 },
                 {
                   "content": "1.63",
                   "boundingBox": [
-                    4.2357,
-                    8.4171,
-                    4.8469,
-                    8.4314,
-                    4.8421,
+                    4.164,
+                    8.4028,
+                    4.7848,
+                    8.4076,
+                    4.7753,
                     8.7895,
-                    4.2261,
-                    8.7752
+                    4.1497,
+                    8.7704
                   ],
-                  "confidence": 0.105,
+                  "confidence": 0.75,
                   "span": {
-                    "offset": 200,
+                    "offset": 196,
                     "length": 4
                   }
                 },
                 {
                   "content": "$14,50",
                   "boundingBox": [
-                    4.0685,
-                    8.8516,
-                    5.1478,
-                    8.9089,
-                    5.1287,
-                    9.2765,
-                    4.0494,
-                    9.224
+                    4.0829,
+                    8.8611,
+                    5.1239,
+                    8.885,
+                    5.1096,
+                    9.2574,
+                    4.0733,
+                    9.2144
                   ],
-                  "confidence": 0.652,
+                  "confidence": 0.762,
                   "span": {
-                    "offset": 205,
+                    "offset": 201,
                     "length": 6
                   }
                 }
@@ -852,14 +789,14 @@
                 {
                   "content": "Contoso",
                   "boundingBox": [
-                    2.9129,
-                    2.5352,
+                    2.8986,
+                    2.5256,
                     4.2691,
-                    2.4015,
-                    4.2978,
-                    2.6784,
+                    2.3776,
+                    4.3025,
+                    2.6832,
                     2.9177,
-                    2.793
+                    2.7977
                   ],
                   "spans": [
                     {
@@ -871,14 +808,14 @@
                 {
                   "content": "Contoso",
                   "boundingBox": [
-                    1.9197,
+                    1.9244,
                     2.7118,
                     2.55,
-                    2.8741,
+                    2.8789,
                     2.5022,
-                    3.0508,
-                    1.8719,
-                    2.8837
+                    3.0603,
+                    1.8862,
+                    2.8885
                   ],
                   "spans": [
                     {
@@ -890,13 +827,13 @@
                 {
                   "content": "123 Main Street",
                   "boundingBox": [
-                    1.9053,
-                    3.0317,
-                    3.0944,
-                    3.2943,
+                    1.9149,
+                    3.0174,
+                    3.0992,
+                    3.2847,
                     3.0514,
                     3.49,
-                    1.8624,
+                    1.8719,
                     3.2274
                   ],
                   "spans": [
@@ -909,14 +846,14 @@
                 {
                   "content": "Redmond, WA 98052",
                   "boundingBox": [
-                    1.8671,
-                    3.3468,
-                    3.4621,
+                    1.8719,
+                    3.3516,
+                    3.4573,
                     3.5569,
-                    3.4334,
-                    3.7622,
-                    1.8385,
-                    3.5951
+                    3.4287,
+                    3.786,
+                    1.8433,
+                    3.6046
                   ],
                   "spans": [
                     {
@@ -928,14 +865,14 @@
                 {
                   "content": "987-654-3210",
                   "boundingBox": [
-                    1.8194,
-                    4.0056,
-                    2.9607,
-                    4.1584,
-                    2.932,
-                    4.3637,
-                    1.7955,
-                    4.2109
+                    1.8242,
+                    4.0009,
+                    2.9559,
+                    4.1489,
+                    2.9272,
+                    4.3685,
+                    1.8051,
+                    4.2157
                   ],
                   "spans": [
                     {
@@ -947,14 +884,14 @@
                 {
                   "content": "6/10/2019 13:59",
                   "boundingBox": [
-                    1.7812,
-                    4.6788,
-                    3.0419,
-                    4.7743,
-                    3.0275,
+                    1.7955,
+                    4.6979,
+                    3.0371,
+                    4.7982,
+                    3.018,
                     5.0178,
-                    1.7621,
-                    4.9319
+                    1.7764,
+                    4.9128
                   ],
                   "spans": [
                     {
@@ -966,14 +903,14 @@
                 {
                   "content": "Sales Associate: Paul",
                   "boundingBox": [
-                    1.7621,
-                    5.0369,
-                    3.5862,
+                    1.7573,
+                    5.0417,
+                    3.5719,
                     5.1276,
-                    3.5767,
-                    5.3329,
-                    1.7525,
-                    5.2613
+                    3.5671,
+                    5.3377,
+                    1.7478,
+                    5.2708
                   ],
                   "spans": [
                     {
@@ -983,39 +920,20 @@
                   ]
                 },
                 {
-                  "content": "-",
+                  "content": "1 Cappuccino",
                   "boundingBox": [
-                    1.7573,
-                    5.4905,
-                    1.8433,
-                    5.5,
-                    1.8385,
-                    5.5525,
-                    1.7525,
-                    5.543
+                    1.7287,
+                    5.7292,
+                    2.9702,
+                    5.7912,
+                    2.9511,
+                    6.0681,
+                    1.7191,
+                    6.0204
                   ],
                   "spans": [
                     {
                       "offset": 101,
-                      "length": 1
-                    }
-                  ]
-                },
-                {
-                  "content": "1 Cappuccino",
-                  "boundingBox": [
-                    1.7287,
-                    5.753,
-                    2.975,
-                    5.8103,
-                    2.9702,
-                    6.0681,
-                    1.7239,
-                    6.0109
-                  ],
-                  "spans": [
-                    {
-                      "offset": 103,
                       "length": 12
                     }
                   ]
@@ -1023,18 +941,18 @@
                 {
                   "content": "1 BACON \u0026 EGGS",
                   "boundingBox": [
-                    1.6761,
-                    6.5169,
-                    3.2281,
-                    6.5217,
-                    3.2281,
-                    6.7556,
-                    1.6761,
-                    6.7461
+                    1.6713,
+                    6.5074,
+                    3.2185,
+                    6.5122,
+                    3.2185,
+                    6.7652,
+                    1.6713,
+                    6.7556
                   ],
                   "spans": [
                     {
-                      "offset": 116,
+                      "offset": 114,
                       "length": 14
                     }
                   ]
@@ -1042,18 +960,18 @@
                 {
                   "content": "$2.20",
                   "boundingBox": [
-                    4.3169,
+                    4.3216,
                     5.753,
-                    4.8135,
-                    5.7387,
-                    4.823,
-                    5.9488,
-                    4.3312,
-                    5.9727
+                    4.7896,
+                    5.7292,
+                    4.8087,
+                    5.944,
+                    4.336,
+                    5.9774
                   ],
                   "spans": [
                     {
-                      "offset": 131,
+                      "offset": 129,
                       "length": 5
                     }
                   ]
@@ -1061,18 +979,18 @@
                 {
                   "content": "Sunny-side-up",
                   "boundingBox": [
-                    2.039,
-                    6.9275,
+                    2.0295,
+                    6.9227,
                     3.2424,
-                    6.9323,
-                    3.2376,
-                    7.171,
-                    2.039,
-                    7.1615
+                    6.9227,
+                    3.2424,
+                    7.1806,
+                    2.0295,
+                    7.1806
                   ],
                   "spans": [
                     {
-                      "offset": 137,
+                      "offset": 135,
                       "length": 13
                     }
                   ]
@@ -1081,37 +999,37 @@
                   "content": "$9.5",
                   "boundingBox": [
                     4.4028,
-                    6.8607,
-                    4.7896,
+                    6.8655,
+                    4.7753,
                     6.8511,
-                    4.7992,
-                    7.1089,
-                    4.3933,
-                    7.1137
+                    4.7801,
+                    7.1185,
+                    4.4076,
+                    7.128
                   ],
                   "spans": [
                     {
-                      "offset": 151,
+                      "offset": 149,
                       "length": 4
                     }
                   ]
                 },
                 {
-                  "content": "--",
+                  "content": "-",
                   "boundingBox": [
-                    4.7705,
-                    7.3859,
-                    4.9615,
-                    7.3859,
-                    4.9615,
-                    7.4336,
-                    4.7705,
-                    7.4336
+                    4.8803,
+                    7.3906,
+                    4.952,
+                    7.3906,
+                    4.9567,
+                    7.424,
+                    4.8803,
+                    7.424
                   ],
                   "spans": [
                     {
-                      "offset": 156,
-                      "length": 2
+                      "offset": 154,
+                      "length": 1
                     }
                   ]
                 },
@@ -1119,17 +1037,17 @@
                   "content": "-",
                   "boundingBox": [
                     1.657,
-                    7.4288,
+                    7.4336,
                     1.7621,
-                    7.4288,
-                    1.7573,
-                    7.4813,
+                    7.4336,
+                    1.7621,
+                    7.4766,
                     1.657,
-                    7.4813
+                    7.4766
                   ],
                   "spans": [
                     {
-                      "offset": 159,
+                      "offset": 156,
                       "length": 1
                     }
                   ]
@@ -1137,94 +1055,75 @@
                 {
                   "content": "Sub-Total",
                   "boundingBox": [
-                    2.3112,
-                    7.701,
-                    3.2997,
-                    7.6723,
-                    3.3093,
+                    2.3017,
+                    7.6914,
+                    3.2949,
+                    7.6628,
+                    3.3045,
                     7.9397,
-                    2.316,
-                    7.9731
+                    2.3112,
+                    7.9683
                   ],
                   "spans": [
                     {
-                      "offset": 161,
+                      "offset": 158,
                       "length": 9
                     }
                   ]
                 },
                 {
-                  "content": "$ 11.70",
+                  "content": "11.70",
                   "boundingBox": [
-                    4.2596,
-                    7.6532,
-                    4.9329,
-                    7.6628,
-                    4.9233,
-                    7.9779,
-                    4.2691,
-                    7.9444
+                    4.4028,
+                    7.6293,
+                    4.9042,
+                    7.6293,
+                    4.9138,
+                    7.954,
+                    4.4124,
+                    7.954
                   ],
                   "spans": [
                     {
-                      "offset": 171,
-                      "length": 7
+                      "offset": 168,
+                      "length": 5
                     }
                   ]
                 },
                 {
                   "content": "Tax",
                   "boundingBox": [
-                    2.3256,
-                    8.1211,
-                    2.6885,
-                    8.1402,
-                    2.6837,
-                    8.3455,
-                    2.3303,
-                    8.3455
-                  ],
-                  "spans": [
-                    {
-                      "offset": 179,
-                      "length": 3
-                    }
-                  ]
-                },
-                {
-                  "content": "1.17",
-                  "boundingBox": [
-                    4.5556,
-                    8.0924,
-                    4.9233,
+                    2.3112,
                     8.1068,
-                    4.9233,
-                    8.3264,
-                    4.5556,
-                    8.3168
+                    2.6694,
+                    8.0877,
+                    2.6742,
+                    8.3694,
+                    2.3208,
+                    8.3837
                   ],
                   "spans": [
                     {
-                      "offset": 183,
-                      "length": 4
+                      "offset": 174,
+                      "length": 3
                     }
                   ]
                 },
                 {
                   "content": "Tip",
                   "boundingBox": [
-                    2.2874,
-                    8.4935,
-                    2.6503,
-                    8.4744,
-                    2.6598,
-                    8.8086,
-                    2.2969,
-                    8.8277
+                    2.3112,
+                    8.5078,
+                    2.6073,
+                    8.5126,
+                    2.6121,
+                    8.8229,
+                    2.316,
+                    8.8325
                   ],
                   "spans": [
                     {
-                      "offset": 188,
+                      "offset": 178,
                       "length": 3
                     }
                   ]
@@ -1232,18 +1131,37 @@
                 {
                   "content": "Total",
                   "boundingBox": [
-                    2.2969,
+                    2.2874,
                     8.9614,
-                    2.8365,
-                    8.9375,
-                    2.8413,
-                    9.2192,
-                    2.3017,
-                    9.2287
+                    2.8079,
+                    8.9184,
+                    2.8222,
+                    9.2096,
+                    2.3112,
+                    9.2383
                   ],
                   "spans": [
                     {
-                      "offset": 192,
+                      "offset": 182,
+                      "length": 5
+                    }
+                  ]
+                },
+                {
+                  "content": "31.17",
+                  "boundingBox": [
+                    4.4649,
+                    8.0399,
+                    4.9233,
+                    8.0399,
+                    4.9281,
+                    8.355,
+                    4.4649,
+                    8.355
+                  ],
+                  "spans": [
+                    {
+                      "offset": 188,
                       "length": 5
                     }
                   ]
@@ -1251,18 +1169,18 @@
                 {
                   "content": "$ 1.63",
                   "boundingBox": [
-                    4.0638,
-                    8.4171,
-                    4.9424,
-                    8.441,
-                    4.9281,
-                    8.7943,
-                    4.0447,
-                    8.7752
+                    4.1115,
+                    8.4028,
+                    5.1048,
+                    8.4219,
+                    5.1191,
+                    8.8086,
+                    4.1115,
+                    8.7561
                   ],
                   "spans": [
                     {
-                      "offset": 198,
+                      "offset": 194,
                       "length": 6
                     }
                   ]
@@ -1270,18 +1188,18 @@
                 {
                   "content": "$14,50",
                   "boundingBox": [
-                    4.0781,
-                    8.8516,
-                    5.1621,
-                    8.9184,
-                    5.143,
-                    9.2717,
-                    4.0494,
-                    9.224
+                    4.0972,
+                    8.8611,
+                    5.1287,
+                    8.885,
+                    5.1478,
+                    9.2622,
+                    4.0733,
+                    9.2049
                   ],
                   "spans": [
                     {
-                      "offset": 205,
+                      "offset": 201,
                       "length": 6
                     }
                   ]
@@ -1290,13 +1208,13 @@
               "spans": [
                 {
                   "offset": 0,
-                  "length": 211
+                  "length": 207
                 }
               ]
             },
             {
               "pageNumber": 2,
-              "angle": 0.4892,
+              "angle": 0.3794,
               "width": 8.5,
               "height": 11,
               "unit": "inch",
@@ -1304,198 +1222,198 @@
                 {
                   "content": "Contoso",
                   "boundingBox": [
-                    2.8413,
-                    1.8477,
-                    4.1211,
-                    1.819,
+                    2.8747,
+                    1.8381,
+                    4.1163,
+                    1.7999,
                     4.1306,
                     2.1723,
-                    2.8413,
-                    2.1914
+                    2.8652,
+                    2.1962
                   ],
                   "confidence": 0.993,
                   "span": {
-                    "offset": 212,
+                    "offset": 208,
                     "length": 7
                   }
                 },
                 {
                   "content": "Contoso",
                   "boundingBox": [
-                    1.9722,
+                    1.9674,
                     2.7691,
-                    2.4879,
-                    2.8025,
-                    2.4736,
+                    2.4927,
+                    2.7834,
+                    2.4831,
                     2.9601,
-                    1.9579,
-                    2.9219
+                    1.9674,
+                    2.941
                   ],
-                  "confidence": 0.917,
+                  "confidence": 0.928,
                   "span": {
-                    "offset": 220,
+                    "offset": 216,
                     "length": 7
                   }
                 },
                 {
                   "content": "123",
                   "boundingBox": [
-                    1.9531,
+                    1.9626,
                     3.0699,
-                    2.1346,
+                    2.1489,
                     3.0747,
-                    2.1346,
-                    3.2561,
+                    2.1441,
+                    3.2609,
                     1.9579,
-                    3.2561
+                    3.2513
                   ],
-                  "confidence": 0.988,
+                  "confidence": 0.994,
                   "span": {
-                    "offset": 228,
+                    "offset": 224,
                     "length": 3
                   }
                 },
                 {
                   "content": "Main",
                   "boundingBox": [
-                    2.168,
+                    2.1823,
                     3.0747,
-                    2.4688,
+                    2.4831,
                     3.0794,
-                    2.4688,
-                    3.2609,
-                    2.168,
-                    3.2561
+                    2.4784,
+                    3.2704,
+                    2.1775,
+                    3.2609
                   ],
-                  "confidence": 0.991,
+                  "confidence": 0.994,
                   "span": {
-                    "offset": 232,
+                    "offset": 228,
                     "length": 4
                   }
                 },
                 {
                   "content": "Street",
                   "boundingBox": [
-                    2.5022,
+                    2.5166,
                     3.0794,
-                    2.9463,
-                    3.089,
                     2.9416,
-                    3.2704,
-                    2.5022,
-                    3.2609
+                    3.0938,
+                    2.9368,
+                    3.2609,
+                    2.5118,
+                    3.2704
                   ],
-                  "confidence": 0.997,
+                  "confidence": 1,
                   "span": {
-                    "offset": 237,
+                    "offset": 233,
                     "length": 6
                   }
                 },
                 {
                   "content": "Redmond,",
                   "boundingBox": [
-                    1.934,
+                    1.9388,
                     3.3802,
-                    2.5452,
+                    2.5548,
                     3.3898,
-                    2.5452,
-                    3.5712,
+                    2.55,
+                    3.576,
                     1.934,
-                    3.5616
+                    3.576
                   ],
-                  "confidence": 0.993,
+                  "confidence": 0.967,
                   "span": {
-                    "offset": 244,
+                    "offset": 240,
                     "length": 8
                   }
                 },
                 {
                   "content": "WA",
                   "boundingBox": [
-                    2.5787,
+                    2.5882,
                     3.3898,
-                    2.7649,
+                    2.784,
                     3.3898,
-                    2.7649,
-                    3.5664,
-                    2.5787,
-                    3.5712
+                    2.7792,
+                    3.5712,
+                    2.5882,
+                    3.576
                   ],
-                  "confidence": 0.999,
+                  "confidence": 0.998,
                   "span": {
-                    "offset": 253,
+                    "offset": 249,
                     "length": 2
                   }
                 },
                 {
                   "content": "98052",
                   "boundingBox": [
-                    2.8031,
+                    2.8222,
                     3.3898,
                     3.2424,
-                    3.385,
-                    3.2424,
-                    3.5521,
-                    2.7983,
-                    3.5664
+                    3.3898,
+                    3.2376,
+                    3.5569,
+                    2.8174,
+                    3.5712
                   ],
-                  "confidence": 0.995,
+                  "confidence": 0.999,
                   "span": {
-                    "offset": 256,
+                    "offset": 252,
                     "length": 5
                   }
                 },
                 {
                   "content": "123-456-7890",
                   "boundingBox": [
-                    1.9101,
-                    4.0056,
+                    1.9197,
+                    4.0152,
                     2.8508,
                     4.0343,
                     2.8461,
-                    4.2109,
-                    1.9053,
-                    4.1918
+                    4.2062,
+                    1.9197,
+                    4.1871
                   ],
-                  "confidence": 0.989,
+                  "confidence": 0.994,
                   "span": {
-                    "offset": 262,
+                    "offset": 258,
                     "length": 12
                   }
                 },
                 {
                   "content": "6/10/2019",
                   "boundingBox": [
-                    1.8958,
-                    4.6645,
-                    2.4879,
-                    4.674,
-                    2.4879,
+                    1.9053,
+                    4.6597,
+                    2.507,
+                    4.6693,
+                    2.5022,
                     4.8698,
-                    1.9006,
-                    4.865
+                    1.9101,
+                    4.8602
                   ],
-                  "confidence": 0.996,
+                  "confidence": 0.994,
                   "span": {
-                    "offset": 275,
+                    "offset": 271,
                     "length": 9
                   }
                 },
                 {
                   "content": "13:59",
                   "boundingBox": [
-                    2.5261,
+                    2.55,
+                    4.6693,
+                    2.8986,
                     4.674,
-                    2.889,
-                    4.6788,
                     2.8843,
-                    4.8698,
-                    2.5261,
+                    4.8793,
+                    2.5404,
                     4.8698
                   ],
-                  "confidence": 0.995,
+                  "confidence": 0.999,
                   "span": {
-                    "offset": 285,
+                    "offset": 281,
                     "length": 5
                   }
                 },
@@ -1503,125 +1421,125 @@
                   "content": "Sales",
                   "boundingBox": [
                     1.8958,
-                    5.0082,
-                    2.2157,
-                    5.0035,
-                    2.2157,
+                    4.9939,
+                    2.2301,
+                    4.9987,
+                    2.2301,
                     5.1897,
                     1.8958,
                     5.1849
                   ],
-                  "confidence": 0.995,
+                  "confidence": 0.997,
                   "span": {
-                    "offset": 291,
+                    "offset": 287,
                     "length": 5
                   }
                 },
                 {
                   "content": "Associate:",
                   "boundingBox": [
-                    2.2492,
+                    2.2683,
+                    4.9987,
+                    2.9416,
                     5.0035,
-                    2.9272,
-                    5.0082,
-                    2.9272,
-                    5.1992,
-                    2.2492,
+                    2.9368,
+                    5.1944,
+                    2.2683,
                     5.1897
                   ],
-                  "confidence": 0.995,
+                  "confidence": 0.989,
                   "span": {
-                    "offset": 297,
+                    "offset": 293,
                     "length": 10
                   }
                 },
                 {
                   "content": "Paul",
                   "boundingBox": [
-                    2.9654,
+                    2.9798,
+                    5.0035,
+                    3.2997,
                     5.0082,
-                    3.3093,
-                    5.0082,
-                    3.3045,
+                    3.2902,
                     5.1992,
-                    2.9607,
-                    5.1992
+                    2.975,
+                    5.1944
                   ],
-                  "confidence": 0.991,
+                  "confidence": 0.994,
                   "span": {
-                    "offset": 308,
+                    "offset": 304,
                     "length": 4
                   }
                 },
                 {
                   "content": "1",
                   "boundingBox": [
-                    1.9865,
-                    5.6862,
-                    2.0295,
-                    5.6814,
-                    2.0295,
+                    1.9961,
+                    5.6766,
+                    2.0629,
+                    5.6766,
+                    2.0677,
                     5.8628,
-                    1.9865,
+                    2.0008,
                     5.8628
                   ],
-                  "confidence": 0.912,
+                  "confidence": 0.98,
                   "span": {
-                    "offset": 313,
+                    "offset": 309,
                     "length": 1
                   }
                 },
                 {
                   "content": "Surface",
                   "boundingBox": [
-                    2.0677,
-                    5.6814,
-                    2.6073,
-                    5.6814,
-                    2.6073,
-                    5.8628,
-                    2.0677,
+                    2.1011,
+                    5.6766,
+                    2.6169,
+                    5.6766,
+                    2.6169,
+                    5.8676,
+                    2.1059,
                     5.8628
                   ],
                   "confidence": 0.997,
                   "span": {
-                    "offset": 315,
+                    "offset": 311,
                     "length": 7
                   }
                 },
                 {
                   "content": "Pro",
                   "boundingBox": [
-                    2.6455,
+                    2.6503,
+                    5.6766,
+                    2.8843,
                     5.6814,
-                    2.8699,
-                    5.6862,
-                    2.8652,
-                    5.8628,
-                    2.6407,
-                    5.8628
+                    2.8843,
+                    5.8676,
+                    2.6551,
+                    5.8676
                   ],
-                  "confidence": 0.997,
+                  "confidence": 0.935,
                   "span": {
-                    "offset": 323,
+                    "offset": 319,
                     "length": 3
                   }
                 },
                 {
                   "content": "6",
                   "boundingBox": [
-                    2.9034,
-                    5.6862,
-                    3.0084,
-                    5.691,
-                    3.0037,
+                    2.9225,
+                    5.6814,
+                    3.0132,
+                    5.6814,
+                    3.0132,
                     5.8676,
-                    2.8986,
+                    2.9225,
                     5.8676
                   ],
-                  "confidence": 0.995,
+                  "confidence": 0.994,
                   "span": {
-                    "offset": 327,
+                    "offset": 323,
                     "length": 1
                   }
                 },
@@ -1629,121 +1547,139 @@
                   "content": "256GB",
                   "boundingBox": [
                     2.1059,
-                    6.0156,
-                    2.4975,
-                    6.0156,
-                    2.4975,
-                    6.2161,
-                    2.1107,
+                    6.0109,
+                    2.5118,
+                    6.0109,
+                    2.5118,
+                    6.2209,
+                    2.1059,
                     6.2114
                   ],
-                  "confidence": 0.995,
+                  "confidence": 0.998,
                   "span": {
-                    "offset": 329,
+                    "offset": 325,
                     "length": 5
                   }
                 },
                 {
                   "content": "/",
                   "boundingBox": [
-                    2.5357,
-                    6.0156,
-                    2.5739,
-                    6.0156,
-                    2.5739,
-                    6.2161,
-                    2.5357,
-                    6.2161
+                    2.5548,
+                    6.0109,
+                    2.5787,
+                    6.0109,
+                    2.5787,
+                    6.2209,
+                    2.5548,
+                    6.2209
                   ],
-                  "confidence": 0.991,
+                  "confidence": 0.994,
                   "span": {
-                    "offset": 335,
+                    "offset": 331,
                     "length": 1
                   }
                 },
                 {
                   "content": "Intel",
                   "boundingBox": [
-                    2.6121,
+                    2.6216,
+                    6.0109,
+                    2.9225,
                     6.0156,
-                    2.9129,
-                    6.0156,
-                    2.9129,
-                    6.2161,
-                    2.6121,
-                    6.2161
+                    2.9177,
+                    6.2257,
+                    2.6216,
+                    6.2209
                   ],
-                  "confidence": 0.972,
+                  "confidence": 0.964,
                   "span": {
-                    "offset": 337,
+                    "offset": 333,
                     "length": 5
                   }
                 },
                 {
                   "content": "Core",
                   "boundingBox": [
-                    2.9511,
+                    2.9607,
                     6.0156,
-                    3.2472,
-                    6.0204,
-                    3.2472,
-                    6.2161,
-                    2.9511,
-                    6.2161
+                    3.2615,
+                    6.0156,
+                    3.2567,
+                    6.2257,
+                    2.9607,
+                    6.2257
                   ],
-                  "confidence": 0.991,
+                  "confidence": 0.994,
                   "span": {
-                    "offset": 343,
+                    "offset": 339,
                     "length": 4
                   }
                 },
                 {
                   "content": "i5",
                   "boundingBox": [
-                    3.2854,
-                    6.0204,
+                    3.2997,
+                    6.0156,
+                    3.4239,
+                    6.0156,
                     3.4191,
-                    6.0204,
-                    3.4143,
-                    6.2161,
-                    3.2854,
-                    6.2161
+                    6.2257,
+                    3.2997,
+                    6.2257
                   ],
-                  "confidence": 0.983,
+                  "confidence": 0.995,
                   "span": {
-                    "offset": 348,
+                    "offset": 344,
                     "length": 2
                   }
                 },
                 {
                   "content": "/",
                   "boundingBox": [
-                    3.4573,
+                    3.4669,
+                    6.0156,
+                    3.5385,
                     6.0204,
-                    3.548,
-                    6.0204,
-                    3.5433,
-                    6.2161,
-                    3.4525,
-                    6.2161
+                    3.5337,
+                    6.2257,
+                    3.4621,
+                    6.2257
                   ],
-                  "confidence": 0.993,
+                  "confidence": 0.994,
                   "span": {
-                    "offset": 351,
+                    "offset": 347,
                     "length": 1
                   }
                 },
                 {
                   "content": "8GB",
                   "boundingBox": [
-                    2.0772,
-                    6.3546,
-                    2.3256,
+                    2.0916,
                     6.3546,
                     2.3303,
-                    6.5456,
-                    2.0868,
-                    6.5456
+                    6.3594,
+                    2.3303,
+                    6.5551,
+                    2.0916,
+                    6.5503
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 349,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "RAM",
+                  "boundingBox": [
+                    2.3685,
+                    6.3594,
+                    2.6742,
+                    6.3594,
+                    2.6742,
+                    6.5599,
+                    2.3685,
+                    6.5551
                   ],
                   "confidence": 0.994,
                   "span": {
@@ -1752,308 +1688,254 @@
                   }
                 },
                 {
-                  "content": "RAM",
-                  "boundingBox": [
-                    2.3638,
-                    6.3546,
-                    2.6646,
-                    6.3546,
-                    2.6694,
-                    6.5551,
-                    2.3685,
-                    6.5503
-                  ],
-                  "confidence": 0.998,
-                  "span": {
-                    "offset": 357,
-                    "length": 3
-                  }
-                },
-                {
                   "content": "(Black)",
                   "boundingBox": [
-                    2.7028,
-                    6.3546,
-                    3.1994,
+                    2.7171,
                     6.3594,
+                    3.2042,
+                    6.3498,
                     3.1994,
                     6.5647,
-                    2.7076,
-                    6.5551
+                    2.7124,
+                    6.5599
                   ],
-                  "confidence": 0.994,
+                  "confidence": 0.995,
                   "span": {
-                    "offset": 361,
+                    "offset": 357,
                     "length": 7
                   }
                 },
                 {
-                  "content": "1",
+                  "content": "---",
                   "boundingBox": [
-                    1.9435,
-                    7.0564,
-                    1.9913,
-                    7.0564,
-                    1.9961,
-                    7.2426,
-                    1.9483,
-                    7.2426
+                    4.1354,
+                    5.4332,
+                    4.2978,
+                    5.4332,
+                    4.2978,
+                    5.4618,
+                    4.1354,
+                    5.4666
                   ],
-                  "confidence": 0.988,
+                  "confidence": 0.967,
+                  "span": {
+                    "offset": 365,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "$",
+                  "boundingBox": [
+                    3.8107,
+                    6.3737,
+                    3.8775,
+                    6.3737,
+                    3.8728,
+                    6.5694,
+                    3.8059,
+                    6.5694
+                  ],
+                  "confidence": 0.967,
                   "span": {
                     "offset": 369,
                     "length": 1
                   }
                 },
                 {
+                  "content": "999.00",
+                  "boundingBox": [
+                    3.9157,
+                    6.3785,
+                    4.3646,
+                    6.388,
+                    4.3598,
+                    6.5838,
+                    3.911,
+                    6.5742
+                  ],
+                  "confidence": 0.999,
+                  "span": {
+                    "offset": 371,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "1",
+                  "boundingBox": [
+                    1.9483,
+                    7.0564,
+                    2.0247,
+                    7.0564,
+                    2.0295,
+                    7.2474,
+                    1.9531,
+                    7.2522
+                  ],
+                  "confidence": 0.994,
+                  "span": {
+                    "offset": 378,
+                    "length": 1
+                  }
+                },
+                {
                   "content": "SurfacePen",
                   "boundingBox": [
-                    2.0295,
+                    2.0629,
                     7.0564,
+                    2.8747,
+                    7.0421,
                     2.8795,
-                    7.0469,
-                    2.8795,
-                    7.2283,
-                    2.0343,
-                    7.2378
+                    7.2331,
+                    2.0629,
+                    7.2474
                   ],
                   "confidence": 0.995,
                   "span": {
-                    "offset": 371,
+                    "offset": 380,
                     "length": 10
                   }
                 },
                 {
-                  "content": "--",
+                  "content": "99.99",
                   "boundingBox": [
-                    1.8242,
-                    7.5052,
-                    1.9197,
-                    7.5004,
-                    1.9244,
-                    7.5434,
-                    1.8289,
-                    7.553
+                    4.0065,
+                    7.0851,
+                    4.3742,
+                    7.0851,
+                    4.3789,
+                    7.2665,
+                    4.0112,
+                    7.2713
                   ],
-                  "confidence": 0.94,
+                  "confidence": 0.998,
                   "span": {
-                    "offset": 382,
-                    "length": 2
+                    "offset": 391,
+                    "length": 5
                   }
                 },
                 {
                   "content": "Sub-Total",
                   "boundingBox": [
-                    2.4115,
+                    2.4067,
+                    7.7201,
+                    3.0801,
                     7.7296,
-                    3.0992,
-                    7.7392,
-                    3.0896,
-                    7.9206,
-                    2.4115,
-                    7.911
+                    3.0753,
+                    7.9301,
+                    2.4067,
+                    7.9158
                   ],
-                  "confidence": 0.943,
+                  "confidence": 0.989,
                   "span": {
-                    "offset": 385,
+                    "offset": 397,
                     "length": 9
                   }
                 },
                 {
                   "content": "Tax",
                   "boundingBox": [
-                    2.698,
-                    8.0638,
-                    2.9511,
-                    8.0734,
-                    2.9416,
-                    8.2452,
-                    2.6933,
-                    8.2309
+                    2.7028,
+                    8.059,
+                    2.9272,
+                    8.059,
+                    2.9272,
+                    8.2405,
+                    2.7028,
+                    8.2357
                   ],
-                  "confidence": 0.993,
+                  "confidence": 0.994,
                   "span": {
-                    "offset": 395,
+                    "offset": 407,
                     "length": 3
                   }
                 },
                 {
                   "content": "Total",
                   "boundingBox": [
-                    2.6264,
-                    8.7847,
-                    2.9989,
-                    8.7656,
-                    3.0037,
-                    8.9423,
                     2.6312,
+                    8.7799,
+                    2.9893,
+                    8.7609,
+                    2.9989,
+                    8.9375,
+                    2.6407,
                     8.9614
                   ],
-                  "confidence": 0.679,
+                  "confidence": 0.931,
                   "span": {
-                    "offset": 399,
-                    "length": 5
-                  }
-                },
-                {
-                  "content": "$",
-                  "boundingBox": [
-                    3.8107,
-                    6.3928,
-                    3.8632,
-                    6.388,
-                    3.8632,
-                    6.5551,
-                    3.8059,
-                    6.5551
-                  ],
-                  "confidence": 0.993,
-                  "span": {
-                    "offset": 405,
-                    "length": 1
-                  }
-                },
-                {
-                  "content": "999.00",
-                  "boundingBox": [
-                    3.8966,
-                    6.388,
-                    4.3837,
-                    6.3976,
-                    4.3789,
-                    6.5647,
-                    3.8966,
-                    6.5551
-                  ],
-                  "confidence": 0.994,
-                  "span": {
-                    "offset": 407,
-                    "length": 6
-                  }
-                },
-                {
-                  "content": "$",
-                  "boundingBox": [
-                    3.8871,
-                    7.0755,
-                    3.9539,
-                    7.0755,
-                    3.9492,
-                    7.2713,
-                    3.8871,
-                    7.2713
-                  ],
-                  "confidence": 0.997,
-                  "span": {
-                    "offset": 414,
-                    "length": 1
-                  }
-                },
-                {
-                  "content": "99.99",
-                  "boundingBox": [
-                    3.9921,
-                    7.0755,
-                    4.3837,
-                    7.0803,
-                    4.3789,
-                    7.276,
-                    3.9874,
-                    7.2713
-                  ],
-                  "confidence": 0.994,
-                  "span": {
-                    "offset": 416,
+                    "offset": 411,
                     "length": 5
                   }
                 },
                 {
                   "content": "1098.99",
                   "boundingBox": [
-                    3.8966,
-                    7.7821,
-                    4.3933,
-                    7.7678,
+                    3.8871,
+                    7.7773,
                     4.398,
-                    7.9397,
-                    3.9014,
-                    7.9588
+                    7.7678,
+                    4.4028,
+                    7.954,
+                    3.8919,
+                    7.9635
                   ],
-                  "confidence": 0.995,
+                  "confidence": 0.981,
                   "span": {
-                    "offset": 422,
+                    "offset": 417,
                     "length": 7
                   }
                 },
                 {
                   "content": "$",
                   "boundingBox": [
-                    3.8107,
+                    3.8154,
+                    8.1163,
+                    3.8919,
                     8.1115,
-                    3.8775,
-                    8.1115,
-                    3.8728,
-                    8.3025,
-                    3.8059,
-                    8.3025
+                    3.9014,
+                    8.3073,
+                    3.8202,
+                    8.3121
                   ],
-                  "confidence": 0.973,
+                  "confidence": 0.994,
                   "span": {
-                    "offset": 430,
+                    "offset": 425,
                     "length": 1
                   }
                 },
                 {
                   "content": "104.40",
                   "boundingBox": [
-                    3.9157,
+                    3.9301,
                     8.1115,
-                    4.398,
-                    8.102,
-                    4.398,
-                    8.2977,
-                    3.911,
-                    8.3025
+                    4.3694,
+                    8.0972,
+                    4.3742,
+                    8.2882,
+                    3.9396,
+                    8.3073
                   ],
-                  "confidence": 0.996,
+                  "confidence": 0.994,
                   "span": {
-                    "offset": 432,
+                    "offset": 427,
                     "length": 6
-                  }
-                },
-                {
-                  "content": "$",
-                  "boundingBox": [
-                    3.739,
-                    8.7752,
-                    3.8107,
-                    8.7847,
-                    3.7963,
-                    8.9566,
-                    3.7295,
-                    8.9518
-                  ],
-                  "confidence": 0.996,
-                  "span": {
-                    "offset": 439,
-                    "length": 1
                   }
                 },
                 {
                   "content": "1203.39",
                   "boundingBox": [
+                    3.8632,
+                    8.7752,
+                    4.3789,
+                    8.8277,
+                    4.3551,
+                    9.0234,
                     3.8441,
-                    8.7847,
-                    4.3742,
-                    8.8468,
-                    4.3455,
-                    9.0282,
-                    3.8346,
-                    8.9614
+                    8.9709
                   ],
-                  "confidence": 0.997,
+                  "confidence": 0.98,
                   "span": {
-                    "offset": 441,
+                    "offset": 434,
                     "length": 7
                   }
                 }
@@ -2062,18 +1944,18 @@
                 {
                   "content": "Contoso",
                   "boundingBox": [
-                    2.8365,
-                    1.8429,
-                    4.164,
-                    1.8142,
-                    4.1688,
+                    2.8652,
+                    1.8286,
+                    4.1497,
+                    1.7951,
+                    4.1593,
                     2.1628,
-                    2.8365,
-                    2.1914
+                    2.8652,
+                    2.1962
                   ],
                   "spans": [
                     {
-                      "offset": 212,
+                      "offset": 208,
                       "length": 7
                     }
                   ]
@@ -2081,18 +1963,18 @@
                 {
                   "content": "Contoso",
                   "boundingBox": [
-                    1.9674,
+                    1.9626,
                     2.7643,
                     2.4927,
-                    2.7977,
-                    2.4784,
+                    2.7834,
+                    2.4879,
                     2.9553,
-                    1.9579,
-                    2.9219
+                    1.9626,
+                    2.9362
                   ],
                   "spans": [
                     {
-                      "offset": 220,
+                      "offset": 216,
                       "length": 7
                     }
                   ]
@@ -2100,18 +1982,18 @@
                 {
                   "content": "123 Main Street",
                   "boundingBox": [
-                    1.9531,
+                    1.9579,
                     3.0699,
-                    2.9511,
-                    3.0842,
                     2.9463,
+                    3.0842,
+                    2.9416,
                     3.2704,
-                    1.9531,
-                    3.2513
+                    1.9579,
+                    3.2561
                   ],
                   "spans": [
                     {
-                      "offset": 228,
+                      "offset": 224,
                       "length": 15
                     }
                   ]
@@ -2119,18 +2001,18 @@
                 {
                   "content": "Redmond, WA 98052",
                   "boundingBox": [
-                    1.9292,
-                    3.3802,
-                    3.2424,
-                    3.3802,
-                    3.2424,
-                    3.5616,
-                    1.9292,
-                    3.5664
+                    1.934,
+                    3.3754,
+                    3.2472,
+                    3.3754,
+                    3.2472,
+                    3.5712,
+                    1.934,
+                    3.576
                   ],
                   "spans": [
                     {
-                      "offset": 244,
+                      "offset": 240,
                       "length": 17
                     }
                   ]
@@ -2138,18 +2020,18 @@
                 {
                   "content": "123-456-7890",
                   "boundingBox": [
-                    1.9101,
-                    4.0009,
-                    2.8556,
-                    4.0247,
-                    2.8508,
-                    4.2109,
-                    1.9053,
-                    4.1871
+                    1.9197,
+                    4.0104,
+                    2.8461,
+                    4.0295,
+                    2.8461,
+                    4.2014,
+                    1.9149,
+                    4.1823
                   ],
                   "spans": [
                     {
-                      "offset": 262,
+                      "offset": 258,
                       "length": 12
                     }
                   ]
@@ -2157,18 +2039,18 @@
                 {
                   "content": "6/10/2019 13:59",
                   "boundingBox": [
-                    1.891,
-                    4.6597,
-                    2.889,
+                    1.9053,
+                    4.6549,
+                    2.8938,
                     4.674,
-                    2.889,
-                    4.8698,
-                    1.891,
-                    4.8602
+                    2.8938,
+                    4.8746,
+                    1.9053,
+                    4.8555
                   ],
                   "spans": [
                     {
-                      "offset": 275,
+                      "offset": 271,
                       "length": 15
                     }
                   ]
@@ -2176,18 +2058,18 @@
                 {
                   "content": "Sales Associate: Paul",
                   "boundingBox": [
-                    1.891,
+                    1.8862,
+                    4.9939,
+                    3.2997,
                     5.0035,
-                    3.314,
-                    5.0082,
-                    3.3093,
+                    3.2997,
                     5.1944,
-                    1.891,
-                    5.1849
+                    1.8862,
+                    5.1801
                   ],
                   "spans": [
                     {
-                      "offset": 291,
+                      "offset": 287,
                       "length": 21
                     }
                   ]
@@ -2195,18 +2077,18 @@
                 {
                   "content": "1 Surface Pro 6",
                   "boundingBox": [
-                    1.9817,
+                    1.9913,
                     5.6766,
-                    3.0275,
-                    5.6814,
-                    3.0228,
+                    3.018,
+                    5.6766,
+                    3.018,
                     5.8628,
-                    1.9817,
+                    1.9913,
                     5.8581
                   ],
                   "spans": [
                     {
-                      "offset": 313,
+                      "offset": 309,
                       "length": 15
                     }
                   ]
@@ -2214,18 +2096,18 @@
                 {
                   "content": "256GB / Intel Core i5 /",
                   "boundingBox": [
-                    2.1059,
+                    2.0963,
+                    6.0109,
+                    3.5385,
                     6.0156,
-                    3.5433,
-                    6.0156,
-                    3.5433,
-                    6.2114,
-                    2.1059,
+                    3.5385,
+                    6.2257,
+                    2.0963,
                     6.2114
                   ],
                   "spans": [
                     {
-                      "offset": 329,
+                      "offset": 325,
                       "length": 23
                     }
                   ]
@@ -2233,19 +2115,57 @@
                 {
                   "content": "8GB RAM (Black)",
                   "boundingBox": [
-                    2.0772,
+                    2.082,
                     6.3498,
-                    3.1994,
-                    6.3546,
-                    3.1947,
+                    3.2042,
+                    6.3498,
+                    3.2042,
                     6.5599,
-                    2.0772,
-                    6.5456
+                    2.082,
+                    6.5551
                   ],
                   "spans": [
                     {
-                      "offset": 353,
+                      "offset": 349,
                       "length": 15
+                    }
+                  ]
+                },
+                {
+                  "content": "---",
+                  "boundingBox": [
+                    4.1211,
+                    5.4284,
+                    4.3407,
+                    5.4284,
+                    4.3407,
+                    5.4618,
+                    4.1211,
+                    5.4666
+                  ],
+                  "spans": [
+                    {
+                      "offset": 365,
+                      "length": 3
+                    }
+                  ]
+                },
+                {
+                  "content": "$ 999.00",
+                  "boundingBox": [
+                    3.8059,
+                    6.3737,
+                    4.3789,
+                    6.3928,
+                    4.3742,
+                    6.579,
+                    3.8011,
+                    6.5694
+                  ],
+                  "spans": [
+                    {
+                      "offset": 369,
+                      "length": 8
                     }
                   ]
                 },
@@ -2253,37 +2173,37 @@
                   "content": "1 SurfacePen",
                   "boundingBox": [
                     1.9388,
-                    7.0469,
-                    2.8747,
+                    7.0516,
+                    2.8795,
                     7.0421,
-                    2.8747,
-                    7.2235,
+                    2.8843,
+                    7.2283,
                     1.9435,
-                    7.2378
+                    7.2474
                   ],
                   "spans": [
                     {
-                      "offset": 369,
+                      "offset": 378,
                       "length": 12
                     }
                   ]
                 },
                 {
-                  "content": "--",
+                  "content": "99.99",
                   "boundingBox": [
-                    1.8242,
-                    7.5052,
-                    1.9817,
-                    7.4909,
-                    1.9865,
-                    7.5386,
-                    1.8289,
-                    7.5482
+                    3.9921,
+                    7.0851,
+                    4.3789,
+                    7.0851,
+                    4.3742,
+                    7.2617,
+                    3.9921,
+                    7.2713
                   ],
                   "spans": [
                     {
-                      "offset": 382,
-                      "length": 2
+                      "offset": 391,
+                      "length": 5
                     }
                   ]
                 },
@@ -2291,17 +2211,17 @@
                   "content": "Sub-Total",
                   "boundingBox": [
                     2.4067,
+                    7.7153,
+                    3.0848,
                     7.7296,
-                    3.0944,
-                    7.7392,
-                    3.0944,
-                    7.9158,
+                    3.0801,
+                    7.9253,
                     2.4067,
-                    7.9063
+                    7.911
                   ],
                   "spans": [
                     {
-                      "offset": 385,
+                      "offset": 397,
                       "length": 9
                     }
                   ]
@@ -2310,17 +2230,17 @@
                   "content": "Tax",
                   "boundingBox": [
                     2.698,
-                    8.0638,
-                    2.9559,
-                    8.0781,
-                    2.9463,
-                    8.2452,
-                    2.6933,
+                    8.059,
+                    2.9368,
+                    8.059,
+                    2.932,
+                    8.2405,
+                    2.698,
                     8.2357
                   ],
                   "spans": [
                     {
-                      "offset": 395,
+                      "offset": 407,
                       "length": 3
                     }
                   ]
@@ -2330,73 +2250,35 @@
                   "boundingBox": [
                     2.6264,
                     8.7847,
-                    2.9989,
-                    8.7656,
+                    2.9941,
+                    8.7609,
                     2.9989,
                     8.9423,
-                    2.636,
+                    2.6455,
                     8.9614
                   ],
                   "spans": [
                     {
-                      "offset": 399,
+                      "offset": 411,
                       "length": 5
-                    }
-                  ]
-                },
-                {
-                  "content": "$ 999.00",
-                  "boundingBox": [
-                    3.8059,
-                    6.3785,
-                    4.3885,
-                    6.3832,
-                    4.3837,
-                    6.5599,
-                    3.8059,
-                    6.5503
-                  ],
-                  "spans": [
-                    {
-                      "offset": 405,
-                      "length": 8
-                    }
-                  ]
-                },
-                {
-                  "content": "$ 99.99",
-                  "boundingBox": [
-                    3.8871,
-                    7.0755,
-                    4.3837,
-                    7.0851,
-                    4.3837,
-                    7.2713,
-                    3.8871,
-                    7.2713
-                  ],
-                  "spans": [
-                    {
-                      "offset": 414,
-                      "length": 7
                     }
                   ]
                 },
                 {
                   "content": "1098.99",
                   "boundingBox": [
-                    3.8919,
-                    7.7869,
+                    3.8393,
+                    7.7773,
                     4.398,
                     7.7678,
                     4.4028,
-                    7.9397,
-                    3.8919,
+                    7.9492,
+                    3.8441,
                     7.9588
                   ],
                   "spans": [
                     {
-                      "offset": 422,
+                      "offset": 417,
                       "length": 7
                     }
                   ]
@@ -2404,46 +2286,46 @@
                 {
                   "content": "$ 104.40",
                   "boundingBox": [
-                    3.8059,
-                    8.1068,
-                    4.398,
-                    8.102,
-                    4.4028,
-                    8.2977,
-                    3.8059,
-                    8.3025
+                    3.8107,
+                    8.1211,
+                    4.3789,
+                    8.0972,
+                    4.3742,
+                    8.293,
+                    3.8202,
+                    8.3121
                   ],
                   "spans": [
                     {
-                      "offset": 430,
+                      "offset": 425,
                       "length": 8
                     }
                   ]
                 },
                 {
-                  "content": "$ 1203.39",
+                  "content": "1203.39",
                   "boundingBox": [
-                    3.739,
+                    3.8584,
                     8.7752,
-                    4.3694,
-                    8.842,
-                    4.3503,
-                    9.0234,
-                    3.7247,
-                    8.9518
+                    4.3885,
+                    8.8277,
+                    4.3646,
+                    9.0282,
+                    3.8393,
+                    8.9661
                   ],
                   "spans": [
                     {
-                      "offset": 439,
-                      "length": 9
+                      "offset": 434,
+                      "length": 7
                     }
                   ]
                 }
               ],
               "spans": [
                 {
-                  "offset": 211,
-                  "length": 237
+                  "offset": 207,
+                  "length": 234
                 }
               ]
             }
@@ -2451,10 +2333,30 @@
           "styles": [
             {
               "isHandwritten": true,
-              "confidence": 0.9,
+              "confidence": 0.6,
               "spans": [
                 {
-                  "offset": 198,
+                  "offset": 154,
+                  "length": 1
+                }
+              ]
+            },
+            {
+              "isHandwritten": true,
+              "confidence": 1,
+              "spans": [
+                {
+                  "offset": 194,
+                  "length": 6
+                }
+              ]
+            },
+            {
+              "isHandwritten": true,
+              "confidence": 0.95,
+              "spans": [
+                {
+                  "offset": 201,
                   "length": 6
                 }
               ]
@@ -2462,7 +2364,7 @@
           ],
           "documents": [
             {
-              "docType": "prebuilt:receipt",
+              "docType": "receipt.retailMeal",
               "boundingRegions": [
                 {
                   "pageNumber": 1,
@@ -2485,7 +2387,7 @@
                     {
                       "type": "object",
                       "valueObject": {
-                        "Name": {
+                        "Description": {
                           "type": "string",
                           "valueString": "Cappuccino",
                           "content": "Cappuccino",
@@ -2493,21 +2395,21 @@
                             {
                               "pageNumber": 1,
                               "boundingBox": [
-                                1.8862,
-                                5.7626,
-                                2.9654,
-                                5.8151,
-                                2.9654,
+                                1.9244,
+                                5.7435,
+                                2.9559,
+                                5.7912,
+                                2.9416,
                                 6.0681,
-                                1.8815,
+                                1.9149,
                                 6.0252
                               ]
                             }
                           ],
-                          "confidence": 0.969,
+                          "confidence": 0.947,
                           "spans": [
                             {
-                              "offset": 105,
+                              "offset": 103,
                               "length": 10
                             }
                           ]
@@ -2520,21 +2422,21 @@
                             {
                               "pageNumber": 1,
                               "boundingBox": [
-                                1.7334,
-                                5.7578,
-                                1.8337,
-                                5.7626,
-                                1.8289,
-                                6.0204,
                                 1.7287,
-                                6.0156
+                                5.7339,
+                                1.8671,
+                                5.7387,
+                                1.8624,
+                                6.0204,
+                                1.7239,
+                                6.0061
                               ]
                             }
                           ],
-                          "confidence": 0.973,
+                          "confidence": 0.98,
                           "spans": [
                             {
-                              "offset": 103,
+                              "offset": 101,
                               "length": 1
                             }
                           ]
@@ -2547,21 +2449,21 @@
                             {
                               "pageNumber": 1,
                               "boundingBox": [
-                                4.3169,
-                                5.753,
-                                4.8087,
-                                5.7387,
-                                4.8183,
-                                5.9536,
                                 4.3216,
-                                5.9727
+                                5.753,
+                                4.7801,
+                                5.7292,
+                                4.7944,
+                                5.9488,
+                                4.3312,
+                                5.9774
                               ]
                             }
                           ],
-                          "confidence": 0.987,
+                          "confidence": 0.976,
                           "spans": [
                             {
-                              "offset": 131,
+                              "offset": 129,
                               "length": 5
                             }
                           ]
@@ -2571,7 +2473,7 @@
                     {
                       "type": "object",
                       "valueObject": {
-                        "Name": {
+                        "Description": {
                           "type": "string",
                           "valueString": "BACON \u0026 EGGS",
                           "content": "BACON \u0026 EGGS",
@@ -2579,21 +2481,21 @@
                             {
                               "pageNumber": 1,
                               "boundingBox": [
-                                1.8636,
-                                6.5169,
-                                3.209,
-                                6.5235,
-                                3.2079,
-                                6.7592,
-                                1.8624,
-                                6.7525
+                                1.8958,
+                                6.5121,
+                                3.2185,
+                                6.5122,
+                                3.2185,
+                                6.77,
+                                1.8958,
+                                6.7699
                               ]
                             }
                           ],
-                          "confidence": 0.969,
+                          "confidence": 0.962,
                           "spans": [
                             {
-                              "offset": 118,
+                              "offset": 116,
                               "length": 12
                             }
                           ]
@@ -2607,20 +2509,20 @@
                               "pageNumber": 1,
                               "boundingBox": [
                                 1.6857,
-                                6.5169,
+                                6.5122,
                                 1.8242,
-                                6.5169,
-                                1.8146,
-                                6.7509,
-                                1.6761,
-                                6.7509
+                                6.5122,
+                                1.8337,
+                                6.7604,
+                                1.7,
+                                6.7604
                               ]
                             }
                           ],
-                          "confidence": 0.973,
+                          "confidence": 0.982,
                           "spans": [
                             {
-                              "offset": 116,
+                              "offset": 114,
                               "length": 1
                             }
                           ]
@@ -2633,21 +2535,21 @@
                             {
                               "pageNumber": 1,
                               "boundingBox": [
-                                4.4076,
-                                6.8559,
-                                4.7848,
+                                4.4028,
+                                6.8607,
+                                4.7562,
                                 6.8511,
-                                4.7896,
-                                7.1042,
-                                4.4124,
-                                7.1137
+                                4.7657,
+                                7.1185,
+                                4.4076,
+                                7.128
                               ]
                             }
                           ],
-                          "confidence": 0.987,
+                          "confidence": 0.976,
                           "spans": [
                             {
-                              "offset": 151,
+                              "offset": 149,
                               "length": 4
                             }
                           ]
@@ -2659,7 +2561,7 @@
                 "Locale": {
                   "type": "string",
                   "valueString": "en-US",
-                  "confidence": 0.994
+                  "confidence": 0.918
                 },
                 "MerchantAddress": {
                   "type": "string",
@@ -2669,18 +2571,18 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        1.9056,
-                        3.0307,
-                        3.5209,
-                        3.3852,
-                        3.4116,
-                        3.8835,
-                        1.7962,
-                        3.529
+                        1.9166,
+                        3.0204,
+                        3.5189,
+                        3.3585,
+                        3.4078,
+                        3.8848,
+                        1.8055,
+                        3.5468
                       ]
                     }
                   ],
-                  "confidence": 0.967,
+                  "confidence": 0.975,
                   "spans": [
                     {
                       "offset": 16,
@@ -2696,14 +2598,14 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        1.9197,
+                        1.9292,
                         2.7166,
-                        2.5404,
-                        2.8789,
+                        2.5452,
+                        2.8837,
                         2.4975,
-                        3.0508,
-                        1.8767,
-                        2.8885
+                        3.0556,
+                        1.891,
+                        2.898
                       ]
                     }
                   ],
@@ -2723,14 +2625,14 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        1.8242,
+                        1.8289,
                         4.0056,
-                        2.9511,
-                        4.1584,
+                        2.9607,
+                        4.1536,
                         2.9272,
-                        4.3637,
-                        1.8003,
-                        4.2109
+                        4.3685,
+                        1.8051,
+                        4.2253
                       ]
                     }
                   ],
@@ -2742,62 +2644,30 @@
                     }
                   ]
                 },
-                "ReceiptType": {
-                  "type": "string",
-                  "valueString": "Itemized",
-                  "confidence": 0.977
-                },
                 "Subtotal": {
                   "type": "number",
                   "valueNumber": 11.7,
-                  "content": "$ 11.70",
+                  "content": "11.70",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        4.2792,
-                        7.6393,
-                        4.9346,
-                        7.6629,
-                        4.9232,
-                        7.9799,
-                        4.2678,
-                        7.9564
+                        4.4124,
+                        7.6293,
+                        4.8994,
+                        7.6293,
+                        4.8994,
+                        7.954,
+                        4.4124,
+                        7.954
                       ]
                     }
                   ],
-                  "confidence": 0.972,
+                  "confidence": 0.983,
                   "spans": [
                     {
-                      "offset": 171,
-                      "length": 7
-                    }
-                  ]
-                },
-                "Tax": {
-                  "type": "number",
-                  "valueNumber": 1.17,
-                  "content": "1.17",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        4.5843,
-                        8.0924,
-                        4.9138,
-                        8.102,
-                        4.909,
-                        8.3264,
-                        4.5795,
-                        8.3168
-                      ]
-                    }
-                  ],
-                  "confidence": 0.987,
-                  "spans": [
-                    {
-                      "offset": 183,
-                      "length": 4
+                      "offset": 168,
+                      "length": 5
                     }
                   ]
                 },
@@ -2809,21 +2679,21 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        4.0495,
-                        8.4128,
-                        4.8504,
-                        8.4314,
-                        4.8421,
-                        8.7912,
-                        4.0411,
-                        8.7726
+                        4.1131,
+                        8.3721,
+                        4.7955,
+                        8.4082,
+                        4.7746,
+                        8.8035,
+                        4.0922,
+                        8.7674
                       ]
                     }
                   ],
-                  "confidence": 0.828,
+                  "confidence": 0.981,
                   "spans": [
                     {
-                      "offset": 198,
+                      "offset": 194,
                       "length": 6
                     }
                   ]
@@ -2836,21 +2706,21 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        4.0685,
-                        8.8516,
-                        5.1478,
-                        8.9089,
-                        5.1287,
-                        9.2765,
-                        4.0494,
-                        9.224
+                        4.0829,
+                        8.8611,
+                        5.1239,
+                        8.885,
+                        5.1096,
+                        9.2574,
+                        4.0733,
+                        9.2144
                       ]
                     }
                   ],
-                  "confidence": 0.976,
+                  "confidence": 0.978,
                   "spans": [
                     {
-                      "offset": 205,
+                      "offset": 201,
                       "length": 6
                     }
                   ]
@@ -2863,18 +2733,18 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        1.786,
-                        4.6836,
-                        2.5213,
-                        4.7409,
-                        2.507,
-                        4.9939,
-                        1.7669,
-                        4.9366
+                        1.8051,
+                        4.6979,
+                        2.5787,
+                        4.76,
+                        2.5596,
+                        4.9844,
+                        1.7812,
+                        4.9128
                       ]
                     }
                   ],
-                  "confidence": 0.99,
+                  "confidence": 0.991,
                   "spans": [
                     {
                       "offset": 63,
@@ -2890,14 +2760,14 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        2.5739,
-                        4.7457,
+                        2.6216,
+                        4.7648,
                         3.0323,
-                        4.7839,
+                        4.7982,
                         3.0228,
-                        5.0178,
-                        2.5596,
-                        4.9987
+                        5.0226,
+                        2.6073,
+                        4.9844
                       ]
                     }
                   ],
@@ -2910,16 +2780,16 @@
                   ]
                 }
               },
-              "confidence": 1,
+              "confidence": 0.971,
               "spans": [
                 {
                   "offset": 0,
-                  "length": 211
+                  "length": 207
                 }
               ]
             },
             {
-              "docType": "prebuilt:receipt",
+              "docType": "receipt.retailMeal",
               "boundingRegions": [
                 {
                   "pageNumber": 2,
@@ -2942,7 +2812,7 @@
                     {
                       "type": "object",
                       "valueObject": {
-                        "Name": {
+                        "Description": {
                           "type": "string",
                           "valueString": "Surface Pro 6",
                           "content": "Surface Pro 6",
@@ -2950,21 +2820,21 @@
                             {
                               "pageNumber": 2,
                               "boundingBox": [
-                                2.0678,
-                                5.6752,
-                                3.0085,
-                                5.6853,
-                                3.0065,
-                                5.8728,
-                                2.0658,
-                                5.8628
+                                2.1011,
+                                5.674,
+                                3.0141,
+                                5.6783,
+                                3.0132,
+                                5.8695,
+                                2.1002,
+                                5.8652
                               ]
                             }
                           ],
-                          "confidence": 0.978,
+                          "confidence": 0.971,
                           "spans": [
                             {
-                              "offset": 315,
+                              "offset": 311,
                               "length": 13
                             }
                           ]
@@ -2977,21 +2847,21 @@
                             {
                               "pageNumber": 2,
                               "boundingBox": [
-                                1.9865,
-                                5.6862,
-                                2.0295,
-                                5.6814,
-                                2.0295,
+                                1.9961,
+                                5.6766,
+                                2.0629,
+                                5.6766,
+                                2.0677,
                                 5.8628,
-                                1.9865,
+                                2.0008,
                                 5.8628
                               ]
                             }
                           ],
-                          "confidence": 0.979,
+                          "confidence": 0.97,
                           "spans": [
                             {
-                              "offset": 313,
+                              "offset": 309,
                               "length": 1
                             }
                           ]
@@ -3004,21 +2874,21 @@
                             {
                               "pageNumber": 2,
                               "boundingBox": [
-                                3.8092,
-                                6.3862,
-                                4.3837,
-                                6.3976,
-                                4.3804,
-                                6.5665,
-                                3.8059,
-                                6.5551
+                                3.8101,
+                                6.3723,
+                                4.3647,
+                                6.3841,
+                                4.3604,
+                                6.5838,
+                                3.8058,
+                                6.572
                               ]
                             }
                           ],
-                          "confidence": 0.984,
+                          "confidence": 0.949,
                           "spans": [
                             {
-                              "offset": 405,
+                              "offset": 369,
                               "length": 8
                             }
                           ]
@@ -3028,7 +2898,7 @@
                     {
                       "type": "object",
                       "valueObject": {
-                        "Name": {
+                        "Description": {
                           "type": "string",
                           "valueString": "SurfacePen",
                           "content": "SurfacePen",
@@ -3036,21 +2906,21 @@
                             {
                               "pageNumber": 2,
                               "boundingBox": [
-                                2.0295,
+                                2.0629,
                                 7.0564,
+                                2.8747,
+                                7.0421,
                                 2.8795,
-                                7.0469,
-                                2.8795,
-                                7.2283,
-                                2.0343,
-                                7.2378
+                                7.2331,
+                                2.0629,
+                                7.2474
                               ]
                             }
                           ],
-                          "confidence": 0.979,
+                          "confidence": 0.972,
                           "spans": [
                             {
-                              "offset": 371,
+                              "offset": 380,
                               "length": 10
                             }
                           ]
@@ -3063,21 +2933,21 @@
                             {
                               "pageNumber": 2,
                               "boundingBox": [
-                                1.9435,
-                                7.0564,
-                                1.9913,
-                                7.0564,
-                                1.9961,
-                                7.2426,
                                 1.9483,
-                                7.2426
+                                7.0564,
+                                2.0247,
+                                7.0564,
+                                2.0295,
+                                7.2474,
+                                1.9531,
+                                7.2522
                               ]
                             }
                           ],
-                          "confidence": 0.981,
+                          "confidence": 0.97,
                           "spans": [
                             {
-                              "offset": 369,
+                              "offset": 378,
                               "length": 1
                             }
                           ]
@@ -3085,27 +2955,27 @@
                         "TotalPrice": {
                           "type": "number",
                           "valueNumber": 99.99,
-                          "content": "$ 99.99",
+                          "content": "99.99",
                           "boundingRegions": [
                             {
                               "pageNumber": 2,
                               "boundingBox": [
-                                3.8871,
-                                7.0742,
-                                4.3837,
-                                7.0803,
-                                4.3813,
-                                7.2773,
-                                3.8847,
+                                4.0065,
+                                7.0851,
+                                4.3742,
+                                7.0851,
+                                4.3789,
+                                7.2665,
+                                4.0112,
                                 7.2713
                               ]
                             }
                           ],
-                          "confidence": 0.984,
+                          "confidence": 0.986,
                           "spans": [
                             {
-                              "offset": 414,
-                              "length": 7
+                              "offset": 391,
+                              "length": 5
                             }
                           ]
                         }
@@ -3116,7 +2986,7 @@
                 "Locale": {
                   "type": "string",
                   "valueString": "en-US",
-                  "confidence": 0.99
+                  "confidence": 0.988
                 },
                 "MerchantAddress": {
                   "type": "string",
@@ -3126,21 +2996,21 @@
                     {
                       "pageNumber": 2,
                       "boundingBox": [
-                        1.9389,
+                        1.9379,
                         3.0697,
-                        3.2497,
-                        3.0903,
-                        3.2419,
-                        3.5821,
-                        1.9312,
-                        3.5616
+                        3.2448,
+                        3.0799,
+                        3.2409,
+                        3.5862,
+                        1.934,
+                        3.576
                       ]
                     }
                   ],
-                  "confidence": 0.974,
+                  "confidence": 0.976,
                   "spans": [
                     {
-                      "offset": 228,
+                      "offset": 224,
                       "length": 33
                     }
                   ]
@@ -3153,55 +3023,51 @@
                     {
                       "pageNumber": 2,
                       "boundingBox": [
-                        1.9722,
+                        1.9674,
                         2.7691,
-                        2.4879,
-                        2.8025,
-                        2.4736,
+                        2.4927,
+                        2.7834,
+                        2.4831,
                         2.9601,
-                        1.9579,
-                        2.9219
+                        1.9674,
+                        2.941
                       ]
                     }
                   ],
-                  "confidence": 0.977,
+                  "confidence": 0.97,
                   "spans": [
                     {
-                      "offset": 220,
+                      "offset": 216,
                       "length": 7
                     }
                   ]
                 },
                 "MerchantPhoneNumber": {
                   "type": "phoneNumber",
+                  "valuePhoneNumber": "\u002B11234567890",
                   "content": "123-456-7890",
                   "boundingRegions": [
                     {
                       "pageNumber": 2,
                       "boundingBox": [
-                        1.9101,
-                        4.0056,
+                        1.9197,
+                        4.0152,
                         2.8508,
                         4.0343,
                         2.8461,
-                        4.2109,
-                        1.9053,
-                        4.1918
+                        4.2062,
+                        1.9197,
+                        4.1871
                       ]
                     }
                   ],
-                  "confidence": 0.989,
+                  "confidence": 0.988,
                   "spans": [
                     {
-                      "offset": 262,
+                      "offset": 258,
                       "length": 12
                     }
                   ]
-                },
-                "ReceiptType": {
-                  "type": "string",
-                  "valueString": "Itemized",
-                  "confidence": 0.977
                 },
                 "Subtotal": {
                   "type": "number",
@@ -3211,26 +3077,53 @@
                     {
                       "pageNumber": 2,
                       "boundingBox": [
-                        3.8966,
-                        7.7821,
-                        4.3933,
-                        7.7678,
+                        3.8871,
+                        7.7773,
                         4.398,
-                        7.9397,
-                        3.9014,
-                        7.9588
+                        7.7678,
+                        4.4028,
+                        7.954,
+                        3.8919,
+                        7.9635
                       ]
                     }
                   ],
                   "confidence": 0.987,
                   "spans": [
                     {
-                      "offset": 422,
+                      "offset": 417,
                       "length": 7
                     }
                   ]
                 },
-                "Tax": {
+                "Total": {
+                  "type": "number",
+                  "valueNumber": 1203.39,
+                  "content": "1203.39",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 2,
+                      "boundingBox": [
+                        3.8632,
+                        8.7752,
+                        4.3789,
+                        8.8277,
+                        4.3551,
+                        9.0234,
+                        3.8441,
+                        8.9709
+                      ]
+                    }
+                  ],
+                  "confidence": 0.984,
+                  "spans": [
+                    {
+                      "offset": 434,
+                      "length": 7
+                    }
+                  ]
+                },
+                "TotalTax": {
                   "type": "number",
                   "valueNumber": 104.4,
                   "content": "$ 104.40",
@@ -3238,49 +3131,22 @@
                     {
                       "pageNumber": 2,
                       "boundingBox": [
-                        3.8059,
-                        8.102,
-                        4.398,
-                        8.102,
-                        4.398,
-                        8.3025,
-                        3.8059,
-                        8.3025
+                        3.8126,
+                        8.1145,
+                        4.3692,
+                        8.0933,
+                        4.3768,
+                        8.2908,
+                        3.8202,
+                        8.3121
                       ]
                     }
                   ],
-                  "confidence": 0.752,
+                  "confidence": 0.987,
                   "spans": [
                     {
-                      "offset": 430,
+                      "offset": 425,
                       "length": 8
-                    }
-                  ]
-                },
-                "Total": {
-                  "type": "number",
-                  "valueNumber": 1203.39,
-                  "content": "$ 1203.39",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 2,
-                      "boundingBox": [
-                        3.7399,
-                        8.7683,
-                        4.3742,
-                        8.8468,
-                        4.3516,
-                        9.029,
-                        3.7173,
-                        8.9504
-                      ]
-                    }
-                  ],
-                  "confidence": 0.982,
-                  "spans": [
-                    {
-                      "offset": 439,
-                      "length": 9
                     }
                   ]
                 },
@@ -3292,21 +3158,21 @@
                     {
                       "pageNumber": 2,
                       "boundingBox": [
-                        1.8958,
-                        4.6645,
-                        2.4879,
-                        4.674,
-                        2.4879,
+                        1.9053,
+                        4.6597,
+                        2.507,
+                        4.6693,
+                        2.5022,
                         4.8698,
-                        1.9006,
-                        4.865
+                        1.9101,
+                        4.8602
                       ]
                     }
                   ],
-                  "confidence": 0.989,
+                  "confidence": 0.99,
                   "spans": [
                     {
-                      "offset": 275,
+                      "offset": 271,
                       "length": 9
                     }
                   ]
@@ -3319,13 +3185,13 @@
                     {
                       "pageNumber": 2,
                       "boundingBox": [
-                        2.5261,
+                        2.55,
+                        4.6693,
+                        2.8986,
                         4.674,
-                        2.889,
-                        4.6788,
                         2.8843,
-                        4.8698,
-                        2.5261,
+                        4.8793,
+                        2.5404,
                         4.8698
                       ]
                     }
@@ -3333,17 +3199,17 @@
                   "confidence": 0.988,
                   "spans": [
                     {
-                      "offset": 285,
+                      "offset": 281,
                       "length": 5
                     }
                   ]
                 }
               },
-              "confidence": 1,
+              "confidence": 0.962,
               "spans": [
                 {
-                  "offset": 211,
-                  "length": 237
+                  "offset": 207,
+                  "length": 234
                 }
               ]
             }
@@ -3354,7 +3220,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-canary.cognitiveservices.azure.com/",
-    "RandomSeed": "1863063030"
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/",
+    "RandomSeed": "233299727"
   }
 }

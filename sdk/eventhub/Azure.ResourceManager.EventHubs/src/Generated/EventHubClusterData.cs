@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> A class representing the EventHubCluster data model. </summary>
-    public partial class EventHubClusterData : TrackedResource
+    public partial class EventHubClusterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of EventHubClusterData. </summary>
         /// <param name="location"> The location. </param>

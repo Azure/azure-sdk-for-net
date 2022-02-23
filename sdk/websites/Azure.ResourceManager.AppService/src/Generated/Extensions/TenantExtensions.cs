@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using Azure;
 using Azure.Core;
@@ -41,10 +42,11 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(tenant).GetSourceControls();
         }
 
-        /// RequestPath: /providers/Microsoft.CertificateRegistration/operations
-        /// ContextualPath: /
-        /// OperationId: CertificateRegistrationProvider_ListOperations
-        /// <summary> Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </summary>
+        /// <summary>
+        /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
+        /// Request Path: /providers/Microsoft.CertificateRegistration/operations
+        /// Operation Id: CertificateRegistrationProvider_ListOperations
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
@@ -53,10 +55,11 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(tenant).GetOperationsCertificateRegistrationProvidersAsync(cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.CertificateRegistration/operations
-        /// ContextualPath: /
-        /// OperationId: CertificateRegistrationProvider_ListOperations
-        /// <summary> Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </summary>
+        /// <summary>
+        /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
+        /// Request Path: /providers/Microsoft.CertificateRegistration/operations
+        /// Operation Id: CertificateRegistrationProvider_ListOperations
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
@@ -65,10 +68,11 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(tenant).GetOperationsCertificateRegistrationProviders(cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.DomainRegistration/operations
-        /// ContextualPath: /
-        /// OperationId: DomainRegistrationProvider_ListOperations
-        /// <summary> Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </summary>
+        /// <summary>
+        /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
+        /// Request Path: /providers/Microsoft.DomainRegistration/operations
+        /// Operation Id: DomainRegistrationProvider_ListOperations
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
@@ -77,10 +81,11 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(tenant).GetOperationsDomainRegistrationProvidersAsync(cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.DomainRegistration/operations
-        /// ContextualPath: /
-        /// OperationId: DomainRegistrationProvider_ListOperations
-        /// <summary> Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </summary>
+        /// <summary>
+        /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
+        /// Request Path: /providers/Microsoft.DomainRegistration/operations
+        /// Operation Id: DomainRegistrationProvider_ListOperations
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
@@ -89,10 +94,11 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(tenant).GetOperationsDomainRegistrationProviders(cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/availableStacks
-        /// ContextualPath: /
-        /// OperationId: Provider_GetAvailableStacks
-        /// <summary> Description for Get available application frameworks and their versions. </summary>
+        /// <summary>
+        /// Description for Get available application frameworks and their versions
+        /// Request Path: /providers/Microsoft.Web/availableStacks
+        /// Operation Id: Provider_GetAvailableStacks
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -102,10 +108,11 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(tenant).GetAvailableStacksProvidersAsync(osTypeSelected, cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/availableStacks
-        /// ContextualPath: /
-        /// OperationId: Provider_GetAvailableStacks
-        /// <summary> Description for Get available application frameworks and their versions. </summary>
+        /// <summary>
+        /// Description for Get available application frameworks and their versions
+        /// Request Path: /providers/Microsoft.Web/availableStacks
+        /// Operation Id: Provider_GetAvailableStacks
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -115,10 +122,11 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(tenant).GetAvailableStacksProviders(osTypeSelected, cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/functionAppStacks
-        /// ContextualPath: /
-        /// OperationId: Provider_GetFunctionAppStacks
-        /// <summary> Description for Get available Function app frameworks and their versions. </summary>
+        /// <summary>
+        /// Description for Get available Function app frameworks and their versions
+        /// Request Path: /providers/Microsoft.Web/functionAppStacks
+        /// Operation Id: Provider_GetFunctionAppStacks
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,10 +136,11 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(tenant).GetFunctionAppStacksProvidersAsync(stackOsType, cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/functionAppStacks
-        /// ContextualPath: /
-        /// OperationId: Provider_GetFunctionAppStacks
-        /// <summary> Description for Get available Function app frameworks and their versions. </summary>
+        /// <summary>
+        /// Description for Get available Function app frameworks and their versions
+        /// Request Path: /providers/Microsoft.Web/functionAppStacks
+        /// Operation Id: Provider_GetFunctionAppStacks
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -141,16 +150,17 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(tenant).GetFunctionAppStacksProviders(stackOsType, cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/locations/{location}/functionAppStacks
-        /// ContextualPath: /
-        /// OperationId: Provider_GetFunctionAppStacksForLocation
-        /// <summary> Description for Get available Function app frameworks and their versions for location. </summary>
+        /// <summary>
+        /// Description for Get available Function app frameworks and their versions for location
+        /// Request Path: /providers/Microsoft.Web/locations/{location}/functionAppStacks
+        /// Operation Id: Provider_GetFunctionAppStacksForLocation
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="location"> Function App stack location. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(this Tenant tenant, string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
@@ -159,16 +169,17 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(tenant).GetFunctionAppStacksForLocationProvidersAsync(location, stackOsType, cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/locations/{location}/functionAppStacks
-        /// ContextualPath: /
-        /// OperationId: Provider_GetFunctionAppStacksForLocation
-        /// <summary> Description for Get available Function app frameworks and their versions for location. </summary>
+        /// <summary>
+        /// Description for Get available Function app frameworks and their versions for location
+        /// Request Path: /providers/Microsoft.Web/locations/{location}/functionAppStacks
+        /// Operation Id: Provider_GetFunctionAppStacksForLocation
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="location"> Function App stack location. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(this Tenant tenant, string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
@@ -177,16 +188,17 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(tenant).GetFunctionAppStacksForLocationProviders(location, stackOsType, cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/locations/{location}/webAppStacks
-        /// ContextualPath: /
-        /// OperationId: Provider_GetWebAppStacksForLocation
-        /// <summary> Description for Get available Web app frameworks and their versions for location. </summary>
+        /// <summary>
+        /// Description for Get available Web app frameworks and their versions for location
+        /// Request Path: /providers/Microsoft.Web/locations/{location}/webAppStacks
+        /// Operation Id: Provider_GetWebAppStacksForLocation
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="location"> Web App stack location. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<WebAppStack> GetWebAppStacksForLocationProvidersAsync(this Tenant tenant, string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
@@ -195,16 +207,17 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(tenant).GetWebAppStacksForLocationProvidersAsync(location, stackOsType, cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/locations/{location}/webAppStacks
-        /// ContextualPath: /
-        /// OperationId: Provider_GetWebAppStacksForLocation
-        /// <summary> Description for Get available Web app frameworks and their versions for location. </summary>
+        /// <summary>
+        /// Description for Get available Web app frameworks and their versions for location
+        /// Request Path: /providers/Microsoft.Web/locations/{location}/webAppStacks
+        /// Operation Id: Provider_GetWebAppStacksForLocation
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="location"> Web App stack location. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<WebAppStack> GetWebAppStacksForLocationProviders(this Tenant tenant, string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
@@ -213,10 +226,11 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(tenant).GetWebAppStacksForLocationProviders(location, stackOsType, cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/operations
-        /// ContextualPath: /
-        /// OperationId: Provider_ListOperations
-        /// <summary> Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions. </summary>
+        /// <summary>
+        /// Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions
+        /// Request Path: /providers/Microsoft.Web/operations
+        /// Operation Id: Provider_ListOperations
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
@@ -225,10 +239,11 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(tenant).GetOperationsProvidersAsync(cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/operations
-        /// ContextualPath: /
-        /// OperationId: Provider_ListOperations
-        /// <summary> Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions. </summary>
+        /// <summary>
+        /// Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions
+        /// Request Path: /providers/Microsoft.Web/operations
+        /// Operation Id: Provider_ListOperations
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
@@ -237,10 +252,11 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(tenant).GetOperationsProviders(cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/webAppStacks
-        /// ContextualPath: /
-        /// OperationId: Provider_GetWebAppStacks
-        /// <summary> Description for Get available Web app frameworks and their versions. </summary>
+        /// <summary>
+        /// Description for Get available Web app frameworks and their versions
+        /// Request Path: /providers/Microsoft.Web/webAppStacks
+        /// Operation Id: Provider_GetWebAppStacks
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -250,10 +266,11 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(tenant).GetWebAppStacksProvidersAsync(stackOsType, cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/webAppStacks
-        /// ContextualPath: /
-        /// OperationId: Provider_GetWebAppStacks
-        /// <summary> Description for Get available Web app frameworks and their versions. </summary>
+        /// <summary>
+        /// Description for Get available Web app frameworks and their versions
+        /// Request Path: /providers/Microsoft.Web/webAppStacks
+        /// Operation Id: Provider_GetWebAppStacks
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

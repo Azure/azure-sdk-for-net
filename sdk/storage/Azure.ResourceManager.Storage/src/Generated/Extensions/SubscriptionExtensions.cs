@@ -35,7 +35,11 @@ namespace Azure.ResourceManager.Storage
             return GetExtensionClient(subscription).GetDeletedAccounts();
         }
 
-        /// <summary> Lists the available SKUs supported by Microsoft.Storage for given subscription. </summary>
+        /// <summary>
+        /// Lists the available SKUs supported by Microsoft.Storage for given subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/skus
+        /// Operation Id: Skus_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SkuInformation" /> that may take multiple service requests to iterate over. </returns>
@@ -44,7 +48,11 @@ namespace Azure.ResourceManager.Storage
             return GetExtensionClient(subscription).GetSkusAsync(cancellationToken);
         }
 
-        /// <summary> Lists the available SKUs supported by Microsoft.Storage for given subscription. </summary>
+        /// <summary>
+        /// Lists the available SKUs supported by Microsoft.Storage for given subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/skus
+        /// Operation Id: Skus_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SkuInformation" /> that may take multiple service requests to iterate over. </returns>
@@ -53,37 +61,43 @@ namespace Azure.ResourceManager.Storage
             return GetExtensionClient(subscription).GetSkus(cancellationToken);
         }
 
-        /// <summary> Checks that the storage account name is valid and is not already in use. </summary>
+        /// <summary>
+        /// Checks that the storage account name is valid and is not already in use.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/checkNameAvailability
+        /// Operation Id: StorageAccounts_CheckNameAvailability
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public async static Task<Response<CheckNameAvailabilityResult>> CheckStorageAccountNameAvailabilityAsync(this Subscription subscription, StorageAccountCheckNameAvailabilityParameters accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
+            Argument.AssertNotNull(accountName, nameof(accountName));
 
             return await GetExtensionClient(subscription).CheckStorageAccountNameAvailabilityAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Checks that the storage account name is valid and is not already in use. </summary>
+        /// <summary>
+        /// Checks that the storage account name is valid and is not already in use.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/checkNameAvailability
+        /// Operation Id: StorageAccounts_CheckNameAvailability
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public static Response<CheckNameAvailabilityResult> CheckStorageAccountNameAvailability(this Subscription subscription, StorageAccountCheckNameAvailabilityParameters accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
+            Argument.AssertNotNull(accountName, nameof(accountName));
 
             return GetExtensionClient(subscription).CheckStorageAccountNameAvailability(accountName, cancellationToken);
         }
 
-        /// <summary> Lists all the storage accounts available under the subscription. Note that storage keys are not returned; use the ListKeys operation for this. </summary>
+        /// <summary>
+        /// Lists all the storage accounts available under the subscription. Note that storage keys are not returned; use the ListKeys operation for this.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/storageAccounts
+        /// Operation Id: StorageAccounts_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StorageAccount" /> that may take multiple service requests to iterate over. </returns>
@@ -92,7 +106,11 @@ namespace Azure.ResourceManager.Storage
             return GetExtensionClient(subscription).GetStorageAccountsAsync(cancellationToken);
         }
 
-        /// <summary> Lists all the storage accounts available under the subscription. Note that storage keys are not returned; use the ListKeys operation for this. </summary>
+        /// <summary>
+        /// Lists all the storage accounts available under the subscription. Note that storage keys are not returned; use the ListKeys operation for this.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/storageAccounts
+        /// Operation Id: StorageAccounts_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageAccount" /> that may take multiple service requests to iterate over. </returns>
@@ -101,7 +119,11 @@ namespace Azure.ResourceManager.Storage
             return GetExtensionClient(subscription).GetStorageAccounts(cancellationToken);
         }
 
-        /// <summary> Lists deleted accounts under the subscription. </summary>
+        /// <summary>
+        /// Lists deleted accounts under the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/deletedAccounts
+        /// Operation Id: DeletedAccounts_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeletedAccount" /> that may take multiple service requests to iterate over. </returns>
@@ -110,7 +132,11 @@ namespace Azure.ResourceManager.Storage
             return GetExtensionClient(subscription).GetDeletedAccountsAsync(cancellationToken);
         }
 
-        /// <summary> Lists deleted accounts under the subscription. </summary>
+        /// <summary>
+        /// Lists deleted accounts under the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/deletedAccounts
+        /// Operation Id: DeletedAccounts_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeletedAccount" /> that may take multiple service requests to iterate over. </returns>
@@ -119,11 +145,15 @@ namespace Azure.ResourceManager.Storage
             return GetExtensionClient(subscription).GetDeletedAccounts(cancellationToken);
         }
 
-        /// <summary> Gets the current usage count and the limit for the resources of the location under the subscription. </summary>
+        /// <summary>
+        /// Gets the current usage count and the limit for the resources of the location under the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/usages
+        /// Operation Id: Usages_ListByLocation
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the Azure Storage resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<Usage> GetUsagesByLocationAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
@@ -133,11 +163,15 @@ namespace Azure.ResourceManager.Storage
             return GetExtensionClient(subscription).GetUsagesByLocationAsync(location, cancellationToken);
         }
 
-        /// <summary> Gets the current usage count and the limit for the resources of the location under the subscription. </summary>
+        /// <summary>
+        /// Gets the current usage count and the limit for the resources of the location under the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/usages
+        /// Operation Id: Usages_ListByLocation
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the Azure Storage resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<Usage> GetUsagesByLocation(this Subscription subscription, string location, CancellationToken cancellationToken = default)

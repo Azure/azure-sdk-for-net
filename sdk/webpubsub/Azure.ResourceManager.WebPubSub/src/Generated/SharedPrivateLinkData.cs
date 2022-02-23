@@ -12,7 +12,7 @@ using Azure.ResourceManager.WebPubSub.Models;
 namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary> A class representing the SharedPrivateLink data model. </summary>
-    public partial class SharedPrivateLinkData : Resource
+    public partial class SharedPrivateLinkData : ResourceData
     {
         /// <summary> Initializes a new instance of SharedPrivateLinkData. </summary>
         public SharedPrivateLinkData()

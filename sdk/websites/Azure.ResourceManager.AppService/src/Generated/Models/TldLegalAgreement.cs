@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="agreementKey"> Unique identifier for the agreement. </param>
         /// <param name="title"> Agreement title. </param>
         /// <param name="content"> Agreement details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agreementKey"/>, <paramref name="title"/>, or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="agreementKey"/>, <paramref name="title"/> or <paramref name="content"/> is null. </exception>
         internal TldLegalAgreement(string agreementKey, string title, string content)
         {
             if (agreementKey == null)

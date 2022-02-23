@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal SourceControl(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sourceControlClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string sourceControlApiVersion);
+            TryGetApiVersion(ResourceType, out string sourceControlApiVersion);
             _sourceControlRestClient = new WebSiteManagementRestOperations(_sourceControlClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sourceControlApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -82,10 +82,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// ContextualPath: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// OperationId: GetSourceControl
-        /// <summary> Description for Gets source control token. </summary>
+        /// <summary>
+        /// Description for Gets source control token
+        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
+        /// Operation Id: GetSourceControl
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SourceControl>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -105,10 +106,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// ContextualPath: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// OperationId: GetSourceControl
-        /// <summary> Description for Gets source control token. </summary>
+        /// <summary>
+        /// Description for Gets source control token
+        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
+        /// Operation Id: GetSourceControl
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SourceControl> Get(CancellationToken cancellationToken = default)
         {

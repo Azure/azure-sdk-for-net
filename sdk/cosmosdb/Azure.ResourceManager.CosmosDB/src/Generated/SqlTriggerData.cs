@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> A class representing the SqlTrigger data model. </summary>
-    public partial class SqlTriggerData : TrackedResource
+    public partial class SqlTriggerData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SqlTriggerData. </summary>
         /// <param name="location"> The location. </param>

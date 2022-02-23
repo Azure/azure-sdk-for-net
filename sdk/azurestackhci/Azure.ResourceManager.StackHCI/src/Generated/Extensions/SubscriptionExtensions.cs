@@ -23,22 +23,30 @@ namespace Azure.ResourceManager.StackHCI
             );
         }
 
-        /// <summary> List all HCI clusters in a subscription. </summary>
+        /// <summary>
+        /// List all HCI clusters in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/clusters
+        /// Operation Id: Clusters_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HCICluster" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<HCICluster> GetHCIClustersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HciCluster" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HciCluster> GetHciClustersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetHCIClustersAsync(cancellationToken);
+            return GetExtensionClient(subscription).GetHciClustersAsync(cancellationToken);
         }
 
-        /// <summary> List all HCI clusters in a subscription. </summary>
+        /// <summary>
+        /// List all HCI clusters in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/clusters
+        /// Operation Id: Clusters_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HCICluster" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<HCICluster> GetHCIClusters(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciCluster" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HciCluster> GetHciClusters(this Subscription subscription, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetHCIClusters(cancellationToken);
+            return GetExtensionClient(subscription).GetHciClusters(cancellationToken);
         }
     }
 }

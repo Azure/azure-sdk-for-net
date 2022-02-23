@@ -23,10 +23,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             );
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ResourcePools_List
-        /// <summary> List of resourcePools in a subscription. </summary>
+        /// <summary>
+        /// List of resourcePools in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools
+        /// Operation Id: ResourcePools_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourcePool" /> that may take multiple service requests to iterate over. </returns>
@@ -35,10 +36,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetExtensionClient(subscription).GetResourcePoolsAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ResourcePools_List
-        /// <summary> List of resourcePools in a subscription. </summary>
+        /// <summary>
+        /// List of resourcePools in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools
+        /// Operation Id: ResourcePools_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourcePool" /> that may take multiple service requests to iterate over. </returns>
@@ -47,10 +49,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetExtensionClient(subscription).GetResourcePools(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/clusters
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Clusters_List
-        /// <summary> List of clusters in a subscription. </summary>
+        /// <summary>
+        /// List of clusters in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/clusters
+        /// Operation Id: Clusters_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VMwareCluster" /> that may take multiple service requests to iterate over. </returns>
@@ -59,10 +62,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetExtensionClient(subscription).GetVMwareClustersAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/clusters
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Clusters_List
-        /// <summary> List of clusters in a subscription. </summary>
+        /// <summary>
+        /// List of clusters in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/clusters
+        /// Operation Id: Clusters_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VMwareCluster" /> that may take multiple service requests to iterate over. </returns>
@@ -71,10 +75,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetExtensionClient(subscription).GetVMwareClusters(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/hosts
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Hosts_List
-        /// <summary> List of hosts in a subscription. </summary>
+        /// <summary>
+        /// List of hosts in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/hosts
+        /// Operation Id: Hosts_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VMwareHost" /> that may take multiple service requests to iterate over. </returns>
@@ -83,10 +88,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetExtensionClient(subscription).GetVMwareHostsAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/hosts
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Hosts_List
-        /// <summary> List of hosts in a subscription. </summary>
+        /// <summary>
+        /// List of hosts in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/hosts
+        /// Operation Id: Hosts_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VMwareHost" /> that may take multiple service requests to iterate over. </returns>
@@ -95,10 +101,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetExtensionClient(subscription).GetVMwareHosts(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/datastores
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Datastores_List
-        /// <summary> List of datastores in a subscription. </summary>
+        /// <summary>
+        /// List of datastores in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/datastores
+        /// Operation Id: Datastores_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VMwareDatastore" /> that may take multiple service requests to iterate over. </returns>
@@ -107,10 +114,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetExtensionClient(subscription).GetVMwareDatastoresAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/datastores
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Datastores_List
-        /// <summary> List of datastores in a subscription. </summary>
+        /// <summary>
+        /// List of datastores in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/datastores
+        /// Operation Id: Datastores_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VMwareDatastore" /> that may take multiple service requests to iterate over. </returns>
@@ -119,10 +127,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetExtensionClient(subscription).GetVMwareDatastores(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/vcenters
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: VCenters_List
-        /// <summary> List of vCenters in a subscription. </summary>
+        /// <summary>
+        /// List of vCenters in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/vcenters
+        /// Operation Id: VCenters_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VCenter" /> that may take multiple service requests to iterate over. </returns>
@@ -131,10 +140,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetExtensionClient(subscription).GetVCentersAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/vcenters
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: VCenters_List
-        /// <summary> List of vCenters in a subscription. </summary>
+        /// <summary>
+        /// List of vCenters in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/vcenters
+        /// Operation Id: VCenters_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VCenter" /> that may take multiple service requests to iterate over. </returns>
@@ -143,10 +153,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetExtensionClient(subscription).GetVCenters(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: VirtualMachines_List
-        /// <summary> List of virtualMachines in a subscription. </summary>
+        /// <summary>
+        /// List of virtualMachines in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines
+        /// Operation Id: VirtualMachines_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachine" /> that may take multiple service requests to iterate over. </returns>
@@ -155,10 +166,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetExtensionClient(subscription).GetVirtualMachinesAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: VirtualMachines_List
-        /// <summary> List of virtualMachines in a subscription. </summary>
+        /// <summary>
+        /// List of virtualMachines in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines
+        /// Operation Id: VirtualMachines_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachine" /> that may take multiple service requests to iterate over. </returns>
@@ -167,10 +179,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetExtensionClient(subscription).GetVirtualMachines(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: VirtualMachineTemplates_List
-        /// <summary> List of virtualMachineTemplates in a subscription. </summary>
+        /// <summary>
+        /// List of virtualMachineTemplates in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates
+        /// Operation Id: VirtualMachineTemplates_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineTemplate" /> that may take multiple service requests to iterate over. </returns>
@@ -179,10 +192,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetExtensionClient(subscription).GetVirtualMachineTemplatesAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: VirtualMachineTemplates_List
-        /// <summary> List of virtualMachineTemplates in a subscription. </summary>
+        /// <summary>
+        /// List of virtualMachineTemplates in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates
+        /// Operation Id: VirtualMachineTemplates_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineTemplate" /> that may take multiple service requests to iterate over. </returns>
@@ -191,10 +205,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetExtensionClient(subscription).GetVirtualMachineTemplates(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualNetworks
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: VirtualNetworks_List
-        /// <summary> List of virtualNetworks in a subscription. </summary>
+        /// <summary>
+        /// List of virtualNetworks in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualNetworks
+        /// Operation Id: VirtualNetworks_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualNetwork" /> that may take multiple service requests to iterate over. </returns>
@@ -203,10 +218,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetExtensionClient(subscription).GetVirtualNetworksAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualNetworks
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: VirtualNetworks_List
-        /// <summary> List of virtualNetworks in a subscription. </summary>
+        /// <summary>
+        /// List of virtualNetworks in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualNetworks
+        /// Operation Id: VirtualNetworks_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualNetwork" /> that may take multiple service requests to iterate over. </returns>

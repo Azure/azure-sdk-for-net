@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the RecoverableDatabase data model. </summary>
-    public partial class RecoverableDatabaseData : Resource
+    public partial class RecoverableDatabaseData : ResourceData
     {
         /// <summary> Initializes a new instance of RecoverableDatabaseData. </summary>
         public RecoverableDatabaseData()

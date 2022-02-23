@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the InstancePool data model. </summary>
-    public partial class InstancePoolData : TrackedResource
+    public partial class InstancePoolData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of InstancePoolData. </summary>
         /// <param name="location"> The location. </param>

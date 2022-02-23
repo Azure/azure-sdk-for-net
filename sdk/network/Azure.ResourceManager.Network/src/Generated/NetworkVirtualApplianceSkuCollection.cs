@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkVirtualApplianceSkuCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkVirtualApplianceSku.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(NetworkVirtualApplianceSku.ResourceType, out string networkVirtualApplianceSkuVirtualApplianceSkusApiVersion);
+            TryGetApiVersion(NetworkVirtualApplianceSku.ResourceType, out string networkVirtualApplianceSkuVirtualApplianceSkusApiVersion);
             _networkVirtualApplianceSkuVirtualApplianceSkusRestClient = new VirtualApplianceSkusRestOperations(_networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkVirtualApplianceSkuVirtualApplianceSkusApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -51,10 +51,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
         }
 
-        /// <summary> Retrieves a single available sku for network virtual appliance. </summary>
+        /// <summary>
+        /// Retrieves a single available sku for network virtual appliance.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}
+        /// Operation Id: VirtualApplianceSkus_Get
+        /// </summary>
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public async virtual Task<Response<NetworkVirtualApplianceSku>> GetAsync(string skuName, CancellationToken cancellationToken = default)
         {
@@ -76,10 +80,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves a single available sku for network virtual appliance. </summary>
+        /// <summary>
+        /// Retrieves a single available sku for network virtual appliance.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}
+        /// Operation Id: VirtualApplianceSkus_Get
+        /// </summary>
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public virtual Response<NetworkVirtualApplianceSku> Get(string skuName, CancellationToken cancellationToken = default)
         {
@@ -101,7 +109,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> List all SKUs available for a virtual appliance. </summary>
+        /// <summary>
+        /// List all SKUs available for a virtual appliance.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus
+        /// Operation Id: VirtualApplianceSkus_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkVirtualApplianceSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkVirtualApplianceSku> GetAllAsync(CancellationToken cancellationToken = default)
@@ -139,7 +151,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> List all SKUs available for a virtual appliance. </summary>
+        /// <summary>
+        /// List all SKUs available for a virtual appliance.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus
+        /// Operation Id: VirtualApplianceSkus_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkVirtualApplianceSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkVirtualApplianceSku> GetAll(CancellationToken cancellationToken = default)
@@ -177,10 +193,14 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}
+        /// Operation Id: VirtualApplianceSkus_Get
+        /// </summary>
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string skuName, CancellationToken cancellationToken = default)
         {
@@ -200,10 +220,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}
+        /// Operation Id: VirtualApplianceSkus_Get
+        /// </summary>
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public virtual Response<bool> Exists(string skuName, CancellationToken cancellationToken = default)
         {
@@ -223,10 +247,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}
+        /// Operation Id: VirtualApplianceSkus_Get
+        /// </summary>
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public async virtual Task<Response<NetworkVirtualApplianceSku>> GetIfExistsAsync(string skuName, CancellationToken cancellationToken = default)
         {
@@ -248,10 +276,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}
+        /// Operation Id: VirtualApplianceSkus_Get
+        /// </summary>
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public virtual Response<NetworkVirtualApplianceSku> GetIfExists(string skuName, CancellationToken cancellationToken = default)
         {

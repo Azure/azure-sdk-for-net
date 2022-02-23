@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the JobAgent data model. </summary>
-    public partial class JobAgentData : TrackedResource
+    public partial class JobAgentData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of JobAgentData. </summary>
         /// <param name="location"> The location. </param>

@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Http;
 using OpenTelemetry.Contrib.Extensions.PersistentStorage;
 using Xunit;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class OfflineStorageTests
     {
@@ -60,7 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             Thread.Sleep(15000);
 
             //Assert
-            Assert.Empty(transmitter.storage.GetBlobs());
+            Assert.Empty(transmitter._storage.GetBlobs());
         }
 
         [Fact]
@@ -86,10 +86,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             Thread.Sleep(15000);
 
             //Assert
-            Assert.Single(transmitter.storage.GetBlobs());
+            Assert.Single(transmitter._storage.GetBlobs());
 
             // Delete the blob
-            transmitter.storage.GetBlob().Lease(1000).Delete();
+            transmitter._storage.GetBlob().Lease(1000).Delete();
         }
 
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/26783")]
@@ -116,10 +116,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             Thread.Sleep(15000);
 
             //Assert
-            Assert.Single(transmitter.storage.GetBlobs());
+            Assert.Single(transmitter._storage.GetBlobs());
 
             // Delete the blob
-            transmitter.storage.GetBlob().Lease(1000).Delete();
+            transmitter._storage.GetBlob().Lease(1000).Delete();
         }
 
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/26783")]
@@ -152,9 +152,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             Thread.Sleep(15000);
 
             //Assert
-            Assert.Single(transmitter.storage.GetBlobs());
+            Assert.Single(transmitter._storage.GetBlobs());
 
-            var failedData = System.Text.Encoding.UTF8.GetString(transmitter.storage.GetBlob().Read());
+            var failedData = System.Text.Encoding.UTF8.GetString(transmitter._storage.GetBlob().Read());
 
             string[] items = failedData.Split('\n');
 
@@ -162,7 +162,46 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             Assert.Equal(2, items.Count());
 
             // Delete the blob
-            transmitter.storage.GetBlob().Lease(1000).Delete();
+            transmitter._storage.GetBlob().Lease(1000).Delete();
+        }
+
+        [Fact(Skip = "Unstable")]
+        public void TransmitFromStorage()
+        {
+            var activity = CreateActivity("TestActivity");
+            var telemetryItem = CreateTelemetryItem(activity);
+            List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
+            telemetryItems.Add(telemetryItem);
+
+            using var testServer = new LocalEndpoint(testEndpoint);
+            testServer.ServerLogic = async (httpContext) =>
+            {
+                httpContext.Response.StatusCode = 500;
+                await httpContext.Response.WriteAsync("Internal Server Error");
+            };
+
+            // Transmit
+            var transmitter = GetTransmitter();
+            transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
+
+            // Wait for maintenance job to run atleast once
+            Thread.Sleep(15000);
+
+            //Assert
+            Assert.Single(transmitter._storage.GetBlobs());
+
+            // reset server logic to return 200
+            testServer.ServerLogic = async (httpContext) =>
+            {
+                httpContext.Response.StatusCode = 200;
+                await httpContext.Response.WriteAsync("{\"itemsReceived\": 1,\"itemsAccepted\": 1,\"errors\":[]}");
+            };
+
+            transmitter.TransmitFromStorage(1, false, CancellationToken.None).EnsureCompleted();
+
+            // Assert
+            // Blob will be deleted on successful transmission
+            Assert.Empty(transmitter._storage.GetBlobs());
         }
 
         private static AzureMonitorTransmitter GetTransmitter()
@@ -173,7 +212,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             AzureMonitorTransmitter transmitter = new AzureMonitorTransmitter(options);
 
             // Overwrite storage to reduce maintenance period
-            transmitter.storage = new FileStorage(options.StorageDirectory, 5000, 5000);
+            transmitter._storage = new FileStorage(options.StorageDirectory, 5000, 5000);
 
             return transmitter;
         }
