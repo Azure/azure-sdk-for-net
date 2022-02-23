@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Multichannel setting. Applies to Premium FileStorage only. </summary>
         internal Multichannel Multichannel { get; set; }
         /// <summary> Indicates whether multichannel is enabled. </summary>
-        public bool? Enabled
+        public bool? IsMultiChannelEnabled
         {
-            get => Multichannel is null ? default : Multichannel.Enabled;
+            get => Multichannel is null ? default : Multichannel.IsMultiChannelEnabled;
             set
             {
                 if (Multichannel is null)
                     Multichannel = new Multichannel();
-                Multichannel.Enabled = value;
+                Multichannel.IsMultiChannelEnabled = value;
             }
         }
 

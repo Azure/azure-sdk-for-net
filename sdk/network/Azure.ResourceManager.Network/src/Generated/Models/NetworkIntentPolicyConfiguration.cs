@@ -18,11 +18,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The name of the Network Intent Policy for storing in target subscription. </summary>
         public string NetworkIntentPolicyName { get; set; }
         /// <summary> Source network intent policy. </summary>
-        internal NetworkIntentPolicy SourceNetworkIntentPolicy { get; set; }
-        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string SourceNetworkIntentEtag
-        {
-            get => SourceNetworkIntentPolicy is null ? default : SourceNetworkIntentPolicy.Etag;
-        }
+        public NetworkIntentPolicy SourceNetworkIntentPolicy { get; set; }
     }
 }

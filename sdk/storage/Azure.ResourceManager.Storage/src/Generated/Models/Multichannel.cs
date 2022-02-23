@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of Multichannel. </summary>
-        /// <param name="enabled"> Indicates whether multichannel is enabled. </param>
-        internal Multichannel(bool? enabled)
+        /// <param name="isMultiChannelEnabled"> Indicates whether multichannel is enabled. </param>
+        internal Multichannel(bool? isMultiChannelEnabled)
         {
-            Enabled = enabled;
+            IsMultiChannelEnabled = isMultiChannelEnabled;
         }
 
         /// <summary> Indicates whether multichannel is enabled. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsMultiChannelEnabled { get; set; }
     }
 }

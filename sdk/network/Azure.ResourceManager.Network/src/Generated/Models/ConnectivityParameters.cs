@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Configuration of the protocol. </summary>
         internal ProtocolConfiguration ProtocolConfiguration { get; set; }
         /// <summary> HTTP configuration of the connectivity check. </summary>
-        public HttpConfiguration ProtocolHttpConfiguration
+        public HttpConfiguration HttpProtocolConfiguration
         {
-            get => ProtocolConfiguration is null ? default : ProtocolConfiguration.HttpConfiguration;
+            get => ProtocolConfiguration is null ? default : ProtocolConfiguration.HttpProtocolConfiguration;
             set
             {
                 if (ProtocolConfiguration is null)
                     ProtocolConfiguration = new ProtocolConfiguration();
-                ProtocolConfiguration.HttpConfiguration = value;
+                ProtocolConfiguration.HttpProtocolConfiguration = value;
             }
         }
 

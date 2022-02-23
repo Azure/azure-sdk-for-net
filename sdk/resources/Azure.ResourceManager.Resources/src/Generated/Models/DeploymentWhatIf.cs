@@ -28,12 +28,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The location to store the deployment data, only required at the tenant and management group scope. </summary>
         public string Location { get; set; }
         /// <summary> The deployment properties. </summary>
-        internal DeploymentWhatIfProperties Properties { get; }
-        /// <summary> The format of the What-If results. </summary>
-        public WhatIfResultFormat? WhatIfResultFormat
-        {
-            get => Properties.WhatIfResultFormat;
-            set => Properties.WhatIfResultFormat = value;
-        }
+        public DeploymentWhatIfProperties Properties { get; }
     }
 }
