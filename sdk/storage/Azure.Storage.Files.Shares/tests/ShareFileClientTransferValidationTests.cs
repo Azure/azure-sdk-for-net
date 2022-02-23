@@ -13,7 +13,7 @@ using NUnit.Framework;
 namespace Azure.Storage.Files.Shares.Tests
 {
     [ShareClientTestFixture]
-    public class ShareFileClientTransactionalHashingTests : TransferValidationTestBase<
+    public class ShareFileClientTransferValidationTests : TransferValidationTestBase<
         ShareServiceClient,
         ShareClient,
         ShareFileClient,
@@ -22,7 +22,7 @@ namespace Azure.Storage.Files.Shares.Tests
     {
         private const string _fileResourcePrefix = "test-file-";
 
-        public ShareFileClientTransactionalHashingTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
+        public ShareFileClientTransferValidationTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
             : base(async, _fileResourcePrefix, null /* RecordedTestMode.Record /* to re-record */)
         {
             ClientBuilder = ClientBuilderExtensions.GetNewShareClientBuilder(Tenants, serviceVersion);

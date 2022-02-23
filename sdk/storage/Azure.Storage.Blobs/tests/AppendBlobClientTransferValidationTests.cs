@@ -10,14 +10,14 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Tests
 {
-    public class PageBlobClientTransactionalHashingTests : BlobBaseClientTransactionalHashingTests<PageBlobClient>
+    public class AppendBlobClientTransferValidationTests : BlobBaseClientTransferValidationTests<AppendBlobClient>
     {
-        public PageBlobClientTransactionalHashingTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+        public AppendBlobClientTransferValidationTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
-        protected override async Task<PageBlobClient> GetResourceClientAsync(
+        protected override async Task<AppendBlobClient> GetResourceClientAsync(
             BlobContainerClient container,
             int resourceLength = default,
             bool createResource = default,
@@ -25,20 +25,20 @@ namespace Azure.Storage.Blobs.Tests
             BlobClientOptions options = null)
         {
             container = InstrumentClient(new BlobContainerClient(container.Uri, Tenants.GetNewSharedKeyCredentials(), options ?? ClientBuilder.GetOptions()));
-            var pageBlob = InstrumentClient(container.GetPageBlobClient(resourceName ?? GetNewResourceName()));
+            var appendBlob = InstrumentClient(container.GetAppendBlobClient(resourceName ?? GetNewResourceName()));
             if (createResource)
             {
-                await pageBlob.CreateAsync(resourceLength);
+                await appendBlob.CreateAsync();
             }
-            return pageBlob;
+            return appendBlob;
         }
 
         protected override async Task<Stream> OpenWriteAsync(
-            PageBlobClient client,
+            AppendBlobClient client,
             UploadTransferValidationOptions hashingOptions,
             int internalBufferSize)
         {
-            return await client.OpenWriteAsync(false, 0, new PageBlobOpenWriteOptions
+            return await client.OpenWriteAsync(true, new AppendBlobOpenWriteOptions
             {
                 ValidationOptions = hashingOptions,
                 BufferSize = internalBufferSize
@@ -46,31 +46,31 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         protected override Task ParallelUploadAsync(
-            PageBlobClient client,
+            AppendBlobClient client,
             Stream source,
             UploadTransferValidationOptions hashingOptions,
             StorageTransferOptions transferOptions)
         {
             /* Need to rerecord? Azure.Core framework won't record inconclusive tests.
              * Change this to pass for recording and revert when done. */
-            Assert.Inconclusive("PageBlobClient contains no definition for parallel upload.");
+            Assert.Inconclusive("AppendBlobClient contains no definition for parallel upload.");
             return Task.CompletedTask;
         }
 
         protected override async Task<Response> UploadPartitionAsync(
-            PageBlobClient client,
+            AppendBlobClient client,
             Stream source,
             UploadTransferValidationOptions hashingOptions)
         {
-            return (await client.UploadPagesAsync(source, 0, new PageBlobUploadPagesOptions
+            return (await client.AppendBlockAsync(source, new AppendBlobAppendBlockOptions
             {
                 TransactionalValidationOptions = hashingOptions
             })).GetRawResponse();
         }
 
-        protected override async Task SetupDataAsync(PageBlobClient client, Stream data)
+        protected override async Task SetupDataAsync(AppendBlobClient client, Stream data)
         {
-            using Stream writestream = await client.OpenWriteAsync(false, 0);
+            using Stream writestream = await client.OpenWriteAsync(false);
             await data.CopyToAsync(writestream);
             await writestream.FlushAsync();
         }

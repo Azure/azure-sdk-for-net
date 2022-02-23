@@ -11,9 +11,9 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Tests
 {
-    public class BlobClientTransactionalHashingTests : BlobBaseClientTransactionalHashingTests<BlobClient>
+    public class BlobClientTransferValidationTests : BlobBaseClientTransferValidationTests<BlobClient>
     {
-        public BlobClientTransactionalHashingTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+        public BlobClientTransferValidationTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }

@@ -12,7 +12,7 @@ using Azure.Storage.Test.Shared;
 namespace Azure.Storage.Files.DataLake.Tests
 {
     [DataLakeClientTestFixture]
-    public class DataLakeFileClientTransactionalHashingTests : TransferValidationTestBase<
+    public class DataLakeFileClientTransferValidationTests : TransferValidationTestBase<
         DataLakeServiceClient,
         DataLakeFileSystemClient,
         DataLakeFileClient,
@@ -21,7 +21,7 @@ namespace Azure.Storage.Files.DataLake.Tests
     {
         private const string _fileResourcePrefix = "test-file-";
 
-        public DataLakeFileClientTransactionalHashingTests(bool async, DataLakeClientOptions.ServiceVersion serviceVersion)
+        public DataLakeFileClientTransferValidationTests(bool async, DataLakeClientOptions.ServiceVersion serviceVersion)
             : base(async, _fileResourcePrefix, null /* RecordedTestMode.Record /* to re-record */)
         {
             ClientBuilder = ClientBuilderExtensions.GetNewDataLakeClientBuilder(Tenants, serviceVersion);

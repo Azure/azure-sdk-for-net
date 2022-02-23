@@ -338,7 +338,7 @@ namespace Azure.Storage.Test.Shared
 
         [TestCase(ValidationAlgorithm.MD5)]
         [TestCase(ValidationAlgorithm.StorageCrc64)]
-        public virtual async Task UploadPartitionUsePrecalculatedChecksum(ValidationAlgorithm algorithm)
+        public virtual async Task UploadPartitionUsePrecalculatedHash(ValidationAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
@@ -586,7 +586,7 @@ namespace Azure.Storage.Test.Shared
 
         [TestCase(ValidationAlgorithm.MD5)]
         [TestCase(ValidationAlgorithm.StorageCrc64)]
-        public virtual async Task PrecalculatedChecksumNotAccepted(ValidationAlgorithm algorithm)
+        public virtual async Task PrecalculatedHashNotAccepted(ValidationAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
@@ -606,7 +606,7 @@ namespace Azure.Storage.Test.Shared
                 async () => await ParallelUploadAsync(client, new MemoryStream(data), validationOptions, transferOptions: default));
 
             // Assert
-            Assert.AreEqual("Precalculated checksum not supported when potentially partitioning an upload.", exception.Message);
+            Assert.AreEqual("PrecalculatedChecksum is invalid", exception.Message);
         }
         #endregion
 
@@ -795,11 +795,11 @@ namespace Azure.Storage.Test.Shared
         public void TestDefaults()
         {
             var uploadOptions = new UploadTransferValidationOptions();
-            Assert.AreEqual(ValidationAlgorithm.StorageCrc64, uploadOptions.Algorithm);
+            Assert.AreEqual(ValidationAlgorithm.Auto, uploadOptions.Algorithm);
             Assert.IsNull(uploadOptions.PrecalculatedChecksum);
 
             var downloadOptions = new DownloadTransferValidationOptions();
-            Assert.AreEqual(ValidationAlgorithm.StorageCrc64, downloadOptions.Algorithm);
+            Assert.AreEqual(ValidationAlgorithm.Auto, downloadOptions.Algorithm);
             Assert.IsTrue(downloadOptions.Validate);
         }
 
