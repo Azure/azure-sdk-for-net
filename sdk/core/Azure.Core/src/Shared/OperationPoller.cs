@@ -20,17 +20,17 @@ namespace Azure.Core
         public delegate Response GetRawResponse();
         public delegate T Value<T>();
 
-        private OperationPollingStrategy _pollingStrategy;
+        private DelayStrategy _delayStrategy;
 
-        public OperationPoller(Response rawResponse, OperationPollingStrategy? defaultPollingStrategy = null)
+        public OperationPoller(DelayStrategy? fallbackStrategy = null)
         {
-            _pollingStrategy = OperationPollingStrategy.ChoosePollingStrategy(rawResponse, defaultPollingStrategy);
+            _delayStrategy = new RetryAfterDelayStrategy(fallbackStrategy ?? new ConstantDelayStrategy());
         }
 
-        public virtual ValueTask<Response> WaitForCompletionResponseAsync(Operation operation, TimeSpan? pollingInterval, CancellationToken cancellationToken)
-            => WaitForCompletionResponseAsync(operation.UpdateStatusAsync, () => operation.HasCompleted, operation.GetRawResponse, pollingInterval, cancellationToken);
+        public virtual ValueTask<Response> WaitForCompletionResponseAsync(Operation operation, TimeSpan? suggestedInterval, CancellationToken cancellationToken)
+            => WaitForCompletionResponseAsync(operation.UpdateStatusAsync, () => operation.HasCompleted, operation.GetRawResponse, suggestedInterval, cancellationToken);
 
-        public virtual async ValueTask<Response> WaitForCompletionResponseAsync(UpdateStatusAsync updateStatusAsync, HasCompleted hasCompleted, GetRawResponse getRawResponse, TimeSpan? pollingInterval, CancellationToken cancellationToken)
+        public virtual async ValueTask<Response> WaitForCompletionResponseAsync(UpdateStatusAsync updateStatusAsync, HasCompleted hasCompleted, GetRawResponse getRawResponse, TimeSpan? suggestedInterval, CancellationToken cancellationToken)
         {
             while (true)
             {
@@ -41,14 +41,14 @@ namespace Azure.Core
                     return getRawResponse();
                 }
 
-                await Task.Delay(_pollingStrategy.GetNextWait(response, pollingInterval), cancellationToken).ConfigureAwait(false);
+                await Task.Delay(_delayStrategy.GetNextDelay(response, suggestedInterval), cancellationToken).ConfigureAwait(false);
             }
         }
 
-        public virtual Response WaitForCompletionResponse(Operation operation, TimeSpan? pollingInterval, CancellationToken cancellationToken)
-            => WaitForCompletionResponse(operation.UpdateStatus, () => operation.HasCompleted, operation.GetRawResponse, pollingInterval, cancellationToken);
+        public virtual Response WaitForCompletionResponse(Operation operation, TimeSpan? suggestedInterval, CancellationToken cancellationToken)
+            => WaitForCompletionResponse(operation.UpdateStatus, () => operation.HasCompleted, operation.GetRawResponse, suggestedInterval, cancellationToken);
 
-        public virtual Response WaitForCompletionResponse(UpdateStatus updateStatus, HasCompleted hasCompleted, GetRawResponse getRawResponse, TimeSpan? pollingInterval, CancellationToken cancellationToken)
+        public virtual Response WaitForCompletionResponse(UpdateStatus updateStatus, HasCompleted hasCompleted, GetRawResponse getRawResponse, TimeSpan? suggestedInterval, CancellationToken cancellationToken)
         {
             while (true)
             {
@@ -59,14 +59,14 @@ namespace Azure.Core
                     return getRawResponse();
                 }
 
-                Thread.Sleep(_pollingStrategy.GetNextWait(response, pollingInterval));
+                Thread.Sleep(_delayStrategy.GetNextDelay(response, suggestedInterval));
             }
         }
 
-        public virtual ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T> operation, TimeSpan? pollingInterval, CancellationToken cancellationToken) where T : notnull
-           => WaitForCompletionAsync(operation.UpdateStatusAsync, () => operation.HasCompleted, () => operation.Value, operation.GetRawResponse, pollingInterval, cancellationToken);
+        public virtual ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T> operation, TimeSpan? suggestedInterval, CancellationToken cancellationToken) where T : notnull
+           => WaitForCompletionAsync(operation.UpdateStatusAsync, () => operation.HasCompleted, () => operation.Value, operation.GetRawResponse, suggestedInterval, cancellationToken);
 
-        public virtual async ValueTask<Response<T>> WaitForCompletionAsync<T>(UpdateStatusAsync updateStatusAsync, HasCompleted hasCompleted, Value<T> value, GetRawResponse getRawResponse, TimeSpan? pollingInterval, CancellationToken cancellationToken)
+        public virtual async ValueTask<Response<T>> WaitForCompletionAsync<T>(UpdateStatusAsync updateStatusAsync, HasCompleted hasCompleted, Value<T> value, GetRawResponse getRawResponse, TimeSpan? suggestedInterval, CancellationToken cancellationToken)
         {
             while (true)
             {
@@ -77,14 +77,14 @@ namespace Azure.Core
                     return Response.FromValue(value(), getRawResponse());
                 }
 
-                await Task.Delay(_pollingStrategy.GetNextWait(response, pollingInterval), cancellationToken).ConfigureAwait(false);
+                await Task.Delay(_delayStrategy.GetNextDelay(response, suggestedInterval), cancellationToken).ConfigureAwait(false);
             }
         }
 
-        public virtual Response<T> WaitForCompletion<T>(Operation<T> operation, TimeSpan? pollingInterval, CancellationToken cancellationToken) where T : notnull
-           => WaitForCompletion(operation.UpdateStatus, () => operation.HasCompleted, () => operation.Value, operation.GetRawResponse, pollingInterval, cancellationToken);
+        public virtual Response<T> WaitForCompletion<T>(Operation<T> operation, TimeSpan? suggestedInterval, CancellationToken cancellationToken) where T : notnull
+           => WaitForCompletion(operation.UpdateStatus, () => operation.HasCompleted, () => operation.Value, operation.GetRawResponse, suggestedInterval, cancellationToken);
 
-        public virtual Response<T> WaitForCompletion<T>(UpdateStatus updateStatus, HasCompleted hasCompleted, Value<T> value, GetRawResponse getRawResponse, TimeSpan? pollingInterval, CancellationToken cancellationToken)
+        public virtual Response<T> WaitForCompletion<T>(UpdateStatus updateStatus, HasCompleted hasCompleted, Value<T> value, GetRawResponse getRawResponse, TimeSpan? suggestedInterval, CancellationToken cancellationToken)
         {
             while (true)
             {
@@ -95,7 +95,7 @@ namespace Azure.Core
                     return Response.FromValue(value(), getRawResponse());
                 }
 
-                Thread.Sleep(_pollingStrategy.GetNextWait(response, pollingInterval));
+                Thread.Sleep(_delayStrategy.GetNextDelay(response, suggestedInterval));
             }
         }
     }
