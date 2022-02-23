@@ -7,6 +7,8 @@ Project("{6DDC611C-0DBD-497F-8854-19B000044FC3}") = "Azure.ResourceManager.DnsRe
 EndProject
 Project("{6DDC611C-0DBD-497F-8854-19B000044FC3}") = "Azure.ResourceManager.DnsResolver.Tests", "tests\Azure.ResourceManager.DnsResolver.Tests.csproj", "{B674F8DC-C1E8-41D7-9183-A53C25AAB958}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{CFD82F5B-3E15-48A1-9125-1C1E5A92573D}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -47,5 +49,17 @@ Global
 		{B674F8DC-C1E8-41D7-9183-A53C25AAB958}.Release|x64.Build.0 = Release|Any CPU
 		{B674F8DC-C1E8-41D7-9183-A53C25AAB958}.Release|x86.ActiveCfg = Release|Any CPU
 		{B674F8DC-C1E8-41D7-9183-A53C25AAB958}.Release|x86.Build.0 = Release|Any CPU
+		{CFD82F5B-3E15-48A1-9125-1C1E5A92573D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFD82F5B-3E15-48A1-9125-1C1E5A92573D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFD82F5B-3E15-48A1-9125-1C1E5A92573D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CFD82F5B-3E15-48A1-9125-1C1E5A92573D}.Debug|x64.Build.0 = Debug|Any CPU
+		{CFD82F5B-3E15-48A1-9125-1C1E5A92573D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CFD82F5B-3E15-48A1-9125-1C1E5A92573D}.Debug|x86.Build.0 = Debug|Any CPU
+		{CFD82F5B-3E15-48A1-9125-1C1E5A92573D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFD82F5B-3E15-48A1-9125-1C1E5A92573D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFD82F5B-3E15-48A1-9125-1C1E5A92573D}.Release|x64.ActiveCfg = Release|Any CPU
+		{CFD82F5B-3E15-48A1-9125-1C1E5A92573D}.Release|x64.Build.0 = Release|Any CPU
+		{CFD82F5B-3E15-48A1-9125-1C1E5A92573D}.Release|x86.ActiveCfg = Release|Any CPU
+		{CFD82F5B-3E15-48A1-9125-1C1E5A92573D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
