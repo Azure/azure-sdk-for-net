@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network.Tests
         [TearDown]
         public async Task TestTearDown()
         {
-            if (_resourceGroup.GetBastionHosts().Exists(_bastionName))
+            if (await _resourceGroup.GetBastionHosts().ExistsAsync(_bastionName))
             {
                 BastionHost bastion = await _resourceGroup.GetBastionHosts().GetAsync(_bastionName);
                 await bastion.DeleteAsync(true);
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task Exists()
         {
             BastionHost bastionHost = await CreateBastionHost(_bastionName);
-            Assert.IsTrue(_resourceGroup.GetBastionHosts().Exists(_bastionName));
-            Assert.IsFalse(_resourceGroup.GetBastionHosts().Exists(_bastionName + "1"));
+            Assert.IsTrue(await _resourceGroup.GetBastionHosts().ExistsAsync(_bastionName));
+            Assert.IsFalse(await _resourceGroup.GetBastionHosts().ExistsAsync(_bastionName + "1"));
         }
 
         [Test]

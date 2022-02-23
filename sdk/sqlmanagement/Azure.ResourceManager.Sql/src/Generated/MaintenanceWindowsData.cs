@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the MaintenanceWindows data model. </summary>
-    public partial class MaintenanceWindowsData : Resource
+    public partial class MaintenanceWindowsData : ResourceData
     {
         /// <summary> Initializes a new instance of MaintenanceWindowsData. </summary>
         public MaintenanceWindowsData()
@@ -25,8 +25,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="timeRanges"></param>
-        internal MaintenanceWindowsData(ResourceIdentifier id, string name, ResourceType type, IList<MaintenanceWindowTimeRange> timeRanges) : base(id, name, type)
+        internal MaintenanceWindowsData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IList<MaintenanceWindowTimeRange> timeRanges) : base(id, name, type, systemData)
         {
             TimeRanges = timeRanges;
         }

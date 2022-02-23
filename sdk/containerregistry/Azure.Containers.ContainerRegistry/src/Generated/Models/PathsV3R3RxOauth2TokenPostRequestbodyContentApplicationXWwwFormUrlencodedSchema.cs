@@ -17,7 +17,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="scope"> Which is expected to be a valid scope, and can be specified more than once for multiple scope requests. You obtained this from the Www-Authenticate response header from the challenge. </param>
         /// <param name="acrRefreshToken"> Must be a valid ACR refresh token. </param>
         /// <param name="grantType"> Grant type is expected to be refresh_token. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="service"/>, <paramref name="scope"/>, or <paramref name="acrRefreshToken"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="service"/>, <paramref name="scope"/> or <paramref name="acrRefreshToken"/> is null. </exception>
         internal PathsV3R3RxOauth2TokenPostRequestbodyContentApplicationXWwwFormUrlencodedSchema(string service, string scope, string acrRefreshToken, TokenGrantType grantType = TokenGrantType.RefreshToken)
         {
             if (service == null)

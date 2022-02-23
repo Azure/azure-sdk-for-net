@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the Feature data model. </summary>
-    public partial class FeatureData : Resource
+    public partial class FeatureData : ResourceData
     {
         /// <summary> Initializes a new instance of FeatureData. </summary>
         internal FeatureData()
@@ -23,8 +23,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the previewed feature. </param>
-        internal FeatureData(ResourceIdentifier id, string name, ResourceType type, FeatureProperties properties) : base(id, name, type)
+        internal FeatureData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, FeatureProperties properties) : base(id, name, type, systemData)
         {
             Properties = properties;
         }

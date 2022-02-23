@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.Storage.Models
         private const string StorageFileDataSmbShareReaderValue = "StorageFileDataSmbShareReader";
         private const string StorageFileDataSmbShareContributorValue = "StorageFileDataSmbShareContributor";
         private const string StorageFileDataSmbShareElevatedContributorValue = "StorageFileDataSmbShareElevatedContributor";
-        private const string StorageFileDataSmbShareOwnerValue = "StorageFileDataSmbShareOwner";
 
         /// <summary> None. </summary>
         public static DefaultSharePermission None { get; } = new DefaultSharePermission(NoneValue);
@@ -36,8 +35,6 @@ namespace Azure.ResourceManager.Storage.Models
         public static DefaultSharePermission StorageFileDataSmbShareContributor { get; } = new DefaultSharePermission(StorageFileDataSmbShareContributorValue);
         /// <summary> StorageFileDataSmbShareElevatedContributor. </summary>
         public static DefaultSharePermission StorageFileDataSmbShareElevatedContributor { get; } = new DefaultSharePermission(StorageFileDataSmbShareElevatedContributorValue);
-        /// <summary> StorageFileDataSmbShareOwner. </summary>
-        public static DefaultSharePermission StorageFileDataSmbShareOwner { get; } = new DefaultSharePermission(StorageFileDataSmbShareOwnerValue);
         /// <summary> Determines if two <see cref="DefaultSharePermission"/> values are the same. </summary>
         public static bool operator ==(DefaultSharePermission left, DefaultSharePermission right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DefaultSharePermission"/> values are not the same. </summary>

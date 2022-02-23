@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -18,6 +20,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Parameters for updating a factory resource.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class FactoryUpdateParameters
     {
         /// <summary>
@@ -66,13 +69,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets whether or not public network access is allowed for
         /// the data factory. Possible values include: 'Enabled', 'Disabled'
         /// </summary>
-        [JsonProperty(PropertyName = "publicNetworkAccess")]
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
         public string PublicNetworkAccess { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

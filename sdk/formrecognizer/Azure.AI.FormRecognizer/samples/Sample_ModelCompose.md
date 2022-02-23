@@ -32,28 +32,28 @@ In our case, we will be writing an application that collects the expenses a comp
 Uri officeSuppliesUri = <purchaseOrderOfficeSuppliesUri>;
 var officeSupplieOptions = new BuildModelOptions() { ModelDescription = "Purchase order - Office supplies" };
 
-BuildModelOperation suppliesOperation = await client.StartBuildModelAsync(officeSuppliesUri, buildModelOptions: officeSupplieOptions);
+BuildModelOperation suppliesOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: officeSupplieOptions);
 Response<DocumentModel> suppliesOperationResponse = await suppliesOperation.WaitForCompletionAsync();
 DocumentModel officeSuppliesModel = suppliesOperationResponse.Value;
 
 Uri officeEquipmentUri = <purchaseOrderOfficeEquipmentUri>;
 var equipmentOptions = new BuildModelOptions() { ModelDescription = "Purchase order - Office Equipment" };
 
-BuildModelOperation equipmentOperation = await client.StartBuildModelAsync(officeSuppliesUri, buildModelOptions: equipmentOptions);
+BuildModelOperation equipmentOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: equipmentOptions);
 Response<DocumentModel> equipmentOperationResponse = await equipmentOperation.WaitForCompletionAsync();
 DocumentModel officeEquipmentModel = equipmentOperationResponse.Value;
 
 Uri furnitureUri = <purchaseOrderFurnitureUri>;
 var furnitureOptions = new BuildModelOptions() { ModelDescription = "Purchase order - Furniture" };
 
-BuildModelOperation furnitureOperation = await client.StartBuildModelAsync(officeSuppliesUri, buildModelOptions: equipmentOptions);
+BuildModelOperation furnitureOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: equipmentOptions);
 Response<DocumentModel> furnitureOperationResponse = await furnitureOperation.WaitForCompletionAsync();
 DocumentModel furnitureModel = furnitureOperationResponse.Value;
 
 Uri cleaningSuppliesUri = <purchaseOrderCleaningSuppliesUri>;
 var cleaningOptions = new BuildModelOptions() { ModelDescription = "Purchase order - Cleaning Supplies" };
 
-BuildModelOperation cleaningOperation = await client.StartBuildModelAsync(officeSuppliesUri, buildModelOptions: equipmentOptions);
+BuildModelOperation cleaningOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: equipmentOptions);
 Response<DocumentModel> cleaningOperationResponse = await cleaningOperation.WaitForCompletionAsync();
 DocumentModel cleaningSuppliesModel = cleaningOperationResponse.Value;
 ```

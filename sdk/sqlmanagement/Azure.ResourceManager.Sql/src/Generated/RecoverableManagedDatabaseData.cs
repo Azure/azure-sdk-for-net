@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the RecoverableManagedDatabase data model. </summary>
-    public partial class RecoverableManagedDatabaseData : Resource
+    public partial class RecoverableManagedDatabaseData : ResourceData
     {
         /// <summary> Initializes a new instance of RecoverableManagedDatabaseData. </summary>
         public RecoverableManagedDatabaseData()
@@ -22,8 +22,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="lastAvailableBackupDate"> The last available backup date. </param>
-        internal RecoverableManagedDatabaseData(ResourceIdentifier id, string name, ResourceType type, string lastAvailableBackupDate) : base(id, name, type)
+        internal RecoverableManagedDatabaseData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string lastAvailableBackupDate) : base(id, name, type, systemData)
         {
             LastAvailableBackupDate = lastAvailableBackupDate;
         }

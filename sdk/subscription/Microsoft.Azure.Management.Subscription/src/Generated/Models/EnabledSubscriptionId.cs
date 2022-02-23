@@ -29,11 +29,11 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// <summary>
         /// Initializes a new instance of the EnabledSubscriptionId class.
         /// </summary>
-        /// <param name="value">The ID of the subscriptions that is being
-        /// enabled</param>
-        public EnabledSubscriptionId(string value = default(string))
+        /// <param name="subscriptionId">The ID of the subscriptions that is
+        /// being enabled</param>
+        public EnabledSubscriptionId(string subscriptionId = default(string))
         {
-            Value = value;
+            SubscriptionId = subscriptionId;
             CustomInit();
         }
 
@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// <summary>
         /// Gets the ID of the subscriptions that is being enabled
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public string Value { get; private set; }
+        [JsonProperty(PropertyName = "subscriptionId")]
+        public string SubscriptionId { get; private set; }
 
     }
 }

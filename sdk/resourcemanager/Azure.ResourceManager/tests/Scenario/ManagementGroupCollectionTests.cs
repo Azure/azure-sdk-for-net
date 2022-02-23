@@ -20,7 +20,8 @@ namespace Azure.ResourceManager.Tests
         public async Task GetGlobalManagementGroup()
         {
             _mgmtGroupName = SessionRecording.GenerateAssetName("mgmt-group-");
-            var mgmtOp = await GlobalClient.GetManagementGroups().CreateOrUpdateAsync(true, _mgmtGroupName, new CreateManagementGroupOptions());
+            var mgmtGroupCollection = GlobalClient.GetManagementGroups();
+            var mgmtOp = await mgmtGroupCollection.CreateOrUpdateAsync(true, _mgmtGroupName, new CreateManagementGroupOptions());
             _mgmtGroup = mgmtOp.Value;
             _mgmtGroup = await _mgmtGroup.GetAsync();
             await StopSessionRecordingAsync();

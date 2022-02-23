@@ -3,8 +3,8 @@
   "baselines": {
     "baseline": {
       "name": "baseline",
-      "createdDate": "2021-12-01 07:45:09Z",
-      "lastUpdatedDate": "2021-12-01 07:45:09Z"
+      "createdDate": "2022-02-18 01:56:27Z",
+      "lastUpdatedDate": "2022-02-18 01:56:27Z"
     }
   },
   "results": {
@@ -20,7 +20,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0020",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -36,7 +36,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -52,7 +52,23 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0100",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "2b9231233d594c6159e876685614ecb0ee011f462e6cd0b443d7f5c3b46035fd": {
+      "signature": "2b9231233d594c6159e876685614ecb0ee011f462e6cd0b443d7f5c3b46035fd",
+      "alternativeSignatures": [
+        "8ceb5820301c581197d169544b33007f7a3ead8b449cb437a5d55299575a30dc"
+      ],
+      "target": "sdk/communication/Azure.Communication.Common/tests/Pipeline/HMACAuthenticationPolicyTests.cs",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-GENERAL0060",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -68,7 +84,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -84,7 +100,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -100,14 +116,126 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
-    "25c9721e9eed26a58ee7a74c28a4e2dd83b119908a17bb22a72b915e4e16eb9c": {
-      "signature": "25c9721e9eed26a58ee7a74c28a4e2dd83b119908a17bb22a72b915e4e16eb9c",
+    "273f12a5424a74b11d6eb86973ad1ac87a5195bff83988b372805797fe3ab69a": {
+      "signature": "273f12a5424a74b11d6eb86973ad1ac87a5195bff83988b372805797fe3ab69a",
       "alternativeSignatures": [
-        "65be6af36074aeabf8644ad8663989146f27b284ebe046186d275f2666efaa87"
+        "6e0b7cfacb141002d2653628b47330bff6cf726f598dc30cc07666acffb4f4ed"
+      ],
+      "target": "sdk/notificationhubs/Microsoft.Azure.Management.NotificationHubs/tests/Tests/ScenarioTests.NotificationHubTests.CRUD.cs",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-GENERAL0060",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "4ba9cd1fac95080e6e2e823535e840dd9e72c3f8be83550d04b52bdb0f90a553": {
+      "signature": "4ba9cd1fac95080e6e2e823535e840dd9e72c3f8be83550d04b52bdb0f90a553",
+      "alternativeSignatures": [
+        "03d2d755649e6ad4ba34c6415b448ae67d487b01a9c42c465b22e8d81b1ad7a4"
+      ],
+      "target": "sdk/testcommon/Azure.Graph.Rbac/src/Generated/OAuth2PermissionGrantRestOperations.cs",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-GENERAL0120",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "364dbb7e6d8ffd5c0c6dcc6a0fb646660ce270e0820428adea0f5749542fc1d8": {
+      "signature": "364dbb7e6d8ffd5c0c6dcc6a0fb646660ce270e0820428adea0f5749542fc1d8",
+      "alternativeSignatures": [
+        "a72f776cf944c41181e97bac9c1337cf5e892c803c2c279052b0aa3df9d71fcb"
+      ],
+      "target": "sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/tests/SessionRecords/ApiManagementServiceTests/BackupAndRestoreService.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-AZURE0070",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "54db941335506914e770b90a2e4416c7649231626550906a81f9d424d67300f1": {
+      "signature": "54db941335506914e770b90a2e4416c7649231626550906a81f9d424d67300f1",
+      "alternativeSignatures": [
+        "26da28476c400d3f9220ea601355e89cfbee430ab6e5cf3834e941cf7c530b9c"
+      ],
+      "target": "sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/tests/SessionRecords/ApiManagementServiceTests/BackupAndRestoreService.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-AZURE0070",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "10ab49cd7cf443ac4721b8ee0526e3646b2d2df3545613f2cc885fae6964bb9c": {
+      "signature": "10ab49cd7cf443ac4721b8ee0526e3646b2d2df3545613f2cc885fae6964bb9c",
+      "alternativeSignatures": [
+        "4fde43abd0bac01e6e28e4cf3d8d49a4b3fd666481c4816a38b3d0108583916f"
+      ],
+      "target": "sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/tests/SessionRecords/DelegationSettingTests/CreateUpdateReset.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-GENERAL0140",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "34179a470026c50f13e1ec4eed2d9d452cb6ee466eb1759f4d7460215a338c72": {
+      "signature": "34179a470026c50f13e1ec4eed2d9d452cb6ee466eb1759f4d7460215a338c72",
+      "alternativeSignatures": [
+        "0fe84bcf9179a6e5ba080f7b28009a48ea06d4376ca07fe5a949546681871e56"
+      ],
+      "target": "sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/tests/SessionRecords/DelegationSettingTests/CreateUpdateReset.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-GENERAL0140",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "610bed2d559a9111eb30480142224818e185225e345f85086464e7577eef4f0e": {
+      "signature": "610bed2d559a9111eb30480142224818e185225e345f85086464e7577eef4f0e",
+      "alternativeSignatures": [
+        "eae1e0575754bbb975a891ad41db20cdc8ade047b079c4e35eb8c0013c931625"
+      ],
+      "target": "sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/tests/SessionRecords/DelegationSettingTests/CreateUpdateReset.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-GENERAL0140",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "aa1f534da37a30f63cc7ee3efb3057661f3824934d8d90fb9a492ff03a2ef243": {
+      "signature": "aa1f534da37a30f63cc7ee3efb3057661f3824934d8d90fb9a492ff03a2ef243",
+      "alternativeSignatures": [
+        "069ee3599dc574af516117724bf65c1bf7809d7f4360291ea445f1654544ce84"
       ],
       "target": "sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/tests/SessionRecords/LoggerTests/CreateListUpdateDeleteEventHub.json",
       "memberOf": [
@@ -116,7 +244,263 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "0694e6fabfaf1507d3bdc9a13dfe08ec3b1c159501347e3c372819c689db9d1a": {
+      "signature": "0694e6fabfaf1507d3bdc9a13dfe08ec3b1c159501347e3c372819c689db9d1a",
+      "alternativeSignatures": [
+        "0437b8b0eddaaca4679421cf0e3fe1ffd79968318a16e101427e9abfec0ec611"
+      ],
+      "target": "sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/tests/SessionRecords/LoggerTests/CreateListUpdateDeleteEventHub.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-AZURE0030",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "f693c3c339af3b1e44abc858727860565f7398d8997611f193b373ab35aa48c7": {
+      "signature": "f693c3c339af3b1e44abc858727860565f7398d8997611f193b373ab35aa48c7",
+      "alternativeSignatures": [
+        "09b9132416f8479d86633475543b3868789157dd857a88632df03a93d721f125"
+      ],
+      "target": "sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/tests/SessionRecords/SubscriptionTests/CreateListUpdateDelete.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-GENERAL0060",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "c3846bf777cab962ac6317d0f11953e005e32c59eda12a8fedad9fd365150183": {
+      "signature": "c3846bf777cab962ac6317d0f11953e005e32c59eda12a8fedad9fd365150183",
+      "alternativeSignatures": [
+        "7e9794afb7b2612d590ee02070accb7ceb73e04213f22589cdb1d93f480167f5"
+      ],
+      "target": "sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/tests/SessionRecords/SubscriptionTests/CreateListUpdateDelete.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-GENERAL0060",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "e00bfd7e9b749714f6e220308e0e467c0da3b122a59a7d9a04bee3d3d3107ea5": {
+      "signature": "e00bfd7e9b749714f6e220308e0e467c0da3b122a59a7d9a04bee3d3d3107ea5",
+      "alternativeSignatures": [
+        "80b78d02a7f218cadd39ab98d2ba2151c1ba1067bf64cb380ed49cbec938f43a"
+      ],
+      "target": "sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/tests/SessionRecords/SubscriptionTests/CreateListUpdateDelete.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-GENERAL0060",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "8d352b99380b5c8d374c1a852a455c329e90fe79fe2a94d7a0080fa75fa920d6": {
+      "signature": "8d352b99380b5c8d374c1a852a455c329e90fe79fe2a94d7a0080fa75fa920d6",
+      "alternativeSignatures": [
+        "fd76160d6520a62c3cf5214977e16433ad912a1db48b2a0e638da2c0624372c5"
+      ],
+      "target": "sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/tests/SessionRecords/SubscriptionTests/CreateListUpdateDelete.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-GENERAL0060",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "514ea934fc8c7bb6d1a143b5c0dbc78a4e9758846b647e1d3553ecb3e9102bd2": {
+      "signature": "514ea934fc8c7bb6d1a143b5c0dbc78a4e9758846b647e1d3553ecb3e9102bd2",
+      "alternativeSignatures": [
+        "ec14dceb9dd3c880fa85c76d9d900398282aefbd51b4d837725895ef91f9cf6e"
+      ],
+      "target": "sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/tests/SessionRecords/SubscriptionTests/CreateListUpdateDelete.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-GENERAL0060",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "78fc4fd31db0e267a14af2cc13e9c3aca0d02b998aad0416bc7d57d02f0bca8f": {
+      "signature": "78fc4fd31db0e267a14af2cc13e9c3aca0d02b998aad0416bc7d57d02f0bca8f",
+      "alternativeSignatures": [
+        "d1a9dbc0cbae3d9181d11b471e47a96444f10fbce9b9f20274ab6a09a25c1d8d"
+      ],
+      "target": "sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/tests/SessionRecords/SubscriptionTests/CreateListUpdateDelete.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-GENERAL0060",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "4eea9419e1310e8bdf7102e7123abe87d293e9d577afeffdb1ff941d468cebd9": {
+      "signature": "4eea9419e1310e8bdf7102e7123abe87d293e9d577afeffdb1ff941d468cebd9",
+      "alternativeSignatures": [
+        "d8d2ae54d9bec55ff81fe2f99d58fc8f768e05e5a3150f4a7f6a0b7bd4a84002"
+      ],
+      "target": "sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/tests/SessionRecords/TenantAccessGitTests/GetUpdateKeys.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-AZURE0070",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "c060bc6bae716c5d1058d5452f7988f23a1b0f6d55839cc4a8b4614b74f70b8c": {
+      "signature": "c060bc6bae716c5d1058d5452f7988f23a1b0f6d55839cc4a8b4614b74f70b8c",
+      "alternativeSignatures": [
+        "6407ab3f7dce5a79d770cc15f147a5731dba4713af41ee43960d66d32f5cdb22"
+      ],
+      "target": "sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/tests/SessionRecords/TenantAccessGitTests/GetUpdateKeys.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-AZURE0070",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "e6c450d00f46c8d5761b08cb16f7ba8aa0507b87506037927f55e6f6ac4fcfd0": {
+      "signature": "e6c450d00f46c8d5761b08cb16f7ba8aa0507b87506037927f55e6f6ac4fcfd0",
+      "alternativeSignatures": [
+        "32c55dfe36726b4a3743e3f9e69ce284de14cc6a8caee90edb23e6fc916b8d9b"
+      ],
+      "target": "sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/tests/SessionRecords/TenantAccessGitTests/GetUpdateKeys.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-AZURE0070",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "3c0a0bfd293c031befa90581d900feff50ee390610921abdf122ee73ecde54bd": {
+      "signature": "3c0a0bfd293c031befa90581d900feff50ee390610921abdf122ee73ecde54bd",
+      "alternativeSignatures": [
+        "020f61d6a3844444d5f73987794c8be41626cc6438894a0bfb384835715d49df"
+      ],
+      "target": "sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/tests/SessionRecords/TenantAccessTests/EnableGetAndUpdateKeys.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-AZURE0070",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "5edcb905b604afbbc3f2fc9e9b17a543ae727e22348de95e756e87451a2091c8": {
+      "signature": "5edcb905b604afbbc3f2fc9e9b17a543ae727e22348de95e756e87451a2091c8",
+      "alternativeSignatures": [
+        "00373655c91e035d89482bf87386456bede81902bf7aa131065c26350fc7e16e"
+      ],
+      "target": "sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/tests/SessionRecords/TenantAccessTests/EnableGetAndUpdateKeys.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-AZURE0070",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "fac0d021de8523b46536e81f9467a160a2a8850323532a357cbc1f3cd721de0c": {
+      "signature": "fac0d021de8523b46536e81f9467a160a2a8850323532a357cbc1f3cd721de0c",
+      "alternativeSignatures": [
+        "25372fd8f3fe1f05af1a3e6b11b4c30063dc78bca73b5ac4a1d12c3a9a13e21f"
+      ],
+      "target": "sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/tests/SessionRecords/TenantAccessTests/EnableGetAndUpdateKeys.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-AZURE0070",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "26c129fe6f00c27aa0fcea4bf89dddc045bed84223f499732a83cc7dc27786f6": {
+      "signature": "26c129fe6f00c27aa0fcea4bf89dddc045bed84223f499732a83cc7dc27786f6",
+      "alternativeSignatures": [
+        "be6074b8e7ad8994d0a13feceb362ed444f4bf03a179bea69bcc6b1804845577"
+      ],
+      "target": "sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/tests/SessionRecords/TenantAccessTests/EnableGetAndUpdateKeys.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-AZURE0070",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "dcccce7fdd8a7bda7094c5af212a27130efcf478ba9122a6583d2105bf1e62da": {
+      "signature": "dcccce7fdd8a7bda7094c5af212a27130efcf478ba9122a6583d2105bf1e62da",
+      "alternativeSignatures": [
+        "1367aabfbb19fb64383476d0a3eb9df37c8ebdf889f2b837f426d59981cbc01b"
+      ],
+      "target": "sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/tests/SessionRecords/TenantAccessTests/EnableGetAndUpdateKeys.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-AZURE0070",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "761c8fd977b35fcafb3f9eac0e2a4bdc11b916161b925c1bba4e002152117bb4": {
+      "signature": "761c8fd977b35fcafb3f9eac0e2a4bdc11b916161b925c1bba4e002152117bb4",
+      "alternativeSignatures": [
+        "10898ff93f07b5b202fd681e853e6dd6f17c99be767a6596b3976901366137b9"
+      ],
+      "target": "sdk/applicationinsights/Microsoft.Azure.Management.ApplicationInsights/tests/SessionRecords/APIKeysTests/CreateGetListUpdateDeleteAPIKeys.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-GENERAL0130",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -132,7 +516,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -148,7 +532,55 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "48b8011213c0e516efc6e5ff5fc0bcff61be6bb7c71beda72fa2081b7358cc57": {
+      "signature": "48b8011213c0e516efc6e5ff5fc0bcff61be6bb7c71beda72fa2081b7358cc57",
+      "alternativeSignatures": [
+        "414c93248ce0ac34fe5f1549f0e337af05411b0050eb15a3687ca99330706126"
+      ],
+      "target": "sdk/compute/Microsoft.Azure.Management.Compute/tests/SessionRecords/DiskRPScenarioTests/Disk_CRUD_WithSecurityProfile_Import.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-AZURE0060",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "98206fd97b73d45503b5dbac1aeb674dd26bf8393edf0b07e82f98eb4833c641": {
+      "signature": "98206fd97b73d45503b5dbac1aeb674dd26bf8393edf0b07e82f98eb4833c641",
+      "alternativeSignatures": [
+        "f208669b05d9215c6ae1126fea22e29764a9bdcc81b73bfefa63ebe4c59248ab"
+      ],
+      "target": "sdk/compute/Microsoft.Azure.Management.Compute/tests/SessionRecords/DiskRPScenarioTests/Disk_CRUD_WithSecurityProfile_Import.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-AZURE0060",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "57de02fe7b65cf1390693e5439e365eb36e82e542edc835d902d5383af98164c": {
+      "signature": "57de02fe7b65cf1390693e5439e365eb36e82e542edc835d902d5383af98164c",
+      "alternativeSignatures": [
+        "f95cd5081dd0361b2e822cbcb4a025e4ccc2bc34d0113da78a0f8924fcd64381"
+      ],
+      "target": "sdk/compute/Microsoft.Azure.Management.Compute/tests/SessionRecords/LogAnalyticsTests/TestExportingThrottlingLogs.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-GENERAL0140",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -164,7 +596,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0140",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -180,7 +612,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0140",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -196,7 +628,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0140",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -212,7 +644,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0060",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -228,7 +660,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0060",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -244,7 +676,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0060",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -260,7 +692,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0060",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -276,55 +708,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0060",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "0e9dee182a9da937ef2b1b2a1d0770578b3c9c0104409e0e11c876f7b6ba3b42": {
-      "signature": "0e9dee182a9da937ef2b1b2a1d0770578b3c9c0104409e0e11c876f7b6ba3b42",
-      "alternativeSignatures": [
-        "1fce1dea83f9deda616e373317b4aecc657a12c55e6ab4e1b5cf5e72481aebd5"
-      ],
-      "target": "sdk/cosmosdb/Microsoft.Azure.Management.CosmosDB/tests/SessionRecords/DatabaseAccountOperationsTests/DatabaseAccountCRUDTests.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-AZURE0070",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "8ac04e872b954fe76fe47ebab84a6b63c887c9ddb0eee425a88196e496a43eac": {
-      "signature": "8ac04e872b954fe76fe47ebab84a6b63c887c9ddb0eee425a88196e496a43eac",
-      "alternativeSignatures": [
-        "8cab3d644667a95dbefdd2c3dc5c047165a5680af634237efdd65e3ac3fa77e7"
-      ],
-      "target": "sdk/cosmosdb/Microsoft.Azure.Management.CosmosDB/tests/SessionRecords/DatabaseAccountOperationsTests/DatabaseAccountCRUDTests.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-GENERAL0030",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "8c73979a0e2e66a18e1e74b4978d16b7316a8ba23c4a360569a2e440d52ba77a": {
-      "signature": "8c73979a0e2e66a18e1e74b4978d16b7316a8ba23c4a360569a2e440d52ba77a",
-      "alternativeSignatures": [
-        "fc3d83501915d464ce29ff083d8d82c9e7ee5cf573b85003272bb7ef8629f2b0"
-      ],
-      "target": "sdk/cosmosdb/Microsoft.Azure.Management.CosmosDB/tests/SessionRecords/DatabaseAccountOperationsTests/DatabaseAccountCRUDTests.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-AZURE0070",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -340,7 +724,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -356,7 +740,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -372,7 +756,23 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "0cf07d76c76f798cb2a28a40c997d915a4cbcc1c0315093933af9878daac6a5b": {
+      "signature": "0cf07d76c76f798cb2a28a40c997d915a4cbcc1c0315093933af9878daac6a5b",
+      "alternativeSignatures": [
+        "2889bbec86836d5d81b1e891ead3cb56fae19f905089a01697eda60801a02bb8"
+      ],
+      "target": "sdk/deploymentmanager/Microsoft.Azure.Management.DeploymentManager/tests/SessionRecords/EndToEndFunctionalTests/TopologyAndRolloutScenarioTest.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-AZURE0070",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -388,151 +788,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0140",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "f8a58edab9ba7cb2cd5aba1e35cafbfca9d1badf4b862b7bb1090d524337695e": {
-      "signature": "f8a58edab9ba7cb2cd5aba1e35cafbfca9d1badf4b862b7bb1090d524337695e",
-      "alternativeSignatures": [
-        "32f8a148af538ef9f27148933a70767d314ef9bf09ef99ef5f5844d584d4c79f"
-      ],
-      "target": "sdk/deviceprovisioningservices/Microsoft.Azure.Management.DeviceProvisioningServices/tests/SessionRecords/DeviceProvisioningClientLinkedHubsTests/CreateAndDelete.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-AZURE0050",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "851bec4b95652134a398ad639f28b4e05c323aeecbf0979d067e72b2c3cb507c": {
-      "signature": "851bec4b95652134a398ad639f28b4e05c323aeecbf0979d067e72b2c3cb507c",
-      "alternativeSignatures": [
-        "06b2f33e09fa16c727148b9e4f4ccd326bd6bacc3c518220062feda4e6fcfb80"
-      ],
-      "target": "sdk/deviceprovisioningservices/Microsoft.Azure.Management.DeviceProvisioningServices/tests/SessionRecords/DeviceProvisioningClientLinkedHubsTests/CreateAndDelete.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-AZURE0050",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "6963a7ac4fbe316f7d1b79cc93c8efe94b36c4d4ba551b298c4a6c2eff14f4fd": {
-      "signature": "6963a7ac4fbe316f7d1b79cc93c8efe94b36c4d4ba551b298c4a6c2eff14f4fd",
-      "alternativeSignatures": [
-        "0fa191a0f3ead3a763cbcf8f8d3149dc4e5b1a3c68d4c5108313f46ad1a7885f"
-      ],
-      "target": "sdk/deviceprovisioningservices/Microsoft.Azure.Management.DeviceProvisioningServices/tests/SessionRecords/DeviceProvisioningClientLinkedHubsTests/CreateAndDelete.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-AZURE0130",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "6228f0ec19aacc2d467886c8c8f59ca88bc46eb683ff742527f08150db097cb1": {
-      "signature": "6228f0ec19aacc2d467886c8c8f59ca88bc46eb683ff742527f08150db097cb1",
-      "alternativeSignatures": [
-        "ea2a21e4039a6efbd962cdbe877b9c4818a3b48399c555633f8a12e2822bb52a"
-      ],
-      "target": "sdk/deviceprovisioningservices/Microsoft.Azure.Management.DeviceProvisioningServices/tests/SessionRecords/DeviceProvisioningClientSharedAccessPolicyTests/ListCreateDelete.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-AZURE0050",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "9ac802c9d998f8fab35ee34fe39ec9639c8bb88b665b176dbc12ce06ab945ba5": {
-      "signature": "9ac802c9d998f8fab35ee34fe39ec9639c8bb88b665b176dbc12ce06ab945ba5",
-      "alternativeSignatures": [
-        "67682e454da5061520f3ddeea41ba4839d6a1adb09f0f8997d8a3afd0fd8813c"
-      ],
-      "target": "sdk/deviceprovisioningservices/Microsoft.Azure.Management.DeviceProvisioningServices/tests/SessionRecords/DeviceProvisioningClientSharedAccessPolicyTests/ListCreateDelete.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-AZURE0130",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "20321c543f1f75b6883cbbdcb0d3ed6c1e85f6e5543b6608800bf002295fe8f7": {
-      "signature": "20321c543f1f75b6883cbbdcb0d3ed6c1e85f6e5543b6608800bf002295fe8f7",
-      "alternativeSignatures": [
-        "152b6a05a32bf842f1a4f876120173a3da50e2706c1b586daaf03ab4dfb3a9e8"
-      ],
-      "target": "sdk/deviceprovisioningservices/Microsoft.Azure.Management.DeviceProvisioningServices/tests/SessionRecords/DeviceProvisioningClientSharedAccessPolicyTests/ListCreateDelete.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-AZURE0050",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "bb5d81a9adc100813729945a135476163093d2360ae337a83e0efdfe1478eaad": {
-      "signature": "bb5d81a9adc100813729945a135476163093d2360ae337a83e0efdfe1478eaad",
-      "alternativeSignatures": [
-        "f0a9dae1c8b4a8f6de632ef6d4666ccacbaa3cda05e24e5417cdf8fdf3dbf1f0"
-      ],
-      "target": "sdk/deviceprovisioningservices/Microsoft.Azure.Management.DeviceProvisioningServices/tests/SessionRecords/DeviceProvisioningClientSharedAccessPolicyTests/ListCreateDelete.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-AZURE0050",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "ae924f24fccf565d06e7b0abc1d1e2fcd503da5103911480711a4b34c40728ab": {
-      "signature": "ae924f24fccf565d06e7b0abc1d1e2fcd503da5103911480711a4b34c40728ab",
-      "alternativeSignatures": [
-        "b587ff01d0e3ee1cabdb82719e27772ed9f0fdaeb39e333a84a53cb24e572ffd"
-      ],
-      "target": "sdk/deviceprovisioningservices/Microsoft.Azure.Management.DeviceProvisioningServices/tests/SessionRecords/DeviceProvisioningClientSharedAccessPolicyTests/ListCreateDelete.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-AZURE0130",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "52676dca5b980859b31f2ca9ba26ac4d3ec9961d1e9340fff8ac70966b3c1813": {
-      "signature": "52676dca5b980859b31f2ca9ba26ac4d3ec9961d1e9340fff8ac70966b3c1813",
-      "alternativeSignatures": [
-        "0eed89550219600701a7743fbfc765e913071f9943eedcdb407035ed4f98c5cd"
-      ],
-      "target": "sdk/deviceprovisioningservices/Microsoft.Azure.Management.DeviceProvisioningServices/tests/SessionRecords/DeviceProvisioningClientSharedAccessPolicyTests/ListCreateDelete.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-AZURE0130",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -548,7 +804,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0140",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -564,7 +820,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0140",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -580,7 +836,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -596,7 +852,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -612,7 +868,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -628,7 +884,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -644,7 +900,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -660,7 +916,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -676,7 +932,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -692,7 +948,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -708,7 +964,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -724,7 +980,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -740,7 +996,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -756,7 +1012,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -772,7 +1028,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -788,7 +1044,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -804,7 +1060,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -820,7 +1076,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -836,7 +1092,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -852,7 +1108,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -868,7 +1124,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -884,7 +1140,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -900,126 +1156,14 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
-    "5e02a66ad7e5242f1cf678834cf98e0b2b14649bf8d71c58a109333b55c21e81": {
-      "signature": "5e02a66ad7e5242f1cf678834cf98e0b2b14649bf8d71c58a109333b55c21e81",
+    "265aaeaa7dc8d02b6ee3eddc9c882698aa4b6c60430a08597595bad2b13a1733": {
+      "signature": "265aaeaa7dc8d02b6ee3eddc9c882698aa4b6c60430a08597595bad2b13a1733",
       "alternativeSignatures": [
-        "b69c9fe89625035bc6098aecba8da3668fdf161460fd70665cad06c542c41fc8"
-      ],
-      "target": "sdk/iothub/Microsoft.Azure.Management.IotHub/tests/SessionRecords/IotHubClientTests/IotHubClient_HubCreate.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-AZURE0050",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "8a0d9bb47f2e6087d6557e30e34bf9d6b6f76b3f225c9e8f573f19c19ad6bb82": {
-      "signature": "8a0d9bb47f2e6087d6557e30e34bf9d6b6f76b3f225c9e8f573f19c19ad6bb82",
-      "alternativeSignatures": [
-        "3da27b1ac1c7117425e77d0e5abddb7b8cd2274132a5f0f3327721685c1595cc"
-      ],
-      "target": "sdk/iothub/Microsoft.Azure.Management.IotHub/tests/SessionRecords/IotHubClientTests/IotHubClient_HubCreate.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-AZURE0050",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "0c5993e3f1a4c7c3509e6258ab9d94c7be204f2492d9d8cd8752c0cbd9d41a75": {
-      "signature": "0c5993e3f1a4c7c3509e6258ab9d94c7be204f2492d9d8cd8752c0cbd9d41a75",
-      "alternativeSignatures": [
-        "a0202859386f87e3bdc830350d6ba41bac27b54ba320f14e26c4348db45d64b5"
-      ],
-      "target": "sdk/iothub/Microsoft.Azure.Management.IotHub/tests/SessionRecords/IotHubClientTests/IotHubClient_HubCreate.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-AZURE0050",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "e9725070490c039b949b2b1df19837d610c914ce3270515ea31d7b18d49a2a9a": {
-      "signature": "e9725070490c039b949b2b1df19837d610c914ce3270515ea31d7b18d49a2a9a",
-      "alternativeSignatures": [
-        "dfcaf766ab16d686f7618a763b82df6405b4a4990ca0d5f028aa44293901ffce"
-      ],
-      "target": "sdk/iothub/Microsoft.Azure.Management.IotHub/tests/SessionRecords/IotHubClientTests/IotHubClient_HubCreate.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-AZURE0050",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "84b6c92ffd96d6ea72af45acc395fd73e1917168c8375aee0ea29044b64565e9": {
-      "signature": "84b6c92ffd96d6ea72af45acc395fd73e1917168c8375aee0ea29044b64565e9",
-      "alternativeSignatures": [
-        "f7a7ac2b2be32ad285f1115c88fcd79faa05587424675eb8db1fae893e2fc8c6"
-      ],
-      "target": "sdk/iothub/Microsoft.Azure.Management.IotHub/tests/SessionRecords/IotHubClientTests/IotHubClient_HubCreate.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-AZURE0050",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "2d2e88fdfcea08eeac75a196dbef32b3eef64902cb040293afac6e67500feeb3": {
-      "signature": "2d2e88fdfcea08eeac75a196dbef32b3eef64902cb040293afac6e67500feeb3",
-      "alternativeSignatures": [
-        "ef405d75a9cd4c44f8e4ba5a8a30b06fec39468129850e9a73a36caf4e00c13e"
-      ],
-      "target": "sdk/iothub/Microsoft.Azure.Management.IotHub/tests/SessionRecords/IotHubClientTests/IotHubClient_HubCreate.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-AZURE0130",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "d5c00b0c9f823a1d5153e299d96f2723f68b4081d490fb758426c03429fdabb6": {
-      "signature": "d5c00b0c9f823a1d5153e299d96f2723f68b4081d490fb758426c03429fdabb6",
-      "alternativeSignatures": [
-        "671cb59565046fe4ea0435541d4d595d1c7b47d4b47888e31b0b95967ceae133"
-      ],
-      "target": "sdk/iothub/Microsoft.Azure.Management.IotHub/tests/SessionRecords/IotHubClientTests/IotHubClient_HubCreate.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-AZURE0050",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "3fc094ca80fd361343fcc5869e1c5a461808dd8be97346594313e01c36ff93df": {
-      "signature": "3fc094ca80fd361343fcc5869e1c5a461808dd8be97346594313e01c36ff93df",
-      "alternativeSignatures": [
-        "c0960d7f92160a42945a7a2ca229b287652fd043c8a157f42864de993f77047b"
+        "3d9f200e4dfc3a685f86c935f8f390dd823abf7264b20029ac3d0c993096b7b4"
       ],
       "target": "sdk/iothub/Microsoft.Azure.Management.IotHub/tests/SessionRecords/IotHubClientTests/IotHubClient_HubUpdate.json",
       "memberOf": [
@@ -1028,30 +1172,14 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
-    "30546f35344522234de3d3f7769bc978761258addda8adc93f3d0323f689a2ac": {
-      "signature": "30546f35344522234de3d3f7769bc978761258addda8adc93f3d0323f689a2ac",
+    "dedbbc226da839ceac9589cf41ad3d2d8506de7377cd68ca7a9448fdd01dc980": {
+      "signature": "dedbbc226da839ceac9589cf41ad3d2d8506de7377cd68ca7a9448fdd01dc980",
       "alternativeSignatures": [
-        "bd532c731ab18985bb344cfd9404fc7fe18fa0f058e49b243164335acef9f33f"
-      ],
-      "target": "sdk/iothub/Microsoft.Azure.Management.IotHub/tests/SessionRecords/IotHubClientTests/IotHubClient_HubUpdate.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-AZURE0050",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "ecb5b8a02515ed546641fac828eb16db4c7990a0c58c596e309ed95396098a9b": {
-      "signature": "ecb5b8a02515ed546641fac828eb16db4c7990a0c58c596e309ed95396098a9b",
-      "alternativeSignatures": [
-        "a93e2111cb4edd56567cc02c3c51e3527002bba2e0915fbcf68ebac3e92ffaa5"
+        "f968d93184893bfc9a5b54218622fc422f270044965b7980940a37665ce83959"
       ],
       "target": "sdk/iothub/Microsoft.Azure.Management.IotHub/tests/SessionRecords/IotHubClientTests/IotHubClient_HubUpdate.json",
       "memberOf": [
@@ -1060,14 +1188,14 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
-    "85a8e8b362587480cc41859c820a29af3ea4c5ae7d3efdd04aa54521c925012a": {
-      "signature": "85a8e8b362587480cc41859c820a29af3ea4c5ae7d3efdd04aa54521c925012a",
+    "1db07288ef291f818611c907973ed7e07733ee429b591981ca8c42c2aae3883d": {
+      "signature": "1db07288ef291f818611c907973ed7e07733ee429b591981ca8c42c2aae3883d",
       "alternativeSignatures": [
-        "dcc36cc27e32ec173dc44cd034cf93736471b9144edb6243a4bcfca2b2d8172e"
+        "4906cdfbc493e842519cca8063a7db642aa7c18d7c899baec62c8ab5739967e6"
       ],
       "target": "sdk/iothub/Microsoft.Azure.Management.IotHub/tests/SessionRecords/IotHubClientTests/IotHubClient_HubUpdate.json",
       "memberOf": [
@@ -1076,55 +1204,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "9eac6ee8b96f89213d3b23fccaaff2b608117d68296a756e3d51ddc886746f75": {
-      "signature": "9eac6ee8b96f89213d3b23fccaaff2b608117d68296a756e3d51ddc886746f75",
-      "alternativeSignatures": [
-        "a15f04e05614cbb3bb09b17bbb4765d11598da1402c6627296054244a482812a"
-      ],
-      "target": "sdk/iothub/Microsoft.Azure.Management.IotHub/tests/SessionRecords/IotHubClientTests/IotHubClient_HubUpdate.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-AZURE0050",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "29a15c3d20829fb847be00008e5246f98cb94f4f40fa737f73ae059071ec2274": {
-      "signature": "29a15c3d20829fb847be00008e5246f98cb94f4f40fa737f73ae059071ec2274",
-      "alternativeSignatures": [
-        "4e89ac2229804e2f06944bf3711c883682a4db911bb432cd4f73ed3dea85e78d"
-      ],
-      "target": "sdk/iothub/Microsoft.Azure.Management.IotHub/tests/SessionRecords/IotHubClientTests/IotHubClient_HubUpdate.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-AZURE0050",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "9c1e06436bf119260771b3f6d72580342d183d59e6698cdf1f825d58557d0741": {
-      "signature": "9c1e06436bf119260771b3f6d72580342d183d59e6698cdf1f825d58557d0741",
-      "alternativeSignatures": [
-        "3467d25a570207f1f383927c31599a62811e92a152b34b5e1985c2893f219bdb"
-      ],
-      "target": "sdk/iothub/Microsoft.Azure.Management.IotHub/tests/SessionRecords/IotHubClientTests/IotHubClient_HubUpdate.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-AZURE0050",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1140,7 +1220,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0020",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1156,7 +1236,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0020",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1172,7 +1252,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0020",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1188,7 +1268,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0140",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1204,7 +1284,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0060",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1220,7 +1300,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0060",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1236,7 +1316,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0060",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1252,7 +1332,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0060",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1268,7 +1348,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0060",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1284,7 +1364,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0060",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1300,7 +1380,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0060",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1316,7 +1396,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0060",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1332,7 +1412,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0060",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1348,7 +1428,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0060",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1364,7 +1444,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0060",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1380,7 +1460,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0060",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1396,7 +1476,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0060",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1412,7 +1492,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0060",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1428,7 +1508,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0060",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1444,7 +1524,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1460,7 +1540,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1476,7 +1556,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1492,7 +1572,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1508,7 +1588,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1524,7 +1604,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1540,7 +1620,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1556,7 +1636,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1572,7 +1652,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1588,7 +1668,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1604,7 +1684,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1620,7 +1700,71 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "8bf5e83e18e7d75cad124581b02c71be1d22331bbbb67406809832805cd56aae": {
+      "signature": "8bf5e83e18e7d75cad124581b02c71be1d22331bbbb67406809832805cd56aae",
+      "alternativeSignatures": [
+        "3f71d6f6a147624de9774eea22781c1525179eca5ba6aaeb3922e0f670abdffe"
+      ],
+      "target": "sdk/notificationhubs/Microsoft.Azure.Management.NotificationHubs/tests/SessionRecords/ScenarioTests/NotificationHubCreateGetUpdateDelete.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-GENERAL0060",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "2b1364c5d6feec72821a692cfbd6e400d99a7fdafa092054f3ff692d426ab13c": {
+      "signature": "2b1364c5d6feec72821a692cfbd6e400d99a7fdafa092054f3ff692d426ab13c",
+      "alternativeSignatures": [
+        "8c33f7335993df317dcff85880f199c0cb268dd8d1c2368c238ab1a59f7f0cfc"
+      ],
+      "target": "sdk/notificationhubs/Microsoft.Azure.Management.NotificationHubs/tests/SessionRecords/ScenarioTests/NotificationHubCreateGetUpdateDelete.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-GENERAL0060",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "74b0a5e6c4e82056f26ea010e001e1f7cbc1ed41baf7928e48dab373c99e5d8a": {
+      "signature": "74b0a5e6c4e82056f26ea010e001e1f7cbc1ed41baf7928e48dab373c99e5d8a",
+      "alternativeSignatures": [
+        "410c40237cf15c844b1837bc00e8bb8230a1c9cd8841d2e1481a2b0c0674a4d6"
+      ],
+      "target": "sdk/notificationhubs/Microsoft.Azure.Management.NotificationHubs/tests/SessionRecords/ScenarioTests/NotificationHubCreateGetUpdateDelete.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-GENERAL0060",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "f3c6aa7aed9bf7f7cc58ee678d73bd720ae3d7f5fc8d99c7a04fba5ca9ced6e3": {
+      "signature": "f3c6aa7aed9bf7f7cc58ee678d73bd720ae3d7f5fc8d99c7a04fba5ca9ced6e3",
+      "alternativeSignatures": [
+        "d7d60f2f42b80eea5c790691407e6b506dae388eccaff24ee94d49392a38d9b3"
+      ],
+      "target": "sdk/notificationhubs/Microsoft.Azure.Management.NotificationHubs/tests/SessionRecords/ScenarioTests/NotificationHubCreateGetUpdateDelete.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-GENERAL0060",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1636,7 +1780,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1652,7 +1796,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1668,7 +1812,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1684,7 +1828,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1700,7 +1844,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1716,7 +1860,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1732,7 +1876,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1748,7 +1892,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1764,7 +1908,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1780,7 +1924,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1796,7 +1940,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1812,7 +1956,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1828,7 +1972,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1844,7 +1988,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1860,7 +2004,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1876,7 +2020,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1892,7 +2036,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1908,7 +2052,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1924,7 +2068,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1940,7 +2084,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1956,7 +2100,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1972,7 +2116,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -1988,7 +2132,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2004,7 +2148,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2020,7 +2164,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2036,7 +2180,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2052,7 +2196,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2068,7 +2212,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2084,7 +2228,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2100,7 +2244,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2116,7 +2260,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0060",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2132,7 +2276,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2148,119 +2292,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "f8e324b9f9b78c2e377614d8093b6117ee59c8883688ada0a9c7a432be01dff2": {
-      "signature": "f8e324b9f9b78c2e377614d8093b6117ee59c8883688ada0a9c7a432be01dff2",
-      "alternativeSignatures": [
-        "da44a5a1de172765ad6260b423f0a6ed8eb9f126ab4b5f800369030618d44ee8"
-      ],
-      "target": "sdk/search/Microsoft.Azure.Management.Search/tests/SessionRecords/AdminKeyTests/CanGetAdminKeys.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-GENERAL0060",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "d2380b3ec177985cba7bdce89003fe288012d834473d6d05706b28942bed8991": {
-      "signature": "d2380b3ec177985cba7bdce89003fe288012d834473d6d05706b28942bed8991",
-      "alternativeSignatures": [
-        "a8edb05d1cbd2b5e02b9dafd2002b5142e2e50e9d3f0f8ccb48b46fba21ce8e4"
-      ],
-      "target": "sdk/search/Microsoft.Azure.Management.Search/tests/SessionRecords/AdminKeyTests/CanRegenerateAdminKeys.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-GENERAL0060",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "a4ca3d3f9b453ecb3fadf7e71589da96251f91ee99d3289fa91d053c09c3d240": {
-      "signature": "a4ca3d3f9b453ecb3fadf7e71589da96251f91ee99d3289fa91d053c09c3d240",
-      "alternativeSignatures": [
-        "ee654d8d90f89c06544e83fe65d3dfe8232c0c0d9eb882626707c9e783a90fae"
-      ],
-      "target": "sdk/search/Microsoft.Azure.Management.Search/tests/SessionRecords/AdminKeyTests/CanRegenerateAdminKeys.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-GENERAL0060",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "3e3537cd4329305f83503e3a5813b7d54d25d5b600f1cf2bf8d7eb5b0226a29e": {
-      "signature": "3e3537cd4329305f83503e3a5813b7d54d25d5b600f1cf2bf8d7eb5b0226a29e",
-      "alternativeSignatures": [
-        "a4e74b020ab6336dd0dafa1ecc8b5dc5528f907d4e5522c3571b5ae09ee253da"
-      ],
-      "target": "sdk/search/Microsoft.Azure.Management.Search/tests/SessionRecords/AdminKeyTests/CanRegenerateAdminKeys.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-GENERAL0060",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "5bfe647d0d59bcc6a7a70b3c571fe0aea649ec5ab2c19d0135c6b73b2565c6bc": {
-      "signature": "5bfe647d0d59bcc6a7a70b3c571fe0aea649ec5ab2c19d0135c6b73b2565c6bc",
-      "alternativeSignatures": [
-        "4833afaf088e81ef57d3a17bc050b7bf59bb8ecd6769a31af61b9d1e75b96cd2"
-      ],
-      "target": "sdk/search/Microsoft.Azure.Management.Search/tests/SessionRecords/QueryKeyTests/CanCreateAndDeleteQueryKeys.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-GENERAL0060",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "ec9bb23f047faedd58e52004965116d6e8ad336f8d757f775667df22cac4fb8d": {
-      "signature": "ec9bb23f047faedd58e52004965116d6e8ad336f8d757f775667df22cac4fb8d",
-      "alternativeSignatures": [
-        "e0a46cc05914ac0b231b1806c7aa65d408fb803dd16296623c38bf0b2a57206a"
-      ],
-      "target": "sdk/search/Microsoft.Azure.Management.Search/tests/SessionRecords/QueryKeyTests/CanListQueryKeys.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-GENERAL0060",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
-      "expirationDate": null,
-      "type": null
-    },
-    "8467e0380193b060da4fbf8a7bfd7914e5e2290532730ae1909f84303cac8dca": {
-      "signature": "8467e0380193b060da4fbf8a7bfd7914e5e2290532730ae1909f84303cac8dca",
-      "alternativeSignatures": [
-        "f975d74b119b575240984b3bf0baea237fc0d8130a61c7f45cd63ba2741d7c12"
-      ],
-      "target": "sdk/search/Microsoft.Azure.Management.Search/tests/SessionRecords/QueryKeyTests/DeleteQueryKeyIsIdempotent.json",
-      "memberOf": [
-        "baseline"
-      ],
-      "tool": "credscan",
-      "ruleId": "CSCAN-GENERAL0060",
-      "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2276,7 +2308,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0050",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2292,7 +2324,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2308,7 +2340,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2324,7 +2356,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2340,7 +2372,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2356,7 +2388,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2372,7 +2404,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2388,7 +2420,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2404,7 +2436,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2420,7 +2452,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2436,7 +2468,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2452,7 +2484,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2468,7 +2500,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2484,7 +2516,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2500,7 +2532,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2516,7 +2548,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2532,7 +2564,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2548,7 +2580,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0030",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2564,7 +2596,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2580,7 +2612,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2596,7 +2628,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2612,7 +2644,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2628,7 +2660,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2644,7 +2676,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2660,7 +2692,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2676,7 +2708,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2692,7 +2724,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0130",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2708,7 +2740,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2724,7 +2756,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2740,7 +2772,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2756,7 +2788,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2772,7 +2804,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2788,7 +2820,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2804,7 +2836,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2820,7 +2852,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2836,7 +2868,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2852,7 +2884,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2868,7 +2900,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2884,7 +2916,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2900,7 +2932,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2916,7 +2948,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2932,7 +2964,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2948,7 +2980,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0140",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2964,7 +2996,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0140",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2980,7 +3012,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -2996,7 +3028,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -3012,7 +3044,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -3028,7 +3060,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -3044,7 +3076,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -3060,7 +3092,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -3076,7 +3108,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -3092,7 +3124,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -3108,7 +3140,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -3124,7 +3156,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -3140,7 +3172,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -3156,7 +3188,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -3172,7 +3204,39 @@
       "tool": "credscan",
       "ruleId": "CSCAN-AZURE0070",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "5bda8f2a14101c2d3ecdde17ca1c3950e9f3ffd561d224386fdb706709b5df52": {
+      "signature": "5bda8f2a14101c2d3ecdde17ca1c3950e9f3ffd561d224386fdb706709b5df52",
+      "alternativeSignatures": [
+        "b77d54197eb8f2a14b966f1511e587a26e98da601779a8eea1b4f74996ee58b2"
+      ],
+      "target": "sdk/storage/Microsoft.Azure.Management.Storage/tests/SessionRecords/StorageAccountTests/StorageAccountSFTP_LocalUser.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-AZURE0070",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "285f917fbb4bb0b777e02c3d30f85915ca1099b76de75cd01fb7407f46b3a2f4": {
+      "signature": "285f917fbb4bb0b777e02c3d30f85915ca1099b76de75cd01fb7407f46b3a2f4",
+      "alternativeSignatures": [
+        "0e0189ce814519f14f2d452024022385e222be422e30e6147927f9b91b5e3d71"
+      ],
+      "target": "sdk/storage/Microsoft.Azure.Management.Storage/tests/SessionRecords/StorageAccountTests/StorageAccountSFTP_LocalUser.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-AZURE0070",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -3188,7 +3252,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0140",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -3204,7 +3268,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0140",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -3220,7 +3284,7 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0140",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     },
@@ -3236,7 +3300,23 @@
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0060",
       "justification": null,
-      "createdDate": "2021-12-01 07:45:09Z",
+      "createdDate": "2022-02-18 01:56:27Z",
+      "expirationDate": null,
+      "type": null
+    },
+    "bc11a09c10500d4e9b912a79251711b3fb11f758ce5f120cb7bf7277801c481f": {
+      "signature": "bc11a09c10500d4e9b912a79251711b3fb11f758ce5f120cb7bf7277801c481f",
+      "alternativeSignatures": [
+        "3dc2cba29ccbcb4f905f842d498cf2f03cce008ecfca54040004425d7e5bae66"
+      ],
+      "target": "sdk/websites/Microsoft.Azure.Management.WebSites/tests/SessionRecords/WebSiteScenarioTests/GetAndSetSensitiveSiteConfigs.json",
+      "memberOf": [
+        "baseline"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-GENERAL0060",
+      "justification": null,
+      "createdDate": "2022-02-18 01:56:27Z",
       "expirationDate": null,
       "type": null
     }

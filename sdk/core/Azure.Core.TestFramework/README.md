@@ -67,8 +67,6 @@ public class AppConfigurationTestEnvironment : TestEnvironment
     public string Endpoint => GetRecordedVariable("APPCONFIGURATION_ENDPOINT");
     // Variables retrieved using GetVariable will not be recorded but the method will throw if the variable is not set
     public string SystemAssignedVault => GetVariable("IDENTITYTEST_TEST_SYSTEMASSIGNEDVAULT");
-    // Variables retrieved using GetOptionalVariable will not be recorded and the method will return null if variable is not set
-    public string TestPassword => GetOptionalVariable("AZURE_IDENTITY_TEST_PASSWORD") ?? "SANITIZED";
 }
 ```
 

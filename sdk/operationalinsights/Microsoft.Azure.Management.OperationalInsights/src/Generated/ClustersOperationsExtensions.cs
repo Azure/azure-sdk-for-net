@@ -336,6 +336,52 @@ namespace Microsoft.Azure.Management.OperationalInsights
             }
 
             /// <summary>
+            /// Updates a Log Analytics cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='clusterName'>
+            /// Name of the Log Analytics Cluster.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters required to patch a Log Analytics cluster.
+            /// </param>
+            public static Cluster BeginUpdate(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterPatch parameters)
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates a Log Analytics cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='clusterName'>
+            /// Name of the Log Analytics Cluster.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters required to patch a Log Analytics cluster.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Cluster> BeginUpdateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterPatch parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets Log Analytics clusters in a resource group.
             /// </summary>
             /// <param name='operations'>

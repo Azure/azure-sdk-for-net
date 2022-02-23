@@ -12,15 +12,18 @@ This script will do a number of things when ran:
   - If there is existing release work item it will update it and if not it will create one.
 - It will validate that the changelog has a entry for the package version that you want to release as well as a timestamp.
 
+For more information see https://aka.ms/azsdk/mark-release-status.
+
 .PARAMETER PackageName
 The full package name of the package you want to prepare for release. (i.e Azure.Core, azure-core, @azure/core-https)
 
 .PARAMETER ServiceDirectory
-Optional: The service directory where the package lives (e.g. /sdk/<service directory>/<package>). If a service directory isn't provided the script
-will search for the package project by traversing all the packages under /sdk/, so the service directory is only a scoping mechanism.
+Optional: Provide a service directory to scope the search of the entire repo to speed-up the project search. This should be the directory
+name under the 'sdk' folder (i.e for the core package which lives under 'sdk\core' the value to pass would be 'core').
 
 .PARAMETER ReleaseDate
-Optional: If not shipping on the normal first Tuesday of the month you can specify a specific release date in the form of "MM/dd/yyyy".
+Optional: Provide a specific date for when you plan to release the package. Should be the date (MM/dd/yyyy) that the given package is going to ship.
+If one isn't provided, then it will compute the next ship date or today's date if past the ship date for the month as the planned date.
 
 .PARAMETER ReleaseTrackingOnly
 Optional: If this switch is passed then the script will only update the release work items and not update the versions in the local repo or validate the changelog.
@@ -151,7 +154,7 @@ if ($LASTEXITCODE -ne 0) {
 
 # Check API status if version is GA
 if (!$newVersionParsed.IsPrerelease)
-{ 
+{
   try
   {
     az account show *> $null

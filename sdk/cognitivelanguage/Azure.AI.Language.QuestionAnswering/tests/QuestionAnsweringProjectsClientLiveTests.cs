@@ -38,7 +38,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         }
 
         [RecordedTest]
-        [Ignore(reason: "Disabled until bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26401")]
         public async Task DeployProject()
         {
             string testProjectName = CreateTestProjectName();
@@ -60,7 +59,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                             }
                         }
                 });
-            Operation<BinaryData> updateSourcesOperation = await Client.UpdateSourcesAsync(true, testProjectName, updateSourcesRequestContent);
+            Operation<BinaryData> updateSourcesOperation = await Client.UpdateSourcesAsync(false, testProjectName, updateSourcesRequestContent);
+            await updateSourcesOperation.WaitForCompletionAsync();
 
             string testDeploymentName = "production";
             Operation<BinaryData> deploymentOperation = await Client.DeployProjectAsync(false, testProjectName, testDeploymentName);
