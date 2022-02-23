@@ -134,16 +134,28 @@ result = client.metrics.get(application, metricId)
 In `Azure.Monitor.Query` v1.0.x:
 
 ```csharp
-metrics_resource_uri = os.environ.get('METRICS_RESOURCE_URI')
-result = metrics_query_client.query_resource(
-    metrics_resource_uri,
-    metric_names=["Ingress"],
-    timespan=timedelta(hours=2),
-    granularity=timedelta(minutes=5),
-    aggregations=[MetricAggregationType.AVERAGE],
-    )
+using Azure;
+using Azure.Monitor.Query;
+using Azure.Monitor.Query.Models;
+
+// code omitted for brevity
+
+Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
+	workspaceId,
+	"AzureActivity | top 10 by TimeGenerated",
+	new QueryTimeRange(TimeSpan.FromDays(1)));
+LogsTable table = response.Value.Table;
+IReadOnlyList<LogsTableRow> rows = table.Rows;
+
+foreach (LogsTableRow row in rows)
+{
+    Console.WriteLine(row.GetString(0)); // Access a particular element with index
+    Console.WriteLine(row.GetTimeSpan(1)); 
+    Console.WriteLine(row.ToString());
+}
+```
 ```
 
 ## Additional samples
 
-For more examples, see [Samples for Azure.Monitor.Query](https://github.com/Azure/azure-sdk-for-.NET/tree/main/sdk/monitor/Azure.Monitor.Query/samples).
+For more examples, see [Samples for Azure.Monitor.Query](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.Query#examples).
