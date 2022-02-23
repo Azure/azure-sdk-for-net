@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
             Optional<string> name = default;
             Optional<string> family = default;
-            Optional<int> vCPUs = default;
+            Optional<int> vcpUs = default;
             Optional<int> gpus = default;
             Optional<int> osVhdSizeMB = default;
             Optional<int> maxResourceVolumeMB = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vCPUs = property.Value.GetInt32();
+                    vcpUs = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("gpus"))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new VirtualMachineSize(name.Value, family.Value, Optional.ToNullable(vCPUs), Optional.ToNullable(gpus), Optional.ToNullable(osVhdSizeMB), Optional.ToNullable(maxResourceVolumeMB), Optional.ToNullable(memoryGB), Optional.ToNullable(lowPriorityCapable), Optional.ToNullable(premiumIO), estimatedVMPrices.Value, Optional.ToList(supportedComputeTypes));
+            return new VirtualMachineSize(name.Value, family.Value, Optional.ToNullable(vcpUs), Optional.ToNullable(gpus), Optional.ToNullable(osVhdSizeMB), Optional.ToNullable(maxResourceVolumeMB), Optional.ToNullable(memoryGB), Optional.ToNullable(lowPriorityCapable), Optional.ToNullable(premiumIO), estimatedVMPrices.Value, Optional.ToList(supportedComputeTypes));
         }
     }
 }

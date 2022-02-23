@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearningServices.Models;
 using Azure.ResourceManager.Models;
 
@@ -59,11 +58,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<Models.Sku> sku = default;
-            Optional<SystemData> systemData = default;
             Optional<Compute> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -106,16 +105,6 @@ namespace Azure.ResourceManager.MachineLearningServices
                     sku = Models.Sku.DeserializeSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -128,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -141,8 +130,13 @@ namespace Azure.ResourceManager.MachineLearningServices
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
             }
-            return new ComputeResourceData(id, name, type, identity.Value, location.Value, Optional.ToDictionary(tags), sku.Value, systemData, properties.Value);
+            return new ComputeResourceData(id, name, type, systemData, identity.Value, location.Value, Optional.ToDictionary(tags), sku.Value, properties.Value);
         }
     }
 }

@@ -7,8 +7,8 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -53,6 +53,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> category = default;
             Optional<string> target = default;
             Optional<string> authType = default;
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -73,6 +74,11 @@ namespace Azure.ResourceManager.MachineLearningServices
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -118,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                     continue;
                 }
             }
-            return new WorkspaceConnectionData(id, name, type, category.Value, target.Value, authType.Value, value.Value, Optional.ToNullable(valueFormat));
+            return new WorkspaceConnectionData(id, name, type, systemData, category.Value, target.Value, authType.Value, value.Value, Optional.ToNullable(valueFormat));
         }
     }
 }

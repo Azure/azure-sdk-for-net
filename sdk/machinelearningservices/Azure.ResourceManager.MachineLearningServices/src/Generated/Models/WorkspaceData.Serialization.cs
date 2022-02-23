@@ -5,10 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearningServices.Models;
 using Azure.ResourceManager.Models;
 
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<Models.Sku> sku = default;
-            Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> workspaceId = default;
             Optional<string> description = default;
             Optional<string> friendlyName = default;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             Optional<string> primaryUserAssignedIdentity = default;
             Optional<string> tenantId = default;
             Optional<bool> storageHnsEnabled = default;
-            Optional<string> mlFlowTrackingUri = default;
+            Optional<Uri> mlFlowTrackingUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -214,19 +214,9 @@ namespace Azure.ResourceManager.MachineLearningServices
                     sku = Models.Sku.DeserializeSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -237,6 +227,11 @@ namespace Azure.ResourceManager.MachineLearningServices
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -435,14 +430,19 @@ namespace Azure.ResourceManager.MachineLearningServices
                         }
                         if (property0.NameEquals("mlFlowTrackingUri"))
                         {
-                            mlFlowTrackingUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            mlFlowTrackingUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new WorkspaceData(id, name, type, identity.Value, location.Value, Optional.ToDictionary(tags), sku.Value, systemData, workspaceId.Value, description.Value, friendlyName.Value, keyVault.Value, applicationInsights.Value, containerRegistry.Value, storageAccount.Value, discoveryUrl.Value, Optional.ToNullable(provisioningState), encryption.Value, Optional.ToNullable(hbiWorkspace), serviceProvisionedResourceGroup.Value, Optional.ToNullable(privateLinkCount), imageBuildCompute.Value, Optional.ToNullable(allowPublicAccessWhenBehindVnet), Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), notebookInfo.Value, serviceManagedResourcesSettings.Value, primaryUserAssignedIdentity.Value, tenantId.Value, Optional.ToNullable(storageHnsEnabled), mlFlowTrackingUri.Value);
+            return new WorkspaceData(id, name, type, systemData, identity.Value, location.Value, Optional.ToDictionary(tags), sku.Value, workspaceId.Value, description.Value, friendlyName.Value, keyVault.Value, applicationInsights.Value, containerRegistry.Value, storageAccount.Value, discoveryUrl.Value, Optional.ToNullable(provisioningState), encryption.Value, Optional.ToNullable(hbiWorkspace), serviceProvisionedResourceGroup.Value, Optional.ToNullable(privateLinkCount), imageBuildCompute.Value, Optional.ToNullable(allowPublicAccessWhenBehindVnet), Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), notebookInfo.Value, serviceManagedResourcesSettings.Value, primaryUserAssignedIdentity.Value, tenantId.Value, Optional.ToNullable(storageHnsEnabled), mlFlowTrackingUri.Value);
         }
     }
 }

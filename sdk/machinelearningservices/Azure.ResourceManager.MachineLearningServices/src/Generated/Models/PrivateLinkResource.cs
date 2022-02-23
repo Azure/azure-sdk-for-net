@@ -7,13 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> A private link resource. </summary>
-    public partial class PrivateLinkResource : Resource
+    public partial class PrivateLinkResource : ResourceData
     {
         /// <summary> Initializes a new instance of PrivateLinkResource. </summary>
         public PrivateLinkResource()
@@ -27,21 +26,20 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
         /// <param name="tags"> Contains resource tags defined as key/value pairs. </param>
         /// <param name="sku"> The sku of the workspace. </param>
-        /// <param name="systemData"> System data. </param>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        internal PrivateLinkResource(ResourceIdentifier id, string name, ResourceType type, Identity identity, string location, IDictionary<string, string> tags, Sku sku, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, type)
+        internal PrivateLinkResource(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, Identity identity, string location, IDictionary<string, string> tags, Sku sku, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, type, systemData)
         {
             Identity = identity;
             Location = location;
             Tags = tags;
             Sku = sku;
-            SystemData = systemData;
             GroupId = groupId;
             RequiredMembers = requiredMembers;
             RequiredZoneNames = requiredZoneNames;
@@ -55,8 +53,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public IDictionary<string, string> Tags { get; }
         /// <summary> The sku of the workspace. </summary>
         public Sku Sku { get; set; }
-        /// <summary> System data. </summary>
-        public SystemData SystemData { get; }
         /// <summary> The private link resource group id. </summary>
         public string GroupId { get; }
         /// <summary> The private link resource required member names. </summary>

@@ -5,14 +5,14 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.MachineLearningServices.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing the WorkspaceConnection data model. </summary>
-    public partial class WorkspaceConnectionData : Resource
+    public partial class WorkspaceConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of WorkspaceConnectionData. </summary>
         public WorkspaceConnectionData()
@@ -23,12 +23,13 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="category"> Category of the workspace connection. </param>
         /// <param name="target"> Target of the workspace connection. </param>
         /// <param name="authType"> Authorization type of the workspace connection. </param>
         /// <param name="value"> Value details of the workspace connection. </param>
         /// <param name="valueFormat"> format for the workspace connection value. </param>
-        internal WorkspaceConnectionData(ResourceIdentifier id, string name, ResourceType type, string category, string target, string authType, string value, ValueFormat? valueFormat) : base(id, name, type)
+        internal WorkspaceConnectionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string category, string target, string authType, string value, ValueFormat? valueFormat) : base(id, name, type, systemData)
         {
             Category = category;
             Target = target;

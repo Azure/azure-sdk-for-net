@@ -7,14 +7,13 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearningServices.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing the ComputeResource data model. </summary>
-    public partial class ComputeResourceData : Resource
+    public partial class ComputeResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of ComputeResourceData. </summary>
         public ComputeResourceData()
@@ -26,19 +25,18 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
         /// <param name="tags"> Contains resource tags defined as key/value pairs. </param>
         /// <param name="sku"> The sku of the workspace. </param>
-        /// <param name="systemData"> System data. </param>
         /// <param name="properties"> Compute properties. </param>
-        internal ComputeResourceData(ResourceIdentifier id, string name, ResourceType type, Identity identity, string location, IDictionary<string, string> tags, Models.Sku sku, SystemData systemData, Compute properties) : base(id, name, type)
+        internal ComputeResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, Identity identity, string location, IDictionary<string, string> tags, Models.Sku sku, Compute properties) : base(id, name, type, systemData)
         {
             Identity = identity;
             Location = location;
             Tags = tags;
             Sku = sku;
-            SystemData = systemData;
             Properties = properties;
         }
 
@@ -50,8 +48,6 @@ namespace Azure.ResourceManager.MachineLearningServices
         public IDictionary<string, string> Tags { get; }
         /// <summary> The sku of the workspace. </summary>
         public Models.Sku Sku { get; set; }
-        /// <summary> System data. </summary>
-        public SystemData SystemData { get; }
         /// <summary> Compute properties. </summary>
         public Compute Properties { get; set; }
     }

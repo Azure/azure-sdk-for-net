@@ -15,77 +15,37 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Capacity))
+            if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("capacity");
-                writer.WriteNumberValue(Capacity.Value);
-            }
-            if (Optional.IsDefined(Family))
-            {
-                writer.WritePropertyName("family");
-                writer.WriteStringValue(Family);
-            }
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Size))
-            {
-                writer.WritePropertyName("size");
-                writer.WriteStringValue(Size);
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier");
-                writer.WriteStringValue(Tier.Value.ToSerialString());
+                writer.WriteStringValue(Tier);
             }
             writer.WriteEndObject();
         }
 
         internal static Sku DeserializeSku(JsonElement element)
         {
-            Optional<int> capacity = default;
-            Optional<string> family = default;
-            string name = default;
-            Optional<string> size = default;
-            Optional<SkuTier> tier = default;
+            Optional<string> name = default;
+            Optional<string> tier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("capacity"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    capacity = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("family"))
-                {
-                    family = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("size"))
-                {
-                    size = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("tier"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    tier = property.Value.GetString().ToSkuTier();
+                    tier = property.Value.GetString();
                     continue;
                 }
             }
-            return new Sku(Optional.ToNullable(capacity), family.Value, name, size.Value, Optional.ToNullable(tier));
+            return new Sku(name.Value, tier.Value);
         }
     }
 }
