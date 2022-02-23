@@ -55,6 +55,29 @@ namespace Azure.Search.Documents.Indexes.Models
             SynonymMapCounter = synonymMapCounter;
         }
 
+        /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
+        /// <param name="aliasCounter"> Total number of aliases. </param>
+        /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
+        /// <param name="indexCounter"> Total number of indexes. </param>
+        /// <param name="indexerCounter"> Total number of indexers. </param>
+        /// <param name="dataSourceCounter"> Total number of data sources. </param>
+        /// <param name="storageSizeCounter"> Total size of used storage in bytes. </param>
+        /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
+        /// <param name="skillsetCounter"> Total number of skillsets. </param>
+        internal SearchServiceCounters(SearchResourceCounter aliasCounter, SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter, SearchResourceCounter skillsetCounter)
+        {
+            AliasCounter = aliasCounter;
+            DocumentCounter = documentCounter;
+            IndexCounter = indexCounter;
+            IndexerCounter = indexerCounter;
+            DataSourceCounter = dataSourceCounter;
+            StorageSizeCounter = storageSizeCounter;
+            SynonymMapCounter = synonymMapCounter;
+            SkillsetCounter = skillsetCounter;
+        }
+
+        /// <summary> Total number of aliases. </summary>
+        public SearchResourceCounter AliasCounter { get; }
         /// <summary> Total number of documents across all indexes in the service. </summary>
         public SearchResourceCounter DocumentCounter { get; }
         /// <summary> Total number of indexes. </summary>

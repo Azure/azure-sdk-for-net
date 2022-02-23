@@ -1762,6 +1762,13 @@ namespace Azure.Search.Documents.Indexes.Models
         public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? SearchAnalyzerName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SynonymMapNames { get { throw null; } }
     }
+    public partial class SearchAlias
+    {
+        public SearchAlias(string name, System.Collections.Generic.IEnumerable<string> indexes) { }
+        public string ETag { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Indexes { get { throw null; } }
+        public string Name { get { throw null; } set { } }
+    }
     public partial class SearchField
     {
         public SearchField(string name, Azure.Search.Documents.Indexes.Models.SearchFieldDataType type) { }
@@ -1991,6 +1998,7 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchServiceCounters
     {
         internal SearchServiceCounters() { }
+        public Azure.Search.Documents.Indexes.Models.SearchResourceCounter AliasCounter { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.SearchResourceCounter DataSourceCounter { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.SearchResourceCounter DocumentCounter { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.SearchResourceCounter IndexCounter { get { throw null; } }
@@ -2951,6 +2959,7 @@ namespace Azure.Search.Documents.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.SearchServiceCounters SearchServiceCounters(Azure.Search.Documents.Indexes.Models.SearchResourceCounter documentCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter indexCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter indexerCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter dataSourceCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter storageSizeCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter synonymMapCounter) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchServiceCounters SearchServiceCounters(Azure.Search.Documents.Indexes.Models.SearchResourceCounter documentCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter indexCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter indexerCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter dataSourceCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter storageSizeCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter synonymMapCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter skillsetCounter) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.SearchServiceCounters SearchServiceCounters(Azure.Search.Documents.Indexes.Models.SearchResourceCounter aliasCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter documentCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter indexCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter indexerCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter dataSourceCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter storageSizeCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter synonymMapCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter skillsetCounter = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchServiceLimits SearchServiceLimits(int? maxFieldsPerIndex, int? maxFieldNestingDepthPerIndex, int? maxComplexCollectionFieldsPerIndex, int? maxComplexObjectsInCollectionsPerDocument) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchServiceStatistics SearchServiceStatistics(Azure.Search.Documents.Indexes.Models.SearchServiceCounters counters, Azure.Search.Documents.Indexes.Models.SearchServiceLimits limits) { throw null; }
         public static Azure.Search.Documents.Models.SearchSuggestion<T> SearchSuggestion<T>(T document, string text) { throw null; }
