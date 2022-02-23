@@ -35,7 +35,7 @@ namespace Azure
         /// that is a copy of the passed-in options.
         /// <paramref name="options">The RequestOptions to copy.</paramref>
         /// </summary>
-        public RequestOptions(RequestOptions options)
+        protected RequestOptions(RequestOptions options)
         {
             _frozen = options._frozen;
             _statusCodes = options._statusCodes;
@@ -64,8 +64,8 @@ namespace Azure
         }
 
         /// <summary>
-        /// Customizes the <see cref="ResponseClassifier"/> for this operation.
-        /// Adding a classifier changes the default classification behavior so that it considers
+        /// Customizes the <see cref="ResponseClassifier"/> for this operation to change
+        /// the default <see cref="Response"/> classification behavior so that it considers
         /// the passed-in status code to be an error or not, as specified.
         /// This is useful for cases where you'd like to prevent specific response status codes from being treated as errors by
         /// logging and distributed tracing policies -- that is, if a response is not classified as an error, it will not appear as an error in
@@ -73,13 +73,16 @@ namespace Azure
         /// </summary>
         /// <param name="statusCode">The status code to customize classification for.</param>
         /// <param name="isError">Whether the passed-in status code should be classified as an error.</param>
+        /// <exception cref="ArgumentOutOfRangeException">statusCode is not between 100 and 599 (inclusive).</exception>
+        /// <exception cref="InvalidOperationException">If this method is called after the <see cref="RequestOptions"/> has been
+        /// used in a method call.</exception>
         public void AddClassifier(int statusCode, bool isError)
         {
             Argument.AssertInRange(statusCode, 100, 599, nameof(statusCode));
 
             if (_frozen)
             {
-                throw new InvalidOperationException("Cannot modify this RequestContext after it has been used in a method call.");
+                throw new InvalidOperationException("Cannot modify classifiers after this type has been used in a method call.");
             }
 
             int length = _statusCodes == null ? 0 : _statusCodes.Length;
@@ -98,11 +101,13 @@ namespace Azure
         /// logs or distributed traces.
         /// </summary>
         /// <param name="classifier">The custom classifier.</param>
+        /// <exception cref="InvalidOperationException">If this method is called after the <see cref="RequestOptions"/> has been
+        /// used in a method call.</exception>
         public void AddClassifier(ResponseClassificationHandler classifier)
         {
             if (_frozen)
             {
-                throw new InvalidOperationException("Cannot modify this RequestContext after it has been used in a method call.");
+                throw new InvalidOperationException("Cannot modify classifiers after this type has been used in a method call.");
             }
 
             int length = _handlers == null ? 0 : _handlers.Length;
@@ -116,9 +121,6 @@ namespace Azure
             _frozen = true;
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="classifier"></param>
         internal CoreResponseClassifier Apply(CoreResponseClassifier classifier)
         {
             if (_statusCodes == null && _handlers == null)

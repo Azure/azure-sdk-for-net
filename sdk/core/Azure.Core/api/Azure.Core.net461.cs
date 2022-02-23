@@ -212,7 +212,7 @@ namespace Azure
     public partial class RequestOptions
     {
         public RequestOptions() { }
-        public RequestOptions(Azure.RequestOptions options) { }
+        protected RequestOptions(Azure.RequestOptions options) { }
         public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
         public void AddClassifier(Azure.Core.ResponseClassificationHandler classifier) { }
         public void AddClassifier(int statusCode, bool isError) { }
