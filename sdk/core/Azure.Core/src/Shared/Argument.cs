@@ -213,24 +213,21 @@ namespace Azure.Core
             return value;
         }
 
-#nullable enable
-        public static void AssertHasOnlySupportedHeaders(RequestConditions? requestConditions, string paramName, string[] supportedHeaders)
+        /// <summary>
+        /// Throws if <paramref name="value"/> is not null.
+        /// </summary>
+        /// <param name="value">The value to validate.</param>
+        /// <param name="name">The name of the parameter.</param>
+        /// <exception cref="ArgumentException"><paramref name="value"/> is not null.</exception>
+#if AZURE_NULLABLE
+        public static void AssertNull<T>([AllowNull] T value, string name)
+#else
+        public static void AssertNull<T>(T value, string name, string message)
+#endif
         {
-            if (requestConditions != null)
+            if (value is not null)
             {
-                AssertHasNoUnsupportedHeader(requestConditions.IfMatch, paramName, supportedHeaders, HttpHeader.Names.IfMatch);
-                AssertHasNoUnsupportedHeader(requestConditions.IfNoneMatch, paramName, supportedHeaders, HttpHeader.Names.IfNoneMatch);
-                AssertHasNoUnsupportedHeader(requestConditions.IfModifiedSince, paramName, supportedHeaders, HttpHeader.Names.IfModifiedSince);
-                AssertHasNoUnsupportedHeader(requestConditions.IfUnmodifiedSince, paramName, supportedHeaders, HttpHeader.Names.IfUnmodifiedSince);
-            }
-        }
-#nullable disable
-
-        private static void AssertHasNoUnsupportedHeader<T>(T? value, string paramName, string[] supportedHeaders, string unsupportedHeader) where T : struct
-        {
-            if (value.HasValue && !Array.Exists(supportedHeaders, element => element == unsupportedHeader))
-            {
-                throw new ArgumentException($"{unsupportedHeader} header is not supported. Supported headers are: {string.Join(", ", supportedHeaders)}.", paramName);
+                throw new ArgumentException(message, name);
             }
         }
     }
