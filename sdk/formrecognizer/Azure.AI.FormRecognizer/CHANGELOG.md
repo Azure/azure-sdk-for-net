@@ -3,6 +3,7 @@
 ## 4.0.0-beta.4 (Unreleased)
 
 ### Features Added
+- Added `DocumentAnalysisClient` integration for ASP.NET Core (https://github.com/azure/azure-sdk-for-net/issues/27123).
 
 ### Breaking Changes
 
