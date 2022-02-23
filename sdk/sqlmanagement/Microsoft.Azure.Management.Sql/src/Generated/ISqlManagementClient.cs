@@ -667,5 +667,10 @@ namespace Microsoft.Azure.Management.Sql
         /// </summary>
         IServerTrustCertificatesOperations ServerTrustCertificates { get; }
 
+        /// <summary>
+        /// Gets the IIPv6FirewallRulesOperations.
+        /// </summary>
+        IIPv6FirewallRulesOperations IPv6FirewallRules { get; }
+
     }
 }

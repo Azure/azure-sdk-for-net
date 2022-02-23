@@ -46,13 +46,14 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "ElasticPoolDatabaseActivities", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "ElasticPoolOperations", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ElasticPools", "2014-04-01"),
-                new Tuple<string, string, string>("Sql", "ElasticPools", "2020-11-01-preview"),
+                new Tuple<string, string, string>("Sql", "ElasticPools", "2021-08-01-preview"),
                 new Tuple<string, string, string>("Sql", "EncryptionProtectors", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ExtendedDatabaseBlobAuditingPolicies", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ExtendedServerBlobAuditingPolicies", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "FailoverGroups", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "FirewallRules", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "GeoBackupPolicies", "2014-04-01"),
+                new Tuple<string, string, string>("Sql", "IPv6FirewallRules", "2021-08-01-preview"),
                 new Tuple<string, string, string>("Sql", "InstanceFailoverGroups", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "InstancePools", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "JobAgents", "2020-11-01-preview"),
@@ -147,11 +148,11 @@ namespace Microsoft.Azure.Management.Sql
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@3.5.1";
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/sql/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\vs\\gh_repos\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "d29e6eb4894005c52e67cb4b5ac3faf031113e7d";
+      public static readonly String GithubCommidId = "aa777ae5b161aba4ea4536b22aea9d1462f08aed";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

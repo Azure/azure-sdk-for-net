@@ -9,7 +9,6 @@ using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Linq;
-using System.Net;
 using Xunit;
 
 namespace Sql.Tests
@@ -74,9 +73,10 @@ namespace Sql.Tests
             {
                 // Test setup (rg, mi):
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
-                ResourceGroup rg = new ResourceGroup(location: "eastus2euap", id: "/subscriptions/8313371e-0879-428e-b1da-6353575a9192/resourceGroups/CustomerExperienceTeam_RG", name: "CustomerExperienceTeam_RG");
-                //var rg = context.CreateResourceGroup(ManagedInstanceTestUtilities.Region);
-                ManagedInstance managedInstance = sqlClient.ManagedInstances.Get(rg.Name, "chimera-ps-cli-v2");
+                //ResourceGroup rg = new ResourceGroup(location: "eastus2euap", id: "/subscriptions/8313371e-0879-428e-b1da-6353575a9192/resourceGroups/CustomerExperienceTeam_RG", name: "CustomerExperienceTeam_RG");
+                //ManagedInstance managedInstance = sqlClient.ManagedInstances.Get(rg.Name, "chimera-ps-cli-v2");
+                ResourceGroup rg = context.CreateResourceGroup(ManagedInstanceTestUtilities.Region);
+                ManagedInstance managedInstance = context.CreateManagedInstance(rg);
                 Assert.NotNull(managedInstance);
 
                 // Test data:
@@ -121,7 +121,6 @@ namespace Sql.Tests
                 var invalidCert5 = new ServerTrustCertificate(makeId(managedInstance.Id, certificateName1), certificateName1, certType, publicBlob3, thumbprint3, certificateName1);
                 // cert name empty
                 var invalidCert6 = new ServerTrustCertificate(makeId(managedInstance.Id, ""), "", certType, publicBlob1, thumbprint1, "");
-
                 var exception1 = Assert.Throws<CloudException>(() => sqlClient.ServerTrustCertificates.CreateOrUpdate(resourceGroupName, managedInstanceName, invalidCertName1, invalidCert1));
                 var exception2 = Assert.Throws<CloudException>(() => sqlClient.ServerTrustCertificates.CreateOrUpdate(resourceGroupName, managedInstanceName, invalidCertName2, invalidCert2));
                 var exception3 = Assert.Throws<CloudException>(() => sqlClient.ServerTrustCertificates.CreateOrUpdate(resourceGroupName, managedInstanceName, invalidCertName3, invalidCert3));
@@ -146,10 +145,10 @@ namespace Sql.Tests
 
                 // Test setup (rg, mi):
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
-                ResourceGroup rg = new ResourceGroup(location: "eastus2euap", id: "/subscriptions/8313371e-0879-428e-b1da-6353575a9192/resourceGroups/CustomerExperienceTeam_RG", name: "CustomerExperienceTeam_RG");
-                //var rg = context.CreateResourceGroup(ManagedInstanceTestUtilities.Region);
-                //ManagedInstance managedInstance = context.CreateManagedInstance(rg);
-                ManagedInstance managedInstance = sqlClient.ManagedInstances.Get(rg.Name, "chimera-ps-cli-v2");
+                //ResourceGroup rg = new ResourceGroup(location: "eastus2euap", id: "/subscriptions/8313371e-0879-428e-b1da-6353575a9192/resourceGroups/CustomerExperienceTeam_RG", name: "CustomerExperienceTeam_RG");
+                //ManagedInstance managedInstance = sqlClient.ManagedInstances.Get(rg.Name, "chimera-ps-cli-v2");
+                ResourceGroup rg = context.CreateResourceGroup(ManagedInstanceTestUtilities.Region);
+                ManagedInstance managedInstance = context.CreateManagedInstance(rg);
                 Assert.NotNull(managedInstance);
 
                 var resourceGroupName = rg.Name;

@@ -673,6 +673,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IServerTrustCertificatesOperations ServerTrustCertificates { get; private set; }
 
         /// <summary>
+        /// Gets the IIPv6FirewallRulesOperations.
+        /// </summary>
+        public virtual IIPv6FirewallRulesOperations IPv6FirewallRules { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -1033,6 +1038,7 @@ namespace Microsoft.Azure.Management.Sql
             ServerConnectionPolicies = new ServerConnectionPoliciesOperations(this);
             DistributedAvailabilityGroups = new DistributedAvailabilityGroupsOperations(this);
             ServerTrustCertificates = new ServerTrustCertificatesOperations(this);
+            IPv6FirewallRules = new IPv6FirewallRulesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
