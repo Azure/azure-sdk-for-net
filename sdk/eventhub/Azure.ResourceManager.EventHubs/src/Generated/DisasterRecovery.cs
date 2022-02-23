@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.EventHubs.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
@@ -54,10 +53,10 @@ namespace Azure.ResourceManager.EventHubs
         internal DisasterRecovery(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string disasterRecoveryDisasterRecoveryConfigsApiVersion);
+            TryGetApiVersion(ResourceType, out string disasterRecoveryDisasterRecoveryConfigsApiVersion);
             _disasterRecoveryDisasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_disasterRecoveryDisasterRecoveryConfigsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, disasterRecoveryDisasterRecoveryConfigsApiVersion);
             _disasterRecoveryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string disasterRecoveryApiVersion);
+            TryGetApiVersion(ResourceType, out string disasterRecoveryApiVersion);
             _disasterRecoveryRestClient = new DisasterRecoveriesRestOperations(_disasterRecoveryClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, disasterRecoveryApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -95,7 +94,11 @@ namespace Azure.ResourceManager.EventHubs
             return new DisasterRecoveryAuthorizationRuleCollection(Client, Id);
         }
 
-        /// <summary> Retrieves Alias(Disaster Recovery configuration) for primary or secondary namespace. </summary>
+        /// <summary>
+        /// Retrieves Alias(Disaster Recovery configuration) for primary or secondary namespace
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// Operation Id: DisasterRecoveryConfigs_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DisasterRecovery>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -115,7 +118,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Retrieves Alias(Disaster Recovery configuration) for primary or secondary namespace. </summary>
+        /// <summary>
+        /// Retrieves Alias(Disaster Recovery configuration) for primary or secondary namespace
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// Operation Id: DisasterRecoveryConfigs_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DisasterRecovery> Get(CancellationToken cancellationToken = default)
         {
@@ -135,17 +142,21 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Deletes an Alias(Disaster Recovery configuration). </summary>
+        /// <summary>
+        /// Deletes an Alias(Disaster Recovery configuration)
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// Operation Id: DisasterRecoveries_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DisasterRecoveryDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _disasterRecoveryClientDiagnostics.CreateScope("DisasterRecovery.Delete");
             scope.Start();
             try
             {
                 var response = await _disasterRecoveryRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DisasterRecoveryDeleteOperation(response);
+                var operation = new EventHubsArmOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -157,17 +168,21 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Deletes an Alias(Disaster Recovery configuration). </summary>
+        /// <summary>
+        /// Deletes an Alias(Disaster Recovery configuration)
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// Operation Id: DisasterRecoveries_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DisasterRecoveryDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _disasterRecoveryClientDiagnostics.CreateScope("DisasterRecovery.Delete");
             scope.Start();
             try
             {
                 var response = _disasterRecoveryRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DisasterRecoveryDeleteOperation(response);
+                var operation = new EventHubsArmOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -179,7 +194,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> This operation disables the Disaster Recovery and stops replicating changes from primary to secondary namespaces. </summary>
+        /// <summary>
+        /// This operation disables the Disaster Recovery and stops replicating changes from primary to secondary namespaces
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/breakPairing
+        /// Operation Id: DisasterRecoveryConfigs_BreakPairing
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> BreakPairingAsync(CancellationToken cancellationToken = default)
         {
@@ -197,7 +216,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> This operation disables the Disaster Recovery and stops replicating changes from primary to secondary namespaces. </summary>
+        /// <summary>
+        /// This operation disables the Disaster Recovery and stops replicating changes from primary to secondary namespaces
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/breakPairing
+        /// Operation Id: DisasterRecoveryConfigs_BreakPairing
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response BreakPairing(CancellationToken cancellationToken = default)
         {
@@ -215,7 +238,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Invokes GEO DR failover and reconfigure the alias to point to the secondary namespace. </summary>
+        /// <summary>
+        /// Invokes GEO DR failover and reconfigure the alias to point to the secondary namespace
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/failover
+        /// Operation Id: DisasterRecoveryConfigs_FailOver
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> FailOverAsync(CancellationToken cancellationToken = default)
         {
@@ -233,7 +260,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Invokes GEO DR failover and reconfigure the alias to point to the secondary namespace. </summary>
+        /// <summary>
+        /// Invokes GEO DR failover and reconfigure the alias to point to the secondary namespace
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/failover
+        /// Operation Id: DisasterRecoveryConfigs_FailOver
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response FailOver(CancellationToken cancellationToken = default)
         {

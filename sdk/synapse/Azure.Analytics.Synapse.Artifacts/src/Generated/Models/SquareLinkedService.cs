@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="host"> The URL of the Square instance. (i.e. mystore.mysquare.com). </param>
         /// <param name="clientId"> The client ID associated with your Square application. </param>
         /// <param name="redirectUri"> The redirect URL assigned in the Square application dashboard. (i.e. http://localhost:2500). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="host"/>, <paramref name="clientId"/>, or <paramref name="redirectUri"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="host"/>, <paramref name="clientId"/> or <paramref name="redirectUri"/> is null. </exception>
         public SquareLinkedService(object host, object clientId, object redirectUri)
         {
             if (host == null)

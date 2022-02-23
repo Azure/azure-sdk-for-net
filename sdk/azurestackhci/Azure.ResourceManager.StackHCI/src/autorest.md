@@ -18,6 +18,9 @@ directive:
     transform: $["x-ms-client-name"] = "ArcExtension"
   - from: clusters.json
     where: $.definitions.Cluster
-    transform: $["x-ms-client-name"] = "HCICluster"
+    transform: $["x-ms-client-name"] = "HciCluster"
+  - from: clusters.json
+    where: $.definitions.ClusterProperties.properties.status["x-ms-enum"]
+    transform: $.name = "HciClusterStatus"
 
 ```

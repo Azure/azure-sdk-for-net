@@ -21,7 +21,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
         /// <param name="content"> Concatenate string representation of all textual and visual elements in reading order. </param>
         /// <param name="pages"> Analyzed pages. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/>, <paramref name="content"/>, or <paramref name="pages"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/>, <paramref name="content"/> or <paramref name="pages"/> is null. </exception>
         internal AnalyzeResult(ApiVersion apiVersion, string modelId, StringIndexType stringIndexType, string content, IEnumerable<DocumentPage> pages)
         {
             if (modelId == null)

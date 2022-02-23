@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the TagResource data model. </summary>
-    public partial class TagResourceData : Resource
+    public partial class TagResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of TagResourceData. </summary>
         /// <param name="properties"> The set of tags. </param>

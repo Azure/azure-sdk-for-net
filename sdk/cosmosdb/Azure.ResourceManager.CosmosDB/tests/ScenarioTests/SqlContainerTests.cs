@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountSqlDatabaseContainerThroughputSetting throughput = await container.GetDatabaseAccountSqlDatabaseContainerThroughputSetting().GetAsync();
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateSqlContainerToAutoscaleAsync(true)).Value;
+            ThroughputSettingsData throughputData = (await throughput.MigrateSqlContainerToAutoscaleAsync(true)).Value.Data;
             AssertAutoscale(throughputData);
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountSqlDatabaseContainerThroughputSetting throughput = await container.GetDatabaseAccountSqlDatabaseContainerThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateSqlContainerToManualThroughputAsync(true)).Value;
+            ThroughputSettingsData throughputData = (await throughput.MigrateSqlContainerToManualThroughputAsync(true)).Value.Data;
             AssertManualThroughput(throughputData);
         }
 

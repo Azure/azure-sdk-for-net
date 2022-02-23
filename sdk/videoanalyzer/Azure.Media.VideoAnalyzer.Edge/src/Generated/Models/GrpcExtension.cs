@@ -19,7 +19,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="endpoint"> Endpoint details of the pipeline extension plugin. </param>
         /// <param name="image"> Image transformations and formatting options to be applied to the video frame(s) prior submission to the pipeline extension plugin. </param>
         /// <param name="dataTransfer"> Specifies how media is transferred to the extension plugin. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, <paramref name="endpoint"/>, <paramref name="image"/>, or <paramref name="dataTransfer"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, <paramref name="endpoint"/>, <paramref name="image"/> or <paramref name="dataTransfer"/> is null. </exception>
         public GrpcExtension(string name, IEnumerable<NodeInput> inputs, EndpointBase endpoint, ImageProperties image, GrpcExtensionDataTransfer dataTransfer) : base(name, inputs, endpoint, image)
         {
             if (name == null)

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the AfdOriginGroup data model. </summary>
-    public partial class AfdOriginGroupData : Resource
+    public partial class AfdOriginGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of AfdOriginGroupData. </summary>
         public AfdOriginGroupData()

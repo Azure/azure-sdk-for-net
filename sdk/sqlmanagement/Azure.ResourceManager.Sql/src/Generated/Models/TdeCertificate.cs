@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A TDE certificate that can be uploaded into a server. </summary>
-    public partial class TdeCertificate : Resource
+    public partial class TdeCertificate : ResourceData
     {
         /// <summary> Initializes a new instance of TdeCertificate. </summary>
         public TdeCertificate()

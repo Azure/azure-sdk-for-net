@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the JobExecution data model. </summary>
-    public partial class JobExecutionData : Resource
+    public partial class JobExecutionData : ResourceData
     {
         /// <summary> Initializes a new instance of JobExecutionData. </summary>
         public JobExecutionData()

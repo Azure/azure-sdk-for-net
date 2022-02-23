@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.Resources
         internal PolicyExemption(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _policyExemptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string policyExemptionApiVersion);
+            TryGetApiVersion(ResourceType, out string policyExemptionApiVersion);
             _policyExemptionRestClient = new PolicyExemptionsRestOperations(_policyExemptionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, policyExemptionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -83,10 +82,11 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}
-        /// ContextualPath: /{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}
-        /// OperationId: PolicyExemptions_Get
-        /// <summary> This operation retrieves a single policy exemption, given its name and the scope it was created at. </summary>
+        /// <summary>
+        /// This operation retrieves a single policy exemption, given its name and the scope it was created at.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}
+        /// Operation Id: PolicyExemptions_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<PolicyExemption>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -106,10 +106,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}
-        /// ContextualPath: /{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}
-        /// OperationId: PolicyExemptions_Get
-        /// <summary> This operation retrieves a single policy exemption, given its name and the scope it was created at. </summary>
+        /// <summary>
+        /// This operation retrieves a single policy exemption, given its name and the scope it was created at.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}
+        /// Operation Id: PolicyExemptions_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PolicyExemption> Get(CancellationToken cancellationToken = default)
         {
@@ -129,20 +130,21 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}
-        /// ContextualPath: /{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}
-        /// OperationId: PolicyExemptions_Delete
-        /// <summary> This operation deletes a policy exemption, given its name and the scope it was created in. The scope of a policy exemption is the part of its ID preceding &apos;/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}&apos;. </summary>
+        /// <summary>
+        /// This operation deletes a policy exemption, given its name and the scope it was created in. The scope of a policy exemption is the part of its ID preceding &apos;/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}&apos;.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}
+        /// Operation Id: PolicyExemptions_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<PolicyExemptionDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _policyExemptionClientDiagnostics.CreateScope("PolicyExemption.Delete");
             scope.Start();
             try
             {
                 var response = await _policyExemptionRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PolicyExemptionDeleteOperation(response);
+                var operation = new ResourcesArmOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -154,20 +156,21 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}
-        /// ContextualPath: /{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}
-        /// OperationId: PolicyExemptions_Delete
-        /// <summary> This operation deletes a policy exemption, given its name and the scope it was created in. The scope of a policy exemption is the part of its ID preceding &apos;/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}&apos;. </summary>
+        /// <summary>
+        /// This operation deletes a policy exemption, given its name and the scope it was created in. The scope of a policy exemption is the part of its ID preceding &apos;/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}&apos;.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}
+        /// Operation Id: PolicyExemptions_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PolicyExemptionDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _policyExemptionClientDiagnostics.CreateScope("PolicyExemption.Delete");
             scope.Start();
             try
             {
                 var response = _policyExemptionRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
-                var operation = new PolicyExemptionDeleteOperation(response);
+                var operation = new ResourcesArmOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

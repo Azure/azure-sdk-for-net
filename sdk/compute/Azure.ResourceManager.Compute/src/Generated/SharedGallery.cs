@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute
         internal SharedGallery(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sharedGalleryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string sharedGalleryApiVersion);
+            TryGetApiVersion(ResourceType, out string sharedGalleryApiVersion);
             _sharedGalleryRestClient = new SharedGalleriesRestOperations(_sharedGalleryClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sharedGalleryApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -89,7 +89,11 @@ namespace Azure.ResourceManager.Compute
             return new SharedGalleryImageCollection(Client, Id);
         }
 
-        /// <summary> Get a shared gallery by subscription id or tenant id. </summary>
+        /// <summary>
+        /// Get a shared gallery by subscription id or tenant id.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}
+        /// Operation Id: SharedGalleries_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SharedGallery>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -110,7 +114,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Get a shared gallery by subscription id or tenant id. </summary>
+        /// <summary>
+        /// Get a shared gallery by subscription id or tenant id.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}
+        /// Operation Id: SharedGalleries_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SharedGallery> Get(CancellationToken cancellationToken = default)
         {

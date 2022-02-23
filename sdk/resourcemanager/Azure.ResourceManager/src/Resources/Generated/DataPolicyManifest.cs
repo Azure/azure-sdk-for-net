@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources
         internal DataPolicyManifest(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _dataPolicyManifestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string dataPolicyManifestApiVersion);
+            TryGetApiVersion(ResourceType, out string dataPolicyManifestApiVersion);
             _dataPolicyManifestRestClient = new DataPolicyManifestsRestOperations(_dataPolicyManifestClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataPolicyManifestApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -82,10 +82,11 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
-        /// ContextualPath: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
-        /// OperationId: DataPolicyManifests_GetByPolicyMode
-        /// <summary> This operation retrieves the data policy manifest with the given policy mode. </summary>
+        /// <summary>
+        /// This operation retrieves the data policy manifest with the given policy mode.
+        /// Request Path: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
+        /// Operation Id: DataPolicyManifests_GetByPolicyMode
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DataPolicyManifest>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -105,10 +106,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
-        /// ContextualPath: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
-        /// OperationId: DataPolicyManifests_GetByPolicyMode
-        /// <summary> This operation retrieves the data policy manifest with the given policy mode. </summary>
+        /// <summary>
+        /// This operation retrieves the data policy manifest with the given policy mode.
+        /// Request Path: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
+        /// Operation Id: DataPolicyManifests_GetByPolicyMode
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataPolicyManifest> Get(CancellationToken cancellationToken = default)
         {

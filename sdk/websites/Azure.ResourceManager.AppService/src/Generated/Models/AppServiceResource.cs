@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Azure resource. This resource is tracked in Azure Resource Manager. </summary>
-    public partial class AppServiceResource : TrackedResource
+    public partial class AppServiceResource : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AppServiceResource. </summary>
         /// <param name="location"> The location. </param>

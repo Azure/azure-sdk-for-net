@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
         internal FrontendIPConfiguration(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string frontendIPConfigurationLoadBalancerFrontendIPConfigurationsApiVersion);
+            TryGetApiVersion(ResourceType, out string frontendIPConfigurationLoadBalancerFrontendIPConfigurationsApiVersion);
             _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient = new LoadBalancerFrontendIPConfigurationsRestOperations(_frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, frontendIPConfigurationLoadBalancerFrontendIPConfigurationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -82,7 +82,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets load balancer frontend IP configuration. </summary>
+        /// <summary>
+        /// Gets load balancer frontend IP configuration.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/frontendIPConfigurations/{frontendIPConfigurationName}
+        /// Operation Id: LoadBalancerFrontendIPConfigurations_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<FrontendIPConfiguration>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -102,7 +106,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets load balancer frontend IP configuration. </summary>
+        /// <summary>
+        /// Gets load balancer frontend IP configuration.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/frontendIPConfigurations/{frontendIPConfigurationName}
+        /// Operation Id: LoadBalancerFrontendIPConfigurations_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FrontendIPConfiguration> Get(CancellationToken cancellationToken = default)
         {

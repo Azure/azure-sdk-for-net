@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         internal ApplicationGatewaySslPredefinedPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationGatewaySslPredefinedPolicy.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ApplicationGatewaySslPredefinedPolicy.ResourceType, out string applicationGatewaySslPredefinedPolicyApplicationGatewaysApiVersion);
+            TryGetApiVersion(ApplicationGatewaySslPredefinedPolicy.ResourceType, out string applicationGatewaySslPredefinedPolicyApplicationGatewaysApiVersion);
             _applicationGatewaySslPredefinedPolicyApplicationGatewaysRestClient = new ApplicationGatewaysRestOperations(_applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationGatewaySslPredefinedPolicyApplicationGatewaysApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -50,10 +50,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ApplicationGatewayAvailableSslOptions.ResourceType), nameof(id));
         }
 
-        /// <summary> Gets Ssl predefined policy with the specified policy name. </summary>
+        /// <summary>
+        /// Gets Ssl predefined policy with the specified policy name.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
+        /// Operation Id: ApplicationGateways_GetSslPredefinedPolicy
+        /// </summary>
         /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
         public async virtual Task<Response<ApplicationGatewaySslPredefinedPolicy>> GetAsync(string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
@@ -75,10 +79,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets Ssl predefined policy with the specified policy name. </summary>
+        /// <summary>
+        /// Gets Ssl predefined policy with the specified policy name.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
+        /// Operation Id: ApplicationGateways_GetSslPredefinedPolicy
+        /// </summary>
         /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
         public virtual Response<ApplicationGatewaySslPredefinedPolicy> Get(string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
@@ -100,7 +108,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Lists all SSL predefined policies for configuring Ssl policy. </summary>
+        /// <summary>
+        /// Lists all SSL predefined policies for configuring Ssl policy.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies
+        /// Operation Id: ApplicationGateways_ListAvailableSslPredefinedPolicies
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationGatewaySslPredefinedPolicy" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationGatewaySslPredefinedPolicy> GetAllAsync(CancellationToken cancellationToken = default)
@@ -138,7 +150,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all SSL predefined policies for configuring Ssl policy. </summary>
+        /// <summary>
+        /// Lists all SSL predefined policies for configuring Ssl policy.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies
+        /// Operation Id: ApplicationGateways_ListAvailableSslPredefinedPolicies
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationGatewaySslPredefinedPolicy" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationGatewaySslPredefinedPolicy> GetAll(CancellationToken cancellationToken = default)
@@ -176,10 +192,14 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
+        /// Operation Id: ApplicationGateways_GetSslPredefinedPolicy
+        /// </summary>
         /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
@@ -199,10 +219,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
+        /// Operation Id: ApplicationGateways_GetSslPredefinedPolicy
+        /// </summary>
         /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
         public virtual Response<bool> Exists(string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
@@ -222,10 +246,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
+        /// Operation Id: ApplicationGateways_GetSslPredefinedPolicy
+        /// </summary>
         /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
         public async virtual Task<Response<ApplicationGatewaySslPredefinedPolicy>> GetIfExistsAsync(string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
@@ -247,10 +275,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
+        /// Operation Id: ApplicationGateways_GetSslPredefinedPolicy
+        /// </summary>
         /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
         public virtual Response<ApplicationGatewaySslPredefinedPolicy> GetIfExists(string predefinedPolicyName, CancellationToken cancellationToken = default)
         {

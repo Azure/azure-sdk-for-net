@@ -21,7 +21,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="translatedToLanguageCode"> To language. </param>
         /// <param name="progress"> Progress of the translation if available. </param>
         /// <param name="id"> Document Id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceDocumentUri"/>, <paramref name="translatedToLanguageCode"/>, or <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceDocumentUri"/>, <paramref name="translatedToLanguageCode"/> or <paramref name="id"/> is null. </exception>
         internal DocumentStatusResult(Uri sourceDocumentUri, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, string translatedToLanguageCode, float progress, string id)
         {
             if (sourceDocumentUri == null)

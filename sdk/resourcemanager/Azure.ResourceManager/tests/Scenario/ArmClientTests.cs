@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Tests
         {
             var rawRgCollection = rgCollection.GetType().GetField("__target", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(rgCollection);
             var restClient = rawRgCollection.GetType().GetField("_resourceGroupRestClient", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(rawRgCollection) as ResourceGroupsRestOperations;
-            return restClient.GetType().GetField("apiVersion", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(restClient) as string;
+            return restClient.GetType().GetField("_apiVersion", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(restClient) as string;
         }
 
         [RecordedTest]
@@ -212,7 +212,6 @@ namespace Azure.ResourceManager.Tests
         {
             Assert.Throws<ArgumentNullException>(() => { new ArmClient(default(TokenCredential)); });
             Assert.DoesNotThrow(() => { new ArmClient(TestEnvironment.Credential, default(string)); });
-            Assert.Throws<ArgumentNullException>(() => { new ArmClient(TestEnvironment.Credential, TestEnvironment.SubscriptionId, default(Uri)); });
         }
 
         [RecordedTest]

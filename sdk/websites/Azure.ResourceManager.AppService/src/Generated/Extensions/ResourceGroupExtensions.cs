@@ -9,6 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Resources;
 
@@ -90,10 +91,11 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(resourceGroup).GetWebSites();
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ResourceHealthMetadata_ListByResourceGroup
-        /// <summary> Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription. </summary>
+        /// <summary>
+        /// Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
+        /// Operation Id: ResourceHealthMetadata_ListByResourceGroup
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteResourceHealthMetadata" /> that may take multiple service requests to iterate over. </returns>
@@ -102,10 +104,11 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(resourceGroup).GetAllResourceHealthMetadataAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ResourceHealthMetadata_ListByResourceGroup
-        /// <summary> Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription. </summary>
+        /// <summary>
+        /// Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
+        /// Operation Id: ResourceHealthMetadata_ListByResourceGroup
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteResourceHealthMetadata" /> that may take multiple service requests to iterate over. </returns>
@@ -114,110 +117,98 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(resourceGroup).GetAllResourceHealthMetadata(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Move
-        /// <summary> Description for Move resources between resource groups. </summary>
+        /// <summary>
+        /// Description for Move resources between resource groups.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources
+        /// Operation Id: Move
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
         public async static Task<Response> MoveAsync(this ResourceGroup resourceGroup, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
-            if (moveResourceEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(moveResourceEnvelope));
-            }
+            Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
 
             return await GetExtensionClient(resourceGroup).MoveAsync(moveResourceEnvelope, cancellationToken).ConfigureAwait(false);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Move
-        /// <summary> Description for Move resources between resource groups. </summary>
+        /// <summary>
+        /// Description for Move resources between resource groups.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources
+        /// Operation Id: Move
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
         public static Response Move(this ResourceGroup resourceGroup, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
-            if (moveResourceEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(moveResourceEnvelope));
-            }
+            Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
 
             return GetExtensionClient(resourceGroup).Move(moveResourceEnvelope, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Validate
-        /// <summary> Description for Validate if a resource can be created. </summary>
+        /// <summary>
+        /// Description for Validate if a resource can be created.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate
+        /// Operation Id: Validate
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="validateRequest"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="validateRequest"/> is null. </exception>
         public async static Task<Response<ValidateResponse>> ValidateAsync(this ResourceGroup resourceGroup, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
         {
-            if (validateRequest == null)
-            {
-                throw new ArgumentNullException(nameof(validateRequest));
-            }
+            Argument.AssertNotNull(validateRequest, nameof(validateRequest));
 
             return await GetExtensionClient(resourceGroup).ValidateAsync(validateRequest, cancellationToken).ConfigureAwait(false);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Validate
-        /// <summary> Description for Validate if a resource can be created. </summary>
+        /// <summary>
+        /// Description for Validate if a resource can be created.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate
+        /// Operation Id: Validate
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="validateRequest"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="validateRequest"/> is null. </exception>
         public static Response<ValidateResponse> Validate(this ResourceGroup resourceGroup, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
         {
-            if (validateRequest == null)
-            {
-                throw new ArgumentNullException(nameof(validateRequest));
-            }
+            Argument.AssertNotNull(validateRequest, nameof(validateRequest));
 
             return GetExtensionClient(resourceGroup).Validate(validateRequest, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/validateMoveResources
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ValidateMove
-        /// <summary> Description for Validate whether a resource can be moved. </summary>
+        /// <summary>
+        /// Description for Validate whether a resource can be moved.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/validateMoveResources
+        /// Operation Id: ValidateMove
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
         public async static Task<Response> ValidateMoveAsync(this ResourceGroup resourceGroup, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
-            if (moveResourceEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(moveResourceEnvelope));
-            }
+            Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
 
             return await GetExtensionClient(resourceGroup).ValidateMoveAsync(moveResourceEnvelope, cancellationToken).ConfigureAwait(false);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/validateMoveResources
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ValidateMove
-        /// <summary> Description for Validate whether a resource can be moved. </summary>
+        /// <summary>
+        /// Description for Validate whether a resource can be moved.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/validateMoveResources
+        /// Operation Id: ValidateMove
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
         public static Response ValidateMove(this ResourceGroup resourceGroup, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
-            if (moveResourceEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(moveResourceEnvelope));
-            }
+            Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
 
             return GetExtensionClient(resourceGroup).ValidateMove(moveResourceEnvelope, cancellationToken);
         }

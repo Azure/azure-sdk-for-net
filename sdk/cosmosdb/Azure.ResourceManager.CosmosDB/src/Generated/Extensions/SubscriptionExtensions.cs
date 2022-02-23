@@ -31,7 +31,11 @@ namespace Azure.ResourceManager.CosmosDB
             return GetExtensionClient(subscription).GetCosmosDBLocations();
         }
 
-        /// <summary> Lists all the Azure Cosmos DB database accounts available under the subscription. </summary>
+        /// <summary>
+        /// Lists all the Azure Cosmos DB database accounts available under the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/databaseAccounts
+        /// Operation Id: DatabaseAccounts_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DatabaseAccount" /> that may take multiple service requests to iterate over. </returns>
@@ -40,7 +44,11 @@ namespace Azure.ResourceManager.CosmosDB
             return GetExtensionClient(subscription).GetDatabaseAccountsAsync(cancellationToken);
         }
 
-        /// <summary> Lists all the Azure Cosmos DB database accounts available under the subscription. </summary>
+        /// <summary>
+        /// Lists all the Azure Cosmos DB database accounts available under the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/databaseAccounts
+        /// Operation Id: DatabaseAccounts_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DatabaseAccount" /> that may take multiple service requests to iterate over. </returns>
@@ -49,7 +57,11 @@ namespace Azure.ResourceManager.CosmosDB
             return GetExtensionClient(subscription).GetDatabaseAccounts(cancellationToken);
         }
 
-        /// <summary> Lists all the restorable Azure Cosmos DB database accounts available under the subscription. This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read&apos; permission. </summary>
+        /// <summary>
+        /// Lists all the restorable Azure Cosmos DB database accounts available under the subscription. This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read&apos; permission.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/restorableDatabaseAccounts
+        /// Operation Id: RestorableDatabaseAccounts_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RestorableDatabaseAccount" /> that may take multiple service requests to iterate over. </returns>
@@ -58,7 +70,11 @@ namespace Azure.ResourceManager.CosmosDB
             return GetExtensionClient(subscription).GetRestorableDatabaseAccountsAsync(cancellationToken);
         }
 
-        /// <summary> Lists all the restorable Azure Cosmos DB database accounts available under the subscription. This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read&apos; permission. </summary>
+        /// <summary>
+        /// Lists all the restorable Azure Cosmos DB database accounts available under the subscription. This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read&apos; permission.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/restorableDatabaseAccounts
+        /// Operation Id: RestorableDatabaseAccounts_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RestorableDatabaseAccount" /> that may take multiple service requests to iterate over. </returns>
@@ -67,7 +83,11 @@ namespace Azure.ResourceManager.CosmosDB
             return GetExtensionClient(subscription).GetRestorableDatabaseAccounts(cancellationToken);
         }
 
-        /// <summary> List all managed Cassandra clusters in this subscription. </summary>
+        /// <summary>
+        /// List all managed Cassandra clusters in this subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/cassandraClusters
+        /// Operation Id: CassandraClusters_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
@@ -76,7 +96,11 @@ namespace Azure.ResourceManager.CosmosDB
             return GetExtensionClient(subscription).GetClusterResourcesAsync(cancellationToken);
         }
 
-        /// <summary> List all managed Cassandra clusters in this subscription. </summary>
+        /// <summary>
+        /// List all managed Cassandra clusters in this subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/cassandraClusters
+        /// Operation Id: CassandraClusters_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>

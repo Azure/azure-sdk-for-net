@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         internal RecoverableDatabase(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _recoverableDatabaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string recoverableDatabaseApiVersion);
+            TryGetApiVersion(ResourceType, out string recoverableDatabaseApiVersion);
             _recoverableDatabaseRestClient = new RecoverableDatabasesRestOperations(_recoverableDatabaseClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, recoverableDatabaseApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -82,10 +82,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}
-        /// OperationId: RecoverableDatabases_Get
-        /// <summary> Gets a recoverable database, which is a resource representing a database&apos;s geo backup. </summary>
+        /// <summary>
+        /// Gets a recoverable database, which is a resource representing a database&apos;s geo backup
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}
+        /// Operation Id: RecoverableDatabases_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<RecoverableDatabase>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -105,10 +106,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}
-        /// OperationId: RecoverableDatabases_Get
-        /// <summary> Gets a recoverable database, which is a resource representing a database&apos;s geo backup. </summary>
+        /// <summary>
+        /// Gets a recoverable database, which is a resource representing a database&apos;s geo backup
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}
+        /// Operation Id: RecoverableDatabases_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RecoverableDatabase> Get(CancellationToken cancellationToken = default)
         {

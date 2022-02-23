@@ -28,7 +28,7 @@ This is a scoped operations object, and any operations you perform will be done 
 ```C# Snippet:Managing_StorageAccounts_GetResourceGroupCollection
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ResourceGroupCreateOrUpdateOperation operation= await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = operation.Value;
 ```
 
@@ -43,7 +43,7 @@ StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(s
 //now we can create a storage account with defined account name and parameters
 StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
 string accountName = "myAccount";
-StorageAccountCreateOrUpdateOperation accountCreateOperation = await accountCollection.CreateOrUpdateAsync(true, accountName, parameters);
+ArmOperation<StorageAccount> accountCreateOperation = await accountCollection.CreateOrUpdateAsync(true, accountName, parameters);
 StorageAccount storageAccount = accountCreateOperation.Value;
 ```
 
@@ -63,7 +63,7 @@ Now that we have the file service, we can manage the file shares inside this sto
 FileShareCollection fileShareCollection = fileService.GetFileShares();
 string fileShareName = "myFileShare";
 FileShareData fileShareData = new FileShareData();
-FileShareCreateOrUpdateOperation fileShareCreateOperation = await fileShareCollection.CreateOrUpdateAsync(false, fileShareName, fileShareData);
+ArmOperation<FileShare> fileShareCreateOperation = await fileShareCollection.CreateOrUpdateAsync(false, fileShareName, fileShareData);
 FileShare fileShare =await fileShareCreateOperation.WaitForCompletionAsync();
 ```
 

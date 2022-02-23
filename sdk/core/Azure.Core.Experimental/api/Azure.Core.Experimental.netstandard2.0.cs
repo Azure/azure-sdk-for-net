@@ -1,8 +1,8 @@
 namespace Azure
 {
-    public partial class MessageWithMetadata
+    public partial class BinaryContent
     {
-        public MessageWithMetadata() { }
+        public BinaryContent() { }
         public virtual Azure.Core.ContentType? ContentType { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected virtual Azure.Core.ContentType? ContentTypeCore { get { throw null; } set { } }

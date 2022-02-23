@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources
         internal ScriptLog(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _scriptLogDeploymentScriptsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string scriptLogDeploymentScriptsApiVersion);
+            TryGetApiVersion(ResourceType, out string scriptLogDeploymentScriptsApiVersion);
             _scriptLogDeploymentScriptsRestClient = new DeploymentScriptsRestOperations(_scriptLogDeploymentScriptsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, scriptLogDeploymentScriptsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -82,7 +82,11 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets deployment script logs for a given deployment script name. </summary>
+        /// <summary>
+        /// Gets deployment script logs for a given deployment script name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}/logs/default
+        /// Operation Id: DeploymentScripts_GetLogsDefault
+        /// </summary>
         /// <param name="tail"> The number of lines to show from the tail of the deployment script log. Valid value is a positive number up to 1000. If &apos;tail&apos; is not provided, all available logs are shown up to container instance log capacity of 4mb. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ScriptLog>> GetAsync(int? tail = null, CancellationToken cancellationToken = default)
@@ -103,7 +107,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets deployment script logs for a given deployment script name. </summary>
+        /// <summary>
+        /// Gets deployment script logs for a given deployment script name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}/logs/default
+        /// Operation Id: DeploymentScripts_GetLogsDefault
+        /// </summary>
         /// <param name="tail"> The number of lines to show from the tail of the deployment script log. Valid value is a positive number up to 1000. If &apos;tail&apos; is not provided, all available logs are shown up to container instance log capacity of 4mb. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ScriptLog> Get(int? tail = null, CancellationToken cancellationToken = default)

@@ -147,7 +147,7 @@ namespace Azure.Core.TestFramework
             if (elementType.BaseType == typeof(object))
                 return false;
 
-            if (elementType.BaseType.Name == "ArmResource")
+            if (elementType.BaseType.Name.Equals("ArmResource", StringComparison.Ordinal) || elementType.BaseType.Name.Equals("ArmCollection", StringComparison.Ordinal))
                 return true;
 
             return InheritsFromArmResource(elementType.BaseType);

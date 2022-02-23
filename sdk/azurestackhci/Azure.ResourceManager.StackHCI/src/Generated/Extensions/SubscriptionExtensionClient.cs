@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.StackHCI
     /// <summary> A class to add extension methods to Subscription. </summary>
     internal partial class SubscriptionExtensionClient : ArmResource
     {
-        private ClientDiagnostics _hCIClusterClustersClientDiagnostics;
-        private ClustersRestOperations _hCIClusterClustersRestClient;
+        private ClientDiagnostics _hciClusterClustersClientDiagnostics;
+        private ClustersRestOperations _hciClusterClustersRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionExtensionClient"/> class for mocking. </summary>
         protected SubscriptionExtensionClient()
@@ -35,28 +35,32 @@ namespace Azure.ResourceManager.StackHCI
         {
         }
 
-        private ClientDiagnostics HCIClusterClustersClientDiagnostics => _hCIClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StackHCI", HCICluster.ResourceType.Namespace, DiagnosticOptions);
-        private ClustersRestOperations HCIClusterClustersRestClient => _hCIClusterClustersRestClient ??= new ClustersRestOperations(HCIClusterClustersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(HCICluster.ResourceType));
+        private ClientDiagnostics HciClusterClustersClientDiagnostics => _hciClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StackHCI", HciCluster.ResourceType.Namespace, DiagnosticOptions);
+        private ClustersRestOperations HciClusterClustersRestClient => _hciClusterClustersRestClient ??= new ClustersRestOperations(HciClusterClustersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(HciCluster.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            Client.TryGetApiVersion(resourceType, out string apiVersion);
+            TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
-        /// <summary> List all HCI clusters in a subscription. </summary>
+        /// <summary>
+        /// List all HCI clusters in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/clusters
+        /// Operation Id: Clusters_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HCICluster" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HCICluster> GetHCIClustersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HciCluster" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HciCluster> GetHciClustersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HCICluster>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<HciCluster>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = HCIClusterClustersClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetHCIClusters");
+                using var scope = HciClusterClustersClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetHciClusters");
                 scope.Start();
                 try
                 {
-                    var response = await HCIClusterClustersRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HCICluster(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await HciClusterClustersRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HciCluster(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -64,14 +68,14 @@ namespace Azure.ResourceManager.StackHCI
                     throw;
                 }
             }
-            async Task<Page<HCICluster>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<HciCluster>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = HCIClusterClustersClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetHCIClusters");
+                using var scope = HciClusterClustersClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetHciClusters");
                 scope.Start();
                 try
                 {
-                    var response = await HCIClusterClustersRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HCICluster(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await HciClusterClustersRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HciCluster(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -82,19 +86,23 @@ namespace Azure.ResourceManager.StackHCI
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> List all HCI clusters in a subscription. </summary>
+        /// <summary>
+        /// List all HCI clusters in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/clusters
+        /// Operation Id: Clusters_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HCICluster" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HCICluster> GetHCIClusters(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciCluster" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HciCluster> GetHciClusters(CancellationToken cancellationToken = default)
         {
-            Page<HCICluster> FirstPageFunc(int? pageSizeHint)
+            Page<HciCluster> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = HCIClusterClustersClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetHCIClusters");
+                using var scope = HciClusterClustersClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetHciClusters");
                 scope.Start();
                 try
                 {
-                    var response = HCIClusterClustersRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HCICluster(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = HciClusterClustersRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HciCluster(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -102,14 +110,14 @@ namespace Azure.ResourceManager.StackHCI
                     throw;
                 }
             }
-            Page<HCICluster> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<HciCluster> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = HCIClusterClustersClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetHCIClusters");
+                using var scope = HciClusterClustersClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetHciClusters");
                 scope.Start();
                 try
                 {
-                    var response = HCIClusterClustersRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HCICluster(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = HciClusterClustersRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HciCluster(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

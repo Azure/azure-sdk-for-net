@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         internal TopLevelDomain(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _topLevelDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string topLevelDomainApiVersion);
+            TryGetApiVersion(ResourceType, out string topLevelDomainApiVersion);
             _topLevelDomainRestClient = new TopLevelDomainsRestOperations(_topLevelDomainClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, topLevelDomainApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -83,10 +83,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
-        /// OperationId: TopLevelDomains_Get
-        /// <summary> Description for Get details of a top-level domain. </summary>
+        /// <summary>
+        /// Description for Get details of a top-level domain.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
+        /// Operation Id: TopLevelDomains_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<TopLevelDomain>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -106,10 +107,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
-        /// OperationId: TopLevelDomains_Get
-        /// <summary> Description for Get details of a top-level domain. </summary>
+        /// <summary>
+        /// Description for Get details of a top-level domain.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
+        /// Operation Id: TopLevelDomains_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TopLevelDomain> Get(CancellationToken cancellationToken = default)
         {
@@ -129,20 +131,18 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}/listAgreements
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
-        /// OperationId: TopLevelDomains_ListAgreements
-        /// <summary> Description for Gets all legal agreements that user needs to accept before purchasing a domain. </summary>
+        /// <summary>
+        /// Description for Gets all legal agreements that user needs to accept before purchasing a domain.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}/listAgreements
+        /// Operation Id: TopLevelDomains_ListAgreements
+        /// </summary>
         /// <param name="agreementOption"> Domain agreement options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agreementOption"/> is null. </exception>
         /// <returns> An async collection of <see cref="TldLegalAgreement" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TldLegalAgreement> GetAgreementsAsync(TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
-            if (agreementOption == null)
-            {
-                throw new ArgumentNullException(nameof(agreementOption));
-            }
+            Argument.AssertNotNull(agreementOption, nameof(agreementOption));
 
             async Task<Page<TldLegalAgreement>> FirstPageFunc(int? pageSizeHint)
             {
@@ -177,20 +177,18 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}/listAgreements
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
-        /// OperationId: TopLevelDomains_ListAgreements
-        /// <summary> Description for Gets all legal agreements that user needs to accept before purchasing a domain. </summary>
+        /// <summary>
+        /// Description for Gets all legal agreements that user needs to accept before purchasing a domain.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}/listAgreements
+        /// Operation Id: TopLevelDomains_ListAgreements
+        /// </summary>
         /// <param name="agreementOption"> Domain agreement options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agreementOption"/> is null. </exception>
         /// <returns> A collection of <see cref="TldLegalAgreement" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TldLegalAgreement> GetAgreements(TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
-            if (agreementOption == null)
-            {
-                throw new ArgumentNullException(nameof(agreementOption));
-            }
+            Argument.AssertNotNull(agreementOption, nameof(agreementOption));
 
             Page<TldLegalAgreement> FirstPageFunc(int? pageSizeHint)
             {

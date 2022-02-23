@@ -12,7 +12,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing the DisasterRecovery data model. </summary>
-    public partial class DisasterRecoveryData : Resource
+    public partial class DisasterRecoveryData : ResourceData
     {
         /// <summary> Initializes a new instance of DisasterRecoveryData. </summary>
         public DisasterRecoveryData()

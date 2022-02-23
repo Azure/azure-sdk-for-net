@@ -112,7 +112,7 @@
         ],
         "x-ms-client-request-id": "c42c9946-50de-9a0f-a3b2-0b8cabb78da3",
         "x-ms-date": "Fri, 19 Feb 2021 19:13:45 GMT",
-        "x-ms-rename-source": "%2Ftest-filesystem-768d56d9-a35c-8f74-2673-8f16464af05c%2Ftest-file-499461ae-3aac-c48d-cc75-1bf5bff7b733=",
+        "x-ms-rename-source": "/test-filesystem-768d56d9-a35c-8f74-2673-8f16464af05c/test-file-499461ae-3aac-c48d-cc75-1bf5bff7b733",
         "x-ms-return-client-request-id": "true",
         "x-ms-source-if-modified-since": "Sat, 20 Feb 2021 19:13:45 GMT",
         "x-ms-version": "2021-04-10"
@@ -282,7 +282,7 @@
         ],
         "x-ms-client-request-id": "0015168a-5802-33e8-c4f3-88aed03a032c",
         "x-ms-date": "Fri, 19 Feb 2021 19:13:46 GMT",
-        "x-ms-rename-source": "%2Ftest-filesystem-55deb5d4-e492-7172-e15a-3e85e845defd%2Ftest-file-6d348441-0443-20ad-9b64-2f4bcc381e47=",
+        "x-ms-rename-source": "/test-filesystem-55deb5d4-e492-7172-e15a-3e85e845defd/test-file-6d348441-0443-20ad-9b64-2f4bcc381e47",
         "x-ms-return-client-request-id": "true",
         "x-ms-source-if-unmodified-since": "Thu, 18 Feb 2021 19:13:45 GMT",
         "x-ms-version": "2021-04-10"
@@ -452,7 +452,7 @@
         ],
         "x-ms-client-request-id": "38734273-42cd-3146-96f8-96a268e51fab",
         "x-ms-date": "Fri, 19 Feb 2021 19:13:46 GMT",
-        "x-ms-rename-source": "%2Ftest-filesystem-95d664f2-4643-3dcf-1998-69c81b16b7bb%2Ftest-file-b0bd6639-5716-0277-7b13-a454631112ce=",
+        "x-ms-rename-source": "/test-filesystem-95d664f2-4643-3dcf-1998-69c81b16b7bb/test-file-b0bd6639-5716-0277-7b13-a454631112ce",
         "x-ms-return-client-request-id": "true",
         "x-ms-source-if-match": "\"garbage\"",
         "x-ms-version": "2021-04-10"
@@ -666,7 +666,7 @@
         ],
         "x-ms-client-request-id": "b0c357e0-e8db-3683-c83c-f5b4efed3806",
         "x-ms-date": "Fri, 19 Feb 2021 19:13:47 GMT",
-        "x-ms-rename-source": "%2Ftest-filesystem-f9803150-f2a1-964b-b249-49dd64c063c6%2Ftest-file-fe2b88ac-21a2-a907-1650-d4a768320824=",
+        "x-ms-rename-source": "/test-filesystem-f9803150-f2a1-964b-b249-49dd64c063c6/test-file-fe2b88ac-21a2-a907-1650-d4a768320824",
         "x-ms-return-client-request-id": "true",
         "x-ms-source-if-none-match": "0x8D8D50A7AE832C7",
         "x-ms-version": "2021-04-10"
@@ -836,7 +836,7 @@
         ],
         "x-ms-client-request-id": "62e0655b-eacd-5759-473f-973364cbe94a",
         "x-ms-date": "Fri, 19 Feb 2021 19:13:47 GMT",
-        "x-ms-rename-source": "%2Ftest-filesystem-3ad856e7-b597-3703-d1a2-c63f19b00733%2Ftest-file-d98a00ff-8ca5-642f-66f0-ae92dc79c223=",
+        "x-ms-rename-source": "/test-filesystem-3ad856e7-b597-3703-d1a2-c63f19b00733/test-file-d98a00ff-8ca5-642f-66f0-ae92dc79c223",
         "x-ms-return-client-request-id": "true",
         "x-ms-source-lease-id": "741ca920-df6d-878a-9d9f-bd5e05484adb",
         "x-ms-version": "2021-04-10"

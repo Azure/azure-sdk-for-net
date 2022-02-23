@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the SyncGroup data model. </summary>
-    public partial class SyncGroupData : Resource
+    public partial class SyncGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of SyncGroupData. </summary>
         public SyncGroupData()

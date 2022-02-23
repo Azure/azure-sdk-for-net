@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the DataMaskingPolicy data model. </summary>
-    public partial class DataMaskingPolicyData : Resource
+    public partial class DataMaskingPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of DataMaskingPolicyData. </summary>
         public DataMaskingPolicyData()

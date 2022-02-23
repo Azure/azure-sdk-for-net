@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Database query. </summary>
-    public partial class ManagedInstanceQuery : Resource
+    public partial class ManagedInstanceQuery : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedInstanceQuery. </summary>
         public ManagedInstanceQuery()

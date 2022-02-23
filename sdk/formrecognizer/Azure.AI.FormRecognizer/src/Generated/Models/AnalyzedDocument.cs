@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="spans"> Location of the document in the reading order concatenated content. </param>
         /// <param name="fields"> Dictionary of named field values. </param>
         /// <param name="confidence"> Confidence of correctly extracting the document. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="docType"/>, <paramref name="spans"/>, or <paramref name="fields"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="docType"/>, <paramref name="spans"/> or <paramref name="fields"/> is null. </exception>
         internal AnalyzedDocument(string docType, IEnumerable<DocumentSpan> spans, IReadOnlyDictionary<string, DocumentField> fields, float confidence)
         {
             if (docType == null)

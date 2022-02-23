@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the AfdSecret data model. </summary>
-    public partial class AfdSecretData : Resource
+    public partial class AfdSecretData : ResourceData
     {
         /// <summary> Initializes a new instance of AfdSecretData. </summary>
         public AfdSecretData()

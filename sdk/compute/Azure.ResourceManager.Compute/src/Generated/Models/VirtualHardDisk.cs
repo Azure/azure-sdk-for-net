@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the uri of a disk. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of VirtualHardDisk. </summary>
         /// <param name="uri"> Specifies the virtual hard disk&apos;s uri. </param>
-        internal VirtualHardDisk(string uri)
+        internal VirtualHardDisk(Uri uri)
         {
             Uri = uri;
         }
 
         /// <summary> Specifies the virtual hard disk&apos;s uri. </summary>
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
     }
 }

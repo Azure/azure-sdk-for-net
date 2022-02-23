@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources
         internal TenantPolicySetDefinition(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _tenantPolicySetDefinitionPolicySetDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string tenantPolicySetDefinitionPolicySetDefinitionsApiVersion);
+            TryGetApiVersion(ResourceType, out string tenantPolicySetDefinitionPolicySetDefinitionsApiVersion);
             _tenantPolicySetDefinitionPolicySetDefinitionsRestClient = new PolicySetDefinitionsRestOperations(_tenantPolicySetDefinitionPolicySetDefinitionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tenantPolicySetDefinitionPolicySetDefinitionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -82,10 +82,11 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
-        /// ContextualPath: /providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
-        /// OperationId: PolicySetDefinitions_GetBuiltIn
-        /// <summary> This operation retrieves the built-in policy set definition with the given name. </summary>
+        /// <summary>
+        /// This operation retrieves the built-in policy set definition with the given name.
+        /// Request Path: /providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
+        /// Operation Id: PolicySetDefinitions_GetBuiltIn
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<TenantPolicySetDefinition>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -105,10 +106,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
-        /// ContextualPath: /providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
-        /// OperationId: PolicySetDefinitions_GetBuiltIn
-        /// <summary> This operation retrieves the built-in policy set definition with the given name. </summary>
+        /// <summary>
+        /// This operation retrieves the built-in policy set definition with the given name.
+        /// Request Path: /providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
+        /// Operation Id: PolicySetDefinitions_GetBuiltIn
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TenantPolicySetDefinition> Get(CancellationToken cancellationToken = default)
         {

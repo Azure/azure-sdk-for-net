@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateMongoDBDatabaseToAutoscaleAsync(true)).Value;
+            ThroughputSettingsData throughputData = (await throughput.MigrateMongoDBDatabaseToAutoscaleAsync(true)).Value.Data;
             AssertAutoscale(throughputData);
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountMongodbDatabaseThroughputSetting throughput = await database.GetDatabaseAccountMongodbDatabaseThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateMongoDBDatabaseToManualThroughputAsync(true)).Value;
+            ThroughputSettingsData throughputData = (await throughput.MigrateMongoDBDatabaseToManualThroughputAsync(true)).Value.Data;
             AssertManualThroughput(throughputData);
         }
 

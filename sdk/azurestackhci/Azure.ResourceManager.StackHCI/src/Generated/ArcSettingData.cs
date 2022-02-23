@@ -14,7 +14,7 @@ using Azure.ResourceManager.StackHCI.Models;
 namespace Azure.ResourceManager.StackHCI
 {
     /// <summary> A class representing the ArcSetting data model. </summary>
-    public partial class ArcSettingData : Resource
+    public partial class ArcSettingData : ResourceData
     {
         /// <summary> Initializes a new instance of ArcSettingData. </summary>
         public ArcSettingData()

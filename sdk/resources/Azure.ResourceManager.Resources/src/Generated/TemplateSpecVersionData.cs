@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the TemplateSpecVersion data model. </summary>
-    public partial class TemplateSpecVersionData : Resource
+    public partial class TemplateSpecVersionData : ResourceData
     {
         /// <summary> Initializes a new instance of TemplateSpecVersionData. </summary>
         /// <param name="location"> The location of the Template Spec Version. It must match the location of the parent Template Spec. </param>

@@ -42,12 +42,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// The resource ID of the SQL database.
         /// </param>
         /// <param name='startTime'>
-        /// The snapshot create timestamp after which snapshots need to be
-        /// listed.
+        /// Restorable Sql containers event feed start time.
         /// </param>
         /// <param name='endTime'>
-        /// The snapshot create timestamp before which snapshots need to be
-        /// listed.
+        /// Restorable Sql containers event feed end time.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

@@ -3,10 +3,13 @@
 ## 12.11.0-beta.4 (Unreleased)
 
 ### Features Added
+- Added support for progress reporting with DownloadToAsync().
 
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed a bug where BlobBaseClient.DownloadTo() would result in an ObjectDisposedException on .NET Framework in certain network conditions.
+- Added nullable version of `BlobProperties.CopyStatus` called `BlobCopyStatus`, allowing a null value when Storage doesn't return a value.
 
 ### Other Changes
 

@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ManagedInstanceLongTermRetentionPolicy data model. </summary>
-    public partial class ManagedInstanceLongTermRetentionPolicyData : Resource
+    public partial class ManagedInstanceLongTermRetentionPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedInstanceLongTermRetentionPolicyData. </summary>
         public ManagedInstanceLongTermRetentionPolicyData()
