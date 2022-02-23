@@ -16,7 +16,7 @@ namespace Azure.Core.Pipeline
         /// <param name="userAgentValue">The <see cref="SetUserAgentString"/>.</param>
         public static void SetUserAgentString(this HttpMessage message, UserAgentValue userAgentValue)
         {
-            message.SetInternalProperty(typeof(UserAgentValue), userAgentValue);
+            message.SetInternalProperty(typeof(UserAgentValueKey), userAgentValue.ToString());
         }
     }
 }
