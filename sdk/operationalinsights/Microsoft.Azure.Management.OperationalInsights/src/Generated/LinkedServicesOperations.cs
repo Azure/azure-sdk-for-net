@@ -547,7 +547,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<LinkedService>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<LinkedService>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

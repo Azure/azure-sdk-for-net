@@ -1370,7 +1370,7 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class IPRule
     {
-        public IPRule(string iPAddressOrRange) { }
+        public IPRule(string ipAddressOrRange) { }
         public string Action { get { throw null; } set { } }
         public string IPAddressOrRange { get { throw null; } set { } }
     }

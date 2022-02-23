@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public StorageAccountTests(bool isAsync) : base(isAsync)
         {
         }
+
         [TearDown]
         public async Task ClearStorageAccounts()
         {
@@ -139,6 +140,7 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccount account4 = await storageAccountCollection.GetIfExistsAsync(accountName);
             Assert.IsNull(account4);
         }
+
         [Test]
         [RecordedTest]
         public async Task CreateStandardAccount()
@@ -151,6 +153,7 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccount account1 = (await storageAccountCollection.CreateOrUpdateAsync(true, accountName, GetDefaultStorageAccountParameters(sku: new Sku(SkuName.StandardLRS)))).Value;
             Assert.AreEqual(accountName, account1.Id.Name);
             VerifyAccountProperties(account1, false);
+            Assert.Null(account1.Data.Identity);
 
             //create a GRS storage account
             accountName = await CreateValidAccountNameAsync(namePrefix);
@@ -632,7 +635,7 @@ namespace Azure.ResourceManager.Storage.Tests
             parameters.NetworkRuleSet = new NetworkRuleSet(defaultAction: DefaultAction.Deny)
             {
                 Bypass = @"Logging, AzureServices",
-                IpRules = { new IPRule(iPAddressOrRange: "23.45.67.89") }
+                IpRules = { new IPRule("23.45.67.89") }
             };
             StorageAccount account1 = (await storageAccountCollection.CreateOrUpdateAsync(true, accountName, parameters)).Value;
             VerifyAccountProperties(account1, false);
@@ -654,8 +657,8 @@ namespace Azure.ResourceManager.Storage.Tests
                 NetworkRuleSet = new NetworkRuleSet(defaultAction: DefaultAction.Deny)
                 {
                     Bypass = @"Logging, Metrics",
-                    IpRules = { new IPRule(iPAddressOrRange: "23.45.67.90"),
-                        new IPRule(iPAddressOrRange: "23.45.67.91")
+                    IpRules = { new IPRule("23.45.67.90"),
+                        new IPRule("23.45.67.91")
                     }
                 }
             };

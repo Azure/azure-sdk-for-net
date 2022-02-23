@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Initializes a new instance of the <see cref = "StorageAccount"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal StorageAccount(ArmClient client, StorageAccountData data) : this(client, data.Id)
+        internal StorageAccount(ArmClient client, StorageAccountData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;

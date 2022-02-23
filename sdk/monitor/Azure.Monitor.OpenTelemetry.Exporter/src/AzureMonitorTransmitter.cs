@@ -73,6 +73,53 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return result;
         }
 
+        public async ValueTask TransmitFromStorage(long maxFilesToTransmit, bool async, CancellationToken cancellationToken)
+        {
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
+
+            long files = maxFilesToTransmit;
+            while (files > 0)
+            {
+                try
+                {
+                    // TODO: Do we need more lease time?
+                    var blob = _storage.GetBlob()?.Lease(10000);
+                    if (blob == null)
+                    {
+                        // no files to transmit
+                        return;
+                    }
+                    else
+                    {
+                        var data = blob.Read();
+                        using var httpMessage = async ?
+                            await _applicationInsightsRestClient.InternalTrackAsync(data, cancellationToken).ConfigureAwait(false) :
+                            _applicationInsightsRestClient.InternalTrackAsync(data, cancellationToken).Result;
+
+                        var result = IsSuccess(httpMessage);
+
+                        if (result == ExportResult.Success)
+                        {
+                            blob.Delete();
+                        }
+                        else
+                        {
+                            HandleFailures(httpMessage, blob);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    AzureMonitorExporterEventSource.Log.Write($"FailedToTransmitFromStorage{EventLevelSuffix.Error}", ex.LogAsyncException());
+                }
+
+                files--;
+            }
+        }
+
         private static ExportResult IsSuccess(HttpMessage httpMessage)
         {
             if (httpMessage.HasResponse && httpMessage.Response.Status == ResponseStatusCodes.Success)
@@ -134,6 +181,56 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             return result;
+        }
+
+        private void HandleFailures(HttpMessage httpMessage, IPersistentBlob blob)
+        {
+            int retryInterval;
+
+            if (!httpMessage.HasResponse)
+            {
+                // HttpRequestException
+                // Extend lease time so that it is not picked again for retry.
+                blob.Lease(HttpPipelineHelper.MinimumRetryInterval);
+            }
+            else
+            {
+                switch (httpMessage.Response.Status)
+                {
+                    case ResponseStatusCodes.PartialSuccess:
+                        // Parse retry-after header
+                        // Send Failed Messages To Storage
+                        // Delete existing file
+                        TrackResponse trackResponse = HttpPipelineHelper.GetTrackResponse(httpMessage);
+                        var content = HttpPipelineHelper.GetPartialContentForRetry(trackResponse, httpMessage.Request.Content);
+                        if (content != null)
+                        {
+                            retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
+                            blob.Delete();
+                            _storage.SaveTelemetry(content, retryInterval);
+                        }
+                        break;
+                    case ResponseStatusCodes.RequestTimeout:
+                    case ResponseStatusCodes.ResponseCodeTooManyRequests:
+                    case ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache:
+                        // Extend lease time using retry interval period
+                        // so that it is not picked up again before that.
+                        retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
+                        blob.Lease(retryInterval);
+                        break;
+                    case ResponseStatusCodes.InternalServerError:
+                    case ResponseStatusCodes.BadGateway:
+                    case ResponseStatusCodes.ServiceUnavailable:
+                    case ResponseStatusCodes.GatewayTimeout:
+                        // Extend lease time so that it is not picked up again
+                        blob.Lease(HttpPipelineHelper.MinimumRetryInterval);
+                        break;
+                    default:
+                        // Log Non-Retriable Status and don't retry or store;
+                        // File will be cleared by maintenance job
+                        break;
+                }
+            }
         }
     }
 }

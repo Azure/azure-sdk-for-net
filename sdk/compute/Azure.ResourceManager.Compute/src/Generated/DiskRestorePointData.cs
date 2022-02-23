@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="systemData"> The systemData. </param>
         /// <param name="timeCreated"> The timestamp of restorePoint creation. </param>
         /// <param name="sourceResourceId"> arm id of source disk or source disk restore point. </param>
-        /// <param name="oSType"> The Operating System type. </param>
+        /// <param name="osType"> The Operating System type. </param>
         /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
         /// <param name="purchasePlan"> Purchase plan information for the the image from which the OS disk was created. </param>
         /// <param name="supportedCapabilities"> List of supported capabilities (like accelerated networking) for the image from which the OS disk was created. </param>
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="completionPercent"> Percentage complete for the background copy of disk restore point when source resource is from a different region. </param>
         /// <param name="replicationState"> Replication state of disk restore point when source resource is from a different region. </param>
         /// <param name="sourceResourceLocation"> Location of source disk or source disk restore point when source resource is from a different region. </param>
-        internal DiskRestorePointData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, DateTimeOffset? timeCreated, string sourceResourceId, OperatingSystemTypes? oSType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string familyId, string sourceUniqueId, Encryption encryption, bool? supportsHibernation, NetworkAccessPolicy? networkAccessPolicy, PublicNetworkAccess? publicNetworkAccess, string diskAccessId, float? completionPercent, string replicationState, string sourceResourceLocation) : base(id, name, type, systemData)
+        internal DiskRestorePointData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, DateTimeOffset? timeCreated, string sourceResourceId, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string familyId, string sourceUniqueId, Encryption encryption, bool? supportsHibernation, NetworkAccessPolicy? networkAccessPolicy, PublicNetworkAccess? publicNetworkAccess, string diskAccessId, float? completionPercent, string replicationState, string sourceResourceLocation) : base(id, name, type, systemData)
         {
             TimeCreated = timeCreated;
             SourceResourceId = sourceResourceId;
-            OSType = oSType;
+            OSType = osType;
             HyperVGeneration = hyperVGeneration;
             PurchasePlan = purchasePlan;
             SupportedCapabilities = supportedCapabilities;

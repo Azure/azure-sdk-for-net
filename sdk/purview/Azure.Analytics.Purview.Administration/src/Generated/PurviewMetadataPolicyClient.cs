@@ -115,9 +115,7 @@ namespace Azure.Analytics.Purview.Administration
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> UpdateMetadataPolicyAsync(string policyId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
 
@@ -214,9 +212,7 @@ namespace Azure.Analytics.Purview.Administration
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response UpdateMetadataPolicy(string policyId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
 
@@ -282,9 +278,7 @@ namespace Azure.Analytics.Purview.Administration
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetMetadataPolicyAsync(string policyId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
 
@@ -350,9 +344,7 @@ namespace Azure.Analytics.Purview.Administration
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetMetadataPolicy(string policyId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
 
@@ -420,9 +412,7 @@ namespace Azure.Analytics.Purview.Administration
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetMetadataPoliciesAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewMetadataPolicyClient.GetMetadataPolicies");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -489,9 +479,7 @@ namespace Azure.Analytics.Purview.Administration
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetMetadataPolicies(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewMetadataPolicyClient.GetMetadataPolicies");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
