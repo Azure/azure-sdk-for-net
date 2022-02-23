@@ -2117,7 +2117,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                         while (activeTasks.Count >= _options.MaximumConcurrentSends)
                         {
-                            var awaiSingleWatch = ValueStopwatch.StartNew();
+                            var awaitSingleWatch = ValueStopwatch.StartNew();
                             Logger.BufferedProducerPublishingAwaitStart(Identifier, EventHubName, activeTasks.Count, operationId);
 
                             // The publishing task is responsible for managing its own exceptions and will not throw.
@@ -2125,7 +2125,7 @@ namespace Azure.Messaging.EventHubs.Producer
                             var finished = await Task.WhenAny(activeTasks).ConfigureAwait(false);
                             activeTasks.Remove(finished);
 
-                            Logger.BufferedProducerPublishingAwaitComplete(Identifier, EventHubName, activeTasks.Count, operationId, awaiSingleWatch.GetElapsedTime().TotalSeconds);
+                            Logger.BufferedProducerPublishingAwaitComplete(Identifier, EventHubName, activeTasks.Count, operationId, awaitSingleWatch.GetElapsedTime().TotalSeconds);
                         }
 
                         // Select a partition to process; because the set of partitions is unstable, capture a local reference to
@@ -2156,7 +2156,7 @@ namespace Azure.Messaging.EventHubs.Producer
                             if ((!cancellationToken.IsCancellationRequested)
                                 && (_activePartitionStateMap.TryGetValue(partition, out var partitionState))
                                 && (partitionState.BufferedEventCount > 0)
-                                && (partitionState.PartitionGuard.Wait(PartitionPublishingGuardAcquireLimitMilliseconds, cancellationToken)))
+                                && ((partitionState.PartitionGuard.Wait(0, cancellationToken)) || (await partitionState.PartitionGuard.WaitAsync(PartitionPublishingGuardAcquireLimitMilliseconds, cancellationToken).ConfigureAwait((false)))))
                             {
                                 // Responsibility for releasing the guard semaphore is passed to the task.
 
