@@ -12,36 +12,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class LogsHelperTests
     {
-        private readonly ILogger _logger;
-        private readonly ILoggerFactory loggerFactory;
-        private readonly TestLogProcessor _processor;
-        private OpenTelemetryLoggerOptions _options;
-
-        public LogsHelperTests()
+        [Fact]
+        public void MessageIsSetToFormattedMessageWhenIncludeFormattedMessageIsSet()
         {
-            _processor = new TestLogProcessor();
-            loggerFactory = LoggerFactory.Create(builder =>
+            var processor = new TestLogProcessor();
+            using var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder.AddOpenTelemetry(options =>
                 {
-                    _options = options;
-                    _options.AddProcessor(_processor);
+                    options.IncludeFormattedMessage = true;
+                    options.AddProcessor(processor);
                 });
                 builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
             });
 
-            _logger = loggerFactory.CreateLogger<LogsHelperTests>();
-        }
+            var logger = loggerFactory.CreateLogger<LogsHelperTests>();
 
-        [Fact]
-        public void MessageIsSetToFormattedMessageWhenIncludeFormattedMessageIsSet()
-        {
-            _options.IncludeFormattedMessage = true;
             string log = "Hello from {name} {price}.";
-            _logger.LogInformation(log, "tomato", 2.99);
+            logger.LogInformation(log, "tomato", 2.99);
 
             var properties = new ChangeTrackingDictionary<string, string>();
-            var message = LogsHelper.GetMessageAndSetProperties(_processor.processedItems[0], properties);
+            var message = LogsHelper.GetMessageAndSetProperties(processor.processedItems[0], properties);
 
             Assert.Equal("Hello from tomato 2.99.", message);
             Assert.True(properties.TryGetValue("OriginalFormat", out string value));
@@ -51,11 +42,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void MessageIsSetToOriginalFormatWhenIncludeFormattedMessageIsNotSet()
         {
+            var processor = new TestLogProcessor();
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.AddProcessor(processor);
+                });
+                builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
+            });
+
+            var logger = loggerFactory.CreateLogger<LogsHelperTests>();
+
             string log = "Hello from {name} {price}.";
-            _logger.LogInformation(log, "tomato", 2.99);
+            logger.LogInformation(log, "tomato", 2.99);
 
             var properties = new ChangeTrackingDictionary<string, string>();
-            var message = LogsHelper.GetMessageAndSetProperties(_processor.processedItems[0], properties);
+            var message = LogsHelper.GetMessageAndSetProperties(processor.processedItems[0], properties);
 
             Assert.Equal(log, message);
             Assert.False(properties.ContainsKey("OriginalFormat"));
@@ -64,11 +67,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void PropertiesContainFieldsFromStructuredLogs()
         {
+            var processor = new TestLogProcessor();
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.AddProcessor(processor);
+                });
+                builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
+            });
+
+            var logger = loggerFactory.CreateLogger<LogsHelperTests>();
+
             string log = "Hello from {name} {price}.";
-            _logger.LogInformation(log, "tomato", 2.99);
+            logger.LogInformation(log, "tomato", 2.99);
 
             var properties = new ChangeTrackingDictionary<string, string>();
-            LogsHelper.GetMessageAndSetProperties(_processor.processedItems[0], properties);
+            LogsHelper.GetMessageAndSetProperties(processor.processedItems[0], properties);
 
             Assert.True(properties.TryGetValue("name", out string name));
             Assert.Equal("tomato", name);
@@ -77,13 +92,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void PropertiesContainFieldsFromStructuredLogsIfStateValuesIsSet()
+        public void PropertiesContainFieldsFromStructuredLogsIfParseStateValuesIsSet()
         {
-            _options.ParseStateValues = true;
-            _logger.LogInformation("{Name} {Price}!", "Tomato", 2.99);
+            var processor = new TestLogProcessor();
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.ParseStateValues = true;
+                    options.AddProcessor(processor);
+                });
+                builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
+            });
+
+            var logger = loggerFactory.CreateLogger<LogsHelperTests>();
+
+            logger.LogInformation("{Name} {Price}!", "Tomato", 2.99);
 
             var properties = new ChangeTrackingDictionary<string, string>();
-            LogsHelper.GetMessageAndSetProperties(_processor.processedItems[0], properties);
+            LogsHelper.GetMessageAndSetProperties(processor.processedItems[0], properties);
 
             Assert.True(properties.TryGetValue("Name", out string name));
             Assert.Equal("Tomato", name);
@@ -94,11 +121,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void PropertiesContainEventIdAndEventNameIfSetOnLog()
         {
+            var processor = new TestLogProcessor();
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.ParseStateValues = true;
+                    options.AddProcessor(processor);
+                });
+                builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
+            });
+
+            var logger = loggerFactory.CreateLogger<LogsHelperTests>();
+
             EventId id = new EventId(1, "TestEvent");
-            _logger.LogInformation(id, "Log Information");
+            logger.LogInformation(id, "Log Information");
 
             var properties = new ChangeTrackingDictionary<string, string>();
-            LogsHelper.GetMessageAndSetProperties(_processor.processedItems[0], properties);
+            LogsHelper.GetMessageAndSetProperties(processor.processedItems[0], properties);
 
             Assert.True(properties.TryGetValue("EventId", out string eventId));
             Assert.Equal("1", eventId);
