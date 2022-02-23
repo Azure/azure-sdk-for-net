@@ -8,7 +8,7 @@ using System;
 namespace Azure.Core
 {
     /// <summary>
-    /// Strategy to control polling behavior of LRO operation.
+    /// Strategy to control delay behavior.
     /// </summary>
     internal abstract class DelayStrategy
     {
