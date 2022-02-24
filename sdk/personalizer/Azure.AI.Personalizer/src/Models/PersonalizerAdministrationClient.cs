@@ -311,13 +311,33 @@ namespace Azure.AI.Personalizer
         /// <remarks> Gets the signed Personalizer model. </remarks>
         public virtual async Task<Response<Stream>> ExportPersonalizerSignedModelAsync(CancellationToken cancellationToken = default)
         {
-            return await GetPersonalizerModelAsync(true, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerAdministrationClient.ExportPersonalizerSignedModel");
+            scope.Start();
+            try
+            {
+                return await GetPersonalizerModelAsync(true, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Export the current model used by Personalizer service. </summary>
         public virtual Response<Stream> ExportPersonalizerSignedModel(CancellationToken cancellationToken = default)
         {
-            return GetPersonalizerModel(isSigned: true, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerAdministrationClient.ExportPersonalizerSignedModel");
+            scope.Start();
+            try
+            {
+                return GetPersonalizerModel(isSigned: true, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Replace the current model used by Personalizer service with an updated model. </summary>
@@ -325,7 +345,7 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> ImportPersonalizerSignedModelAsync(Stream modelStream, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PersonalizerAdministrationClient.ImportPersonalizerModel");
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerAdministrationClient.ImportPersonalizerSignedModel");
             scope.Start();
             try
             {
@@ -343,7 +363,7 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response ImportPersonalizerSignedModel(Stream modelStream, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PersonalizerAdministrationClient.ImportPersonalizerModel");
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerAdministrationClient.ImportPersonalizerSignedModel");
             scope.Start();
             try
             {
