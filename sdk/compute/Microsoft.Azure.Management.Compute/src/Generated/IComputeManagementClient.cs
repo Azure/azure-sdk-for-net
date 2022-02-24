@@ -187,6 +187,31 @@ namespace Microsoft.Azure.Management.Compute
         ILogAnalyticsOperations LogAnalytics { get; }
 
         /// <summary>
+        /// Gets the IDisksOperations.
+        /// </summary>
+        IDisksOperations Disks { get; }
+
+        /// <summary>
+        /// Gets the IDiskAccessesOperations.
+        /// </summary>
+        IDiskAccessesOperations DiskAccesses { get; }
+
+        /// <summary>
+        /// Gets the IDiskEncryptionSetsOperations.
+        /// </summary>
+        IDiskEncryptionSetsOperations DiskEncryptionSets { get; }
+
+        /// <summary>
+        /// Gets the IDiskRestorePointOperations.
+        /// </summary>
+        IDiskRestorePointOperations DiskRestorePoint { get; }
+
+        /// <summary>
+        /// Gets the ISnapshotsOperations.
+        /// </summary>
+        ISnapshotsOperations Snapshots { get; }
+
+        /// <summary>
         /// Gets the IVirtualMachineRunCommandsOperations.
         /// </summary>
         IVirtualMachineRunCommandsOperations VirtualMachineRunCommands { get; }
@@ -200,31 +225,6 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IResourceSkusOperations.
         /// </summary>
         IResourceSkusOperations ResourceSkus { get; }
-
-        /// <summary>
-        /// Gets the IDisksOperations.
-        /// </summary>
-        IDisksOperations Disks { get; }
-
-        /// <summary>
-        /// Gets the ISnapshotsOperations.
-        /// </summary>
-        ISnapshotsOperations Snapshots { get; }
-
-        /// <summary>
-        /// Gets the IDiskEncryptionSetsOperations.
-        /// </summary>
-        IDiskEncryptionSetsOperations DiskEncryptionSets { get; }
-
-        /// <summary>
-        /// Gets the IDiskAccessesOperations.
-        /// </summary>
-        IDiskAccessesOperations DiskAccesses { get; }
-
-        /// <summary>
-        /// Gets the IDiskRestorePointOperations.
-        /// </summary>
-        IDiskRestorePointOperations DiskRestorePoint { get; }
 
         /// <summary>
         /// Gets the IGalleriesOperations.
