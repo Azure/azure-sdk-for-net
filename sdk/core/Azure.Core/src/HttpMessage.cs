@@ -80,7 +80,7 @@ namespace Azure.Core
         /// </summary>
         public TimeSpan? NetworkTimeout { get; set; }
 
-        internal void ApplyRequestContext(RequestContext? context, CoreResponseClassifier? classifier)
+        internal void ApplyRequestContext(RequestContext? context, ResponseClassifier? classifier)
         {
             if (context == null)
             {
@@ -97,7 +97,15 @@ namespace Azure.Core
 
             if (classifier != null)
             {
-                ResponseClassifier = context.Apply(classifier);
+                var coreClassifier = classifier as CoreResponseClassifier;
+                if (coreClassifier != null)
+                {
+                    ResponseClassifier = context.Apply(coreClassifier);
+                }
+                else
+                {
+
+                }
             }
         }
 
