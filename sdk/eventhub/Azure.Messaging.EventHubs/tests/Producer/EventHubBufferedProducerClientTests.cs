@@ -1224,9 +1224,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var publishedEventsCount = 0;
             var expectedPartition = "4";
-            var extraEvent = EventGenerator.CreateSmallEvents(1).First();
             var expectedEvents = EventGenerator.CreateSmallEvents(10).ToList();
             var batchedEvents = new List<EventData>();
             var handlerArgs = default(SendEventBatchSucceededEventArgs);
@@ -1246,7 +1244,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockProducer
                 .Setup(producer => producer.SendAsync(It.IsAny<EventDataBatch>(), It.IsAny<CancellationToken>()))
-                .Callback<EventDataBatch, CancellationToken>((batch, token) => publishedEventsCount = batch.Count)
                 .Returns(Task.CompletedTask);
 
             mockBufferedProducer.Object.ActivePartitionStateMap[expectedPartition] = partitionState;
@@ -1298,10 +1295,8 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var publishedEventsCount = 0;
             var expectedPartition = "4";
             var expectedException = new AccessViolationException();
-            var extraEvent = EventGenerator.CreateSmallEvents(1).First();
             var expectedEvents = EventGenerator.CreateSmallEvents(10).ToList();
             var batchedEvents = new List<EventData>();
             var handlerArgs = default(SendEventBatchFailedEventArgs);
@@ -1321,7 +1316,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockProducer
                 .Setup(producer => producer.SendAsync(It.IsAny<EventDataBatch>(), It.IsAny<CancellationToken>()))
-                .Callback<EventDataBatch, CancellationToken>((batch, token) => publishedEventsCount = batch.Count)
                 .ThrowsAsync(expectedException);
 
             mockBufferedProducer.Object.ActivePartitionStateMap[expectedPartition] = partitionState;
@@ -1362,6 +1356,122 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<string>(),
                     It.IsAny<CancellationToken>()),
                 Times.Once);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubBufferedProducerClient.FlushAsync" /> method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task FlushAsyncToleratesExceptionsInTheSuccessHandler()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var expectedPartition = "4";
+            var expectedEvents = EventGenerator.CreateSmallEvents(10).ToList();
+            var handlerWasCalled = false;
+            var batchedEvents = new List<EventData>();
+            var options = new EventHubBufferedProducerClientOptions { MaximumWaitTime = EventHubsTestEnvironment.Instance.TestExecutionTimeLimit };
+            var partitionState = new EventHubBufferedProducerClient.PartitionPublishingState(expectedPartition, options);
+            var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
+            var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, options) { CallBase = true };
+
+            mockProducer
+                .Setup(producer => producer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new[] { expectedPartition, "6" });
+
+            mockProducer
+                .Setup(producer => producer.CreateBatchAsync(It.IsAny<CreateBatchOptions>(), It.IsAny<CancellationToken>()))
+                .Returns<CreateBatchOptions, CancellationToken>((options, token) => new ValueTask<EventDataBatch>(EventHubsModelFactory.EventDataBatch(1_048_576, batchedEvents, options, _ => batchedEvents.Count < expectedEvents.Count)));
+
+            mockProducer
+                .Setup(producer => producer.SendAsync(It.IsAny<EventDataBatch>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
+            mockBufferedProducer.Object.ActivePartitionStateMap[expectedPartition] = partitionState;
+
+            // Wire up the handler.
+
+            mockBufferedProducer.Object.SendEventBatchSucceededAsync += args =>
+            {
+                batchedEvents.Clear();
+                handlerWasCalled = true;
+
+                throw new AmbiguousMatchException("I was actually thinking of the 3 of clubs.");
+            };
+
+            // Enqueue the events that need to be published.
+
+            foreach (var eventData in expectedEvents)
+            {
+                await partitionState.PendingEventsWriter.WriteAsync(eventData, cancellationSource.Token);
+                partitionState.BufferedEventCount += 1;
+            }
+
+            // Flush and verify.
+
+            Assert.That(async () => await mockBufferedProducer.Object.FlushAsync(cancellationSource.Token).AwaitWithCancellation(cancellationSource.Token), Throws.Nothing);
+            Assert.That(handlerWasCalled, Is.True, "The success handler should have been called.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubBufferedProducerClient.FlushAsync" /> method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task FlushAsyncToleratesExceptionsInTheFailureHandler()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var expectedPartition = "4";
+            var expectedEvents = EventGenerator.CreateSmallEvents(10).ToList();
+            var handlerWasCalled = false;
+            var batchedEvents = new List<EventData>();
+            var options = new EventHubBufferedProducerClientOptions { MaximumWaitTime = EventHubsTestEnvironment.Instance.TestExecutionTimeLimit };
+            var partitionState = new EventHubBufferedProducerClient.PartitionPublishingState(expectedPartition, options);
+            var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
+            var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, options) { CallBase = true };
+
+            mockProducer
+                .Setup(producer => producer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new[] { expectedPartition, "6" });
+
+            mockProducer
+                .Setup(producer => producer.CreateBatchAsync(It.IsAny<CreateBatchOptions>(), It.IsAny<CancellationToken>()))
+                .Returns<CreateBatchOptions, CancellationToken>((options, token) => new ValueTask<EventDataBatch>(EventHubsModelFactory.EventDataBatch(1_048_576, batchedEvents, options, _ => batchedEvents.Count < expectedEvents.Count)));
+
+            mockProducer
+                .Setup(producer => producer.SendAsync(It.IsAny<EventDataBatch>(), It.IsAny<CancellationToken>()))
+                .ThrowsAsync(new AccessViolationException());
+
+            mockBufferedProducer.Object.ActivePartitionStateMap[expectedPartition] = partitionState;
+
+            // Wire up the handler.
+
+            mockBufferedProducer.Object.SendEventBatchFailedAsync += args =>
+            {
+                batchedEvents.Clear();
+                handlerWasCalled = true;
+
+                throw new BadImageFormatException("I've seen better selfies...");
+            };
+
+            // Enqueue the events that need to be published.
+
+            foreach (var eventData in expectedEvents)
+            {
+                await partitionState.PendingEventsWriter.WriteAsync(eventData, cancellationSource.Token);
+                partitionState.BufferedEventCount += 1;
+            }
+
+            // Flush and verify.
+
+            Assert.That(async () => await mockBufferedProducer.Object.FlushAsync(cancellationSource.Token).AwaitWithCancellation(cancellationSource.Token), Throws.Nothing);
+            Assert.That(handlerWasCalled, Is.True, "The success handler should have been called.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
         }
 
         /// <summary>
