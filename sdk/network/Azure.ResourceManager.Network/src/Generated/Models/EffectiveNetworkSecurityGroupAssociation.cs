@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -29,10 +30,30 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The ID of the Azure network manager if assigned. </summary>
-        public WritableSubResource NetworkManager { get; }
+        internal WritableSubResource NetworkManager { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier NetworkManagerId
+        {
+            get => NetworkManager.Id;
+            set => NetworkManager.Id = value;
+        }
+
         /// <summary> The ID of the subnet if assigned. </summary>
-        public WritableSubResource Subnet { get; }
+        internal WritableSubResource Subnet { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get => Subnet.Id;
+            set => Subnet.Id = value;
+        }
+
         /// <summary> The ID of the network interface if assigned. </summary>
-        public WritableSubResource NetworkInterface { get; }
+        internal WritableSubResource NetworkInterface { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier NetworkInterfaceId
+        {
+            get => NetworkInterface.Id;
+            set => NetworkInterface.Id = value;
+        }
     }
 }

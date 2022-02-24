@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Contains the os disk image information. </summary>
-    public partial class OSDiskImage
+    internal partial class OSDiskImage
     {
         /// <summary> Initializes a new instance of OSDiskImage. </summary>
         /// <param name="operatingSystem"> The operating system of the osDiskImage. </param>

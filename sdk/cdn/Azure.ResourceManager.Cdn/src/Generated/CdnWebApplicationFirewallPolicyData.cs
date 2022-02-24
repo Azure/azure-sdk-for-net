@@ -64,15 +64,60 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets a unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; set; }
         /// <summary> The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy. </summary>
-        public Models.Sku Sku { get; set; }
+        internal Models.Sku Sku { get; set; }
+        /// <summary> Name of the pricing tier. </summary>
+        public SkuName? SkuName
+        {
+            get => Sku is null ? default : Sku.Name;
+            set
+            {
+                if (Sku is null)
+                    Sku = new Models.Sku();
+                Sku.Name = value;
+            }
+        }
+
         /// <summary> Describes  policySettings for policy. </summary>
         public PolicySettings PolicySettings { get; set; }
         /// <summary> Describes rate limit rules inside the policy. </summary>
-        public RateLimitRuleList RateLimitRules { get; set; }
+        internal RateLimitRuleList RateLimitRules { get; set; }
+        /// <summary> List of rules. </summary>
+        public IList<RateLimitRule> RateLimitRules
+        {
+            get
+            {
+                if (RateLimitRules is null)
+                    RateLimitRules = new RateLimitRuleList();
+                return RateLimitRules.Rules;
+            }
+        }
+
         /// <summary> Describes custom rules inside the policy. </summary>
-        public CustomRuleList CustomRules { get; set; }
+        internal CustomRuleList CustomRules { get; set; }
+        /// <summary> List of rules. </summary>
+        public IList<CustomRule> CustomRules
+        {
+            get
+            {
+                if (CustomRules is null)
+                    CustomRules = new CustomRuleList();
+                return CustomRules.Rules;
+            }
+        }
+
         /// <summary> Describes managed rules inside the policy. </summary>
-        public ManagedRuleSetList ManagedRules { get; set; }
+        internal ManagedRuleSetList ManagedRules { get; set; }
+        /// <summary> List of rule sets. </summary>
+        public IList<ManagedRuleSet> ManagedRuleSets
+        {
+            get
+            {
+                if (ManagedRules is null)
+                    ManagedRules = new ManagedRuleSetList();
+                return ManagedRules.ManagedRuleSets;
+            }
+        }
+
         /// <summary> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </summary>
         public IReadOnlyList<SubResource> EndpointLinks { get; }
         /// <summary> Provisioning state of the WebApplicationFirewallPolicy. </summary>

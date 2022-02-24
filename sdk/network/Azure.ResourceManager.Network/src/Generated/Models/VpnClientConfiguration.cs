@@ -54,7 +54,18 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The reference to the address space resource which represents Address space for P2S VpnClient. </summary>
-        public AddressSpace VpnClientAddressPool { get; set; }
+        internal AddressSpace VpnClientAddressPool { get; set; }
+        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
+        public IList<string> VpnClientAddressPrefixes
+        {
+            get
+            {
+                if (VpnClientAddressPool is null)
+                    VpnClientAddressPool = new AddressSpace();
+                return VpnClientAddressPool.AddressPrefixes;
+            }
+        }
+
         /// <summary> VpnClientRootCertificate for virtual network gateway. </summary>
         public IList<VpnClientRootCertificate> VpnClientRootCertificates { get; }
         /// <summary> VpnClientRevokedCertificate for Virtual network gateway. </summary>

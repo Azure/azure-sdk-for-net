@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Configuration of the protocol. </summary>
-    public partial class ProtocolConfiguration
+    internal partial class ProtocolConfiguration
     {
         /// <summary> Initializes a new instance of ProtocolConfiguration. </summary>
         public ProtocolConfiguration()

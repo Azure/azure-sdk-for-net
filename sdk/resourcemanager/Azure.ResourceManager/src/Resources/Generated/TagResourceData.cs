@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -40,6 +41,16 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> The set of tags. </summary>
-        public Tag Properties { get; set; }
+        internal Tag Properties { get; set; }
+        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        public IDictionary<string, string> TagTagsValue
+        {
+            get
+            {
+                if (Properties is null)
+                    Properties = new Tag();
+                return Properties.TagsValue;
+            }
+        }
     }
 }

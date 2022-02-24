@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Multichannel setting. Applies to Premium FileStorage only. </summary>
-    public partial class Multichannel
+    internal partial class Multichannel
     {
         /// <summary> Initializes a new instance of Multichannel. </summary>
         public Multichannel()

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The idle timeout of the public IP address. </summary>
         public int? IdleTimeoutInMinutes { get; set; }
         /// <summary> The dns settings to be applied on the publicIP addresses . </summary>
-        public VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings DnsSettings { get; set; }
+        internal VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings DnsSettings { get; set; }
+        /// <summary> The Domain name label.The concatenation of the domain name label and vm index will be the domain name labels of the PublicIPAddress resources that will be created. </summary>
+        public string DnsDomainNameLabel
+        {
+            get => DnsSettings is null ? default : DnsSettings.DomainNameLabel;
+            set => DnsSettings = new VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings(value);
+        }
+
         /// <summary> Specify what happens to the public IP when the VM is deleted. </summary>
         public DeleteOptions? DeleteOption { get; set; }
     }

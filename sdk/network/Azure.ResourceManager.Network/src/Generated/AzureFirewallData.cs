@@ -86,9 +86,33 @@ namespace Azure.ResourceManager.Network
         /// <summary> The operation mode for Threat Intelligence. </summary>
         public AzureFirewallThreatIntelMode? ThreatIntelMode { get; set; }
         /// <summary> The virtualHub to which the firewall belongs. </summary>
-        public WritableSubResource VirtualHub { get; set; }
+        internal WritableSubResource VirtualHub { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VirtualHubId
+        {
+            get => VirtualHub is null ? default : VirtualHub.Id;
+            set
+            {
+                if (VirtualHub is null)
+                    VirtualHub = new WritableSubResource();
+                VirtualHub.Id = value;
+            }
+        }
+
         /// <summary> The firewallPolicy associated with this azure firewall. </summary>
-        public WritableSubResource FirewallPolicy { get; set; }
+        internal WritableSubResource FirewallPolicy { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier FirewallPolicyId
+        {
+            get => FirewallPolicy is null ? default : FirewallPolicy.Id;
+            set
+            {
+                if (FirewallPolicy is null)
+                    FirewallPolicy = new WritableSubResource();
+                FirewallPolicy.Id = value;
+            }
+        }
+
         /// <summary> IP addresses associated with AzureFirewall. </summary>
         public HubIPAddresses HubIPAddresses { get; set; }
         /// <summary> IpGroups associated with AzureFirewall. </summary>

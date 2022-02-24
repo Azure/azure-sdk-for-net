@@ -53,9 +53,33 @@ namespace Azure.ResourceManager.Network
         /// <summary> VirtualRouter IPs. </summary>
         public IList<string> VirtualRouterIps { get; }
         /// <summary> The Subnet on which VirtualRouter is hosted. </summary>
-        public WritableSubResource HostedSubnet { get; set; }
+        internal WritableSubResource HostedSubnet { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier HostedSubnetId
+        {
+            get => HostedSubnet is null ? default : HostedSubnet.Id;
+            set
+            {
+                if (HostedSubnet is null)
+                    HostedSubnet = new WritableSubResource();
+                HostedSubnet.Id = value;
+            }
+        }
+
         /// <summary> The Gateway on which VirtualRouter is hosted. </summary>
-        public WritableSubResource HostedGateway { get; set; }
+        internal WritableSubResource HostedGateway { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier HostedGatewayId
+        {
+            get => HostedGateway is null ? default : HostedGateway.Id;
+            set
+            {
+                if (HostedGateway is null)
+                    HostedGateway = new WritableSubResource();
+                HostedGateway.Id = value;
+            }
+        }
+
         /// <summary> List of references to VirtualRouterPeerings. </summary>
         public IReadOnlyList<WritableSubResource> Peerings { get; }
         /// <summary> The provisioning state of the resource. </summary>

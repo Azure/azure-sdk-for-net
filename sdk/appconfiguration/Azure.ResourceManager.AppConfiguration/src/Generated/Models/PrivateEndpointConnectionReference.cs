@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> The provisioning status of the private endpoint connection. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The resource of private endpoint. </summary>
-        public WritableSubResource PrivateEndpoint { get; }
+        internal WritableSubResource PrivateEndpoint { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier PrivateEndpointId
+        {
+            get => PrivateEndpoint.Id;
+            set => PrivateEndpoint.Id = value;
+        }
+
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
     }
