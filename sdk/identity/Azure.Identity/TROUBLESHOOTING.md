@@ -17,11 +17,11 @@ library.
 - [Troubleshooting Environment Credential Authentication Issues](#troubleshooting-environment-credential-authentication-issues)
 - [Troubleshooting Service Principal Authentication Issues](#troubleshooting-service-principal-authentication-issues)
 - [Troubleshooting Username Password Authentication Issues](#troubleshooting-username-password-authentication-issues)
-- [Troubleshooting Mananged Identity Authenticaiton Issues](#troubleshooting-mananged-identity-authenticaiton-issues)
-- [Troubleshooting Visual Studio Code Authenticaiton Issues](#troubleshooting-visual-studio-code-authenticaiton-issues)
-- [Troubleshooting Visual Studio Authenticaiton Issues](#troubleshooting-visual-studio-authenticaiton-issues)
-- [Troubleshooting Azure CLI Authenticaiton Issues](#troubleshooting-azure-cli-authenticaiton-issues)
-- [Troubleshooting Azure Powershell Authenticaiton Issues](#troubleshooting-azure-powershell-authenticaiton-issues)
+- [Troubleshooting Managed Identity Authentication Issues](#troubleshooting-managed-identity-authentication-issues)
+- [Troubleshooting Visual Studio Code Authentication Issues](#troubleshooting-visual-studio-code-authentication-issues)
+- [Troubleshooting Visual Studio Authentication Issues](#troubleshooting-visual-studio-authentication-issues)
+- [Troubleshooting Azure CLI Authentication Issues](#troubleshooting-azure-cli-authentication-issues)
+- [Troubleshooting Azure Powershell Authentication Issues](#troubleshooting-azure-powershell-authentication-issues)
 
 ## Troubleshooting Default Azure Credential Authentication Issues.
 
@@ -39,9 +39,9 @@ credential/authentication type you're looking to use via `DefaultAzureCredential
 | --- | --- |
 | Environment Credential |    [Environment Credential Troubleshooting Guide](#troubleshooting-environment-credential-authentication-issues) |
 | Managed Identity Credential |    [Managed Identity Troubleshooting Guide](#troubleshooting-managed-identity-authentication-issues) |
-| Visual Studio Code Credential |    [Visual Studio Code Troubleshooting Guide](#troubleshooting-visual-studio-code-authenticaiton-issues) |
-| Visual Studio Credential |    [Visual Studio Troubleshooting Guide](#troubleshooting-visual-studio-authenticaiton-issues) |
-| Azure CLI Credential |    [Azure CLI Troubleshooting Guide](#troubleshooting-azure-cli-authenticaiton-issues) |
+| Visual Studio Code Credential |    [Visual Studio Code Troubleshooting Guide](#troubleshooting-visual-studio-code-authentication-issues) |
+| Visual Studio Credential |    [Visual Studio Troubleshooting Guide](#troubleshooting-visual-studio-authentication-issues) |
+| Azure CLI Credential |    [Azure CLI Troubleshooting Guide](#troubleshooting-azure-cli-authentication-issues) |
 | Azure Powershell Credential |    [Azure Powershell Troubleshooting Guide](#troubleshooting-azure-powershell-authentication-issues) |
 
 ## Troubleshooting Environment Credential Authentication Issues.
@@ -235,7 +235,7 @@ The `AzureCliCredential` utilizes the current logged in Azure user in Azure CLI 
 via `az login` command. You can further read instructions to [Sign in with Azure CLI](https://docs.microsoft.com/cli/azure/authenticate-azure-cli). Once logged in
 try running the credential again.
 
-## Troubleshooting Azure Powershell Authenticaiton Issues
+## Troubleshooting Azure Powershell Authentication Issues
 
 ### Credential Unavailable
 
