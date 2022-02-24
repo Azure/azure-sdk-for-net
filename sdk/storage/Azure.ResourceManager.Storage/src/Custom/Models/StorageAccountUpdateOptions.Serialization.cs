@@ -7,24 +7,19 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountCreateParameters : IUtf8JsonSerializable
+    public partial class StorageAccountUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sku");
-            writer.WriteObjectValue(Sku);
-            writer.WritePropertyName("kind");
-            writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("location");
-            writer.WriteStringValue(Location);
-            if (Optional.IsDefined(ExtendedLocation))
+            if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("extendedLocation");
-                writer.WriteObjectValue(ExtendedLocation);
+                writer.WritePropertyName("sku");
+                writer.WriteObjectValue(Sku);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -40,30 +35,16 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                JsonSerializer.Serialize(writer, Identity);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+            }
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind");
+                writer.WriteStringValue(Kind.Value.ToString());
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(AllowedCopyScope))
-            {
-                writer.WritePropertyName("allowedCopyScope");
-                writer.WriteStringValue(AllowedCopyScope.Value.ToString());
-            }
-            if (Optional.IsDefined(PublicNetworkAccess))
-            {
-                writer.WritePropertyName("publicNetworkAccess");
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
-            }
-            if (Optional.IsDefined(SasPolicy))
-            {
-                writer.WritePropertyName("sasPolicy");
-                writer.WriteObjectValue(SasPolicy);
-            }
-            if (Optional.IsDefined(KeyPolicy))
-            {
-                writer.WritePropertyName("keyPolicy");
-                writer.WriteObjectValue(KeyPolicy);
-            }
             if (Optional.IsDefined(CustomDomain))
             {
                 writer.WritePropertyName("customDomain");
@@ -74,10 +55,15 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("encryption");
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(NetworkRuleSet))
+            if (Optional.IsDefined(SasPolicy))
             {
-                writer.WritePropertyName("networkAcls");
-                writer.WriteObjectValue(NetworkRuleSet);
+                writer.WritePropertyName("sasPolicy");
+                writer.WriteObjectValue(SasPolicy);
+            }
+            if (Optional.IsDefined(KeyPolicy))
+            {
+                writer.WritePropertyName("keyPolicy");
+                writer.WriteObjectValue(KeyPolicy);
             }
             if (Optional.IsDefined(AccessTier))
             {
@@ -104,10 +90,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("isLocalUserEnabled");
                 writer.WriteBooleanValue(IsLocalUserEnabled.Value);
             }
-            if (Optional.IsDefined(IsHnsEnabled))
+            if (Optional.IsDefined(NetworkRuleSet))
             {
-                writer.WritePropertyName("isHnsEnabled");
-                writer.WriteBooleanValue(IsHnsEnabled.Value);
+                writer.WritePropertyName("networkAcls");
+                writer.WriteObjectValue(NetworkRuleSet);
             }
             if (Optional.IsDefined(LargeFileSharesState))
             {
@@ -134,11 +120,6 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("allowSharedKeyAccess");
                 writer.WriteBooleanValue(AllowSharedKeyAccess.Value);
             }
-            if (Optional.IsDefined(EnableNfsV3))
-            {
-                writer.WritePropertyName("isNfsV3Enabled");
-                writer.WriteBooleanValue(EnableNfsV3.Value);
-            }
             if (Optional.IsDefined(AllowCrossTenantReplication))
             {
                 writer.WritePropertyName("allowCrossTenantReplication");
@@ -149,10 +130,20 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("defaultToOAuthAuthentication");
                 writer.WriteBooleanValue(DefaultToOAuthAuthentication.Value);
             }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess");
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
             if (Optional.IsDefined(ImmutableStorageWithVersioning))
             {
                 writer.WritePropertyName("immutableStorageWithVersioning");
                 writer.WriteObjectValue(ImmutableStorageWithVersioning);
+            }
+            if (Optional.IsDefined(AllowedCopyScope))
+            {
+                writer.WritePropertyName("allowedCopyScope");
+                writer.WriteStringValue(AllowedCopyScope.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
