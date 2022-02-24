@@ -212,6 +212,7 @@ namespace Azure
     public partial class RequestOptions
     {
         public RequestOptions() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected RequestOptions(Azure.RequestOptions options) { }
         public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
         public void AddClassifier(Azure.Core.ResponseClassificationHandler classifier) { }
