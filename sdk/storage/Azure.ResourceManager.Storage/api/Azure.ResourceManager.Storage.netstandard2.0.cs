@@ -2281,7 +2281,7 @@ namespace Azure.ResourceManager.Storage.Models
         public SmbSetting() { }
         public string AuthenticationMethods { get { throw null; } set { } }
         public string ChannelEncryption { get { throw null; } set { } }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsMultiChannelEnabled { get { throw null; } set { } }
         public string KerberosTicketEncryption { get { throw null; } set { } }
         public string Versions { get { throw null; } set { } }
     }

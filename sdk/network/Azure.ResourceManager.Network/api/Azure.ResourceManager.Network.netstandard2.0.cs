@@ -2731,7 +2731,7 @@ namespace Azure.ResourceManager.Network
     {
         public PrivateLinkServiceData() { }
         public string Alias { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.PrivateLinkServicePropertiesAutoApproval AutoApproval { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> AutoApprovalSubscriptions { get { throw null; } }
         public bool? EnableProxyProtocol { get { throw null; } set { } }
         public string Etag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
@@ -2741,7 +2741,7 @@ namespace Azure.ResourceManager.Network
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.NetworkInterfaceData> NetworkInterfaces { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.PrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.PrivateLinkServicePropertiesVisibility Visibility { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> VisibilitySubscriptions { get { throw null; } }
     }
     public partial class Probe : Azure.ResourceManager.Core.ArmResource
     {
@@ -6146,9 +6146,9 @@ namespace Azure.ResourceManager.Network.Models
     {
         public ConnectivityParameters(Azure.ResourceManager.Network.Models.ConnectivitySource source, Azure.ResourceManager.Network.Models.ConnectivityDestination destination) { }
         public Azure.ResourceManager.Network.Models.ConnectivityDestination Destination { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.HttpConfiguration HttpProtocolConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPVersion? PreferredIPVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.Protocol? Protocol { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.HttpConfiguration ProtocolHttpConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ConnectivitySource Source { get { throw null; } }
     }
     public partial class ConnectivitySource
@@ -7933,7 +7933,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public NetworkIntentPolicyConfiguration() { }
         public string NetworkIntentPolicyName { get { throw null; } set { } }
-        public string SourceNetworkIntentEtag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkIntentPolicy SourceNetworkIntentPolicy { get { throw null; } set { } }
     }
     public partial class NetworkInterfaceAssociation
     {
