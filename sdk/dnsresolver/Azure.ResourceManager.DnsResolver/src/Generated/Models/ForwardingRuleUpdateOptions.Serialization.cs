@@ -10,13 +10,23 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    public partial class VirtualNetworkLinkPatch : IUtf8JsonSerializable
+    public partial class ForwardingRuleUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(TargetDnsServers))
+            {
+                writer.WritePropertyName("targetDnsServers");
+                writer.WriteStartArray();
+                foreach (var item in TargetDnsServers)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata");
@@ -27,6 +37,11 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(ForwardingRuleState))
+            {
+                writer.WritePropertyName("forwardingRuleState");
+                writer.WriteStringValue(ForwardingRuleState.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

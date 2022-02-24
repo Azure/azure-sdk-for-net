@@ -10,22 +10,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    public partial class DnsResolverPatch : IUtf8JsonSerializable
+    public partial class VirtualNetworkLinkUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            writer.WritePropertyName("properties");
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("metadata");
                 writer.WriteStartObject();
-                foreach (var item in Tags)
+                foreach (var item in Metadata)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
     }

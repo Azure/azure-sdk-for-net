@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.DnsResolver
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IpConfigurations))
+            if (Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations");
                 writer.WriteStartArray();
-                foreach (var item in IpConfigurations)
+                foreach (var item in IPConfigurations)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DnsResolver
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<IList<IpConfiguration>> ipConfigurations = default;
+            Optional<IList<IPConfiguration>> ipConfigurations = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.DnsResolver
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<IpConfiguration> array = new List<IpConfiguration>();
+                            List<IPConfiguration> array = new List<IPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IpConfiguration.DeserializeIpConfiguration(item));
+                                array.Add(IPConfiguration.DeserializeIPConfiguration(item));
                             }
                             ipConfigurations = array;
                             continue;

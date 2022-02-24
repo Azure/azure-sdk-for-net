@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.DnsResolver.Tests
 {
-    public class dnsresolverManagementTestEnvironment : TestEnvironment
+    public class DnsResolverManagementTestEnvironment : TestEnvironment
     {
     }
 }

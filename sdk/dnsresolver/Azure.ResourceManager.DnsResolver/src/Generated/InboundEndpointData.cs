@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="location"> The location. </param>
         public InboundEndpointData(AzureLocation location) : base(location)
         {
-            IpConfigurations = new ChangeTrackingList<IpConfiguration>();
+            IPConfigurations = new ChangeTrackingList<IPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of InboundEndpointData. </summary>
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="etag"> ETag of the inbound endpoint. </param>
-        /// <param name="ipConfigurations"> IP configurations for the inbound endpoint. </param>
+        /// <param name="iPConfigurations"> IP configurations for the inbound endpoint. </param>
         /// <param name="provisioningState"> The current provisioning state of the inbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the inbound endpoint resource. </param>
-        internal InboundEndpointData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string etag, IList<IpConfiguration> ipConfigurations, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, type, systemData, tags, location)
+        internal InboundEndpointData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string etag, IList<IPConfiguration> iPConfigurations, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, type, systemData, tags, location)
         {
             Etag = etag;
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = iPConfigurations;
             ProvisioningState = provisioningState;
             ResourceGuid = resourceGuid;
         }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <summary> ETag of the inbound endpoint. </summary>
         public string Etag { get; }
         /// <summary> IP configurations for the inbound endpoint. </summary>
-        public IList<IpConfiguration> IpConfigurations { get; }
+        public IList<IPConfiguration> IPConfigurations { get; }
         /// <summary> The current provisioning state of the inbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The resourceGuid property of the inbound endpoint resource. </summary>

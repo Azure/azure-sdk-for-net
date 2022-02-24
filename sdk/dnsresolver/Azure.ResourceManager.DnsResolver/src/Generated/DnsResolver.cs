@@ -383,23 +383,23 @@ namespace Azure.ResourceManager.DnsResolver
         /// OperationId: DnsResolvers_Update
         /// <summary> Updates a DNS resolver. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="parameters"> Parameters supplied to the Update operation. </param>
+        /// <param name="options"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DnsResolverUpdateOperation> UpdateAsync(bool waitForCompletion, DnsResolverPatch parameters, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<DnsResolverUpdateOperation> UpdateAsync(bool waitForCompletion, DnsResolverUpdateOptions options, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _dnsResolverClientDiagnostics.CreateScope("DnsResolver.Update");
             scope.Start();
             try
             {
-                var response = await _dnsResolverRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsResolverUpdateOperation(ArmClient, _dnsResolverClientDiagnostics, Pipeline, _dnsResolverRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, ifMatch).Request, response);
+                var response = await _dnsResolverRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, ifMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new DnsResolverUpdateOperation(ArmClient, _dnsResolverClientDiagnostics, Pipeline, _dnsResolverRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, ifMatch).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -416,23 +416,23 @@ namespace Azure.ResourceManager.DnsResolver
         /// OperationId: DnsResolvers_Update
         /// <summary> Updates a DNS resolver. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="parameters"> Parameters supplied to the Update operation. </param>
+        /// <param name="options"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual DnsResolverUpdateOperation Update(bool waitForCompletion, DnsResolverPatch parameters, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual DnsResolverUpdateOperation Update(bool waitForCompletion, DnsResolverUpdateOptions options, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _dnsResolverClientDiagnostics.CreateScope("DnsResolver.Update");
             scope.Start();
             try
             {
-                var response = _dnsResolverRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, ifMatch, cancellationToken);
-                var operation = new DnsResolverUpdateOperation(ArmClient, _dnsResolverClientDiagnostics, Pipeline, _dnsResolverRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, ifMatch).Request, response);
+                var response = _dnsResolverRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, ifMatch, cancellationToken);
+                var operation = new DnsResolverUpdateOperation(ArmClient, _dnsResolverClientDiagnostics, Pipeline, _dnsResolverRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, ifMatch).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

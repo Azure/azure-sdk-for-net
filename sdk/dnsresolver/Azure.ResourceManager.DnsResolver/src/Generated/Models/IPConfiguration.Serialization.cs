@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    public partial class IpConfiguration : IUtf8JsonSerializable
+    public partial class IPConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -21,24 +21,24 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 writer.WritePropertyName("subnet");
                 JsonSerializer.Serialize(writer, Subnet);
             }
-            if (Optional.IsDefined(PrivateIpAddress))
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress");
-                writer.WriteStringValue(PrivateIpAddress);
+                writer.WriteStringValue(PrivateIPAddress);
             }
-            if (Optional.IsDefined(PrivateIpAllocationMethod))
+            if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIpAllocationMethod");
-                writer.WriteStringValue(PrivateIpAllocationMethod.Value.ToString());
+                writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
             }
             writer.WriteEndObject();
         }
 
-        internal static IpConfiguration DeserializeIpConfiguration(JsonElement element)
+        internal static IPConfiguration DeserializeIPConfiguration(JsonElement element)
         {
             Optional<WritableSubResource> subnet = default;
             Optional<string> privateIpAddress = default;
-            Optional<IpAllocationMethod> privateIpAllocationMethod = default;
+            Optional<IPAllocationMethod> privateIpAllocationMethod = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnet"))
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.DnsResolver.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    privateIpAllocationMethod = new IpAllocationMethod(property.Value.GetString());
+                    privateIpAllocationMethod = new IPAllocationMethod(property.Value.GetString());
                     continue;
                 }
             }
-            return new IpConfiguration(subnet, privateIpAddress.Value, Optional.ToNullable(privateIpAllocationMethod));
+            return new IPConfiguration(subnet, privateIpAddress.Value, Optional.ToNullable(privateIpAllocationMethod));
         }
     }
 }
