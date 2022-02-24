@@ -22,7 +22,7 @@ The Event Processor client library is a companion to the Azure Event Hubs client
 
 - **Azure Storage account with blob storage:** To persist checkpoints and govern ownership in Azure Storage, you'll need to have an Azure Storage account with blobs available.  If you are not familiar with Azure Storage accounts, you may wish to follow the step-by-step guide for [creating a storage account using the Azure portal](https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json&tabs=azure-portal).  There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create storage accounts.
 
-- **Azure Storage blob container:** Checkpoint and ownership data in Azure Storage will be writtent to blobs in a specific container.  The `EventProcessorClient` requires an existing container and will not implicitly create one to help guard against accidental misconfiguration.  If you are not familiar with Azure Storage containers, you may wish to refer to the documentation on [managing containers](https://docs.microsoft.com/azure/storage/blobs/storage-blob-container-create?tabs=dotnet).  There, you can find detailed instructions for using .NET, the Azure CLI, or Azure PowerShell to create a container.
+- **Azure Storage blob container:** Checkpoint and ownership data in Azure Storage will be written to blobs in a specific container.  The `EventProcessorClient` requires an existing container and will not implicitly create one to help guard against accidental misconfiguration.  If you are not familiar with Azure Storage containers, you may wish to refer to the documentation on [managing containers](https://docs.microsoft.com/azure/storage/blobs/storage-blob-container-create?tabs=dotnet).  There, you can find detailed instructions for using .NET, the Azure CLI, or Azure PowerShell to create a container.
 
 - **C# 8.0:** The Azure Event Hubs client library makes use of new features that were introduced in C# 8.0.  In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.   
 
@@ -92,6 +92,9 @@ Since the `EventProcessorClient` has a dependency on Azure Storage blobs for per
 Because the `EventProcessorClient` has no way of knowing the intent of specifying a container that does not exist, it will not implicitly create the container.  This acts as a guard against a misconfigured container causing a rogue processor unable to share ownership and interfering with other processors in the consumer group.
 
 ```C# Snippet:EventHubs_Processor_ReadMe_Create
+// The container specified when creating the BlobContainerClient must exist; it will
+// not be implicitly created.
+
 var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
 var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
 
@@ -99,18 +102,8 @@ var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPA
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
-// The container identified by "blobContainerName" must exist; it will not be implicitly
-// created.
-
 var storageClient = new BlobContainerClient(storageConnectionString, blobContainerName);
-
-var processor = new EventProcessorClient
-(
-    storageClient,
-    consumerGroup,
-    eventHubsConnectionString,
-    eventHubName
-);
+var processor = new EventProcessorClient(storageClient, consumerGroup, eventHubsConnectionString, eventHubName);
 ```
 
 ### Configure the event and error handlers
