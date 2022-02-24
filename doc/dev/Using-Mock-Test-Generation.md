@@ -4,6 +4,7 @@
 2. [Prepare the Mock-service-host](#prepare-mock-service-host)
 3. [Execute Mock Test](#execute-mock-test)
 4. [How to skip failure test](#skip-swagger-example)
+4. [FAQ](#faq)
 
 This article demonstrate how to generate and execute mock test for .Net SDK.
 
@@ -12,7 +13,11 @@ Writing and executing live tests for SDKs are difficult for some RPs:
 + Need to understand executing orders of APIs inside the RP.
 + Some APIs take long time to execute which make writing/debugging tests is time consuming.
 
-In case we focused only on SDK behaviour instead of service behaviour, the mock test can be used to validate the SDK quality efficiently. The mock test can be generated and executed under the [mock-service-host](https://www.openssl.org/) to save developer's efforts.
+In case we focused only on SDK behaviour instead of service behaviour, the mock test can be used to validate the SDK quality efficiently. The mock test can be generated and executed under the [mock-service-host](https://github.com/Azure/azure-sdk-tools/tree/main/tools/mock-service-host) to save developer's efforts.
+
+Below is a sample for mock testcase:
+
+![testcase-sample.png](images/testcase-sample.png)
 
 <div id="generate-mock-test"/>
 
@@ -162,3 +167,21 @@ testmodeler:
 The example names can be copied from the generated test function:
 
 ![find-example-name.png](images/find-example-name.png)
+
+<div id="FAQ"/>
+
+# FAQ
+
+**Q1: Does mock-test require service API readiness?**
+
+**A:** No. The mock test send request to local mock-service-host.
+
+
+**Q2: Are swagger example files required to generate the mock test?**
+
+**A:** Yes.
+
+
+**Q3: In the mock testcase, do I need to create a resource before I test the delete API?**
+
+**A:** No. The mock-service-host are stateless by default. Refer to [mock-service-host](https://github.com/Azure/azure-sdk-tools/tree/main/tools/mock-service-host) for more information.
