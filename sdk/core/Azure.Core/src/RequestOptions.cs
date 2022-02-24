@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -35,6 +36,7 @@ namespace Azure
         /// that is a copy of the passed-in options.
         /// <paramref name="options">The RequestOptions to copy.</paramref>
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected RequestOptions(RequestOptions options)
         {
             _frozen = options._frozen;
