@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The baseline results of a single metric. </summary>
-    public partial class SingleMetricBaseline : Resource
+    public partial class SingleMetricBaseline : ResourceData
     {
         /// <summary> Initializes a new instance of SingleMetricBaseline. </summary>
         /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </param>

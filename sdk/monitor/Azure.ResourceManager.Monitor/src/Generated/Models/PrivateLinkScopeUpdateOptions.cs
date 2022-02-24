@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags on a PrivateLinkScope instance. </summary>
-    public partial class TagsResource
+    public partial class PrivateLinkScopeUpdateOptions
     {
-        /// <summary> Initializes a new instance of TagsResource. </summary>
-        public TagsResource()
+        /// <summary> Initializes a new instance of PrivateLinkScopeUpdateOptions. </summary>
+        public PrivateLinkScopeUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

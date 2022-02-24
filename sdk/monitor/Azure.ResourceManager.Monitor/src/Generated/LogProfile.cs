@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor
         internal LogProfile(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _logProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string logProfileApiVersion);
+            TryGetApiVersion(ResourceType, out string logProfileApiVersion);
             _logProfileRestClient = new LogProfilesRestOperations(_logProfileClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, logProfileApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -84,10 +84,11 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// OperationId: LogProfiles_Get
-        /// <summary> Gets the log profile. </summary>
+        /// <summary>
+        /// Gets the log profile.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
+        /// Operation Id: LogProfiles_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<LogProfile>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -107,10 +108,11 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// OperationId: LogProfiles_Get
-        /// <summary> Gets the log profile. </summary>
+        /// <summary>
+        /// Gets the log profile.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
+        /// Operation Id: LogProfiles_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<LogProfile> Get(CancellationToken cancellationToken = default)
         {
@@ -130,20 +132,21 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// OperationId: LogProfiles_Delete
-        /// <summary> Deletes the log profile. </summary>
+        /// <summary>
+        /// Deletes the log profile.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
+        /// Operation Id: LogProfiles_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<LogProfileDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _logProfileClientDiagnostics.CreateScope("LogProfile.Delete");
             scope.Start();
             try
             {
                 var response = await _logProfileRestClient.DeleteAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new LogProfileDeleteOperation(response);
+                var operation = new MonitorArmOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -155,20 +158,21 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// OperationId: LogProfiles_Delete
-        /// <summary> Deletes the log profile. </summary>
+        /// <summary>
+        /// Deletes the log profile.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
+        /// Operation Id: LogProfiles_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual LogProfileDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _logProfileClientDiagnostics.CreateScope("LogProfile.Delete");
             scope.Start();
             try
             {
                 var response = _logProfileRestClient.Delete(Id.SubscriptionId, Id.Name, cancellationToken);
-                var operation = new LogProfileDeleteOperation(response);
+                var operation = new MonitorArmOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -180,25 +184,23 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// OperationId: LogProfiles_Update
-        /// <summary> Updates an existing LogProfilesResource. To update other fields use the CreateOrUpdate method. </summary>
-        /// <param name="logProfilesResource"> Parameters supplied to the operation. </param>
+        /// <summary>
+        /// Updates an existing LogProfilesResource. To update other fields use the CreateOrUpdate method.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
+        /// Operation Id: LogProfiles_Update
+        /// </summary>
+        /// <param name="options"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="logProfilesResource"/> is null. </exception>
-        public async virtual Task<Response<LogProfile>> UpdateAsync(LogProfileResourcePatch logProfilesResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<Response<LogProfile>> UpdateAsync(LogProfileUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (logProfilesResource == null)
-            {
-                throw new ArgumentNullException(nameof(logProfilesResource));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _logProfileClientDiagnostics.CreateScope("LogProfile.Update");
             scope.Start();
             try
             {
-                var response = await _logProfileRestClient.UpdateAsync(Id.SubscriptionId, Id.Name, logProfilesResource, cancellationToken).ConfigureAwait(false);
+                var response = await _logProfileRestClient.UpdateAsync(Id.SubscriptionId, Id.Name, options, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new LogProfile(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -208,25 +210,23 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// OperationId: LogProfiles_Update
-        /// <summary> Updates an existing LogProfilesResource. To update other fields use the CreateOrUpdate method. </summary>
-        /// <param name="logProfilesResource"> Parameters supplied to the operation. </param>
+        /// <summary>
+        /// Updates an existing LogProfilesResource. To update other fields use the CreateOrUpdate method.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
+        /// Operation Id: LogProfiles_Update
+        /// </summary>
+        /// <param name="options"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="logProfilesResource"/> is null. </exception>
-        public virtual Response<LogProfile> Update(LogProfileResourcePatch logProfilesResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<LogProfile> Update(LogProfileUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (logProfilesResource == null)
-            {
-                throw new ArgumentNullException(nameof(logProfilesResource));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _logProfileClientDiagnostics.CreateScope("LogProfile.Update");
             scope.Start();
             try
             {
-                var response = _logProfileRestClient.Update(Id.SubscriptionId, Id.Name, logProfilesResource, cancellationToken);
+                var response = _logProfileRestClient.Update(Id.SubscriptionId, Id.Name, options, cancellationToken);
                 return Response.FromValue(new LogProfile(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -236,24 +236,19 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// OperationId: LogProfiles_Get
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
+        /// Operation Id: LogProfiles_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<LogProfile>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _logProfileClientDiagnostics.CreateScope("LogProfile.AddTag");
             scope.Start();
@@ -272,24 +267,19 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// OperationId: LogProfiles_Get
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
+        /// Operation Id: LogProfiles_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<LogProfile> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _logProfileClientDiagnostics.CreateScope("LogProfile.AddTag");
             scope.Start();
@@ -308,19 +298,17 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// OperationId: LogProfiles_Get
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
+        /// Operation Id: LogProfiles_Get
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<LogProfile>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _logProfileClientDiagnostics.CreateScope("LogProfile.SetTags");
             scope.Start();
@@ -340,19 +328,17 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// OperationId: LogProfiles_Get
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
+        /// Operation Id: LogProfiles_Get
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<LogProfile> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _logProfileClientDiagnostics.CreateScope("LogProfile.SetTags");
             scope.Start();
@@ -372,19 +358,17 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// OperationId: LogProfiles_Get
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
+        /// Operation Id: LogProfiles_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<LogProfile>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _logProfileClientDiagnostics.CreateScope("LogProfile.RemoveTag");
             scope.Start();
@@ -403,19 +387,17 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// OperationId: LogProfiles_Get
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
+        /// Operation Id: LogProfiles_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<LogProfile> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _logProfileClientDiagnostics.CreateScope("LogProfile.RemoveTag");
             scope.Start();

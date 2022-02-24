@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> An alert status. </summary>
-    public partial class MetricAlertStatus : Resource
+    public partial class MetricAlertStatus : ResourceData
     {
         /// <summary> Initializes a new instance of MetricAlertStatus. </summary>
         internal MetricAlertStatus()

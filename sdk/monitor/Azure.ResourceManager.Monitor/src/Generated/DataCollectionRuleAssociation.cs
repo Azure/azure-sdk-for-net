@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.Monitor
         internal DataCollectionRuleAssociation(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _dataCollectionRuleAssociationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string dataCollectionRuleAssociationApiVersion);
+            TryGetApiVersion(ResourceType, out string dataCollectionRuleAssociationApiVersion);
             _dataCollectionRuleAssociationRestClient = new DataCollectionRuleAssociationsRestOperations(_dataCollectionRuleAssociationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataCollectionRuleAssociationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -83,10 +82,11 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}
-        /// ContextualPath: /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}
-        /// OperationId: DataCollectionRuleAssociations_Get
-        /// <summary> Returns the specified association. </summary>
+        /// <summary>
+        /// Returns the specified association.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}
+        /// Operation Id: DataCollectionRuleAssociations_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DataCollectionRuleAssociation>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -106,10 +106,11 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}
-        /// ContextualPath: /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}
-        /// OperationId: DataCollectionRuleAssociations_Get
-        /// <summary> Returns the specified association. </summary>
+        /// <summary>
+        /// Returns the specified association.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}
+        /// Operation Id: DataCollectionRuleAssociations_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataCollectionRuleAssociation> Get(CancellationToken cancellationToken = default)
         {
@@ -129,20 +130,21 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}
-        /// ContextualPath: /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}
-        /// OperationId: DataCollectionRuleAssociations_Delete
-        /// <summary> Deletes an association. </summary>
+        /// <summary>
+        /// Deletes an association.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}
+        /// Operation Id: DataCollectionRuleAssociations_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DataCollectionRuleAssociationDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociation.Delete");
             scope.Start();
             try
             {
                 var response = await _dataCollectionRuleAssociationRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataCollectionRuleAssociationDeleteOperation(response);
+                var operation = new MonitorArmOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -154,20 +156,21 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}
-        /// ContextualPath: /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}
-        /// OperationId: DataCollectionRuleAssociations_Delete
-        /// <summary> Deletes an association. </summary>
+        /// <summary>
+        /// Deletes an association.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}
+        /// Operation Id: DataCollectionRuleAssociations_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DataCollectionRuleAssociationDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociation.Delete");
             scope.Start();
             try
             {
                 var response = _dataCollectionRuleAssociationRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
-                var operation = new DataCollectionRuleAssociationDeleteOperation(response);
+                var operation = new MonitorArmOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

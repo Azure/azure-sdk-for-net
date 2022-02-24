@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="id"> Azure Resource Manager identifier of the Log Analytics Workspace. </param>
         /// <param name="location"> Location of the Log Analytics workspace. </param>
         /// <param name="customerId"> Log Analytics workspace identifier. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="location"/>, or <paramref name="customerId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="location"/> or <paramref name="customerId"/> is null. </exception>
         public WorkspaceInfo(string id, string location, string customerId)
         {
             if (id == null)

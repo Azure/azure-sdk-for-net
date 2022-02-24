@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> An azure resource object. </summary>
-    public partial class AzureResource : TrackedResource
+    public partial class AzureResource : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AzureResource. </summary>
         /// <param name="location"> The location. </param>

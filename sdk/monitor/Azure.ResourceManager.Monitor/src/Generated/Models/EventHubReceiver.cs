@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="eventHubNameSpace"> The Event Hub namespace. </param>
         /// <param name="eventHubName"> The name of the specific Event Hub queue. </param>
         /// <param name="subscriptionId"> The Id for the subscription containing this event hub. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="eventHubNameSpace"/>, <paramref name="eventHubName"/>, or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="eventHubNameSpace"/>, <paramref name="eventHubName"/> or <paramref name="subscriptionId"/> is null. </exception>
         public EventHubReceiver(string name, string eventHubNameSpace, string eventHubName, string subscriptionId)
         {
             if (name == null)

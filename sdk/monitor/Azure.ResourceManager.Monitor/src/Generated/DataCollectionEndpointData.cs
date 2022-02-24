@@ -13,7 +13,7 @@ using Azure.ResourceManager.Monitor.Models;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A class representing the DataCollectionEndpoint data model. </summary>
-    public partial class DataCollectionEndpointData : TrackedResource
+    public partial class DataCollectionEndpointData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DataCollectionEndpointData. </summary>
         /// <param name="location"> The location. </param>

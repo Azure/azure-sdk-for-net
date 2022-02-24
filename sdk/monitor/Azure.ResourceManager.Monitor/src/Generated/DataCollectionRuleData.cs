@@ -13,7 +13,7 @@ using Azure.ResourceManager.Monitor.Models;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A class representing the DataCollectionRule data model. </summary>
-    public partial class DataCollectionRuleData : TrackedResource
+    public partial class DataCollectionRuleData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DataCollectionRuleData. </summary>
         /// <param name="location"> The location. </param>

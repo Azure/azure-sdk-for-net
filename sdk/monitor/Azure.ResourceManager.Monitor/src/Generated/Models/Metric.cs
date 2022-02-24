@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> the name and the display name of the metric, i.e. it is localizable string. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="timeseries"> the time series returned when a data query is performed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="type"/>, <paramref name="name"/>, or <paramref name="timeseries"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="type"/>, <paramref name="name"/> or <paramref name="timeseries"/> is null. </exception>
         internal Metric(string id, string type, LocalizableString name, MetricUnit unit, IEnumerable<TimeSeriesElement> timeseries)
         {
             if (id == null)

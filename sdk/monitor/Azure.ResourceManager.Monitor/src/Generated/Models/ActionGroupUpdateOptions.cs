@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> An action group object for the body of patch operations. </summary>
-    public partial class ActionGroupPatchBody
+    public partial class ActionGroupUpdateOptions
     {
-        /// <summary> Initializes a new instance of ActionGroupPatchBody. </summary>
-        public ActionGroupPatchBody()
+        /// <summary> Initializes a new instance of ActionGroupUpdateOptions. </summary>
+        public ActionGroupUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

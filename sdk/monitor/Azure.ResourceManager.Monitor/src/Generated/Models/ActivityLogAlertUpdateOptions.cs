@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> An activity log alert object for the body of patch operations. </summary>
-    public partial class ActivityLogAlertPatchBody
+    public partial class ActivityLogAlertUpdateOptions
     {
-        /// <summary> Initializes a new instance of ActivityLogAlertPatchBody. </summary>
-        public ActivityLogAlertPatchBody()
+        /// <summary> Initializes a new instance of ActivityLogAlertUpdateOptions. </summary>
+        public ActivityLogAlertUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

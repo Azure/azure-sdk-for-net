@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="minimum"> the minimum number of instances for the resource. </param>
         /// <param name="maximum"> the maximum number of instances for the resource. The actual maximum number of instances is limited by the cores that are available in the subscription. </param>
         /// <param name="default"> the number of instances that will be set if metrics are not available for evaluation. The default is only used if the current instance count is lower than the default. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="minimum"/>, <paramref name="maximum"/>, or <paramref name="default"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="minimum"/>, <paramref name="maximum"/> or <paramref name="default"/> is null. </exception>
         public ScaleCapacity(string minimum, string maximum, string @default)
         {
             if (minimum == null)

@@ -36,17 +36,18 @@ namespace Azure.ResourceManager.Monitor
         internal DiagnosticSettingsCategoryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _diagnosticSettingsCategoryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", DiagnosticSettingsCategory.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(DiagnosticSettingsCategory.ResourceType, out string diagnosticSettingsCategoryApiVersion);
+            TryGetApiVersion(DiagnosticSettingsCategory.ResourceType, out string diagnosticSettingsCategoryApiVersion);
             _diagnosticSettingsCategoryRestClient = new DiagnosticSettingsCategoryRestOperations(_diagnosticSettingsCategoryClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diagnosticSettingsCategoryApiVersion);
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
-        /// ContextualPath: /{resourceUri}
-        /// OperationId: DiagnosticSettingsCategory_Get
-        /// <summary> Gets the diagnostic settings category for the specified resource. </summary>
+        /// <summary>
+        /// Gets the diagnostic settings category for the specified resource.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
+        /// Operation Id: DiagnosticSettingsCategory_Get
+        /// </summary>
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<DiagnosticSettingsCategory>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -68,13 +69,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
-        /// ContextualPath: /{resourceUri}
-        /// OperationId: DiagnosticSettingsCategory_Get
-        /// <summary> Gets the diagnostic settings category for the specified resource. </summary>
+        /// <summary>
+        /// Gets the diagnostic settings category for the specified resource.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
+        /// Operation Id: DiagnosticSettingsCategory_Get
+        /// </summary>
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<DiagnosticSettingsCategory> Get(string name, CancellationToken cancellationToken = default)
         {
@@ -96,10 +98,11 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories
-        /// ContextualPath: /{resourceUri}
-        /// OperationId: DiagnosticSettingsCategory_List
-        /// <summary> Lists the diagnostic settings categories for the specified resource. </summary>
+        /// <summary>
+        /// Lists the diagnostic settings categories for the specified resource.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories
+        /// Operation Id: DiagnosticSettingsCategory_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DiagnosticSettingsCategory" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DiagnosticSettingsCategory> GetAllAsync(CancellationToken cancellationToken = default)
@@ -122,10 +125,11 @@ namespace Azure.ResourceManager.Monitor
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories
-        /// ContextualPath: /{resourceUri}
-        /// OperationId: DiagnosticSettingsCategory_List
-        /// <summary> Lists the diagnostic settings categories for the specified resource. </summary>
+        /// <summary>
+        /// Lists the diagnostic settings categories for the specified resource.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories
+        /// Operation Id: DiagnosticSettingsCategory_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DiagnosticSettingsCategory" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DiagnosticSettingsCategory> GetAll(CancellationToken cancellationToken = default)
@@ -148,13 +152,14 @@ namespace Azure.ResourceManager.Monitor
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
-        /// ContextualPath: /{resourceUri}
-        /// OperationId: DiagnosticSettingsCategory_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
+        /// Operation Id: DiagnosticSettingsCategory_Get
+        /// </summary>
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -174,13 +179,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
-        /// ContextualPath: /{resourceUri}
-        /// OperationId: DiagnosticSettingsCategory_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
+        /// Operation Id: DiagnosticSettingsCategory_Get
+        /// </summary>
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
@@ -200,13 +206,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
-        /// ContextualPath: /{resourceUri}
-        /// OperationId: DiagnosticSettingsCategory_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
+        /// Operation Id: DiagnosticSettingsCategory_Get
+        /// </summary>
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<DiagnosticSettingsCategory>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -228,13 +235,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
-        /// ContextualPath: /{resourceUri}
-        /// OperationId: DiagnosticSettingsCategory_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
+        /// Operation Id: DiagnosticSettingsCategory_Get
+        /// </summary>
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<DiagnosticSettingsCategory> GetIfExists(string name, CancellationToken cancellationToken = default)
         {

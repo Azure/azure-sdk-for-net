@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="operator"> The operator used to compare the metric value against the threshold. </param>
         /// <param name="alertSensitivity"> The extent of deviation required to trigger an alert. This will affect how tight the threshold is to the metric series pattern. </param>
         /// <param name="failingPeriods"> The minimum number of violations required within the selected lookback time window required to raise an alert. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="metricName"/>, or <paramref name="failingPeriods"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="metricName"/> or <paramref name="failingPeriods"/> is null. </exception>
         public DynamicMetricCriteria(string name, string metricName, AggregationTypeEnum timeAggregation, DynamicThresholdOperator @operator, DynamicThresholdSensitivity alertSensitivity, DynamicThresholdFailingPeriods failingPeriods) : base(name, metricName, timeAggregation)
         {
             if (name == null)

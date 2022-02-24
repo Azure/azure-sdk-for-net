@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> The name of the voice receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="countryCode"> The country code of the voice receiver. </param>
         /// <param name="phoneNumber"> The phone number of the voice receiver. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="countryCode"/>, or <paramref name="phoneNumber"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="countryCode"/> or <paramref name="phoneNumber"/> is null. </exception>
         public VoiceReceiver(string name, string countryCode, string phoneNumber)
         {
             if (name == null)

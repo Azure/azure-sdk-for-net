@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Metric namespace class specifies the metadata for a metric namespace. </summary>
-    public partial class MetricNamespace : Resource
+    public partial class MetricNamespace : ResourceData
     {
         /// <summary> Initializes a new instance of MetricNamespace. </summary>
         internal MetricNamespace()

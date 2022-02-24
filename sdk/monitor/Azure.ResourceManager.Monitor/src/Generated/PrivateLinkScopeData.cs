@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A class representing the PrivateLinkScope data model. </summary>
-    public partial class PrivateLinkScopeData : TrackedResource
+    public partial class PrivateLinkScopeData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of PrivateLinkScopeData. </summary>
         /// <param name="location"> The location. </param>

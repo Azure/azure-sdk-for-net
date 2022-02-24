@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor
@@ -39,7 +38,7 @@ namespace Azure.ResourceManager.Monitor
         internal ActionGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _actionGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ActionGroup.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ActionGroup.ResourceType, out string actionGroupApiVersion);
+            TryGetApiVersion(ActionGroup.ResourceType, out string actionGroupApiVersion);
             _actionGroupRestClient = new ActionGroupsRestOperations(_actionGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, actionGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -52,30 +51,28 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ActionGroups_CreateOrUpdate
-        /// <summary> Create a new action group or update an existing one. </summary>
+        /// <summary>
+        /// Create a new action group or update an existing one.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}
+        /// Operation Id: ActionGroups_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="actionGroupName"> The name of the action group. </param>
         /// <param name="actionGroup"> The action group to create or use for the update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> or <paramref name="actionGroup"/> is null. </exception>
-        public async virtual Task<ActionGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string actionGroupName, ActionGroupData actionGroup, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ActionGroup>> CreateOrUpdateAsync(bool waitForCompletion, string actionGroupName, ActionGroupData actionGroup, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(actionGroupName, nameof(actionGroupName));
-            if (actionGroup == null)
-            {
-                throw new ArgumentNullException(nameof(actionGroup));
-            }
+            Argument.AssertNotNull(actionGroup, nameof(actionGroup));
 
             using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _actionGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, actionGroupName, actionGroup, cancellationToken).ConfigureAwait(false);
-                var operation = new ActionGroupCreateOrUpdateOperation(Client, response);
+                var operation = new MonitorArmOperation<ActionGroup>(Response.FromValue(new ActionGroup(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -87,30 +84,28 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ActionGroups_CreateOrUpdate
-        /// <summary> Create a new action group or update an existing one. </summary>
+        /// <summary>
+        /// Create a new action group or update an existing one.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}
+        /// Operation Id: ActionGroups_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="actionGroupName"> The name of the action group. </param>
         /// <param name="actionGroup"> The action group to create or use for the update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> or <paramref name="actionGroup"/> is null. </exception>
-        public virtual ActionGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string actionGroupName, ActionGroupData actionGroup, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ActionGroup> CreateOrUpdate(bool waitForCompletion, string actionGroupName, ActionGroupData actionGroup, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(actionGroupName, nameof(actionGroupName));
-            if (actionGroup == null)
-            {
-                throw new ArgumentNullException(nameof(actionGroup));
-            }
+            Argument.AssertNotNull(actionGroup, nameof(actionGroup));
 
             using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _actionGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, actionGroupName, actionGroup, cancellationToken);
-                var operation = new ActionGroupCreateOrUpdateOperation(Client, response);
+                var operation = new MonitorArmOperation<ActionGroup>(Response.FromValue(new ActionGroup(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -122,13 +117,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ActionGroups_Get
-        /// <summary> Get an action group. </summary>
+        /// <summary>
+        /// Get an action group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}
+        /// Operation Id: ActionGroups_Get
+        /// </summary>
         /// <param name="actionGroupName"> The name of the action group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> is null. </exception>
         public async virtual Task<Response<ActionGroup>> GetAsync(string actionGroupName, CancellationToken cancellationToken = default)
         {
@@ -150,13 +146,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ActionGroups_Get
-        /// <summary> Get an action group. </summary>
+        /// <summary>
+        /// Get an action group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}
+        /// Operation Id: ActionGroups_Get
+        /// </summary>
         /// <param name="actionGroupName"> The name of the action group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> is null. </exception>
         public virtual Response<ActionGroup> Get(string actionGroupName, CancellationToken cancellationToken = default)
         {
@@ -178,10 +175,11 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ActionGroups_ListByResourceGroup
-        /// <summary> Get a list of all action groups in a resource group. </summary>
+        /// <summary>
+        /// Get a list of all action groups in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups
+        /// Operation Id: ActionGroups_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ActionGroup" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ActionGroup> GetAllAsync(CancellationToken cancellationToken = default)
@@ -204,10 +202,11 @@ namespace Azure.ResourceManager.Monitor
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ActionGroups_ListByResourceGroup
-        /// <summary> Get a list of all action groups in a resource group. </summary>
+        /// <summary>
+        /// Get a list of all action groups in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups
+        /// Operation Id: ActionGroups_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ActionGroup" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ActionGroup> GetAll(CancellationToken cancellationToken = default)
@@ -230,13 +229,14 @@ namespace Azure.ResourceManager.Monitor
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ActionGroups_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}
+        /// Operation Id: ActionGroups_Get
+        /// </summary>
         /// <param name="actionGroupName"> The name of the action group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string actionGroupName, CancellationToken cancellationToken = default)
         {
@@ -256,13 +256,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ActionGroups_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}
+        /// Operation Id: ActionGroups_Get
+        /// </summary>
         /// <param name="actionGroupName"> The name of the action group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string actionGroupName, CancellationToken cancellationToken = default)
         {
@@ -282,13 +283,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ActionGroups_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}
+        /// Operation Id: ActionGroups_Get
+        /// </summary>
         /// <param name="actionGroupName"> The name of the action group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> is null. </exception>
         public async virtual Task<Response<ActionGroup>> GetIfExistsAsync(string actionGroupName, CancellationToken cancellationToken = default)
         {
@@ -310,13 +312,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ActionGroups_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}
+        /// Operation Id: ActionGroups_Get
+        /// </summary>
         /// <param name="actionGroupName"> The name of the action group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> is null. </exception>
         public virtual Response<ActionGroup> GetIfExists(string actionGroupName, CancellationToken cancellationToken = default)
         {

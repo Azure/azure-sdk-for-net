@@ -19,11 +19,13 @@ namespace Azure.ResourceManager.Monitor
 {
     internal partial class LogProfilesRestOperations
     {
-        private Uri endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
         private readonly string _userAgent;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of LogProfilesRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -34,9 +36,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public LogProfilesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            this.apiVersion = apiVersion ?? "2016-03-01";
-            _clientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2016-03-01";
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
@@ -47,12 +49,12 @@ namespace Azure.ResourceManager.Monitor
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Insights/logprofiles/", false);
             uri.AppendPath(logProfileName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -81,7 +83,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -108,7 +110,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -118,12 +120,12 @@ namespace Azure.ResourceManager.Monitor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Insights/logprofiles/", false);
             uri.AppendPath(logProfileName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -160,7 +162,7 @@ namespace Azure.ResourceManager.Monitor
                 case 404:
                     return Response.FromValue((LogProfileData)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -194,7 +196,7 @@ namespace Azure.ResourceManager.Monitor
                 case 404:
                     return Response.FromValue((LogProfileData)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -204,12 +206,12 @@ namespace Azure.ResourceManager.Monitor
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Insights/logprofiles/", false);
             uri.AppendPath(logProfileName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -225,7 +227,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="logProfileName"> The name of the log profile. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="logProfileName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="logProfileName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<LogProfileData>> CreateOrUpdateAsync(string subscriptionId, string logProfileName, LogProfileData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -253,7 +255,7 @@ namespace Azure.ResourceManager.Monitor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -262,7 +264,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="logProfileName"> The name of the log profile. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="logProfileName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="logProfileName"/> or <paramref name="parameters"/> is null. </exception>
         public Response<LogProfileData> CreateOrUpdate(string subscriptionId, string logProfileName, LogProfileData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -290,27 +292,27 @@ namespace Azure.ResourceManager.Monitor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string logProfileName, LogProfileResourcePatch logProfilesResource)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string logProfileName, LogProfileUpdateOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Insights/logprofiles/", false);
             uri.AppendPath(logProfileName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(logProfilesResource);
+            content.JsonWriter.WriteObjectValue(options);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -319,10 +321,10 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Updates an existing LogProfilesResource. To update other fields use the CreateOrUpdate method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="logProfileName"> The name of the log profile. </param>
-        /// <param name="logProfilesResource"> Parameters supplied to the operation. </param>
+        /// <param name="options"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="logProfileName"/>, or <paramref name="logProfilesResource"/> is null. </exception>
-        public async Task<Response<LogProfileData>> UpdateAsync(string subscriptionId, string logProfileName, LogProfileResourcePatch logProfilesResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="logProfileName"/> or <paramref name="options"/> is null. </exception>
+        public async Task<Response<LogProfileData>> UpdateAsync(string subscriptionId, string logProfileName, LogProfileUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -332,12 +334,12 @@ namespace Azure.ResourceManager.Monitor
             {
                 throw new ArgumentNullException(nameof(logProfileName));
             }
-            if (logProfilesResource == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(logProfilesResource));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, logProfileName, logProfilesResource);
+            using var message = CreateUpdateRequest(subscriptionId, logProfileName, options);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -349,17 +351,17 @@ namespace Azure.ResourceManager.Monitor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Updates an existing LogProfilesResource. To update other fields use the CreateOrUpdate method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="logProfileName"> The name of the log profile. </param>
-        /// <param name="logProfilesResource"> Parameters supplied to the operation. </param>
+        /// <param name="options"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="logProfileName"/>, or <paramref name="logProfilesResource"/> is null. </exception>
-        public Response<LogProfileData> Update(string subscriptionId, string logProfileName, LogProfileResourcePatch logProfilesResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="logProfileName"/> or <paramref name="options"/> is null. </exception>
+        public Response<LogProfileData> Update(string subscriptionId, string logProfileName, LogProfileUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -369,12 +371,12 @@ namespace Azure.ResourceManager.Monitor
             {
                 throw new ArgumentNullException(nameof(logProfileName));
             }
-            if (logProfilesResource == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(logProfilesResource));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, logProfileName, logProfilesResource);
+            using var message = CreateUpdateRequest(subscriptionId, logProfileName, options);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -386,7 +388,7 @@ namespace Azure.ResourceManager.Monitor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -396,11 +398,11 @@ namespace Azure.ResourceManager.Monitor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Insights/logprofiles", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -430,7 +432,7 @@ namespace Azure.ResourceManager.Monitor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -457,7 +459,7 @@ namespace Azure.ResourceManager.Monitor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

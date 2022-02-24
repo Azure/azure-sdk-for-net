@@ -16,7 +16,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -56,10 +55,10 @@ namespace Azure.ResourceManager.Monitor
         internal DataCollectionRule(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _dataCollectionRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string dataCollectionRuleApiVersion);
+            TryGetApiVersion(ResourceType, out string dataCollectionRuleApiVersion);
             _dataCollectionRuleRestClient = new DataCollectionRulesRestOperations(_dataCollectionRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataCollectionRuleApiVersion);
             _dataCollectionRuleAssociationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", DataCollectionRuleAssociation.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(DataCollectionRuleAssociation.ResourceType, out string dataCollectionRuleAssociationApiVersion);
+            TryGetApiVersion(DataCollectionRuleAssociation.ResourceType, out string dataCollectionRuleAssociationApiVersion);
             _dataCollectionRuleAssociationRestClient = new DataCollectionRuleAssociationsRestOperations(_dataCollectionRuleAssociationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataCollectionRuleAssociationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -90,10 +89,11 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// OperationId: DataCollectionRules_Get
-        /// <summary> Returns the specified data collection rule. </summary>
+        /// <summary>
+        /// Returns the specified data collection rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
+        /// Operation Id: DataCollectionRules_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DataCollectionRule>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -113,10 +113,11 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// OperationId: DataCollectionRules_Get
-        /// <summary> Returns the specified data collection rule. </summary>
+        /// <summary>
+        /// Returns the specified data collection rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
+        /// Operation Id: DataCollectionRules_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataCollectionRule> Get(CancellationToken cancellationToken = default)
         {
@@ -136,20 +137,21 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// OperationId: DataCollectionRules_Delete
-        /// <summary> Deletes a data collection rule. </summary>
+        /// <summary>
+        /// Deletes a data collection rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
+        /// Operation Id: DataCollectionRules_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DataCollectionRuleDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRule.Delete");
             scope.Start();
             try
             {
                 var response = await _dataCollectionRuleRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataCollectionRuleDeleteOperation(response);
+                var operation = new MonitorArmOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -161,20 +163,21 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// OperationId: DataCollectionRules_Delete
-        /// <summary> Deletes a data collection rule. </summary>
+        /// <summary>
+        /// Deletes a data collection rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
+        /// Operation Id: DataCollectionRules_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DataCollectionRuleDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRule.Delete");
             scope.Start();
             try
             {
                 var response = _dataCollectionRuleRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DataCollectionRuleDeleteOperation(response);
+                var operation = new MonitorArmOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -186,54 +189,11 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// OperationId: DataCollectionRules_Update
-        /// <summary> Updates part of a data collection rule. </summary>
-        /// <param name="body"> The payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DataCollectionRule>> UpdateAsync(ResourceForUpdate body = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRule.Update");
-            scope.Start();
-            try
-            {
-                var response = await _dataCollectionRuleRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DataCollectionRule(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// OperationId: DataCollectionRules_Update
-        /// <summary> Updates part of a data collection rule. </summary>
-        /// <param name="body"> The payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataCollectionRule> Update(ResourceForUpdate body = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRule.Update");
-            scope.Start();
-            try
-            {
-                var response = _dataCollectionRuleRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                return Response.FromValue(new DataCollectionRule(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}/associations
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// OperationId: DataCollectionRuleAssociations_ListByRule
-        /// <summary> Lists associations for the specified data collection rule. </summary>
+        /// <summary>
+        /// Lists associations for the specified data collection rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}/associations
+        /// Operation Id: DataCollectionRuleAssociations_ListByRule
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataCollectionRuleAssociation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataCollectionRuleAssociation> GetDataCollectionRuleAssociationsByRuleAsync(CancellationToken cancellationToken = default)
@@ -271,10 +231,11 @@ namespace Azure.ResourceManager.Monitor
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}/associations
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// OperationId: DataCollectionRuleAssociations_ListByRule
-        /// <summary> Lists associations for the specified data collection rule. </summary>
+        /// <summary>
+        /// Lists associations for the specified data collection rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}/associations
+        /// Operation Id: DataCollectionRuleAssociations_ListByRule
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataCollectionRuleAssociation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataCollectionRuleAssociation> GetDataCollectionRuleAssociationsByRule(CancellationToken cancellationToken = default)
@@ -312,24 +273,19 @@ namespace Azure.ResourceManager.Monitor
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// OperationId: DataCollectionRules_Get
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
+        /// Operation Id: DataCollectionRules_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<DataCollectionRule>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRule.AddTag");
             scope.Start();
@@ -348,24 +304,19 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// OperationId: DataCollectionRules_Get
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
+        /// Operation Id: DataCollectionRules_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<DataCollectionRule> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRule.AddTag");
             scope.Start();
@@ -384,19 +335,17 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// OperationId: DataCollectionRules_Get
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
+        /// Operation Id: DataCollectionRules_Get
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<DataCollectionRule>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRule.SetTags");
             scope.Start();
@@ -416,19 +365,17 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// OperationId: DataCollectionRules_Get
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
+        /// Operation Id: DataCollectionRules_Get
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DataCollectionRule> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRule.SetTags");
             scope.Start();
@@ -448,19 +395,17 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// OperationId: DataCollectionRules_Get
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
+        /// Operation Id: DataCollectionRules_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<DataCollectionRule>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRule.RemoveTag");
             scope.Start();
@@ -479,19 +424,17 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
-        /// OperationId: DataCollectionRules_Get
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
+        /// Operation Id: DataCollectionRules_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<DataCollectionRule> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRule.RemoveTag");
             scope.Start();

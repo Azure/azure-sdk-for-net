@@ -12,10 +12,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The metric alert resource for patch operations. </summary>
-    public partial class MetricAlertResourcePatch
+    public partial class MetricAlertUpdateOptions
     {
-        /// <summary> Initializes a new instance of MetricAlertResourcePatch. </summary>
-        public MetricAlertResourcePatch()
+        /// <summary> Initializes a new instance of MetricAlertUpdateOptions. </summary>
+        public MetricAlertUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Scopes = new ChangeTrackingList<string>();

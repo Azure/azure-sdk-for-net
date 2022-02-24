@@ -24,10 +24,11 @@ namespace Azure.ResourceManager.Monitor
             );
         }
 
-        /// RequestPath: /providers/Microsoft.Insights/eventcategories
-        /// ContextualPath: /
-        /// OperationId: EventCategories_List
-        /// <summary> Get the list of available event categories supported in the Activity Logs Service.&lt;br&gt;The current list includes the following: Administrative, Security, ServiceHealth, Alert, Recommendation, Policy. </summary>
+        /// <summary>
+        /// Get the list of available event categories supported in the Activity Logs Service.&lt;br&gt;The current list includes the following: Administrative, Security, ServiceHealth, Alert, Recommendation, Policy.
+        /// Request Path: /providers/Microsoft.Insights/eventcategories
+        /// Operation Id: EventCategories_List
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LocalizableString" /> that may take multiple service requests to iterate over. </returns>
@@ -36,10 +37,11 @@ namespace Azure.ResourceManager.Monitor
             return GetExtensionClient(tenant).GetEventCategoriesAsync(cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Insights/eventcategories
-        /// ContextualPath: /
-        /// OperationId: EventCategories_List
-        /// <summary> Get the list of available event categories supported in the Activity Logs Service.&lt;br&gt;The current list includes the following: Administrative, Security, ServiceHealth, Alert, Recommendation, Policy. </summary>
+        /// <summary>
+        /// Get the list of available event categories supported in the Activity Logs Service.&lt;br&gt;The current list includes the following: Administrative, Security, ServiceHealth, Alert, Recommendation, Policy.
+        /// Request Path: /providers/Microsoft.Insights/eventcategories
+        /// Operation Id: EventCategories_List
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LocalizableString" /> that may take multiple service requests to iterate over. </returns>
@@ -48,10 +50,11 @@ namespace Azure.ResourceManager.Monitor
             return GetExtensionClient(tenant).GetEventCategories(cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Insights/eventtypes/management/values
-        /// ContextualPath: /
-        /// OperationId: TenantActivityLogs_List
-        /// <summary> Gets the Activity Logs for the Tenant.&lt;br&gt;Everything that is applicable to the API to get the Activity Logs for the subscription is applicable to this API (the parameters, $filter, etc.).&lt;br&gt;One thing to point out here is that this API does *not* retrieve the logs at the individual subscription of the tenant but only surfaces the logs that were generated at the tenant level. </summary>
+        /// <summary>
+        /// Gets the Activity Logs for the Tenant.&lt;br&gt;Everything that is applicable to the API to get the Activity Logs for the subscription is applicable to this API (the parameters, $filter, etc.).&lt;br&gt;One thing to point out here is that this API does *not* retrieve the logs at the individual subscription of the tenant but only surfaces the logs that were generated at the tenant level.
+        /// Request Path: /providers/Microsoft.Insights/eventtypes/management/values
+        /// Operation Id: TenantActivityLogs_List
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="filter"> Reduces the set of data collected. &lt;br&gt;The **$filter** is very restricted and allows only the following patterns.&lt;br&gt;- List events for a resource group: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos; and resourceGroupName eq &apos;&lt;ResourceGroupName&gt;&apos;.&lt;br&gt;- List events for resource: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos; and resourceUri eq &apos;&lt;ResourceURI&gt;&apos;.&lt;br&gt;- List events for a subscription: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos;.&lt;br&gt;- List events for a resource provider: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos; and resourceProvider eq &apos;&lt;ResourceProviderName&gt;&apos;.&lt;br&gt;- List events for a correlation Id: api-version=2014-04-01&amp;$filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and eventChannels eq &apos;Admin, Operation&apos; and correlationId eq &apos;&lt;CorrelationID&gt;&apos;.&lt;br&gt;**NOTE**: No other syntax is allowed. </param>
         /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The **$select** argument is a comma separated list of property names to be returned. Possible values are: *authorization*, *claims*, *correlationId*, *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*, *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*, *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*, *subStatus*, *subscriptionId*. </param>
@@ -62,10 +65,11 @@ namespace Azure.ResourceManager.Monitor
             return GetExtensionClient(tenant).GetTenantActivityLogsAsync(filter, select, cancellationToken);
         }
 
-        /// RequestPath: /providers/Microsoft.Insights/eventtypes/management/values
-        /// ContextualPath: /
-        /// OperationId: TenantActivityLogs_List
-        /// <summary> Gets the Activity Logs for the Tenant.&lt;br&gt;Everything that is applicable to the API to get the Activity Logs for the subscription is applicable to this API (the parameters, $filter, etc.).&lt;br&gt;One thing to point out here is that this API does *not* retrieve the logs at the individual subscription of the tenant but only surfaces the logs that were generated at the tenant level. </summary>
+        /// <summary>
+        /// Gets the Activity Logs for the Tenant.&lt;br&gt;Everything that is applicable to the API to get the Activity Logs for the subscription is applicable to this API (the parameters, $filter, etc.).&lt;br&gt;One thing to point out here is that this API does *not* retrieve the logs at the individual subscription of the tenant but only surfaces the logs that were generated at the tenant level.
+        /// Request Path: /providers/Microsoft.Insights/eventtypes/management/values
+        /// Operation Id: TenantActivityLogs_List
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="filter"> Reduces the set of data collected. &lt;br&gt;The **$filter** is very restricted and allows only the following patterns.&lt;br&gt;- List events for a resource group: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos; and resourceGroupName eq &apos;&lt;ResourceGroupName&gt;&apos;.&lt;br&gt;- List events for resource: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos; and resourceUri eq &apos;&lt;ResourceURI&gt;&apos;.&lt;br&gt;- List events for a subscription: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos;.&lt;br&gt;- List events for a resource provider: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos; and resourceProvider eq &apos;&lt;ResourceProviderName&gt;&apos;.&lt;br&gt;- List events for a correlation Id: api-version=2014-04-01&amp;$filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and eventChannels eq &apos;Admin, Operation&apos; and correlationId eq &apos;&lt;CorrelationID&gt;&apos;.&lt;br&gt;**NOTE**: No other syntax is allowed. </param>
         /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The **$select** argument is a comma separated list of property names to be returned. Possible values are: *authorization*, *claims*, *correlationId*, *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*, *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*, *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*, *subStatus*, *subscriptionId*. </param>

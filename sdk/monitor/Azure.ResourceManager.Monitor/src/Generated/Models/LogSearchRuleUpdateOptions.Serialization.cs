@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class ActivityLogAlertPatchBody : IUtf8JsonSerializable
+    public partial class LogSearchRuleUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteStringValue(Enabled.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

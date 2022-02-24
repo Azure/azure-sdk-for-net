@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="notificationId"> The notification id. </param>
         /// <param name="correlationId"> The correlation id. </param>
         /// <param name="createdTime"> The created time. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notificationId"/>, <paramref name="correlationId"/>, or <paramref name="createdTime"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationId"/>, <paramref name="correlationId"/> or <paramref name="createdTime"/> is null. </exception>
         internal TestNotificationResponse(string notificationId, string correlationId, string createdTime)
         {
             if (notificationId == null)

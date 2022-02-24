@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor
@@ -39,7 +38,7 @@ namespace Azure.ResourceManager.Monitor
         internal ActivityLogAlertCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _activityLogAlertClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ActivityLogAlert.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ActivityLogAlert.ResourceType, out string activityLogAlertApiVersion);
+            TryGetApiVersion(ActivityLogAlert.ResourceType, out string activityLogAlertApiVersion);
             _activityLogAlertRestClient = new ActivityLogAlertsRestOperations(_activityLogAlertClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, activityLogAlertApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -52,30 +51,28 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ActivityLogAlerts_CreateOrUpdate
-        /// <summary> Create a new activity log alert or update an existing one. </summary>
+        /// <summary>
+        /// Create a new activity log alert or update an existing one.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Operation Id: ActivityLogAlerts_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
         /// <param name="activityLogAlert"> The activity log alert to create or use for the update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> or <paramref name="activityLogAlert"/> is null. </exception>
-        public async virtual Task<ActivityLogAlertCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string activityLogAlertName, ActivityLogAlertData activityLogAlert, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ActivityLogAlert>> CreateOrUpdateAsync(bool waitForCompletion, string activityLogAlertName, ActivityLogAlertData activityLogAlert, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
-            if (activityLogAlert == null)
-            {
-                throw new ArgumentNullException(nameof(activityLogAlert));
-            }
+            Argument.AssertNotNull(activityLogAlert, nameof(activityLogAlert));
 
             using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _activityLogAlertRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, activityLogAlert, cancellationToken).ConfigureAwait(false);
-                var operation = new ActivityLogAlertCreateOrUpdateOperation(Client, response);
+                var operation = new MonitorArmOperation<ActivityLogAlert>(Response.FromValue(new ActivityLogAlert(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -87,30 +84,28 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ActivityLogAlerts_CreateOrUpdate
-        /// <summary> Create a new activity log alert or update an existing one. </summary>
+        /// <summary>
+        /// Create a new activity log alert or update an existing one.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Operation Id: ActivityLogAlerts_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
         /// <param name="activityLogAlert"> The activity log alert to create or use for the update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> or <paramref name="activityLogAlert"/> is null. </exception>
-        public virtual ActivityLogAlertCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string activityLogAlertName, ActivityLogAlertData activityLogAlert, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ActivityLogAlert> CreateOrUpdate(bool waitForCompletion, string activityLogAlertName, ActivityLogAlertData activityLogAlert, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
-            if (activityLogAlert == null)
-            {
-                throw new ArgumentNullException(nameof(activityLogAlert));
-            }
+            Argument.AssertNotNull(activityLogAlert, nameof(activityLogAlert));
 
             using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _activityLogAlertRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, activityLogAlert, cancellationToken);
-                var operation = new ActivityLogAlertCreateOrUpdateOperation(Client, response);
+                var operation = new MonitorArmOperation<ActivityLogAlert>(Response.FromValue(new ActivityLogAlert(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -122,13 +117,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ActivityLogAlerts_Get
-        /// <summary> Get an activity log alert. </summary>
+        /// <summary>
+        /// Get an activity log alert.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Operation Id: ActivityLogAlerts_Get
+        /// </summary>
         /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
         public async virtual Task<Response<ActivityLogAlert>> GetAsync(string activityLogAlertName, CancellationToken cancellationToken = default)
         {
@@ -150,13 +146,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ActivityLogAlerts_Get
-        /// <summary> Get an activity log alert. </summary>
+        /// <summary>
+        /// Get an activity log alert.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Operation Id: ActivityLogAlerts_Get
+        /// </summary>
         /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
         public virtual Response<ActivityLogAlert> Get(string activityLogAlertName, CancellationToken cancellationToken = default)
         {
@@ -178,10 +175,11 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ActivityLogAlerts_ListByResourceGroup
-        /// <summary> Get a list of all activity log alerts in a resource group. </summary>
+        /// <summary>
+        /// Get a list of all activity log alerts in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts
+        /// Operation Id: ActivityLogAlerts_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ActivityLogAlert" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ActivityLogAlert> GetAllAsync(CancellationToken cancellationToken = default)
@@ -204,10 +202,11 @@ namespace Azure.ResourceManager.Monitor
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ActivityLogAlerts_ListByResourceGroup
-        /// <summary> Get a list of all activity log alerts in a resource group. </summary>
+        /// <summary>
+        /// Get a list of all activity log alerts in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts
+        /// Operation Id: ActivityLogAlerts_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ActivityLogAlert" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ActivityLogAlert> GetAll(CancellationToken cancellationToken = default)
@@ -230,13 +229,14 @@ namespace Azure.ResourceManager.Monitor
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ActivityLogAlerts_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Operation Id: ActivityLogAlerts_Get
+        /// </summary>
         /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string activityLogAlertName, CancellationToken cancellationToken = default)
         {
@@ -256,13 +256,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ActivityLogAlerts_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Operation Id: ActivityLogAlerts_Get
+        /// </summary>
         /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
         public virtual Response<bool> Exists(string activityLogAlertName, CancellationToken cancellationToken = default)
         {
@@ -282,13 +283,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ActivityLogAlerts_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Operation Id: ActivityLogAlerts_Get
+        /// </summary>
         /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
         public async virtual Task<Response<ActivityLogAlert>> GetIfExistsAsync(string activityLogAlertName, CancellationToken cancellationToken = default)
         {
@@ -310,13 +312,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ActivityLogAlerts_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Operation Id: ActivityLogAlerts_Get
+        /// </summary>
         /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
         public virtual Response<ActivityLogAlert> GetIfExists(string activityLogAlertName, CancellationToken cancellationToken = default)
         {

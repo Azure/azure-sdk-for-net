@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A class representing the ScopedPrivateLink data model. </summary>
-    public partial class ScopedPrivateLinkData : Resource
+    public partial class ScopedPrivateLinkData : ResourceData
     {
         /// <summary> Initializes a new instance of ScopedPrivateLinkData. </summary>
         public ScopedPrivateLinkData()

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Monitor
         internal PrivateLink(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _privateLinkPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string privateLinkPrivateLinkResourcesApiVersion);
+            TryGetApiVersion(ResourceType, out string privateLinkPrivateLinkResourcesApiVersion);
             _privateLinkPrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_privateLinkPrivateLinkResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, privateLinkPrivateLinkResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -82,10 +82,11 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/privateLinkResources/{groupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/privateLinkResources/{groupName}
-        /// OperationId: PrivateLinkResources_Get
-        /// <summary> Gets the private link resources that need to be created for a Azure Monitor PrivateLinkScope. </summary>
+        /// <summary>
+        /// Gets the private link resources that need to be created for a Azure Monitor PrivateLinkScope.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/privateLinkResources/{groupName}
+        /// Operation Id: PrivateLinkResources_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<PrivateLink>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -105,10 +106,11 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/privateLinkResources/{groupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/privateLinkResources/{groupName}
-        /// OperationId: PrivateLinkResources_Get
-        /// <summary> Gets the private link resources that need to be created for a Azure Monitor PrivateLinkScope. </summary>
+        /// <summary>
+        /// Gets the private link resources that need to be created for a Azure Monitor PrivateLinkScope.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/privateLinkResources/{groupName}
+        /// Operation Id: PrivateLinkResources_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PrivateLink> Get(CancellationToken cancellationToken = default)
         {

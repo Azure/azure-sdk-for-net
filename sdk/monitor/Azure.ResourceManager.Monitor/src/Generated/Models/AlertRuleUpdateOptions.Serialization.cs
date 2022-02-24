@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class AlertRuleResourcePatch : IUtf8JsonSerializable
+    public partial class AlertRuleUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

@@ -15,14 +15,14 @@ using Azure.ResourceManager.Monitor.Models;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A class representing the LogProfile data model. </summary>
-    public partial class LogProfileData : TrackedResource
+    public partial class LogProfileData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of LogProfileData. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="locations"> List of regions for which Activity Log events should be stored or streamed. It is a comma separated list of valid ARM locations including the &apos;global&apos; location. </param>
         /// <param name="categories"> the categories of the logs. These categories are created as is convenient to the user. Some values are: &apos;Write&apos;, &apos;Delete&apos;, and/or &apos;Action.&apos;. </param>
         /// <param name="retentionPolicy"> the retention policy for the events in the log. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locations"/>, <paramref name="categories"/>, or <paramref name="retentionPolicy"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locations"/>, <paramref name="categories"/> or <paramref name="retentionPolicy"/> is null. </exception>
         public LogProfileData(AzureLocation location, IEnumerable<string> locations, IEnumerable<string> categories, RetentionPolicy retentionPolicy) : base(location)
         {
             if (locations == null)

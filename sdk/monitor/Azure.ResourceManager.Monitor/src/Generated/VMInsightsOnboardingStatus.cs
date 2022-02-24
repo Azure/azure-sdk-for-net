@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Monitor
         internal VmInsightsOnboardingStatus(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _vmInsightsOnboardingStatusVMInsightsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string vmInsightsOnboardingStatusVMInsightsApiVersion);
+            TryGetApiVersion(ResourceType, out string vmInsightsOnboardingStatusVMInsightsApiVersion);
             _vmInsightsOnboardingStatusVMInsightsRestClient = new VMInsightsRestOperations(_vmInsightsOnboardingStatusVMInsightsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vmInsightsOnboardingStatusVMInsightsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -82,10 +82,11 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/vmInsightsOnboardingStatuses/default
-        /// ContextualPath: /{resourceUri}/providers/Microsoft.Insights/vmInsightsOnboardingStatuses/default
-        /// OperationId: VMInsights_GetOnboardingStatus
-        /// <summary> Retrieves the VM Insights onboarding status for the specified resource or resource scope. </summary>
+        /// <summary>
+        /// Retrieves the VM Insights onboarding status for the specified resource or resource scope.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/vmInsightsOnboardingStatuses/default
+        /// Operation Id: VMInsights_GetOnboardingStatus
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VmInsightsOnboardingStatus>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -105,10 +106,11 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/vmInsightsOnboardingStatuses/default
-        /// ContextualPath: /{resourceUri}/providers/Microsoft.Insights/vmInsightsOnboardingStatuses/default
-        /// OperationId: VMInsights_GetOnboardingStatus
-        /// <summary> Retrieves the VM Insights onboarding status for the specified resource or resource scope. </summary>
+        /// <summary>
+        /// Retrieves the VM Insights onboarding status for the specified resource or resource scope.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/vmInsightsOnboardingStatuses/default
+        /// Operation Id: VMInsights_GetOnboardingStatus
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VmInsightsOnboardingStatus> Get(CancellationToken cancellationToken = default)
         {

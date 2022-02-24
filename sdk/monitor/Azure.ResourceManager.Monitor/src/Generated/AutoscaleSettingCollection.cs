@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor
@@ -39,7 +38,7 @@ namespace Azure.ResourceManager.Monitor
         internal AutoscaleSettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _autoscaleSettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", AutoscaleSetting.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(AutoscaleSetting.ResourceType, out string autoscaleSettingApiVersion);
+            TryGetApiVersion(AutoscaleSetting.ResourceType, out string autoscaleSettingApiVersion);
             _autoscaleSettingRestClient = new AutoscaleSettingsRestOperations(_autoscaleSettingClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, autoscaleSettingApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -52,30 +51,28 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AutoscaleSettings_CreateOrUpdate
-        /// <summary> Creates or updates an autoscale setting. </summary>
+        /// <summary>
+        /// Creates or updates an autoscale setting.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
+        /// Operation Id: AutoscaleSettings_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<AutoscaleSettingCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string autoscaleSettingName, AutoscaleSettingData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<AutoscaleSetting>> CreateOrUpdateAsync(bool waitForCompletion, string autoscaleSettingName, AutoscaleSettingData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(autoscaleSettingName, nameof(autoscaleSettingName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _autoscaleSettingRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, autoscaleSettingName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new AutoscaleSettingCreateOrUpdateOperation(Client, response);
+                var operation = new MonitorArmOperation<AutoscaleSetting>(Response.FromValue(new AutoscaleSetting(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -87,30 +84,28 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AutoscaleSettings_CreateOrUpdate
-        /// <summary> Creates or updates an autoscale setting. </summary>
+        /// <summary>
+        /// Creates or updates an autoscale setting.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
+        /// Operation Id: AutoscaleSettings_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual AutoscaleSettingCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string autoscaleSettingName, AutoscaleSettingData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AutoscaleSetting> CreateOrUpdate(bool waitForCompletion, string autoscaleSettingName, AutoscaleSettingData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(autoscaleSettingName, nameof(autoscaleSettingName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _autoscaleSettingRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, autoscaleSettingName, parameters, cancellationToken);
-                var operation = new AutoscaleSettingCreateOrUpdateOperation(Client, response);
+                var operation = new MonitorArmOperation<AutoscaleSetting>(Response.FromValue(new AutoscaleSetting(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -122,13 +117,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AutoscaleSettings_Get
-        /// <summary> Gets an autoscale setting. </summary>
+        /// <summary>
+        /// Gets an autoscale setting
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
+        /// Operation Id: AutoscaleSettings_Get
+        /// </summary>
         /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
         public async virtual Task<Response<AutoscaleSetting>> GetAsync(string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
@@ -150,13 +146,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AutoscaleSettings_Get
-        /// <summary> Gets an autoscale setting. </summary>
+        /// <summary>
+        /// Gets an autoscale setting
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
+        /// Operation Id: AutoscaleSettings_Get
+        /// </summary>
         /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
         public virtual Response<AutoscaleSetting> Get(string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
@@ -178,10 +175,11 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AutoscaleSettings_ListByResourceGroup
-        /// <summary> Lists the autoscale settings for a resource group. </summary>
+        /// <summary>
+        /// Lists the autoscale settings for a resource group
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings
+        /// Operation Id: AutoscaleSettings_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AutoscaleSetting" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutoscaleSetting> GetAllAsync(CancellationToken cancellationToken = default)
@@ -219,10 +217,11 @@ namespace Azure.ResourceManager.Monitor
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AutoscaleSettings_ListByResourceGroup
-        /// <summary> Lists the autoscale settings for a resource group. </summary>
+        /// <summary>
+        /// Lists the autoscale settings for a resource group
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings
+        /// Operation Id: AutoscaleSettings_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AutoscaleSetting" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutoscaleSetting> GetAll(CancellationToken cancellationToken = default)
@@ -260,13 +259,14 @@ namespace Azure.ResourceManager.Monitor
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AutoscaleSettings_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
+        /// Operation Id: AutoscaleSettings_Get
+        /// </summary>
         /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
@@ -286,13 +286,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AutoscaleSettings_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
+        /// Operation Id: AutoscaleSettings_Get
+        /// </summary>
         /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
         public virtual Response<bool> Exists(string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
@@ -312,13 +313,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AutoscaleSettings_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
+        /// Operation Id: AutoscaleSettings_Get
+        /// </summary>
         /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
         public async virtual Task<Response<AutoscaleSetting>> GetIfExistsAsync(string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
@@ -340,13 +342,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AutoscaleSettings_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
+        /// Operation Id: AutoscaleSettings_Get
+        /// </summary>
         /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
         public virtual Response<AutoscaleSetting> GetIfExists(string autoscaleSettingName, CancellationToken cancellationToken = default)
         {

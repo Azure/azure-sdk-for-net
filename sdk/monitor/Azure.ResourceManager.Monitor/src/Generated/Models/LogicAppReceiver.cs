@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> The name of the logic app receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="resourceId"> The azure resource id of the logic app receiver. </param>
         /// <param name="callbackUrl"> The callback url where http request sent to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="resourceId"/>, or <paramref name="callbackUrl"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="resourceId"/> or <paramref name="callbackUrl"/> is null. </exception>
         public LogicAppReceiver(string name, string resourceId, string callbackUrl)
         {
             if (name == null)

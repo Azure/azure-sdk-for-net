@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.Monitor
         internal ScopedPrivateLink(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string scopedPrivateLinkPrivateLinkScopedResourcesApiVersion);
+            TryGetApiVersion(ResourceType, out string scopedPrivateLinkPrivateLinkScopedResourcesApiVersion);
             _scopedPrivateLinkPrivateLinkScopedResourcesRestClient = new PrivateLinkScopedResourcesRestOperations(_scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, scopedPrivateLinkPrivateLinkScopedResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -83,10 +82,11 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
-        /// OperationId: PrivateLinkScopedResources_Get
-        /// <summary> Gets a scoped resource in a private link scope. </summary>
+        /// <summary>
+        /// Gets a scoped resource in a private link scope.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
+        /// Operation Id: PrivateLinkScopedResources_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ScopedPrivateLink>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -106,10 +106,11 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
-        /// OperationId: PrivateLinkScopedResources_Get
-        /// <summary> Gets a scoped resource in a private link scope. </summary>
+        /// <summary>
+        /// Gets a scoped resource in a private link scope.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
+        /// Operation Id: PrivateLinkScopedResources_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ScopedPrivateLink> Get(CancellationToken cancellationToken = default)
         {
@@ -129,20 +130,21 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
-        /// OperationId: PrivateLinkScopedResources_Delete
-        /// <summary> Deletes a private endpoint connection with a given name. </summary>
+        /// <summary>
+        /// Deletes a private endpoint connection with a given name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
+        /// Operation Id: PrivateLinkScopedResources_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ScopedPrivateLinkDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics.CreateScope("ScopedPrivateLink.Delete");
             scope.Start();
             try
             {
                 var response = await _scopedPrivateLinkPrivateLinkScopedResourcesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ScopedPrivateLinkDeleteOperation(_scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics, Pipeline, _scopedPrivateLinkPrivateLinkScopedResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new MonitorArmOperation(_scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics, Pipeline, _scopedPrivateLinkPrivateLinkScopedResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -154,20 +156,21 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
-        /// OperationId: PrivateLinkScopedResources_Delete
-        /// <summary> Deletes a private endpoint connection with a given name. </summary>
+        /// <summary>
+        /// Deletes a private endpoint connection with a given name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
+        /// Operation Id: PrivateLinkScopedResources_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ScopedPrivateLinkDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics.CreateScope("ScopedPrivateLink.Delete");
             scope.Start();
             try
             {
                 var response = _scopedPrivateLinkPrivateLinkScopedResourcesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ScopedPrivateLinkDeleteOperation(_scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics, Pipeline, _scopedPrivateLinkPrivateLinkScopedResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new MonitorArmOperation(_scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics, Pipeline, _scopedPrivateLinkPrivateLinkScopedResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

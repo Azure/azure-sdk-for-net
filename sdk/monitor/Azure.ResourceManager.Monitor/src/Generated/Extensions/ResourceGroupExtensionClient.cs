@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            Client.TryGetApiVersion(resourceType, out string apiVersion);
+            TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
@@ -107,10 +107,11 @@ namespace Azure.ResourceManager.Monitor
             return new DataCollectionRuleCollection(Client, Id);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: PrivateLinkScopeOperationStatus_Get
-        /// <summary> Get the status of an azure asynchronous operation associated with a private link scope operation. </summary>
+        /// <summary>
+        /// Get the status of an azure asynchronous operation associated with a private link scope operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}
+        /// Operation Id: PrivateLinkScopeOperationStatus_Get
+        /// </summary>
         /// <param name="asyncOperationId"> The operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<OperationStatus>> GetPrivateLinkScopeOperationStatuAsync(string asyncOperationId, CancellationToken cancellationToken = default)
@@ -129,10 +130,11 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: PrivateLinkScopeOperationStatus_Get
-        /// <summary> Get the status of an azure asynchronous operation associated with a private link scope operation. </summary>
+        /// <summary>
+        /// Get the status of an azure asynchronous operation associated with a private link scope operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}
+        /// Operation Id: PrivateLinkScopeOperationStatus_Get
+        /// </summary>
         /// <param name="asyncOperationId"> The operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<OperationStatus> GetPrivateLinkScopeOperationStatu(string asyncOperationId, CancellationToken cancellationToken = default)

@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The log profile resource for patch operations. </summary>
-    public partial class LogProfileResourcePatch
+    public partial class LogProfileUpdateOptions
     {
-        /// <summary> Initializes a new instance of LogProfileResourcePatch. </summary>
-        public LogProfileResourcePatch()
+        /// <summary> Initializes a new instance of LogProfileUpdateOptions. </summary>
+        public LogProfileUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Locations = new ChangeTrackingList<string>();

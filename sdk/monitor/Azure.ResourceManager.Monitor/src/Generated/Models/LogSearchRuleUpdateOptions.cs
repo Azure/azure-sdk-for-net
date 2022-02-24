@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The log search rule resource for patch operations. </summary>
-    public partial class LogSearchRuleResourcePatch
+    public partial class LogSearchRuleUpdateOptions
     {
-        /// <summary> Initializes a new instance of LogSearchRuleResourcePatch. </summary>
-        public LogSearchRuleResourcePatch()
+        /// <summary> Initializes a new instance of LogSearchRuleUpdateOptions. </summary>
+        public LogSearchRuleUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

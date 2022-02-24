@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="functionAppResourceId"> The azure resource id of the function app. </param>
         /// <param name="functionName"> The function name in the function app. </param>
         /// <param name="httpTriggerUrl"> The http trigger url where http request sent to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="functionAppResourceId"/>, <paramref name="functionName"/>, or <paramref name="httpTriggerUrl"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="functionAppResourceId"/>, <paramref name="functionName"/> or <paramref name="httpTriggerUrl"/> is null. </exception>
         public AzureFunctionReceiver(string name, string functionAppResourceId, string functionName, string httpTriggerUrl)
         {
             if (name == null)

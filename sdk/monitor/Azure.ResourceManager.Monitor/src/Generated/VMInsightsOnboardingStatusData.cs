@@ -13,7 +13,7 @@ using Azure.ResourceManager.Monitor.Models;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A class representing the VmInsightsOnboardingStatus data model. </summary>
-    public partial class VmInsightsOnboardingStatusData : Resource
+    public partial class VmInsightsOnboardingStatusData : ResourceData
     {
         /// <summary> Initializes a new instance of VmInsightsOnboardingStatusData. </summary>
         public VmInsightsOnboardingStatusData()

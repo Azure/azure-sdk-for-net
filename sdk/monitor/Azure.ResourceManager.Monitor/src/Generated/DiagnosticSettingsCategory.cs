@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Monitor
         internal DiagnosticSettingsCategory(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _diagnosticSettingsCategoryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string diagnosticSettingsCategoryApiVersion);
+            TryGetApiVersion(ResourceType, out string diagnosticSettingsCategoryApiVersion);
             _diagnosticSettingsCategoryRestClient = new DiagnosticSettingsCategoryRestOperations(_diagnosticSettingsCategoryClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diagnosticSettingsCategoryApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -82,10 +82,11 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
-        /// ContextualPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
-        /// OperationId: DiagnosticSettingsCategory_Get
-        /// <summary> Gets the diagnostic settings category for the specified resource. </summary>
+        /// <summary>
+        /// Gets the diagnostic settings category for the specified resource.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
+        /// Operation Id: DiagnosticSettingsCategory_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DiagnosticSettingsCategory>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -105,10 +106,11 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
-        /// ContextualPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
-        /// OperationId: DiagnosticSettingsCategory_Get
-        /// <summary> Gets the diagnostic settings category for the specified resource. </summary>
+        /// <summary>
+        /// Gets the diagnostic settings category for the specified resource.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
+        /// Operation Id: DiagnosticSettingsCategory_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DiagnosticSettingsCategory> Get(CancellationToken cancellationToken = default)
         {

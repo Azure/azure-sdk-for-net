@@ -19,11 +19,13 @@ namespace Azure.ResourceManager.Monitor
 {
     internal partial class ActionGroupsRestOperations
     {
-        private Uri endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
         private readonly string _userAgent;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of ActionGroupsRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -34,9 +36,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public ActionGroupsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            this.apiVersion = apiVersion ?? "2021-09-01";
-            _clientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2021-09-01";
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
@@ -47,14 +49,14 @@ namespace Azure.ResourceManager.Monitor
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/actionGroups/", false);
             uri.AppendPath(actionGroupName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -71,7 +73,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="actionGroupName"> The name of the action group. </param>
         /// <param name="actionGroup"> The action group to create or use for the update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/>, or <paramref name="actionGroup"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/> or <paramref name="actionGroup"/> is null. </exception>
         public async Task<Response<ActionGroupData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string actionGroupName, ActionGroupData actionGroup, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -104,7 +106,7 @@ namespace Azure.ResourceManager.Monitor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -114,7 +116,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="actionGroupName"> The name of the action group. </param>
         /// <param name="actionGroup"> The action group to create or use for the update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/>, or <paramref name="actionGroup"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/> or <paramref name="actionGroup"/> is null. </exception>
         public Response<ActionGroupData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string actionGroupName, ActionGroupData actionGroup, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -147,7 +149,7 @@ namespace Azure.ResourceManager.Monitor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -157,14 +159,14 @@ namespace Azure.ResourceManager.Monitor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/actionGroups/", false);
             uri.AppendPath(actionGroupName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -176,7 +178,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="actionGroupName"> The name of the action group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="actionGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="actionGroupName"/> is null. </exception>
         public async Task<Response<ActionGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string actionGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -206,7 +208,7 @@ namespace Azure.ResourceManager.Monitor
                 case 404:
                     return Response.FromValue((ActionGroupData)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -215,7 +217,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="actionGroupName"> The name of the action group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="actionGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="actionGroupName"/> is null. </exception>
         public Response<ActionGroupData> Get(string subscriptionId, string resourceGroupName, string actionGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -245,7 +247,7 @@ namespace Azure.ResourceManager.Monitor
                 case 404:
                     return Response.FromValue((ActionGroupData)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -255,14 +257,14 @@ namespace Azure.ResourceManager.Monitor
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/actionGroups/", false);
             uri.AppendPath(actionGroupName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -274,7 +276,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="actionGroupName"> The name of the action group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="actionGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="actionGroupName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string actionGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -298,7 +300,7 @@ namespace Azure.ResourceManager.Monitor
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -307,7 +309,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="actionGroupName"> The name of the action group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="actionGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="actionGroupName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string actionGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -331,29 +333,29 @@ namespace Azure.ResourceManager.Monitor
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string actionGroupName, ActionGroupPatchBody actionGroupPatch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string actionGroupName, ActionGroupUpdateOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/actionGroups/", false);
             uri.AppendPath(actionGroupName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(actionGroupPatch);
+            content.JsonWriter.WriteObjectValue(options);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -363,10 +365,10 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="actionGroupName"> The name of the action group. </param>
-        /// <param name="actionGroupPatch"> Parameters supplied to the operation. </param>
+        /// <param name="options"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/>, or <paramref name="actionGroupPatch"/> is null. </exception>
-        public async Task<Response<ActionGroupData>> UpdateAsync(string subscriptionId, string resourceGroupName, string actionGroupName, ActionGroupPatchBody actionGroupPatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/> or <paramref name="options"/> is null. </exception>
+        public async Task<Response<ActionGroupData>> UpdateAsync(string subscriptionId, string resourceGroupName, string actionGroupName, ActionGroupUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -380,12 +382,12 @@ namespace Azure.ResourceManager.Monitor
             {
                 throw new ArgumentNullException(nameof(actionGroupName));
             }
-            if (actionGroupPatch == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(actionGroupPatch));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, actionGroupName, actionGroupPatch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, actionGroupName, options);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -397,7 +399,7 @@ namespace Azure.ResourceManager.Monitor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -405,10 +407,10 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="actionGroupName"> The name of the action group. </param>
-        /// <param name="actionGroupPatch"> Parameters supplied to the operation. </param>
+        /// <param name="options"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/>, or <paramref name="actionGroupPatch"/> is null. </exception>
-        public Response<ActionGroupData> Update(string subscriptionId, string resourceGroupName, string actionGroupName, ActionGroupPatchBody actionGroupPatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/> or <paramref name="options"/> is null. </exception>
+        public Response<ActionGroupData> Update(string subscriptionId, string resourceGroupName, string actionGroupName, ActionGroupUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -422,12 +424,12 @@ namespace Azure.ResourceManager.Monitor
             {
                 throw new ArgumentNullException(nameof(actionGroupName));
             }
-            if (actionGroupPatch == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(actionGroupPatch));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, actionGroupName, actionGroupPatch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, actionGroupName, options);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -439,7 +441,7 @@ namespace Azure.ResourceManager.Monitor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -449,11 +451,11 @@ namespace Azure.ResourceManager.Monitor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Insights/createNotifications", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -487,7 +489,7 @@ namespace Azure.ResourceManager.Monitor
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -514,7 +516,7 @@ namespace Azure.ResourceManager.Monitor
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -524,12 +526,12 @@ namespace Azure.ResourceManager.Monitor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Insights/notificationStatus/", false);
             uri.AppendPath(notificationId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -564,7 +566,7 @@ namespace Azure.ResourceManager.Monitor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -596,7 +598,7 @@ namespace Azure.ResourceManager.Monitor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -606,11 +608,11 @@ namespace Azure.ResourceManager.Monitor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Insights/actionGroups", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -640,7 +642,7 @@ namespace Azure.ResourceManager.Monitor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -667,7 +669,7 @@ namespace Azure.ResourceManager.Monitor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -677,13 +679,13 @@ namespace Azure.ResourceManager.Monitor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/actionGroups", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -718,7 +720,7 @@ namespace Azure.ResourceManager.Monitor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -750,7 +752,7 @@ namespace Azure.ResourceManager.Monitor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -760,7 +762,7 @@ namespace Azure.ResourceManager.Monitor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -768,7 +770,7 @@ namespace Azure.ResourceManager.Monitor
             uri.AppendPath("/providers/Microsoft.Insights/actionGroups/", false);
             uri.AppendPath(actionGroupName, true);
             uri.AppendPath("/subscribe", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -785,7 +787,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="actionGroupName"> The name of the action group. </param>
         /// <param name="enableRequest"> The receiver to re-enable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/>, or <paramref name="enableRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/> or <paramref name="enableRequest"/> is null. </exception>
         public async Task<Response> EnableReceiverAsync(string subscriptionId, string resourceGroupName, string actionGroupName, EnableRequest enableRequest, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -812,7 +814,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -822,7 +824,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="actionGroupName"> The name of the action group. </param>
         /// <param name="enableRequest"> The receiver to re-enable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/>, or <paramref name="enableRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/> or <paramref name="enableRequest"/> is null. </exception>
         public Response EnableReceiver(string subscriptionId, string resourceGroupName, string actionGroupName, EnableRequest enableRequest, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -849,7 +851,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

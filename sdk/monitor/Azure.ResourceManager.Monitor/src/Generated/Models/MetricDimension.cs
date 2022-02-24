@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> Name of the dimension. </param>
         /// <param name="operator"> the dimension operator. Only &apos;Include&apos; and &apos;Exclude&apos; are supported. </param>
         /// <param name="values"> list of dimension values. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="operator"/>, or <paramref name="values"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="operator"/> or <paramref name="values"/> is null. </exception>
         public MetricDimension(string name, string @operator, IEnumerable<string> values)
         {
             if (name == null)

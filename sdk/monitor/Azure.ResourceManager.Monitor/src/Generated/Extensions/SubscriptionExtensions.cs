@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
 
@@ -35,10 +36,11 @@ namespace Azure.ResourceManager.Monitor
             return GetExtensionClient(subscription).GetLogProfiles();
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/autoscalesettings
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: AutoscaleSettings_ListBySubscription
-        /// <summary> Lists the autoscale settings for a subscription. </summary>
+        /// <summary>
+        /// Lists the autoscale settings for a subscription
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/autoscalesettings
+        /// Operation Id: AutoscaleSettings_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AutoscaleSetting" /> that may take multiple service requests to iterate over. </returns>
@@ -47,10 +49,11 @@ namespace Azure.ResourceManager.Monitor
             return GetExtensionClient(subscription).GetAutoscaleSettingsAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/autoscalesettings
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: AutoscaleSettings_ListBySubscription
-        /// <summary> Lists the autoscale settings for a subscription. </summary>
+        /// <summary>
+        /// Lists the autoscale settings for a subscription
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/autoscalesettings
+        /// Operation Id: AutoscaleSettings_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AutoscaleSetting" /> that may take multiple service requests to iterate over. </returns>
@@ -59,10 +62,11 @@ namespace Azure.ResourceManager.Monitor
             return GetExtensionClient(subscription).GetAutoscaleSettings(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/alertrules
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: AlertRules_ListBySubscription
-        /// <summary> List the classic metric alert rules within a subscription. </summary>
+        /// <summary>
+        /// List the classic metric alert rules within a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/alertrules
+        /// Operation Id: AlertRules_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AlertRule" /> that may take multiple service requests to iterate over. </returns>
@@ -71,10 +75,11 @@ namespace Azure.ResourceManager.Monitor
             return GetExtensionClient(subscription).GetAlertRulesAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/alertrules
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: AlertRules_ListBySubscription
-        /// <summary> List the classic metric alert rules within a subscription. </summary>
+        /// <summary>
+        /// List the classic metric alert rules within a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/alertrules
+        /// Operation Id: AlertRules_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AlertRule" /> that may take multiple service requests to iterate over. </returns>
@@ -83,52 +88,49 @@ namespace Azure.ResourceManager.Monitor
             return GetExtensionClient(subscription).GetAlertRules(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/createNotifications
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ActionGroups_PostTestNotifications
-        /// <summary> Send test notifications to a set of provided receivers. </summary>
+        /// <summary>
+        /// Send test notifications to a set of provided receivers
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/createNotifications
+        /// Operation Id: ActionGroups_PostTestNotifications
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationRequest"/> is null. </exception>
-        public async static Task<PostTestNotificationsActionGroupOperation> PostTestNotificationsActionGroupAsync(this Subscription subscription, bool waitForCompletion, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        public async static Task<ArmOperation<TestNotificationResponse>> PostTestNotificationsActionGroupAsync(this Subscription subscription, bool waitForCompletion, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
         {
-            if (notificationRequest == null)
-            {
-                throw new ArgumentNullException(nameof(notificationRequest));
-            }
+            Argument.AssertNotNull(notificationRequest, nameof(notificationRequest));
 
             return await GetExtensionClient(subscription).PostTestNotificationsActionGroupAsync(waitForCompletion, notificationRequest, cancellationToken).ConfigureAwait(false);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/createNotifications
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ActionGroups_PostTestNotifications
-        /// <summary> Send test notifications to a set of provided receivers. </summary>
+        /// <summary>
+        /// Send test notifications to a set of provided receivers
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/createNotifications
+        /// Operation Id: ActionGroups_PostTestNotifications
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationRequest"/> is null. </exception>
-        public static PostTestNotificationsActionGroupOperation PostTestNotificationsActionGroup(this Subscription subscription, bool waitForCompletion, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        public static ArmOperation<TestNotificationResponse> PostTestNotificationsActionGroup(this Subscription subscription, bool waitForCompletion, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
         {
-            if (notificationRequest == null)
-            {
-                throw new ArgumentNullException(nameof(notificationRequest));
-            }
+            Argument.AssertNotNull(notificationRequest, nameof(notificationRequest));
 
             return GetExtensionClient(subscription).PostTestNotificationsActionGroup(waitForCompletion, notificationRequest, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/notificationStatus/{notificationId}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ActionGroups_GetTestNotifications
-        /// <summary> Get the test notifications by the notification id. </summary>
+        /// <summary>
+        /// Get the test notifications by the notification id
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/notificationStatus/{notificationId}
+        /// Operation Id: ActionGroups_GetTestNotifications
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="notificationId"> The notification id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="notificationId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationId"/> is null. </exception>
         public async static Task<Response<TestNotificationDetailsResponse>> GetTestNotificationsActionGroupAsync(this Subscription subscription, string notificationId, CancellationToken cancellationToken = default)
         {
@@ -137,14 +139,15 @@ namespace Azure.ResourceManager.Monitor
             return await GetExtensionClient(subscription).GetTestNotificationsActionGroupAsync(notificationId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/notificationStatus/{notificationId}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ActionGroups_GetTestNotifications
-        /// <summary> Get the test notifications by the notification id. </summary>
+        /// <summary>
+        /// Get the test notifications by the notification id
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/notificationStatus/{notificationId}
+        /// Operation Id: ActionGroups_GetTestNotifications
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="notificationId"> The notification id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="notificationId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationId"/> is null. </exception>
         public static Response<TestNotificationDetailsResponse> GetTestNotificationsActionGroup(this Subscription subscription, string notificationId, CancellationToken cancellationToken = default)
         {
@@ -153,10 +156,11 @@ namespace Azure.ResourceManager.Monitor
             return GetExtensionClient(subscription).GetTestNotificationsActionGroup(notificationId, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/actionGroups
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ActionGroups_ListBySubscriptionId
-        /// <summary> Get a list of all action groups in a subscription. </summary>
+        /// <summary>
+        /// Get a list of all action groups in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/actionGroups
+        /// Operation Id: ActionGroups_ListBySubscriptionId
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ActionGroup" /> that may take multiple service requests to iterate over. </returns>
@@ -165,10 +169,11 @@ namespace Azure.ResourceManager.Monitor
             return GetExtensionClient(subscription).GetActionGroupsAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/actionGroups
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ActionGroups_ListBySubscriptionId
-        /// <summary> Get a list of all action groups in a subscription. </summary>
+        /// <summary>
+        /// Get a list of all action groups in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/actionGroups
+        /// Operation Id: ActionGroups_ListBySubscriptionId
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ActionGroup" /> that may take multiple service requests to iterate over. </returns>
@@ -177,10 +182,11 @@ namespace Azure.ResourceManager.Monitor
             return GetExtensionClient(subscription).GetActionGroups(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/eventtypes/management/values
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ActivityLogs_List
-        /// <summary> Provides the list of records from the activity logs. </summary>
+        /// <summary>
+        /// Provides the list of records from the activity logs.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/eventtypes/management/values
+        /// Operation Id: ActivityLogs_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> Reduces the set of data collected.&lt;br&gt;This argument is required and it also requires at least the start date/time.&lt;br&gt;The **$filter** argument is very restricted and allows only the following patterns.&lt;br&gt;- *List events for a resource group*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and resourceGroupName eq &apos;resourceGroupName&apos;.&lt;br&gt;- *List events for resource*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and resourceUri eq &apos;resourceURI&apos;.&lt;br&gt;- *List events for a subscription in a time range*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos;.&lt;br&gt;- *List events for a resource provider*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and resourceProvider eq &apos;resourceProviderName&apos;.&lt;br&gt;- *List events for a correlation Id*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and correlationId eq &apos;correlationID&apos;.&lt;br&gt;&lt;br&gt;**NOTE**: No other syntax is allowed. </param>
         /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The **$select** argument is a comma separated list of property names to be returned. Possible values are: *authorization*, *claims*, *correlationId*, *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*, *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*, *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*, *subStatus*, *subscriptionId*. </param>
@@ -189,18 +195,16 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="EventData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventData> GetActivityLogsAsync(this Subscription subscription, string filter, string select = null, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
 
             return GetExtensionClient(subscription).GetActivityLogsAsync(filter, select, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/eventtypes/management/values
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ActivityLogs_List
-        /// <summary> Provides the list of records from the activity logs. </summary>
+        /// <summary>
+        /// Provides the list of records from the activity logs.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/eventtypes/management/values
+        /// Operation Id: ActivityLogs_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> Reduces the set of data collected.&lt;br&gt;This argument is required and it also requires at least the start date/time.&lt;br&gt;The **$filter** argument is very restricted and allows only the following patterns.&lt;br&gt;- *List events for a resource group*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and resourceGroupName eq &apos;resourceGroupName&apos;.&lt;br&gt;- *List events for resource*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and resourceUri eq &apos;resourceURI&apos;.&lt;br&gt;- *List events for a subscription in a time range*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos;.&lt;br&gt;- *List events for a resource provider*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and resourceProvider eq &apos;resourceProviderName&apos;.&lt;br&gt;- *List events for a correlation Id*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and correlationId eq &apos;correlationID&apos;.&lt;br&gt;&lt;br&gt;**NOTE**: No other syntax is allowed. </param>
         /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The **$select** argument is a comma separated list of property names to be returned. Possible values are: *authorization*, *claims*, *correlationId*, *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*, *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*, *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*, *subStatus*, *subscriptionId*. </param>
@@ -209,18 +213,16 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="EventData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EventData> GetActivityLogs(this Subscription subscription, string filter, string select = null, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
 
             return GetExtensionClient(subscription).GetActivityLogs(filter, select, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/metricAlerts
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: MetricAlerts_ListBySubscription
-        /// <summary> Retrieve alert rule definitions in a subscription. </summary>
+        /// <summary>
+        /// Retrieve alert rule definitions in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/metricAlerts
+        /// Operation Id: MetricAlerts_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MetricAlert" /> that may take multiple service requests to iterate over. </returns>
@@ -229,10 +231,11 @@ namespace Azure.ResourceManager.Monitor
             return GetExtensionClient(subscription).GetMetricAlertsAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/metricAlerts
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: MetricAlerts_ListBySubscription
-        /// <summary> Retrieve alert rule definitions in a subscription. </summary>
+        /// <summary>
+        /// Retrieve alert rule definitions in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/metricAlerts
+        /// Operation Id: MetricAlerts_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MetricAlert" /> that may take multiple service requests to iterate over. </returns>
@@ -241,10 +244,11 @@ namespace Azure.ResourceManager.Monitor
             return GetExtensionClient(subscription).GetMetricAlerts(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/scheduledQueryRules
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ScheduledQueryRules_ListBySubscription
-        /// <summary> List the Log Search rules within a subscription group. </summary>
+        /// <summary>
+        /// List the Log Search rules within a subscription group.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/scheduledQueryRules
+        /// Operation Id: ScheduledQueryRules_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://msdn.microsoft.com/en-us/library/azure/dn931934.aspx. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -254,10 +258,11 @@ namespace Azure.ResourceManager.Monitor
             return GetExtensionClient(subscription).GetLogSearchRulesAsync(filter, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/scheduledQueryRules
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ScheduledQueryRules_ListBySubscription
-        /// <summary> List the Log Search rules within a subscription group. </summary>
+        /// <summary>
+        /// List the Log Search rules within a subscription group.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/scheduledQueryRules
+        /// Operation Id: ScheduledQueryRules_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://msdn.microsoft.com/en-us/library/azure/dn931934.aspx. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -267,10 +272,11 @@ namespace Azure.ResourceManager.Monitor
             return GetExtensionClient(subscription).GetLogSearchRules(filter, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/microsoft.insights/privateLinkScopes
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: PrivateLinkScopes_List
-        /// <summary> Gets a list of all Azure Monitor PrivateLinkScopes within a subscription. </summary>
+        /// <summary>
+        /// Gets a list of all Azure Monitor PrivateLinkScopes within a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/microsoft.insights/privateLinkScopes
+        /// Operation Id: PrivateLinkScopes_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PrivateLinkScope" /> that may take multiple service requests to iterate over. </returns>
@@ -279,10 +285,11 @@ namespace Azure.ResourceManager.Monitor
             return GetExtensionClient(subscription).GetPrivateLinkScopesAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/microsoft.insights/privateLinkScopes
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: PrivateLinkScopes_List
-        /// <summary> Gets a list of all Azure Monitor PrivateLinkScopes within a subscription. </summary>
+        /// <summary>
+        /// Gets a list of all Azure Monitor PrivateLinkScopes within a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/microsoft.insights/privateLinkScopes
+        /// Operation Id: PrivateLinkScopes_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PrivateLinkScope" /> that may take multiple service requests to iterate over. </returns>
@@ -291,10 +298,11 @@ namespace Azure.ResourceManager.Monitor
             return GetExtensionClient(subscription).GetPrivateLinkScopes(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/microsoft.insights/activityLogAlerts
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ActivityLogAlerts_ListBySubscriptionId
-        /// <summary> Get a list of all activity log alerts in a subscription. </summary>
+        /// <summary>
+        /// Get a list of all activity log alerts in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/microsoft.insights/activityLogAlerts
+        /// Operation Id: ActivityLogAlerts_ListBySubscriptionId
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ActivityLogAlert" /> that may take multiple service requests to iterate over. </returns>
@@ -303,10 +311,11 @@ namespace Azure.ResourceManager.Monitor
             return GetExtensionClient(subscription).GetActivityLogAlertsAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/microsoft.insights/activityLogAlerts
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ActivityLogAlerts_ListBySubscriptionId
-        /// <summary> Get a list of all activity log alerts in a subscription. </summary>
+        /// <summary>
+        /// Get a list of all activity log alerts in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/microsoft.insights/activityLogAlerts
+        /// Operation Id: ActivityLogAlerts_ListBySubscriptionId
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ActivityLogAlert" /> that may take multiple service requests to iterate over. </returns>
@@ -315,10 +324,11 @@ namespace Azure.ResourceManager.Monitor
             return GetExtensionClient(subscription).GetActivityLogAlerts(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionEndpoints
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DataCollectionEndpoints_ListBySubscription
-        /// <summary> Lists all data collection endpoints in the specified subscription. </summary>
+        /// <summary>
+        /// Lists all data collection endpoints in the specified subscription
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionEndpoints
+        /// Operation Id: DataCollectionEndpoints_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataCollectionEndpoint" /> that may take multiple service requests to iterate over. </returns>
@@ -327,10 +337,11 @@ namespace Azure.ResourceManager.Monitor
             return GetExtensionClient(subscription).GetDataCollectionEndpointsAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionEndpoints
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DataCollectionEndpoints_ListBySubscription
-        /// <summary> Lists all data collection endpoints in the specified subscription. </summary>
+        /// <summary>
+        /// Lists all data collection endpoints in the specified subscription
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionEndpoints
+        /// Operation Id: DataCollectionEndpoints_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataCollectionEndpoint" /> that may take multiple service requests to iterate over. </returns>
@@ -339,10 +350,11 @@ namespace Azure.ResourceManager.Monitor
             return GetExtensionClient(subscription).GetDataCollectionEndpoints(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionRules
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DataCollectionRules_ListBySubscription
-        /// <summary> Lists all data collection rules in the specified subscription. </summary>
+        /// <summary>
+        /// Lists all data collection rules in the specified subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionRules
+        /// Operation Id: DataCollectionRules_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataCollectionRule" /> that may take multiple service requests to iterate over. </returns>
@@ -351,10 +363,11 @@ namespace Azure.ResourceManager.Monitor
             return GetExtensionClient(subscription).GetDataCollectionRulesAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionRules
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DataCollectionRules_ListBySubscription
-        /// <summary> Lists all data collection rules in the specified subscription. </summary>
+        /// <summary>
+        /// Lists all data collection rules in the specified subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionRules
+        /// Operation Id: DataCollectionRules_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataCollectionRule" /> that may take multiple service requests to iterate over. </returns>

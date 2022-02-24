@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="VmInsightsOnboardingStatus" /> object. </returns>
         public static VmInsightsOnboardingStatus GetVmInsightsOnboardingStatus(this ArmResource armResource)
         {
-            return GetExtensionClient(armResource).GetVmInsightsOnboardingStatus();
+            return armResource.GetVmInsightsOnboardingStatus();
         }
 
         /// <summary> Gets a collection of DataCollectionRuleAssociations in the DataCollectionRuleAssociation. </summary>

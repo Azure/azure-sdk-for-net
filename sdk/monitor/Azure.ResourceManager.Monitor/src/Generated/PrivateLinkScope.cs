@@ -15,7 +15,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.Monitor
         internal PrivateLinkScope(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _privateLinkScopeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string privateLinkScopeApiVersion);
+            TryGetApiVersion(ResourceType, out string privateLinkScopeApiVersion);
             _privateLinkScopeRestClient = new PrivateLinkScopesRestOperations(_privateLinkScopeClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, privateLinkScopeApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -105,10 +104,11 @@ namespace Azure.ResourceManager.Monitor
             return new ScopedPrivateLinkCollection(Client, Id);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopes_Get
-        /// <summary> Returns a Azure Monitor PrivateLinkScope. </summary>
+        /// <summary>
+        /// Returns a Azure Monitor PrivateLinkScope.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
+        /// Operation Id: PrivateLinkScopes_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<PrivateLinkScope>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -128,10 +128,11 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopes_Get
-        /// <summary> Returns a Azure Monitor PrivateLinkScope. </summary>
+        /// <summary>
+        /// Returns a Azure Monitor PrivateLinkScope.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
+        /// Operation Id: PrivateLinkScopes_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PrivateLinkScope> Get(CancellationToken cancellationToken = default)
         {
@@ -151,20 +152,21 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopes_Delete
-        /// <summary> Deletes a Azure Monitor PrivateLinkScope. </summary>
+        /// <summary>
+        /// Deletes a Azure Monitor PrivateLinkScope.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
+        /// Operation Id: PrivateLinkScopes_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<PrivateLinkScopeDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _privateLinkScopeClientDiagnostics.CreateScope("PrivateLinkScope.Delete");
             scope.Start();
             try
             {
                 var response = await _privateLinkScopeRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PrivateLinkScopeDeleteOperation(_privateLinkScopeClientDiagnostics, Pipeline, _privateLinkScopeRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new MonitorArmOperation(_privateLinkScopeClientDiagnostics, Pipeline, _privateLinkScopeRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -176,20 +178,21 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopes_Delete
-        /// <summary> Deletes a Azure Monitor PrivateLinkScope. </summary>
+        /// <summary>
+        /// Deletes a Azure Monitor PrivateLinkScope.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
+        /// Operation Id: PrivateLinkScopes_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PrivateLinkScopeDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _privateLinkScopeClientDiagnostics.CreateScope("PrivateLinkScope.Delete");
             scope.Start();
             try
             {
                 var response = _privateLinkScopeRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new PrivateLinkScopeDeleteOperation(_privateLinkScopeClientDiagnostics, Pipeline, _privateLinkScopeRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new MonitorArmOperation(_privateLinkScopeClientDiagnostics, Pipeline, _privateLinkScopeRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -201,80 +204,19 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopes_UpdateTags
-        /// <summary> Updates an existing PrivateLinkScope&apos;s tags. To update other fields use the CreateOrUpdate method. </summary>
-        /// <param name="privateLinkScopeTags"> Updated tag information to set into the PrivateLinkScope instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkScopeTags"/> is null. </exception>
-        public async virtual Task<Response<PrivateLinkScope>> UpdateAsync(TagsResource privateLinkScopeTags, CancellationToken cancellationToken = default)
-        {
-            if (privateLinkScopeTags == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkScopeTags));
-            }
-
-            using var scope = _privateLinkScopeClientDiagnostics.CreateScope("PrivateLinkScope.Update");
-            scope.Start();
-            try
-            {
-                var response = await _privateLinkScopeRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkScopeTags, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PrivateLinkScope(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopes_UpdateTags
-        /// <summary> Updates an existing PrivateLinkScope&apos;s tags. To update other fields use the CreateOrUpdate method. </summary>
-        /// <param name="privateLinkScopeTags"> Updated tag information to set into the PrivateLinkScope instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkScopeTags"/> is null. </exception>
-        public virtual Response<PrivateLinkScope> Update(TagsResource privateLinkScopeTags, CancellationToken cancellationToken = default)
-        {
-            if (privateLinkScopeTags == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkScopeTags));
-            }
-
-            using var scope = _privateLinkScopeClientDiagnostics.CreateScope("PrivateLinkScope.Update");
-            scope.Start();
-            try
-            {
-                var response = _privateLinkScopeRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkScopeTags, cancellationToken);
-                return Response.FromValue(new PrivateLinkScope(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopes_Get
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
+        /// Operation Id: PrivateLinkScopes_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<PrivateLinkScope>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _privateLinkScopeClientDiagnostics.CreateScope("PrivateLinkScope.AddTag");
             scope.Start();
@@ -293,24 +235,19 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopes_Get
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
+        /// Operation Id: PrivateLinkScopes_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<PrivateLinkScope> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _privateLinkScopeClientDiagnostics.CreateScope("PrivateLinkScope.AddTag");
             scope.Start();
@@ -329,19 +266,17 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopes_Get
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
+        /// Operation Id: PrivateLinkScopes_Get
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<PrivateLinkScope>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _privateLinkScopeClientDiagnostics.CreateScope("PrivateLinkScope.SetTags");
             scope.Start();
@@ -361,19 +296,17 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopes_Get
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
+        /// Operation Id: PrivateLinkScopes_Get
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<PrivateLinkScope> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _privateLinkScopeClientDiagnostics.CreateScope("PrivateLinkScope.SetTags");
             scope.Start();
@@ -393,19 +326,17 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopes_Get
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
+        /// Operation Id: PrivateLinkScopes_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<PrivateLinkScope>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _privateLinkScopeClientDiagnostics.CreateScope("PrivateLinkScope.RemoveTag");
             scope.Start();
@@ -424,19 +355,17 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopes_Get
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
+        /// Operation Id: PrivateLinkScopes_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<PrivateLinkScope> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _privateLinkScopeClientDiagnostics.CreateScope("PrivateLinkScope.RemoveTag");
             scope.Start();

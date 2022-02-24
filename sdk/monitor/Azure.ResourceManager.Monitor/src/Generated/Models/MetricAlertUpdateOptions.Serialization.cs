@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MetricAlertResourcePatch : IUtf8JsonSerializable
+    public partial class MetricAlertUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

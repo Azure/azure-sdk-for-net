@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor
         internal ActivityLogAlert(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _activityLogAlertClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string activityLogAlertApiVersion);
+            TryGetApiVersion(ResourceType, out string activityLogAlertApiVersion);
             _activityLogAlertRestClient = new ActivityLogAlertsRestOperations(_activityLogAlertClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, activityLogAlertApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -84,10 +84,11 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// OperationId: ActivityLogAlerts_Get
-        /// <summary> Get an activity log alert. </summary>
+        /// <summary>
+        /// Get an activity log alert.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Operation Id: ActivityLogAlerts_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ActivityLogAlert>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -107,10 +108,11 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// OperationId: ActivityLogAlerts_Get
-        /// <summary> Get an activity log alert. </summary>
+        /// <summary>
+        /// Get an activity log alert.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Operation Id: ActivityLogAlerts_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ActivityLogAlert> Get(CancellationToken cancellationToken = default)
         {
@@ -130,20 +132,21 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// OperationId: ActivityLogAlerts_Delete
-        /// <summary> Delete an activity log alert. </summary>
+        /// <summary>
+        /// Delete an activity log alert.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Operation Id: ActivityLogAlerts_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ActivityLogAlertDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlert.Delete");
             scope.Start();
             try
             {
                 var response = await _activityLogAlertRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ActivityLogAlertDeleteOperation(response);
+                var operation = new MonitorArmOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -155,20 +158,21 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// OperationId: ActivityLogAlerts_Delete
-        /// <summary> Delete an activity log alert. </summary>
+        /// <summary>
+        /// Delete an activity log alert.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Operation Id: ActivityLogAlerts_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ActivityLogAlertDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlert.Delete");
             scope.Start();
             try
             {
                 var response = _activityLogAlertRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ActivityLogAlertDeleteOperation(response);
+                var operation = new MonitorArmOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -180,25 +184,23 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// OperationId: ActivityLogAlerts_Update
-        /// <summary> Updates an existing ActivityLogAlertResource&apos;s tags. To update other fields use the CreateOrUpdate method. </summary>
-        /// <param name="activityLogAlertPatch"> Parameters supplied to the operation. </param>
+        /// <summary>
+        /// Updates an existing ActivityLogAlertResource&apos;s tags. To update other fields use the CreateOrUpdate method.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Operation Id: ActivityLogAlerts_Update
+        /// </summary>
+        /// <param name="options"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertPatch"/> is null. </exception>
-        public async virtual Task<Response<ActivityLogAlert>> UpdateAsync(ActivityLogAlertPatchBody activityLogAlertPatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<Response<ActivityLogAlert>> UpdateAsync(ActivityLogAlertUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (activityLogAlertPatch == null)
-            {
-                throw new ArgumentNullException(nameof(activityLogAlertPatch));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlert.Update");
             scope.Start();
             try
             {
-                var response = await _activityLogAlertRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, activityLogAlertPatch, cancellationToken).ConfigureAwait(false);
+                var response = await _activityLogAlertRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ActivityLogAlert(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -208,25 +210,23 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// OperationId: ActivityLogAlerts_Update
-        /// <summary> Updates an existing ActivityLogAlertResource&apos;s tags. To update other fields use the CreateOrUpdate method. </summary>
-        /// <param name="activityLogAlertPatch"> Parameters supplied to the operation. </param>
+        /// <summary>
+        /// Updates an existing ActivityLogAlertResource&apos;s tags. To update other fields use the CreateOrUpdate method.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Operation Id: ActivityLogAlerts_Update
+        /// </summary>
+        /// <param name="options"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertPatch"/> is null. </exception>
-        public virtual Response<ActivityLogAlert> Update(ActivityLogAlertPatchBody activityLogAlertPatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<ActivityLogAlert> Update(ActivityLogAlertUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (activityLogAlertPatch == null)
-            {
-                throw new ArgumentNullException(nameof(activityLogAlertPatch));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlert.Update");
             scope.Start();
             try
             {
-                var response = _activityLogAlertRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, activityLogAlertPatch, cancellationToken);
+                var response = _activityLogAlertRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
                 return Response.FromValue(new ActivityLogAlert(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -236,24 +236,19 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// OperationId: ActivityLogAlerts_Get
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Operation Id: ActivityLogAlerts_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<ActivityLogAlert>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlert.AddTag");
             scope.Start();
@@ -272,24 +267,19 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// OperationId: ActivityLogAlerts_Get
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Operation Id: ActivityLogAlerts_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ActivityLogAlert> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlert.AddTag");
             scope.Start();
@@ -308,19 +298,17 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// OperationId: ActivityLogAlerts_Get
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Operation Id: ActivityLogAlerts_Get
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<ActivityLogAlert>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlert.SetTags");
             scope.Start();
@@ -340,19 +328,17 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// OperationId: ActivityLogAlerts_Get
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Operation Id: ActivityLogAlerts_Get
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ActivityLogAlert> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlert.SetTags");
             scope.Start();
@@ -372,19 +358,17 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// OperationId: ActivityLogAlerts_Get
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Operation Id: ActivityLogAlerts_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<ActivityLogAlert>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlert.RemoveTag");
             scope.Start();
@@ -403,19 +387,17 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// OperationId: ActivityLogAlerts_Get
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Operation Id: ActivityLogAlerts_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ActivityLogAlert> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlert.RemoveTag");
             scope.Start();

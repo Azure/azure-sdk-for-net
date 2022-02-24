@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -98,15 +99,16 @@ namespace Azure.ResourceManager.Monitor
             return GetExtensionClient(resourceGroup).GetDataCollectionRules();
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: PrivateLinkScopeOperationStatus_Get
-        /// <summary> Get the status of an azure asynchronous operation associated with a private link scope operation. </summary>
+        /// <summary>
+        /// Get the status of an azure asynchronous operation associated with a private link scope operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}
+        /// Operation Id: PrivateLinkScopeOperationStatus_Get
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="asyncOperationId"> The operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentException"> <paramref name="asyncOperationId"/> is empty. </exception>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
         public async static Task<Response<OperationStatus>> GetPrivateLinkScopeOperationStatuAsync(this ResourceGroup resourceGroup, string asyncOperationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
@@ -114,15 +116,16 @@ namespace Azure.ResourceManager.Monitor
             return await GetExtensionClient(resourceGroup).GetPrivateLinkScopeOperationStatuAsync(asyncOperationId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: PrivateLinkScopeOperationStatus_Get
-        /// <summary> Get the status of an azure asynchronous operation associated with a private link scope operation. </summary>
+        /// <summary>
+        /// Get the status of an azure asynchronous operation associated with a private link scope operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}
+        /// Operation Id: PrivateLinkScopeOperationStatus_Get
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="asyncOperationId"> The operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentException"> <paramref name="asyncOperationId"/> is empty. </exception>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
         public static Response<OperationStatus> GetPrivateLinkScopeOperationStatu(this ResourceGroup resourceGroup, string asyncOperationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));

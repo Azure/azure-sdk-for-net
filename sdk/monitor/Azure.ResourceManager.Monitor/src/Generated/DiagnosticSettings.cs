@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.Monitor
         internal DiagnosticSettings(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _diagnosticSettingsDiagnosticSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string diagnosticSettingsDiagnosticSettingsApiVersion);
+            TryGetApiVersion(ResourceType, out string diagnosticSettingsDiagnosticSettingsApiVersion);
             _diagnosticSettingsDiagnosticSettingsRestClient = new DiagnosticSettingsRestOperations(_diagnosticSettingsDiagnosticSettingsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diagnosticSettingsDiagnosticSettingsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -83,10 +82,11 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
-        /// ContextualPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
-        /// OperationId: DiagnosticSettings_Get
-        /// <summary> Gets the active diagnostic settings for the specified resource. </summary>
+        /// <summary>
+        /// Gets the active diagnostic settings for the specified resource.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
+        /// Operation Id: DiagnosticSettings_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DiagnosticSettings>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -106,10 +106,11 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
-        /// ContextualPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
-        /// OperationId: DiagnosticSettings_Get
-        /// <summary> Gets the active diagnostic settings for the specified resource. </summary>
+        /// <summary>
+        /// Gets the active diagnostic settings for the specified resource.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
+        /// Operation Id: DiagnosticSettings_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DiagnosticSettings> Get(CancellationToken cancellationToken = default)
         {
@@ -129,20 +130,21 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
-        /// ContextualPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
-        /// OperationId: DiagnosticSettings_Delete
-        /// <summary> Deletes existing diagnostic settings for the specified resource. </summary>
+        /// <summary>
+        /// Deletes existing diagnostic settings for the specified resource.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
+        /// Operation Id: DiagnosticSettings_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DiagnosticSettingsDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _diagnosticSettingsDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettings.Delete");
             scope.Start();
             try
             {
                 var response = await _diagnosticSettingsDiagnosticSettingsRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DiagnosticSettingsDeleteOperation(response);
+                var operation = new MonitorArmOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -154,20 +156,21 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
-        /// ContextualPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
-        /// OperationId: DiagnosticSettings_Delete
-        /// <summary> Deletes existing diagnostic settings for the specified resource. </summary>
+        /// <summary>
+        /// Deletes existing diagnostic settings for the specified resource.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
+        /// Operation Id: DiagnosticSettings_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DiagnosticSettingsDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _diagnosticSettingsDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettings.Delete");
             scope.Start();
             try
             {
                 var response = _diagnosticSettingsDiagnosticSettingsRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
-                var operation = new DiagnosticSettingsDeleteOperation(response);
+                var operation = new MonitorArmOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

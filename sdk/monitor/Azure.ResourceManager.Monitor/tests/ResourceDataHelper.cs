@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             return dest;
         }
 
-        public static void AssertTrackedResource(TrackedResource r1, TrackedResource r2)
+        public static void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
             Assert.AreEqual(r1.Name, r2.Name);
             Assert.AreEqual(r1.Id, r2.Id);

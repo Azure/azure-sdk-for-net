@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="runbookName"> The name for this runbook. </param>
         /// <param name="webhookResourceId"> The resource id for webhook linked to this runbook. </param>
         /// <param name="isGlobalRunbook"> Indicates whether this instance is global runbook. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="automationAccountId"/>, <paramref name="runbookName"/>, or <paramref name="webhookResourceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="automationAccountId"/>, <paramref name="runbookName"/> or <paramref name="webhookResourceId"/> is null. </exception>
         public AutomationRunbookReceiver(string automationAccountId, string runbookName, string webhookResourceId, bool isGlobalRunbook)
         {
             if (automationAccountId == null)

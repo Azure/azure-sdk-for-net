@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="days"> the collection of days that the profile takes effect on. Possible values are Sunday through Saturday. </param>
         /// <param name="hours"> A collection of hours that the profile takes effect on. Values supported are 0 to 23 on the 24-hour clock (AM/PM times are not supported). </param>
         /// <param name="minutes"> A collection of minutes at which the profile takes effect at. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="timeZone"/>, <paramref name="days"/>, <paramref name="hours"/>, or <paramref name="minutes"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="timeZone"/>, <paramref name="days"/>, <paramref name="hours"/> or <paramref name="minutes"/> is null. </exception>
         public RecurrentSchedule(string timeZone, IEnumerable<string> days, IEnumerable<int> hours, IEnumerable<int> minutes)
         {
             if (timeZone == null)

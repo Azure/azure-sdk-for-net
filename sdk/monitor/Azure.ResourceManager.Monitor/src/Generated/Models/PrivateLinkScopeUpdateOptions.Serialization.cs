@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class LogSearchRuleResourcePatch : IUtf8JsonSerializable
+    public partial class PrivateLinkScopeUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -26,14 +26,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
-            {
-                writer.WritePropertyName("enabled");
-                writer.WriteStringValue(Enabled.Value.ToString());
-            }
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
     }

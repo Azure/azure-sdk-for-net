@@ -191,4 +191,10 @@ directive:
             "description": "the namespace of the metric."
           }
         }  
+  - from: swagger-document
+    where: $.paths
+    remove: "/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}"
+  - from: swagger-document
+    where: $.paths
+    remove: "/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings"
 ```

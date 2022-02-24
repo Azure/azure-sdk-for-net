@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="aggregation"> The aggregation type of the metric. </param>
         /// <param name="timestamps"> The list of timestamps of the baselines. </param>
         /// <param name="data"> The baseline values for each sensitivity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="aggregation"/>, <paramref name="timestamps"/>, or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="aggregation"/>, <paramref name="timestamps"/> or <paramref name="data"/> is null. </exception>
         internal TimeSeriesBaseline(string aggregation, IEnumerable<DateTimeOffset> timestamps, IEnumerable<SingleBaseline> data)
         {
             if (aggregation == null)

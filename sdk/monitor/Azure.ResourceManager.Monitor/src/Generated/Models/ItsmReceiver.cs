@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="connectionId"> Unique identification of ITSM connection among multiple defined in above workspace. </param>
         /// <param name="ticketConfiguration"> JSON blob for the configurations of the ITSM action. CreateMultipleWorkItems option will be part of this blob as well. </param>
         /// <param name="region"> Region in which workspace resides. Supported values:&apos;centralindia&apos;,&apos;japaneast&apos;,&apos;southeastasia&apos;,&apos;australiasoutheast&apos;,&apos;uksouth&apos;,&apos;westcentralus&apos;,&apos;canadacentral&apos;,&apos;eastus&apos;,&apos;westeurope&apos;. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="workspaceId"/>, <paramref name="connectionId"/>, <paramref name="ticketConfiguration"/>, or <paramref name="region"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="workspaceId"/>, <paramref name="connectionId"/>, <paramref name="ticketConfiguration"/> or <paramref name="region"/> is null. </exception>
         public ItsmReceiver(string name, string workspaceId, string connectionId, string ticketConfiguration, string region)
         {
             if (name == null)

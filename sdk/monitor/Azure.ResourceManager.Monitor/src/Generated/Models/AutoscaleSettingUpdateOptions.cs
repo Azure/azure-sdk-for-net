@@ -12,10 +12,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The autoscale setting object for patch operations. </summary>
-    public partial class AutoscaleSettingResourcePatch
+    public partial class AutoscaleSettingUpdateOptions
     {
-        /// <summary> Initializes a new instance of AutoscaleSettingResourcePatch. </summary>
-        public AutoscaleSettingResourcePatch()
+        /// <summary> Initializes a new instance of AutoscaleSettingUpdateOptions. </summary>
+        public AutoscaleSettingUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Profiles = new ChangeTrackingList<AutoscaleProfile>();

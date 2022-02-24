@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> the name of the profile. </param>
         /// <param name="capacity"> the number of instances that can be used during this profile. </param>
         /// <param name="rules"> the collection of rules that provide the triggers and parameters for the scaling action. A maximum of 10 rules can be specified. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="capacity"/>, or <paramref name="rules"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="capacity"/> or <paramref name="rules"/> is null. </exception>
         public AutoscaleProfile(string name, ScaleCapacity capacity, IEnumerable<ScaleRule> rules)
         {
             if (name == null)

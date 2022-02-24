@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.Monitor
         internal ScopedPrivateLinkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ScopedPrivateLink.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ScopedPrivateLink.ResourceType, out string scopedPrivateLinkPrivateLinkScopedResourcesApiVersion);
+            TryGetApiVersion(ScopedPrivateLink.ResourceType, out string scopedPrivateLinkPrivateLinkScopedResourcesApiVersion);
             _scopedPrivateLinkPrivateLinkScopedResourcesRestClient = new PrivateLinkScopedResourcesRestOperations(_scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, scopedPrivateLinkPrivateLinkScopedResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -51,30 +50,28 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PrivateLinkScope.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopedResources_CreateOrUpdate
-        /// <summary> Approve or reject a private endpoint connection with a given name. </summary>
+        /// <summary>
+        /// Approve or reject a private endpoint connection with a given name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
+        /// Operation Id: PrivateLinkScopedResources_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="name"> The name of the scoped resource object. </param>
         /// <param name="parameters"> The ScopedPrivateLink to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ScopedPrivateLinkCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string name, ScopedPrivateLinkData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ScopedPrivateLink>> CreateOrUpdateAsync(bool waitForCompletion, string name, ScopedPrivateLinkData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics.CreateScope("ScopedPrivateLinkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _scopedPrivateLinkPrivateLinkScopedResourcesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ScopedPrivateLinkCreateOrUpdateOperation(Client, _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics, Pipeline, _scopedPrivateLinkPrivateLinkScopedResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, parameters).Request, response);
+                var operation = new MonitorArmOperation<ScopedPrivateLink>(new ScopedPrivateLinkOperationSource(Client), _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics, Pipeline, _scopedPrivateLinkPrivateLinkScopedResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -86,30 +83,28 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopedResources_CreateOrUpdate
-        /// <summary> Approve or reject a private endpoint connection with a given name. </summary>
+        /// <summary>
+        /// Approve or reject a private endpoint connection with a given name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
+        /// Operation Id: PrivateLinkScopedResources_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="name"> The name of the scoped resource object. </param>
         /// <param name="parameters"> The ScopedPrivateLink to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ScopedPrivateLinkCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string name, ScopedPrivateLinkData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ScopedPrivateLink> CreateOrUpdate(bool waitForCompletion, string name, ScopedPrivateLinkData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics.CreateScope("ScopedPrivateLinkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _scopedPrivateLinkPrivateLinkScopedResourcesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, parameters, cancellationToken);
-                var operation = new ScopedPrivateLinkCreateOrUpdateOperation(Client, _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics, Pipeline, _scopedPrivateLinkPrivateLinkScopedResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, parameters).Request, response);
+                var operation = new MonitorArmOperation<ScopedPrivateLink>(new ScopedPrivateLinkOperationSource(Client), _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics, Pipeline, _scopedPrivateLinkPrivateLinkScopedResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -121,13 +116,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopedResources_Get
-        /// <summary> Gets a scoped resource in a private link scope. </summary>
+        /// <summary>
+        /// Gets a scoped resource in a private link scope.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
+        /// Operation Id: PrivateLinkScopedResources_Get
+        /// </summary>
         /// <param name="name"> The name of the scoped resource object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<ScopedPrivateLink>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -149,13 +145,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopedResources_Get
-        /// <summary> Gets a scoped resource in a private link scope. </summary>
+        /// <summary>
+        /// Gets a scoped resource in a private link scope.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
+        /// Operation Id: PrivateLinkScopedResources_Get
+        /// </summary>
         /// <param name="name"> The name of the scoped resource object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<ScopedPrivateLink> Get(string name, CancellationToken cancellationToken = default)
         {
@@ -177,10 +174,11 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopedResources_ListByPrivateLinkScope
-        /// <summary> Gets all private endpoint connections on a private link scope. </summary>
+        /// <summary>
+        /// Gets all private endpoint connections on a private link scope.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources
+        /// Operation Id: PrivateLinkScopedResources_ListByPrivateLinkScope
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScopedPrivateLink" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScopedPrivateLink> GetAllAsync(CancellationToken cancellationToken = default)
@@ -218,10 +216,11 @@ namespace Azure.ResourceManager.Monitor
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopedResources_ListByPrivateLinkScope
-        /// <summary> Gets all private endpoint connections on a private link scope. </summary>
+        /// <summary>
+        /// Gets all private endpoint connections on a private link scope.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources
+        /// Operation Id: PrivateLinkScopedResources_ListByPrivateLinkScope
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScopedPrivateLink" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScopedPrivateLink> GetAll(CancellationToken cancellationToken = default)
@@ -259,13 +258,14 @@ namespace Azure.ResourceManager.Monitor
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopedResources_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
+        /// Operation Id: PrivateLinkScopedResources_Get
+        /// </summary>
         /// <param name="name"> The name of the scoped resource object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -285,13 +285,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopedResources_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
+        /// Operation Id: PrivateLinkScopedResources_Get
+        /// </summary>
         /// <param name="name"> The name of the scoped resource object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
@@ -311,13 +312,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopedResources_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
+        /// Operation Id: PrivateLinkScopedResources_Get
+        /// </summary>
         /// <param name="name"> The name of the scoped resource object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<ScopedPrivateLink>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -339,13 +341,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopedResources_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
+        /// Operation Id: PrivateLinkScopedResources_Get
+        /// </summary>
         /// <param name="name"> The name of the scoped resource object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<ScopedPrivateLink> GetIfExists(string name, CancellationToken cancellationToken = default)
         {

@@ -12,10 +12,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The alert rule object for patch operations. </summary>
-    public partial class AlertRuleResourcePatch
+    public partial class AlertRuleUpdateOptions
     {
-        /// <summary> Initializes a new instance of AlertRuleResourcePatch. </summary>
-        public AlertRuleResourcePatch()
+        /// <summary> Initializes a new instance of AlertRuleUpdateOptions. </summary>
+        public AlertRuleUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Actions = new ChangeTrackingList<RuleAction>();

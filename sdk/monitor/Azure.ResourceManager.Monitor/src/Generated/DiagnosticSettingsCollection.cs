@@ -16,7 +16,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -37,34 +36,32 @@ namespace Azure.ResourceManager.Monitor
         internal DiagnosticSettingsCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _diagnosticSettingsDiagnosticSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", DiagnosticSettings.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(DiagnosticSettings.ResourceType, out string diagnosticSettingsDiagnosticSettingsApiVersion);
+            TryGetApiVersion(DiagnosticSettings.ResourceType, out string diagnosticSettingsDiagnosticSettingsApiVersion);
             _diagnosticSettingsDiagnosticSettingsRestClient = new DiagnosticSettingsRestOperations(_diagnosticSettingsDiagnosticSettingsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diagnosticSettingsDiagnosticSettingsApiVersion);
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
-        /// ContextualPath: /{resourceUri}
-        /// OperationId: DiagnosticSettings_CreateOrUpdate
-        /// <summary> Creates or updates diagnostic settings for the specified resource. </summary>
+        /// <summary>
+        /// Creates or updates diagnostic settings for the specified resource.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
+        /// Operation Id: DiagnosticSettings_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DiagnosticSettingsCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string name, DiagnosticSettingsData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<DiagnosticSettings>> CreateOrUpdateAsync(bool waitForCompletion, string name, DiagnosticSettingsData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _diagnosticSettingsDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingsCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _diagnosticSettingsDiagnosticSettingsRestClient.CreateOrUpdateAsync(Id, name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DiagnosticSettingsCreateOrUpdateOperation(Client, response);
+                var operation = new MonitorArmOperation<DiagnosticSettings>(Response.FromValue(new DiagnosticSettings(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -76,30 +73,28 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
-        /// ContextualPath: /{resourceUri}
-        /// OperationId: DiagnosticSettings_CreateOrUpdate
-        /// <summary> Creates or updates diagnostic settings for the specified resource. </summary>
+        /// <summary>
+        /// Creates or updates diagnostic settings for the specified resource.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
+        /// Operation Id: DiagnosticSettings_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual DiagnosticSettingsCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string name, DiagnosticSettingsData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DiagnosticSettings> CreateOrUpdate(bool waitForCompletion, string name, DiagnosticSettingsData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _diagnosticSettingsDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingsCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _diagnosticSettingsDiagnosticSettingsRestClient.CreateOrUpdate(Id, name, parameters, cancellationToken);
-                var operation = new DiagnosticSettingsCreateOrUpdateOperation(Client, response);
+                var operation = new MonitorArmOperation<DiagnosticSettings>(Response.FromValue(new DiagnosticSettings(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -111,13 +106,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
-        /// ContextualPath: /{resourceUri}
-        /// OperationId: DiagnosticSettings_Get
-        /// <summary> Gets the active diagnostic settings for the specified resource. </summary>
+        /// <summary>
+        /// Gets the active diagnostic settings for the specified resource.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
+        /// Operation Id: DiagnosticSettings_Get
+        /// </summary>
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<DiagnosticSettings>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -139,13 +135,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
-        /// ContextualPath: /{resourceUri}
-        /// OperationId: DiagnosticSettings_Get
-        /// <summary> Gets the active diagnostic settings for the specified resource. </summary>
+        /// <summary>
+        /// Gets the active diagnostic settings for the specified resource.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
+        /// Operation Id: DiagnosticSettings_Get
+        /// </summary>
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<DiagnosticSettings> Get(string name, CancellationToken cancellationToken = default)
         {
@@ -167,10 +164,11 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings
-        /// ContextualPath: /{resourceUri}
-        /// OperationId: DiagnosticSettings_List
-        /// <summary> Gets the active diagnostic settings list for the specified resource. </summary>
+        /// <summary>
+        /// Gets the active diagnostic settings list for the specified resource.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings
+        /// Operation Id: DiagnosticSettings_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DiagnosticSettings" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DiagnosticSettings> GetAllAsync(CancellationToken cancellationToken = default)
@@ -193,10 +191,11 @@ namespace Azure.ResourceManager.Monitor
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings
-        /// ContextualPath: /{resourceUri}
-        /// OperationId: DiagnosticSettings_List
-        /// <summary> Gets the active diagnostic settings list for the specified resource. </summary>
+        /// <summary>
+        /// Gets the active diagnostic settings list for the specified resource.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings
+        /// Operation Id: DiagnosticSettings_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DiagnosticSettings" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DiagnosticSettings> GetAll(CancellationToken cancellationToken = default)
@@ -219,13 +218,14 @@ namespace Azure.ResourceManager.Monitor
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
-        /// ContextualPath: /{resourceUri}
-        /// OperationId: DiagnosticSettings_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
+        /// Operation Id: DiagnosticSettings_Get
+        /// </summary>
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -245,13 +245,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
-        /// ContextualPath: /{resourceUri}
-        /// OperationId: DiagnosticSettings_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
+        /// Operation Id: DiagnosticSettings_Get
+        /// </summary>
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
@@ -271,13 +272,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
-        /// ContextualPath: /{resourceUri}
-        /// OperationId: DiagnosticSettings_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
+        /// Operation Id: DiagnosticSettings_Get
+        /// </summary>
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<DiagnosticSettings>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -299,13 +301,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
-        /// ContextualPath: /{resourceUri}
-        /// OperationId: DiagnosticSettings_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
+        /// Operation Id: DiagnosticSettings_Get
+        /// </summary>
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<DiagnosticSettings> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
