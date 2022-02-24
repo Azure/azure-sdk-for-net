@@ -48,6 +48,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var consumerGroup = "fakeConsumer";
 #endif
 
+            // The container identified by "blobContainerName" must exist; it will not be implicitly
+            // created.
+
             var storageClient = new BlobContainerClient(storageConnectionString, blobContainerName);
 
             var processor = new EventProcessorClient
