@@ -16,7 +16,9 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Other Changes
 
-- Attempt to retrieve AMQP objects synchronously before calling `GetOrCreateAsync`.
+- Attempt to retrieve AMQP objects synchronously before calling `GetOrCreateAsync`, avoiding an asynchronous call unless necessary.
+
+- Remove allocations from Event Source logging by introducing `WriteEvent` overloads to handle cases that would otherwise result in boxing to `object[]` via params array.  _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 
 - Remove LINQ from the `AmqpMessageConverter` in favor of direct looping.  _(Based on a community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 

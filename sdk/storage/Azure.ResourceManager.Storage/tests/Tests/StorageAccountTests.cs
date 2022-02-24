@@ -140,6 +140,7 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccount account4 = await storageAccountCollection.GetIfExistsAsync(accountName);
             Assert.IsNull(account4);
         }
+
         [Test]
         [RecordedTest]
         public async Task CreateStandardAccount()
@@ -152,6 +153,7 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccount account1 = (await storageAccountCollection.CreateOrUpdateAsync(true, accountName, GetDefaultStorageAccountParameters(sku: new Sku(SkuName.StandardLRS)))).Value;
             Assert.AreEqual(accountName, account1.Id.Name);
             VerifyAccountProperties(account1, false);
+            Assert.Null(account1.Data.Identity);
 
             //create a GRS storage account
             accountName = await CreateValidAccountNameAsync(namePrefix);
