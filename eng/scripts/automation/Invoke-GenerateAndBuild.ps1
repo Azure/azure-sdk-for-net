@@ -27,12 +27,8 @@ if ( $serviceType -eq "resource-manager" ) {
   New-MgmtPackageFolder -service $service -packageName $packageName -sdkPath $sdkPath -commitid $commitid -readme $swaggerDir/$readmeFile -outputJsonFile $newpackageoutput
 } else {
   Write-Host "Generate data-plane SDK client library."
-  $group = "sample";
-  if ($inputJson.group) {
-    $group = $inputJson.group
-  }
-  $namespace = "Azure.$group.$packageName"
-  New-DataPlanePackageFolder -service $service -namespace $namespace -sdkPath $sdkPath -outputJsonFile $outputJsonFile
+  Write-Host "Data-plane SDK Generation is not implemented currently."
+  exit 1
 }
 if ( $? -ne $True) {
   Write-Error "Failed to create sdk project folder. exit code: $?"
