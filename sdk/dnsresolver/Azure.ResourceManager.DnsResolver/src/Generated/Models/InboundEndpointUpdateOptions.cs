@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.DnsResolver.Models
 {
     /// <summary> Describes an inbound endpoint for a DNS resolver for PATCH operation. </summary>
-    public partial class InboundEndpointPatch
+    public partial class InboundEndpointUpdateOptions
     {
-        /// <summary> Initializes a new instance of InboundEndpointPatch. </summary>
-        public InboundEndpointPatch()
+        /// <summary> Initializes a new instance of InboundEndpointUpdateOptions. </summary>
+        public InboundEndpointUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

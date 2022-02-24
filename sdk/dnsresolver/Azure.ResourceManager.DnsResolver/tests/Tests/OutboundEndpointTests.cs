@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
             var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
 
-            var outboundEndpointPatch = new OutboundEndpointPatch();
-            outboundEndpointPatch.Tags.Add(newTagKey, newTagValue);
+            var outboundEndpointUpdateOptions = new OutboundEndpointUpdateOptions();
+            outboundEndpointUpdateOptions.Tags.Add(newTagKey, newTagValue);
 
             // ACT
-            var patchedOutboundEndpoint = await createdOutboundEndpoint.Value.UpdateAsync(true, outboundEndpointPatch);
+            var patchedOutboundEndpoint = await createdOutboundEndpoint.Value.UpdateAsync(true, outboundEndpointUpdateOptions);
 
             // ASSERT
-            CollectionAssert.AreEquivalent(patchedOutboundEndpoint.Value.Data.Tags, outboundEndpointPatch.Tags);
+            CollectionAssert.AreEquivalent(patchedOutboundEndpoint.Value.Data.Tags, outboundEndpointUpdateOptions.Tags);
         }
 
         [Test]

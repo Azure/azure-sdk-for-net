@@ -222,22 +222,22 @@ namespace Azure.ResourceManager.DnsResolver
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/forwardingRules/{forwardingRuleName}
         /// OperationId: ForwardingRules_Update
         /// <summary> Updates a forwarding rule in a DNS forwarding ruleset. </summary>
-        /// <param name="parameters"> Parameters supplied to the Update operation. </param>
+        /// <param name="options"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<ForwardingRule>> UpdateAsync(ForwardingRulePatch parameters, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<Response<ForwardingRule>> UpdateAsync(ForwardingRuleUpdateOptions options, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _forwardingRuleClientDiagnostics.CreateScope("ForwardingRule.Update");
             scope.Start();
             try
             {
-                var response = await _forwardingRuleRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _forwardingRuleRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, ifMatch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ForwardingRule(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -251,22 +251,22 @@ namespace Azure.ResourceManager.DnsResolver
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/forwardingRules/{forwardingRuleName}
         /// OperationId: ForwardingRules_Update
         /// <summary> Updates a forwarding rule in a DNS forwarding ruleset. </summary>
-        /// <param name="parameters"> Parameters supplied to the Update operation. </param>
+        /// <param name="options"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<ForwardingRule> Update(ForwardingRulePatch parameters, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<ForwardingRule> Update(ForwardingRuleUpdateOptions options, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _forwardingRuleClientDiagnostics.CreateScope("ForwardingRule.Update");
             scope.Start();
             try
             {
-                var response = _forwardingRuleRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, ifMatch, cancellationToken);
+                var response = _forwardingRuleRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, ifMatch, cancellationToken);
                 return Response.FromValue(new ForwardingRule(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var inboundEndpointData = new InboundEndpointData(this.DefaultLocation);
 
-            inboundEndpointData.IpConfigurations.Add(new IpConfiguration()
+            inboundEndpointData.IPConfigurations.Add(new IPConfiguration()
             {
-                PrivateIpAllocationMethod = IpAllocationMethod.Dynamic,
+                PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                 Subnet = new WritableSubResource()
                 {
                     Id = new ResourceIdentifier(subnetId),
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var inboundEndpointData = new InboundEndpointData(this.DefaultLocation);
 
-            inboundEndpointData.IpConfigurations.Add(new IpConfiguration()
+            inboundEndpointData.IPConfigurations.Add(new IPConfiguration()
             {
-                PrivateIpAllocationMethod = IpAllocationMethod.Dynamic,
+                PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                 Subnet = new WritableSubResource()
                 {
                     Id = new ResourceIdentifier(subnetId),
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var inboundEndpointData = new InboundEndpointData(this.DefaultLocation);
 
-            inboundEndpointData.IpConfigurations.Add(new IpConfiguration()
+            inboundEndpointData.IPConfigurations.Add(new IPConfiguration()
             {
-                PrivateIpAllocationMethod = IpAllocationMethod.Dynamic,
+                PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                 Subnet = new WritableSubResource()
                 {
                     Id = new ResourceIdentifier(subnetId),
@@ -119,14 +119,14 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
             var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
 
-            var inboundEndpointPatch = new InboundEndpointPatch();
-            inboundEndpointPatch.Tags.Add(newTagKey, newTagValue);
+            var inboundEndpointUpdateOptions = new InboundEndpointUpdateOptions();
+            inboundEndpointUpdateOptions.Tags.Add(newTagKey, newTagValue);
 
             // ACT
-            var patchedInboundEndpoint = await createdInboundEndpoint.Value.UpdateAsync(true, inboundEndpointPatch);
+            var patchedInboundEndpoint = await createdInboundEndpoint.Value.UpdateAsync(true, inboundEndpointUpdateOptions);
 
             // ASSERT
-            CollectionAssert.AreEquivalent(patchedInboundEndpoint.Value.Data.Tags, inboundEndpointPatch.Tags);
+            CollectionAssert.AreEquivalent(patchedInboundEndpoint.Value.Data.Tags, inboundEndpointUpdateOptions.Tags);
         }
 
         [Test]
@@ -135,9 +135,9 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var inboundEndpointData = new InboundEndpointData(this.DefaultLocation);
 
-            inboundEndpointData.IpConfigurations.Add(new IpConfiguration()
+            inboundEndpointData.IPConfigurations.Add(new IPConfiguration()
             {
-                PrivateIpAllocationMethod = IpAllocationMethod.Dynamic,
+                PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                 Subnet = new WritableSubResource()
                 {
                     Id = new ResourceIdentifier(subnetId),

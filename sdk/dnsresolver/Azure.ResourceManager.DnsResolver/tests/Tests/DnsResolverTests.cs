@@ -106,14 +106,14 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
             var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
 
-            var dnsResolverPatch = new DnsResolverPatch();
-            dnsResolverPatch.Tags.Add(newTagKey, newTagValue);
+            var dnsResolverUpdateOptions = new DnsResolverUpdateOptions();
+            dnsResolverUpdateOptions.Tags.Add(newTagKey, newTagValue);
 
             // ACT
-            var patchedDnsResolver = await createdDnsResolver.Value.UpdateAsync(true, dnsResolverPatch );
+            var patchedDnsResolver = await createdDnsResolver.Value.UpdateAsync(true, dnsResolverUpdateOptions);
 
             // ASSERT
-            CollectionAssert.AreEquivalent(patchedDnsResolver.Value.Data.Tags, dnsResolverPatch.Tags);
+            CollectionAssert.AreEquivalent(patchedDnsResolver.Value.Data.Tags, dnsResolverUpdateOptions.Tags);
         }
 
         [Test]

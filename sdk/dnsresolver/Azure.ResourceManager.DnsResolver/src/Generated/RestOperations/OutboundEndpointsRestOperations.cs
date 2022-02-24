@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string dnsResolverName, string outboundEndpointName, OutboundEndpointPatch parameters, string ifMatch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string dnsResolverName, string outboundEndpointName, OutboundEndpointUpdateOptions options, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DnsResolver
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(options);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -202,11 +202,11 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="dnsResolverName"> The name of the DNS resolver. </param>
         /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
-        /// <param name="parameters"> Parameters supplied to the Update operation. </param>
+        /// <param name="options"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsResolverName"/>, <paramref name="outboundEndpointName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string dnsResolverName, string outboundEndpointName, OutboundEndpointPatch parameters, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsResolverName"/>, <paramref name="outboundEndpointName"/>, or <paramref name="options"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string dnsResolverName, string outboundEndpointName, OutboundEndpointUpdateOptions options, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -224,12 +224,12 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 throw new ArgumentNullException(nameof(outboundEndpointName));
             }
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, dnsResolverName, outboundEndpointName, parameters, ifMatch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, dnsResolverName, outboundEndpointName, options, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -246,11 +246,11 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="dnsResolverName"> The name of the DNS resolver. </param>
         /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
-        /// <param name="parameters"> Parameters supplied to the Update operation. </param>
+        /// <param name="options"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsResolverName"/>, <paramref name="outboundEndpointName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string dnsResolverName, string outboundEndpointName, OutboundEndpointPatch parameters, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsResolverName"/>, <paramref name="outboundEndpointName"/>, or <paramref name="options"/> is null. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string dnsResolverName, string outboundEndpointName, OutboundEndpointUpdateOptions options, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -268,12 +268,12 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 throw new ArgumentNullException(nameof(outboundEndpointName));
             }
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, dnsResolverName, outboundEndpointName, parameters, ifMatch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, dnsResolverName, outboundEndpointName, options, ifMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -43,4 +43,40 @@ directive:
   - from: swagger-document
     where: $.definitions.TargetDnsServer.properties.ipAddress
     transform: $['x-ms-client-name'] = 'iPAddress'
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}'].patch.parameters[3]
+    transform: $['name'] = 'options'
+  - from: swagger-document
+    where: $.definitions.DnsResolverPatch
+    transform: $['x-ms-client-name'] = 'DnsResolverUpdateOptions'
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/inboundEndpoints/{inboundEndpointName}'].patch.parameters[4]
+    transform: $['name'] = 'options'
+  - from: swagger-document
+    where: $.definitions.InboundEndpointPatch
+    transform: $['x-ms-client-name'] = 'InboundEndpointUpdateOptions'
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}'].patch.parameters[4]
+    transform: $['name'] = 'options'
+  - from: swagger-document
+    where: $.definitions.OutboundEndpointPatch
+    transform: $['x-ms-client-name'] = 'OutboundEndpointUpdateOptions'
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}'].patch.parameters[3]
+    transform: $['name'] = 'options'
+  - from: swagger-document
+    where: $.definitions.DnsForwardingRulesetPatch
+    transform: $['x-ms-client-name'] = 'DnsForwardingRulesetUpdateOptions'
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/forwardingRules/{forwardingRuleName}'].patch.parameters[4]
+    transform: $['name'] = 'options'
+  - from: swagger-document
+    where: $.definitions.ForwardingRulePatch
+    transform: $['x-ms-client-name'] = 'ForwardingRuleUpdateOptions'
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}'].patch.parameters[4]
+    transform: $['name'] = 'options'
+  - from: swagger-document
+    where: $.definitions.VirtualNetworkLinkPatch
+    transform: $['x-ms-client-name'] = 'VirtualNetworkLinkUpdateOptions'
 ```

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    public partial class DnsForwardingRulesetPatch : IUtf8JsonSerializable
+    public partial class OutboundEndpointUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

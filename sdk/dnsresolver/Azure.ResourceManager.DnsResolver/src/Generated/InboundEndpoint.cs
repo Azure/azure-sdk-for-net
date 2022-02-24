@@ -383,23 +383,23 @@ namespace Azure.ResourceManager.DnsResolver
         /// OperationId: InboundEndpoints_Update
         /// <summary> Updates an inbound endpoint for a DNS resolver. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="parameters"> Parameters supplied to the Update operation. </param>
+        /// <param name="options"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<InboundEndpointUpdateOperation> UpdateAsync(bool waitForCompletion, InboundEndpointPatch parameters, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<InboundEndpointUpdateOperation> UpdateAsync(bool waitForCompletion, InboundEndpointUpdateOptions options, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpoint.Update");
             scope.Start();
             try
             {
-                var response = await _inboundEndpointRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new InboundEndpointUpdateOperation(ArmClient, _inboundEndpointClientDiagnostics, Pipeline, _inboundEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, ifMatch).Request, response);
+                var response = await _inboundEndpointRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, ifMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new InboundEndpointUpdateOperation(ArmClient, _inboundEndpointClientDiagnostics, Pipeline, _inboundEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, ifMatch).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -416,23 +416,23 @@ namespace Azure.ResourceManager.DnsResolver
         /// OperationId: InboundEndpoints_Update
         /// <summary> Updates an inbound endpoint for a DNS resolver. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="parameters"> Parameters supplied to the Update operation. </param>
+        /// <param name="options"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual InboundEndpointUpdateOperation Update(bool waitForCompletion, InboundEndpointPatch parameters, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual InboundEndpointUpdateOperation Update(bool waitForCompletion, InboundEndpointUpdateOptions options, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpoint.Update");
             scope.Start();
             try
             {
-                var response = _inboundEndpointRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, ifMatch, cancellationToken);
-                var operation = new InboundEndpointUpdateOperation(ArmClient, _inboundEndpointClientDiagnostics, Pipeline, _inboundEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, ifMatch).Request, response);
+                var response = _inboundEndpointRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, ifMatch, cancellationToken);
+                var operation = new InboundEndpointUpdateOperation(ArmClient, _inboundEndpointClientDiagnostics, Pipeline, _inboundEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, ifMatch).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

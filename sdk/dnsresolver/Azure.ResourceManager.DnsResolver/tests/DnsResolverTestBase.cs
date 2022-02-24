@@ -18,7 +18,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.DnsResolver.Tests
 {
-    public class DnsResolverTestBase : ManagementRecordedTestBase<dnsresolverManagementTestEnvironment>
+    public class DnsResolverTestBase : ManagementRecordedTestBase<DnsResolverManagementTestEnvironment>
     {
         protected AzureLocation DefaultLocation => AzureLocation.WestUS2;
         protected ArmClient Client { get; private set; }
