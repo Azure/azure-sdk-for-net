@@ -95,7 +95,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             var exceptionType = exception.GetType().FullName;
             var strackTrace = new StackTrace(exception);
-            var exceptionStackFrame = strackTrace.GetFrame(1);
+            var exceptionStackFrame = strackTrace.GetFrame(0);
 
             if (exceptionStackFrame != null)
             {
