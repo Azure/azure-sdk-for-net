@@ -10,7 +10,7 @@ namespace Azure.Communication.ShortCodes.Tests
 {
     public class ShortCodesClientLiveTestBase : RecordedTestBase<ShortCodesClientTestEnvironment>
     {
-        public ShortCodesClientLiveTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ShortCodesClientLiveTestBase(bool isAsync) : base(isAsync)
             => Sanitizer = new ShortCodesClientRecordedTestSanitizer();
 
         /// <summary>
