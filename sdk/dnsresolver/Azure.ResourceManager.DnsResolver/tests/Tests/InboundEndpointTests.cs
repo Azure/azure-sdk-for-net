@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.DnsResolver.Tests
 
         public InboundEndpointTests(bool async) : base(async)
         {
-            Mode = RecordedTestMode.Playback;
         }
 
         [SetUp]
