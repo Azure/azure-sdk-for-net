@@ -1,6 +1,7 @@
 # Release History
 
 ## 0.3.0-beta.2 (Unreleased)
+- Removing gltf support, given that it actually doesn't really work on the service: it's rejects with a 400 error
 
 ### Features Added
 
