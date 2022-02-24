@@ -5,6 +5,7 @@
 ### Features Added
 
 - Added `AddClassifier` methods to `RequestContext`. These methods allow callers to change the response classification behavior for a given method invocation.
+- Added type `RequestOptions` to the `Azure` namespace and made `RequestContext` a subclass of `RequestOptions`.  This enables `RequestOptions` to be exposed in methods that take `CancellationToken` without causing confusion regarding which cancellation token will take effect.
 
 ### Breaking Changes
 
