@@ -58,7 +58,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> The Frontend IP addresses of the load balancer. </summary>
         public IList<WritableSubResource> FrontendIPConfigurations { get; }
         /// <summary> A reference to a pool of DIPs. Outbound traffic is randomly load balanced across IPs in the backend IPs. </summary>
-        public WritableSubResource BackendAddressPool { get; set; }
+        internal WritableSubResource BackendAddressPool { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier BackendAddressPoolId
+        {
+            get => BackendAddressPool is null ? default : BackendAddressPool.Id;
+            set
+            {
+                if (BackendAddressPool is null)
+                    BackendAddressPool = new WritableSubResource();
+                BackendAddressPool.Id = value;
+            }
+        }
+
         /// <summary> The provisioning state of the outbound rule resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The protocol for the outbound rule in load balancer. </summary>

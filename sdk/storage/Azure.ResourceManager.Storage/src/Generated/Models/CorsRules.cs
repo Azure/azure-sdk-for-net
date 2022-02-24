@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Sets the CORS rules. You can include up to five CorsRule elements in the request. </summary>
-    public partial class CorsRules
+    internal partial class CorsRules
     {
         /// <summary> Initializes a new instance of CorsRules. </summary>
         public CorsRules()

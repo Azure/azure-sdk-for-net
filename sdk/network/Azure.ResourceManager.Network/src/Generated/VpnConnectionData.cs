@@ -76,7 +76,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Id of the connected vpn site. </summary>
-        public WritableSubResource RemoteVpnSite { get; set; }
+        internal WritableSubResource RemoteVpnSite { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier RemoteVpnSiteId
+        {
+            get => RemoteVpnSite is null ? default : RemoteVpnSite.Id;
+            set
+            {
+                if (RemoteVpnSite is null)
+                    RemoteVpnSite = new WritableSubResource();
+                RemoteVpnSite.Id = value;
+            }
+        }
+
         /// <summary> Routing weight for vpn connection. </summary>
         public int? RoutingWeight { get; set; }
         /// <summary> DPD timeout in seconds for vpn connection. </summary>

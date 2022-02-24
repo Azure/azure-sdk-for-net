@@ -45,4 +45,7 @@ directive:
   - from: swagger-document
     where: $.definitions.ListQueueResource.properties.value.items["$ref"]
     transform: return "#/definitions/StorageQueue"
+  - from: swagger-document
+    where: $.definitions.Multichannel.properties.enabled
+    transform: $['x-ms-client-name'] = 'IsMultiChannelEnabled'
 ```

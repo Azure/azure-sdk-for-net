@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.Null(keyspace);
         }
 
-        protected async Task<CassandraKeyspace> CreateCassandraKeyspace(AutoscaleSettings autoscale)
+        internal async Task<CassandraKeyspace> CreateCassandraKeyspace(AutoscaleSettings autoscale)
         {
             _keyspaceName = Recording.GenerateAssetName("cassandra-keyspace-");
             return await CreateCassandraKeyspace(_keyspaceName, autoscale, _keyspaceAccount.GetCassandraKeyspaces());

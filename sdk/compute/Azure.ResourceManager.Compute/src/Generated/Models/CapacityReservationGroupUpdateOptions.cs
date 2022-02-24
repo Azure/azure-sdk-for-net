@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> A list of references to all virtual machines associated to the capacity reservation group. </summary>
         public IReadOnlyList<Resources.Models.SubResource> VirtualMachinesAssociated { get; }
         /// <summary> The capacity reservation group instance view which has the list of instance views for all the capacity reservations that belong to the capacity reservation group. </summary>
-        public CapacityReservationGroupInstanceView InstanceView { get; }
+        internal CapacityReservationGroupInstanceView InstanceView { get; }
+        /// <summary> List of instance view of the capacity reservations under the capacity reservation group. </summary>
+        public IReadOnlyList<CapacityReservationInstanceViewWithName> InstanceViewCapacityReservations
+        {
+            get => InstanceView.CapacityReservations;
+        }
     }
 }

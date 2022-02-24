@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.Null(trigger);
         }
 
-        protected async Task<SqlTrigger> CreateSqlTrigger(AutoscaleSettings autoscale)
+        internal async Task<SqlTrigger> CreateSqlTrigger(AutoscaleSettings autoscale)
         {
             _triggerName = Recording.GenerateAssetName("sql-trigger-");
             SqlTriggerCreateUpdateOptions sqlDatabaseCreateUpdateOptions = new SqlTriggerCreateUpdateOptions(AzureLocation.WestUS,

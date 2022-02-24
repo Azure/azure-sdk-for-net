@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -39,7 +40,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The Microsoft peering configuration. </summary>
         public ExpressRouteCircuitPeeringConfig MicrosoftPeeringConfig { get; set; }
         /// <summary> The reference to the RouteFilter resource. </summary>
-        public WritableSubResource RouteFilter { get; set; }
+        internal WritableSubResource RouteFilter { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier RouteFilterId
+        {
+            get => RouteFilter is null ? default : RouteFilter.Id;
+            set
+            {
+                if (RouteFilter is null)
+                    RouteFilter = new WritableSubResource();
+                RouteFilter.Id = value;
+            }
+        }
+
         /// <summary> The state of peering. </summary>
         public ExpressRouteCircuitPeeringState? State { get; set; }
     }

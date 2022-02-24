@@ -45,8 +45,31 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         public double? TokenRefreshExtensionHours { get; set; }
         /// <summary> The configuration settings of the storage of the tokens if a file system is used. </summary>
-        public FileSystemTokenStore FileSystem { get; set; }
+        internal FileSystemTokenStore FileSystem { get; set; }
+        /// <summary> The directory in which the tokens will be stored. </summary>
+        public string FileSystemDirectory
+        {
+            get => FileSystem is null ? default : FileSystem.Directory;
+            set
+            {
+                if (FileSystem is null)
+                    FileSystem = new FileSystemTokenStore();
+                FileSystem.Directory = value;
+            }
+        }
+
         /// <summary> The configuration settings of the storage of the tokens if blob storage is used. </summary>
-        public BlobStorageTokenStore AzureBlobStorage { get; set; }
+        internal BlobStorageTokenStore AzureBlobStorage { get; set; }
+        /// <summary> The name of the app setting containing the SAS URL of the blob storage containing the tokens. </summary>
+        public string AzureBlobStorageSasUrlSettingName
+        {
+            get => AzureBlobStorage is null ? default : AzureBlobStorage.SasUrlSettingName;
+            set
+            {
+                if (AzureBlobStorage is null)
+                    AzureBlobStorage = new BlobStorageTokenStore();
+                AzureBlobStorage.SasUrlSettingName = value;
+            }
+        }
     }
 }

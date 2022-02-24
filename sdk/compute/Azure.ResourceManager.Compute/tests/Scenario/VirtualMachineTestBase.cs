@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Compute.Tests.Helpers;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -118,6 +119,15 @@ namespace Azure.ResourceManager.Compute.Tests
             //var subnet = await CreateSubnet(vnet.Id as ResourceGroupResourceIdentifier);
             var nic = await CreateNetworkInterface(GetSubnetId(vnet));
             return nic;
+        }
+
+        protected async Task<VirtualMachine> CreateVirtualMachineAsync(string vmName)
+        {
+            var collection = await GetVirtualMachineCollectionAsync();
+            var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
+            var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
+            var lro = await collection.CreateOrUpdateAsync(true, vmName, input);
+            return lro.Value;
         }
     }
 }

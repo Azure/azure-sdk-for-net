@@ -53,10 +53,6 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             var vnetData = new VirtualNetworkData()
             {
                 Location = "westus2",
-                AddressSpace = new AddressSpace()
-                {
-                    AddressPrefixes = { "10.10.0.0/16", }
-                },
                 Subnets =
                 {
                     new SubnetData() { Name = "subnet01", AddressPrefix = "10.10.1.0/24", },
@@ -73,6 +69,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                     }
                 },
             };
+            vnetData.AddressPrefixes.Add("10.10.0.0/16");
             var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnetData);
             SubnetId = $"{vnet.Value.Data.Id.ToString()}/subnets/ManagedInstance";
             await StopSessionRecordingAsync();

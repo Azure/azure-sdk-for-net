@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> TLS settings for the resource. </summary>
-    public partial class WebPubSubTlsSettings
+    internal partial class WebPubSubTlsSettings
     {
         /// <summary> Initializes a new instance of WebPubSubTlsSettings. </summary>
         public WebPubSubTlsSettings()

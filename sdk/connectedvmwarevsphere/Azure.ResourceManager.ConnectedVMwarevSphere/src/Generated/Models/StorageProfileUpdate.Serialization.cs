@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class StorageProfileUpdate : IUtf8JsonSerializable
+    internal partial class StorageProfileUpdate : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
