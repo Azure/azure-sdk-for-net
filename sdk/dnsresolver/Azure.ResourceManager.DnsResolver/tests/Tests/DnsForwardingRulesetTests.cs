@@ -121,14 +121,14 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
             var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
 
-            var dnsForwardingRulesetPatch = new DnsForwardingRulesetPatch();
-            dnsForwardingRulesetPatch.Tags.Add(newTagKey, newTagValue);
+            var dnsForwardingRulesetUpdateOptions = new DnsForwardingRulesetUpdateOptions();
+            dnsForwardingRulesetUpdateOptions.Tags.Add(newTagKey, newTagValue);
 
             // ACT
-            var patchedDnsForwardingRuleset = await createdDnsForwardingRuleset.Value.UpdateAsync(true, dnsForwardingRulesetPatch);
+            var patchedDnsForwardingRuleset = await createdDnsForwardingRuleset.Value.UpdateAsync(true, dnsForwardingRulesetUpdateOptions);
 
             // ASSERT
-            CollectionAssert.AreEquivalent(patchedDnsForwardingRuleset.Value.Data.Tags, dnsForwardingRulesetPatch.Tags);
+            CollectionAssert.AreEquivalent(patchedDnsForwardingRuleset.Value.Data.Tags, dnsForwardingRulesetUpdateOptions.Tags);
         }
 
         [Test]
