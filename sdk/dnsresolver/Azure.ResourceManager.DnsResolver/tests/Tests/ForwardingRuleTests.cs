@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             forwardingRuleData.DomainName = "test.com.";
             forwardingRuleData.TargetDnsServers.Add(new TargetDnsServer()
             {
-                IpAddress = "10.0.0.3",
+                IPAddress = "10.0.0.3",
             });
 
             var forwardingRuleName = Recording.GenerateAssetName("forwardingRule-");
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             forwardingRuleData.DomainName = "test.com.";
             forwardingRuleData.TargetDnsServers.Add(new TargetDnsServer()
             {
-                IpAddress = "10.0.0.3",
+                IPAddress = "10.0.0.3",
             });
 
             var forwardingRuleName = Recording.GenerateAssetName("forwardingRule-");
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             forwardingRuleData.DomainName = "test.com.";
             forwardingRuleData.TargetDnsServers.Add(new TargetDnsServer()
             {
-                IpAddress = "10.0.0.3",
+                IPAddress = "10.0.0.3",
             });
 
             var forwardingRuleName = Recording.GenerateAssetName("forwardingRule-");
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
             var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
 
-            var forwardingRulePatch = new ForwardingRulePatch();
+            var forwardingRulePatch = new ForwardingRuleUpdateOptions();
             forwardingRulePatch.Metadata.Add(newTagKey, newTagValue);
 
             // ACT
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             forwardingRuleData.DomainName = "test.com.";
             forwardingRuleData.TargetDnsServers.Add(new TargetDnsServer()
             {
-                IpAddress = "10.0.0.3",
+                IPAddress = "10.0.0.3",
             });
 
             var forwardingRuleName = Recording.GenerateAssetName("forwardingRule-");
