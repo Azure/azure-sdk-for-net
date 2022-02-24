@@ -1301,7 +1301,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public async Task<Response<ApplicationGatewayAvailableSslOptions>> ListAvailableSslOptionsAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationGatewayAvailableSslOptionsData>> ListAvailableSslOptionsAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1314,11 +1314,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ApplicationGatewayAvailableSslOptions value = default;
+                        ApplicationGatewayAvailableSslOptionsData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationGatewayAvailableSslOptions.DeserializeApplicationGatewayAvailableSslOptions(document.RootElement);
+                        value = ApplicationGatewayAvailableSslOptionsData.DeserializeApplicationGatewayAvailableSslOptionsData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ApplicationGatewayAvailableSslOptionsData)null, message.Response);
                 default:
                     throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -1328,7 +1330,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public Response<ApplicationGatewayAvailableSslOptions> ListAvailableSslOptions(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<ApplicationGatewayAvailableSslOptionsData> ListAvailableSslOptions(string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1341,11 +1343,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ApplicationGatewayAvailableSslOptions value = default;
+                        ApplicationGatewayAvailableSslOptionsData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationGatewayAvailableSslOptions.DeserializeApplicationGatewayAvailableSslOptions(document.RootElement);
+                        value = ApplicationGatewayAvailableSslOptionsData.DeserializeApplicationGatewayAvailableSslOptionsData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ApplicationGatewayAvailableSslOptionsData)null, message.Response);
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -1445,7 +1449,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="predefinedPolicyName"/> is null. </exception>
-        public async Task<Response<ApplicationGatewaySslPredefinedPolicy>> GetSslPredefinedPolicyAsync(string subscriptionId, string predefinedPolicyName, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationGatewaySslPredefinedPolicyData>> GetSslPredefinedPolicyAsync(string subscriptionId, string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1462,11 +1466,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ApplicationGatewaySslPredefinedPolicy value = default;
+                        ApplicationGatewaySslPredefinedPolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationGatewaySslPredefinedPolicy.DeserializeApplicationGatewaySslPredefinedPolicy(document.RootElement);
+                        value = ApplicationGatewaySslPredefinedPolicyData.DeserializeApplicationGatewaySslPredefinedPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ApplicationGatewaySslPredefinedPolicyData)null, message.Response);
                 default:
                     throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -1477,7 +1483,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="predefinedPolicyName"/> is null. </exception>
-        public Response<ApplicationGatewaySslPredefinedPolicy> GetSslPredefinedPolicy(string subscriptionId, string predefinedPolicyName, CancellationToken cancellationToken = default)
+        public Response<ApplicationGatewaySslPredefinedPolicyData> GetSslPredefinedPolicy(string subscriptionId, string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1494,11 +1500,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ApplicationGatewaySslPredefinedPolicy value = default;
+                        ApplicationGatewaySslPredefinedPolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationGatewaySslPredefinedPolicy.DeserializeApplicationGatewaySslPredefinedPolicy(document.RootElement);
+                        value = ApplicationGatewaySslPredefinedPolicyData.DeserializeApplicationGatewaySslPredefinedPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ApplicationGatewaySslPredefinedPolicyData)null, message.Response);
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }

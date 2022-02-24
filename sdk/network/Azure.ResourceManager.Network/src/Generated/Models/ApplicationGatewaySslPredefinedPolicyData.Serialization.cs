@@ -8,10 +8,11 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network.Models;
 
-namespace Azure.ResourceManager.Network.Models
+namespace Azure.ResourceManager.Network
 {
-    public partial class ApplicationGatewaySslPredefinedPolicy : IUtf8JsonSerializable
+    public partial class ApplicationGatewaySslPredefinedPolicyData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewaySslPredefinedPolicy DeserializeApplicationGatewaySslPredefinedPolicy(JsonElement element)
+        internal static ApplicationGatewaySslPredefinedPolicyData DeserializeApplicationGatewaySslPredefinedPolicyData(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> id = default;
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewaySslPredefinedPolicy(id.Value, name.Value, Optional.ToList(cipherSuites), Optional.ToNullable(minProtocolVersion));
+            return new ApplicationGatewaySslPredefinedPolicyData(id.Value, name.Value, Optional.ToList(cipherSuites), Optional.ToNullable(minProtocolVersion));
         }
     }
 }

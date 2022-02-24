@@ -28,6 +28,14 @@ namespace Azure.ResourceManager.Network
             );
         }
 
+        /// <summary> Gets an object representing a ApplicationGatewayAvailableSslOptions along with the instance operations that can be performed on it in the SubscriptionExtensions. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <returns> Returns a <see cref="ApplicationGatewayAvailableSslOptions" /> object. </returns>
+        public static ApplicationGatewayAvailableSslOptions GetApplicationGatewayAvailableSslOptions(this Subscription subscription)
+        {
+            return GetExtensionClient(subscription).GetApplicationGatewayAvailableSslOptions();
+        }
+
         /// <summary> Gets a collection of AzureWebCategories in the AzureWebCategory. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AzureWebCategories and their operations over a AzureWebCategory. </returns>
@@ -180,90 +188,6 @@ namespace Azure.ResourceManager.Network
         public static Pageable<ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetApplicationGatewayAvailableWafRuleSetsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists available Ssl options for configuring Ssl policy.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
-        /// Operation Id: ApplicationGateways_ListAvailableSslOptions
-        /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async static Task<Response<ApplicationGatewayAvailableSslOptions>> GetApplicationGatewayAvailableSslOptionsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
-        {
-            return await GetExtensionClient(subscription).GetApplicationGatewayAvailableSslOptionsAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Lists available Ssl options for configuring Ssl policy.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
-        /// Operation Id: ApplicationGateways_ListAvailableSslOptions
-        /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<ApplicationGatewayAvailableSslOptions> GetApplicationGatewayAvailableSslOptions(this Subscription subscription, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscription).GetApplicationGatewayAvailableSslOptions(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all SSL predefined policies for configuring Ssl policy.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies
-        /// Operation Id: ApplicationGateways_ListAvailableSslPredefinedPolicies
-        /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationGatewaySslPredefinedPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscription).GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all SSL predefined policies for configuring Ssl policy.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies
-        /// Operation Id: ApplicationGateways_ListAvailableSslPredefinedPolicies
-        /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationGatewaySslPredefinedPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPolicies(this Subscription subscription, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscription).GetApplicationGatewayAvailableSslPredefinedPolicies(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets Ssl predefined policy with the specified policy name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
-        /// Operation Id: ApplicationGateways_GetSslPredefinedPolicy
-        /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
-        public async static Task<Response<ApplicationGatewaySslPredefinedPolicy>> GetApplicationGatewaySslPredefinedPolicyAsync(this Subscription subscription, string predefinedPolicyName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(predefinedPolicyName, nameof(predefinedPolicyName));
-
-            return await GetExtensionClient(subscription).GetApplicationGatewaySslPredefinedPolicyAsync(predefinedPolicyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets Ssl predefined policy with the specified policy name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
-        /// Operation Id: ApplicationGateways_GetSslPredefinedPolicy
-        /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
-        public static Response<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewaySslPredefinedPolicy(this Subscription subscription, string predefinedPolicyName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(predefinedPolicyName, nameof(predefinedPolicyName));
-
-            return GetExtensionClient(subscription).GetApplicationGatewaySslPredefinedPolicy(predefinedPolicyName, cancellationToken);
         }
 
         /// <summary>

@@ -7,24 +7,25 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network.Models;
 
-namespace Azure.ResourceManager.Network.Models
+namespace Azure.ResourceManager.Network
 {
-    /// <summary> An Ssl predefined policy. </summary>
-    public partial class ApplicationGatewaySslPredefinedPolicy : SubResource
+    /// <summary> A class representing the ApplicationGatewaySslPredefinedPolicy data model. </summary>
+    public partial class ApplicationGatewaySslPredefinedPolicyData : SubResource
     {
-        /// <summary> Initializes a new instance of ApplicationGatewaySslPredefinedPolicy. </summary>
-        public ApplicationGatewaySslPredefinedPolicy()
+        /// <summary> Initializes a new instance of ApplicationGatewaySslPredefinedPolicyData. </summary>
+        public ApplicationGatewaySslPredefinedPolicyData()
         {
             CipherSuites = new ChangeTrackingList<ApplicationGatewaySslCipherSuite>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewaySslPredefinedPolicy. </summary>
+        /// <summary> Initializes a new instance of ApplicationGatewaySslPredefinedPolicyData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the Ssl predefined policy. </param>
         /// <param name="cipherSuites"> Ssl cipher suites to be enabled in the specified order for application gateway. </param>
         /// <param name="minProtocolVersion"> Minimum version of Ssl protocol to be supported on application gateway. </param>
-        internal ApplicationGatewaySslPredefinedPolicy(string id, string name, IList<ApplicationGatewaySslCipherSuite> cipherSuites, ApplicationGatewaySslProtocol? minProtocolVersion) : base(id)
+        internal ApplicationGatewaySslPredefinedPolicyData(string id, string name, IList<ApplicationGatewaySslCipherSuite> cipherSuites, ApplicationGatewaySslProtocol? minProtocolVersion) : base(id)
         {
             Name = name;
             CipherSuites = cipherSuites;
