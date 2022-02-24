@@ -38,7 +38,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void EmptyStringIsReturnedForExceptionWithoutStack()
+        public void ParsedStackIsEmptyForExceptionWithoutStack()
         {
             var exception = new ArgumentNullException();
 
