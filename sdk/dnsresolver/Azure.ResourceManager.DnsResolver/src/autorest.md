@@ -20,5 +20,27 @@ output-folder: Generated/
 mgmt-debug:
     show-request-path: true
  
-
+directive:
+  - from: swagger-document
+    where: $.definitions.InboundEndpointProperties.properties.ipConfigurations
+    transform: $['x-ms-client-name'] = 'iPConfigurations'
+  - from: swagger-document
+    where: $.definitions.IpConfiguration
+    transform: $['x-ms-client-name'] = 'IPConfiguration'
+  - from: swagger-document
+    where: $.definitions.IpConfiguration.properties.privateIpAddress
+    transform: $['x-ms-client-name'] = 'privateIPAddress'
+  - from: swagger-document
+    where: $.definitions.IpConfiguration.properties.privateIpAllocationMethod
+    transform: $['x-ms-client-name'] = 'privateIPAllocationMethod'
+  - from: swagger-document
+    where: $.definitions.IpConfiguration.properties.privateIpAllocationMethod
+    transform: >
+      $['x-ms-enum'] = {
+          "name": "IPAllocationMethod",
+          "modelAsString": true
+      }
+  - from: swagger-document
+    where: $.definitions.TargetDnsServer.properties.ipAddress
+    transform: $['x-ms-client-name'] = 'iPAddress'
 ```
