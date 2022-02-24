@@ -53,7 +53,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The nat gateway SKU. </summary>
-        public NatGatewaySku Sku { get; set; }
+        internal NatGatewaySku Sku { get; set; }
+        /// <summary> Name of Nat Gateway SKU. </summary>
+        public NatGatewaySkuName? SkuName
+        {
+            get => Sku is null ? default : Sku.Name;
+            set
+            {
+                if (Sku is null)
+                    Sku = new NatGatewaySku();
+                Sku.Name = value;
+            }
+        }
+
         /// <summary> A list of availability zones denoting the zone in which Nat Gateway should be deployed. </summary>
         public IList<string> Zones { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>

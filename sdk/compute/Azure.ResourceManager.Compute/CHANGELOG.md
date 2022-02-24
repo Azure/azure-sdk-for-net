@@ -229,7 +229,6 @@ AvailabilitySet availabilitySet = asetOperation.Value;
 var vnetData = new VirtualNetworkData()
 {
     Location = location,
-    AddressSpace = new AddressSpace() { AddressPrefixes = { "10.0.0.0/16" } },
     Subnets =
     {
         new SubnetData()
@@ -239,6 +238,7 @@ var vnetData = new VirtualNetworkData()
         }
     },
 };
+vnetData.AddressPrefixes.Add("10.0.0.0/16");
 ArmOperation<VirtualNetwork> vnetOperation = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, "myVirtualNetwork", vnetData);
 VirtualNetwork vnet = vnetOperation.Value;
 

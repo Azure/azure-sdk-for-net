@@ -73,9 +73,31 @@ namespace Azure.ResourceManager.Network
         /// <summary> An array of list about connections to the private endpoint. </summary>
         public IReadOnlyList<PrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> The visibility list of the private link service. </summary>
-        public PrivateLinkServicePropertiesVisibility Visibility { get; set; }
+        internal PrivateLinkServicePropertiesVisibility Visibility { get; set; }
+        /// <summary> The list of subscriptions. </summary>
+        public IList<string> VisibilitySubscriptions
+        {
+            get
+            {
+                if (Visibility is null)
+                    Visibility = new PrivateLinkServicePropertiesVisibility();
+                return Visibility.Subscriptions;
+            }
+        }
+
         /// <summary> The auto-approval list of the private link service. </summary>
-        public PrivateLinkServicePropertiesAutoApproval AutoApproval { get; set; }
+        internal PrivateLinkServicePropertiesAutoApproval AutoApproval { get; set; }
+        /// <summary> The list of subscriptions. </summary>
+        public IList<string> AutoApprovalSubscriptions
+        {
+            get
+            {
+                if (AutoApproval is null)
+                    AutoApproval = new PrivateLinkServicePropertiesAutoApproval();
+                return AutoApproval.Subscriptions;
+            }
+        }
+
         /// <summary> The list of Fqdn. </summary>
         public IList<string> Fqdns { get; }
         /// <summary> The alias of the private link service. </summary>

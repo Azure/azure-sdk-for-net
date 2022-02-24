@@ -52,7 +52,19 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Resource reference to the Azure origin resource. </summary>
-        public WritableSubResource AzureOrigin { get; set; }
+        internal WritableSubResource AzureOrigin { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier AzureOriginId
+        {
+            get => AzureOrigin is null ? default : AzureOrigin.Id;
+            set
+            {
+                if (AzureOrigin is null)
+                    AzureOrigin = new WritableSubResource();
+                AzureOrigin.Id = value;
+            }
+        }
+
         /// <summary> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </summary>
         public string HostName { get; set; }
         /// <summary> The value of the HTTP port. Must be between 1 and 65535. </summary>

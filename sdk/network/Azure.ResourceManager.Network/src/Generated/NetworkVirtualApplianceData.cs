@@ -73,7 +73,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> BootStrapConfigurationBlobs storage URLs. </summary>
         public IList<string> BootStrapConfigurationBlobs { get; }
         /// <summary> The Virtual Hub where Network Virtual Appliance is being deployed. </summary>
-        public WritableSubResource VirtualHub { get; set; }
+        internal WritableSubResource VirtualHub { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VirtualHubId
+        {
+            get => VirtualHub is null ? default : VirtualHub.Id;
+            set
+            {
+                if (VirtualHub is null)
+                    VirtualHub = new WritableSubResource();
+                VirtualHub.Id = value;
+            }
+        }
+
         /// <summary> CloudInitConfigurationBlob storage URLs. </summary>
         public IList<string> CloudInitConfigurationBlobs { get; }
         /// <summary> CloudInitConfiguration string in plain text. </summary>

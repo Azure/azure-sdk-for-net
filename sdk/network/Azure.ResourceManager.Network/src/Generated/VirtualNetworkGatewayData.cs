@@ -93,7 +93,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> ActiveActive flag. </summary>
         public bool? Active { get; set; }
         /// <summary> The reference to the LocalNetworkGateway resource which represents local network site having default routes. Assign Null value in case of removing existing default site setting. </summary>
-        public WritableSubResource GatewayDefaultSite { get; set; }
+        internal WritableSubResource GatewayDefaultSite { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier GatewayDefaultSiteId
+        {
+            get => GatewayDefaultSite is null ? default : GatewayDefaultSite.Id;
+            set
+            {
+                if (GatewayDefaultSite is null)
+                    GatewayDefaultSite = new WritableSubResource();
+                GatewayDefaultSite.Id = value;
+            }
+        }
+
         /// <summary> The reference to the VirtualNetworkGatewaySku resource which represents the SKU selected for Virtual network gateway. </summary>
         public VirtualNetworkGatewaySku Sku { get; set; }
         /// <summary> The reference to the VpnClientConfiguration resource which represents the P2S VpnClient configurations. </summary>
@@ -101,7 +113,18 @@ namespace Azure.ResourceManager.Network
         /// <summary> Virtual network gateway&apos;s BGP speaker settings. </summary>
         public BgpSettings BgpSettings { get; set; }
         /// <summary> The reference to the address space resource which represents the custom routes address space specified by the customer for virtual network gateway and VpnClient. </summary>
-        public AddressSpace CustomRoutes { get; set; }
+        internal AddressSpace CustomRoutes { get; set; }
+        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
+        public IList<string> CustomRoutesAddressPrefixes
+        {
+            get
+            {
+                if (CustomRoutes is null)
+                    CustomRoutes = new AddressSpace();
+                return CustomRoutes.AddressPrefixes;
+            }
+        }
+
         /// <summary> The resource GUID property of the virtual network gateway resource. </summary>
         public string ResourceGuid { get; }
         /// <summary> The provisioning state of the virtual network gateway resource. </summary>

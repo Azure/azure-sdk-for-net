@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -52,11 +53,47 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The private IP address allocation method. </summary>
         public IPAllocationMethod? PrivateIPAllocationMethod { get; set; }
         /// <summary> Reference to the subnet resource. </summary>
-        public WritableSubResource Subnet { get; set; }
+        internal WritableSubResource Subnet { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get => Subnet is null ? default : Subnet.Id;
+            set
+            {
+                if (Subnet is null)
+                    Subnet = new WritableSubResource();
+                Subnet.Id = value;
+            }
+        }
+
         /// <summary> Reference to the PublicIP resource. </summary>
-        public WritableSubResource PublicIPAddress { get; set; }
+        internal WritableSubResource PublicIPAddress { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier PublicIPAddressId
+        {
+            get => PublicIPAddress is null ? default : PublicIPAddress.Id;
+            set
+            {
+                if (PublicIPAddress is null)
+                    PublicIPAddress = new WritableSubResource();
+                PublicIPAddress.Id = value;
+            }
+        }
+
         /// <summary> Reference to the application gateway private link configuration. </summary>
-        public WritableSubResource PrivateLinkConfiguration { get; set; }
+        internal WritableSubResource PrivateLinkConfiguration { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier PrivateLinkConfigurationId
+        {
+            get => PrivateLinkConfiguration is null ? default : PrivateLinkConfiguration.Id;
+            set
+            {
+                if (PrivateLinkConfiguration is null)
+                    PrivateLinkConfiguration = new WritableSubResource();
+                PrivateLinkConfiguration.Id = value;
+            }
+        }
+
         /// <summary> The provisioning state of the frontend IP configuration resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

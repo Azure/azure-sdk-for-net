@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> AddressSpace contains an array of IP address ranges that can be used by subnets of the virtual network. </summary>
-    public partial class AddressSpace
+    internal partial class AddressSpace
     {
         /// <summary> Initializes a new instance of AddressSpace. </summary>
         public AddressSpace()

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public GuestAgentData() { }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.GuestCredential Credentials { get { throw null; } set { } }
         public string CustomResourceName { get { throw null; } }
-        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.HttpProxyConfiguration HttpProxyConfig { get { throw null; } set { } }
+        public string HttpsProxy { get { throw null; } set { } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.ProvisioningAction? ProvisioningAction { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string Status { get { throw null; } }
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public string Kind { get { throw null; } set { } }
         public string MoName { get { throw null; } }
         public string MoRefId { get { throw null; } set { } }
-        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.NetworkProfile NetworkProfile { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NetworkInterface> NetworkInterfaces { get { throw null; } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSProfile OSProfile { get { throw null; } set { } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.PlacementProfile PlacementProfile { get { throw null; } set { } }
         public string PowerState { get { throw null; } }
@@ -773,11 +773,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public int? NumCoresPerSocket { get { throw null; } set { } }
         public int? NumCpus { get { throw null; } set { } }
     }
-    public partial class HttpProxyConfiguration
-    {
-        public HttpProxyConfiguration() { }
-        public string HttpsProxy { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IdentityType : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.IdentityType>
     {
@@ -896,16 +891,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public string NetworkId { get { throw null; } set { } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.NICType? NicType { get { throw null; } set { } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.PowerOnBootOption? PowerOnBoot { get { throw null; } set { } }
-    }
-    public partial class NetworkProfile
-    {
-        public NetworkProfile() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NetworkInterface> NetworkInterfaces { get { throw null; } }
-    }
-    public partial class NetworkProfileUpdate
-    {
-        public NetworkProfileUpdate() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NetworkInterfaceUpdate> NetworkInterfaces { get { throw null; } }
     }
     public partial class NicIPAddressSettings
     {
@@ -1132,11 +1117,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualDisk> Disks { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualScsiController> ScsiControllers { get { throw null; } }
     }
-    public partial class StorageProfileUpdate
-    {
-        public StorageProfileUpdate() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualDiskUpdate> Disks { get { throw null; } }
-    }
     public partial class VICredential
     {
         public VICredential() { }
@@ -1174,8 +1154,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public VirtualMachineUpdateOptions() { }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.HardwareProfile HardwareProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.NetworkProfileUpdate NetworkProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.StorageProfileUpdate StorageProfile { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NetworkInterfaceUpdate> NetworkInterfaces { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualDiskUpdate> StorageDisks { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class VirtualScsiController
