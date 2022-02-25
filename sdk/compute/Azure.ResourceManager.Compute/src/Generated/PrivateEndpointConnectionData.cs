@@ -36,7 +36,13 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The resource of private end point. </summary>
-        public Resources.Models.SubResource PrivateEndpoint { get; }
+        internal Resources.Models.SubResource PrivateEndpoint { get; }
+        /// <summary> Gets Id. </summary>
+        public ResourceIdentifier PrivateEndpointId
+        {
+            get => PrivateEndpoint.Id;
+        }
+
         /// <summary> A collection of information about the state of the connection between DiskAccess and Virtual Network. </summary>
         public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>

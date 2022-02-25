@@ -73,7 +73,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> The provisioning state of the firewall policy resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The parent firewall policy from which rules are inherited. </summary>
-        public WritableSubResource BasePolicy { get; set; }
+        internal WritableSubResource BasePolicy { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier BasePolicyId
+        {
+            get => BasePolicy is null ? default : BasePolicy.Id;
+            set
+            {
+                if (BasePolicy is null)
+                    BasePolicy = new WritableSubResource();
+                BasePolicy.Id = value;
+            }
+        }
+
         /// <summary> List of references to Azure Firewalls that this Firewall Policy is associated with. </summary>
         public IReadOnlyList<WritableSubResource> Firewalls { get; }
         /// <summary> List of references to Child Firewall Policies. </summary>
@@ -85,14 +97,48 @@ namespace Azure.ResourceManager.Network
         /// <summary> Insights on Firewall Policy. </summary>
         public FirewallPolicyInsights Insights { get; set; }
         /// <summary> The private IP addresses/IP ranges to which traffic will not be SNAT. </summary>
-        public FirewallPolicySnat Snat { get; set; }
+        internal FirewallPolicySnat Snat { get; set; }
+        /// <summary> List of private IP addresses/IP address ranges to not be SNAT. </summary>
+        public IList<string> SnatPrivateRanges
+        {
+            get
+            {
+                if (Snat is null)
+                    Snat = new FirewallPolicySnat();
+                return Snat.PrivateRanges;
+            }
+        }
+
         /// <summary> DNS Proxy Settings definition. </summary>
         public DnsSettings DnsSettings { get; set; }
         /// <summary> The configuration for Intrusion detection. </summary>
         public FirewallPolicyIntrusionDetection IntrusionDetection { get; set; }
         /// <summary> TLS Configuration definition. </summary>
-        public FirewallPolicyTransportSecurity TransportSecurity { get; set; }
+        internal FirewallPolicyTransportSecurity TransportSecurity { get; set; }
+        /// <summary> The CA used for intermediate CA generation. </summary>
+        public FirewallPolicyCertificateAuthority TransportSecurityCertificateAuthority
+        {
+            get => TransportSecurity is null ? default : TransportSecurity.CertificateAuthority;
+            set
+            {
+                if (TransportSecurity is null)
+                    TransportSecurity = new FirewallPolicyTransportSecurity();
+                TransportSecurity.CertificateAuthority = value;
+            }
+        }
+
         /// <summary> The Firewall Policy SKU. </summary>
-        public FirewallPolicySku Sku { get; set; }
+        internal FirewallPolicySku Sku { get; set; }
+        /// <summary> Tier of Firewall Policy. </summary>
+        public FirewallPolicySkuTier? SkuTier
+        {
+            get => Sku is null ? default : Sku.Tier;
+            set
+            {
+                if (Sku is null)
+                    Sku = new FirewallPolicySku();
+                Sku.Tier = value;
+            }
+        }
     }
 }

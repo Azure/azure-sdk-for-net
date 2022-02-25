@@ -45,7 +45,18 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Local network site address space. </summary>
-        public AddressSpace LocalNetworkAddressSpace { get; set; }
+        internal AddressSpace LocalNetworkAddressSpace { get; set; }
+        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
+        public IList<string> LocalNetworkAddressPrefixes
+        {
+            get
+            {
+                if (LocalNetworkAddressSpace is null)
+                    LocalNetworkAddressSpace = new AddressSpace();
+                return LocalNetworkAddressSpace.AddressPrefixes;
+            }
+        }
+
         /// <summary> IP address of local network gateway. </summary>
         public string GatewayIpAddress { get; set; }
         /// <summary> FQDN of local network gateway. </summary>

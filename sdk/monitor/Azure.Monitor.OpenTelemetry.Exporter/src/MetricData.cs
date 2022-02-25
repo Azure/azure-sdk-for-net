@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using OpenTelemetry.Metrics;
@@ -11,6 +12,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     {
         public MetricsData(int version, Metric metric, ref MetricPoint metricPoint) : base(version)
         {
+            if (metric == null)
+            {
+                throw new ArgumentNullException(nameof(metric));
+            }
+
             IList<MetricDataPoint> metricDataPoints = new List<MetricDataPoint>();
             MetricDataPoint metricDataPoint = null;
             switch (metric.MetricType)

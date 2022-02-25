@@ -40,7 +40,19 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy. </summary>
-        public Sku Sku { get; set; }
+        internal Sku Sku { get; set; }
+        /// <summary> Name of the pricing tier. </summary>
+        public SkuName? SkuName
+        {
+            get => Sku is null ? default : Sku.Name;
+            set
+            {
+                if (Sku is null)
+                    Sku = new Sku();
+                Sku.Name = value;
+            }
+        }
+
         /// <summary> Provisioning state of the managed rule set. </summary>
         public string ProvisioningState { get; }
         /// <summary> Type of the managed rule set. </summary>
