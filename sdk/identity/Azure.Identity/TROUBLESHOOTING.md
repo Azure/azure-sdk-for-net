@@ -131,7 +131,7 @@ The `ManagedIdentityCredential` is designed to work on a variety of Azure hosts 
 |---|---|---|
 |Azure Virtual Machines and Scale Sets|[Configuration](https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/qs-configure-portal-windows-vm)|[Troubleshooting](#azure-virtual-machine-managed-identity)|
 |Azure App Service and Azure Functions|[Configuration](https://docs.microsoft.com/azure/app-service/overview-managed-identity)|[Troubleshooting](#azure-app-service-and-azure-functions-managed-identity)|
-|Azure Kubernetes Service|[Configuration]()|[Troubleshooting]()|
+|Azure Kubernetes Service|[Configuration](https://azure.github.io/aad-pod-identity/docs/)|[Troubleshooting](#azure-kubernetes-service-managed-identity)|
 |Azure Arc|[Configuration]()|[Troubleshooting]()|
 |Azure Service Fabric|[Configuration]()|[Troubleshooting]()|
 ### Azure Virtual Machine Managed Identity
@@ -167,12 +167,26 @@ curl 'http://169.254.169.254/metadata/identity/oauth2/token?resource=https://man
 ```
 > Note that the output of this command will contain a valid access token, and SHOULD NOT BE SHARED to avoid compromising account security.
 
+### Azure Kubernetes Service Managed Identity 
+#### Pod Identity For Kubernetes
+`CredentialUnavailableException`
+| Error Message |Description| Mitigation |
+|---|---|---|
+|No Managed Identity endpoint found|The application attempted to authenticate before an identity was assigned to its pod|Verify the pod is labeled correctly. This also occurs when a correctly labeled pod authenticates before the identity is ready. To prevent initialization races, configure NMI to set the Retry-After header in its responses (see [Pod Identity documentation](https://azure.github.io/aad-pod-identity/docs/configure/feature_flags/#set-retry-after-header-in-nmi-response)).
+
 ## Troubleshooting `VisualStudioCodeCredential` Authentication Issues
 `CredentialUnavailableException`
 | Error Message |Description| Mitigation |
 |---|---|---|
 |Failed To Read VS Code Credentials<p/><p/>OR<p/>Authenticate via Azure Tools plugin in VS Code.|No Azure account information was found in the VS Code configuration.|<ul><li>Ensure the [Azure Account plugin](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account) is properly installed</li><li>Use **View > Command Palette** to execute the **Azure: Sign In** command. This command opens a browser window and displays a page that allows you to sign in to Azure.</li><li>If you already had the Azure Account extension installed and had logged in to your account, try logging out and logging in again as that will repopulate the cache and potentially mitigate the error you're getting.</li></ul>|
 |MSAL Interaction Required Error|The `VisualStudioCodeCredential` was able to read the cached credentials from the cache but the cached token is likely expired.|Log into the Azure Account extension via **View > Command Palette** to execute the **Azure: Sign In** command in the VS Code IDE.|
+
+## Troubleshooting `VisualStudioCredential` Authentication Issues
+`CredentialUnavailableException`
+| Error Message |Description| Mitigation |
+|---|---|---|
+|Failed To Read Credentials<p/><p/>OR<p/>Authenticate via Azure Service Authentication.|The `VisualStudioCredential` failed retrieve a token from the Visual Studio authentication utility `Microsoft.Asal.TokenService.exe`.|<ul><li>In Visual Studio select the `Tools > Options` menu to launch the Options dialog.</li><li>Navigate to the `Azure Service Authentication` options to sign in with your Azure Active Directory account.</li><li>If you already had logged in to your account, try logging out and logging in again as that will repopulate the cache and potentially mitigate the error you're getting.</li></ul>|
+
 ## Troubleshooting `AzureCliCredential` Authentication Issues
 `CredentialUnavailableException`
 | Error Message |Description| Mitigation |
