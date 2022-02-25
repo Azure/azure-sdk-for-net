@@ -2,11 +2,11 @@ param (
     [Parameter(Mandatory = $true)]
     [string] $SourceBlobPath,
     [Parameter(Mandatory = $true)]
-    [string] $SASKey,
+    [string] $ApplicationId,
     [Parameter(Mandatory = $true)]
     [string] $DestinationDirectory
 )
 
+azcopy login --service-principal --application-id $ApplicationId
 Write-Host "Copying from $SourceBlobPath to $DestinationDirectory ..."
-$Source = $SourceBlobPath + $SASKey
-& azcopy cp $Source $DestinationDirectory --recursive
+azcopy cp "${SourceBlobPath}/*" $DestinationDirectory --recursive=true
