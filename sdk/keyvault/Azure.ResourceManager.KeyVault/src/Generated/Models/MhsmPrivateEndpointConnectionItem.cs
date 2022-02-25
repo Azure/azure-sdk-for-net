@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
@@ -29,7 +30,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Properties of the private endpoint object. </summary>
-        public SubResource PrivateEndpoint { get; }
+        internal SubResource PrivateEndpoint { get; }
+        /// <summary> Gets Id. </summary>
+        public ResourceIdentifier PrivateEndpointId
+        {
+            get => PrivateEndpoint.Id;
+        }
+
         /// <summary> Approval state of the private link connection. </summary>
         public MhsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
         /// <summary> Provisioning state of the private endpoint connection. </summary>

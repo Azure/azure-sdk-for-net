@@ -95,7 +95,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> The IP address associated with the public IP address resource. </summary>
         public string IpAddress { get; set; }
         /// <summary> The Public IP Prefix this Public IP Address should be allocated from. </summary>
-        public WritableSubResource PublicIPPrefix { get; set; }
+        internal WritableSubResource PublicIPPrefix { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier PublicIPPrefixId
+        {
+            get => PublicIPPrefix is null ? default : PublicIPPrefix.Id;
+            set
+            {
+                if (PublicIPPrefix is null)
+                    PublicIPPrefix = new WritableSubResource();
+                PublicIPPrefix.Id = value;
+            }
+        }
+
         /// <summary> The idle timeout of the public IP address. </summary>
         public int? IdleTimeoutInMinutes { get; set; }
         /// <summary> The resource GUID property of the public IP address resource. </summary>

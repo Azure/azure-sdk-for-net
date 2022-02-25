@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.Null(database);
         }
 
-        protected async Task<MongoDBDatabase> CreateMongoDBDatabase(AutoscaleSettings autoscale)
+        internal async Task<MongoDBDatabase> CreateMongoDBDatabase(AutoscaleSettings autoscale)
         {
             _databaseName = Recording.GenerateAssetName("mongodb-");
             return await CreateMongoDBDatabase(_databaseName, autoscale, _databaseAccount.GetMongoDBDatabases());

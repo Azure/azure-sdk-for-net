@@ -35,7 +35,14 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> SasPolicy assigned to the storage account. </summary>
         public SasPolicy SasPolicy { get; set; }
         /// <summary> KeyPolicy assigned to the storage account. </summary>
-        public KeyPolicy KeyPolicy { get; set; }
+        internal KeyPolicy KeyPolicy { get; set; }
+        /// <summary> The key expiration period in days. </summary>
+        public int KeyExpirationPeriodInDays
+        {
+            get => KeyPolicy is null ? default : KeyPolicy.KeyExpirationPeriodInDays;
+            set => KeyPolicy = new KeyPolicy(value);
+        }
+
         /// <summary> Required for storage accounts where kind = BlobStorage. The access tier used for billing. </summary>
         public AccessTier? AccessTier { get; set; }
         /// <summary> Provides the identity based authentication settings for Azure Files. </summary>

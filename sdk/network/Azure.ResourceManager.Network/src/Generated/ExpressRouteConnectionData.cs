@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -54,7 +55,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> The provisioning state of the express route connection resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The ExpressRoute circuit peering. </summary>
-        public WritableSubResource ExpressRouteCircuitPeering { get; set; }
+        internal WritableSubResource ExpressRouteCircuitPeering { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier ExpressRouteCircuitPeeringId
+        {
+            get => ExpressRouteCircuitPeering is null ? default : ExpressRouteCircuitPeering.Id;
+            set
+            {
+                if (ExpressRouteCircuitPeering is null)
+                    ExpressRouteCircuitPeering = new WritableSubResource();
+                ExpressRouteCircuitPeering.Id = value;
+            }
+        }
+
         /// <summary> Authorization key to establish the connection. </summary>
         public string AuthorizationKey { get; set; }
         /// <summary> The routing weight associated to the connection. </summary>

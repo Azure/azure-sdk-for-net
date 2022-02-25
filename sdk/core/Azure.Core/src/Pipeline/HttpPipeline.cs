@@ -30,13 +30,13 @@ namespace Azure.Core.Pipeline
 
         /// <summary>
         /// The pipeline index where <see cref="HttpPipelinePosition.PerCall"/> policies will be added,
-        /// if any are specified using <see cref="RequestContext.AddPolicy(HttpPipelinePolicy, HttpPipelinePosition)"/>.
+        /// if any are specified using <see cref="RequestOptions.AddPolicy(HttpPipelinePolicy, HttpPipelinePosition)"/>.
         /// </summary>
         private readonly int _perCallIndex;
 
         /// <summary>
         /// The pipeline index where <see cref="HttpPipelinePosition.PerRetry"/> policies will be added,
-        /// if any are specified using <see cref="RequestContext.AddPolicy(HttpPipelinePolicy, HttpPipelinePosition)"/>.
+        /// if any are specified using <see cref="RequestOptions.AddPolicy(HttpPipelinePolicy, HttpPipelinePosition)"/>.
         /// </summary>
         private readonly int _perRetryIndex;
 

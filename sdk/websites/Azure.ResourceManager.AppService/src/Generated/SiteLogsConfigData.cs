@@ -42,8 +42,31 @@ namespace Azure.ResourceManager.AppService
         /// <summary> HTTP logs configuration. </summary>
         public HttpLogsConfig HttpLogs { get; set; }
         /// <summary> Failed requests tracing configuration. </summary>
-        public EnabledConfig FailedRequestsTracing { get; set; }
+        internal EnabledConfig FailedRequestsTracing { get; set; }
+        /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
+        public bool? FailedRequestsTracingEnabled
+        {
+            get => FailedRequestsTracing is null ? default : FailedRequestsTracing.Enabled;
+            set
+            {
+                if (FailedRequestsTracing is null)
+                    FailedRequestsTracing = new EnabledConfig();
+                FailedRequestsTracing.Enabled = value;
+            }
+        }
+
         /// <summary> Detailed error messages configuration. </summary>
-        public EnabledConfig DetailedErrorMessages { get; set; }
+        internal EnabledConfig DetailedErrorMessages { get; set; }
+        /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
+        public bool? DetailedErrorMessagesEnabled
+        {
+            get => DetailedErrorMessages is null ? default : DetailedErrorMessages.Enabled;
+            set
+            {
+                if (DetailedErrorMessages is null)
+                    DetailedErrorMessages = new EnabledConfig();
+                DetailedErrorMessages.Enabled = value;
+            }
+        }
     }
 }

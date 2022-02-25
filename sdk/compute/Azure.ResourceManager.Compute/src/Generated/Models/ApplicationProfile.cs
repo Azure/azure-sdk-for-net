@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Contains the list of gallery applications that should be made available to the VM/VMSS. </summary>
-    public partial class ApplicationProfile
+    internal partial class ApplicationProfile
     {
         /// <summary> Initializes a new instance of ApplicationProfile. </summary>
         public ApplicationProfile()

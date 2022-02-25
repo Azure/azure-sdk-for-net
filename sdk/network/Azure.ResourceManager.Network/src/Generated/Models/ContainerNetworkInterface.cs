@@ -49,7 +49,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Container network interface configuration from which this container network interface is created. </summary>
         public ContainerNetworkInterfaceConfiguration ContainerNetworkInterfaceConfiguration { get; }
         /// <summary> Reference to the container to which this container network interface is attached. </summary>
-        public WritableSubResource Container { get; set; }
+        internal WritableSubResource Container { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier ContainerId
+        {
+            get => Container is null ? default : Container.Id;
+            set
+            {
+                if (Container is null)
+                    Container = new WritableSubResource();
+                Container.Id = value;
+            }
+        }
+
         /// <summary> Reference to the ip configuration on this container nic. </summary>
         public IReadOnlyList<ContainerNetworkInterfaceIpConfiguration> IpConfigurations { get; }
         /// <summary> The provisioning state of the container network interface resource. </summary>

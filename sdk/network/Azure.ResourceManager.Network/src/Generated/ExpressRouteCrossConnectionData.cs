@@ -66,7 +66,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> The circuit bandwidth In Mbps. </summary>
         public int? BandwidthInMbps { get; }
         /// <summary> The ExpressRouteCircuit. </summary>
-        public WritableSubResource ExpressRouteCircuit { get; set; }
+        internal WritableSubResource ExpressRouteCircuit { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier ExpressRouteCircuitId
+        {
+            get => ExpressRouteCircuit is null ? default : ExpressRouteCircuit.Id;
+            set
+            {
+                if (ExpressRouteCircuit is null)
+                    ExpressRouteCircuit = new WritableSubResource();
+                ExpressRouteCircuit.Id = value;
+            }
+        }
+
         /// <summary> The provisioning state of the circuit in the connectivity provider system. </summary>
         public ServiceProviderProvisioningState? ServiceProviderProvisioningState { get; set; }
         /// <summary> Additional read only notes set by the connectivity provider. </summary>

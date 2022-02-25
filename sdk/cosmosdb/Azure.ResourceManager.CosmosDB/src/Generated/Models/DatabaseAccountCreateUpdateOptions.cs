@@ -142,11 +142,35 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Flag to indicate whether Free Tier is enabled. </summary>
         public bool? EnableFreeTier { get; set; }
         /// <summary> API specific properties. Currently, supported only for MongoDB API. </summary>
-        public ApiProperties ApiProperties { get; set; }
+        internal ApiProperties ApiProperties { get; set; }
+        /// <summary> Describes the ServerVersion of an a MongoDB account. </summary>
+        public ServerVersion? ApiServerVersion
+        {
+            get => ApiProperties is null ? default : ApiProperties.ServerVersion;
+            set
+            {
+                if (ApiProperties is null)
+                    ApiProperties = new ApiProperties();
+                ApiProperties.ServerVersion = value;
+            }
+        }
+
         /// <summary> Flag to indicate whether to enable storage analytics. </summary>
         public bool? EnableAnalyticalStorage { get; set; }
         /// <summary> Analytical storage specific properties. </summary>
-        public AnalyticalStorageConfiguration AnalyticalStorageConfiguration { get; set; }
+        internal AnalyticalStorageConfiguration AnalyticalStorageConfiguration { get; set; }
+        /// <summary> Describes the types of schema for analytical storage. </summary>
+        public AnalyticalStorageSchemaType? AnalyticalStorageSchemaType
+        {
+            get => AnalyticalStorageConfiguration is null ? default : AnalyticalStorageConfiguration.SchemaType;
+            set
+            {
+                if (AnalyticalStorageConfiguration is null)
+                    AnalyticalStorageConfiguration = new AnalyticalStorageConfiguration();
+                AnalyticalStorageConfiguration.SchemaType = value;
+            }
+        }
+
         /// <summary> Enum to indicate the mode of account creation. </summary>
         public CreateMode? CreateMode { get; set; }
         /// <summary> The object representing the policy for taking backups on an account. </summary>
@@ -162,6 +186,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Parameters to indicate the information about the restore. </summary>
         public RestoreParameters RestoreParameters { get; set; }
         /// <summary> The object that represents all properties related to capacity enforcement on an account. </summary>
-        public Capacity Capacity { get; set; }
+        internal Capacity Capacity { get; set; }
+        /// <summary> The total throughput limit imposed on the account. A totalThroughputLimit of 2000 imposes a strict limit of max throughput that can be provisioned on that account to be 2000. A totalThroughputLimit of -1 indicates no limits on provisioning of throughput. </summary>
+        public int? CapacityTotalThroughputLimit
+        {
+            get => Capacity is null ? default : Capacity.TotalThroughputLimit;
+            set
+            {
+                if (Capacity is null)
+                    Capacity = new Capacity();
+                Capacity.TotalThroughputLimit = value;
+            }
+        }
     }
 }
