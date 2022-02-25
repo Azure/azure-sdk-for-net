@@ -207,7 +207,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             AggregateException aggregateException = new AggregateException("AggregateException", new[] { innerException1, innerException2 });
 
-            logger.LogWarning(aggregateException, aggregateException.Message);
+            logger.LogWarning(aggregateException, "AggregateException");
 
             var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
 
@@ -238,7 +238,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var exception = new Exception("Exception", innerexception2);
 
-            logger.LogWarning(exception, exception.Message);
+            logger.LogWarning(exception, "Exception");
 
             var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
 
@@ -273,7 +273,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             AggregateException rootLevelException = new AggregateException("0", innerExceptions);
 
-            logger.LogWarning(rootLevelException, rootLevelException.Message);
+            logger.LogWarning(rootLevelException, "0");
 
             var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
 
