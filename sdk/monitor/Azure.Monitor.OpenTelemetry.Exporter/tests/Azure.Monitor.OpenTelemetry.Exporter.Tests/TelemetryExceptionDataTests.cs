@@ -16,9 +16,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void ValidateProblemIdForExceptionWithoutStackTrace()
         {
-            var Id = LogsHelper.GetProblemId(new Exception("Test"));
+            var id = LogsHelper.GetProblemId(new Exception("Test"));
 
-            Assert.Equal(typeof(Exception).FullName + " at UnknownMethod", Id);
+            Assert.Equal(typeof(Exception).FullName + " at UnknownMethod", id);
         }
 
         [Fact]
@@ -26,9 +26,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             Exception ex = CreateException(1);
 
-            var Id = LogsHelper.GetProblemId(ex);
+            var id = LogsHelper.GetProblemId(ex);
 
-            Assert.StartsWith(typeof(AggregateException).FullName + " at " + typeof(TelemetryExceptionDataTests).FullName + "." + nameof(FunctionWithException), Id);
+            Assert.StartsWith(typeof(AggregateException).FullName + " at " + typeof(TelemetryExceptionDataTests).FullName + "." + nameof(FunctionWithException), id);
         }
 
         [Fact]
@@ -104,16 +104,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var exceptionDetails = new TelemetryExceptionDetails(exception, exception.Message, null);
             var stack = exceptionDetails.ParsedStack;
 
-            if (line != 0)
-            {
-                Assert.Equal(line, stack[0].Line);
-                Assert.Equal(fileName, stack[0].FileName);
-            }
-            else
-            {
-                Assert.Null(stack[0].Line);
-                Assert.Null(stack[0].FileName);
-            }
+            Assert.Equal(line, stack[0].Line);
+            Assert.Equal(fileName, stack[0].FileName);
         }
 
         [Fact]
