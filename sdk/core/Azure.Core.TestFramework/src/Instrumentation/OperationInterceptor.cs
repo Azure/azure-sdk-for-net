@@ -31,10 +31,7 @@ namespace Azure.Core.TestFramework
                 {
                     CheckArguments(invocation.Arguments);
                     Operation<object> operation = invocation.InvocationTarget as Operation<object>;
-                    OperationPoller poller = new OperationPoller();
-                    poller.GetType().GetField("_pollingStrategy", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(operation, new ZeroPollingStrategy());
-                    invocation.ReturnValue = poller.WaitForCompletionAsync(operation, null, default);
-                    //invocation.ReturnValue = InvokeWaitForCompletion(invocation.InvocationTarget, invocation.TargetType, invocation.Arguments.Last());
+                    invocation.ReturnValue = GetZeroPoller(operation).WaitForCompletionAsync(operation, null, default);
                     return;
                 }
 
@@ -42,9 +39,7 @@ namespace Azure.Core.TestFramework
                 {
                     CheckArguments(invocation.Arguments);
                     Operation operation = invocation.InvocationTarget as Operation;
-                    OperationPoller poller = new OperationPoller();
-                    poller.GetType().GetField("_pollingStrategy", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(operation, new ZeroPollingStrategy());
-                    invocation.ReturnValue = poller.WaitForCompletionResponseAsync(operation, null, default);
+                    invocation.ReturnValue = GetZeroPoller(operation).WaitForCompletionResponseAsync(operation, null, default);
                     return;
                 }
             }
@@ -52,31 +47,14 @@ namespace Azure.Core.TestFramework
             invocation.Proceed();
         }
 
-        internal static object InvokeWaitForCompletionResponse(object target, object cancellationToken)
+        internal static object InvokeWaitForCompletionResponse(Operation operation, CancellationToken cancellationToken)
         {
-            try
-            {
-                return WaitForCompletionResponseAsync.Invoke(target, new[] { NoWaitDelay, cancellationToken });
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-            }
-            return null;
+            return GetZeroPoller(operation).WaitForCompletionResponseAsync(operation, null, (CancellationToken)cancellationToken);
         }
 
-        internal static object InvokeWaitForCompletion(object target, Type targetType, object cancellationToken)
+        internal static object InvokeWaitForCompletion(Operation<object> operation, CancellationToken cancellationToken)
         {
-            var waitForCompletionMethod = targetType.GetMethod(WaitForCompletionMethodName, new[] { typeof(TimeSpan), typeof(CancellationToken) });
-            try
-            {
-                return waitForCompletionMethod.Invoke(target, new[] { NoWaitDelay, cancellationToken });
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-            }
-            return null;
+            return GetZeroPoller(operation).WaitForCompletionAsync(operation, null, (CancellationToken)cancellationToken);
         }
 
         private void CheckArguments(object[] invocationArguments)
@@ -91,6 +69,13 @@ namespace Azure.Core.TestFramework
                                                         $"The test framework would automatically reduce the interval in playback.");
                 }
             }
+        }
+
+        private static OperationPoller GetZeroPoller(object operation)
+        {
+            OperationPoller poller = new OperationPoller();
+            poller.GetType().GetField("_delayStrategy", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(poller, new ZeroPollingStrategy());
+            return poller;
         }
     }
 }
