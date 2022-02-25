@@ -18,6 +18,21 @@ request-path-to-resource-name:
 override-operation-name:
     Namespaces_CheckNameAvailability: CheckEventHubNameAvailability
     DisasterRecoveryConfigs_CheckNameAvailability: CheckDisasterRecoveryNameAvailability
+rename-rules:
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+
 directive:
     - rename-model:
         from: ArmDisasterRecovery
@@ -83,12 +98,6 @@ directive:
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}'].delete.operationId
       transform: return "EventHubNamespaces_Delete"
-    - from: swagger-document
-      where: $.definitions.NetworkRuleSet.properties.properties.properties.ipRules
-      transform: $['x-ms-client-name'] = 'iPRules'
-    - from: swagger-document
-      where: $.definitions.NetworkRuleSetIPRules.properties.ipMask
-      transform: $['x-ms-client-name'] = 'iPMask'
     - from: swagger-document
       where: $.definitions.DisasterRecovery.properties.properties.properties.provisioningState
       transform: >
