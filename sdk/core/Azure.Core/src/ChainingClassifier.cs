@@ -8,11 +8,10 @@ namespace Azure.Core
     internal class ChainingClassifier : ResponseClassifier
     {
         private ResponseClassificationHandler[]? _handlers;
-
         private ResponseClassifier _endOfChain;
 
-        public ChainingClassifier(ResponseClassificationHandler[]? handlers,
-            (int Status, bool IsError)[]? statusCodes,
+        public ChainingClassifier((int Status, bool IsError)[]? statusCodes,
+            ResponseClassificationHandler[]? handlers,
             ResponseClassifier endOfChain)
         {
             if (handlers != null)

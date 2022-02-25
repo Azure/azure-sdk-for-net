@@ -148,8 +148,7 @@ namespace Azure
                 return clone;
             }
 
-            // Chain classifiers instead
-            return new ChainingClassifier(_handlers, _statusCodes, classifier);
+            return new ChainingClassifier(_statusCodes, _handlers, classifier);
         }
     }
 }
