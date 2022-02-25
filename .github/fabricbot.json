@@ -4033,5 +4033,209 @@
         }
       ]
     }
+  },
+  {
+    "taskType": "scheduledAndTrigger",
+    "capabilityId": "IssueRouting",
+    "subCapability": "@Mention",
+    "version": "1.0",
+    "config": {
+      "taskName": "[SQUIRE TEST] Team Assignment",
+      "labelsAndMentions": [
+        {
+          "labels": [
+            "Event Hubs",
+            "Client",
+            "needs-team-triage"
+          ],
+          "mentionees": [
+            "jsquire"
+          ],
+          "assignToMentionees": true
+        },
+        {
+          "labels": [
+            "Service Bus",
+            "Client",
+            "needs-team-triage"
+          ],
+          "mentionees": [
+            "JoshLove-msft",
+            "jsquire"
+          ],
+          "assignToMentionees": true
+        }
+      ],
+      "requireBotAssign": false
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssuesOnlyResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "isOpen",
+            "parameters": {}
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "needs-team-triage"
+            }
+          },
+          {
+            "name": "isAction",
+            "parameters": {
+              "action": "assigned"
+            }
+          },
+          {
+            "name": "isAssignedToSomeone",
+            "parameters": {}
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "hasLabel",
+                "parameters": {
+                  "label": "needs-triage"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "eventType": "issue",
+      "eventNames": [
+        "issues",
+        "project_card"
+      ],
+      "taskName": "[SQUIRE TEST] Adjust Labels onTeam Assignment",
+      "actions": [
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "needs-team-triage"
+          }
+        }
+      ],
+      "dangerZone": {
+        "respondToBotActions": true,
+        "acceptRespondToBotActions": true
+      }
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssuesOnlyResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "isOpen",
+            "parameters": {}
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "needs-team-triage"
+            }
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isAssignedToSomeone",
+                "parameters": {}
+              }
+            ]
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "hasLabel",
+                "parameters": {
+                  "label": "needs-triage"
+                }
+              }
+            ]
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isAction",
+                "parameters": {
+                  "titlePattern": "[SQUIRE TEST]",
+                  "action": "opened"
+                }
+              }
+            ]
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isAction",
+                "parameters": {
+                  "action": "closed"
+                }
+              }
+            ]
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isAction",
+                "parameters": {
+                  "action": "reopened"
+                }
+              }
+            ]
+          },
+          {
+            "name": "titleContains",
+            "parameters": {
+              "titlePattern": "[SQUIRE TEST]"
+            }
+          }
+        ]
+      },
+      "eventType": "issue",
+      "eventNames": [
+        "issues",
+        "project_card"
+      ],
+      "taskName": "[SQUIRE TEST] Route to CXP if no Team Assignment",
+      "actions": [
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "needs-team-triage"
+          }
+        },
+        {
+          "name": "addLabel",
+          "parameters": {
+            "label": "CXP Attention"
+          }
+        }
+      ],
+      "dangerZone": {
+        "respondToBotActions": true,
+        "acceptRespondToBotActions": true
+      }
+    }
   }
 ]
