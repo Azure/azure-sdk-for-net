@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         {
             Default,
 
-            Ipv6,
+            IPv6,
 
             MultiCA,
 
