@@ -23,9 +23,22 @@ namespace Azure.Security.KeyVault.Keys
         private static readonly JsonEncodedText s_timeBeforeExpiryPropertyNameBytes = JsonEncodedText.Encode(TimeBeforeExpiryPropertyName);
 
         /// <summary>
-        /// Gets or sets he <see cref="KeyRotationPolicyAction"/> that will be executed.
+        /// Initializes a new instance of the <see cref="KeyRotationLifetimeAction"/> structure.
         /// </summary>
-        public KeyRotationPolicyAction Action { get; set; }
+        /// <param name="action">The <see cref="KeyRotationPolicyAction"/> that will be executed.</param>
+        public KeyRotationLifetimeAction(KeyRotationPolicyAction action)
+        {
+            Action = action;
+        }
+
+        internal KeyRotationLifetimeAction()
+        {
+        }
+
+        /// <summary>
+        /// Gets the <see cref="KeyRotationPolicyAction"/> that will be executed.
+        /// </summary>
+        public KeyRotationPolicyAction Action { get; private set; }
 
         /// <summary>
         /// Gets or sets the ISO 8601 duration after creation to attempt to rotate. It only applies to <see cref="KeyRotationPolicyAction.Rotate"/>.

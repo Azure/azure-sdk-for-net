@@ -83,9 +83,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 ExpiresIn = "P45D",
                 LifetimeActions =
                 {
-                    new KeyRotationLifetimeAction
+                    new KeyRotationLifetimeAction(KeyRotationPolicyAction.Rotate)
                     {
-                        Action = KeyRotationPolicyAction.Rotate,
                         TimeBeforeExpiry= "P30D",
                     }
                 },
