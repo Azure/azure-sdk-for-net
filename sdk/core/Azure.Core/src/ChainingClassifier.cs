@@ -2,29 +2,31 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Azure.Core
 {
     internal class ChainingClassifier : ResponseClassifier
     {
         private ResponseClassificationHandler[]? _handlers;
-        internal ResponseClassificationHandler[]? Handlers => _handlers;
 
         private ResponseClassifier _endOfChain;
 
-        public ChainingClassifier(ResponseClassifier endOfChain)
+        public ChainingClassifier(ResponseClassificationHandler[]? handlers,
+            (int Status, bool IsError)[]? statusCodes,
+            ResponseClassifier endOfChain)
         {
-            _endOfChain = endOfChain;
-        }
+            if (handlers != null)
+            {
+                AddClassifiers(handlers);
+            }
 
-        internal void AddHandler(ResponseClassificationHandler handler)
-        {
-            int length = _handlers == null ? 0 : _handlers.Length;
-            Array.Resize(ref _handlers, length + 1);
-            Array.Copy(_handlers, 0, _handlers, 1, length);
-            _handlers[0] = handler;
+            if (statusCodes != null)
+            {
+                StatusCodeHandler handler = new StatusCodeHandler(statusCodes);
+                AddClassifiers(new StatusCodeHandler[] { handler });
+            }
+
+            _endOfChain = endOfChain;
         }
 
         public override bool IsErrorResponse(HttpMessage message)
@@ -43,9 +45,42 @@ namespace Azure.Core
             return _endOfChain.IsErrorResponse(message);
         }
 
+        private void AddClassifiers(ResponseClassificationHandler[] handlers)
+        {
+            int length = _handlers == null ? 0 : _handlers.Length;
+            Array.Resize(ref _handlers, length + handlers.Length);
+            Array.Copy(handlers, 0, _handlers, length, handlers.Length);
+        }
+
         private class StatusCodeHandler : ResponseClassificationHandler
         {
+            private int[] _statusCodes;
+            private bool[] _isErrorValues;
 
+            public StatusCodeHandler((int Status, bool IsError)[] statusCodes)
+            {
+                _statusCodes = new int[statusCodes.Length];
+                _isErrorValues = new bool[statusCodes.Length];
+
+                for (int i = 0; i < statusCodes.Length; i++)
+                {
+                    _statusCodes[i] = statusCodes[i].Status;
+                    _isErrorValues[i] = statusCodes[i].IsError;
+                }
+            }
+
+            public override bool TryClassify(HttpMessage message, out bool isError)
+            {
+                int index = _statusCodes.AsSpan().IndexOf(message.Response.Status);
+                if (index >= 0)
+                {
+                    isError = _isErrorValues[index];
+                    return true;
+                }
+
+                isError = false;
+                return false;
+            }
         }
     }
 }

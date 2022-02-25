@@ -97,15 +97,7 @@ namespace Azure.Core
 
             if (classifier != null)
             {
-                var coreClassifier = classifier as CoreResponseClassifier;
-                if (coreClassifier != null)
-                {
-                    ResponseClassifier = context.Apply(coreClassifier);
-                }
-                else
-                {
-
-                }
+                ResponseClassifier = context.Apply(classifier);
             }
         }
 

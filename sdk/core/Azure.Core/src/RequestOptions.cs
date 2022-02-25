@@ -89,7 +89,8 @@ namespace Azure
 
             int length = _statusCodes == null ? 0 : _statusCodes.Length;
             Array.Resize(ref _statusCodes, length + 1);
-            _statusCodes[length] = (statusCode, isError);
+            Array.Copy(_statusCodes, 0, _statusCodes, 1, length);
+            _statusCodes[0] = (statusCode, isError);
         }
 
         /// <summary>
@@ -123,26 +124,32 @@ namespace Azure
             _frozen = true;
         }
 
-        internal CoreResponseClassifier Apply(CoreResponseClassifier classifier)
+        internal ResponseClassifier Apply(ResponseClassifier classifier)
         {
             if (_statusCodes == null && _handlers == null)
             {
                 return classifier;
             }
 
-            CoreResponseClassifier clone = classifier.Clone();
-
-            clone.Handlers = _handlers;
-
-            if (_statusCodes != null)
+            CoreResponseClassifier? coreClassifier = classifier as CoreResponseClassifier;
+            if (coreClassifier != null)
             {
-                foreach (var classification in _statusCodes)
+                CoreResponseClassifier clone = coreClassifier.Clone();
+                clone.Handlers = _handlers;
+
+                if (_statusCodes != null)
                 {
-                    clone.AddClassifier(classification.Status, classification.IsError);
+                    foreach (var classification in _statusCodes)
+                    {
+                        clone.AddClassifier(classification.Status, classification.IsError);
+                    }
                 }
+
+                return clone;
             }
 
-            return clone;
+            // Chain classifiers instead
+            return new ChainingClassifier(_handlers, _statusCodes, classifier);
         }
     }
 }
