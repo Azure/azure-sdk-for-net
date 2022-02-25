@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -41,6 +42,17 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the policies applied when scaling in Virtual Machines in the Virtual Machine Scale Set. </summary>
         public ScaleInPolicy ScaleInPolicy { get; set; }
         /// <summary> Specifies information about the proximity placement group that the virtual machine scale set should be assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version: 2018-04-01. </summary>
-        public WritableSubResource ProximityPlacementGroup { get; set; }
+        internal WritableSubResource ProximityPlacementGroup { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier ProximityPlacementGroupId
+        {
+            get => ProximityPlacementGroup is null ? default : ProximityPlacementGroup.Id;
+            set
+            {
+                if (ProximityPlacementGroup is null)
+                    ProximityPlacementGroup = new WritableSubResource();
+                ProximityPlacementGroup.Id = value;
+            }
+        }
     }
 }

@@ -44,14 +44,14 @@ namespace Microsoft.Azure.Management.CosmosDB
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// The ID of the target subscription.
-        /// </summary>
-        public string SubscriptionId { get; set; }
-
-        /// <summary>
         /// The API version to use for this operation.
         /// </summary>
         public string ApiVersion { get; private set; }
+
+        /// <summary>
+        /// The ID of the target subscription.
+        /// </summary>
+        public string SubscriptionId { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -137,6 +137,11 @@ namespace Microsoft.Azure.Management.CosmosDB
         public virtual IPartitionKeyRangeIdRegionOperations PartitionKeyRangeIdRegion { get; private set; }
 
         /// <summary>
+        /// Gets the IGraphResourcesOperations.
+        /// </summary>
+        public virtual IGraphResourcesOperations GraphResources { get; private set; }
+
+        /// <summary>
         /// Gets the ISqlResourcesOperations.
         /// </summary>
         public virtual ISqlResourcesOperations SqlResources { get; private set; }
@@ -165,6 +170,21 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Gets the ILocationsOperations.
         /// </summary>
         public virtual ILocationsOperations Locations { get; private set; }
+
+        /// <summary>
+        /// Gets the IDataTransferJobsOperations.
+        /// </summary>
+        public virtual IDataTransferJobsOperations DataTransferJobs { get; private set; }
+
+        /// <summary>
+        /// Gets the ICassandraClustersOperations.
+        /// </summary>
+        public virtual ICassandraClustersOperations CassandraClusters { get; private set; }
+
+        /// <summary>
+        /// Gets the ICassandraDataCentersOperations.
+        /// </summary>
+        public virtual ICassandraDataCentersOperations CassandraDataCenters { get; private set; }
 
         /// <summary>
         /// Gets the INotebookWorkspacesOperations.
@@ -217,14 +237,34 @@ namespace Microsoft.Azure.Management.CosmosDB
         public virtual IRestorableMongodbResourcesOperations RestorableMongodbResources { get; private set; }
 
         /// <summary>
-        /// Gets the ICassandraClustersOperations.
+        /// Gets the IRestorableGremlinDatabasesOperations.
         /// </summary>
-        public virtual ICassandraClustersOperations CassandraClusters { get; private set; }
+        public virtual IRestorableGremlinDatabasesOperations RestorableGremlinDatabases { get; private set; }
 
         /// <summary>
-        /// Gets the ICassandraDataCentersOperations.
+        /// Gets the IRestorableGremlinGraphsOperations.
         /// </summary>
-        public virtual ICassandraDataCentersOperations CassandraDataCenters { get; private set; }
+        public virtual IRestorableGremlinGraphsOperations RestorableGremlinGraphs { get; private set; }
+
+        /// <summary>
+        /// Gets the IRestorableGremlinResourcesOperations.
+        /// </summary>
+        public virtual IRestorableGremlinResourcesOperations RestorableGremlinResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IRestorableTablesOperations.
+        /// </summary>
+        public virtual IRestorableTablesOperations RestorableTables { get; private set; }
+
+        /// <summary>
+        /// Gets the IRestorableTableResourcesOperations.
+        /// </summary>
+        public virtual IRestorableTableResourcesOperations RestorableTableResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IServiceOperations.
+        /// </summary>
+        public virtual IServiceOperations Service { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the CosmosDBManagementClient class.
@@ -480,12 +520,16 @@ namespace Microsoft.Azure.Management.CosmosDB
             CollectionPartition = new CollectionPartitionOperations(this);
             PartitionKeyRangeId = new PartitionKeyRangeIdOperations(this);
             PartitionKeyRangeIdRegion = new PartitionKeyRangeIdRegionOperations(this);
+            GraphResources = new GraphResourcesOperations(this);
             SqlResources = new SqlResourcesOperations(this);
             MongoDBResources = new MongoDBResourcesOperations(this);
             TableResources = new TableResourcesOperations(this);
             CassandraResources = new CassandraResourcesOperations(this);
             GremlinResources = new GremlinResourcesOperations(this);
             Locations = new LocationsOperations(this);
+            DataTransferJobs = new DataTransferJobsOperations(this);
+            CassandraClusters = new CassandraClustersOperations(this);
+            CassandraDataCenters = new CassandraDataCentersOperations(this);
             NotebookWorkspaces = new NotebookWorkspacesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
@@ -496,10 +540,14 @@ namespace Microsoft.Azure.Management.CosmosDB
             RestorableMongodbDatabases = new RestorableMongodbDatabasesOperations(this);
             RestorableMongodbCollections = new RestorableMongodbCollectionsOperations(this);
             RestorableMongodbResources = new RestorableMongodbResourcesOperations(this);
-            CassandraClusters = new CassandraClustersOperations(this);
-            CassandraDataCenters = new CassandraDataCentersOperations(this);
+            RestorableGremlinDatabases = new RestorableGremlinDatabasesOperations(this);
+            RestorableGremlinGraphs = new RestorableGremlinGraphsOperations(this);
+            RestorableGremlinResources = new RestorableGremlinResourcesOperations(this);
+            RestorableTables = new RestorableTablesOperations(this);
+            RestorableTableResources = new RestorableTableResourcesOperations(this);
+            Service = new ServiceOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-10-15";
+            ApiVersion = "2021-11-15-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -531,6 +579,10 @@ namespace Microsoft.Azure.Management.CosmosDB
             };
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<BackupPolicy>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<BackupPolicy>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DataTransferDataSourceSink>("component"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DataTransferDataSourceSink>("component"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ServiceResourceProperties>("serviceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ServiceResourceProperties>("serviceType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

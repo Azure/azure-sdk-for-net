@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.Null(database);
         }
 
-        protected async Task<SqlDatabase> CreateSqlDatabase(AutoscaleSettings autoscale)
+        internal async Task<SqlDatabase> CreateSqlDatabase(AutoscaleSettings autoscale)
         {
             _databaseName = Recording.GenerateAssetName("sql-db-");
             return await CreateSqlDatabase(_databaseName, autoscale, _databaseAccount.GetSqlDatabases());

@@ -40,12 +40,18 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// to be restored (ISO-8601 format).</param>
         /// <param name="databasesToRestore">List of specific databases
         /// available for restore.</param>
-        public RestoreParameters(string restoreMode = default(string), string restoreSource = default(string), System.DateTime? restoreTimestampInUtc = default(System.DateTime?), IList<DatabaseRestoreResource> databasesToRestore = default(IList<DatabaseRestoreResource>))
+        /// <param name="gremlinDatabasesToRestore">List of specific gremlin
+        /// databases available for restore.</param>
+        /// <param name="tablesToRestore">List of specific tables available for
+        /// restore.</param>
+        public RestoreParameters(string restoreMode = default(string), string restoreSource = default(string), System.DateTime? restoreTimestampInUtc = default(System.DateTime?), IList<DatabaseRestoreResource> databasesToRestore = default(IList<DatabaseRestoreResource>), IList<GremlinDatabaseRestoreResource> gremlinDatabasesToRestore = default(IList<GremlinDatabaseRestoreResource>), IList<string> tablesToRestore = default(IList<string>))
         {
             RestoreMode = restoreMode;
             RestoreSource = restoreSource;
             RestoreTimestampInUtc = restoreTimestampInUtc;
             DatabasesToRestore = databasesToRestore;
+            GremlinDatabasesToRestore = gremlinDatabasesToRestore;
+            TablesToRestore = tablesToRestore;
             CustomInit();
         }
 
@@ -81,6 +87,19 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "databasesToRestore")]
         public IList<DatabaseRestoreResource> DatabasesToRestore { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of specific gremlin databases available for
+        /// restore.
+        /// </summary>
+        [JsonProperty(PropertyName = "gremlinDatabasesToRestore")]
+        public IList<GremlinDatabaseRestoreResource> GremlinDatabasesToRestore { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of specific tables available for restore.
+        /// </summary>
+        [JsonProperty(PropertyName = "tablesToRestore")]
+        public IList<string> TablesToRestore { get; set; }
 
     }
 }

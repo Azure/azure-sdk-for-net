@@ -78,7 +78,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The reference to a virtual machine. </summary>
-        public WritableSubResource VirtualMachine { get; }
+        internal WritableSubResource VirtualMachine { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VirtualMachineId
+        {
+            get => VirtualMachine.Id;
+            set => VirtualMachine.Id = value;
+        }
+
         /// <summary> The reference to the NetworkSecurityGroup resource. </summary>
         public NetworkSecurityGroupData NetworkSecurityGroup { get; set; }
         /// <summary> A reference to the private endpoint to which the network interface is linked. </summary>
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> A list of references to linked BareMetal resources. </summary>
         public IReadOnlyList<string> HostedWorkloads { get; }
         /// <summary> A reference to the dscp configuration to which the network interface is linked. </summary>
-        public WritableSubResource DscpConfiguration { get; }
+        internal WritableSubResource DscpConfiguration { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier DscpConfigurationId
+        {
+            get => DscpConfiguration.Id;
+            set => DscpConfiguration.Id = value;
+        }
+
         /// <summary> The resource GUID property of the network interface resource. </summary>
         public string ResourceGuid { get; }
         /// <summary> The provisioning state of the network interface resource. </summary>

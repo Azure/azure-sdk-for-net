@@ -77,21 +77,104 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The VirtualWAN to which the VirtualHub belongs. </summary>
-        public WritableSubResource VirtualWan { get; set; }
+        internal WritableSubResource VirtualWan { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VirtualWanId
+        {
+            get => VirtualWan is null ? default : VirtualWan.Id;
+            set
+            {
+                if (VirtualWan is null)
+                    VirtualWan = new WritableSubResource();
+                VirtualWan.Id = value;
+            }
+        }
+
         /// <summary> The VpnGateway associated with this VirtualHub. </summary>
-        public WritableSubResource VpnGateway { get; set; }
+        internal WritableSubResource VpnGateway { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VpnGatewayId
+        {
+            get => VpnGateway is null ? default : VpnGateway.Id;
+            set
+            {
+                if (VpnGateway is null)
+                    VpnGateway = new WritableSubResource();
+                VpnGateway.Id = value;
+            }
+        }
+
         /// <summary> The P2SVpnGateway associated with this VirtualHub. </summary>
-        public WritableSubResource P2SVpnGateway { get; set; }
+        internal WritableSubResource P2SVpnGateway { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier P2SVpnGatewayId
+        {
+            get => P2SVpnGateway is null ? default : P2SVpnGateway.Id;
+            set
+            {
+                if (P2SVpnGateway is null)
+                    P2SVpnGateway = new WritableSubResource();
+                P2SVpnGateway.Id = value;
+            }
+        }
+
         /// <summary> The expressRouteGateway associated with this VirtualHub. </summary>
-        public WritableSubResource ExpressRouteGateway { get; set; }
+        internal WritableSubResource ExpressRouteGateway { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier ExpressRouteGatewayId
+        {
+            get => ExpressRouteGateway is null ? default : ExpressRouteGateway.Id;
+            set
+            {
+                if (ExpressRouteGateway is null)
+                    ExpressRouteGateway = new WritableSubResource();
+                ExpressRouteGateway.Id = value;
+            }
+        }
+
         /// <summary> The azureFirewall associated with this VirtualHub. </summary>
-        public WritableSubResource AzureFirewall { get; set; }
+        internal WritableSubResource AzureFirewall { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier AzureFirewallId
+        {
+            get => AzureFirewall is null ? default : AzureFirewall.Id;
+            set
+            {
+                if (AzureFirewall is null)
+                    AzureFirewall = new WritableSubResource();
+                AzureFirewall.Id = value;
+            }
+        }
+
         /// <summary> The securityPartnerProvider associated with this VirtualHub. </summary>
-        public WritableSubResource SecurityPartnerProvider { get; set; }
+        internal WritableSubResource SecurityPartnerProvider { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SecurityPartnerProviderId
+        {
+            get => SecurityPartnerProvider is null ? default : SecurityPartnerProvider.Id;
+            set
+            {
+                if (SecurityPartnerProvider is null)
+                    SecurityPartnerProvider = new WritableSubResource();
+                SecurityPartnerProvider.Id = value;
+            }
+        }
+
         /// <summary> Address-prefix for this VirtualHub. </summary>
         public string AddressPrefix { get; set; }
         /// <summary> The routeTable associated with this virtual hub. </summary>
-        public VirtualHubRouteTable RouteTable { get; set; }
+        internal VirtualHubRouteTable RouteTable { get; set; }
+        /// <summary> List of all routes. </summary>
+        public IList<VirtualHubRoute> Routes
+        {
+            get
+            {
+                if (RouteTable is null)
+                    RouteTable = new VirtualHubRouteTable();
+                return RouteTable.Routes;
+            }
+        }
+
         /// <summary> The provisioning state of the virtual hub resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The Security Provider name. </summary>

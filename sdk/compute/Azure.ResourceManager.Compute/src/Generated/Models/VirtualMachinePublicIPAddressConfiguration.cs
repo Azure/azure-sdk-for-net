@@ -61,11 +61,30 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specify what happens to the public IP address when the VM is deleted. </summary>
         public DeleteOptions? DeleteOption { get; set; }
         /// <summary> The dns settings to be applied on the publicIP addresses . </summary>
-        public VirtualMachinePublicIPAddressDnsSettingsConfiguration DnsSettings { get; set; }
+        internal VirtualMachinePublicIPAddressDnsSettingsConfiguration DnsSettings { get; set; }
+        /// <summary> The Domain name label prefix of the PublicIPAddress resources that will be created. The generated name label is the concatenation of the domain name label and vm network profile unique ID. </summary>
+        public string DnsDomainNameLabel
+        {
+            get => DnsSettings is null ? default : DnsSettings.DomainNameLabel;
+            set => DnsSettings = new VirtualMachinePublicIPAddressDnsSettingsConfiguration(value);
+        }
+
         /// <summary> The list of IP tags associated with the public IP address. </summary>
         public IList<VirtualMachineIPTag> IPTags { get; }
         /// <summary> The PublicIPPrefix from which to allocate publicIP addresses. </summary>
-        public WritableSubResource PublicIPPrefix { get; set; }
+        internal WritableSubResource PublicIPPrefix { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier PublicIPPrefixId
+        {
+            get => PublicIPPrefix is null ? default : PublicIPPrefix.Id;
+            set
+            {
+                if (PublicIPPrefix is null)
+                    PublicIPPrefix = new WritableSubResource();
+                PublicIPPrefix.Id = value;
+            }
+        }
+
         /// <summary> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: &apos;IPv4&apos; and &apos;IPv6&apos;. </summary>
         public IPVersions? PublicIPAddressVersion { get; set; }
         /// <summary> Specify the public IP allocation type. </summary>

@@ -52,7 +52,13 @@ namespace Azure.ResourceManager.Compute
         /// <summary> A list of references to all dedicated hosts in the dedicated host group. </summary>
         public IReadOnlyList<Resources.Models.SubResource> Hosts { get; }
         /// <summary> The dedicated host group instance view, which has the list of instance view of the dedicated hosts under the dedicated host group. </summary>
-        public DedicatedHostGroupInstanceView InstanceView { get; }
+        internal DedicatedHostGroupInstanceView InstanceView { get; }
+        /// <summary> List of instance view of the dedicated hosts under the dedicated host group. </summary>
+        public IReadOnlyList<DedicatedHostInstanceViewWithName> InstanceViewHosts
+        {
+            get => InstanceView.Hosts;
+        }
+
         /// <summary> Specifies whether virtual machines or virtual machine scale sets can be placed automatically on the dedicated host group. Automatic placement means resources are allocated on dedicated hosts, that are chosen by Azure, under the dedicated host group. The value is defaulted to &apos;false&apos; when not provided. &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-06-01. </summary>
         public bool? SupportAutomaticPlacement { get; set; }
     }

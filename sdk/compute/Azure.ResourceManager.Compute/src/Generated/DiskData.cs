@@ -121,7 +121,19 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Purchase plan information for the the image from which the OS disk was created. E.g. - {name: 2019-Datacenter, publisher: MicrosoftWindowsServer, product: WindowsServer}. </summary>
         public DiskPurchasePlan PurchasePlan { get; set; }
         /// <summary> List of supported capabilities for the image from which the OS disk was created. </summary>
-        public SupportedCapabilities SupportedCapabilities { get; set; }
+        internal SupportedCapabilities SupportedCapabilities { get; set; }
+        /// <summary> True if the image from which the OS disk is created supports accelerated networking. </summary>
+        public bool? AcceleratedNetwork
+        {
+            get => SupportedCapabilities is null ? default : SupportedCapabilities.AcceleratedNetwork;
+            set
+            {
+                if (SupportedCapabilities is null)
+                    SupportedCapabilities = new SupportedCapabilities();
+                SupportedCapabilities.AcceleratedNetwork = value;
+            }
+        }
+
         /// <summary> Disk source information. CreationData information cannot be changed after the disk has been created. </summary>
         public CreationData CreationData { get; set; }
         /// <summary> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk&apos;s size. </summary>
@@ -159,7 +171,13 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Set to true to enable bursting beyond the provisioned performance target of the disk. Bursting is disabled by default. Does not apply to Ultra disks. </summary>
         public bool? BurstingEnabled { get; set; }
         /// <summary> Properties of the disk for which update is pending. </summary>
-        public PropertyUpdatesInProgress PropertyUpdatesInProgress { get; }
+        internal PropertyUpdatesInProgress PropertyUpdatesInProgress { get; }
+        /// <summary> The target performance tier of the disk if a tier change operation is in progress. </summary>
+        public string PropertyUpdatesInProgressTargetTier
+        {
+            get => PropertyUpdatesInProgress.TargetTier;
+        }
+
         /// <summary> Indicates the OS on a disk supports hibernation. </summary>
         public bool? SupportsHibernation { get; set; }
         /// <summary> Contains the security related information for the resource. </summary>

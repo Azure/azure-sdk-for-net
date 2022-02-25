@@ -88,9 +88,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetPropertiesAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetProperties");
             scope.Start();
@@ -135,9 +133,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetProperties(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetProperties");
             scope.Start();
@@ -190,9 +186,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.CreateOrUpdate");
             scope.Start();
@@ -245,9 +239,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response CreateOrUpdate(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.CreateOrUpdate");
             scope.Start();
@@ -292,9 +284,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> DeleteAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.Delete");
             scope.Start();
@@ -339,9 +329,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response Delete(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.Delete");
             scope.Start();
@@ -403,9 +391,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> TagVersionAsync(int classificationRuleVersion, string action, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(action, nameof(action));
 
@@ -469,9 +455,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response TagVersion(int classificationRuleVersion, string action, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(action, nameof(action));
 
@@ -524,9 +508,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetVersionsAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewClassificationRuleClient.GetVersions");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -578,9 +560,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetVersions(RequestContext context = null)
-#pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewClassificationRuleClient.GetVersions");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)

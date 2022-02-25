@@ -460,7 +460,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="span"> Location of the selection mark in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the selection mark. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentSelectionMark"/> instance for mocking. </returns>
-        public static DocumentSelectionMark DocumentSelectionMark(SelectionMarkState state = default, BoundingBox boundingBox = default, DocumentSpan span = null, float confidence = default)
+        public static DocumentSelectionMark DocumentSelectionMark(SelectionMarkState state = default, BoundingBox boundingBox = default, DocumentSpan span = default, float confidence = default)
         {
             return new DocumentSelectionMark(state, boundingBox, span, confidence);
         }
@@ -526,7 +526,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="span"> Location of the word in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the word. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentWord"/> instance for mocking. </returns>
-        public static DocumentWord DocumentWord(string content = null, BoundingBox boundingBox = default, DocumentSpan span = null, float confidence = default)
+        public static DocumentWord DocumentWord(string content = null, BoundingBox boundingBox = default, DocumentSpan span = default, float confidence = default)
         {
             return new DocumentWord(content, boundingBox, span, confidence);
         }

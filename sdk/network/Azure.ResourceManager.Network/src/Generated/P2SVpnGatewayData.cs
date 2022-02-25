@@ -53,7 +53,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The VirtualHub to which the gateway belongs. </summary>
-        public WritableSubResource VirtualHub { get; set; }
+        internal WritableSubResource VirtualHub { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VirtualHubId
+        {
+            get => VirtualHub is null ? default : VirtualHub.Id;
+            set
+            {
+                if (VirtualHub is null)
+                    VirtualHub = new WritableSubResource();
+                VirtualHub.Id = value;
+            }
+        }
+
         /// <summary> List of all p2s connection configurations of the gateway. </summary>
         public IList<P2SConnectionConfiguration> P2SConnectionConfigurations { get; }
         /// <summary> The provisioning state of the P2S VPN gateway resource. </summary>
@@ -61,7 +73,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> The scale unit for this p2s vpn gateway. </summary>
         public int? VpnGatewayScaleUnit { get; set; }
         /// <summary> The VpnServerConfiguration to which the p2sVpnGateway is attached to. </summary>
-        public WritableSubResource VpnServerConfiguration { get; set; }
+        internal WritableSubResource VpnServerConfiguration { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VpnServerConfigurationId
+        {
+            get => VpnServerConfiguration is null ? default : VpnServerConfiguration.Id;
+            set
+            {
+                if (VpnServerConfiguration is null)
+                    VpnServerConfiguration = new WritableSubResource();
+                VpnServerConfiguration.Id = value;
+            }
+        }
+
         /// <summary> All P2S VPN clients&apos; connection health status. </summary>
         public VpnClientConnectionHealth VpnClientConnectionHealth { get; }
         /// <summary> List of all customer specified DNS servers IP addresses. </summary>

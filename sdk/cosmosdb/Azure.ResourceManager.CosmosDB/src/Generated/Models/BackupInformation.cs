@@ -23,6 +23,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Information about the status of continuous backups. </summary>
-        public ContinuousBackupInformation ContinuousBackupInformation { get; }
+        internal ContinuousBackupInformation ContinuousBackupInformation { get; }
+        /// <summary> The latest restorable timestamp for a resource. </summary>
+        public string ContinuousBackupInformationLatestRestorableTimestamp
+        {
+            get => ContinuousBackupInformation.LatestRestorableTimestamp;
+        }
     }
 }

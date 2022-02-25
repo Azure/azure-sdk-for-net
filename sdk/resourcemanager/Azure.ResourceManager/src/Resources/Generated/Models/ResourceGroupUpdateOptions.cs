@@ -22,7 +22,13 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The name of the resource group. </summary>
         public string Name { get; set; }
         /// <summary> The resource group properties. </summary>
-        public ResourceGroupProperties Properties { get; set; }
+        internal ResourceGroupProperties Properties { get; set; }
+        /// <summary> The provisioning state. </summary>
+        public string ResourceGroupProvisioningState
+        {
+            get => Properties is null ? default : Properties.ProvisioningState;
+        }
+
         /// <summary> The ID of the resource that manages this resource group. </summary>
         public string ManagedBy { get; set; }
         /// <summary> The tags attached to the resource group. </summary>

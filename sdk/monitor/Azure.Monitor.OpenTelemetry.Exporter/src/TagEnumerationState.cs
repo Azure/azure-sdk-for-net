@@ -120,5 +120,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
             }
         }
+
+        public void Return()
+        {
+            PartBTags.Return();
+            PartCTags.Return();
+        }
     }
 }

@@ -62,17 +62,65 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Type of the resource. </summary>
         public string Type { get; }
         /// <summary> Frontend IP configuration resource of an application gateway. </summary>
-        public WritableSubResource FrontendIPConfiguration { get; set; }
+        internal WritableSubResource FrontendIPConfiguration { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier FrontendIPConfigurationId
+        {
+            get => FrontendIPConfiguration is null ? default : FrontendIPConfiguration.Id;
+            set
+            {
+                if (FrontendIPConfiguration is null)
+                    FrontendIPConfiguration = new WritableSubResource();
+                FrontendIPConfiguration.Id = value;
+            }
+        }
+
         /// <summary> Frontend port resource of an application gateway. </summary>
-        public WritableSubResource FrontendPort { get; set; }
+        internal WritableSubResource FrontendPort { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier FrontendPortId
+        {
+            get => FrontendPort is null ? default : FrontendPort.Id;
+            set
+            {
+                if (FrontendPort is null)
+                    FrontendPort = new WritableSubResource();
+                FrontendPort.Id = value;
+            }
+        }
+
         /// <summary> Protocol of the HTTP listener. </summary>
         public ApplicationGatewayProtocol? Protocol { get; set; }
         /// <summary> Host name of HTTP listener. </summary>
         public string HostName { get; set; }
         /// <summary> SSL certificate resource of an application gateway. </summary>
-        public WritableSubResource SslCertificate { get; set; }
+        internal WritableSubResource SslCertificate { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SslCertificateId
+        {
+            get => SslCertificate is null ? default : SslCertificate.Id;
+            set
+            {
+                if (SslCertificate is null)
+                    SslCertificate = new WritableSubResource();
+                SslCertificate.Id = value;
+            }
+        }
+
         /// <summary> SSL profile resource of the application gateway. </summary>
-        public WritableSubResource SslProfile { get; set; }
+        internal WritableSubResource SslProfile { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SslProfileId
+        {
+            get => SslProfile is null ? default : SslProfile.Id;
+            set
+            {
+                if (SslProfile is null)
+                    SslProfile = new WritableSubResource();
+                SslProfile.Id = value;
+            }
+        }
+
         /// <summary> Applicable only if protocol is https. Enables SNI for multi-hosting. </summary>
         public bool? RequireServerNameIndication { get; set; }
         /// <summary> The provisioning state of the HTTP listener resource. </summary>
@@ -80,7 +128,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Custom error configurations of the HTTP listener. </summary>
         public IList<ApplicationGatewayCustomError> CustomErrorConfigurations { get; }
         /// <summary> Reference to the FirewallPolicy resource. </summary>
-        public WritableSubResource FirewallPolicy { get; set; }
+        internal WritableSubResource FirewallPolicy { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier FirewallPolicyId
+        {
+            get => FirewallPolicy is null ? default : FirewallPolicy.Id;
+            set
+            {
+                if (FirewallPolicy is null)
+                    FirewallPolicy = new WritableSubResource();
+                FirewallPolicy.Id = value;
+            }
+        }
+
         /// <summary> List of Host names for HTTP Listener that allows special wildcard characters as well. </summary>
         public IList<string> HostNames { get; }
     }

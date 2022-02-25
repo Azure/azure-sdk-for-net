@@ -26,7 +26,19 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Domains referenced by this endpoint. </summary>
         public IList<WritableSubResource> CustomDomains { get; }
         /// <summary> A reference to the origin group. </summary>
-        public WritableSubResource OriginGroup { get; set; }
+        internal WritableSubResource OriginGroup { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier OriginGroupId
+        {
+            get => OriginGroup is null ? default : OriginGroup.Id;
+            set
+            {
+                if (OriginGroup is null)
+                    OriginGroup = new WritableSubResource();
+                OriginGroup.Id = value;
+            }
+        }
+
         /// <summary> A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </summary>
         public string OriginPath { get; set; }
         /// <summary> rule sets referenced by this endpoint. </summary>
