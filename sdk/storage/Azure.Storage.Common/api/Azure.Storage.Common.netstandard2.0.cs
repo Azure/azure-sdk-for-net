@@ -12,20 +12,19 @@ namespace Azure.Storage
     {
         V1_0 = 1,
     }
-    public partial class DownloadTransactionalHashingOptions
+    public partial class DownloadTransferValidationOptions
     {
-        public DownloadTransactionalHashingOptions() { }
-        public Azure.Storage.TransactionalHashAlgorithm Algorithm { get { throw null; } set { } }
+        public DownloadTransferValidationOptions() { }
+        public Azure.Storage.ValidationAlgorithm Algorithm { get { throw null; } set { } }
         public bool Validate { get { throw null; } set { } }
     }
-    public partial class StorageCrc64NonCryptographicHashAlgorithm
+    public partial class StorageCrc64NonCryptographicHashAlgorithm : System.IO.Hashing.NonCryptographicHashAlgorithm
     {
-        internal StorageCrc64NonCryptographicHashAlgorithm() { }
-        public void Append(System.ReadOnlySpan<byte> source) { }
+        internal StorageCrc64NonCryptographicHashAlgorithm() : base (default(int)) { }
+        public override void Append(System.ReadOnlySpan<byte> source) { }
         public static Azure.Storage.StorageCrc64NonCryptographicHashAlgorithm Create() { throw null; }
-        public byte[] GetCurrentHash() { throw null; }
-        protected void GetCurrentHashCore(System.Span<byte> destination) { }
-        public void Reset() { }
+        protected override void GetCurrentHashCore(System.Span<byte> destination) { }
+        public override void Reset() { }
     }
     public static partial class StorageExtensions
     {
@@ -59,17 +58,18 @@ namespace Azure.Storage
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static bool operator !=(Azure.Storage.StorageTransferOptions left, Azure.Storage.StorageTransferOptions right) { throw null; }
     }
-    public enum TransactionalHashAlgorithm
+    public partial class UploadTransferValidationOptions
     {
-        None = 0,
-        StorageCrc64 = 1,
-        MD5 = 2,
+        public UploadTransferValidationOptions() { }
+        public Azure.Storage.ValidationAlgorithm Algorithm { get { throw null; } set { } }
+        public byte[] PrecalculatedChecksum { get { throw null; } set { } }
     }
-    public partial class UploadTransactionalHashingOptions
+    public enum ValidationAlgorithm
     {
-        public UploadTransactionalHashingOptions() { }
-        public Azure.Storage.TransactionalHashAlgorithm Algorithm { get { throw null; } set { } }
-        public byte[] PrecalculatedHash { get { throw null; } set { } }
+        Auto = 0,
+        None = 1,
+        StorageCrc64 = 2,
+        MD5 = 3,
     }
 }
 namespace Azure.Storage.Sas
