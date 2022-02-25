@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             return accountLro.Value;
         }
 
-        protected static CreateUpdateOptions BuildDatabaseCreateUpdateOptions(int testThroughput1, AutoscaleSettings autoscale)
+        internal static CreateUpdateOptions BuildDatabaseCreateUpdateOptions(int testThroughput1, AutoscaleSettings autoscale)
         {
             return new CreateUpdateOptions
             {

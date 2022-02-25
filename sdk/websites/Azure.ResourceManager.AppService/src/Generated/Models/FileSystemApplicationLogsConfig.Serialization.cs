@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class FileSystemApplicationLogsConfig : IUtf8JsonSerializable
+    internal partial class FileSystemApplicationLogsConfig : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

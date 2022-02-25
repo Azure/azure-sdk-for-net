@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -36,6 +37,12 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Returns the date and time the ManagementPolicies was last modified. </summary>
         public DateTimeOffset? LastModifiedTime { get; }
         /// <summary> The Storage Account ManagementPolicy, in JSON format. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </summary>
-        public ManagementPolicySchema Policy { get; set; }
+        internal ManagementPolicySchema Policy { get; set; }
+        /// <summary> The Storage Account ManagementPolicies Rules. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </summary>
+        public IList<ManagementPolicyRule> Rules
+        {
+            get => Policy is null ? default : Policy.Rules;
+            set => Policy = new ManagementPolicySchema(value);
+        }
     }
 }

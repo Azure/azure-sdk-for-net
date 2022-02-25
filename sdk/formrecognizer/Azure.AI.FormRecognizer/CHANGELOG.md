@@ -6,6 +6,7 @@
 - Added `DocumentAnalysisClient` integration for ASP.NET Core ([#27123](https://github.com/azure/azure-sdk-for-net/issues/27123)).
 
 ### Breaking Changes
+- Made `DocumentSpan` a `struct` instead of a `class`.
 
 ### Bugs Fixed
 

@@ -38,11 +38,12 @@ param(
   [Parameter(Mandatory = $true)]
   [string] $OutputLocation
 )
-Set-StrictMode -Version 3
 . $PSScriptRoot/common.ps1
 . $PSScriptRoot/Helpers/PSModule-Helpers.ps1
 
 Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+
+Set-StrictMode -Version 3
 
 function GetClientPackageNode($clientPackage) {
   $packageInfo = &$GetDocsMsTocDataFn `

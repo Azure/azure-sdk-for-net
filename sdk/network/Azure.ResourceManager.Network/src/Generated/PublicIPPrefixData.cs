@@ -80,9 +80,28 @@ namespace Azure.ResourceManager.Network
         /// <summary> The list of all referenced PublicIPAddresses. </summary>
         public IReadOnlyList<Resources.Models.SubResource> PublicIPAddresses { get; }
         /// <summary> The reference to load balancer frontend IP configuration associated with the public IP prefix. </summary>
-        public WritableSubResource LoadBalancerFrontendIpConfiguration { get; }
+        internal WritableSubResource LoadBalancerFrontendIpConfiguration { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier LoadBalancerFrontendIpConfigurationId
+        {
+            get => LoadBalancerFrontendIpConfiguration.Id;
+            set => LoadBalancerFrontendIpConfiguration.Id = value;
+        }
+
         /// <summary> The customIpPrefix that this prefix is associated with. </summary>
-        public WritableSubResource CustomIPPrefix { get; set; }
+        internal WritableSubResource CustomIPPrefix { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier CustomIPPrefixId
+        {
+            get => CustomIPPrefix is null ? default : CustomIPPrefix.Id;
+            set
+            {
+                if (CustomIPPrefix is null)
+                    CustomIPPrefix = new WritableSubResource();
+                CustomIPPrefix.Id = value;
+            }
+        }
+
         /// <summary> The resource GUID property of the public IP prefix resource. </summary>
         public string ResourceGuid { get; }
         /// <summary> The provisioning state of the public IP prefix resource. </summary>

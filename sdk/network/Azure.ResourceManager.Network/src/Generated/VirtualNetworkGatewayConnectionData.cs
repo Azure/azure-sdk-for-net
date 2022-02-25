@@ -133,7 +133,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> The ingress bytes transferred in this connection. </summary>
         public long? IngressBytesTransferred { get; }
         /// <summary> The reference to peerings resource. </summary>
-        public WritableSubResource Peer { get; set; }
+        internal WritableSubResource Peer { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier PeerId
+        {
+            get => Peer is null ? default : Peer.Id;
+            set
+            {
+                if (Peer is null)
+                    Peer = new WritableSubResource();
+                Peer.Id = value;
+            }
+        }
+
         /// <summary> EnableBgp flag. </summary>
         public bool? EnableBgp { get; set; }
         /// <summary> Use private local Azure IP for the connection. </summary>

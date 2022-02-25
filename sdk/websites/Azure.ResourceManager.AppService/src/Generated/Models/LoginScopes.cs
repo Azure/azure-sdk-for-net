@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the login flow, including the scopes that should be requested. </summary>
-    public partial class LoginScopes
+    internal partial class LoginScopes
     {
         /// <summary> Initializes a new instance of LoginScopes. </summary>
         public LoginScopes()

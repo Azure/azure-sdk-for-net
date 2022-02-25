@@ -56,7 +56,14 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> SasPolicy assigned to the storage account. </summary>
         public SasPolicy SasPolicy { get; set; }
         /// <summary> KeyPolicy assigned to the storage account. </summary>
-        public KeyPolicy KeyPolicy { get; set; }
+        internal KeyPolicy KeyPolicy { get; set; }
+        /// <summary> The key expiration period in days. </summary>
+        public int KeyExpirationPeriodInDays
+        {
+            get => KeyPolicy is null ? default : KeyPolicy.KeyExpirationPeriodInDays;
+            set => KeyPolicy = new KeyPolicy(value);
+        }
+
         /// <summary> User domain assigned to the storage account. Name is the CNAME source. Only one custom domain is supported per storage account at this time. To clear the existing custom domain, use an empty string for the custom domain name property. </summary>
         public CustomDomain CustomDomain { get; set; }
         /// <summary> Encryption settings to be used for server-side encryption for the storage account. </summary>

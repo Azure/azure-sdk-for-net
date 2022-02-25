@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
@@ -27,7 +28,19 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Subnet properties. </summary>
-        public WritableSubResource Subnet { get; set; }
+        internal WritableSubResource Subnet { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get => Subnet is null ? default : Subnet.Id;
+            set
+            {
+                if (Subnet is null)
+                    Subnet = new WritableSubResource();
+                Subnet.Id = value;
+            }
+        }
+
         /// <summary> Value that indicates whether to ignore missing Vnet Service Endpoint. </summary>
         public bool? IgnoreMissingVnetServiceEndpoint { get; set; }
     }
