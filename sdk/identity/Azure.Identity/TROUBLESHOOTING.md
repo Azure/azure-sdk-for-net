@@ -50,7 +50,7 @@ The `CredentialUnavailableExcpetion` is a special exception type derived from `A
 
 ## Finding Relevant Information in Exception Messages
 
-AuthenticationFailedException is thrown when unexpected errors occurred when a credential is authenticating. This can include errors received from requests to the AAD STS and often contains information helpful to diagnosis. Consider the following `AuthenticationFailedException` message.
+`AuthenticationFailedException` is thrown when unexpected errors occurred while a credential is authenticating. This can include errors received from requests to the AAD STS and often contains information helpful to diagnosis. Consider the following `AuthenticationFailedException` message.
 
 ![AuthenticationFailedException Message Example](./images/AuthFailedErrorMessageExample.png)
 
