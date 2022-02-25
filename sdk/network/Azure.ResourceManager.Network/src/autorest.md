@@ -55,6 +55,9 @@ directive:
   - remove-operation: "GetBastionShareableLink"
   - remove-operation: "GetActiveSessions"
   - remove-operation: "DisconnectActiveSessions"
+  - remove-operation: "ApplicationGateways_ListAvailableSslOptions"
+  - remove-operation: "ApplicationGateways_ListAvailableSslPredefinedPolicies"
+  - remove-operation: "ApplicationGateways_GetSslPredefinedPolicy"
 ```
 
 ### Tag: package-track2-preview

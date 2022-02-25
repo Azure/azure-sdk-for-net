@@ -28,14 +28,6 @@ namespace Azure.ResourceManager.Network
             );
         }
 
-        /// <summary> Gets an object representing a ApplicationGatewayAvailableSslOptions along with the instance operations that can be performed on it in the SubscriptionExtensions. </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ApplicationGatewayAvailableSslOptions" /> object. </returns>
-        public static ApplicationGatewayAvailableSslOptions GetApplicationGatewayAvailableSslOptions(this Subscription subscription)
-        {
-            return GetExtensionClient(subscription).GetApplicationGatewayAvailableSslOptions();
-        }
-
         /// <summary> Gets a collection of AzureWebCategories in the AzureWebCategory. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AzureWebCategories and their operations over a AzureWebCategory. </returns>

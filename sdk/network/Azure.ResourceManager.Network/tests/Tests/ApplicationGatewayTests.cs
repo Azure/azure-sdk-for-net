@@ -873,24 +873,5 @@ namespace Azure.ResourceManager.Network.Tests
             // Delete AppGw
             await getGateway.Value.DeleteAsync(true);
         }
-
-        [Test]
-        [RecordedTest]
-        public async Task AppGatewayAvailableSslOptionsTest()
-        {
-            //Get AppGatewayAvailableSslOptions
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
-            ApplicationGatewayAvailableSslOptions applicationGatewayAvailableSslOptions = await subscription.GetApplicationGatewayAvailableSslOptions().GetAsync();
-            Assert.AreEqual(applicationGatewayAvailableSslOptions.Data.Name, "default");
-
-            //List available SslPredefinedPolicies
-            List<ApplicationGatewaySslPredefinedPolicy> sslPredefinedPolicies = await applicationGatewayAvailableSslOptions.GetApplicationGatewaySslPredefinedPolicies().GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(sslPredefinedPolicies.Count, 3);
-
-            //Get SslPredefinedPolicy
-            string sslPredefinedPolicyName = ApplicationGatewaySslPolicyName.AppGwSslPolicy20170401S.ToString();
-            ApplicationGatewaySslPredefinedPolicy sslPredefinedPolicy = await applicationGatewayAvailableSslOptions.GetApplicationGatewaySslPredefinedPolicies().GetAsync(sslPredefinedPolicyName);
-            Assert.AreEqual(sslPredefinedPolicy.Data.Name, sslPredefinedPolicyName);
-        }
     }
 }

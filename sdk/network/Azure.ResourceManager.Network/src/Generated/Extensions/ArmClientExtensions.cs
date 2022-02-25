@@ -29,38 +29,6 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region ApplicationGatewayAvailableSslOptions
-        /// <summary> Gets an object representing a ApplicationGatewayAvailableSslOptions along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationGatewayAvailableSslOptions" /> object. </returns>
-        public static ApplicationGatewayAvailableSslOptions GetApplicationGatewayAvailableSslOptions(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetClient(() =>
-            {
-                ApplicationGatewayAvailableSslOptions.ValidateResourceId(id);
-                return new ApplicationGatewayAvailableSslOptions(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ApplicationGatewaySslPredefinedPolicy
-        /// <summary> Gets an object representing a ApplicationGatewaySslPredefinedPolicy along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationGatewaySslPredefinedPolicy" /> object. </returns>
-        public static ApplicationGatewaySslPredefinedPolicy GetApplicationGatewaySslPredefinedPolicy(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetClient(() =>
-            {
-                ApplicationGatewaySslPredefinedPolicy.ValidateResourceId(id);
-                return new ApplicationGatewaySslPredefinedPolicy(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region ApplicationGatewayPrivateEndpointConnection
         /// <summary> Gets an object representing a ApplicationGatewayPrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
