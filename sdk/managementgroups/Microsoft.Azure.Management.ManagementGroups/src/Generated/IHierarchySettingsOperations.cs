@@ -19,23 +19,18 @@ namespace Microsoft.Azure.Management.ManagementGroups
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ManagementGroupSubscriptionsOperations operations.
+    /// HierarchySettingsOperations operations.
     /// </summary>
-    public partial interface IManagementGroupSubscriptionsOperations
+    public partial interface IHierarchySettingsOperations
     {
         /// <summary>
-        /// Associates existing subscription with the management group.
+        /// Gets all the hierarchy settings defined at the Management Group
+        /// level. Settings can only be set on the root Management Group of the
+        /// hierarchy.
         ///
         /// </summary>
         /// <param name='groupId'>
         /// Management Group ID.
-        /// </param>
-        /// <param name='subscriptionId'>
-        /// Subscription ID.
-        /// </param>
-        /// <param name='cacheControl'>
-        /// Indicates whether the request should utilize any caches. Populate
-        /// the header with 'no-cache' value to bypass existing caches.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -52,48 +47,15 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SubscriptionUnderManagementGroup>> CreateWithHttpMessagesAsync(string groupId, string subscriptionId, string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<HierarchySettingsList>> ListWithHttpMessagesAsync(string groupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// De-associates subscription from the management group.
+        /// Gets the hierarchy settings defined at the Management Group level.
+        /// Settings can only be set on the root Management Group of the
+        /// hierarchy.
         ///
         /// </summary>
         /// <param name='groupId'>
         /// Management Group ID.
-        /// </param>
-        /// <param name='subscriptionId'>
-        /// Subscription ID.
-        /// </param>
-        /// <param name='cacheControl'>
-        /// Indicates whether the request should utilize any caches. Populate
-        /// the header with 'no-cache' value to bypass existing caches.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string groupId, string subscriptionId, string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Retrieves details about given subscription which is associated with
-        /// the management group.
-        ///
-        /// </summary>
-        /// <param name='groupId'>
-        /// Management Group ID.
-        /// </param>
-        /// <param name='subscriptionId'>
-        /// Subscription ID.
-        /// </param>
-        /// <param name='cacheControl'>
-        /// Indicates whether the request should utilize any caches. Populate
-        /// the header with 'no-cache' value to bypass existing caches.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -110,21 +72,17 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SubscriptionUnderManagementGroup>> GetSubscriptionWithHttpMessagesAsync(string groupId, string subscriptionId, string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<HierarchySettings>> GetWithHttpMessagesAsync(string groupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieves details about all subscriptions which are associated with
-        /// the management group.
+        /// Creates or updates the hierarchy settings defined at the Management
+        /// Group level.
         ///
         /// </summary>
         /// <param name='groupId'>
         /// Management Group ID.
         /// </param>
-        /// <param name='skiptoken'>
-        /// Page continuation token is only used if a previous operation
-        /// returned a partial result.
-        /// If a previous response contains a nextLink element, the value of
-        /// the nextLink element will include a token parameter that specifies
-        /// a starting point to use for subsequent calls.
+        /// <param name='createTenantSettingsRequest'>
+        /// Tenant level settings request parameter.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -141,14 +99,17 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SubscriptionUnderManagementGroup>>> GetSubscriptionsUnderManagementGroupWithHttpMessagesAsync(string groupId, string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<HierarchySettings>> CreateOrUpdateWithHttpMessagesAsync(string groupId, CreateOrUpdateSettingsRequest createTenantSettingsRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieves details about all subscriptions which are associated with
-        /// the management group.
+        /// Updates the hierarchy settings defined at the Management Group
+        /// level.
         ///
         /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
+        /// <param name='groupId'>
+        /// Management Group ID.
+        /// </param>
+        /// <param name='createTenantSettingsRequest'>
+        /// Tenant level settings request parameter.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -165,6 +126,27 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SubscriptionUnderManagementGroup>>> GetSubscriptionsUnderManagementGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<HierarchySettings>> UpdateWithHttpMessagesAsync(string groupId, CreateOrUpdateSettingsRequest createTenantSettingsRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes the hierarchy settings defined at the Management Group
+        /// level.
+        ///
+        /// </summary>
+        /// <param name='groupId'>
+        /// Management Group ID.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string groupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
