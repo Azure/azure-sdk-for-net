@@ -11323,7 +11323,7 @@
         "x-ms-request-id": "23e015dc-1abd-4ec1-b5af-4ad0d93960b2",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20220119T041343Z:fb1c9c5f-a7cc-439e-9db9-cf998c8defa1"
       },
-      "ResponseBody": null
+      "ResponseBody": "null"
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus2/operationResults/23e015dc-1abd-4ec1-b5af-4ad0d93960b2?api-version=2021-02-01",
@@ -11358,7 +11358,7 @@
         "x-ms-request-id": "23e015dc-1abd-4ec1-b5af-4ad0d93960b2",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20220119T041343Z:bf8816a1-dc88-42fc-8763-d80d917921d8"
       },
-      "ResponseBody": null
+      "ResponseBody": "null"
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus2/operationResults/23e015dc-1abd-4ec1-b5af-4ad0d93960b2?api-version=2021-02-01",
@@ -11393,7 +11393,7 @@
         "x-ms-request-id": "23e015dc-1abd-4ec1-b5af-4ad0d93960b2",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20220119T041353Z:495cc181-9e08-4102-9174-3e4223173cdf"
       },
-      "ResponseBody": null
+      "ResponseBody": "null"
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus2/operationResults/23e015dc-1abd-4ec1-b5af-4ad0d93960b2?api-version=2021-02-01",

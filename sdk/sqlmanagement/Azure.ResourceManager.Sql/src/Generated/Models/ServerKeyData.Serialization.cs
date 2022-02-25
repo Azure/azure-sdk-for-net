@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri");
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -40,9 +41,10 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> subregion = default;
             Optional<ServerKeyType> serverKeyType = default;
-            Optional<string> uri = default;
+            Optional<Uri> uri = default;
             Optional<string> thumbprint = default;
             Optional<DateTimeOffset> creationDate = default;
             Optional<bool> autoRotationEnabled = default;
@@ -73,6 +75,11 @@ namespace Azure.ResourceManager.Sql
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -99,7 +106,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("uri"))
                         {
-                            uri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            uri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("thumbprint"))
@@ -131,7 +143,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ServerKeyData(id, name, type, kind.Value, location.Value, subregion.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(creationDate), Optional.ToNullable(autoRotationEnabled));
+            return new ServerKeyData(id, name, type, systemData, kind.Value, location.Value, subregion.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(creationDate), Optional.ToNullable(autoRotationEnabled));
         }
     }
 }

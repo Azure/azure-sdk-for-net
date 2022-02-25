@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("publicIPAddressVersion");
                 writer.WriteStringValue(PublicIPAddressVersion.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IpTags))
+            if (Optional.IsCollectionDefined(IPTags))
             {
                 writer.WritePropertyName("ipTags");
                 writer.WriteStartArray();
-                foreach (var item in IpTags)
+                foreach (var item in IPTags)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<IPVersion> publicIPAddressVersion = default;
-            Optional<IList<IpTag>> ipTags = default;
+            Optional<IList<IPTag>> ipTags = default;
             Optional<int> prefixLength = default;
             Optional<string> ipPrefix = default;
             Optional<IReadOnlyList<Resources.Models.SubResource>> publicIPAddresses = default;
@@ -219,10 +219,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<IpTag> array = new List<IpTag>();
+                            List<IPTag> array = new List<IPTag>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IpTag.DeserializeIpTag(item));
+                                array.Add(IPTag.DeserializeIPTag(item));
                             }
                             ipTags = array;
                             continue;

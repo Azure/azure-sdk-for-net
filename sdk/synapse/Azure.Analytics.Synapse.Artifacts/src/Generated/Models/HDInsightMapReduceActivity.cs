@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="className"> Class name. Type: string (or Expression with resultType string). </param>
         /// <param name="jarFilePath"> Jar path. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="className"/>, or <paramref name="jarFilePath"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="className"/> or <paramref name="jarFilePath"/> is null. </exception>
         public HDInsightMapReduceActivity(string name, object className, object jarFilePath) : base(name)
         {
             if (name == null)

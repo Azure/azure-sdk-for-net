@@ -1,6 +1,12 @@
 # Release History
 
-## 5.7.0-beta.3 (Unreleased)
+## 5.7.0-beta.4 (Unreleased)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
 
 ### Features Added
 
@@ -9,6 +15,30 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- The `EventHubBufferedProducer` will now invoke the handlers for success or failure when publishing a batch in a deterministic manner, as part of the publishing flow.  Handlers will now be awaited, causing the publishing operation to be considered incomplete until the handler returns.  Previously, handlers were invoked in the background non-deterministically and without a guaranteed ordering.  This ensured they could not interfere with publishing throughput but caused difficulty for reliably checkpointing with the source of events.
+
+- Attempt to retrieve AMQP objects synchronously before calling `GetOrCreateAsync`, avoiding an asynchronous call unless necessary.
+
+- Remove allocations from Event Source logging by introducing `WriteEvent` overloads to handle cases that would otherwise result in boxing to `object[]` via params array.  _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+- Remove LINQ from the `AmqpMessageConverter` in favor of direct looping.  _(Based on a community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+- Change the internal batch `AsEnumerable<T>` to `AsList<T>` in order to avoid casting costs and have `Count` available to right-size transform collections. _(Based on a community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+- Use the two item overload when creating a linked token source to avoid allocating an unnecessary array. _([ref](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/Threading/CancellationTokenSource.cs#L736-L739))_ _(Based on a community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+## 5.7.0-beta.3 (2022-02-09)
+
+### Features Added
+
+- Added `FullyQualifiedNamespace`, `EventHubName`, and `ConsumerGroup` to the partition context associated with events read by the `EventHubConsumerClient`.
+
+### Other Changes
+
+- Improved documentation for `EventPosition` to be more explicit about defaults for inclusivity.
+
+- Minor updates to the class hierarchy of `EventData` to improve integration with Azure Schema Registry.
 
 ## 5.7.0-beta.2 (2022-01-13)
 

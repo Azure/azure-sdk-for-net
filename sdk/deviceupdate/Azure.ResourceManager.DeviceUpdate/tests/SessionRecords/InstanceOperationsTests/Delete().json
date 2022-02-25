@@ -93,13 +93,14 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "38",
+        "Content-Length": "48",
         "Content-Type": "application/json",
         "User-Agent": "azsdk-net-ResourceManager.DeviceUpdate/1.0.0-alpha.20211115.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "9fbf056c27cc677090e7772019b0bb0f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
+        "tags": {},
         "location": "westus2",
         "properties": {}
       },
@@ -978,13 +979,14 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "229",
+        "Content-Length": "239",
         "Content-Type": "application/json",
         "User-Agent": "azsdk-net-ResourceManager.DeviceUpdate/1.0.0-alpha.20211115.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "d1cb52d533e32e8e03d56a12102dc7cc",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
+        "tags": {},
         "location": "westus2",
         "properties": {
           "iotHubs": [
@@ -7851,7 +7853,7 @@
         "x-ms-request-id": "7035d99b-fbb7-45a3-8f0f-3e09bb180d06",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20211115T135934Z:73abf98a-5761-4aea-a54f-ad4a94f99cd3"
       },
-      "ResponseBody": null
+      "ResponseBody": "null"
     },
     {
       "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/7035d99b-fbb7-45a3-8f0f-3e09bb180d06*EFFE545689B739E910C59B82227F435232FA0D9A6B0292C7A16566E5E259B1BC?api-version=2020-03-01-preview",

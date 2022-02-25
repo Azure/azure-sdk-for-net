@@ -77,7 +77,7 @@
           "(.NET 5.0.3; Microsoft Windows 10.0.19041)"
         ],
         "x-ms-client-request-id": "3bc916df-bf3f-af18-ae14-27da7d5664b9",
-        "x-ms-rename-source": "%2Ftest-filesystem-5b9590d6-6af3-a509-1278-68d2dc4a9ce6%2Ftest-directory-a5ea196e-9d2a-f069-db5f-5b4768213852%3Fsv=2021-04-10&st=2021-02-19T18%3A05%3A59Z&se=2021-02-19T20%3A05%3A59Z&sr=c&sp=racwdlmeop&sig=Sanitized",
+        "x-ms-rename-source": "/test-filesystem-5b9590d6-6af3-a509-1278-68d2dc4a9ce6/test-directory-a5ea196e-9d2a-f069-db5f-5b4768213852?sv=2021-04-10&st=2021-02-19T18%3A05%3A59Z&se=2021-02-19T20%3A05%3A59Z&sr=c&sp=racwdlmeop&sig=Sanitized",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2021-04-10"
       },

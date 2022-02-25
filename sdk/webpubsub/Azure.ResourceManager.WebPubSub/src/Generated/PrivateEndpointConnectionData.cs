@@ -13,7 +13,7 @@ using Azure.ResourceManager.WebPubSub.Models;
 namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary> A class representing the PrivateEndpointConnection data model. </summary>
-    public partial class PrivateEndpointConnectionData : Resource
+    public partial class PrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnectionData. </summary>
         public PrivateEndpointConnectionData()
@@ -25,26 +25,35 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
         /// <param name="privateEndpoint"> Private endpoint associated with the private endpoint connection. </param>
         /// <param name="groupIds"> Group IDs. </param>
         /// <param name="privateLinkServiceConnectionState"> Connection state. </param>
-        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, ProvisioningState? provisioningState, PrivateEndpoint privateEndpoint, IReadOnlyList<string> groupIds, PrivateLinkServiceConnectionState privateLinkServiceConnectionState) : base(id, name, type)
+        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, ProvisioningState? provisioningState, PrivateEndpoint privateEndpoint, IReadOnlyList<string> groupIds, PrivateLinkServiceConnectionState privateLinkServiceConnectionState) : base(id, name, type, systemData)
         {
-            SystemData = systemData;
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             GroupIds = groupIds;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
         }
 
-        /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
-        public SystemData SystemData { get; }
         /// <summary> Provisioning state of the private endpoint connection. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Private endpoint associated with the private endpoint connection. </summary>
-        public PrivateEndpoint PrivateEndpoint { get; set; }
+        internal PrivateEndpoint PrivateEndpoint { get; set; }
+        /// <summary> Full qualified Id of the private endpoint. </summary>
+        public string PrivateEndpointId
+        {
+            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+            set
+            {
+                if (PrivateEndpoint is null)
+                    PrivateEndpoint = new PrivateEndpoint();
+                PrivateEndpoint.Id = value;
+            }
+        }
+
         /// <summary> Group IDs. </summary>
         public IReadOnlyList<string> GroupIds { get; }
         /// <summary> Connection state. </summary>

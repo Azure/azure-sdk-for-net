@@ -95,7 +95,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "70",
+        "Content-Length": "80",
         "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-ResourceManager.Cdn/1.0.0-alpha.20210916.1",
@@ -108,6 +108,7 @@
         "sku": {
           "name": "Standard_Akamai"
         },
+        "tags": {},
         "location": "westus",
         "properties": {}
       },

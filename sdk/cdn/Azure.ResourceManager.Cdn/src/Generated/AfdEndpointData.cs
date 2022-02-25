@@ -5,40 +5,35 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the AfdEndpoint data model. </summary>
-    public partial class AfdEndpointData : TrackedResource
+    public partial class AfdEndpointData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AfdEndpointData. </summary>
-        /// <param name="location"> Resource location. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public AfdEndpointData(string location) : base(location)
+        /// <param name="location"> The location. </param>
+        public AfdEndpointData(AzureLocation location) : base(location)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
         }
 
         /// <summary> Initializes a new instance of AfdEndpointData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Read only system data. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="originResponseTimeoutSeconds"> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </param>
         /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <param name="hostName"> The host name of the endpoint structured as {endpointName}.{DNSZone}, e.g. contoso.azureedge.net. </param>
-        internal AfdEndpointData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, IDictionary<string, string> tags, int? originResponseTimeoutSeconds, EnabledState? enabledState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus, string hostName) : base(id, name, type, systemData, location, tags)
+        internal AfdEndpointData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, int? originResponseTimeoutSeconds, EnabledState? enabledState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus, string hostName) : base(id, name, type, systemData, tags, location)
         {
             OriginResponseTimeoutSeconds = originResponseTimeoutSeconds;
             EnabledState = enabledState;

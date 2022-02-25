@@ -7,11 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Describes a managed rule set definition. </summary>
-    public partial class ManagedRuleSetDefinition : Resource
+    public partial class ManagedRuleSetDefinition : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedRuleSetDefinition. </summary>
         public ManagedRuleSetDefinition()
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Read only system data. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="sku"> The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy. </param>
         /// <param name="provisioningState"> Provisioning state of the managed rule set. </param>
         /// <param name="ruleSetType"> Type of the managed rule set. </param>
@@ -39,7 +40,19 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy. </summary>
-        public Sku Sku { get; set; }
+        internal Sku Sku { get; set; }
+        /// <summary> Name of the pricing tier. </summary>
+        public SkuName? SkuName
+        {
+            get => Sku is null ? default : Sku.Name;
+            set
+            {
+                if (Sku is null)
+                    Sku = new Sku();
+                Sku.Name = value;
+            }
+        }
+
         /// <summary> Provisioning state of the managed rule set. </summary>
         public string ProvisioningState { get; }
         /// <summary> Type of the managed rule set. </summary>

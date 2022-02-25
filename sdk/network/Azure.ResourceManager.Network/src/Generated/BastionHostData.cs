@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of BastionHostData. </summary>
         public BastionHostData()
         {
-            IpConfigurations = new ChangeTrackingList<BastionHostIPConfiguration>();
+            IPConfigurations = new ChangeTrackingList<BastionHostIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of BastionHostData. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network
         {
             Etag = etag;
             Sku = sku;
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             DnsName = dnsName;
             ProvisioningState = provisioningState;
         }
@@ -43,9 +43,21 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The sku of this Bastion Host. </summary>
-        public Sku Sku { get; set; }
+        internal Sku Sku { get; set; }
+        /// <summary> The name of this Bastion Host. </summary>
+        public BastionHostSkuName? SkuName
+        {
+            get => Sku is null ? default : Sku.Name;
+            set
+            {
+                if (Sku is null)
+                    Sku = new Sku();
+                Sku.Name = value;
+            }
+        }
+
         /// <summary> IP configuration of the Bastion Host resource. </summary>
-        public IList<BastionHostIPConfiguration> IpConfigurations { get; }
+        public IList<BastionHostIPConfiguration> IPConfigurations { get; }
         /// <summary> FQDN for the endpoint on which bastion host is accessible. </summary>
         public string DnsName { get; set; }
         /// <summary> The provisioning state of the bastion host resource. </summary>

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Application gateway client authentication configuration. </summary>
-    public partial class ApplicationGatewayClientAuthConfiguration
+    internal partial class ApplicationGatewayClientAuthConfiguration
     {
         /// <summary> Initializes a new instance of ApplicationGatewayClientAuthConfiguration. </summary>
         public ApplicationGatewayClientAuthConfiguration()

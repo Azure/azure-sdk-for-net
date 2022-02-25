@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifyMongoDBDatabases(database, database2);
 
-            MongoDBDatabaseCreateUpdateOptions updateOptions = new MongoDBDatabaseCreateUpdateOptions(database.Id, _databaseName, database.Data.Type,
+            MongoDBDatabaseCreateUpdateOptions updateOptions = new MongoDBDatabaseCreateUpdateOptions(database.Id, _databaseName, database.Data.Type, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 AzureLocation.WestUS, database.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountMongodbDatabaseThroughputSetting throughput2 = await throughput.CreateOrUpdate(false, new ThroughputSettingsUpdateOptions(AzureLocation.WestUS,
-                new ThroughputSettingsResource(TestThroughput2, null, null, null))).WaitForCompletionAsync();
+            DatabaseAccountMongodbDatabaseThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(true, new ThroughputSettingsUpdateOptions(AzureLocation.WestUS,
+                new ThroughputSettingsResource(TestThroughput2, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
         }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = await throughput.MigrateMongoDBDatabaseToAutoscale(false).WaitForCompletionAsync();
+            ThroughputSettingsData throughputData = (await throughput.MigrateMongoDBDatabaseToAutoscaleAsync(true)).Value.Data;
             AssertAutoscale(throughputData);
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountMongodbDatabaseThroughputSetting throughput = await database.GetDatabaseAccountMongodbDatabaseThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = await throughput.MigrateMongoDBDatabaseToManualThroughput(false).WaitForCompletionAsync();
+            ThroughputSettingsData throughputData = (await throughput.MigrateMongoDBDatabaseToManualThroughputAsync(true)).Value.Data;
             AssertManualThroughput(throughputData);
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.Null(database);
         }
 
-        protected async Task<MongoDBDatabase> CreateMongoDBDatabase(AutoscaleSettings autoscale)
+        internal async Task<MongoDBDatabase> CreateMongoDBDatabase(AutoscaleSettings autoscale)
         {
             _databaseName = Recording.GenerateAssetName("mongodb-");
             return await CreateMongoDBDatabase(_databaseName, autoscale, _databaseAccount.GetMongoDBDatabases());

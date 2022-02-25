@@ -39,15 +39,10 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task TestAddTags(string key, string value, IDictionary<string, string> tags)
         {
-            if (key is null)
+            if (key is null || value is null)
             {
                 var ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await _rg.AddTagAsync(key, value));
                 Assert.That(ex.Message.Contains("Value cannot be null"));
-            }
-            else if (value is null)
-            {
-                var ex = Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await _rg.AddTagAsync(key, value));
-                Assert.That(ex.Message.Contains("Invalid tag value. The following tags 'nullKey' have a null value. Tag value cannot be null."));
             }
             else
             {

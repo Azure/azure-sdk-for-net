@@ -633,7 +633,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="Delete"/> operation marks the specified path
         /// deletion. The path is later deleted during
-        /// garbage collection.
+        /// garbage collection which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
@@ -648,7 +648,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -683,7 +683,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation marks the specified path
         /// deletion. The path is later deleted during
-        /// garbage collection.
+        /// garbage collection which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
@@ -698,7 +698,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -736,7 +736,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="DeleteIfExists"/> operation marks the specified file
         /// for deletion, if the file exists. The file is later deleted during
-        /// garbage collection.
+        /// garbage collection which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
@@ -751,7 +751,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -786,7 +786,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="DeleteIfExistsAsync"/> operation marks the specified file
         /// for deletion, if the file exists. The file is later deleted during
-        /// garbage collection.
+        /// garbage collection which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
@@ -801,7 +801,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -4151,7 +4151,7 @@ namespace Azure.Storage.Files.DataLake
         /// result of a query against the file.
         /// </summary>
         /// <param name="querySqlExpression">
-        /// The query.
+        /// The query. For a sample SQL query expression, see <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-query-acceleration-how-to?tabs=dotnet%2Cpowershell#retrieve-data-by-using-a-filter">this </see>article.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -4201,7 +4201,7 @@ namespace Azure.Storage.Files.DataLake
         /// result of a query against the file.
         /// </summary>
         /// <param name="querySqlExpression">
-        /// The query.
+        /// The query. For a sample SQL query expression, see <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-query-acceleration-how-to?tabs=dotnet%2Cpowershell#retrieve-data-by-using-a-filter">this </see>article.
         /// </param>
         /// <param name="options">
         /// Optional parameters.

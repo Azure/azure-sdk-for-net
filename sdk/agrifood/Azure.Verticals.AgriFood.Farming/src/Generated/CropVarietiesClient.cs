@@ -22,9 +22,11 @@ namespace Azure.Verticals.AgriFood.Farming
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
@@ -45,7 +47,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new FarmBeatsClientOptions();
 
-            _clientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
@@ -57,6 +59,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="cropVarietyId"> ID of the crop variety. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> or <paramref name="cropVarietyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> or <paramref name="cropVarietyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -90,14 +93,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetCropVarietyAsync(string cropId, string cropVarietyId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(cropId, nameof(cropId));
-            Argument.AssertNotNull(cropVarietyId, nameof(cropVarietyId));
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
+            Argument.AssertNotNullOrEmpty(cropVarietyId, nameof(cropVarietyId));
 
-            using var scope = _clientDiagnostics.CreateScope("CropVarietiesClient.GetCropVariety");
+            using var scope = ClientDiagnostics.CreateScope("CropVarietiesClient.GetCropVariety");
             scope.Start();
             try
             {
@@ -116,6 +117,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="cropVarietyId"> ID of the crop variety. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> or <paramref name="cropVarietyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> or <paramref name="cropVarietyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -149,14 +151,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetCropVariety(string cropId, string cropVarietyId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(cropId, nameof(cropId));
-            Argument.AssertNotNull(cropVarietyId, nameof(cropVarietyId));
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
+            Argument.AssertNotNullOrEmpty(cropVarietyId, nameof(cropVarietyId));
 
-            using var scope = _clientDiagnostics.CreateScope("CropVarietiesClient.GetCropVariety");
+            using var scope = ClientDiagnostics.CreateScope("CropVarietiesClient.GetCropVariety");
             scope.Start();
             try
             {
@@ -176,6 +176,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> or <paramref name="cropVarietyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> or <paramref name="cropVarietyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -224,14 +225,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CreateOrUpdateAsync(string cropId, string cropVarietyId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(cropId, nameof(cropId));
-            Argument.AssertNotNull(cropVarietyId, nameof(cropVarietyId));
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
+            Argument.AssertNotNullOrEmpty(cropVarietyId, nameof(cropVarietyId));
 
-            using var scope = _clientDiagnostics.CreateScope("CropVarietiesClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("CropVarietiesClient.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -251,6 +250,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> or <paramref name="cropVarietyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> or <paramref name="cropVarietyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -299,14 +299,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response CreateOrUpdate(string cropId, string cropVarietyId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(cropId, nameof(cropId));
-            Argument.AssertNotNull(cropVarietyId, nameof(cropVarietyId));
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
+            Argument.AssertNotNullOrEmpty(cropVarietyId, nameof(cropVarietyId));
 
-            using var scope = _clientDiagnostics.CreateScope("CropVarietiesClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("CropVarietiesClient.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -325,6 +323,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="cropVarietyId"> ID of the crop variety. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> or <paramref name="cropVarietyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> or <paramref name="cropVarietyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -343,14 +342,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> DeleteAsync(string cropId, string cropVarietyId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(cropId, nameof(cropId));
-            Argument.AssertNotNull(cropVarietyId, nameof(cropVarietyId));
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
+            Argument.AssertNotNullOrEmpty(cropVarietyId, nameof(cropVarietyId));
 
-            using var scope = _clientDiagnostics.CreateScope("CropVarietiesClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("CropVarietiesClient.Delete");
             scope.Start();
             try
             {
@@ -369,6 +366,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="cropVarietyId"> ID of the crop variety. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> or <paramref name="cropVarietyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> or <paramref name="cropVarietyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -387,14 +385,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response Delete(string cropId, string cropVarietyId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(cropId, nameof(cropId));
-            Argument.AssertNotNull(cropVarietyId, nameof(cropVarietyId));
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
+            Argument.AssertNotNullOrEmpty(cropVarietyId, nameof(cropVarietyId));
 
-            using var scope = _clientDiagnostics.CreateScope("CropVarietiesClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("CropVarietiesClient.Delete");
             scope.Start();
             try
             {
@@ -431,6 +427,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -470,13 +467,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetCropVarietiesByCropIdAsync(string cropId, IEnumerable<string> cropIds = null, IEnumerable<string> brands = null, IEnumerable<string> products = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(cropId, nameof(cropId));
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "CropVarietiesClient.GetCropVarietiesByCropId");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "CropVarietiesClient.GetCropVarietiesByCropId");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -514,6 +509,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -553,13 +549,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetCropVarietiesByCropId(string cropId, IEnumerable<string> cropIds = null, IEnumerable<string> brands = null, IEnumerable<string> products = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(cropId, nameof(cropId));
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "CropVarietiesClient.GetCropVarietiesByCropId");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "CropVarietiesClient.GetCropVarietiesByCropId");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -634,11 +628,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetCropVarietiesAsync(IEnumerable<string> cropIds = null, IEnumerable<string> brands = null, IEnumerable<string> products = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "CropVarietiesClient.GetCropVarieties");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "CropVarietiesClient.GetCropVarieties");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -713,11 +705,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetCropVarieties(IEnumerable<string> cropIds = null, IEnumerable<string> brands = null, IEnumerable<string> products = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "CropVarietiesClient.GetCropVarieties");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "CropVarietiesClient.GetCropVarieties");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do

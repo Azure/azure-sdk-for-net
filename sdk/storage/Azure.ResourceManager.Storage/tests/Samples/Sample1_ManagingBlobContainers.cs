@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ResourceGroupCreateOrUpdateOperation operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+            ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = operation.Value;
             this.resourceGroup = resourceGroup;
             Sku sku = new Sku(SkuName.StandardGRS);
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku, kind, locationStr);
             StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
             string accountName = "myAccount";
-            StorageAccountCreateOrUpdateOperation accountCreateOperation = await accountCollection.CreateOrUpdateAsync(false, accountName, parameters);
+            ArmOperation<StorageAccount> accountCreateOperation = await accountCollection.CreateOrUpdateAsync(false, accountName, parameters);
             storageAccount = await accountCreateOperation.WaitForCompletionAsync();
             #region Snippet:Managing_BlobContainers_GetBlobService
             BlobService blobService = storageAccount.GetBlobService();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
             string blobContainerName = "myBlobContainer";
             BlobContainerData blobContainerData = new BlobContainerData();
-            BlobContainerCreateOrUpdateOperation blobContainerCreateOperation = await blobContainerCollection.CreateOrUpdateAsync(true, blobContainerName, blobContainerData);
+            ArmOperation<BlobContainer> blobContainerCreateOperation = await blobContainerCollection.CreateOrUpdateAsync(true, blobContainerName, blobContainerData);
             BlobContainer blobContainer = blobContainerCreateOperation.Value;
             #endregion
         }

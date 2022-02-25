@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="sourceTriggerEvents">The source event corresponding to
         /// the trigger.</param>
         /// <param name="status">The current status of trigger. Possible values
-        /// include: 'Enabled', 'Disabled'</param>
+        /// include: 'Disabled', 'Enabled'</param>
         public SourceTriggerUpdateParameters(string name, SourceUpdateParameters sourceRepository = default(SourceUpdateParameters), IList<string> sourceTriggerEvents = default(IList<string>), string status = default(string))
         {
             SourceRepository = sourceRepository;
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 
         /// <summary>
         /// Gets or sets the current status of trigger. Possible values
-        /// include: 'Enabled', 'Disabled'
+        /// include: 'Disabled', 'Enabled'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; set; }

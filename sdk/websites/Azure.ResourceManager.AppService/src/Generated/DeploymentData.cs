@@ -8,6 +8,7 @@
 using System;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -23,6 +24,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="status"> Deployment status. </param>
         /// <param name="message"> Details about deployment status. </param>
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> End time. </param>
         /// <param name="active"> True if deployment is currently active, false if completed and null if not started. </param>
         /// <param name="details"> Details on deployment. </param>
-        internal DeploymentData(ResourceIdentifier id, string name, ResourceType type, string kind, int? status, string message, string author, string deployer, string authorEmail, DateTimeOffset? startTime, DateTimeOffset? endTime, bool? active, string details) : base(id, name, type, kind)
+        internal DeploymentData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, int? status, string message, string author, string deployer, string authorEmail, DateTimeOffset? startTime, DateTimeOffset? endTime, bool? active, string details) : base(id, name, type, systemData, kind)
         {
             Status = status;
             Message = message;

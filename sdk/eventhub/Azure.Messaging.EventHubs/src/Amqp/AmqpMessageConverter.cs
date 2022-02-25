@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using Azure.Core;
@@ -80,7 +79,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   ensuring proper disposal.
         /// </remarks>
         ///
-        public virtual AmqpMessage CreateBatchFromEvents(IEnumerable<EventData> source,
+        public virtual AmqpMessage CreateBatchFromEvents(IReadOnlyCollection<EventData> source,
                                                          string partitionKey = null)
         {
             Argument.AssertNotNull(source, nameof(source));
@@ -101,7 +100,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   ensuring proper disposal.
         /// </remarks>
         ///
-        public virtual AmqpMessage CreateBatchFromMessages(IEnumerable<AmqpMessage> source,
+        public virtual AmqpMessage CreateBatchFromMessages(IReadOnlyCollection<AmqpMessage> source,
                                                            string partitionKey = null)
         {
             Argument.AssertNotNull(source, nameof(source));
@@ -264,11 +263,18 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source events.</returns>
         ///
-        private static AmqpMessage BuildAmqpBatchFromEvents(IEnumerable<EventData> source,
-                                                            string partitionKey) =>
-            BuildAmqpBatchFromMessages(
-                source.Select(eventData => BuildAmqpMessageFromEvent(eventData, partitionKey)),
-                partitionKey);
+        private static AmqpMessage BuildAmqpBatchFromEvents(IReadOnlyCollection<EventData> source,
+                                                            string partitionKey)
+        {
+            var messages = new List<AmqpMessage>(source.Count);
+
+            foreach (var eventData in source)
+            {
+                messages.Add(BuildAmqpMessageFromEvent(eventData, partitionKey));
+            }
+
+            return BuildAmqpBatchFromMessages(messages, partitionKey);
+        }
 
         /// <summary>
         ///   Builds a batch <see cref="AmqpMessage" /> from a set of <see cref="AmqpMessage" />.
@@ -284,26 +290,43 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   ensuring proper disposal.
         /// </remarks>
         ///
-        private static AmqpMessage BuildAmqpBatchFromMessages(IEnumerable<AmqpMessage> source,
+        private static AmqpMessage BuildAmqpBatchFromMessages(IReadOnlyCollection<AmqpMessage> source,
                                                               string partitionKey)
         {
             AmqpMessage batchEnvelope;
 
-            var batchMessages = source.ToList();
-
-            if (batchMessages.Count == 1)
+            if (source.Count == 1)
             {
-                batchEnvelope = batchMessages[0];
+                switch (source)
+                {
+                    case List<AmqpMessage> messageList:
+                        batchEnvelope = messageList[0];
+                        break;
+
+                    case AmqpMessage[] messageArray:
+                        batchEnvelope = messageArray[0];
+                        break;
+
+                    default:
+                        var enumerator = source.GetEnumerator();
+                        enumerator.MoveNext();
+
+                        batchEnvelope = enumerator.Current;
+                        break;
+                }
             }
             else
             {
-                batchEnvelope = AmqpMessage.Create(batchMessages.Select(message =>
+                var messageData = new List<Data>(source.Count);
+
+                foreach (var message in source)
                 {
                     message.Batchable = true;
                     using var messageStream = message.ToStream();
-                    return new Data { Value = ReadStreamToArraySegment(messageStream) };
-                }));
+                    messageData.Add(new Data { Value = ReadStreamToArraySegment(messageStream) });
+                }
 
+                batchEnvelope = AmqpMessage.Create(messageData);
                 batchEnvelope.MessageFormat = AmqpConstants.AmqpBatchedMessageFormat;
             }
 
@@ -858,7 +881,14 @@ namespace Azure.Messaging.EventHubs.Amqp
                 return false;
             }
 
-            sequenceBody = AmqpMessageBody.FromSequence(source.SequenceBody.Select(item => (IList<object>)item.List).ToArray());
+            var bodyContent = new List<IList<object>>();
+
+            foreach (var item in source.SequenceBody)
+            {
+                bodyContent.Add((IList<object>)item.List);
+            }
+
+            sequenceBody = AmqpMessageBody.FromSequence(bodyContent);
             return true;
         }
 

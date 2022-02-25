@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -24,6 +25,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="latestRun"> Latest job run information. </param>
         /// <param name="historyUrl"> History URL. </param>
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="error"> Error information. </param>
         /// <param name="usingSdk"> Using SDK?. </param>
         /// <param name="settings"> Job settings. </param>
-        internal TriggeredWebJobData(ResourceIdentifier id, string name, ResourceType type, string kind, TriggeredJobRun latestRun, string historyUrl, string schedulerLogsUrl, string runCommand, string url, string extraInfoUrl, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, object> settings) : base(id, name, type, kind)
+        internal TriggeredWebJobData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, TriggeredJobRun latestRun, string historyUrl, string schedulerLogsUrl, string runCommand, string url, string extraInfoUrl, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, object> settings) : base(id, name, type, systemData, kind)
         {
             LatestRun = latestRun;
             HistoryUrl = historyUrl;

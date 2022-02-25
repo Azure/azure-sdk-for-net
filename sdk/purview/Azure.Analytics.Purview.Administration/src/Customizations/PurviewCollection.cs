@@ -17,7 +17,7 @@ namespace Azure.Analytics.Purview.Administration
             _tokenCredential = tokenCredential;
             _endpoint = endpoint;
             _collectionName = collectionName;
-            _clientDiagnostics = clientDiagnostics;
+            ClientDiagnostics = clientDiagnostics;
         }
     }
 }

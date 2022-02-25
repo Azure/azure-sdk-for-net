@@ -6,6 +6,7 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -21,10 +22,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="functionName"> The name for the function. </param>
         /// <param name="triggerType"> The trigger type of the function. </param>
-        internal StaticSiteFunctionOverviewARMResource(ResourceIdentifier id, string name, ResourceType type, string kind, string functionName, TriggerTypes? triggerType) : base(id, name, type, kind)
+        internal StaticSiteFunctionOverviewARMResource(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string functionName, TriggerTypes? triggerType) : base(id, name, type, systemData, kind)
         {
             FunctionName = functionName;
             TriggerType = triggerType;

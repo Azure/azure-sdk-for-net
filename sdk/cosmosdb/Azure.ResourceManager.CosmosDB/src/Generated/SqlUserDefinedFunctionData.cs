@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> A class representing the SqlUserDefinedFunction data model. </summary>
-    public partial class SqlUserDefinedFunctionData : TrackedResource
+    public partial class SqlUserDefinedFunctionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SqlUserDefinedFunctionData. </summary>
         /// <param name="location"> The location. </param>
@@ -25,10 +25,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
-        internal SqlUserDefinedFunctionData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, SqlUserDefinedFunctionPropertiesResource resource) : base(id, name, type, tags, location)
+        internal SqlUserDefinedFunctionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlUserDefinedFunctionPropertiesResource resource) : base(id, name, type, systemData, tags, location)
         {
             Resource = resource;
         }
