@@ -136,7 +136,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
             var metrics = new List<Metric>();
 
-            using var meter = new Meter(nameof(ValidateSumDoubles));
+            using var meter = new Meter(nameof(ValidateLimits));
             using var provider = Sdk.CreateMeterProviderBuilder()
                 .AddMeter(meter.Name)
                 .AddInMemoryExporter(metrics)
