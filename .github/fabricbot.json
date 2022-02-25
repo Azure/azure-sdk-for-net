@@ -4067,7 +4067,7 @@
         }
       ],
       "requireBotAssign": false,
-      "replyTemplate": "Thank you for your feedback.   We are routing this to the appropriate team for follow-up. \n\n//cc: ${mentionees}."
+      "replyTemplate": "Thank you for your feedback.   We are routing this to the appropriate team members for follow-up. "
     }
   },
   {
@@ -4231,12 +4231,54 @@
           "parameters": {
             "label": "CXP Attention"
           }
+        },
+        {
+          "name": "addReply",
+          "parameters": {
+            "comment": "Thank you for your feedback.  This has been routed to the support team for assistance."
+          }
         }
       ],
       "dangerZone": {
         "respondToBotActions": true,
         "acceptRespondToBotActions": true
       }
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssueCommentResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "isOpen",
+            "parameters": {}
+          },
+          {
+            "name": "commentContains",
+            "parameters": {
+              "commentPattern": "/squire"
+            }
+          }
+        ]
+      },
+      "eventType": "issue",
+      "eventNames": [
+        "issue_comment"
+      ],
+      "taskName": "[SQUIRE TEST] Validate Rules Updated",
+      "actions": [
+        {
+          "name": "addReply",
+          "parameters": {
+            "comment": "Test rules iteration: 3"
+          }
+        }
+      ]
     }
   }
 ]
