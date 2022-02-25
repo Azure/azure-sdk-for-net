@@ -4090,12 +4090,6 @@
             }
           },
           {
-            "name": "isAction",
-            "parameters": {
-              "action": "assigned"
-            }
-          },
-          {
             "name": "isAssignedToSomeone",
             "parameters": {}
           },
@@ -4123,6 +4117,12 @@
           "name": "removeLabel",
           "parameters": {
             "label": "needs-team-triage"
+          }
+        },
+        {
+          "name": "addLabel",
+          "parameters": {
+            "label": "needs-team-attention"
           }
         }
       ],
@@ -4172,44 +4172,21 @@
             ]
           },
           {
-            "operator": "not",
-            "operands": [
-              {
-                "name": "isAction",
-                "parameters": {
-                  "titlePattern": "[SQUIRE TEST]",
-                  "action": "opened"
-                }
-              }
-            ]
-          },
-          {
-            "operator": "not",
-            "operands": [
-              {
-                "name": "isAction",
-                "parameters": {
-                  "action": "closed"
-                }
-              }
-            ]
-          },
-          {
-            "operator": "not",
-            "operands": [
-              {
-                "name": "isAction",
-                "parameters": {
-                  "action": "reopened"
-                }
-              }
-            ]
-          },
-          {
             "name": "titleContains",
             "parameters": {
               "titlePattern": "[SQUIRE TEST]"
             }
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "hasLabel",
+                "parameters": {
+                  "label": "CXP Attention"
+                }
+              }
+            ]
           }
         ]
       },
@@ -4233,9 +4210,9 @@
           }
         },
         {
-          "name": "addReply",
+          "name": "addLabel",
           "parameters": {
-            "comment": "Thank you for your feedback.  This has been routed to the support team for assistance."
+            "label": "needs-team-attention"
           }
         }
       ],
@@ -4275,7 +4252,7 @@
         {
           "name": "addReply",
           "parameters": {
-            "comment": "Test rules iteration: 3"
+            "comment": "Test rules iteration: 4"
           }
         }
       ]
