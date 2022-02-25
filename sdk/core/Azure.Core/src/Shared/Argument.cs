@@ -221,14 +221,16 @@ namespace Azure.Core
         /// <param name="message">The error message.</param>
         /// <exception cref="ArgumentException"><paramref name="value"/> is not null.</exception>
 #if AZURE_NULLABLE
-        public static void AssertNull<T>([AllowNull] T value, string name, string message)
+        public static void AssertNull<T>([AllowNull] T value, string name, [AllowNull] string message = null)
 #else
-        public static void AssertNull<T>(T value, string name, string message)
+#nullable enable
+        public static void AssertNull<T>(T value, string name, string? message = null)
+#nullable disable
 #endif
         {
             if (value is not null)
             {
-                throw new ArgumentException(message, name);
+                throw new ArgumentException(message ?? "Value must be null.", name);
             }
         }
     }
