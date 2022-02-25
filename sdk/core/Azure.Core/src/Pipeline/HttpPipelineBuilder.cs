@@ -123,7 +123,6 @@ namespace Azure.Core.Pipeline
 
             AddCustomerPolicies(HttpPipelinePosition.PerCall);
 
-            policies.RemoveAll(static policy => policy == null);
             var perCallIndex = policies.Count;
 
             policies.Add(ClientRequestIdPolicy.Shared);
