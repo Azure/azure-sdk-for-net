@@ -30,6 +30,23 @@ no-property-type-replacement:
 override-operation-name:
   CheckNameAvailability: CheckCdnNameAvailability
   CheckNameAvailabilityWithSubscription: CheckCdnNameAvailabilityWithSubscription
+rename-rules:
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  Ipv4: IPv4
+  Ipv6: IPv6
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+
 directive:
   - from: cdnwebapplicationfirewall.json
     where: $.definitions.CdnWebApplicationFirewallPolicyProperties.properties.rateLimitRules
@@ -238,22 +255,4 @@ directive:
               }
           }
       }
-  - from: swagger-document
-    where: $.definitions.EdgeNodeProperties.properties.ipAddressGroups
-    transform: $['x-ms-client-name'] = 'iPAddressGroups'
-  - from: swagger-document
-    where: $.definitions.IpAddressGroup
-    transform: $['x-ms-client-name'] = 'IPAddressGroup'
-  - from: swagger-document
-    where: $.definitions.IpAddressGroup.properties.ipv4Addresses
-    transform: $['x-ms-client-name'] = 'iPv4Addresses'
-  - from: swagger-document
-    where: $.definitions.IpAddressGroup.properties.ipv6Addresses
-    transform: $['x-ms-client-name'] = 'iPv6Addresses'
-  - from: swagger-document
-    where: $.definitions.cidrIpAddress
-    transform: $['x-ms-client-name'] = 'cidrIPAddress'
-  - from: swagger-document
-    where: $.definitions.cidrIpAddress.properties.baseIpAddress
-    transform: $['x-ms-client-name'] = 'baseIPAddress'
 ```
