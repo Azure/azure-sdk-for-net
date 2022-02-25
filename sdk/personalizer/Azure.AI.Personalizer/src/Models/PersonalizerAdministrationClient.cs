@@ -341,15 +341,15 @@ namespace Azure.AI.Personalizer
         }
 
         /// <summary> Replace the current model used by Personalizer service with an updated model. </summary>
-        /// <param name="modelStream">Stream representing the digitally signed model zip archive.</param>
+        /// <param name="modelBody">Stream representing the digitally signed model zip archive.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ImportPersonalizerSignedModelAsync(Stream modelStream, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ImportPersonalizerSignedModelAsync(Stream modelBody, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PersonalizerAdministrationClient.ImportPersonalizerSignedModel");
             scope.Start();
             try
             {
-                return await ModelRestClient.ImportAsync(modelStream, cancellationToken).ConfigureAwait(false);
+                return await ModelRestClient.ImportAsync(modelBody, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -359,15 +359,15 @@ namespace Azure.AI.Personalizer
         }
 
         /// <summary> Replace the current model used by Personalizer service with an updated model. </summary>
-        /// <param name="modelStream">Stream representing the digitally signed model zip archive.</param>
+        /// <param name="modelBody">Stream representing the digitally signed model zip archive.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response ImportPersonalizerSignedModel(Stream modelStream, CancellationToken cancellationToken = default)
+        public virtual Response ImportPersonalizerSignedModel(Stream modelBody, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PersonalizerAdministrationClient.ImportPersonalizerSignedModel");
             scope.Start();
             try
             {
-                return ModelRestClient.Import(modelStream, cancellationToken);
+                return ModelRestClient.Import(modelBody, cancellationToken);
             }
             catch (Exception e)
             {

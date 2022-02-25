@@ -43,9 +43,9 @@ namespace Azure.AI.Personalizer.Tests
             return await client.ExportPersonalizerSignedModelAsync();
         }
 
-        private async Task<Response> ImportSignedModel(Stream modelStream, PersonalizerAdministrationClient client)
+        private async Task<Response> ImportSignedModel(Stream modelBody, PersonalizerAdministrationClient client)
         {
-            return await client.ImportPersonalizerSignedModelAsync(modelStream);
+            return await client.ImportPersonalizerSignedModelAsync(modelBody);
         }
 
         private async Task ResetModel(PersonalizerAdministrationClient client)
