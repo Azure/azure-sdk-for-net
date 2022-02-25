@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Describes operator to be matched. </summary>
-    public readonly partial struct RequestMethodOperator : IEquatable<RequestMethodOperator>
+    internal readonly partial struct RequestMethodOperator : IEquatable<RequestMethodOperator>
     {
         private readonly string _value;
 

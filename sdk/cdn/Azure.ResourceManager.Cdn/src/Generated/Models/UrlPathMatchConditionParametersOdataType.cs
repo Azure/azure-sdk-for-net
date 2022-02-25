@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The UrlPathMatchConditionParametersOdataType. </summary>
-    public readonly partial struct UrlPathMatchConditionParametersOdataType : IEquatable<UrlPathMatchConditionParametersOdataType>
+    internal readonly partial struct UrlPathMatchConditionParametersOdataType : IEquatable<UrlPathMatchConditionParametersOdataType>
     {
         private readonly string _value;
 

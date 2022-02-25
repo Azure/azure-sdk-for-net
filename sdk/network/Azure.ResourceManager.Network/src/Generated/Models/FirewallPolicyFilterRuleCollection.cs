@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Firewall Policy Filter Rule Collection. </summary>
-    public partial class FirewallPolicyFilterRuleCollection : FirewallPolicyRuleCollection
+    internal partial class FirewallPolicyFilterRuleCollection : FirewallPolicyRuleCollection
     {
         /// <summary> Initializes a new instance of FirewallPolicyFilterRuleCollection. </summary>
         public FirewallPolicyFilterRuleCollection()

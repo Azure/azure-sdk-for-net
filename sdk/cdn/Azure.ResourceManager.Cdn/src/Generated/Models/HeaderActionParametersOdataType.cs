@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The HeaderActionParametersOdataType. </summary>
-    public readonly partial struct HeaderActionParametersOdataType : IEquatable<HeaderActionParametersOdataType>
+    internal readonly partial struct HeaderActionParametersOdataType : IEquatable<HeaderActionParametersOdataType>
     {
         private readonly string _value;
 

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The UrlSigningActionParametersOdataType. </summary>
-    public readonly partial struct UrlSigningActionParametersOdataType : IEquatable<UrlSigningActionParametersOdataType>
+    internal readonly partial struct UrlSigningActionParametersOdataType : IEquatable<UrlSigningActionParametersOdataType>
     {
         private readonly string _value;
 

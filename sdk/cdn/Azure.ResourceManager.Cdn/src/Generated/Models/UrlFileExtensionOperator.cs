@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Describes operator to be matched. </summary>
-    public readonly partial struct UrlFileExtensionOperator : IEquatable<UrlFileExtensionOperator>
+    internal readonly partial struct UrlFileExtensionOperator : IEquatable<UrlFileExtensionOperator>
     {
         private readonly string _value;
 

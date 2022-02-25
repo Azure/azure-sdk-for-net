@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Type of managed service identity. </summary>
-    public enum ManagedServiceIdentityType
+    internal enum ManagedServiceIdentityType
     {
         /// <summary> SystemAssigned. </summary>
         SystemAssigned,

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The type of identity used for the resource. The type &apos;SystemAssigned,UserAssigned&apos; includes both an implicitly created identity and a set of user assigned identities. The type &apos;None&apos; will remove any identities from the service. </summary>
-    public enum ResourceIdentityType
+    internal enum ResourceIdentityType
     {
         /// <summary> SystemAssigned. </summary>
         SystemAssigned,

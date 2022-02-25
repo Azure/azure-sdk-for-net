@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The redirect type the rule will use when redirecting traffic. </summary>
-    public readonly partial struct RedirectType : IEquatable<RedirectType>
+    internal readonly partial struct RedirectType : IEquatable<RedirectType>
     {
         private readonly string _value;
 

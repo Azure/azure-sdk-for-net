@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Information about JIT request. </summary>
-    public partial class JitRequestUpdateOptions
+    internal partial class JitRequestUpdateOptions
     {
         /// <summary> Initializes a new instance of JitRequestUpdateOptions. </summary>
         public JitRequestUpdateOptions()

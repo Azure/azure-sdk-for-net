@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Protocol to use for the redirect. The default value is MatchRequest. </summary>
-    public readonly partial struct DestinationProtocol : IEquatable<DestinationProtocol>
+    internal readonly partial struct DestinationProtocol : IEquatable<DestinationProtocol>
     {
         private readonly string _value;
 

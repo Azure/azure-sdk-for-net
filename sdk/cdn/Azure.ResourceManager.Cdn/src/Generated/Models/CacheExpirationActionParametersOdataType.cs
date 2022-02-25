@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The CacheExpirationActionParametersOdataType. </summary>
-    public readonly partial struct CacheExpirationActionParametersOdataType : IEquatable<CacheExpirationActionParametersOdataType>
+    internal readonly partial struct CacheExpirationActionParametersOdataType : IEquatable<CacheExpirationActionParametersOdataType>
     {
         private readonly string _value;
 

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for RequestUri match conditions. </summary>
-    public partial class RequestUriMatchConditionParameters
+    internal partial class RequestUriMatchConditionParameters
     {
         /// <summary> Initializes a new instance of RequestUriMatchConditionParameters. </summary>
         /// <param name="odataType"></param>

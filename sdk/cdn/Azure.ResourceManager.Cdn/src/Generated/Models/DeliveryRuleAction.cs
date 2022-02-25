@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The name of the action for the delivery rule. </summary>
-    public readonly partial struct DeliveryRuleAction : IEquatable<DeliveryRuleAction>
+    internal readonly partial struct DeliveryRuleAction : IEquatable<DeliveryRuleAction>
     {
         private readonly string _value;
 

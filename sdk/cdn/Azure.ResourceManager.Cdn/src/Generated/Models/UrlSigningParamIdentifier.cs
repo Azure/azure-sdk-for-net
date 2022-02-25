@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines how to identify a parameter for a specific purpose e.g. expires. </summary>
-    public partial class UrlSigningParamIdentifier
+    internal partial class UrlSigningParamIdentifier
     {
         /// <summary> Initializes a new instance of UrlSigningParamIdentifier. </summary>
         /// <param name="paramIndicator"> Indicates the purpose of the parameter. </param>

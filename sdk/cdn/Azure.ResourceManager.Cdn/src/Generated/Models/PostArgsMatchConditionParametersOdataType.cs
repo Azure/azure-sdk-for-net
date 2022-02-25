@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The PostArgsMatchConditionParametersOdataType. </summary>
-    public readonly partial struct PostArgsMatchConditionParametersOdataType : IEquatable<PostArgsMatchConditionParametersOdataType>
+    internal readonly partial struct PostArgsMatchConditionParametersOdataType : IEquatable<PostArgsMatchConditionParametersOdataType>
     {
         private readonly string _value;
 

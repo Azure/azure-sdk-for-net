@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The CacheKeyQueryStringActionParametersOdataType. </summary>
-    public readonly partial struct CacheKeyQueryStringActionParametersOdataType : IEquatable<CacheKeyQueryStringActionParametersOdataType>
+    internal readonly partial struct CacheKeyQueryStringActionParametersOdataType : IEquatable<CacheKeyQueryStringActionParametersOdataType>
     {
         private readonly string _value;
 

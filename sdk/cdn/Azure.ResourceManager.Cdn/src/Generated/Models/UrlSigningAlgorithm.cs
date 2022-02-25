@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Algorithm to use for URL signing. </summary>
-    public readonly partial struct UrlSigningAlgorithm : IEquatable<UrlSigningAlgorithm>
+    internal readonly partial struct UrlSigningAlgorithm : IEquatable<UrlSigningAlgorithm>
     {
         private readonly string _value;
 

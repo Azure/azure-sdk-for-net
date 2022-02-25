@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Indicates the purpose of the parameter. </summary>
-    public readonly partial struct ParamIndicator : IEquatable<ParamIndicator>
+    internal readonly partial struct ParamIndicator : IEquatable<ParamIndicator>
     {
         private readonly string _value;
 

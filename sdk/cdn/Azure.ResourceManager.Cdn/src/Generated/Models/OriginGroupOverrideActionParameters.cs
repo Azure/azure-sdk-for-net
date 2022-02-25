@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for the origin group override action. </summary>
-    public partial class OriginGroupOverrideActionParameters
+    internal partial class OriginGroupOverrideActionParameters
     {
         /// <summary> Initializes a new instance of OriginGroupOverrideActionParameters. </summary>
         /// <param name="odataType"></param>

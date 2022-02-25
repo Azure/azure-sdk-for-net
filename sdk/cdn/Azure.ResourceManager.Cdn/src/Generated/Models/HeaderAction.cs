@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Action to perform. </summary>
-    public readonly partial struct HeaderAction : IEquatable<HeaderAction>
+    internal readonly partial struct HeaderAction : IEquatable<HeaderAction>
     {
         private readonly string _value;
 

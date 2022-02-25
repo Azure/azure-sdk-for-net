@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for UrlFileExtension match conditions. </summary>
-    public partial class UrlFileExtensionMatchConditionParameters
+    internal partial class UrlFileExtensionMatchConditionParameters
     {
         /// <summary> Initializes a new instance of UrlFileExtensionMatchConditionParameters. </summary>
         /// <param name="odataType"></param>

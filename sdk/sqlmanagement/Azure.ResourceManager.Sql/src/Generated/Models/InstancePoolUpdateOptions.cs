@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> An update to an Instance pool. </summary>
-    public partial class InstancePoolUpdateOptions
+    internal partial class InstancePoolUpdateOptions
     {
         /// <summary> Initializes a new instance of InstancePoolUpdateOptions. </summary>
         public InstancePoolUpdateOptions()

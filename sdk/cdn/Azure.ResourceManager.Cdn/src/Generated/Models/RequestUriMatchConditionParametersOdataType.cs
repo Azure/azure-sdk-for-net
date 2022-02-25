@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The RequestUriMatchConditionParametersOdataType. </summary>
-    public readonly partial struct RequestUriMatchConditionParametersOdataType : IEquatable<RequestUriMatchConditionParametersOdataType>
+    internal readonly partial struct RequestUriMatchConditionParametersOdataType : IEquatable<RequestUriMatchConditionParametersOdataType>
     {
         private readonly string _value;
 

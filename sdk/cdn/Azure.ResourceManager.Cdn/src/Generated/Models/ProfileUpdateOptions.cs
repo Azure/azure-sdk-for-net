@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Properties required to update a profile. </summary>
-    public partial class ProfileUpdateOptions
+    internal partial class ProfileUpdateOptions
     {
         /// <summary> Initializes a new instance of ProfileUpdateOptions. </summary>
         public ProfileUpdateOptions()

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Describes operator to be matched. </summary>
-    public readonly partial struct IsDeviceOperator : IEquatable<IsDeviceOperator>
+    internal readonly partial struct IsDeviceOperator : IEquatable<IsDeviceOperator>
     {
         private readonly string _value;
 

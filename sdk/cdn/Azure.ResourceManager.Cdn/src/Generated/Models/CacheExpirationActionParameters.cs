@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for the cache expiration action. </summary>
-    public partial class CacheExpirationActionParameters
+    internal partial class CacheExpirationActionParameters
     {
         /// <summary> Initializes a new instance of CacheExpirationActionParameters. </summary>
         /// <param name="odataType"></param>

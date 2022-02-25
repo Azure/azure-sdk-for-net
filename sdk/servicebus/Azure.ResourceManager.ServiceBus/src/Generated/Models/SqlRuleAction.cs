@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Represents set of actions written in SQL language-based syntax that is performed against a ServiceBus.Messaging.BrokeredMessage. </summary>
-    public partial class SqlRuleAction : FilterAction
+    internal partial class SqlRuleAction : FilterAction
     {
         /// <summary> Initializes a new instance of SqlRuleAction. </summary>
         public SqlRuleAction()

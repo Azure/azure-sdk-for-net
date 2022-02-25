@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Models
 {
     [JsonConverter(typeof(ErrorResponseConverter))]
-    internal partial class ErrorResponse : IUtf8JsonSerializable
+    public partial class ErrorResponse : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

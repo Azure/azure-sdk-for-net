@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for the cache-key query string action. </summary>
-    public partial class CacheKeyQueryStringActionParameters
+    internal partial class CacheKeyQueryStringActionParameters
     {
         /// <summary> Initializes a new instance of CacheKeyQueryStringActionParameters. </summary>
         /// <param name="odataType"></param>

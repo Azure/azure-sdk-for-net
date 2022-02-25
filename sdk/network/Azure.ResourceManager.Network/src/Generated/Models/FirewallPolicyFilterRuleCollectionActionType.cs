@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The action type of a rule. </summary>
-    public readonly partial struct FirewallPolicyFilterRuleCollectionActionType : IEquatable<FirewallPolicyFilterRuleCollectionActionType>
+    internal readonly partial struct FirewallPolicyFilterRuleCollectionActionType : IEquatable<FirewallPolicyFilterRuleCollectionActionType>
     {
         private readonly string _value;
 
