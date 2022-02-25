@@ -70,6 +70,11 @@ namespace Azure.Core.Tests
                 Assert.False(beforeTransportRan);
             }), HttpPipelinePosition.PerRetry);
 
+            // Intentionally add some null policies to ensure it does not break indexing
+            options.AddPolicy(null, HttpPipelinePosition.PerCall);
+            options.AddPolicy(null, HttpPipelinePosition.PerRetry);
+            options.AddPolicy(null, HttpPipelinePosition.BeforeTransport);
+
             options.AddPolicy(new CallbackPolicy(m =>
             {
                 beforeTransportRan = true;
