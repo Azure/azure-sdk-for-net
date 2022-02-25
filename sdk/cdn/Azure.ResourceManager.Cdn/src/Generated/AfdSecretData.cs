@@ -39,6 +39,17 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets the deployment status. </summary>
         public DeploymentStatus? DeploymentStatus { get; }
         /// <summary> object which contains secret parameters. </summary>
-        public SecretParameters Parameters { get; set; }
+        internal SecretParameters Parameters { get; set; }
+        /// <summary> The type of the Secret to create. </summary>
+        internal SecretType ParametersType
+        {
+            get => Parameters is null ? default : Parameters.Type;
+            set
+            {
+                if (Parameters is null)
+                    Parameters = new SecretParameters();
+                Parameters.Type = value;
+            }
+        }
     }
 }

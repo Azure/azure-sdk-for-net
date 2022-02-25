@@ -92,11 +92,47 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The authorizationKey. </summary>
         public string AuthorizationKey { get; set; }
         /// <summary> The reference to virtual network gateway resource. </summary>
-        public WritableSubResource VirtualNetworkGateway1 { get; set; }
+        internal WritableSubResource VirtualNetworkGateway1 { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VirtualNetworkGateway1Id
+        {
+            get => VirtualNetworkGateway1 is null ? default : VirtualNetworkGateway1.Id;
+            set
+            {
+                if (VirtualNetworkGateway1 is null)
+                    VirtualNetworkGateway1 = new WritableSubResource();
+                VirtualNetworkGateway1.Id = value;
+            }
+        }
+
         /// <summary> The reference to virtual network gateway resource. </summary>
-        public WritableSubResource VirtualNetworkGateway2 { get; set; }
+        internal WritableSubResource VirtualNetworkGateway2 { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VirtualNetworkGateway2Id
+        {
+            get => VirtualNetworkGateway2 is null ? default : VirtualNetworkGateway2.Id;
+            set
+            {
+                if (VirtualNetworkGateway2 is null)
+                    VirtualNetworkGateway2 = new WritableSubResource();
+                VirtualNetworkGateway2.Id = value;
+            }
+        }
+
         /// <summary> The reference to local network gateway resource. </summary>
-        public WritableSubResource LocalNetworkGateway2 { get; set; }
+        internal WritableSubResource LocalNetworkGateway2 { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier LocalNetworkGateway2Id
+        {
+            get => LocalNetworkGateway2 is null ? default : LocalNetworkGateway2.Id;
+            set
+            {
+                if (LocalNetworkGateway2 is null)
+                    LocalNetworkGateway2 = new WritableSubResource();
+                LocalNetworkGateway2.Id = value;
+            }
+        }
+
         /// <summary> Gateway connection type. </summary>
         public VirtualNetworkGatewayConnectionType ConnectionType { get; set; }
         /// <summary> Connection protocol used for this connection. </summary>
@@ -116,7 +152,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The ingress bytes transferred in this connection. </summary>
         public long? IngressBytesTransferred { get; }
         /// <summary> The reference to peerings resource. </summary>
-        public WritableSubResource Peer { get; set; }
+        internal WritableSubResource Peer { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier PeerId
+        {
+            get => Peer is null ? default : Peer.Id;
+            set
+            {
+                if (Peer is null)
+                    Peer = new WritableSubResource();
+                Peer.Id = value;
+            }
+        }
+
         /// <summary> EnableBgp flag. </summary>
         public bool? EnableBgp { get; set; }
         /// <summary> Enable policy-based traffic selectors. </summary>

@@ -45,7 +45,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The standard JSON format of a Table. </summary>
-        public TableResource Resource { get; set; }
+        internal TableResource Resource { get; set; }
+        /// <summary> Name of the Cosmos DB table. </summary>
+        public string ResourceId
+        {
+            get => Resource is null ? default : Resource.Id;
+            set => Resource = new TableResource(value);
+        }
+
         /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>
         public CreateUpdateOptions Options { get; set; }
     }

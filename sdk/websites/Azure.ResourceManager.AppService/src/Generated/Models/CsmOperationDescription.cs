@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Gets the origin. </summary>
         public string Origin { get; }
         /// <summary> Properties available for a Microsoft.Web resource provider operation. </summary>
-        public CsmOperationDescriptionProperties Properties { get; }
+        internal CsmOperationDescriptionProperties Properties { get; }
+        /// <summary> Resource metrics service provided by Microsoft.Insights resource provider. </summary>
+        public ServiceSpecification CsmOperationDescriptionServiceSpecification
+        {
+            get => Properties.ServiceSpecification;
+        }
     }
 }

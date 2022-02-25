@@ -87,13 +87,50 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The createUiDefinition json for the backing template with Microsoft.Solutions/applications resource. It can be a JObject or well-formed JSON string. </summary>
         public object CreateUiDefinition { get; set; }
         /// <summary> The managed application notification policy. </summary>
-        public ApplicationNotificationPolicy NotificationPolicy { get; set; }
+        internal ApplicationNotificationPolicy NotificationPolicy { get; set; }
+        /// <summary> The managed application notification endpoint. </summary>
+        public IList<ApplicationNotificationEndpoint> NotificationEndpoints
+        {
+            get => NotificationPolicy is null ? default : NotificationPolicy.NotificationEndpoints;
+            set => NotificationPolicy = new ApplicationNotificationPolicy(value);
+        }
+
         /// <summary> The managed application locking policy. </summary>
-        public ApplicationPackageLockingPolicyDefinition LockingPolicy { get; set; }
+        internal ApplicationPackageLockingPolicyDefinition LockingPolicy { get; set; }
+        /// <summary> The deny assignment excluded actions. </summary>
+        public IList<string> LockingAllowedActions
+        {
+            get
+            {
+                if (LockingPolicy is null)
+                    LockingPolicy = new ApplicationPackageLockingPolicyDefinition();
+                return LockingPolicy.AllowedActions;
+            }
+        }
+
         /// <summary> The managed application deployment policy. </summary>
-        public ApplicationDeploymentPolicy DeploymentPolicy { get; set; }
+        internal ApplicationDeploymentPolicy DeploymentPolicy { get; set; }
+        /// <summary> The managed application deployment mode. </summary>
+        public DeploymentMode DeploymentMode
+        {
+            get => DeploymentPolicy is null ? default : DeploymentPolicy.DeploymentMode;
+            set => DeploymentPolicy = new ApplicationDeploymentPolicy(value);
+        }
+
         /// <summary> The managed application management policy that determines publisher&apos;s access to the managed resource group. </summary>
-        public ApplicationManagementPolicy ManagementPolicy { get; set; }
+        internal ApplicationManagementPolicy ManagementPolicy { get; set; }
+        /// <summary> The managed application management mode. </summary>
+        public ApplicationManagementMode? ManagementMode
+        {
+            get => ManagementPolicy is null ? default : ManagementPolicy.Mode;
+            set
+            {
+                if (ManagementPolicy is null)
+                    ManagementPolicy = new ApplicationManagementPolicy();
+                ManagementPolicy.Mode = value;
+            }
+        }
+
         /// <summary> The managed application provider policies. </summary>
         public IList<ApplicationPolicy> Policies { get; }
     }

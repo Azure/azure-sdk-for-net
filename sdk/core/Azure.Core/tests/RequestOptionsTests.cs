@@ -32,7 +32,9 @@ namespace Azure.Core.Experimental.Tests
             var options = new RequestOptions();
             options.AddPolicy(new AddHeaderPolicy("PerCallHeader", "Value"), HttpPipelinePosition.PerCall);
 
-            var message = pipeline.CreateMessage(options);
+            var context = new RequestContext(options);
+            context.CancellationToken = default;
+            var message = pipeline.CreateMessage(context);
             await pipeline.SendAsync(message, message.CancellationToken);
 
             Request request = mockTransport.Requests[0];
@@ -56,7 +58,9 @@ namespace Azure.Core.Experimental.Tests
             var options = new RequestOptions();
             options.AddPolicy(new AddHeaderPolicy("PerRetryHeader", "Value"), HttpPipelinePosition.PerRetry);
 
-            var message = pipeline.CreateMessage(options);
+            var context = new RequestContext(options);
+            context.CancellationToken = default;
+            var message = pipeline.CreateMessage(context);
             await pipeline.SendAsync(message, message.CancellationToken);
 
             Request request = mockTransport.Requests[0];
@@ -83,7 +87,9 @@ namespace Azure.Core.Experimental.Tests
             var options = new RequestOptions();
             options.AddPolicy(new AddHeaderPolicy("BeforeTransportHeader", "Value"), HttpPipelinePosition.BeforeTransport);
 
-            var message = pipeline.CreateMessage(options);
+            var context = new RequestContext(options);
+            context.CancellationToken = default;
+            var message = pipeline.CreateMessage(context);
             await pipeline.SendAsync(message, message.CancellationToken);
 
             Request request = mockTransport.Requests[0];
@@ -114,7 +120,9 @@ namespace Azure.Core.Experimental.Tests
             options.AddPolicy(new AddHeaderPolicy("PerRetryHeader", "PerRetry"), HttpPipelinePosition.PerRetry);
             options.AddPolicy(new AddHeaderPolicy("BeforeTransportHeader", "BeforeTransport"), HttpPipelinePosition.BeforeTransport);
 
-            var message = pipeline.CreateMessage(options);
+            var context = new RequestContext(options);
+            context.CancellationToken = default;
+            var message = pipeline.CreateMessage(context);
             await pipeline.SendAsync(message, message.CancellationToken);
 
             Request request = mockTransport.Requests[0];
@@ -161,7 +169,9 @@ namespace Azure.Core.Experimental.Tests
             options.AddPolicy(new AddHeaderPolicy("PerCall", "RequestContext"), HttpPipelinePosition.PerCall);
             options.AddPolicy(new AddHeaderPolicy("BeforeTransport", "RequestContext"), HttpPipelinePosition.BeforeTransport);
 
-            var message = pipeline.CreateMessage(options);
+            var context = new RequestContext(options);
+            context.CancellationToken = default;
+            var message = pipeline.CreateMessage(context);
             await pipeline.SendAsync(message, message.CancellationToken);
 
             Request request = mockTransport.Requests[0];
