@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network
             Etag = etag;
             VirtualWan = virtualWan;
             DeviceProperties = deviceProperties;
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             SiteKey = siteKey;
             AddressSpace = addressSpace;
             BgpProperties = bgpProperties;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The device properties. </summary>
         public DeviceProperties DeviceProperties { get; set; }
         /// <summary> The ip-address for the vpn-site. </summary>
-        public string IpAddress { get; set; }
+        public string IPAddress { get; set; }
         /// <summary> The key for vpn-site that can be used for connections. </summary>
         public string SiteKey { get; set; }
         /// <summary> The AddressSpace that contains an array of IP address ranges. </summary>

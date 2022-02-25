@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
             Name = name;
             VirtualNetwork = virtualNetwork;
             Subnet = subnet;
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             NetworkInterfaceIPConfiguration = networkInterfaceIPConfiguration;
             LoadBalancerFrontendIPConfiguration = loadBalancerFrontendIPConfiguration;
         }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> IP Address belonging to the referenced virtual network. </summary>
-        public string IpAddress { get; set; }
+        public string IPAddress { get; set; }
         /// <summary> Reference to IP address defined in network interfaces. </summary>
         internal WritableSubResource NetworkInterfaceIPConfiguration { get; }
         /// <summary> Gets or sets Id. </summary>

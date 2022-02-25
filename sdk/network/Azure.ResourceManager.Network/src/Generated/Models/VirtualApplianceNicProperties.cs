@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of VirtualApplianceNicProperties. </summary>
         /// <param name="name"> NIC name. </param>
-        /// <param name="publicIpAddress"> Public IP address. </param>
-        /// <param name="privateIpAddress"> Private IP address. </param>
-        internal VirtualApplianceNicProperties(string name, string publicIpAddress, string privateIpAddress)
+        /// <param name="publicIPAddress"> Public IP address. </param>
+        /// <param name="privateIPAddress"> Private IP address. </param>
+        internal VirtualApplianceNicProperties(string name, string publicIPAddress, string privateIPAddress)
         {
             Name = name;
-            PublicIpAddress = publicIpAddress;
-            PrivateIpAddress = privateIpAddress;
+            PublicIPAddress = publicIPAddress;
+            PrivateIPAddress = privateIPAddress;
         }
 
         /// <summary> NIC name. </summary>
         public string Name { get; }
         /// <summary> Public IP address. </summary>
-        public string PublicIpAddress { get; }
+        public string PublicIPAddress { get; }
         /// <summary> Private IP address. </summary>
-        public string PrivateIpAddress { get; }
+        public string PrivateIPAddress { get; }
     }
 }

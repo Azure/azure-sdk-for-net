@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.Network
             return new BgpConnectionCollection(Client, Id);
         }
 
-        /// <summary> Gets a collection of HubIpConfigurations in the HubIpConfiguration. </summary>
-        /// <returns> An object representing collection of HubIpConfigurations and their operations over a HubIpConfiguration. </returns>
-        public virtual HubIpConfigurationCollection GetHubIpConfigurations()
+        /// <summary> Gets a collection of HubIPConfigurations in the HubIPConfiguration. </summary>
+        /// <returns> An object representing collection of HubIPConfigurations and their operations over a HubIPConfiguration. </returns>
+        public virtual HubIPConfigurationCollection GetHubIPConfigurations()
         {
-            return new HubIpConfigurationCollection(Client, Id);
+            return new HubIPConfigurationCollection(Client, Id);
         }
 
         /// <summary> Gets a collection of HubRouteTables in the HubRouteTable. </summary>

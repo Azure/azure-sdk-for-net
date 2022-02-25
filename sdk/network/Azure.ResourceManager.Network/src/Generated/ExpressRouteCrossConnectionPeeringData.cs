@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the express route cross connection peering resource. </param>
         /// <param name="gatewayManagerEtag"> The GatewayManager Etag. </param>
         /// <param name="lastModifiedBy"> Who was the last to modify the peering. </param>
-        /// <param name="ipv6PeeringConfig"> The IPv6 peering configuration. </param>
-        internal ExpressRouteCrossConnectionPeeringData(string id, string name, string etag, ExpressRoutePeeringType? peeringType, ExpressRoutePeeringState? state, int? azureASN, long? peerASN, string primaryPeerAddressPrefix, string secondaryPeerAddressPrefix, string primaryAzurePort, string secondaryAzurePort, string sharedKey, int? vlanId, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig, ProvisioningState? provisioningState, string gatewayManagerEtag, string lastModifiedBy, Ipv6ExpressRouteCircuitPeeringConfig ipv6PeeringConfig) : base(id)
+        /// <param name="iPv6PeeringConfig"> The IPv6 peering configuration. </param>
+        internal ExpressRouteCrossConnectionPeeringData(string id, string name, string etag, ExpressRoutePeeringType? peeringType, ExpressRoutePeeringState? state, int? azureASN, long? peerASN, string primaryPeerAddressPrefix, string secondaryPeerAddressPrefix, string primaryAzurePort, string secondaryAzurePort, string sharedKey, int? vlanId, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig, ProvisioningState? provisioningState, string gatewayManagerEtag, string lastModifiedBy, IPv6ExpressRouteCircuitPeeringConfig iPv6PeeringConfig) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
             ProvisioningState = provisioningState;
             GatewayManagerEtag = gatewayManagerEtag;
             LastModifiedBy = lastModifiedBy;
-            Ipv6PeeringConfig = ipv6PeeringConfig;
+            IPv6PeeringConfig = iPv6PeeringConfig;
         }
 
         /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
@@ -90,6 +90,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> Who was the last to modify the peering. </summary>
         public string LastModifiedBy { get; }
         /// <summary> The IPv6 peering configuration. </summary>
-        public Ipv6ExpressRouteCircuitPeeringConfig Ipv6PeeringConfig { get; set; }
+        public IPv6ExpressRouteCircuitPeeringConfig IPv6PeeringConfig { get; set; }
     }
 }

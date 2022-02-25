@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Network
         public NatGatewayData()
         {
             Zones = new ChangeTrackingList<string>();
-            PublicIpAddresses = new ChangeTrackingList<WritableSubResource>();
-            PublicIpPrefixes = new ChangeTrackingList<WritableSubResource>();
+            PublicIPAddresses = new ChangeTrackingList<WritableSubResource>();
+            PublicIPPrefixes = new ChangeTrackingList<WritableSubResource>();
             Subnets = new ChangeTrackingList<WritableSubResource>();
         }
 
@@ -34,19 +34,19 @@ namespace Azure.ResourceManager.Network
         /// <param name="zones"> A list of availability zones denoting the zone in which Nat Gateway should be deployed. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="idleTimeoutInMinutes"> The idle timeout of the nat gateway. </param>
-        /// <param name="publicIpAddresses"> An array of public ip addresses associated with the nat gateway resource. </param>
-        /// <param name="publicIpPrefixes"> An array of public ip prefixes associated with the nat gateway resource. </param>
+        /// <param name="publicIPAddresses"> An array of public ip addresses associated with the nat gateway resource. </param>
+        /// <param name="publicIPPrefixes"> An array of public ip prefixes associated with the nat gateway resource. </param>
         /// <param name="subnets"> An array of references to the subnets using this nat gateway resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the NAT gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the NAT gateway resource. </param>
-        internal NatGatewayData(string id, string name, string type, string location, IDictionary<string, string> tags, NatGatewaySku sku, IList<string> zones, string etag, int? idleTimeoutInMinutes, IList<WritableSubResource> publicIpAddresses, IList<WritableSubResource> publicIpPrefixes, IReadOnlyList<WritableSubResource> subnets, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal NatGatewayData(string id, string name, string type, string location, IDictionary<string, string> tags, NatGatewaySku sku, IList<string> zones, string etag, int? idleTimeoutInMinutes, IList<WritableSubResource> publicIPAddresses, IList<WritableSubResource> publicIPPrefixes, IReadOnlyList<WritableSubResource> subnets, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
         {
             Sku = sku;
             Zones = zones;
             Etag = etag;
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
-            PublicIpAddresses = publicIpAddresses;
-            PublicIpPrefixes = publicIpPrefixes;
+            PublicIPAddresses = publicIPAddresses;
+            PublicIPPrefixes = publicIPPrefixes;
             Subnets = subnets;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> The idle timeout of the nat gateway. </summary>
         public int? IdleTimeoutInMinutes { get; set; }
         /// <summary> An array of public ip addresses associated with the nat gateway resource. </summary>
-        public IList<WritableSubResource> PublicIpAddresses { get; }
+        public IList<WritableSubResource> PublicIPAddresses { get; }
         /// <summary> An array of public ip prefixes associated with the nat gateway resource. </summary>
-        public IList<WritableSubResource> PublicIpPrefixes { get; }
+        public IList<WritableSubResource> PublicIPPrefixes { get; }
         /// <summary> An array of references to the subnets using this nat gateway resource. </summary>
         public IReadOnlyList<WritableSubResource> Subnets { get; }
         /// <summary> The resource GUID property of the NAT gateway resource. </summary>

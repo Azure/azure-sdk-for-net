@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Network
         {
             VirtualHubRouteTableV2S = new ChangeTrackingList<VirtualHubRouteTableV2Data>();
             BgpConnections = new ChangeTrackingList<WritableSubResource>();
-            IpConfigurations = new ChangeTrackingList<WritableSubResource>();
-            VirtualRouterIps = new ChangeTrackingList<string>();
+            IPConfigurations = new ChangeTrackingList<WritableSubResource>();
+            VirtualRouterIPs = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualHubData. </summary>
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="bgpConnections"> List of references to Bgp Connections. </param>
         /// <param name="ipConfigurations"> List of references to IpConfigurations. </param>
         /// <param name="virtualRouterAsn"> VirtualRouter ASN. </param>
-        /// <param name="virtualRouterIps"> VirtualRouter IPs. </param>
+        /// <param name="virtualRouterIPs"> VirtualRouter IPs. </param>
         /// <param name="allowBranchToBranchTraffic"> Flag to control transit for VirtualRouter hub. </param>
         /// <param name="preferredRoutingGateway"> The preferred gateway to route on-prem traffic. </param>
-        internal VirtualHubData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, WritableSubResource virtualWan, WritableSubResource vpnGateway, WritableSubResource p2SVpnGateway, WritableSubResource expressRouteGateway, WritableSubResource azureFirewall, WritableSubResource securityPartnerProvider, string addressPrefix, VirtualHubRouteTable routeTable, ProvisioningState? provisioningState, string securityProviderName, IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2S, string sku, RoutingState? routingState, IReadOnlyList<WritableSubResource> bgpConnections, IReadOnlyList<WritableSubResource> ipConfigurations, long? virtualRouterAsn, IList<string> virtualRouterIps, bool? allowBranchToBranchTraffic, PreferredRoutingGateway? preferredRoutingGateway) : base(id, name, type, location, tags)
+        internal VirtualHubData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, WritableSubResource virtualWan, WritableSubResource vpnGateway, WritableSubResource p2SVpnGateway, WritableSubResource expressRouteGateway, WritableSubResource azureFirewall, WritableSubResource securityPartnerProvider, string addressPrefix, VirtualHubRouteTable routeTable, ProvisioningState? provisioningState, string securityProviderName, IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2S, string sku, RoutingState? routingState, IReadOnlyList<WritableSubResource> bgpConnections, IReadOnlyList<WritableSubResource> ipConfigurations, long? virtualRouterAsn, IList<string> virtualRouterIPs, bool? allowBranchToBranchTraffic, PreferredRoutingGateway? preferredRoutingGateway) : base(id, name, type, location, tags)
         {
             Etag = etag;
             VirtualWan = virtualWan;
@@ -67,9 +67,9 @@ namespace Azure.ResourceManager.Network
             Sku = sku;
             RoutingState = routingState;
             BgpConnections = bgpConnections;
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             VirtualRouterAsn = virtualRouterAsn;
-            VirtualRouterIps = virtualRouterIps;
+            VirtualRouterIPs = virtualRouterIPs;
             AllowBranchToBranchTraffic = allowBranchToBranchTraffic;
             PreferredRoutingGateway = preferredRoutingGateway;
         }
@@ -188,11 +188,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> List of references to Bgp Connections. </summary>
         public IReadOnlyList<WritableSubResource> BgpConnections { get; }
         /// <summary> List of references to IpConfigurations. </summary>
-        public IReadOnlyList<WritableSubResource> IpConfigurations { get; }
+        public IReadOnlyList<WritableSubResource> IPConfigurations { get; }
         /// <summary> VirtualRouter ASN. </summary>
         public long? VirtualRouterAsn { get; set; }
         /// <summary> VirtualRouter IPs. </summary>
-        public IList<string> VirtualRouterIps { get; }
+        public IList<string> VirtualRouterIPs { get; }
         /// <summary> Flag to control transit for VirtualRouter hub. </summary>
         public bool? AllowBranchToBranchTraffic { get; set; }
         /// <summary> The preferred gateway to route on-prem traffic. </summary>
