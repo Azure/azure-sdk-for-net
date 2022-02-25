@@ -58,6 +58,9 @@ directive:
   - from: networkWatcher.json
     where: $.definitions.ProtocolConfiguration.properties.HTTPConfiguration
     transform: $['x-ms-client-name'] = 'HttpProtocolConfiguration' 
+  - remove-operation: "ApplicationGateways_ListAvailableSslOptions"
+  - remove-operation: "ApplicationGateways_ListAvailableSslPredefinedPolicies"
+  - remove-operation: "ApplicationGateways_GetSslPredefinedPolicy"
 ```
 
 ### Tag: package-track2-preview
