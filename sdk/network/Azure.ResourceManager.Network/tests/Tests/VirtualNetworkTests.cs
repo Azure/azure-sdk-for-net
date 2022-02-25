@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 Tags = { { "key", "value" } },
-                IpConfigurations = {
+                IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
                     {
                         Name = ipConfigName,
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 Tags = { { "key", "value" } },
-                IpConfigurations = {
+                IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
                     {
                         Name = ipConfigName,

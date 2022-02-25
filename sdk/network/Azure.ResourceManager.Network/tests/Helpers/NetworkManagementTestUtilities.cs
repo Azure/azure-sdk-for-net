@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     supportedLocations = FeaturesInfo.AllFeaturesSupportedLocations;
                     break;
                 case FeaturesInfo.Type.Ipv6:
-                    supportedLocations = FeaturesInfo.Ipv6SupportedLocations;
+                    supportedLocations = FeaturesInfo.IPv6SupportedLocations;
                     break;
                 case FeaturesInfo.Type.MultiCA:
                     supportedLocations = FeaturesInfo.DefaultLocations;
