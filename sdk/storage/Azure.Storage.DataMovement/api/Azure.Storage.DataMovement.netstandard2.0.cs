@@ -5,9 +5,6 @@ namespace Azure.Storage.DataMovement
         Queued = 0,
         InProgress = 1,
         Completed = 2,
-        CompletedWithErrors = 3,
-        CompletedWithFailures = 4,
-        CompletedWithErrorsAndSkipped = 5,
     }
     public partial class StorageTransferEventArgs : Azure.SyncAsyncEventArgs
     {

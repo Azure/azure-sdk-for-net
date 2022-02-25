@@ -27,11 +27,11 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         S3AccessKey = 4,
         /// <summary>
-        /// For Google App credentials.
+        /// For Google App credentials.TODO: future use
         /// </summary>
         GoogleAppCredentials = 5,
         /// <summary>
-        /// For S3, Anon Credentials and public bucket.
+        /// For S3, Anon Credentials and public bucket. TODO: future use
         /// </summary>
         S3PublicBucket = 6,
     }

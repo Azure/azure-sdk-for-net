@@ -29,11 +29,6 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         public BlobTransferType TransferType { get; internal set; }
 
         /// <summary>
-        /// Status of the job
-        /// </summary>
-        public StorageJobTransferStatus Status { get; internal set; }
-
-        /// <summary>
         /// Source Uri single transfers.
         /// </summary>
         public Uri SourcePath { get; internal set; }
@@ -42,5 +37,10 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// Gets the local path which will store the contents for a single blob to be downloaded.
         /// </summary>
         public Uri DestinationUri { get; internal set; }
+
+        /// <summary>
+        /// Current job status at the time retrieving the job properties
+        /// </summary>
+        public StorageJobTransferStatus TransferStatus { get; internal set; }
     }
 }

@@ -202,7 +202,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 BlobName = directoryPath
             };
             _uri = blobUriBuilder.ToUri();
-            // TODO: clone client
             _containerClient = client;
         }
 

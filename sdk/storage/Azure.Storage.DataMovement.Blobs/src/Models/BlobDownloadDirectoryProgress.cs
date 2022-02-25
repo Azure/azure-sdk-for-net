@@ -29,5 +29,10 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// Number of bytes transferred succesfully.
         /// </summary>
         public long TotalBytesTransferred { get; internal set; }
+
+        /// <summary>
+        /// Transfer Status
+        /// </summary>
+        public StorageJobTransferStatus TransferStatus { get; internal set;}
     }
 }

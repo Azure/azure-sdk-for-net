@@ -12,6 +12,7 @@ using Azure.Storage;
 using Azure.Storage.DataMovement.Blobs.Models;
 using System.IO;
 using Azure.Core.Pipeline;
+using System.Linq;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
@@ -32,7 +33,7 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// Indexed by the job id
         /// </summary>
-        private IDictionary<string, BlobTransferJobInternal> _totalTransferJobs { get; set; }
+        private IList<BlobTransferJobInternal> _totalTransferJobs { get; set; }
 
         /// <summary>
         /// internal job transfer to scan for job sand schedule requests accordingly
@@ -67,6 +68,7 @@ namespace Azure.Storage.DataMovement.Blobs
             _jobTransferScheduler = new BlobJobTransferScheduler(options?.ConcurrencyForLocalFilesystemListing, options?.ConcurrencyForServiceListing);
             _taskFactory = new TaskFactory(_jobTransferScheduler);
             _managerTransferStatus = StorageManagerTransferStatus.Idle;
+            _totalTransferJobs = new List<BlobTransferJobInternal>();
         }
 
         /// <summary>
@@ -125,7 +127,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="destinationClient"></param>
         /// <param name="uploadOptions"></param>
         /// <returns>A guid of the job id</returns>
-        public string ScheduleUpload(
+        public BlobTransferJobProperties ScheduleUpload(
             string sourceLocalPath,
             BlobClient destinationClient,
             BlobUploadOptions uploadOptions = default)
@@ -136,15 +138,14 @@ namespace Azure.Storage.DataMovement.Blobs
             string jobId = Guid.NewGuid().ToString(); // TODO; update the way we generate job ids, to also check if the job id already exists
 
             BlobUploadTransferJob transferJob = new BlobUploadTransferJob(jobId, sourceLocalPath, destinationClient, uploadOptions);
-            _totalTransferJobs.Add(jobId, transferJob);
+            _totalTransferJobs.Add(transferJob);
             Task uploadTask = _taskFactory.StartNew(
                 action: transferJob.ProcessUploadTransfer(),
                 cancellationToken: transferJob.CancellationTokenSource.Token,
                 creationOptions: TaskCreationOptions.LongRunning, //TODO: look into if setting this to TaskCreationOptions.
                 scheduler: _jobTransferScheduler);
 
-            // TODO: remove stub
-            return jobId;
+            return transferJob.ToBlobTransferJobDetails();
         }
 
         /// <summary>
@@ -156,7 +157,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="destinationLocalPath"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public string ScheduleDownload(
+        public BlobTransferJobProperties ScheduleDownload(
             BlobClient sourceClient,
             string destinationLocalPath,
             BlobDownloadToOptions options = default)
@@ -166,12 +167,13 @@ namespace Azure.Storage.DataMovement.Blobs
             // having to check the existence of the path twice.
             string jobId = Guid.NewGuid().ToString(); // TODO; update the way we generate job ids, to also check if the job id already exists
             BlobDownloadTransferJob transferJob = new BlobDownloadTransferJob(jobId, sourceClient, destinationLocalPath, options);
+            _totalTransferJobs.Add(transferJob);
             Task downloadTask = _taskFactory.StartNew(
                 action: transferJob.ProcessDownloadTransfer(),
                 cancellationToken: transferJob.CancellationTokenSource.Token,
                 creationOptions: TaskCreationOptions.LongRunning, //TODO: look into if setting this to TaskCreationOptions.None would be better if the transfer is small
                 scheduler: _jobTransferScheduler);
-            return jobId;
+            return transferJob.ToBlobTransferJobDetails();
         }
 
         /// <summary>
@@ -192,7 +194,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="options"></param>
         /// <returns></returns>
         /// TODO: remove suppression
-        public string ScheduleUploadDirectory(
+        public BlobTransferJobProperties ScheduleUploadDirectory(
             string sourceLocalPath,
             BlobVirtualDirectoryClient destinationClient,
             bool overwrite = false,
@@ -203,12 +205,13 @@ namespace Azure.Storage.DataMovement.Blobs
             // having to check the existence of the path twice.
             string jobId = Guid.NewGuid().ToString(); // TODO; update the way we generate job ids, to also check if the job id already exists
             BlobUploadDirectoryTransferJob transferJob = new BlobUploadDirectoryTransferJob(jobId, sourceLocalPath, overwrite, destinationClient, options);
-            _totalTransferJobs.Add(jobId, transferJob);
+            _totalTransferJobs.Add(transferJob);
 
             // Queue task to scan the local directory for paths to upload
             // As each local path is found, it is added to the queue as well.
             Task uploadDirectoryTask = _taskFactory.StartNew(
-                action: () => {
+                action: () =>
+                {
                     /* TODO: move this to Core.Diagnostics Logger
                     transferJob.Logger.LogAsync(
                         logLevel: DataMovementLogLevel.Information,
@@ -238,28 +241,28 @@ namespace Azure.Storage.DataMovement.Blobs
                             fileUploadTasks.Add(singleUploadTask);
                         }
                     }
-                /* TODO: move this to Core.Diagnostics Logger
-                transferJob.Logger.LogAsync(
+                    /* TODO: move this to Core.Diagnostics Logger
+                    transferJob.Logger.LogAsync(
+                        logLevel: DataMovementLogLevel.Information,
+                        message: $"Created all upload tasks for the source directory: {transferJob.SourceLocalPath} to upload to the destination directory: {transferJob.DestinationBlobDirectoryClient.Uri.AbsoluteUri}",
+                        false).EnsureCompleted();
+                    */
+
+                    // Wait for all the remaining blobs to finish upload before logging that the transfer has finished.
+                    Task.WhenAll(fileUploadTasks).Wait();
+
+                    /* TODO: move this to Core.Diagnostics Logger
+                    transferJob.Logger.LogAsync(
                     logLevel: DataMovementLogLevel.Information,
-                    message: $"Created all upload tasks for the source directory: {transferJob.SourceLocalPath} to upload to the destination directory: {transferJob.DestinationBlobDirectoryClient.Uri.AbsoluteUri}",
+                    message: $"Completed all upload tasks for the source directory: {transferJob.SourceLocalPath} and uploaded to the destination directory: {transferJob.DestinationBlobDirectoryClient.Uri.AbsoluteUri}",
                     false).EnsureCompleted();
-                */
-
-                // Wait for all the remaining blobs to finish upload before logging that the transfer has finished.
-                Task.WhenAll(fileUploadTasks).Wait();
-
-                /* TODO: move this to Core.Diagnostics Logger
-                transferJob.Logger.LogAsync(
-                logLevel: DataMovementLogLevel.Information,
-                message: $"Completed all upload tasks for the source directory: {transferJob.SourceLocalPath} and uploaded to the destination directory: {transferJob.DestinationBlobDirectoryClient.Uri.AbsoluteUri}",
-                false).EnsureCompleted();
-                */
-        },
-        cancellationToken: transferJob.CancellationTokenSource.Token,
-        creationOptions: TaskCreationOptions.LongRunning, //TODO: look into if setting this to TaskCreationOptions.None would be better if the transfer is small
-        scheduler: _jobTransferScheduler);
-    return jobId;
-}
+                    */
+                },
+            cancellationToken: transferJob.CancellationTokenSource.Token,
+            creationOptions: TaskCreationOptions.LongRunning, //TODO: look into if setting this to TaskCreationOptions.None would be better if the transfer is small
+            scheduler: _jobTransferScheduler);
+            return transferJob.ToBlobTransferJobDetails();
+        }
 
         /// <summary>
         /// Add Download Blob Directory Job to perform
@@ -271,7 +274,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="options"></param>
         /// <returns></returns>
         /// TODO: remove suppression
-        public string ScheduleDownloadDirectory(
+        public BlobTransferJobProperties ScheduleDownloadDirectory(
             BlobVirtualDirectoryClient sourceClient,
             string destinationLocalPath,
             BlobDirectoryDownloadOptions options = default)
@@ -281,25 +284,25 @@ namespace Azure.Storage.DataMovement.Blobs
             // having to check the existence of the path twice.
             string jobId = Guid.NewGuid().ToString(); // TODO; update the way we generate job ids, to also check if the job id already exists
             BlobDownloadDirectoryTransferJob transferJob = new BlobDownloadDirectoryTransferJob(jobId, sourceClient, destinationLocalPath, options);
-            _totalTransferJobs.Add(jobId, transferJob);
+            _totalTransferJobs.Add(transferJob);
             // Queue task to scan the remote directory for paths to download
             // As each blob is found, it is added to the queue as well.
             Task uploadDirectoryTask = _taskFactory.StartNew(
                 action: () =>
                 {
-            /* TODO: move this to Core.Diagnostics Logger
-            transferJob.Logger.LogAsync(
-                logLevel: DataMovementLogLevel.Information,
-                message: $"Begin enumerating files within source directory: {transferJob.SourceBlobDirectoryClient.DirectoryPath}",
-                false).EnsureCompleted();
-            */
+                    /* TODO: move this to Core.Diagnostics Logger
+                    transferJob.Logger.LogAsync(
+                        logLevel: DataMovementLogLevel.Information,
+                        message: $"Begin enumerating files within source directory: {transferJob.SourceBlobDirectoryClient.DirectoryPath}",
+                        false).EnsureCompleted();
+                    */
                     Pageable<BlobItem> blobs = transferJob.SourceBlobDirectoryClient.GetBlobs();
-            /* TODO: move this to Core.Diagnostics Logger
-            transferJob.Logger.LogAsync(
-                logLevel: DataMovementLogLevel.Information,
-                message: $"Completed enumerating files within source directory: {transferJob.SourceBlobDirectoryClient.DirectoryPath}\n",
-                false).EnsureCompleted();
-            */
+                    /* TODO: move this to Core.Diagnostics Logger
+                    transferJob.Logger.LogAsync(
+                        logLevel: DataMovementLogLevel.Information,
+                        message: $"Completed enumerating files within source directory: {transferJob.SourceBlobDirectoryClient.DirectoryPath}\n",
+                        false).EnsureCompleted();
+                    */
                     List<Task> fileUploadTasks = new List<Task>();
                     foreach (BlobItem blob in blobs)
                     {
@@ -310,26 +313,26 @@ namespace Azure.Storage.DataMovement.Blobs
                     scheduler: _jobTransferScheduler);
                         fileUploadTasks.Add(singleDownloadTask);
                     }
-            /* TODO: move this to Core.Diagnostics Logger
-            transferJob.Logger.LogAsync(
-                logLevel: DataMovementLogLevel.Information,
-                message: $"Created all upload tasks for the source directory: {transferJob.SourceBlobDirectoryClient.DirectoryPath} to upload to the destination directory: {transferJob.DestinationLocalPath}",
-                false).EnsureCompleted();
-            */
-            // Wait for all the remaining blobs to finish upload before logging that the transfer has finished.
-            Task.WhenAll(fileUploadTasks).Wait();
-            /* TODO: move this to Core.Diagnostics Logger
-            transferJob.Logger.LogAsync(
-                logLevel: DataMovementLogLevel.Information,
-                message: $"Completed all upload tasks for the source directory: {transferJob.SourceBlobDirectoryClient.DirectoryPath} and uploaded to the destination directory: {transferJob.DestinationLocalPath}",
-                false).EnsureCompleted();
-            */
+                    /* TODO: move this to Core.Diagnostics Logger
+                    transferJob.Logger.LogAsync(
+                        logLevel: DataMovementLogLevel.Information,
+                        message: $"Created all upload tasks for the source directory: {transferJob.SourceBlobDirectoryClient.DirectoryPath} to upload to the destination directory: {transferJob.DestinationLocalPath}",
+                        false).EnsureCompleted();
+                    */
+                    // Wait for all the remaining blobs to finish upload before logging that the transfer has finished.
+                    Task.WhenAll(fileUploadTasks).Wait();
+                    /* TODO: move this to Core.Diagnostics Logger
+                    transferJob.Logger.LogAsync(
+                        logLevel: DataMovementLogLevel.Information,
+                        message: $"Completed all upload tasks for the source directory: {transferJob.SourceBlobDirectoryClient.DirectoryPath} and uploaded to the destination directory: {transferJob.DestinationLocalPath}",
+                        false).EnsureCompleted();
+                    */
                 },
             cancellationToken: transferJob.CancellationTokenSource.Token,
             creationOptions: TaskCreationOptions.LongRunning, //TODO: look into if setting this to TaskCreationOptions.None would be better if the transfer is small
             scheduler: _jobTransferScheduler);
 
-            return jobId;
+            return transferJob.ToBlobTransferJobDetails();
         }
 
         /// <summary>
@@ -342,7 +345,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="copyMethod">Copy Method</param>
         /// <param name="copyOptions"></param>
         /// <returns>A guid of the job id</returns>
-        public string ScheduleCopy(
+        public BlobTransferJobProperties ScheduleCopy(
         Uri sourceUri,
         BlobClient destinationClient,
         BlobCopyMethod copyMethod,
@@ -359,7 +362,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 destinationClient,
                 copyMethod,
                 copyOptions);
-            _totalTransferJobs.Add(jobId, transferJob);
+            _totalTransferJobs.Add(transferJob);
             Task downloadTask = _taskFactory.StartNew(
                 action: transferJob.ProcessCopyTransfer(),
                 cancellationToken: transferJob.CancellationTokenSource.Token,
@@ -367,7 +370,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 scheduler: _jobTransferScheduler);
 
             // TODO: remove stub
-            return jobId;
+            return transferJob.ToBlobTransferJobDetails();
         }
 
         /// <summary>
@@ -383,7 +386,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="copyMethod">Copy Method</param>
         /// <param name="copyOptions"></param>
         /// <returns>A guid of the job id</returns>
-        public string ScheduleCopyDirectory(
+        public BlobTransferJobProperties ScheduleCopyDirectory(
         BlobVirtualDirectoryClient sourceClient,
         BlobVirtualDirectoryClient destinationClient,
         BlobCopyMethod copyMethod,
@@ -394,25 +397,25 @@ namespace Azure.Storage.DataMovement.Blobs
             // having to check the existence of the path twice.
             string jobId = Guid.NewGuid().ToString(); // TODO; update the way we generate job ids, to also check if the job id already exists
             BlobServiceCopyDirectoryTransferJob transferJob = new BlobServiceCopyDirectoryTransferJob(jobId, sourceClient, destinationClient, copyMethod, copyOptions);
-            _totalTransferJobs.Add(jobId, transferJob);
+            _totalTransferJobs.Add(transferJob);
             // Queue task to scan the remote directory for paths to download
             // As each blob is found, it is added to the queue as well.
             Task copyDirectoryTask = _taskFactory.StartNew(
                 action: () =>
                 {
-        /* TODO: move this to Core.Diagnostics Logger
-        transferJob.Logger.LogAsync(
-            logLevel: DataMovementLogLevel.Information,
-            message: $"Begin enumerating files within source directory: {transferJob.SourceDirectoryUri.AbsoluteUri}",
-            false).EnsureCompleted();
-        */
+                    /* TODO: move this to Core.Diagnostics Logger
+                    transferJob.Logger.LogAsync(
+                        logLevel: DataMovementLogLevel.Information,
+                        message: $"Begin enumerating files within source directory: {transferJob.SourceDirectoryUri.AbsoluteUri}",
+                        false).EnsureCompleted();
+                    */
                     Pageable<BlobItem> blobs = sourceClient.GetBlobs();
-        /* TODO: move this to Core.Diagnostics Logger
-        transferJob.Logger.LogAsync(
-        logLevel: DataMovementLogLevel.Information,
-        message: $"Completed enumerating files within source directory: {transferJob.SourceDirectoryUri.AbsoluteUri}\n",
-        false).EnsureCompleted();
-        */
+                    /* TODO: move this to Core.Diagnostics Logger
+                    transferJob.Logger.LogAsync(
+                    logLevel: DataMovementLogLevel.Information,
+                    message: $"Completed enumerating files within source directory: {transferJob.SourceDirectoryUri.AbsoluteUri}\n",
+                    false).EnsureCompleted();
+                    */
 
                     List<Task> fileUploadTasks = new List<Task>();
                     foreach (BlobItem blob in blobs)
@@ -424,27 +427,27 @@ namespace Azure.Storage.DataMovement.Blobs
                             scheduler: _jobTransferScheduler);
                         fileUploadTasks.Add(singleDownloadTask);
                     }
-        /* TODO: move this to Core.Diagnostics Logger
-        transferJob.Logger.LogAsync(
-            logLevel: DataMovementLogLevel.Information,
-            message: $"Created all upload tasks for the source directory: {transferJob.SourceDirectoryUri.AbsoluteUri} to upload to the destination directory: {transferJob.DestinationBlobDirectoryClient.Uri.AbsoluteUri}",
-            false).EnsureCompleted();
-        */
+                    /* TODO: move this to Core.Diagnostics Logger
+                    transferJob.Logger.LogAsync(
+                        logLevel: DataMovementLogLevel.Information,
+                        message: $"Created all upload tasks for the source directory: {transferJob.SourceDirectoryUri.AbsoluteUri} to upload to the destination directory: {transferJob.DestinationBlobDirectoryClient.Uri.AbsoluteUri}",
+                        false).EnsureCompleted();
+                    */
 
-        // Wait for all the remaining blobs to finish upload before logging that the transfer has finished.
+                    // Wait for all the remaining blobs to finish upload before logging that the transfer has finished.
                     Task.WhenAll(fileUploadTasks).Wait();
 
-        /* TODO: move this to Core.Diagnostics Logger
-        transferJob.Logger.LogAsync(
-            logLevel: DataMovementLogLevel.Information,
-            message: $"Completed all upload tasks for the source directory: {transferJob.SourceDirectoryUri.AbsoluteUri} and uploaded to the destination directory: {transferJob.DestinationBlobDirectoryClient.Uri.AbsoluteUri}",
-            false).EnsureCompleted();
-        */
+                    /* TODO: move this to Core.Diagnostics Logger
+                    transferJob.Logger.LogAsync(
+                        logLevel: DataMovementLogLevel.Information,
+                        message: $"Completed all upload tasks for the source directory: {transferJob.SourceDirectoryUri.AbsoluteUri} and uploaded to the destination directory: {transferJob.DestinationBlobDirectoryClient.Uri.AbsoluteUri}",
+                        false).EnsureCompleted();
+                    */
                 },
                 cancellationToken: transferJob.CancellationTokenSource.Token,
                 creationOptions: TaskCreationOptions.LongRunning, //TODO: look into if setting this to TaskCreationOptions.None would be better if the transfer is small
                 scheduler: _jobTransferScheduler);
-            return jobId;
+            return transferJob.ToBlobTransferJobDetails();
         }
 
         /*
@@ -475,22 +478,21 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns></returns>
         public BlobTransferJobProperties GetJobProperties(string jobId)
         {
-            if (!_totalTransferJobs.ContainsKey(jobId))
+            foreach (BlobTransferJobInternal currentJob in _totalTransferJobs)
             {
-                BlobTransferJobInternal job = _totalTransferJobs[jobId];
-                if (job.CancellationTokenSource.IsCancellationRequested)
+                if (jobId.Equals(currentJob.JobId))
                 {
-                    throw Errors.JobCancelledOrPaused(jobId);
-                }
-                else
-                {
-                    return job.GetJobDetails();
+                    if (currentJob.CancellationTokenSource.IsCancellationRequested)
+                    {
+                        throw Errors.JobCancelledOrPaused(jobId);
+                    }
+                    else
+                    {
+                        return currentJob.GetJobDetails();
+                    }
                 }
             }
-            else
-            {
-                throw Errors.InvalidJobId(nameof(GetJobProperties), jobId);
-            }
+            throw Errors.InvalidJobId(nameof(GetJobProperties), jobId);
         }
 
         /// <summary>
@@ -499,46 +501,74 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="jobId"></param>
         public override async Task PauseTransferJobAsync(string jobId)
         {
-            if (!_totalTransferJobs.ContainsKey(jobId))
+            foreach (BlobTransferJobInternal currentJob in _totalTransferJobs)
             {
-                BlobTransferJobInternal job = _totalTransferJobs[jobId];
-                if (job.CancellationTokenSource.IsCancellationRequested)
+                if (jobId.Equals(currentJob.JobId))
                 {
-                    throw Errors.JobCancelledOrPaused(jobId);
-                }
-                else
-                {
-                    await job.PauseTransferJob().ConfigureAwait(false);
+                    if (currentJob.CancellationTokenSource.IsCancellationRequested)
+                    {
+                        throw Errors.JobCancelledOrPaused(jobId);
+                    }
+                    else
+                    {
+                        await currentJob.PauseTransferJob().ConfigureAwait(false);
+                    }
                 }
             }
-            else
-            {
-                throw Errors.InvalidJobId(nameof(PauseTransferJobAsync), jobId);
-            }
+            // if the loop exists, we were not able to find the job id specified
+            throw Errors.InvalidJobId(nameof(PauseTransferJobAsync), jobId);
         }
 
         /// <summary>
         /// Returns storage job information if provided jobId.
         /// </summary>
         /// <param name="jobId"></param>
-        public override async Task ResumeTransferJobAsync(string jobId)
+        public override async Task ResumeTransferJobsAsync(string jobId)
         {
-            if (!_totalTransferJobs.ContainsKey(jobId))
+            foreach (BlobTransferJobInternal currentJob in _totalTransferJobs)
             {
-                BlobTransferJobInternal job = _totalTransferJobs[jobId];
-                if (job.CancellationTokenSource.IsCancellationRequested)
+                if (jobId.Equals(currentJob.JobId))
                 {
-                    // The job is currently getting cancelled or paused
-                    throw Errors.JobCancelledOrPaused(jobId);
+                    if (currentJob.CancellationTokenSource.IsCancellationRequested)
+                    {
+                        // The job is currently getting cancelled or paused
+                        throw Errors.JobCancelledOrPaused(jobId);
+                    }
+                    else
+                    {
+                        await currentJob.ResumeTransferJob().ConfigureAwait(false);
+                    }
                 }
-                else
+            }
+            throw Errors.InvalidJobId(nameof(ResumeTransferJobsAsync), jobId);
+        }
+
+        /// <summary>
+        /// Returns storage job information if provided jobId.
+        /// </summary>
+        /// <param name="transferStatus">Resume job based on status</param>
+        public override async Task ResumeTransferJobsAsync(StorageJobTransferStatus transferStatus)
+        {
+            if (transferStatus != StorageJobTransferStatus.Completed ||
+                transferStatus != StorageJobTransferStatus.InProgress ||
+                transferStatus != StorageJobTransferStatus.Queued)
+            {
+                foreach (BlobTransferJobInternal currentJob in _totalTransferJobs)
                 {
-                    await job.ResumeTransferJob().ConfigureAwait(false);
+                    if (transferStatus.Equals(currentJob.GetTransferStatus()))
+                    {
+                        if (!currentJob.CancellationTokenSource.IsCancellationRequested)
+                        {
+                            await currentJob.ResumeTransferJob().ConfigureAwait(false);
+                        }
+                    }
                 }
+
+                // TODO: do we have to throw an error if there are no jobs with this job status?
             }
             else
             {
-                throw Errors.InvalidJobId(nameof(ResumeTransferJobAsync), jobId);
+                throw Errors.JobStatusInvalidResume(transferStatus.ToString());
             }
         }
 
@@ -552,9 +582,9 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             _managerTransferStatus = StorageManagerTransferStatus.InProgress;
 
-            foreach (KeyValuePair<string, BlobTransferJobInternal> job in _totalTransferJobs)
+            foreach (BlobTransferJobInternal job in _totalTransferJobs)
             {
-                await job.Value.ResumeTransferJob().ConfigureAwait(false);
+                await job.ResumeTransferJob().ConfigureAwait(false);
                 //TODO: log cancellation of job
                 //Call job update transfer status
             }
@@ -573,11 +603,11 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             _managerTransferStatus = StorageManagerTransferStatus.Pausing;
 
-            foreach (KeyValuePair<string, BlobTransferJobInternal> job in _totalTransferJobs)
+            foreach (BlobTransferJobInternal job in _totalTransferJobs)
             {
-                if (!job.Value.CancellationTokenSource.IsCancellationRequested)
+                if (!job.CancellationTokenSource.IsCancellationRequested)
                 {
-                    job.Value.CancellationTokenSource.Cancel(true);
+                    job.CancellationTokenSource.Cancel(true);
                 }
                 //TODO: log cancellation of job
                 //Call job update transfer status
@@ -602,13 +632,13 @@ namespace Azure.Storage.DataMovement.Blobs
             // This would remove all transfers from the queue and not log the current progress
             // to the file. Maybe we would also remove the file too as a part of cleanup.
             _managerTransferStatus = StorageManagerTransferStatus.Cancelling;
-            foreach (KeyValuePair<string, BlobTransferJobInternal> job in _totalTransferJobs)
+            foreach (BlobTransferJobInternal job in _totalTransferJobs)
             {
                 // Probably look to do this in parallel.
                 // TODO: catch any errors that fly up the stack and attempt
                 // to delete the other log or plan files, but throw the proper exception
                 // or list of files that could not be deleted.
-                job.Value.PlanJobWriter.RemovePlanFile();
+                job.PlanJobWriter.RemovePlanFile();
             }
         }
 
@@ -635,7 +665,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 throw new Exception("Please wait until all transfer jobs have cancelled");
             }
             _managerTransferStatus = StorageManagerTransferStatus.Cleaning;
-            foreach (KeyValuePair<string, BlobTransferJobInternal> job in _totalTransferJobs)
+            foreach (BlobTransferJobInternal job in _totalTransferJobs)
             {
                 // Probably look to do this in parallel.
                 // TODO: catch any errors that fly up the stack and attempt
@@ -644,7 +674,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
                 //TODO: do we have to remove log files?
                 //job.Value.Logger.removeLogFile();
-                job.Value.PlanJobWriter.RemovePlanFile();
+                job.PlanJobWriter.RemovePlanFile();
             }
         }
     }

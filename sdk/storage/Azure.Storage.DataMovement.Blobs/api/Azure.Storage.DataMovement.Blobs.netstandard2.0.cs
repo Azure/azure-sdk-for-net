@@ -187,21 +187,9 @@ namespace Azure.Storage.DataMovement.Blobs.Models
     public partial class BlobTransferJobProperties
     {
         internal BlobTransferJobProperties() { }
-        public Azure.Storage.DataMovement.Blobs.Models.BlobCopyMethod CopyMethod { get { throw null; } }
-        public Azure.Storage.Blobs.Specialized.BlobBaseClient DestinationBlobClient { get { throw null; } }
-        public Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient DestinationBlobDirectoryClient { get { throw null; } }
-        public string DestinationLocalPath { get { throw null; } }
-        public Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryCopyFromUriOptions DirectoryCopyFromUriOptions { get { throw null; } }
-        public Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryDownloadOptions DirectoryDownloadOptions { get { throw null; } }
-        public Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryUploadOptions DirectoryUploadOptions { get { throw null; } }
+        public System.Uri DestinationUri { get { throw null; } }
         public string JobId { get { throw null; } }
-        public Azure.Storage.Blobs.Models.BlobCopyFromUriOptions SingleCopyFromUriOptions { get { throw null; } }
-        public Azure.Storage.Blobs.Models.BlobDownloadToOptions SingleDownloadOptions { get { throw null; } }
-        public Azure.Storage.Blobs.Models.BlobUploadOptions SingleUploadOptions { get { throw null; } }
-        public Azure.Storage.Blobs.Specialized.BlobBaseClient SourceBlobClient { get { throw null; } }
-        public Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient SourceBlobDirectoryClient { get { throw null; } }
-        public string SourceLocalPath { get { throw null; } }
-        public System.Uri SourceUri { get { throw null; } }
+        public System.Uri SourcePath { get { throw null; } }
         public Azure.Storage.DataMovement.StorageJobTransferStatus Status { get { throw null; } }
         public Azure.Storage.DataMovement.Blobs.Models.BlobTransferType TransferType { get { throw null; } }
     }
@@ -211,8 +199,14 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         SingleDownload = 1,
         DirectoryUpload = 2,
         DirectoryDownload = 3,
-        SingleCopy = 4,
-        DirectoryCopy = 5,
+        SingleSyncCopy = 4,
+        DirectorySyncCopy = 5,
+        SingleAsyncCopy = 6,
+        DirectoryAsyncCopy = 7,
+        SingleRoundTripCopy = 8,
+        DirectoryRoundTripCopy = 9,
+        SingleSyncUploadUriCopy = 10,
+        DirectorySyncUploadUriCopy = 11,
     }
     public partial class BlobUploadDirectoryEventHandler
     {

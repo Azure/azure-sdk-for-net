@@ -20,7 +20,6 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 JobId = transferJob.JobId,
                 TransferType = BlobTransferType.SingleUpload,
-                Status = StorageJobTransferStatus.Completed, //TODO = update with actual job status
                 SourcePath = new Uri(transferJob.SourceLocalPath),
                 DestinationUri = transferJob.DestinationBlobClient.Uri,
             };
@@ -37,7 +36,6 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 JobId = transferJob.JobId,
                 TransferType = BlobTransferType.DirectoryUpload,
-                Status = StorageJobTransferStatus.Completed, //TODO = update with actual job status
                 SourcePath = new Uri(transferJob.SourceLocalPath),
                 DestinationUri = transferJob.DestinationBlobDirectoryClient.Uri,
             };
@@ -54,7 +52,6 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 JobId = transferJob.JobId,
                 TransferType = BlobTransferType.SingleDownload,
-                Status = StorageJobTransferStatus.Completed, //TODO = update with actual job status
                 SourcePath = transferJob.SourceBlobClient.Uri,
                 DestinationUri = new Uri(transferJob.DestinationLocalPath),
             };
@@ -71,7 +68,6 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 JobId = transferJob.JobId,
                 TransferType = BlobTransferType.DirectoryDownload,
-                Status = StorageJobTransferStatus.Completed, //TODO = update with actual job status
                 SourcePath = transferJob.SourceBlobDirectoryClient.Uri,
                 DestinationUri = new Uri(transferJob.DestinationLocalPath),
             };
@@ -88,7 +84,6 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 JobId = transferJob.JobId,
                 TransferType = BlobTransferType.SingleSyncCopy,
-                Status = StorageJobTransferStatus.Completed, //TODO = update with actual job status
                 SourcePath = transferJob.SourceUri,
                 DestinationUri = transferJob.DestinationBlobClient.Uri,
             };
@@ -105,7 +100,6 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 JobId = transferJob.JobId,
                 TransferType = BlobTransferType.DirectorySyncCopy,
-                Status = StorageJobTransferStatus.Completed, //TODO = update with actual job status
                 SourcePath = transferJob.SourceDirectoryClient.Uri,
                 DestinationUri = transferJob.DestinationBlobDirectoryClient.Uri,
             };

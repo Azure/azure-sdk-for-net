@@ -58,6 +58,13 @@ namespace Azure.Storage.DataMovement
         ///<summary>
         /// Initializes a new instance of the <see cref="StorageTransferManager"/>
         /// class.
+        ///
+        /// This constructor will first default to using the environment variable
+        /// AZDMLIB_JOB_PLAN_LOCATION. If this environment variable is not set
+        /// then. We will default to storing the job plan files in
+        /// %USERPROFILE%\.azstoragedml directory on Windows OS
+        /// and $HOME$\.azstoragedml directory on Mac and Linux based OS.
+        ///
         /// </summary>
         /// <param name="options">Directory path where transfer state is kept.</param>
         protected StorageTransferManager(StorageTransferManagerOptions options)
@@ -76,11 +83,6 @@ namespace Azure.Storage.DataMovement
         /// the transfer manager, we will default to storing the file in
         /// %USERPROFILE%\.azstoragedml directory on Windows OS
         /// and $HOME$\.azstoragedml directory on Mac and Linux based OS.
-        ///
-        /// TODO: this will also hold the the information of all exceptions that
-        /// have occured during the transfer state. In the case that too many
-        /// exceptions happened during a transfer job and the customer wants
-        /// to go through each exception and resolve each one.
         /// </param>
         /// <param name="options"></param>
         protected StorageTransferManager(string transferStateDirectoryPath, StorageTransferManagerOptions options)
@@ -99,7 +101,13 @@ namespace Azure.Storage.DataMovement
         /// Returns storage job information if provided jobId.
         /// </summary>
         /// <param name="jobId"></param>
-        public abstract Task ResumeTransferJobAsync(string jobId);
+        public abstract Task ResumeTransferJobsAsync(string jobId);
+
+        /// <summary>
+        /// Returns storage job information if provided jobId.
+        /// </summary>
+        /// <param name="jobId"></param>
+        public abstract Task ResumeTransferJobsAsync(StorageJobTransferStatus jobId);
 
         /// <summary>
         /// Resumes transfers that are currently being processed.
@@ -113,8 +121,6 @@ namespace Azure.Storage.DataMovement
         /// Pauses transfers that are currently being processed.
         /// Does not allow any other transfer start.
         /// </summary>
-        /// TODO: Returns actual object, or at least in a designated log
-        /// file we have a place where people can continue transfers
         public abstract Task PauseAllTransferJobsAsync();
 
         /// <summary>

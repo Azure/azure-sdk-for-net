@@ -22,6 +22,9 @@ namespace Azure.Storage
         public static ArgumentException JobCancelledOrPaused(string jobId)
             => new ArgumentException($"The following job with the respective job id: \"{jobId}\" is currently being cancelled or paused.");
 
+        public static ArgumentException JobStatusInvalidResume(string jobStatus)
+            => new ArgumentException($"Cannot resume jobs with the following status: \"{jobStatus}\".");
+
         public static InvalidOperationException TooManyLogFiles(string logFolderPath, string jobId)
             => new InvalidOperationException($"Path:\"{logFolderPath}\" cannot be used to store log file for job \"{jobId}\"" +
                 $"due to limit of duplicate job log file names. Please clear out the folder or use a different folder path");
