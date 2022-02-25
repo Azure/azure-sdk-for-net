@@ -38,8 +38,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// Adds current export duration in seconds to the sample size.
         /// Also, removes the oldest record from the sample.
         /// </summary>
-        internal void AddExportDurationToDataSample(double currentExportDuration)
+        internal void AddExportDurationToDataSample(double currentBatchExportDuration)
         {
+            _currentBatchExportDuration = currentBatchExportDuration;
+
             _exportDurationIndex++;
 
             // if we run out of elements, start from beginning
@@ -49,8 +51,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             _exportDurationRunningSum -= _exportDurationsInSeconds[_exportDurationIndex];
-            _exportDurationsInSeconds[_exportDurationIndex] = currentExportDuration;
-            _exportDurationRunningSum += currentExportDuration;
+            _exportDurationsInSeconds[_exportDurationIndex] = currentBatchExportDuration;
+            _exportDurationRunningSum += currentBatchExportDuration;
         }
 
         /// <summary>
