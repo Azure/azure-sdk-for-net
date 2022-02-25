@@ -55,9 +55,9 @@ directive:
   - remove-operation: "GetBastionShareableLink"
   - remove-operation: "GetActiveSessions"
   - remove-operation: "DisconnectActiveSessions"
-  - remove-operation: "ApplicationGateways_ListAvailableSslOptions"
-  - remove-operation: "ApplicationGateways_ListAvailableSslPredefinedPolicies"
-  - remove-operation: "ApplicationGateways_GetSslPredefinedPolicy"
+  - from: networkWatcher.json
+    where: $.definitions.ProtocolConfiguration.properties.HTTPConfiguration
+    transform: $['x-ms-client-name'] = 'HttpProtocolConfiguration' 
 ```
 
 ### Tag: package-track2-preview

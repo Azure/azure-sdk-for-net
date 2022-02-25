@@ -111,11 +111,29 @@ namespace Azure.ResourceManager.Network
         /// <summary> Who was the last to modify the peering. </summary>
         public string LastModifiedBy { get; }
         /// <summary> The reference to the RouteFilter resource. </summary>
-        public WritableSubResource RouteFilter { get; set; }
+        internal WritableSubResource RouteFilter { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier RouteFilterId
+        {
+            get => RouteFilter is null ? default : RouteFilter.Id;
+            set
+            {
+                if (RouteFilter is null)
+                    RouteFilter = new WritableSubResource();
+                RouteFilter.Id = value;
+            }
+        }
+
         /// <summary> The IPv6 peering configuration. </summary>
         public Ipv6ExpressRouteCircuitPeeringConfig Ipv6PeeringConfig { get; set; }
         /// <summary> The ExpressRoute connection. </summary>
-        public Resources.Models.SubResource ExpressRouteConnection { get; set; }
+        internal Resources.Models.SubResource ExpressRouteConnection { get; set; }
+        /// <summary> Gets Id. </summary>
+        public ResourceIdentifier ExpressRouteConnectionId
+        {
+            get => ExpressRouteConnection is null ? default : ExpressRouteConnection.Id;
+        }
+
         /// <summary> The list of circuit connections associated with Azure Private Peering for this circuit. </summary>
         public IList<ExpressRouteCircuitConnectionData> Connections { get; }
         /// <summary> The list of peered circuit connections associated with Azure Private Peering for this circuit. </summary>

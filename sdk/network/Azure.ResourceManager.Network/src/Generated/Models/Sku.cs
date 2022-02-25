@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The sku of this Bastion Host. </summary>
-    public partial class Sku
+    internal partial class Sku
     {
         /// <summary> Initializes a new instance of Sku. </summary>
         public Sku()

@@ -87,7 +87,14 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The deployment mode. Possible values are Incremental and Complete. </summary>
         public DeploymentMode? Mode { get; }
         /// <summary> The debug setting of the deployment. </summary>
-        public DebugSetting DebugSetting { get; }
+        internal DebugSetting DebugSetting { get; }
+        /// <summary> Specifies the type of information to log for debugging. The permitted values are none, requestContent, responseContent, or both requestContent and responseContent separated by a comma. The default is none. When setting this value, carefully consider the type of information you are passing in during deployment. By logging information about the request or response, you could potentially expose sensitive data that is retrieved through the deployment operations. </summary>
+        public string DebugSettingDetailLevel
+        {
+            get => DebugSetting.DetailLevel;
+            set => DebugSetting.DetailLevel = value;
+        }
+
         /// <summary> The deployment on error behavior. </summary>
         public OnErrorDeploymentExtended OnErrorDeployment { get; }
         /// <summary> The hash produced for the template. </summary>

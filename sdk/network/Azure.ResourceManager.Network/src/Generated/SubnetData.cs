@@ -96,7 +96,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> The reference to the RouteTable resource. </summary>
         public RouteTableData RouteTable { get; set; }
         /// <summary> Nat gateway associated with this subnet. </summary>
-        public WritableSubResource NatGateway { get; set; }
+        internal WritableSubResource NatGateway { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier NatGatewayId
+        {
+            get => NatGateway is null ? default : NatGateway.Id;
+            set
+            {
+                if (NatGateway is null)
+                    NatGateway = new WritableSubResource();
+                NatGateway.Id = value;
+            }
+        }
+
         /// <summary> An array of service endpoints. </summary>
         public IList<ServiceEndpointPropertiesFormat> ServiceEndpoints { get; }
         /// <summary> An array of service endpoint policies. </summary>

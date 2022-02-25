@@ -9,12 +9,6 @@ namespace Azure
         public virtual System.BinaryData? Data { get { throw null; } set { } }
         public virtual bool IsReadOnly { get { throw null; } }
     }
-    public partial class RequestOptions
-    {
-        public RequestOptions() { }
-        public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
-        public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
-    }
 }
 namespace Azure.Core
 {
@@ -102,12 +96,5 @@ namespace Azure.Core
         public T To<T>(System.Text.Json.JsonSerializerOptions options) { throw null; }
         public long WriteTo(System.IO.Stream stream) { throw null; }
         public System.Threading.Tasks.Task<long> WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken) { throw null; }
-    }
-}
-namespace Azure.Core.Pipeline
-{
-    public static partial class HttpPipelineExtensions
-    {
-        public static Azure.Core.HttpMessage CreateMessage(this Azure.Core.Pipeline.HttpPipeline pipeline, Azure.RequestOptions? options) { throw null; }
     }
 }

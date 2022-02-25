@@ -18,12 +18,29 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The description of this Shared Image Gallery resource. This property is updatable. </summary>
         public string Description { get; set; }
         /// <summary> Describes the gallery unique name. </summary>
-        public GalleryIdentifier Identifier { get; set; }
+        internal GalleryIdentifier Identifier { get; set; }
+        /// <summary> The unique name of the Shared Image Gallery. This name is generated automatically by Azure. </summary>
+        public string IdentifierUniqueName
+        {
+            get => Identifier is null ? default : Identifier.UniqueName;
+        }
+
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public GalleryPropertiesProvisioningState? ProvisioningState { get; }
         /// <summary> Profile for gallery sharing to subscription or tenant. </summary>
         public SharingProfile SharingProfile { get; set; }
         /// <summary> Contains information about the soft deletion policy of the gallery. </summary>
-        public SoftDeletePolicy SoftDeletePolicy { get; set; }
+        internal SoftDeletePolicy SoftDeletePolicy { get; set; }
+        /// <summary> Enables soft-deletion for resources in this gallery, allowing them to be recovered within retention time. </summary>
+        public bool? IsSoftDeleteEnabled
+        {
+            get => SoftDeletePolicy is null ? default : SoftDeletePolicy.IsSoftDeleteEnabled;
+            set
+            {
+                if (SoftDeletePolicy is null)
+                    SoftDeletePolicy = new SoftDeletePolicy();
+                SoftDeletePolicy.IsSoftDeleteEnabled = value;
+            }
+        }
     }
 }

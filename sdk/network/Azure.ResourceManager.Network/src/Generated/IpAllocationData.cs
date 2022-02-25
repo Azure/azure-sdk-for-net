@@ -52,9 +52,23 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The Subnet that using the prefix of this IpAllocation resource. </summary>
-        public WritableSubResource Subnet { get; }
+        internal WritableSubResource Subnet { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get => Subnet.Id;
+            set => Subnet.Id = value;
+        }
+
         /// <summary> The VirtualNetwork that using the prefix of this IpAllocation resource. </summary>
-        public WritableSubResource VirtualNetwork { get; }
+        internal WritableSubResource VirtualNetwork { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VirtualNetworkId
+        {
+            get => VirtualNetwork.Id;
+            set => VirtualNetwork.Id = value;
+        }
+
         /// <summary> The type for the IpAllocation. </summary>
         public IpAllocationType? TypePropertiesType { get; set; }
         /// <summary> The address prefix for the IpAllocation. </summary>
