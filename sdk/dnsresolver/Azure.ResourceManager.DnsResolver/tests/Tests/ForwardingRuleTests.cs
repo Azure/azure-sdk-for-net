@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             return (await dnsForwardingRulesetCollection.CreateOrUpdateAsync(true, dnsForwardingRulesetName, dnsForwardingRulesetData)).Value;
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateForwardingRule()
         {
             // ARRANGE
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             Assert.AreEqual(createdForwardingRule.Value.Data.ProvisioningState, ProvisioningState.Succeeded);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetForwardingRule()
         {
             // ARRANGE
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             Assert.AreEqual(retrievedForwardingRule.Value.Data.Name, forwardingRuleName);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task UpdateForwardingRule()
         {
             // ARRANGE
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             CollectionAssert.AreEquivalent(patchedForwardingRule.Value.Data.Metadata, forwardingRulePatch.Metadata);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RemoveForwardingRule()
         {
             // ARRANGE

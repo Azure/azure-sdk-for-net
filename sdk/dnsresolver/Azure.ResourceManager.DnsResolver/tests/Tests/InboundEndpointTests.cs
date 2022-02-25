@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             dnsResolver = (await resourceGroup.Value.GetDnsResolvers().CreateOrUpdateAsync(true, dnsResolverName, dnsResolverData)).Value;
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateInboundEndpoint()
         {
             // ARRANGE
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             Assert.AreEqual(inboundEndpoint.Value.Data.ProvisioningState, ProvisioningState.Succeeded);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetInboundEndpoint()
         {
             // ARRANGE
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             Assert.AreEqual(retrievedInboundEndpoint.Value.Data.Name, inboundEndpointName);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task UpdateInboundEndpoint()
         {
             // ARRANGE
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             CollectionAssert.AreEquivalent(patchedInboundEndpoint.Value.Data.Tags, inboundEndpointUpdateOptions.Tags);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RemoveInboundEndpoint()
         {
             // ARRANGE

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             this.dnsResolverCollection = resourceGroup.Value.GetDnsResolvers();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateDnsResolverAsync()
         {
             // ARRANGE
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             Assert.AreEqual(dnsResolver.Value.Data.ProvisioningState, ProvisioningState.Succeeded);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetDnsResolverAsync()
         {
             // ARRANGE
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             Assert.AreEqual(retrievedDnsResolver.Value.Data.Name, dnsResolverName);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task UpdateDnsResolverAsync()
         {
             // ARRANGE
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             CollectionAssert.AreEquivalent(patchedDnsResolver.Value.Data.Tags, dnsResolverUpdateOptions.Tags);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RemoveDnsResolverAsync()
         {
             // ARRANGE

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             return (await dnsForwardingRulesetCollection.CreateOrUpdateAsync(true, dnsForwardingRulesetName, dnsForwardingRulesetData)).Value;
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateVirtualNetworkLink()
         {
             // ARRANGE
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             Assert.AreEqual(createdVirtualNetworkLink.Value.Data.ProvisioningState, ProvisioningState.Succeeded);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetVirtualNetworkLink()
         {
             // ARRANGE
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             Assert.AreEqual(retrievedVirtualNetworkLink.Value.Data.Name, virtualNetworkLinkName);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task UpdateVirtualNetworkLink()
         {
             // ARRANGE
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             CollectionAssert.AreEquivalent(patchedVirtualNetworkLink.Value.Data.Metadata, virtualNetworkLinkPatch.Metadata);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RemoveVirtualNetworkLink()
         {
             // ARRANGE
