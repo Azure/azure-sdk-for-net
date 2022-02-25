@@ -74,12 +74,8 @@ namespace Azure.Storage.Blobs.Tests
             });
 
         #region Added Tests
-        // hashing, so we buffered the stream to hash then rewind before returning to user
-        [TestCase(ValidationAlgorithm.MD5, true)]
-        [TestCase(ValidationAlgorithm.StorageCrc64, true)]
-        // no hashing, so we save users a buffer
-        [TestCase(ValidationAlgorithm.None, false)]
-        public async Task ExpectedDownloadStreamingStreamTypeReturned(ValidationAlgorithm algorithm, bool isBuffered)
+        [TestCaseSource("GetValidationAlgorithms")]
+        public async Task ExpectedDownloadStreamingStreamTypeReturned(ValidationAlgorithm algorithm)
         {
             await using var test = await GetDisposingContainerAsync();
 
@@ -103,15 +99,32 @@ namespace Azure.Storage.Blobs.Tests
             });
 
             // Assert
-            if (isBuffered)
+            // validated stream is buffered
+            Assert.AreEqual(typeof(MemoryStream), response.Value.Content.GetType());
+        }
+
+        [Test]
+        public async Task ExpectedDownloadStreamingStreamTypeReturned_None()
+        {
+            await using var test = await GetDisposingContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewResourceName()));
+            using (var stream = new MemoryStream(data))
             {
-                Assert.AreEqual(typeof(MemoryStream), response.Value.Content.GetType());
+                await blob.UploadAsync(stream);
             }
-            // actual unbuffered stream type is private; just check we didn't get back a buffered stream
-            else
+
+            // Act
+            Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(new BlobDownloadOptions
             {
-                Assert.AreNotEqual(typeof(MemoryStream), response.Value.Content.GetType());
-            }
+                Range = new HttpRange(length: data.Length)
+            });
+
+            // Assert
+            // unvalidated stream type is private; just check we didn't get back a buffered stream
+            Assert.AreNotEqual(typeof(MemoryStream), response.Value.Content.GetType());
         }
         #endregion
     }
