@@ -5,6 +5,17 @@ using System;
 
 namespace Azure.Core
 {
+    /// <summary>
+    /// Implements chaining of classifiers for the general case where the end-of-chain
+    /// <see cref="ResponseClassifier"/> is not a <see cref="CoreResponseClassifier"/>.
+    /// <see cref="CoreResponseClassifier"/> is preferred due to its enhanced performance
+    /// characteristics.
+    /// The classifier chain is a series of <see cref="ResponseClassificationHandler"/> classifiers
+    /// followed by the "end-of-chain" <see cref="ResponseClassifier"/>.  The handlers are
+    /// added to the chain via <see cref="RequestContext"/> or <see cref="RequestOptions"/>,
+    /// and applied starting with the most recently added handler, then applying status code
+    /// classification, and finally by applying the "end-of-chain" classifier.
+    /// </summary>
     internal class ChainingClassifier : ResponseClassifier
     {
         private ResponseClassificationHandler[]? _handlers;

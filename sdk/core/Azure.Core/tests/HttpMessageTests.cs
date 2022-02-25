@@ -242,7 +242,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void AppliesResponseClassifier()
+        public void AppliesNonCoreResponseClassifier_HeadResponseClassifier()
         {
             HttpMessage message = new HttpMessage(new MockRequest(), default);
             message.ApplyRequestContext(new RequestContext(), HeadResponseClassifier.Instance);
@@ -287,9 +287,9 @@ namespace Azure.Core.Tests
         public void ChainsClassifiers_StatusCodesAndHandlers()
         {
             RequestContext context = new RequestContext();
-            context.AddClassifier(404, true);
+            context.AddClassifier(404, false);
             context.AddClassifier(500, false);
-            context.AddClassifier(new StatusCodeHandler(404, false));
+            context.AddClassifier(new StatusCodeHandler(404, true));
 
             HttpMessage message = new HttpMessage(new MockRequest(), default);
             message.ApplyRequestContext(context, HeadResponseClassifier.Instance);
@@ -301,7 +301,7 @@ namespace Azure.Core.Tests
             Assert.IsTrue(message.ResponseClassifier.IsErrorResponse(message));
 
             message.Response = new MockResponse(404);
-            Assert.IsFalse(message.ResponseClassifier.IsErrorResponse(message));
+            Assert.IsTrue(message.ResponseClassifier.IsErrorResponse(message));
 
             message.Response = new MockResponse(500);
             Assert.IsFalse(message.ResponseClassifier.IsErrorResponse(message));

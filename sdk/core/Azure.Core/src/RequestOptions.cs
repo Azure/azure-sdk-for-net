@@ -69,6 +69,7 @@ namespace Azure
         /// Customizes the <see cref="ResponseClassifier"/> for this operation to change
         /// the default <see cref="Response"/> classification behavior so that it considers
         /// the passed-in status code to be an error or not, as specified.
+        /// Status code classifiers are applied after all <see cref="ResponseClassificationHandler"/> classifiers.
         /// This is useful for cases where you'd like to prevent specific response status codes from being treated as errors by
         /// logging and distributed tracing policies -- that is, if a response is not classified as an error, it will not appear as an error in
         /// logs or distributed traces.
