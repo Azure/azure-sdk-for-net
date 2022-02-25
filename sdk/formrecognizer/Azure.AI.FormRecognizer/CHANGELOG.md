@@ -1,6 +1,18 @@
 # Release History
 
-## 4.0.0-beta.3 (2021-02-10)
+## 4.0.0-beta.4 (Unreleased)
+
+### Features Added
+- Added `DocumentAnalysisClient` integration for ASP.NET Core ([#27123](https://github.com/azure/azure-sdk-for-net/issues/27123)).
+
+### Breaking Changes
+- Made `DocumentSpan` a `struct` instead of a `class`.
+
+### Bugs Fixed
+
+### Other Changes
+
+## 4.0.0-beta.3 (2022-02-10)
 
 ### Features Added
 - Added the `DocumentField.AsCurrency` method and the `DocumentFieldType.Currency` enum value to support analyzed currency fields.

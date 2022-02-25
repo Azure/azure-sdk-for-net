@@ -50,20 +50,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return telemetryItems;
         }
 
-        internal static string GetMessage(LogRecord logRecord)
+        internal static string GetMessageAndSetProperties(LogRecord logRecord, IDictionary<string, string> properties)
         {
-            string message = null;
+            string message = logRecord.FormattedMessage;
 
-            if (logRecord.FormattedMessage != null)
+            // Both logRecord.State and logRecord.StateValues will not be set at the same time for LogRecord.
+            // Either logRecord.State != null or logRecord.StateValues will be called.
+            if (logRecord.State != null)
             {
-                message = logRecord.FormattedMessage;
-            }
-            else if (logRecord.State != null)
-            {
-                message = logRecord.State.ToString();
+                if (logRecord.State is IReadOnlyCollection<KeyValuePair<string, object>> stateDictionary)
+                {
+                    ExtractProperties(ref message, properties, stateDictionary);
+                }
             }
 
-            // TODO: Parse logRecord.StateValues to extract originalformat / telemetry properties.
+            if (logRecord.StateValues != null)
+            {
+                ExtractProperties(ref message, properties, logRecord.StateValues);
+            }
+
+            if (logRecord.EventId.Id != 0)
+            {
+                properties.Add("EventId", logRecord.EventId.Id.ToString(CultureInfo.InvariantCulture));
+            }
+
+            if (!string.IsNullOrEmpty(logRecord.EventId.Name))
+            {
+                properties.Add("EventName", logRecord.EventId.Name);
+            }
 
             return message;
         }
@@ -75,7 +89,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             var exceptionType = exception.GetType().FullName;
             var strackTrace = new StackTrace(exception);
-            var exceptionStackFrame = strackTrace.GetFrame(1);
+            var exceptionStackFrame = strackTrace.GetFrame(0);
 
             if (exceptionStackFrame != null)
             {
@@ -120,6 +134,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 case LogLevel.Trace:
                 default:
                     return SeverityLevel.Verbose;
+            }
+        }
+
+        private static void ExtractProperties(ref string message, IDictionary<string, string> properties, IReadOnlyCollection<KeyValuePair<string, object>> stateDictionary)
+        {
+            foreach (KeyValuePair<string, object> item in stateDictionary)
+            {
+                if (item.Key == "{OriginalFormat}")
+                {
+                    if (message == null)
+                    {
+                        message = item.Value.ToString();
+                    }
+                    else
+                    {
+                        properties.Add("OriginalFormat", item.Value.ToString());
+                    }
+                }
+                else
+                {
+                    properties.Add(item.Key, item.Value.ToString());
+                }
             }
         }
     }

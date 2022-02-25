@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -51,9 +52,33 @@ namespace Azure.ResourceManager.Network
         /// <summary> Type of the resource. </summary>
         public string Type { get; }
         /// <summary> Reference to Express Route Circuit Private Peering Resource of the circuit. </summary>
-        public WritableSubResource ExpressRouteCircuitPeering { get; set; }
+        internal WritableSubResource ExpressRouteCircuitPeering { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier ExpressRouteCircuitPeeringId
+        {
+            get => ExpressRouteCircuitPeering is null ? default : ExpressRouteCircuitPeering.Id;
+            set
+            {
+                if (ExpressRouteCircuitPeering is null)
+                    ExpressRouteCircuitPeering = new WritableSubResource();
+                ExpressRouteCircuitPeering.Id = value;
+            }
+        }
+
         /// <summary> Reference to Express Route Circuit Private Peering Resource of the peered circuit. </summary>
-        public WritableSubResource PeerExpressRouteCircuitPeering { get; set; }
+        internal WritableSubResource PeerExpressRouteCircuitPeering { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier PeerExpressRouteCircuitPeeringId
+        {
+            get => PeerExpressRouteCircuitPeering is null ? default : PeerExpressRouteCircuitPeering.Id;
+            set
+            {
+                if (PeerExpressRouteCircuitPeering is null)
+                    PeerExpressRouteCircuitPeering = new WritableSubResource();
+                PeerExpressRouteCircuitPeering.Id = value;
+            }
+        }
+
         /// <summary> /29 IP address space to carve out Customer addresses for tunnels. </summary>
         public string AddressPrefix { get; set; }
         /// <summary> Express Route Circuit connection state. </summary>

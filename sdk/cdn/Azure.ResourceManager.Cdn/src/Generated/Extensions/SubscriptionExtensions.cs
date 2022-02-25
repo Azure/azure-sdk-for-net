@@ -9,6 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Resources;
 
@@ -63,10 +64,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
         public async static Task<Response<CheckNameAvailabilityOutput>> CheckCdnNameAvailabilityWithSubscriptionAsync(this Subscription subscription, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
         {
-            if (checkNameAvailabilityInput == null)
-            {
-                throw new ArgumentNullException(nameof(checkNameAvailabilityInput));
-            }
+            Argument.AssertNotNull(checkNameAvailabilityInput, nameof(checkNameAvailabilityInput));
 
             return await GetExtensionClient(subscription).CheckCdnNameAvailabilityWithSubscriptionAsync(checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
         }
@@ -82,10 +80,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
         public static Response<CheckNameAvailabilityOutput> CheckCdnNameAvailabilityWithSubscription(this Subscription subscription, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
         {
-            if (checkNameAvailabilityInput == null)
-            {
-                throw new ArgumentNullException(nameof(checkNameAvailabilityInput));
-            }
+            Argument.AssertNotNull(checkNameAvailabilityInput, nameof(checkNameAvailabilityInput));
 
             return GetExtensionClient(subscription).CheckCdnNameAvailabilityWithSubscription(checkNameAvailabilityInput, cancellationToken);
         }
@@ -101,10 +96,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="validateProbeInput"/> is null. </exception>
         public async static Task<Response<ValidateProbeOutput>> ValidateProbeAsync(this Subscription subscription, ValidateProbeInput validateProbeInput, CancellationToken cancellationToken = default)
         {
-            if (validateProbeInput == null)
-            {
-                throw new ArgumentNullException(nameof(validateProbeInput));
-            }
+            Argument.AssertNotNull(validateProbeInput, nameof(validateProbeInput));
 
             return await GetExtensionClient(subscription).ValidateProbeAsync(validateProbeInput, cancellationToken).ConfigureAwait(false);
         }
@@ -120,10 +112,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="validateProbeInput"/> is null. </exception>
         public static Response<ValidateProbeOutput> ValidateProbe(this Subscription subscription, ValidateProbeInput validateProbeInput, CancellationToken cancellationToken = default)
         {
-            if (validateProbeInput == null)
-            {
-                throw new ArgumentNullException(nameof(validateProbeInput));
-            }
+            Argument.AssertNotNull(validateProbeInput, nameof(validateProbeInput));
 
             return GetExtensionClient(subscription).ValidateProbe(validateProbeInput, cancellationToken);
         }

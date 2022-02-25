@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
             Name = name;
             Type = type;
             LinkProperties = linkProperties;
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             Fqdn = fqdn;
             BgpProperties = bgpProperties;
             ProvisioningState = provisioningState;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The link provider properties. </summary>
         public VpnLinkProviderProperties LinkProperties { get; set; }
         /// <summary> The ip-address for the vpn-site-link. </summary>
-        public string IpAddress { get; set; }
+        public string IPAddress { get; set; }
         /// <summary> FQDN of vpn-site-link. </summary>
         public string Fqdn { get; set; }
         /// <summary> The set of bgp properties. </summary>

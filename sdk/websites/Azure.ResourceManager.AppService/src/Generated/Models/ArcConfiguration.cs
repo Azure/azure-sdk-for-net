@@ -45,7 +45,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Gets or sets the artifact storage access mode. </summary>
         public string ArtifactStorageAccessMode { get; set; }
         /// <summary> Gets or sets the front end service configuration. </summary>
-        public FrontEndConfiguration FrontEndServiceConfiguration { get; set; }
+        internal FrontEndConfiguration FrontEndServiceConfiguration { get; set; }
+        /// <summary> Gets or sets the front end service kind. </summary>
+        public FrontEndServiceType? FrontEndServiceKind
+        {
+            get => FrontEndServiceConfiguration is null ? default : FrontEndServiceConfiguration.Kind;
+            set
+            {
+                if (FrontEndServiceConfiguration is null)
+                    FrontEndServiceConfiguration = new FrontEndConfiguration();
+                FrontEndServiceConfiguration.Kind = value;
+            }
+        }
+
         /// <summary> Gets or sets the kube config. </summary>
         public string KubeConfig { get; set; }
     }

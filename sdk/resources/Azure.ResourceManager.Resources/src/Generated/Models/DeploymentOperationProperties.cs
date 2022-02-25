@@ -59,8 +59,19 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The target resource. </summary>
         public TargetResource TargetResource { get; }
         /// <summary> The HTTP request message. </summary>
-        public HttpMessage Request { get; }
+        internal HttpMessage Request { get; }
+        /// <summary> HTTP message content. </summary>
+        public object RequestContent
+        {
+            get => Request.Content;
+        }
+
         /// <summary> The HTTP response message. </summary>
-        public HttpMessage Response { get; }
+        internal HttpMessage Response { get; }
+        /// <summary> HTTP message content. </summary>
+        public object ResponseContent
+        {
+            get => Response.Content;
+        }
     }
 }

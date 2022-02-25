@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            Client.TryGetApiVersion(resourceType, out string apiVersion);
+            TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.Network
             return new BastionHostCollection(Client, Id);
         }
 
-        /// <summary> Gets a collection of CustomIpPrefixes in the CustomIpPrefix. </summary>
-        /// <returns> An object representing collection of CustomIpPrefixes and their operations over a CustomIpPrefix. </returns>
-        public virtual CustomIpPrefixCollection GetCustomIpPrefixes()
+        /// <summary> Gets a collection of CustomIPPrefixes in the CustomIPPrefix. </summary>
+        /// <returns> An object representing collection of CustomIPPrefixes and their operations over a CustomIPPrefix. </returns>
+        public virtual CustomIPPrefixCollection GetCustomIPPrefixes()
         {
-            return new CustomIpPrefixCollection(Client, Id);
+            return new CustomIPPrefixCollection(Client, Id);
         }
 
         /// <summary> Gets a collection of DdosCustomPolicies in the DdosCustomPolicy. </summary>
@@ -140,18 +140,18 @@ namespace Azure.ResourceManager.Network
             return new FirewallPolicyCollection(Client, Id);
         }
 
-        /// <summary> Gets a collection of IpAllocations in the IpAllocation. </summary>
-        /// <returns> An object representing collection of IpAllocations and their operations over a IpAllocation. </returns>
-        public virtual IpAllocationCollection GetIpAllocations()
+        /// <summary> Gets a collection of IPAllocations in the IPAllocation. </summary>
+        /// <returns> An object representing collection of IPAllocations and their operations over a IPAllocation. </returns>
+        public virtual IPAllocationCollection GetIPAllocations()
         {
-            return new IpAllocationCollection(Client, Id);
+            return new IPAllocationCollection(Client, Id);
         }
 
-        /// <summary> Gets a collection of IpGroups in the IpGroup. </summary>
-        /// <returns> An object representing collection of IpGroups and their operations over a IpGroup. </returns>
-        public virtual IpGroupCollection GetIpGroups()
+        /// <summary> Gets a collection of IPGroups in the IPGroup. </summary>
+        /// <returns> An object representing collection of IPGroups and their operations over a IPGroup. </returns>
+        public virtual IPGroupCollection GetIPGroups()
         {
-            return new IpGroupCollection(Client, Id);
+            return new IPGroupCollection(Client, Id);
         }
 
         /// <summary> Gets a collection of LoadBalancers in the LoadBalancer. </summary>
@@ -301,11 +301,11 @@ namespace Azure.ResourceManager.Network
             return new VirtualRouterCollection(Client, Id);
         }
 
-        /// <summary> Gets a collection of VirtualWANs in the VirtualWAN. </summary>
-        /// <returns> An object representing collection of VirtualWANs and their operations over a VirtualWAN. </returns>
-        public virtual VirtualWANCollection GetVirtualWANs()
+        /// <summary> Gets a collection of VirtualWans in the VirtualWan. </summary>
+        /// <returns> An object representing collection of VirtualWans and their operations over a VirtualWan. </returns>
+        public virtual VirtualWanCollection GetVirtualWans()
         {
-            return new VirtualWANCollection(Client, Id);
+            return new VirtualWanCollection(Client, Id);
         }
 
         /// <summary> Gets a collection of VpnSites in the VpnSite. </summary>

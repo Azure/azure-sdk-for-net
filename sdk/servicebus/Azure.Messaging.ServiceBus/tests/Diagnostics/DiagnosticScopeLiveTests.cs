@@ -161,7 +161,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     batch.TryAddMessage(ServiceBusTestUtilities.GetMessage(sessionId));
                 }
                 await sender.SendMessagesAsync(batch);
-                AssertSendActivities(useSessions, sender, batch.AsEnumerable<ServiceBusMessage>());
+                AssertSendActivities(useSessions, sender, batch.AsReadOnly<ServiceBusMessage>());
             };
         }
 

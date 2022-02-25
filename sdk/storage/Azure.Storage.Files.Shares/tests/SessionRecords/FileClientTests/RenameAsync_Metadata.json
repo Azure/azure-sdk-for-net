@@ -114,7 +114,7 @@
         "User-Agent": "azsdk-net-Storage.Files.Shares/12.9.0-alpha.20211214.1 (.NET Framework 4.8.4340.0; Microsoft Windows 10.0.19044 )",
         "x-ms-client-request-id": "058b900e-63df-076c-bf30-8f0edec4574b",
         "x-ms-date": "Tue, 14 Dec 2021 18:48:54 GMT",
-        "x-ms-file-rename-source": "https%3A%2F%2Fhtoxscnapby3pev24a.file.preprod.core.windows.net%2Ftest-share-09b586d7-220d-bc2f-0382-5fe686e957b7%2Ftest-directory-51f49a34-ab08-f247-7a8e-aa46a24d0964%2Ftest-file-6cd39376-f1a0-a8ba-4681-265921fe59f8=",
+        "x-ms-file-rename-source": "https://htoxscnapby3pev24a.file.preprod.core.windows.net/test-share-09b586d7-220d-bc2f-0382-5fe686e957b7/test-directory-51f49a34-ab08-f247-7a8e-aa46a24d0964/test-file-6cd39376-f1a0-a8ba-4681-265921fe59f8",
         "x-ms-meta-Capital": "letter",
         "x-ms-meta-foo": "bar",
         "x-ms-meta-meta": "data",

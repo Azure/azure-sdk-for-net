@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotSourcecontrol(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotSourcecontrolWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteSlotSourcecontrolWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string siteSlotSourcecontrolWebAppsApiVersion);
             _siteSlotSourcecontrolWebAppsRestClient = new WebAppsRestOperations(_siteSlotSourcecontrolWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotSourcecontrolWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -194,10 +194,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteSourceControl"/> is null. </exception>
         public async virtual Task<Response<SiteSlotSourcecontrol>> UpdateAsync(SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
         {
-            if (siteSourceControl == null)
-            {
-                throw new ArgumentNullException(nameof(siteSourceControl));
-            }
+            Argument.AssertNotNull(siteSourceControl, nameof(siteSourceControl));
 
             using var scope = _siteSlotSourcecontrolWebAppsClientDiagnostics.CreateScope("SiteSlotSourcecontrol.Update");
             scope.Start();
@@ -223,10 +220,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteSourceControl"/> is null. </exception>
         public virtual Response<SiteSlotSourcecontrol> Update(SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
         {
-            if (siteSourceControl == null)
-            {
-                throw new ArgumentNullException(nameof(siteSourceControl));
-            }
+            Argument.AssertNotNull(siteSourceControl, nameof(siteSourceControl));
 
             using var scope = _siteSlotSourcecontrolWebAppsClientDiagnostics.CreateScope("SiteSlotSourcecontrol.Update");
             scope.Start();
@@ -253,10 +247,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteSourceControl"/> is null. </exception>
         public async virtual Task<ArmOperation<SiteSlotSourcecontrol>> CreateOrUpdateAsync(bool waitForCompletion, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
         {
-            if (siteSourceControl == null)
-            {
-                throw new ArgumentNullException(nameof(siteSourceControl));
-            }
+            Argument.AssertNotNull(siteSourceControl, nameof(siteSourceControl));
 
             using var scope = _siteSlotSourcecontrolWebAppsClientDiagnostics.CreateScope("SiteSlotSourcecontrol.CreateOrUpdate");
             scope.Start();
@@ -286,10 +277,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteSourceControl"/> is null. </exception>
         public virtual ArmOperation<SiteSlotSourcecontrol> CreateOrUpdate(bool waitForCompletion, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
         {
-            if (siteSourceControl == null)
-            {
-                throw new ArgumentNullException(nameof(siteSourceControl));
-            }
+            Argument.AssertNotNull(siteSourceControl, nameof(siteSourceControl));
 
             using var scope = _siteSlotSourcecontrolWebAppsClientDiagnostics.CreateScope("SiteSlotSourcecontrol.CreateOrUpdate");
             scope.Start();

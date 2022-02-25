@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Storage
         internal EncryptionScope(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _encryptionScopeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string encryptionScopeApiVersion);
+            TryGetApiVersion(ResourceType, out string encryptionScopeApiVersion);
             _encryptionScopeRestClient = new EncryptionScopesRestOperations(_encryptionScopeClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, encryptionScopeApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -140,10 +140,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScope"/> is null. </exception>
         public async virtual Task<Response<EncryptionScope>> UpdateAsync(EncryptionScopeData encryptionScope, CancellationToken cancellationToken = default)
         {
-            if (encryptionScope == null)
-            {
-                throw new ArgumentNullException(nameof(encryptionScope));
-            }
+            Argument.AssertNotNull(encryptionScope, nameof(encryptionScope));
 
             using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScope.Update");
             scope.Start();
@@ -169,10 +166,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScope"/> is null. </exception>
         public virtual Response<EncryptionScope> Update(EncryptionScopeData encryptionScope, CancellationToken cancellationToken = default)
         {
-            if (encryptionScope == null)
-            {
-                throw new ArgumentNullException(nameof(encryptionScope));
-            }
+            Argument.AssertNotNull(encryptionScope, nameof(encryptionScope));
 
             using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScope.Update");
             scope.Start();

@@ -1958,6 +1958,49 @@
         {
           "labels": [
             "Service Attention",
+            "IoT"
+          ],
+          "mentionees": [
+            "drwill-ms",
+            "timtay-microsoft",
+            "abhipsaMisra",
+            "azabbasi",
+            "brycewang-microsoft",
+            "aandykwong-ms"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "IoTHub"
+          ],
+          "mentionees": [
+            "drwill-ms",
+            "timtay-microsoft",
+            "abhipsaMisra",
+            "azabbasi",
+            "brycewang-microsoft",
+            "aandykwong-ms"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "IoT Models Repository"
+          ],
+          "mentionees": [
+            "drwill-ms",
+            "timtay-microsoft",
+            "abhipsaMisra",
+            "azabbasi",
+            "digimaun",
+            "brycewang-microsoft",
+            "aandykwong-ms"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
             "KeyVault"
           ],
           "mentionees": [
@@ -2475,7 +2518,8 @@
           ],
           "mentionees": [
             "shankarsama",
-            "DorothySun216"
+            "DorothySun216",
+            "EldertGrootenboer"
           ]
         },
         {
@@ -3462,7 +3506,7 @@
         {
           "name": "addReply",
           "parameters": {
-            "comment": "Hi @${issueAuthor}.  Thank you, for your interest in helping to improve the Azure SDK experience and for your contribution.  We've noticed that there hasn't been recent engagement on this pull request.  If this is still an active work stream, please let us know by pushing some changes or leaving a comment.  Otherwise, we'll close this out in 7 days."
+            "comment": "Hi @${issueAuthor}.  Thank you for your interest in helping to improve the Azure SDK experience and for your contribution.  We've noticed that there hasn't been recent engagement on this pull request.  If this is still an active work stream, please let us know by pushing some changes or leaving a comment.  Otherwise, we'll close this out in 7 days."
           }
         }
       ]
@@ -3988,6 +4032,211 @@
           }
         }
       ]
+    }
+  },
+  {
+    "taskType": "scheduledAndTrigger",
+    "capabilityId": "IssueRouting",
+    "subCapability": "@Mention",
+    "version": "1.0",
+    "config": {
+      "taskName": "[SQUIRE TEST] Team Assignment",
+      "labelsAndMentions": [
+        {
+          "labels": [
+            "Event Hubs",
+            "Client",
+            "needs-team-triage"
+          ],
+          "mentionees": [
+            "jsquire"
+          ],
+          "assignToMentionees": true
+        },
+        {
+          "labels": [
+            "Service Bus",
+            "Client",
+            "needs-team-triage"
+          ],
+          "mentionees": [
+            "JoshLove-msft",
+            "jsquire"
+          ],
+          "assignToMentionees": true
+        }
+      ],
+      "requireBotAssign": false,
+      "replyTemplate": "Thank you for your feedback.   We are routing this to the appropriate team for follow-up. \n\n//cc: ${mentionees}."
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssuesOnlyResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "isOpen",
+            "parameters": {}
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "needs-team-triage"
+            }
+          },
+          {
+            "name": "isAction",
+            "parameters": {
+              "action": "assigned"
+            }
+          },
+          {
+            "name": "isAssignedToSomeone",
+            "parameters": {}
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "hasLabel",
+                "parameters": {
+                  "label": "needs-triage"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "eventType": "issue",
+      "eventNames": [
+        "issues",
+        "project_card"
+      ],
+      "taskName": "[SQUIRE TEST] Adjust Labels on Team Assignment",
+      "actions": [
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "needs-team-triage"
+          }
+        }
+      ],
+      "dangerZone": {
+        "respondToBotActions": true,
+        "acceptRespondToBotActions": true
+      }
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssuesOnlyResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "isOpen",
+            "parameters": {}
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "needs-team-triage"
+            }
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isAssignedToSomeone",
+                "parameters": {}
+              }
+            ]
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "hasLabel",
+                "parameters": {
+                  "label": "needs-triage"
+                }
+              }
+            ]
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isAction",
+                "parameters": {
+                  "titlePattern": "[SQUIRE TEST]",
+                  "action": "opened"
+                }
+              }
+            ]
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isAction",
+                "parameters": {
+                  "action": "closed"
+                }
+              }
+            ]
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isAction",
+                "parameters": {
+                  "action": "reopened"
+                }
+              }
+            ]
+          },
+          {
+            "name": "titleContains",
+            "parameters": {
+              "titlePattern": "[SQUIRE TEST]"
+            }
+          }
+        ]
+      },
+      "eventType": "issue",
+      "eventNames": [
+        "issues",
+        "project_card"
+      ],
+      "taskName": "[SQUIRE TEST] Route to CXP if no Team Assignment",
+      "actions": [
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "needs-team-triage"
+          }
+        },
+        {
+          "name": "addLabel",
+          "parameters": {
+            "label": "CXP Attention"
+          }
+        }
+      ],
+      "dangerZone": {
+        "respondToBotActions": true,
+        "acceptRespondToBotActions": true
+      }
     }
   }
 ]

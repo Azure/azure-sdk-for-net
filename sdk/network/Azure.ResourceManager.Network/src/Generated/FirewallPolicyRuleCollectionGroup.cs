@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
         internal FirewallPolicyRuleCollectionGroup(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _firewallPolicyRuleCollectionGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string firewallPolicyRuleCollectionGroupApiVersion);
+            TryGetApiVersion(ResourceType, out string firewallPolicyRuleCollectionGroupApiVersion);
             _firewallPolicyRuleCollectionGroupRestClient = new FirewallPolicyRuleCollectionGroupsRestOperations(_firewallPolicyRuleCollectionGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, firewallPolicyRuleCollectionGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

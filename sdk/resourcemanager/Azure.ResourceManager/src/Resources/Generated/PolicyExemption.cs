@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources
         internal PolicyExemption(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _policyExemptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string policyExemptionApiVersion);
+            TryGetApiVersion(ResourceType, out string policyExemptionApiVersion);
             _policyExemptionRestClient = new PolicyExemptionsRestOperations(_policyExemptionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, policyExemptionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

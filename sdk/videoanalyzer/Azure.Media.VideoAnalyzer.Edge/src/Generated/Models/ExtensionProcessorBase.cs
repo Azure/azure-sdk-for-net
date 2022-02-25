@@ -18,7 +18,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <param name="endpoint"> Endpoint details of the pipeline extension plugin. </param>
         /// <param name="image"> Image transformations and formatting options to be applied to the video frame(s) prior submission to the pipeline extension plugin. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, <paramref name="endpoint"/>, or <paramref name="image"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, <paramref name="endpoint"/> or <paramref name="image"/> is null. </exception>
         public ExtensionProcessorBase(string name, IEnumerable<NodeInput> inputs, EndpointBase endpoint, ImageProperties image) : base(name, inputs)
         {
             if (name == null)

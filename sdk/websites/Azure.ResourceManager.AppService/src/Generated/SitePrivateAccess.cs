@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal SitePrivateAccess(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sitePrivateAccessWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string sitePrivateAccessWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string sitePrivateAccessWebAppsApiVersion);
             _sitePrivateAccessWebAppsRestClient = new WebAppsRestOperations(_sitePrivateAccessWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sitePrivateAccessWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -141,10 +141,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="access"/> is null. </exception>
         public async virtual Task<ArmOperation<SitePrivateAccess>> CreateOrUpdateAsync(bool waitForCompletion, PrivateAccessData access, CancellationToken cancellationToken = default)
         {
-            if (access == null)
-            {
-                throw new ArgumentNullException(nameof(access));
-            }
+            Argument.AssertNotNull(access, nameof(access));
 
             using var scope = _sitePrivateAccessWebAppsClientDiagnostics.CreateScope("SitePrivateAccess.CreateOrUpdate");
             scope.Start();
@@ -174,10 +171,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="access"/> is null. </exception>
         public virtual ArmOperation<SitePrivateAccess> CreateOrUpdate(bool waitForCompletion, PrivateAccessData access, CancellationToken cancellationToken = default)
         {
-            if (access == null)
-            {
-                throw new ArgumentNullException(nameof(access));
-            }
+            Argument.AssertNotNull(access, nameof(access));
 
             using var scope = _sitePrivateAccessWebAppsClientDiagnostics.CreateScope("SitePrivateAccess.CreateOrUpdate");
             scope.Start();

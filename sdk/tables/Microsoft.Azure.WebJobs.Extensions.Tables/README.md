@@ -165,7 +165,7 @@ public class OutputSingle
         [HttpTrigger(AuthorizationLevel.Anonymous, "GET")] HttpRequest request,
         [Table("MyTable")] out TableEntity entity)
     {
-        entity = new TableEntity("<PartitionKey>", "<PartitionKey>")
+        entity = new TableEntity("<PartitionKey>", "<RowKey>")
         {
             ["Text"] = "Hello"
         };
@@ -265,7 +265,7 @@ public class BindTableClient
         [HttpTrigger(AuthorizationLevel.Anonymous, "POST")] HttpRequest request,
         [Table("MyTable")] TableClient client)
     {
-        await client.AddEntityAsync(new TableEntity("<PartitionKey>", "<PartitionKey>")
+        await client.AddEntityAsync(new TableEntity("<PartitionKey>", "<RowKey>")
         {
             ["Text"] = request.GetEncodedPathAndQuery()
         });

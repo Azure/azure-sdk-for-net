@@ -11,6 +11,13 @@
     /// </summary>
     public static partial class GalleriesOperationsExtensions
     {
+        public static async Task<Gallery> GetAsync(this IGalleriesOperations operations, string resourceGroupName, string galleryName, string select, CancellationToken cancellationToken)
+        {
+            using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, galleryName, select, null, cancellationToken).ConfigureAwait(false))
+            {
+                return _result.Body;
+            }
+        }
         /// <summary>
         /// Retrieves information about a Shared Image Gallery.
         /// </summary>
