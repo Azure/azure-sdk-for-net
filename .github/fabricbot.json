@@ -4066,7 +4066,8 @@
           "assignToMentionees": true
         }
       ],
-      "requireBotAssign": false
+      "requireBotAssign": false,
+      "replyTemplate": "Thank you for your feedback.   We are routing this to the appropriate team for follow-up. \n\n//cc: ${mentionees}."
     }
   },
   {
@@ -4116,7 +4117,7 @@
         "issues",
         "project_card"
       ],
-      "taskName": "[SQUIRE TEST] Adjust Labels onTeam Assignment",
+      "taskName": "[SQUIRE TEST] Adjust Labels on Team Assignment",
       "actions": [
         {
           "name": "removeLabel",
