@@ -207,6 +207,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             AggregateException aggregateException = new AggregateException("AggregateException", new[] { innerException1, innerException2 });
 
+            // Passing "AggregateException" explicitly here instead of using aggregateException.Message
+            // aggregateException.Message will return different value in case of net461 compred to netcore
             logger.LogWarning(aggregateException, "AggregateException");
 
             var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
@@ -238,6 +240,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var exception = new Exception("Exception", innerexception2);
 
+            // Passing "Exception" explicitly here instead of using exception.Message
+            // exception.Message will return different value in case of net461 compred to netcore
             logger.LogWarning(exception, "Exception");
 
             var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
@@ -273,6 +277,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             AggregateException rootLevelException = new AggregateException("0", innerExceptions);
 
+            // Passing "0" explicitly here instead of using rootLevelException.Message
+            // rootLevelException.Message will return different value in case of net461 compred to netcore
             logger.LogWarning(rootLevelException, "0");
 
             var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
