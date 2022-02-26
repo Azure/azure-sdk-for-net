@@ -109,8 +109,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var exceptionDetails = new TelemetryExceptionDetails(exception, exception.Message, null);
             var stack = exceptionDetails.ParsedStack;
 
-            Assert.Equal(line, stack[0].Line);
-            Assert.Equal(fileName, stack[0].FileName);
+            // Behavior may vary in some cases and line may return 0
+            // In this case Line will be null
+            if (line != 0)
+            {
+                Assert.Equal(line, stack[0].Line);
+                Assert.Equal(fileName, stack[0].FileName);
+            }
+            else
+            {
+                Assert.Null(stack[0].Line);
+                Assert.Null(stack[0].FileName);
+            }
         }
 
         [Fact]
