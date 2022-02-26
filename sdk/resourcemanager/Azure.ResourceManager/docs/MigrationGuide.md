@@ -225,7 +225,7 @@ NetworkInterfaceIPConfigurationData networkInterfaceIPConfiguration = new Networ
 
 NetworkInterfaceData nicData = new NetworkInterfaceData();
 nicData.Location = location;
-nicData.IpConfigurations.Add(networkInterfaceIPConfiguration);
+nicData.IPConfigurations.Add(networkInterfaceIPConfiguration);
 NetworkInterfaceCollection networkInterfaces = resourceGroup.GetNetworkInterfaces();
 ArmOperation<NetworkInterface> networkInterfaceOperation = await networkInterfaces.CreateOrUpdateAsync(true, networkInterfaceName, nicData);
 NetworkInterface networkInterface = networkInterfaceOperation.Value;
