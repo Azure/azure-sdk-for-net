@@ -95,8 +95,7 @@ In `Microsoft.Azure.ApplicationInsights.Query` v1.0.0:
 using Microsoft.Azure.ApplicationInsights.Query.Models
 
 // code omitted for brevity
-
-QueryResults response = await client.QueryAsync("AzureActivity | top 10 by TimeGenerated"); //TODO
+QueryResults results = await client.Query.ExecuteAsync("<appId>", "AzureActivity | top 10 by TimeGenerated");
 ```
 
 In `Azure.Monitor.Query` v1.0.x:
@@ -126,9 +125,10 @@ The `Microsoft.Azure.ApplicationInsights.Query` package includes an Events API, 
 In `Microsoft.Azure.ApplicationInsights.Query` v1.0.0:
 
 ```csharp
-metricId = 'availabilityResults/count'
-application = 'DEMO_APP'
-result = client.metrics.get(application, metricId)
+using Microsoft.Azure.ApplicationInsights.Query.Models
+
+// code omitted for brevity
+HttpResponseMessage response = await client.QueryAsync("<appId>", "AzureActivity | top 10 by TimeGenerated").ConfigureAwait(false).Response;
 ```
 
 In `Azure.Monitor.Query` v1.0.x:
