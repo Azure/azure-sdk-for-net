@@ -714,7 +714,6 @@ namespace Kusto.Tests.ScenarioTests
         
                 // create cluster
                 var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
-                
                 CreatePrivateEndpoints(testBase, createdCluster.Id);
                 
                 // Get list
@@ -750,8 +749,7 @@ namespace Kusto.Tests.ScenarioTests
                 
                 //Get cluster and validate PrivateEndpointConnections
                 var cluster = testBase.client.Clusters.Get(testBase.rgName, testBase.clusterName);
-                //TODO - needs to be recorded again
-                //VerifyCluster(cluster, testBase.clusterName, testBase.sku1, trustedExternalTenants: testBase.trustedExternalTenants, state: testBase.runningState, tenantId: testBase.tenantId, privateEndpointConnections: privateEndpointConnections.ToList());
+                VerifyCluster(cluster, testBase.clusterName, testBase.sku1, trustedExternalTenants: testBase.trustedExternalTenants, state: testBase.runningState, tenantId: testBase.tenantId, privateEndpointConnections: privateEndpointConnections.ToList());
         
                 // Delete private endpoint connection
                 testBase.client.PrivateEndpointConnections.Delete(testBase.rgName, testBase.clusterName, testBase.privateEndpointConnectionName);
