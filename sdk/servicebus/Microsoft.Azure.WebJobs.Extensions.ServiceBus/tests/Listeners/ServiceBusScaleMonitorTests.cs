@@ -200,6 +200,28 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         }
 
         [Test]
+        public async Task GetMetrics_IgnoresLockedMessages()
+        {
+            var lockedMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(lockedUntil: DateTimeOffset.UtcNow.AddMinutes(1));
+            var anotherLockedMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(lockedUntil: DateTimeOffset.UtcNow.AddMinutes(1));
+
+            _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(lockedMessage);
+
+            _mockMessageReceiver.Setup(x => x.PeekMessagesAsync(It.IsAny<int>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new List<ServiceBusReceivedMessage> { anotherLockedMessage });
+
+            ServiceBusListener listener = CreateListener();
+
+            var metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
+
+            Assert.AreEqual(0, metrics.PartitionCount);
+            Assert.AreEqual(0, metrics.MessageCount);
+            Assert.AreEqual(TimeSpan.FromSeconds(0), metrics.QueueTime);
+            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+        }
+
+        [Test]
         public async Task GetMetrics_DoesNotPeekBatchesWhenFirstAttemptReturnsActive()
         {
             var activeMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(enqueuedTime: DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(30)), sequenceNumber: 2);
@@ -303,17 +325,18 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         }
 
         [Test]
-        public async Task GetMetrics_IgnoresDeferredOrScheduledMessagesUntilItFindsAnActive()
+        public async Task GetMetrics_IgnoresDeferredScheduledOrLockedMessagesUntilItFindsAnActive()
         {
             var firstDeferredMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(serviceBusMessageState: ServiceBusMessageState.Deferred);
             var secondScheduledMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(serviceBusMessageState: ServiceBusMessageState.Scheduled);
-            var activeMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(enqueuedTime: DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(30)), sequenceNumber: 2);
+            var thirdLockedMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(lockedUntil: DateTimeOffset.UtcNow.AddMinutes(1));
+            var activeMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(enqueuedTime: DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(30)), sequenceNumber: 3);
 
             _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(firstDeferredMessage);
 
             _mockMessageReceiver.Setup(x => x.PeekMessagesAsync(It.IsAny<int>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new List<ServiceBusReceivedMessage> { secondScheduledMessage, activeMessage });
+                .ReturnsAsync(new List<ServiceBusReceivedMessage> { secondScheduledMessage, thirdLockedMessage, activeMessage });
 
             ServiceBusListener listener = CreateListener();
 

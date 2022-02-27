@@ -68,7 +68,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 {
                     // ignore it. The Get[Queue|Topic]MetricsAsync methods deal with activeMessage being null
                 }
-                else if (MessageIsActive(peekedMessage))
+                else if (MessageIsActive(peekedMessage) && !MessageIsLocked(peekedMessage))
                 {
                     activeMessage = peekedMessage;
                 }
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     var peekedMessages  = await _receiver.Value.PeekMessagesAsync(10, fromSequenceNumber: peekedMessage.SequenceNumber).ConfigureAwait(false);
                     foreach (var receivedMessage in peekedMessages )
                     {
-                        if (MessageIsActive(receivedMessage))
+                        if (MessageIsActive(receivedMessage) && !MessageIsLocked(receivedMessage))
                         {
                             activeMessage = receivedMessage;
                             break;
@@ -191,6 +191,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private static bool MessageIsActive(ServiceBusReceivedMessage message)
         {
             return message.State == ServiceBusMessageState.Active;
+        }
+
+        private static bool MessageIsLocked(ServiceBusReceivedMessage message)
+        {
+            return message.LockedUntil >= DateTimeOffset.UtcNow;
         }
 
         ScaleStatus IScaleMonitor.GetScaleStatus(ScaleStatusContext context)
