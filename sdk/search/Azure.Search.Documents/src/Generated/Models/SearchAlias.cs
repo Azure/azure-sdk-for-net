@@ -36,19 +36,17 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of SearchAlias. </summary>
         /// <param name="name"> The name of the alias. </param>
         /// <param name="indexes"> The name of the index this alias maps to. Only one index name may be specified. </param>
-        /// <param name="eTag"> The ETag of the alias. </param>
-        internal SearchAlias(string name, IList<string> indexes, string eTag)
+        /// <param name="etag"> The ETag of the alias. </param>
+        internal SearchAlias(string name, IList<string> indexes, string etag)
         {
             Name = name;
             Indexes = indexes;
-            ETag = eTag;
+            _etag = etag;
         }
 
         /// <summary> The name of the alias. </summary>
         public string Name { get; set; }
         /// <summary> The name of the index this alias maps to. Only one index name may be specified. </summary>
         public IList<string> Indexes { get; }
-        /// <summary> The ETag of the alias. </summary>
-        public string ETag { get; set; }
     }
 }

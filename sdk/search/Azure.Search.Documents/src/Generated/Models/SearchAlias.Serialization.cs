@@ -25,10 +25,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(ETag))
+            if (Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag");
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(_etag);
             }
             writer.WriteEndObject();
         }
