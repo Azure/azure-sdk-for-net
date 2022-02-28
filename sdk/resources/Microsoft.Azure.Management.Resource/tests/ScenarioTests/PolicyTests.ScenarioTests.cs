@@ -7,7 +7,6 @@ namespace Policy.Tests
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
-
     using Microsoft.Azure.Management.ManagedServiceIdentity;
     using Microsoft.Azure.Management.ManagementGroups;
     using Microsoft.Azure.Management.ManagementGroups.Models;
