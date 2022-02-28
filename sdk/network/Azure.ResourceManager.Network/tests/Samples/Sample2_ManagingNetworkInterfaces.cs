@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             NetworkInterfaceData networkInterfaceInput = new NetworkInterfaceData()
             {
                 Location = resourceGroup.Data.Location,
-                IpConfigurations = {
+                IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
                     {
                         Name = "ipConfig",

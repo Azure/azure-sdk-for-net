@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ApplicationBillingDetailsDefinition
+    internal partial class ApplicationBillingDetailsDefinition
     {
         internal static ApplicationBillingDetailsDefinition DeserializeApplicationBillingDetailsDefinition(JsonElement element)
         {

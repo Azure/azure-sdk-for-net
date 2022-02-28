@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("authorizationKey");
                 writer.WriteStringValue(AuthorizationKey);
             }
-            if (Optional.IsDefined(Ipv6CircuitConnectionConfig))
+            if (Optional.IsDefined(IPv6CircuitConnectionConfig))
             {
                 writer.WritePropertyName("ipv6CircuitConnectionConfig");
-                writer.WriteObjectValue(Ipv6CircuitConnectionConfig);
+                writer.WriteObjectValue(IPv6CircuitConnectionConfig);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
             Optional<WritableSubResource> peerExpressRouteCircuitPeering = default;
             Optional<string> addressPrefix = default;
             Optional<string> authorizationKey = default;
-            Optional<Ipv6CircuitConnectionConfig> ipv6CircuitConnectionConfig = default;
+            Optional<IPv6CircuitConnectionConfig> ipv6CircuitConnectionConfig = default;
             Optional<CircuitConnectionStatus> circuitConnectionStatus = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            ipv6CircuitConnectionConfig = Ipv6CircuitConnectionConfig.DeserializeIpv6CircuitConnectionConfig(property0.Value);
+                            ipv6CircuitConnectionConfig = IPv6CircuitConnectionConfig.DeserializeIPv6CircuitConnectionConfig(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("circuitConnectionStatus"))

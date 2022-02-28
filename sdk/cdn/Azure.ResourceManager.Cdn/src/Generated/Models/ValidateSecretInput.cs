@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -29,7 +30,14 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The secret source. </summary>
-        public WritableSubResource SecretSource { get; }
+        internal WritableSubResource SecretSource { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SecretSourceId
+        {
+            get => SecretSource.Id;
+            set => SecretSource.Id = value;
+        }
+
         /// <summary> The secret type. </summary>
         public ValidateSecretType SecretType { get; }
     }

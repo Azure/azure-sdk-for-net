@@ -61,7 +61,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> The managed identity information, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The sku of the configuration store. </summary>
-        public Models.Sku Sku { get; set; }
+        internal Models.Sku Sku { get; set; }
+        /// <summary> The SKU name of the configuration store. </summary>
+        public string SkuName
+        {
+            get => Sku is null ? default : Sku.Name;
+            set => Sku = new Models.Sku(value);
+        }
+
         /// <summary> The provisioning state of the configuration store. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The creation date of configuration store. </summary>
@@ -69,7 +76,19 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> The DNS endpoint where the configuration store API will be available. </summary>
         public string Endpoint { get; }
         /// <summary> The encryption settings of the configuration store. </summary>
-        public Models.EncryptionProperties Encryption { get; set; }
+        internal Models.EncryptionProperties Encryption { get; set; }
+        /// <summary> Key vault properties. </summary>
+        public Models.KeyVaultProperties EncryptionKeyVaultProperties
+        {
+            get => Encryption is null ? default : Encryption.KeyVaultProperties;
+            set
+            {
+                if (Encryption is null)
+                    Encryption = new Models.EncryptionProperties();
+                Encryption.KeyVaultProperties = value;
+            }
+        }
+
         /// <summary> The list of private endpoint connections that are set up for this resource. </summary>
         public IReadOnlyList<PrivateEndpointConnectionReference> PrivateEndpointConnections { get; }
         /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>

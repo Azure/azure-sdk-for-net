@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The routes that specify the endpoints used for login and logout requests. </summary>
-    public partial class LoginRoutes
+    internal partial class LoginRoutes
     {
         /// <summary> Initializes a new instance of LoginRoutes. </summary>
         public LoginRoutes()

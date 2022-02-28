@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The Office365 breakout policy. </summary>
-    public partial class O365PolicyProperties
+    internal partial class O365PolicyProperties
     {
         /// <summary> Initializes a new instance of O365PolicyProperties. </summary>
         public O365PolicyProperties()

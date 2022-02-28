@@ -76,7 +76,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Request timeout in seconds. Application Gateway will fail the request if response is not received within RequestTimeout. Acceptable values are from 1 second to 86400 seconds. </summary>
         public int? RequestTimeout { get; set; }
         /// <summary> Probe resource of an application gateway. </summary>
-        public WritableSubResource Probe { get; set; }
+        internal WritableSubResource Probe { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier ProbeId
+        {
+            get => Probe is null ? default : Probe.Id;
+            set
+            {
+                if (Probe is null)
+                    Probe = new WritableSubResource();
+                Probe.Id = value;
+            }
+        }
+
         /// <summary> Array of references to application gateway authentication certificates. </summary>
         public IList<WritableSubResource> AuthenticationCertificates { get; }
         /// <summary> Array of references to application gateway trusted root certificates. </summary>

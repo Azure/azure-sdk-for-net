@@ -910,7 +910,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetVMSecurityRulesRequest(string subscriptionId, string resourceGroupName, string networkWatcherName, SecurityGroupViewParameters parameters)
+        internal HttpMessage CreateGetVmSecurityRulesRequest(string subscriptionId, string resourceGroupName, string networkWatcherName, SecurityGroupViewParameters parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -942,7 +942,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the VM to check security groups for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> GetVMSecurityRulesAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, SecurityGroupViewParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> GetVmSecurityRulesAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, SecurityGroupViewParameters parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -961,7 +961,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateGetVMSecurityRulesRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
+            using var message = CreateGetVmSecurityRulesRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -980,7 +980,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the VM to check security groups for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
-        public Response GetVMSecurityRules(string subscriptionId, string resourceGroupName, string networkWatcherName, SecurityGroupViewParameters parameters, CancellationToken cancellationToken = default)
+        public Response GetVmSecurityRules(string subscriptionId, string resourceGroupName, string networkWatcherName, SecurityGroupViewParameters parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -999,7 +999,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateGetVMSecurityRulesRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
+            using var message = CreateGetVmSecurityRulesRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

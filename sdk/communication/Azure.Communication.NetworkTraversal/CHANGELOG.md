@@ -10,7 +10,7 @@
 
 ### Other Changes
 
-## 1.0.0 (2022-02-09)
+## 1.0.0 (2022-02-09) (Deprecated)
 
 ### Breaking Changes
 

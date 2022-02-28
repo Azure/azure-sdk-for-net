@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The unique key policy configuration for specifying uniqueness constraints on documents in the collection in the Azure Cosmos DB service. </summary>
-    public partial class UniqueKeyPolicy
+    internal partial class UniqueKeyPolicy
     {
         /// <summary> Initializes a new instance of UniqueKeyPolicy. </summary>
         public UniqueKeyPolicy()

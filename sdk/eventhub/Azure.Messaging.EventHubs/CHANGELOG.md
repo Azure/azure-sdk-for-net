@@ -16,7 +16,11 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Other Changes
 
-- Attempt to retrieve AMQP objects synchronously before calling `GetOrCreateAsync`.
+- The `EventHubBufferedProducer` will now invoke the handlers for success or failure when publishing a batch in a deterministic manner, as part of the publishing flow.  Handlers will now be awaited, causing the publishing operation to be considered incomplete until the handler returns.  Previously, handlers were invoked in the background non-deterministically and without a guaranteed ordering.  This ensured they could not interfere with publishing throughput but caused difficulty for reliably checkpointing with the source of events.
+
+- Attempt to retrieve AMQP objects synchronously before calling `GetOrCreateAsync`, avoiding an asynchronous call unless necessary.
+
+- Remove allocations from Event Source logging by introducing `WriteEvent` overloads to handle cases that would otherwise result in boxing to `object[]` via params array.  _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 
 - Remove LINQ from the `AmqpMessageConverter` in favor of direct looping.  _(Based on a community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 

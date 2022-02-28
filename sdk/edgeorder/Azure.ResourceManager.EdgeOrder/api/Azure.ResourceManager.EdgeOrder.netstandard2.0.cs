@@ -450,11 +450,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation HierarchyInformation { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.ImageInformation> ImageInformation { get { throw null; } }
     }
-    public partial class EncryptionPreferences
-    {
-        public EncryptionPreferences() { }
-        public Azure.ResourceManager.EdgeOrder.Models.DoubleEncryptionStatus? DoubleEncryptionStatus { get { throw null; } set { } }
-    }
     public partial class FilterableProperty
     {
         public FilterableProperty(Azure.ResourceManager.EdgeOrder.Models.SupportedFilterTypes type, System.Collections.Generic.IEnumerable<string> supportedValues) { }
@@ -542,11 +537,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.LinkType left, Azure.ResourceManager.EdgeOrder.Models.LinkType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagementResourcePreferences
-    {
-        public ManagementResourcePreferences() { }
-        public string PreferredManagementResourceId { get { throw null; } set { } }
-    }
     public partial class MeterDetails
     {
         internal MeterDetails() { }
@@ -624,8 +614,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public Azure.ResourceManager.EdgeOrder.Models.ActionStatusEnum? DeletionStatus { get { throw null; } }
         public Azure.ResourceManager.Models.ErrorDetail Error { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.ForwardShippingDetails ForwardShippingDetails { get { throw null; } }
-        public Azure.ResourceManager.EdgeOrder.Models.ResourceProviderDetails ManagementRpDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.ResourceProviderDetails> ManagementRpDetailsList { get { throw null; } }
+        public string ManagementRpDetailsResourceProviderNamespace { get { throw null; } }
         public System.Collections.Generic.IList<string> NotificationEmailList { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.StageDetails> OrderItemStageHistory { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.OrderItemType OrderItemType { get { throw null; } set { } }
@@ -638,10 +628,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     public partial class OrderItemPreferences
     {
         public OrderItemPreferences() { }
-        public Azure.ResourceManager.EdgeOrder.Models.EncryptionPreferences EncryptionPreferences { get { throw null; } set { } }
-        public Azure.ResourceManager.EdgeOrder.Models.ManagementResourcePreferences ManagementResourcePreferences { get { throw null; } set { } }
+        public Azure.ResourceManager.EdgeOrder.Models.DoubleEncryptionStatus? DoubleEncryptionStatus { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EdgeOrder.Models.NotificationPreference> NotificationPreferences { get { throw null; } }
-        public Azure.ResourceManager.EdgeOrder.Models.TransportPreferences TransportPreferences { get { throw null; } set { } }
+        public string PreferredManagementResourceId { get { throw null; } set { } }
+        public Azure.ResourceManager.EdgeOrder.Models.TransportShipmentTypes TransportPreferencesPreferredShipmentType { get { throw null; } set { } }
     }
     public partial class OrderItemResourceUpdateOptions
     {
@@ -910,11 +900,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static implicit operator Azure.ResourceManager.EdgeOrder.Models.SupportedFilterTypes (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.SupportedFilterTypes left, Azure.ResourceManager.EdgeOrder.Models.SupportedFilterTypes right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class TransportPreferences
-    {
-        public TransportPreferences(Azure.ResourceManager.EdgeOrder.Models.TransportShipmentTypes preferredShipmentType) { }
-        public Azure.ResourceManager.EdgeOrder.Models.TransportShipmentTypes PreferredShipmentType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TransportShipmentTypes : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.TransportShipmentTypes>

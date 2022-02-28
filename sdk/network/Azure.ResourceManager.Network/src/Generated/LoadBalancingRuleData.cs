@@ -66,13 +66,49 @@ namespace Azure.ResourceManager.Network
         /// <summary> Type of the resource. </summary>
         public string Type { get; }
         /// <summary> A reference to frontend IP addresses. </summary>
-        public WritableSubResource FrontendIPConfiguration { get; set; }
+        internal WritableSubResource FrontendIPConfiguration { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier FrontendIPConfigurationId
+        {
+            get => FrontendIPConfiguration is null ? default : FrontendIPConfiguration.Id;
+            set
+            {
+                if (FrontendIPConfiguration is null)
+                    FrontendIPConfiguration = new WritableSubResource();
+                FrontendIPConfiguration.Id = value;
+            }
+        }
+
         /// <summary> A reference to a pool of DIPs. Inbound traffic is randomly load balanced across IPs in the backend IPs. </summary>
-        public WritableSubResource BackendAddressPool { get; set; }
+        internal WritableSubResource BackendAddressPool { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier BackendAddressPoolId
+        {
+            get => BackendAddressPool is null ? default : BackendAddressPool.Id;
+            set
+            {
+                if (BackendAddressPool is null)
+                    BackendAddressPool = new WritableSubResource();
+                BackendAddressPool.Id = value;
+            }
+        }
+
         /// <summary> An array of references to pool of DIPs. </summary>
         public IList<WritableSubResource> BackendAddressPools { get; }
         /// <summary> The reference to the load balancer probe used by the load balancing rule. </summary>
-        public WritableSubResource Probe { get; set; }
+        internal WritableSubResource Probe { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier ProbeId
+        {
+            get => Probe is null ? default : Probe.Id;
+            set
+            {
+                if (Probe is null)
+                    Probe = new WritableSubResource();
+                Probe.Id = value;
+            }
+        }
+
         /// <summary> The reference to the transport protocol used by the load balancing rule. </summary>
         public TransportProtocol? Protocol { get; set; }
         /// <summary> The load distribution policy for this rule. </summary>

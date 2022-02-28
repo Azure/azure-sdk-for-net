@@ -15,6 +15,6 @@ namespace Azure.ResourceManager.Resources.Models
     {
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         [CodeGenMember("Tags")]
-        public IDictionary<string, string> TagsValue { get; }
+        public IDictionary<string, string> TagValues { get; }
     }
 }
