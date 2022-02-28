@@ -102,7 +102,7 @@ QueryResults response = await client.QueryAsync("AzureActivity | top 10 by TimeG
 In `Azure.Monitor.Query` v1.0.x:
 
 - The `QueryBody` is flattened. Users are expected to pass the Kusto query directly to the API.
-- The `timespan` attribute is now required, which helped to avoid querying over the entire data set.
+- The `timespan` parameter is now required, which helps to avoid querying over the entire data set.
 
 ```csharp
 using Azure;
