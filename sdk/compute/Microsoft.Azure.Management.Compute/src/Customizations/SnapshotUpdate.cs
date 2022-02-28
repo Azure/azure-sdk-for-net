@@ -87,5 +87,22 @@ namespace Microsoft.Azure.Management.Compute.Models
             Sku = sku;
             CustomInit();
         }
+
+        public SnapshotUpdate(OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string), bool? supportsHibernation = default(bool?), string publicNetworkAccess = default(string), SupportedCapabilities supportedCapabilities = default(SupportedCapabilities), IDictionary<string, string> tags = default(IDictionary<string, string>), SnapshotSku sku = default(SnapshotSku))
+        {
+            OsType = osType;
+            DiskSizeGB = diskSizeGB;
+            EncryptionSettingsCollection = encryptionSettingsCollection;
+            Encryption = encryption;
+            NetworkAccessPolicy = networkAccessPolicy;
+            DiskAccessId = diskAccessId;
+            SupportsHibernation = supportsHibernation;
+            PublicNetworkAccess = publicNetworkAccess;
+            SupportedCapabilities = supportedCapabilities;
+            Tags = tags;
+            Sku = sku;
+            CustomInit();
+        }
+
     }
 }
