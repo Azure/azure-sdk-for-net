@@ -66,7 +66,7 @@ This error contains several pieces of information:
 
 The Azure Identity library provides the same [logging capabilities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging) as the rest of the Azure SDK.
 
-The simplest way to see the logs to help debug authentication issues is to enable the console logging.
+The simplest way to see the logs to help debug authentication issues is to enable the console logger.
 
 ``` c#
 // Setup a listener to monitor logged events.
