@@ -628,13 +628,13 @@ namespace Azure.Storage.Files.Shares.Models
     {
         public ShareFileCopyOptions() { }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions Conditions { get { throw null; } set { } }
-        public Azure.Storage.Files.Shares.Models.CopyableFileSmbProperties CopyableFileSmbProperties { get { throw null; } set { } }
         public string FilePermission { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.PermissionCopyMode? FilePermissionCopyMode { get { throw null; } set { } }
         public bool? IgnoreReadOnly { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public bool? SetArchiveAttribute { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.FileSmbProperties SmbProperties { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.CopyableFileSmbProperties SmbPropertiesToCopy { get { throw null; } set { } }
     }
     public partial class ShareFileDownloadDetails
     {

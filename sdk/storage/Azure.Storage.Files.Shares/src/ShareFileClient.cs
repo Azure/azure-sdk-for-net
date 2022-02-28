@@ -1039,7 +1039,7 @@ namespace Azure.Storage.Files.Shares
                 ignoreReadOnly: options?.IgnoreReadOnly,
                 setArchiveAttribute: options?.SetArchiveAttribute,
                 conditions: options?.Conditions,
-                copyableFileSmbProperties: options?.CopyableFileSmbProperties,
+                copyableFileSmbProperties: options?.SmbPropertiesToCopy,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -1204,7 +1204,7 @@ namespace Azure.Storage.Files.Shares
                 ignoreReadOnly: options?.IgnoreReadOnly,
                 setArchiveAttribute: options?.SetArchiveAttribute,
                 conditions: options?.Conditions,
-                copyableFileSmbProperties: options?.CopyableFileSmbProperties,
+                copyableFileSmbProperties: options?.SmbPropertiesToCopy,
                 async: true,
                 cancellationToken: cancellationToken).
                 ConfigureAwait(false);

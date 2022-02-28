@@ -1495,7 +1495,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareFileCopyOptions options = new ShareFileCopyOptions
             {
-                CopyableFileSmbProperties = CopyableFileSmbProperties.CreatedOn,
+                SmbPropertiesToCopy = CopyableFileSmbProperties.CreatedOn,
                 SmbProperties = new FileSmbProperties
                 {
                     FileCreatedOn = Recording.UtcNow
@@ -1522,7 +1522,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareFileCopyOptions options = new ShareFileCopyOptions
             {
-                CopyableFileSmbProperties = CopyableFileSmbProperties.LastWrittenOn,
+                SmbPropertiesToCopy = CopyableFileSmbProperties.LastWrittenOn,
                 SmbProperties = new FileSmbProperties
                 {
                     FileLastWrittenOn = Recording.UtcNow
@@ -1549,7 +1549,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareFileCopyOptions options = new ShareFileCopyOptions
             {
-                CopyableFileSmbProperties = CopyableFileSmbProperties.FileAttributes,
+                SmbPropertiesToCopy = CopyableFileSmbProperties.FileAttributes,
                 SmbProperties = new FileSmbProperties
                 {
                     FileAttributes = ShareExtensions.ToFileAttributes("Archive|ReadOnly")
@@ -1576,7 +1576,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareFileCopyOptions options = new ShareFileCopyOptions
             {
-                CopyableFileSmbProperties = CopyableFileSmbProperties.All
+                SmbPropertiesToCopy = CopyableFileSmbProperties.All
             };
 
             // Act

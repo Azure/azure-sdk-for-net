@@ -56,6 +56,6 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// SMB properties to copy from the source file.
         /// </summary>
-        public CopyableFileSmbProperties CopyableFileSmbProperties { get; set; }
+        public CopyableFileSmbProperties SmbPropertiesToCopy { get; set; }
     }
 }
