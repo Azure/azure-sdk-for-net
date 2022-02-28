@@ -4187,6 +4187,17 @@
                 }
               }
             ]
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "hasLabel",
+                "parameters": {
+                  "label": "needs-team-attention"
+                }
+              }
+            ]
           }
         ]
       },
@@ -4232,10 +4243,6 @@
         "operator": "and",
         "operands": [
           {
-            "name": "isOpen",
-            "parameters": {}
-          },
-          {
             "name": "commentContains",
             "parameters": {
               "commentPattern": "/squire"
@@ -4252,7 +4259,7 @@
         {
           "name": "addReply",
           "parameters": {
-            "comment": "Test rules iteration: 4"
+            "comment": "Test rules iteration: 5"
           }
         }
       ]
