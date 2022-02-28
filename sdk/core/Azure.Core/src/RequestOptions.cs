@@ -132,8 +132,7 @@ namespace Azure
                 return classifier;
             }
 
-            CoreResponseClassifier? coreClassifier = classifier as CoreResponseClassifier;
-            if (coreClassifier != null)
+            if (classifier is CoreResponseClassifier coreClassifier)
             {
                 CoreResponseClassifier clone = coreClassifier.Clone();
                 clone.Handlers = _handlers;
