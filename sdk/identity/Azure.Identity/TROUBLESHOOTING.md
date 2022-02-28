@@ -132,8 +132,8 @@ The `ManagedIdentityCredential` is designed to work on a variety of Azure hosts 
 |Azure Virtual Machines and Scale Sets|[Configuration](https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/qs-configure-portal-windows-vm)|[Troubleshooting](#azure-virtual-machine-managed-identity)|
 |Azure App Service and Azure Functions|[Configuration](https://docs.microsoft.com/azure/app-service/overview-managed-identity)|[Troubleshooting](#azure-app-service-and-azure-functions-managed-identity)|
 |Azure Kubernetes Service|[Configuration](https://azure.github.io/aad-pod-identity/docs/)|[Troubleshooting](#azure-kubernetes-service-managed-identity)|
-|Azure Arc|[Configuration](https://docs.microsoft.com/azure/azure-arc/servers/managed-identity-authentication)|Troubleshooting|
-|Azure Service Fabric|[Configuration](https://docs.microsoft.com/azure/service-fabric/concepts-managed-identity)|Troubleshooting|
+|Azure Arc|[Configuration](https://docs.microsoft.com/azure/azure-arc/servers/managed-identity-authentication)||
+|Azure Service Fabric|[Configuration](https://docs.microsoft.com/azure/service-fabric/concepts-managed-identity)||
 ### Azure Virtual Machine Managed Identity
 
 `CredentialUnavailableException`
