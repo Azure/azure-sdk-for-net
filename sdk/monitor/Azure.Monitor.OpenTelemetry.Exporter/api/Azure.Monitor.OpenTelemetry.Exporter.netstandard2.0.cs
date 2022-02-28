@@ -21,7 +21,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public override OpenTelemetry.ExportResult Export(in OpenTelemetry.Batch<System.Diagnostics.Activity> batch) { throw null; }
     }
 }
-namespace Microsoft.Extensions.Logging
+namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     public static partial class AzureMonitorExporterLoggingExtensions
     {
