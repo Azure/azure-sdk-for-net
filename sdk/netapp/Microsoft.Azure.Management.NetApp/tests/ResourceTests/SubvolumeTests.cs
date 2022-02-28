@@ -154,7 +154,7 @@ namespace NetApp.Tests.ResourceTests
         }
         private static string GetSessionsDirectoryPath()
         {
-            string executingAssemblyPath = typeof(NetApp.Tests.ResourceTests.VolumeTests).GetTypeInfo().Assembly.Location;
+            string executingAssemblyPath = typeof(NetApp.Tests.ResourceTests.SubvolumeTests).GetTypeInfo().Assembly.Location;
             return Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
         }
 
