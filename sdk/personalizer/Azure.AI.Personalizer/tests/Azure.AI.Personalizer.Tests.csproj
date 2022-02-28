@@ -6,7 +6,7 @@
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.RL" VersionOverride="1.0.18710001-dev" />
+    <PackageReference Include="Microsoft.RL" VersionOverride="1.0.18750001-dev" />
   </ItemGroup>
 
 

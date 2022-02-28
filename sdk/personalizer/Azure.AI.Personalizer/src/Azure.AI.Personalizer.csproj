@@ -32,7 +32,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Microsoft.RL" VersionOverride="1.0.18710001-dev" />
+    <PackageReference Include="Microsoft.RL" VersionOverride="1.0.18750001-dev" />
     <PackageReference Include="System.Text.Json" VersionOverride="6.0.1" />
   </ItemGroup>
 
