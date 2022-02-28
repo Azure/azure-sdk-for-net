@@ -36,7 +36,10 @@ namespace Azure.Security.KeyVault.Tests
                     rex = _rex;
                 }
 
-                context.CurrentResult.SetResult(ResultState.Failure, rex.Message, rex.StackTrace);
+                if (rex != null)
+                {
+                    context.CurrentResult.SetResult(ResultState.Failure, rex.Message, rex.StackTrace);
+                }
 
                 if (context.CurrentResult.ResultState.Status == TestStatus.Failed &&
                     context.CurrentResult.Message.Contains("Status: 400") &&
