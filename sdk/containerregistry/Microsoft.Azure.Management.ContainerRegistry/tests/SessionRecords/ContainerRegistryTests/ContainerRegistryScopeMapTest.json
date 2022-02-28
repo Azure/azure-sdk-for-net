@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0d02ed68-8ec6-441b-b55b-d5687b93c26b"
+          "70703e0f-07e4-4247-a6f7-c4c661569aa3"
         ],
         "Accept-Language": [
           "en-US"
@@ -27,16 +27,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
+          "11999"
         ],
         "x-ms-request-id": [
-          "6d887fcc-4425-447c-8375-4381fa3da0f6"
+          "38110a2c-f08a-462e-98dc-58a4b46dabae"
         ],
         "x-ms-correlation-request-id": [
-          "6d887fcc-4425-447c-8375-4381fa3da0f6"
+          "38110a2c-f08a-462e-98dc-58a4b46dabae"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220228T052807Z:6d887fcc-4425-447c-8375-4381fa3da0f6"
+          "WESTCENTRALUS:20220228T051523Z:38110a2c-f08a-462e-98dc-58a4b46dabae"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,7 +45,7 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 28 Feb 2022 05:28:06 GMT"
+          "Mon, 28 Feb 2022 05:15:22 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -61,13 +61,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourcegroups/acr_rg4426?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Jlc291cmNlZ3JvdXBzL2Fjcl9yZzQ0MjY/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourcegroups/acr_rg1195?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Jlc291cmNlZ3JvdXBzL2Fjcl9yZzExOTU/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a842d72d-5836-4602-af6e-8296b18453e0"
+          "52db05bf-5ffa-4313-b702-d2ef0b8fd048"
         ],
         "Accept-Language": [
           "en-US"
@@ -96,13 +96,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "c158a8e7-69f0-4d8a-b304-55da50b63496"
+          "f72cf19c-38a3-4b7a-b022-d60aa317d4c2"
         ],
         "x-ms-correlation-request-id": [
-          "c158a8e7-69f0-4d8a-b304-55da50b63496"
+          "f72cf19c-38a3-4b7a-b022-d60aa317d4c2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220228T052807Z:c158a8e7-69f0-4d8a-b304-55da50b63496"
+          "WESTCENTRALUS:20220228T051524Z:f72cf19c-38a3-4b7a-b022-d60aa317d4c2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -111,7 +111,7 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 28 Feb 2022 05:28:06 GMT"
+          "Mon, 28 Feb 2022 05:15:24 GMT"
         ],
         "Content-Length": [
           "173"
@@ -123,17 +123,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg4426\",\r\n  \"name\": \"acr_rg4426\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg1195\",\r\n  \"name\": \"acr_rg1195\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg4426/providers/Microsoft.ContainerRegistry/registries/acrregistry7858?api-version=2021-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzQ0MjYvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5Nzg1OD9hcGktdmVyc2lvbj0yMDIxLTEyLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg1195/providers/Microsoft.ContainerRegistry/registries/acrregistry3941?api-version=2021-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzExOTUvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5Mzk0MT9hcGktdmVyc2lvbj0yMDIxLTEyLTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Premium\"\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "788dc05a-8655-480c-bbd8-79140bb396e6"
+          "4c6b2856-cf35-4c22-b168-3e2bed80d6a2"
         ],
         "Accept-Language": [
           "en-US"
@@ -171,22 +171,22 @@
           "1198"
         ],
         "x-ms-request-id": [
-          "8ea05d2d-bfcc-4a92-9c81-9261b7a9a42d"
+          "c98edcd2-5b26-4282-9b59-b92c29fc4d65"
         ],
         "x-ms-correlation-request-id": [
-          "8ea05d2d-bfcc-4a92-9c81-9261b7a9a42d"
+          "c98edcd2-5b26-4282-9b59-b92c29fc4d65"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220228T052809Z:8ea05d2d-bfcc-4a92-9c81-9261b7a9a42d"
+          "WESTCENTRALUS:20220228T051528Z:c98edcd2-5b26-4282-9b59-b92c29fc4d65"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 28 Feb 2022 05:28:09 GMT"
+          "Mon, 28 Feb 2022 05:15:27 GMT"
         ],
         "Content-Length": [
-          "1355"
+          "1356"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -195,17 +195,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Premium\",\r\n    \"tier\": \"Premium\"\r\n  },\r\n  \"type\": \"Microsoft.ContainerRegistry/registries\",\r\n  \"id\": \"/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg4426/providers/Microsoft.ContainerRegistry/registries/acrregistry7858\",\r\n  \"name\": \"acrregistry7858\",\r\n  \"location\": \"westus\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"systemData\": {\r\n    \"createdBy\": \"e1ec98bb-3308-49c1-a1d9-6a8b7cd365da\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2022-02-27T21:28:08.0030317-08:00\",\r\n    \"lastModifiedBy\": \"e1ec98bb-3308-49c1-a1d9-6a8b7cd365da\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2022-02-27T21:28:08.0030317-08:00\"\r\n  },\r\n  \"properties\": {\r\n    \"loginServer\": \"acrregistry7858.azurecr.io\",\r\n    \"creationDate\": \"2022-02-28T05:28:08.0030317Z\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"adminUserEnabled\": false,\r\n    \"networkRuleSet\": {\r\n      \"defaultAction\": \"Allow\",\r\n      \"virtualNetworkRules\": [],\r\n      \"ipRules\": []\r\n    },\r\n    \"policies\": {\r\n      \"quarantinePolicy\": {\r\n        \"status\": \"disabled\"\r\n      },\r\n      \"trustPolicy\": {\r\n        \"type\": \"Notary\",\r\n        \"status\": \"disabled\"\r\n      },\r\n      \"retentionPolicy\": {\r\n        \"days\": 7,\r\n        \"lastUpdatedTime\": \"2022-02-27T21:28:08.906548-08:00\",\r\n        \"status\": \"disabled\"\r\n      },\r\n      \"exportPolicy\": {\r\n        \"status\": \"enabled\"\r\n      }\r\n    },\r\n    \"encryption\": {\r\n      \"status\": \"disabled\"\r\n    },\r\n    \"dataEndpointEnabled\": false,\r\n    \"dataEndpointHostNames\": [],\r\n    \"privateEndpointConnections\": [],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"networkRuleBypassOptions\": \"AzureServices\",\r\n    \"zoneRedundancy\": \"Disabled\",\r\n    \"anonymousPullEnabled\": false\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Premium\",\r\n    \"tier\": \"Premium\"\r\n  },\r\n  \"type\": \"Microsoft.ContainerRegistry/registries\",\r\n  \"id\": \"/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg1195/providers/Microsoft.ContainerRegistry/registries/acrregistry3941\",\r\n  \"name\": \"acrregistry3941\",\r\n  \"location\": \"westus\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"systemData\": {\r\n    \"createdBy\": \"e1ec98bb-3308-49c1-a1d9-6a8b7cd365da\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2022-02-27T21:15:26.0651861-08:00\",\r\n    \"lastModifiedBy\": \"e1ec98bb-3308-49c1-a1d9-6a8b7cd365da\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2022-02-27T21:15:26.0651861-08:00\"\r\n  },\r\n  \"properties\": {\r\n    \"loginServer\": \"acrregistry3941.azurecr.io\",\r\n    \"creationDate\": \"2022-02-28T05:15:26.0651861Z\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"adminUserEnabled\": false,\r\n    \"networkRuleSet\": {\r\n      \"defaultAction\": \"Allow\",\r\n      \"virtualNetworkRules\": [],\r\n      \"ipRules\": []\r\n    },\r\n    \"policies\": {\r\n      \"quarantinePolicy\": {\r\n        \"status\": \"disabled\"\r\n      },\r\n      \"trustPolicy\": {\r\n        \"type\": \"Notary\",\r\n        \"status\": \"disabled\"\r\n      },\r\n      \"retentionPolicy\": {\r\n        \"days\": 7,\r\n        \"lastUpdatedTime\": \"2022-02-27T21:15:27.5609331-08:00\",\r\n        \"status\": \"disabled\"\r\n      },\r\n      \"exportPolicy\": {\r\n        \"status\": \"enabled\"\r\n      }\r\n    },\r\n    \"encryption\": {\r\n      \"status\": \"disabled\"\r\n    },\r\n    \"dataEndpointEnabled\": false,\r\n    \"dataEndpointHostNames\": [],\r\n    \"privateEndpointConnections\": [],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"networkRuleBypassOptions\": \"AzureServices\",\r\n    \"zoneRedundancy\": \"Disabled\",\r\n    \"anonymousPullEnabled\": false\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg4426/providers/Microsoft.ContainerRegistry/registries/acrregistry7858/exportPipelines/acrexportpipeline3869?api-version=2021-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzQ0MjYvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5Nzg1OC9leHBvcnRQaXBlbGluZXMvYWNyZXhwb3J0cGlwZWxpbmUzODY5P2FwaS12ZXJzaW9uPTIwMjEtMTItMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg1195/providers/Microsoft.ContainerRegistry/registries/acrregistry3941/scopeMaps/acrscopemap3295?api-version=2021-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzExOTUvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5Mzk0MS9zY29wZU1hcHMvYWNyc2NvcGVtYXAzMjk1P2FwaS12ZXJzaW9uPTIwMjEtMTItMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"westus\",\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"properties\": {\r\n    \"target\": {\r\n      \"type\": \"AzureStorageBlobContainer\",\r\n      \"uri\": \"https://accountname.blob.core.windows.net/containername\",\r\n      \"keyVaultUri\": \"https://vaultname.vault.azure.net/secrets/exportsas\"\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"actions\": [\r\n      \"repositories/hello-world/content/read\",\r\n      \"repositories/hello-world/content/write\",\r\n      \"repositories/hello-world/content/delete\",\r\n      \"repositories/hello-world/metadata/read\",\r\n      \"repositories/hello-world/metadata/write\"\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0db9fbf9-3cae-4068-baab-fbcb84b14353"
+          "7a8b1a45-22c2-471e-b2df-01883547103a"
         ],
         "Accept-Language": [
           "en-US"
@@ -220,7 +220,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "323"
+          "298"
         ]
       },
       "ResponseHeaders": {
@@ -231,7 +231,7 @@
           "no-cache"
         ],
         "api-supported-versions": [
-          "2019-12-01-preview, 2020-11-01-preview, 2021-06-01-preview, 2021-08-01-preview, 2021-12-01-preview"
+          "2019-05-01-preview, 2020-11-01-preview, 2021-06-01-preview, 2021-08-01-preview, 2021-12-01-preview"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -243,22 +243,22 @@
           "1197"
         ],
         "x-ms-request-id": [
-          "e72f79e3-9a70-4b5d-8ff4-e4d22a759643"
+          "046bf207-8f81-4579-b800-f54a543b2bf6"
         ],
         "x-ms-correlation-request-id": [
-          "e72f79e3-9a70-4b5d-8ff4-e4d22a759643"
+          "046bf207-8f81-4579-b800-f54a543b2bf6"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220228T052810Z:e72f79e3-9a70-4b5d-8ff4-e4d22a759643"
+          "WESTCENTRALUS:20220228T051528Z:046bf207-8f81-4579-b800-f54a543b2bf6"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 28 Feb 2022 05:28:10 GMT"
+          "Mon, 28 Feb 2022 05:15:27 GMT"
         ],
         "Content-Length": [
-          "957"
+          "884"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -267,17 +267,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ContainerRegistry/registries/exportPipelines\",\r\n  \"location\": \"WESTUS\",\r\n  \"identity\": {\r\n    \"principalId\": \"f715ad9f-5d34-4979-bb2c-69a05c3042ad\",\r\n    \"tenantId\": \"33e01921-4d64-4f8c-a055-5bdaffd5e33d\",\r\n    \"type\": \"systemAssigned\"\r\n  },\r\n  \"id\": \"/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg4426/providers/Microsoft.ContainerRegistry/registries/acrregistry7858/exportPipelines/acrexportpipeline3869\",\r\n  \"name\": \"acrexportpipeline3869\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"e1ec98bb-3308-49c1-a1d9-6a8b7cd365da\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2022-02-27T21:28:09.1031051-08:00\",\r\n    \"lastModifiedBy\": \"e1ec98bb-3308-49c1-a1d9-6a8b7cd365da\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2022-02-27T21:28:09.1031051-08:00\"\r\n  },\r\n  \"properties\": {\r\n    \"target\": {\r\n      \"type\": \"AzureStorageBlobContainer\",\r\n      \"uri\": \"https://accountname.blob.core.windows.net/containername\",\r\n      \"keyVaultUri\": \"https://vaultname.vault.azure.net/secrets/exportsas\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ContainerRegistry/registries/scopeMaps\",\r\n  \"id\": \"/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg1195/providers/Microsoft.ContainerRegistry/registries/acrregistry3941/scopeMaps/acrscopemap3295\",\r\n  \"name\": \"acrscopemap3295\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"e1ec98bb-3308-49c1-a1d9-6a8b7cd365da\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2022-02-27T21:15:28.2503165-08:00\",\r\n    \"lastModifiedBy\": \"e1ec98bb-3308-49c1-a1d9-6a8b7cd365da\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2022-02-27T21:15:28.2503165-08:00\"\r\n  },\r\n  \"properties\": {\r\n    \"type\": \"UserDefined\",\r\n    \"creationDate\": \"2022-02-27T21:15:28.326647-08:00\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"actions\": [\r\n      \"repositories/hello-world/content/read\",\r\n      \"repositories/hello-world/content/write\",\r\n      \"repositories/hello-world/content/delete\",\r\n      \"repositories/hello-world/metadata/read\",\r\n      \"repositories/hello-world/metadata/write\"\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg4426/providers/Microsoft.ContainerRegistry/registries/acrregistry7858/exportPipelines?api-version=2021-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzQ0MjYvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5Nzg1OC9leHBvcnRQaXBlbGluZXM/YXBpLXZlcnNpb249MjAyMS0xMi0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg1195/providers/Microsoft.ContainerRegistry/registries/acrregistry3941/scopeMaps?api-version=2021-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzExOTUvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5Mzk0MS9zY29wZU1hcHM/YXBpLXZlcnNpb249MjAyMS0xMi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "76ec0a04-a3d8-4fa6-b621-3195adc1688a"
+          "8a5db7ae-ddb1-4e60-841c-2545e73d52e9"
         ],
         "Accept-Language": [
           "en-US"
@@ -297,7 +297,73 @@
           "no-cache"
         ],
         "api-supported-versions": [
-          "2019-12-01-preview, 2020-11-01-preview, 2021-06-01-preview, 2021-08-01-preview, 2021-12-01-preview"
+          "2019-05-01-preview, 2020-11-01-preview, 2021-06-01-preview, 2021-08-01-preview, 2021-12-01-preview"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-request-id": [
+          "290d8fdd-24ff-40b1-84ab-2d0bb33bc65d"
+        ],
+        "x-ms-correlation-request-id": [
+          "290d8fdd-24ff-40b1-84ab-2d0bb33bc65d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20220228T051528Z:290d8fdd-24ff-40b1-84ab-2d0bb33bc65d"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 28 Feb 2022 05:15:28 GMT"
+        ],
+        "Content-Length": [
+          "2542"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"type\": \"Microsoft.ContainerRegistry/registries/scopeMaps\",\r\n      \"id\": \"/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg1195/providers/Microsoft.ContainerRegistry/registries/acrregistry3941/scopeMaps/_repositories_admin\",\r\n      \"name\": \"_repositories_admin\",\r\n      \"properties\": {\r\n        \"description\": \"Can perform all read, write and delete operations on the registry\",\r\n        \"type\": \"SystemDefined\",\r\n        \"creationDate\": \"2022-02-17T18:21:25.2883326-08:00\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"actions\": [\r\n          \"repositories/*/metadata/read\",\r\n          \"repositories/*/metadata/write\",\r\n          \"repositories/*/content/read\",\r\n          \"repositories/*/content/write\",\r\n          \"repositories/*/content/delete\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.ContainerRegistry/registries/scopeMaps\",\r\n      \"id\": \"/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg1195/providers/Microsoft.ContainerRegistry/registries/acrregistry3941/scopeMaps/_repositories_pull\",\r\n      \"name\": \"_repositories_pull\",\r\n      \"properties\": {\r\n        \"description\": \"Can pull any repository of the registry\",\r\n        \"type\": \"SystemDefined\",\r\n        \"creationDate\": \"2022-02-17T18:21:25.2883326-08:00\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"actions\": [\r\n          \"repositories/*/content/read\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.ContainerRegistry/registries/scopeMaps\",\r\n      \"id\": \"/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg1195/providers/Microsoft.ContainerRegistry/registries/acrregistry3941/scopeMaps/_repositories_push\",\r\n      \"name\": \"_repositories_push\",\r\n      \"properties\": {\r\n        \"description\": \"Can push to any repository of the registry\",\r\n        \"type\": \"SystemDefined\",\r\n        \"creationDate\": \"2022-02-17T18:21:25.2883326-08:00\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"actions\": [\r\n          \"repositories/*/content/read\",\r\n          \"repositories/*/content/write\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.ContainerRegistry/registries/scopeMaps\",\r\n      \"id\": \"/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg1195/providers/Microsoft.ContainerRegistry/registries/acrregistry3941/scopeMaps/acrscopemap3295\",\r\n      \"name\": \"acrscopemap3295\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"e1ec98bb-3308-49c1-a1d9-6a8b7cd365da\",\r\n        \"createdByType\": \"Application\",\r\n        \"createdAt\": \"2022-02-27T21:15:28.2503165-08:00\",\r\n        \"lastModifiedBy\": \"e1ec98bb-3308-49c1-a1d9-6a8b7cd365da\",\r\n        \"lastModifiedByType\": \"Application\",\r\n        \"lastModifiedAt\": \"2022-02-27T21:15:28.2503165-08:00\"\r\n      },\r\n      \"properties\": {\r\n        \"type\": \"UserDefined\",\r\n        \"creationDate\": \"2022-02-27T21:15:28.326647-08:00\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"actions\": [\r\n          \"repositories/hello-world/content/read\",\r\n          \"repositories/hello-world/content/write\",\r\n          \"repositories/hello-world/content/delete\",\r\n          \"repositories/hello-world/metadata/read\",\r\n          \"repositories/hello-world/metadata/write\"\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg1195/providers/Microsoft.ContainerRegistry/registries/acrregistry3941/scopeMaps/acrscopemap3295?api-version=2021-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzExOTUvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5Mzk0MS9zY29wZU1hcHMvYWNyc2NvcGVtYXAzMjk1P2FwaS12ZXJzaW9uPTIwMjEtMTItMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d9cde6d2-f739-4406-9883-37fd17381148"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.21.56803",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/7.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "api-supported-versions": [
+          "2019-05-01-preview, 2020-11-01-preview, 2021-06-01-preview, 2021-08-01-preview, 2021-12-01-preview"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -309,22 +375,22 @@
           "11997"
         ],
         "x-ms-request-id": [
-          "35a2e101-4cd2-4e43-a7fc-0ade07b65547"
+          "88d5d522-a57d-42f1-8432-afea8a393691"
         ],
         "x-ms-correlation-request-id": [
-          "35a2e101-4cd2-4e43-a7fc-0ade07b65547"
+          "88d5d522-a57d-42f1-8432-afea8a393691"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220228T052810Z:35a2e101-4cd2-4e43-a7fc-0ade07b65547"
+          "WESTCENTRALUS:20220228T051528Z:88d5d522-a57d-42f1-8432-afea8a393691"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 28 Feb 2022 05:28:10 GMT"
+          "Mon, 28 Feb 2022 05:15:28 GMT"
         ],
         "Content-Length": [
-          "969"
+          "884"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -333,21 +399,15 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"type\": \"Microsoft.ContainerRegistry/registries/exportPipelines\",\r\n      \"location\": \"WESTUS\",\r\n      \"identity\": {\r\n        \"principalId\": \"f715ad9f-5d34-4979-bb2c-69a05c3042ad\",\r\n        \"tenantId\": \"33e01921-4d64-4f8c-a055-5bdaffd5e33d\",\r\n        \"type\": \"systemAssigned\"\r\n      },\r\n      \"id\": \"/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg4426/providers/Microsoft.ContainerRegistry/registries/acrregistry7858/exportPipelines/acrexportpipeline3869\",\r\n      \"name\": \"acrexportpipeline3869\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"e1ec98bb-3308-49c1-a1d9-6a8b7cd365da\",\r\n        \"createdByType\": \"Application\",\r\n        \"createdAt\": \"2022-02-27T21:28:09.1031051-08:00\",\r\n        \"lastModifiedBy\": \"e1ec98bb-3308-49c1-a1d9-6a8b7cd365da\",\r\n        \"lastModifiedByType\": \"Application\",\r\n        \"lastModifiedAt\": \"2022-02-27T21:28:09.1031051-08:00\"\r\n      },\r\n      \"properties\": {\r\n        \"target\": {\r\n          \"type\": \"AzureStorageBlobContainer\",\r\n          \"uri\": \"https://accountname.blob.core.windows.net/containername\",\r\n          \"keyVaultUri\": \"https://vaultname.vault.azure.net/secrets/exportsas\"\r\n        },\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ContainerRegistry/registries/scopeMaps\",\r\n  \"id\": \"/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg1195/providers/Microsoft.ContainerRegistry/registries/acrregistry3941/scopeMaps/acrscopemap3295\",\r\n  \"name\": \"acrscopemap3295\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"e1ec98bb-3308-49c1-a1d9-6a8b7cd365da\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2022-02-27T21:15:28.2503165-08:00\",\r\n    \"lastModifiedBy\": \"e1ec98bb-3308-49c1-a1d9-6a8b7cd365da\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2022-02-27T21:15:28.2503165-08:00\"\r\n  },\r\n  \"properties\": {\r\n    \"type\": \"UserDefined\",\r\n    \"creationDate\": \"2022-02-27T21:15:28.326647-08:00\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"actions\": [\r\n      \"repositories/hello-world/content/read\",\r\n      \"repositories/hello-world/content/write\",\r\n      \"repositories/hello-world/content/delete\",\r\n      \"repositories/hello-world/metadata/read\",\r\n      \"repositories/hello-world/metadata/write\"\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg4426/providers/Microsoft.ContainerRegistry/registries/acrregistry7858/exportPipelines/acrexportpipeline3869?api-version=2021-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzQ0MjYvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5Nzg1OC9leHBvcnRQaXBlbGluZXMvYWNyZXhwb3J0cGlwZWxpbmUzODY5P2FwaS12ZXJzaW9uPTIwMjEtMTItMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg1195/providers/Microsoft.ContainerRegistry/registries/acrregistry3941/scopeMaps/acrscopemap3295?api-version=2021-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzExOTUvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5Mzk0MS9zY29wZU1hcHMvYWNyc2NvcGVtYXAzMjk1P2FwaS12ZXJzaW9uPTIwMjEtMTItMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "6103d129-5f9d-48eb-b448-d9eb8b94304a"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
         "User-Agent": [
           "FxVersion/4.700.21.56803",
           "OSName/Windows",
@@ -363,7 +423,151 @@
           "no-cache"
         ],
         "api-supported-versions": [
-          "2019-12-01-preview, 2020-11-01-preview, 2021-06-01-preview, 2021-08-01-preview, 2021-12-01-preview"
+          "2019-05-01-preview, 2020-11-01-preview, 2021-06-01-preview, 2021-08-01-preview, 2021-12-01-preview"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11995"
+        ],
+        "x-ms-request-id": [
+          "06307909-22cf-4ef1-b8c2-d33076c265fe"
+        ],
+        "x-ms-correlation-request-id": [
+          "06307909-22cf-4ef1-b8c2-d33076c265fe"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20220228T051539Z:06307909-22cf-4ef1-b8c2-d33076c265fe"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 28 Feb 2022 05:15:39 GMT"
+        ],
+        "Content-Length": [
+          "746"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ContainerRegistry/registries/scopeMaps\",\r\n  \"id\": \"/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg1195/providers/Microsoft.ContainerRegistry/registries/acrregistry3941/scopeMaps/acrscopemap3295\",\r\n  \"name\": \"acrscopemap3295\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"e1ec98bb-3308-49c1-a1d9-6a8b7cd365da\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2022-02-27T21:15:28.8903251-08:00\",\r\n    \"lastModifiedBy\": \"e1ec98bb-3308-49c1-a1d9-6a8b7cd365da\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2022-02-27T21:15:28.8903251-08:00\"\r\n  },\r\n  \"properties\": {\r\n    \"description\": \"Description\",\r\n    \"type\": \"UserDefined\",\r\n    \"creationDate\": \"2022-02-27T21:15:28.326647-08:00\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"actions\": [\r\n      \"repositories/hello-world/content/read\"\r\n    ]\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg1195/providers/Microsoft.ContainerRegistry/registries/acrregistry3941/scopeMaps/acrscopemap3295?api-version=2021-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzExOTUvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5Mzk0MS9zY29wZU1hcHMvYWNyc2NvcGVtYXAzMjk1P2FwaS12ZXJzaW9uPTIwMjEtMTItMDEtcHJldmlldw==",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"Description\",\r\n    \"actions\": [\r\n      \"repositories/hello-world/content/read\"\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "61a4ddf5-4121-4a0c-8216-ea323ac35f74"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.21.56803",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/7.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "135"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg1195/providers/Microsoft.ContainerRegistry/registries/acrregistry3941/scopeMaps/acrscopemap3295/operationStatuses/token-61a4ddf5-4121-4a0c-8216-ea323ac35f74?api-version=2021-12-01-preview"
+        ],
+        "api-supported-versions": [
+          "2019-05-01-preview, 2020-11-01-preview, 2021-06-01-preview, 2021-08-01-preview, 2021-12-01-preview"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-request-id": [
+          "ed662a8f-89b2-420b-b085-d6fd8ce57e74"
+        ],
+        "x-ms-correlation-request-id": [
+          "ed662a8f-89b2-420b-b085-d6fd8ce57e74"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20220228T051529Z:ed662a8f-89b2-420b-b085-d6fd8ce57e74"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 28 Feb 2022 05:15:28 GMT"
+        ],
+        "Content-Length": [
+          "745"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ContainerRegistry/registries/scopeMaps\",\r\n  \"id\": \"/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg1195/providers/Microsoft.ContainerRegistry/registries/acrregistry3941/scopeMaps/acrscopemap3295\",\r\n  \"name\": \"acrscopemap3295\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"e1ec98bb-3308-49c1-a1d9-6a8b7cd365da\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2022-02-27T21:15:28.8903251-08:00\",\r\n    \"lastModifiedBy\": \"e1ec98bb-3308-49c1-a1d9-6a8b7cd365da\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2022-02-27T21:15:28.8903251-08:00\"\r\n  },\r\n  \"properties\": {\r\n    \"description\": \"Description\",\r\n    \"type\": \"UserDefined\",\r\n    \"creationDate\": \"2022-02-27T21:15:28.326647-08:00\",\r\n    \"provisioningState\": \"Updating\",\r\n    \"actions\": [\r\n      \"repositories/hello-world/content/read\"\r\n    ]\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg1195/providers/Microsoft.ContainerRegistry/registries/acrregistry3941/scopeMaps/acrscopemap3295/operationStatuses/token-61a4ddf5-4121-4a0c-8216-ea323ac35f74?api-version=2021-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzExOTUvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5Mzk0MS9zY29wZU1hcHMvYWNyc2NvcGVtYXAzMjk1L29wZXJhdGlvblN0YXR1c2VzL3Rva2VuLTYxYTRkZGY1LTQxMjEtNGEwYy04MjE2LWVhMzIzYWMzNWY3ND9hcGktdmVyc2lvbj0yMDIxLTEyLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.700.21.56803",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/7.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg1195/providers/Microsoft.ContainerRegistry/registries/acrregistry3941/scopeMaps/acrscopemap3295/operationStatuses/token-61a4ddf5-4121-4a0c-8216-ea323ac35f74?api-version=2021-12-01-preview"
+        ],
+        "api-supported-versions": [
+          "2019-05-01-preview, 2020-11-01-preview, 2021-06-01-preview, 2021-08-01-preview, 2021-12-01-preview"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -375,22 +579,22 @@
           "11996"
         ],
         "x-ms-request-id": [
-          "123aed9a-e261-4ba1-852a-e13980cf5518"
+          "7a569497-2a49-41a7-a39f-d7fb5d9cbe83"
         ],
         "x-ms-correlation-request-id": [
-          "123aed9a-e261-4ba1-852a-e13980cf5518"
+          "7a569497-2a49-41a7-a39f-d7fb5d9cbe83"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220228T052810Z:123aed9a-e261-4ba1-852a-e13980cf5518"
+          "WESTCENTRALUS:20220228T051539Z:7a569497-2a49-41a7-a39f-d7fb5d9cbe83"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 28 Feb 2022 05:28:10 GMT"
+          "Mon, 28 Feb 2022 05:15:38 GMT"
         ],
         "Content-Length": [
-          "957"
+          "22"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -399,17 +603,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ContainerRegistry/registries/exportPipelines\",\r\n  \"location\": \"WESTUS\",\r\n  \"identity\": {\r\n    \"principalId\": \"f715ad9f-5d34-4979-bb2c-69a05c3042ad\",\r\n    \"tenantId\": \"33e01921-4d64-4f8c-a055-5bdaffd5e33d\",\r\n    \"type\": \"systemAssigned\"\r\n  },\r\n  \"id\": \"/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg4426/providers/Microsoft.ContainerRegistry/registries/acrregistry7858/exportPipelines/acrexportpipeline3869\",\r\n  \"name\": \"acrexportpipeline3869\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"e1ec98bb-3308-49c1-a1d9-6a8b7cd365da\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2022-02-27T21:28:09.1031051-08:00\",\r\n    \"lastModifiedBy\": \"e1ec98bb-3308-49c1-a1d9-6a8b7cd365da\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2022-02-27T21:28:09.1031051-08:00\"\r\n  },\r\n  \"properties\": {\r\n    \"target\": {\r\n      \"type\": \"AzureStorageBlobContainer\",\r\n      \"uri\": \"https://accountname.blob.core.windows.net/containername\",\r\n      \"keyVaultUri\": \"https://vaultname.vault.azure.net/secrets/exportsas\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg4426/providers/Microsoft.ContainerRegistry/registries/acrregistry7858/exportPipelines/acrexportpipeline3869?api-version=2021-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzQ0MjYvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5Nzg1OC9leHBvcnRQaXBlbGluZXMvYWNyZXhwb3J0cGlwZWxpbmUzODY5P2FwaS12ZXJzaW9uPTIwMjEtMTItMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg1195/providers/Microsoft.ContainerRegistry/registries/acrregistry3941/scopeMaps/acrscopemap3295?api-version=2021-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzExOTUvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5Mzk0MS9zY29wZU1hcHMvYWNyc2NvcGVtYXAzMjk1P2FwaS12ZXJzaW9uPTIwMjEtMTItMDEtcHJldmlldw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b88f0511-452c-4f09-bb58-9950c7325977"
+          "f259e4b4-c70f-409e-9e8e-77a619817795"
         ],
         "Accept-Language": [
           "en-US"
@@ -428,8 +632,14 @@
         "Pragma": [
           "no-cache"
         ],
+        "Location": [
+          "https://management.azure.com/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/providers/Microsoft.ContainerRegistry/locations/WESTUS/operationResults/token-f259e4b4-c70f-409e-9e8e-77a619817795?api-version=2021-12-01-preview"
+        ],
+        "Retry-After": [
+          "10"
+        ],
         "api-supported-versions": [
-          "2019-12-01-preview, 2020-11-01-preview, 2021-06-01-preview, 2021-08-01-preview, 2021-12-01-preview"
+          "2019-05-01-preview, 2020-11-01-preview, 2021-06-01-preview, 2021-08-01-preview, 2021-12-01-preview"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -438,22 +648,79 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14999"
+          "14998"
         ],
         "x-ms-request-id": [
-          "373424ef-957f-4a45-9b77-39ce4026670c"
+          "ee82bb42-38b8-4b97-ba77-56548974eb49"
         ],
         "x-ms-correlation-request-id": [
-          "373424ef-957f-4a45-9b77-39ce4026670c"
+          "ee82bb42-38b8-4b97-ba77-56548974eb49"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220228T052811Z:373424ef-957f-4a45-9b77-39ce4026670c"
+          "WESTCENTRALUS:20220228T051540Z:ee82bb42-38b8-4b97-ba77-56548974eb49"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 28 Feb 2022 05:28:11 GMT"
+          "Mon, 28 Feb 2022 05:15:39 GMT"
+        ],
+        "Content-Length": [
+          "4"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "null",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/providers/Microsoft.ContainerRegistry/locations/WESTUS/operationResults/token-f259e4b4-c70f-409e-9e8e-77a619817795?api-version=2021-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVyUmVnaXN0cnkvbG9jYXRpb25zL1dFU1RVUy9vcGVyYXRpb25SZXN1bHRzL3Rva2VuLWYyNTllNGI0LWM3MGYtNDA5ZS05ZThlLTc3YTYxOTgxNzc5NT9hcGktdmVyc2lvbj0yMDIxLTEyLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.700.21.56803",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/7.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11994"
+        ],
+        "x-ms-request-id": [
+          "66b1519a-6567-490f-a3c8-f2c3249f9104"
+        ],
+        "x-ms-correlation-request-id": [
+          "66b1519a-6567-490f-a3c8-f2c3249f9104"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20220228T051550Z:66b1519a-6567-490f-a3c8-f2c3249f9104"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 28 Feb 2022 05:15:49 GMT"
         ],
         "Expires": [
           "-1"
@@ -466,17 +733,11 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg4426/providers/Microsoft.ContainerRegistry/registries/acrregistry7858/exportPipelines/acrexportpipeline3869?api-version=2021-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzQ0MjYvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5Nzg1OC9leHBvcnRQaXBlbGluZXMvYWNyZXhwb3J0cGlwZWxpbmUzODY5P2FwaS12ZXJzaW9uPTIwMjEtMTItMDEtcHJldmlldw==",
-      "RequestMethod": "DELETE",
+      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/providers/Microsoft.ContainerRegistry/locations/WESTUS/operationResults/token-f259e4b4-c70f-409e-9e8e-77a619817795?api-version=2021-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVyUmVnaXN0cnkvbG9jYXRpb25zL1dFU1RVUy9vcGVyYXRpb25SZXN1bHRzL3Rva2VuLWYyNTllNGI0LWM3MGYtNDA5ZS05ZThlLTc3YTYxOTgxNzc5NT9hcGktdmVyc2lvbj0yMDIxLTEyLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "2b4a0b1f-f047-4446-8185-278a81d069b2"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
         "User-Agent": [
           "FxVersion/4.700.21.56803",
           "OSName/Windows",
@@ -491,48 +752,48 @@
         "Pragma": [
           "no-cache"
         ],
-        "api-supported-versions": [
-          "2019-12-01-preview, 2020-11-01-preview, 2021-06-01-preview, 2021-08-01-preview, 2021-12-01-preview"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14998"
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11993"
         ],
         "x-ms-request-id": [
-          "631c5ffa-8807-4309-b074-96a3bcdc77cb"
+          "1e3fc10e-29ca-49a2-ae55-1bffe7e6b3b2"
         ],
         "x-ms-correlation-request-id": [
-          "631c5ffa-8807-4309-b074-96a3bcdc77cb"
+          "1e3fc10e-29ca-49a2-ae55-1bffe7e6b3b2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220228T052811Z:631c5ffa-8807-4309-b074-96a3bcdc77cb"
+          "WESTCENTRALUS:20220228T051550Z:1e3fc10e-29ca-49a2-ae55-1bffe7e6b3b2"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 28 Feb 2022 05:28:11 GMT"
+          "Mon, 28 Feb 2022 05:15:49 GMT"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "0"
         ]
       },
       "ResponseBody": "",
-      "StatusCode": 204
+      "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg4426/providers/Microsoft.ContainerRegistry/registries/acrregistry7858?api-version=2021-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzQ0MjYvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5Nzg1OD9hcGktdmVyc2lvbj0yMDIxLTEyLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg1195/providers/Microsoft.ContainerRegistry/registries/acrregistry3941?api-version=2021-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzExOTUvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5Mzk0MT9hcGktdmVyc2lvbj0yMDIxLTEyLTAxLXByZXZpZXc=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1396f7bc-a43c-4369-a31f-4a65af526605"
+          "b5eac713-d1da-41da-a7e1-ce32d9a044cd"
         ],
         "Accept-Language": [
           "en-US"
@@ -564,19 +825,19 @@
           "14997"
         ],
         "x-ms-request-id": [
-          "639b32ed-3bea-49c3-a319-fa212ee8b495"
+          "344f6b2b-ce34-4cdc-898c-bdd4cd636b3b"
         ],
         "x-ms-correlation-request-id": [
-          "639b32ed-3bea-49c3-a319-fa212ee8b495"
+          "344f6b2b-ce34-4cdc-898c-bdd4cd636b3b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220228T052846Z:639b32ed-3bea-49c3-a319-fa212ee8b495"
+          "WESTCENTRALUS:20220228T051553Z:344f6b2b-ce34-4cdc-898c-bdd4cd636b3b"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 28 Feb 2022 05:28:46 GMT"
+          "Mon, 28 Feb 2022 05:15:52 GMT"
         ],
         "Expires": [
           "-1"
@@ -591,13 +852,13 @@
   ],
   "Names": {
     "CreateResourceGroup": [
-      "acr_rg4426"
+      "acr_rg1195"
     ],
     "CreateManagedContainerRegistry": [
-      "acrregistry7858"
+      "acrregistry3941"
     ],
-    "ContainerRegistryTransferExportTest": [
-      "acrexportpipeline3869"
+    "CreatedContainerRegistryScopeMap": [
+      "acrscopemap3295"
     ]
   },
   "Variables": {
