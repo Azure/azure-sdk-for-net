@@ -15,7 +15,6 @@ The Azure Monitor Query client library is used to execute read-only queries agai
 - [Migration guide from Application Insights][migration_guide_app_insights]
 - [Migration guide from Operational Insights][migration_guide_opp_insights]
 
-
 ## Getting started
 
 ### Prerequisites
