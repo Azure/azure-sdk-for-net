@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.Core
 {
@@ -13,7 +14,8 @@ namespace Azure.Core
     /// The classifier chain is a series of <see cref="ResponseClassificationHandler"/> classifiers
     /// followed by the "end-of-chain" <see cref="ResponseClassifier"/>.  The handlers are
     /// added to the chain via <see cref="RequestContext"/> or <see cref="RequestOptions"/>,
-    /// and applied starting with the most recently added handler, then applying status code
+    /// and all of them are applied starting with the most recently added handler and
+    /// iterating over the list to the least-recently added handler, then applying status code
     /// classification, and finally by applying the "end-of-chain" classifier.
     /// </summary>
     internal class ChainingClassifier : ResponseClassifier
@@ -32,8 +34,8 @@ namespace Azure.Core
 
             if (statusCodes != null)
             {
-                StatusCodeHandler handler = new StatusCodeHandler(statusCodes);
-                AddClassifiers(new StatusCodeHandler[] { handler });
+                StatusCodeHandler[] handler = { new StatusCodeHandler(statusCodes) };
+                AddClassifiers(new ReadOnlySpan<ResponseClassificationHandler>(handler));
             }
 
             _endOfChain = endOfChain;
@@ -55,11 +57,12 @@ namespace Azure.Core
             return _endOfChain.IsErrorResponse(message);
         }
 
-        private void AddClassifiers(ResponseClassificationHandler[] handlers)
+        private void AddClassifiers(ReadOnlySpan<ResponseClassificationHandler> handlers)
         {
             int length = _handlers == null ? 0 : _handlers.Length;
             Array.Resize(ref _handlers, length + handlers.Length);
-            Array.Copy(handlers, 0, _handlers, length, handlers.Length);
+            Span<ResponseClassificationHandler> target = new Span<ResponseClassificationHandler>(_handlers, length, handlers.Length);
+            handlers.CopyTo(target);
         }
 
         private class StatusCodeHandler : ResponseClassificationHandler
@@ -73,7 +76,7 @@ namespace Azure.Core
 
             public override bool TryClassify(HttpMessage message, out bool isError)
             {
-                foreach (var classification in _statusCodes.AsSpan())
+                foreach (var classification in _statusCodes)
                 {
                     if (classification.Status == message.Response.Status)
                     {

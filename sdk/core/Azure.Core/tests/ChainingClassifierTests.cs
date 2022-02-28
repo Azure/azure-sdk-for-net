@@ -1,18 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Microsoft.Net.Http.Headers;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    internal class ChainingClassifierTests
+    public class ChainingClassifierTests
     {
         [Test]
         public void ClassifiesUsingOnlyEndOfChain()
