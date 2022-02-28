@@ -18,7 +18,7 @@ namespace Azure.AI.Personalizer
     {
         private readonly ClientDiagnostics clientDiagnostics;
         private readonly HttpPipeline pipeline;
-        private readonly bool isLocalInference;
+        private readonly bool useLocalInference;
         private string stringEndpoint;
         private AzureKeyCredential azureKeyCredential;
         private TokenCredential tokenCredential;
@@ -70,8 +70,8 @@ namespace Azure.AI.Personalizer
             PolicyRestClient = new PolicyRestClient(clientDiagnostics, pipeline, stringEndpoint);
             tokenCredential = credential;
 
-            this.isLocalInference = options.IsLocalInference;
-            if (isLocalInference)
+            this.useLocalInference = options.UseLocalInference;
+            if (useLocalInference)
             {
                 validateAndAssignSampleRate(options.SubsampleRate);
                 //lazy load Rankprocessor
@@ -110,8 +110,8 @@ namespace Azure.AI.Personalizer
             PolicyRestClient = new PolicyRestClient(clientDiagnostics, pipeline, stringEndpoint);
             azureKeyCredential = credential;
 
-            this.isLocalInference = options.IsLocalInference;
-            if (isLocalInference)
+            this.useLocalInference = options.UseLocalInference;
+            if (useLocalInference)
             {
                 validateAndAssignSampleRate(options.SubsampleRate);
                 //lazy load Rankprocessor
@@ -148,7 +148,7 @@ namespace Azure.AI.Personalizer
             scope.Start();
             try
             {
-                if (isLocalInference)
+                if (useLocalInference)
                 {
                     validateAndUpdateLiveModelConfig();
                     return rlNetProcessor.Value.Rank(options);
@@ -199,7 +199,7 @@ namespace Azure.AI.Personalizer
             scope.Start();
             try
             {
-                if (isLocalInference)
+                if (useLocalInference)
                 {
                     validateAndUpdateLiveModelConfig();
                     return rlNetProcessor.Value.Rank(options);
@@ -250,7 +250,7 @@ namespace Azure.AI.Personalizer
             scope.Start();
             try
             {
-                if (isLocalInference)
+                if (useLocalInference)
                 {
                     validateAndUpdateLiveModelConfig();
                     return rlNetProcessor.Value.Rank(options);
@@ -308,7 +308,7 @@ namespace Azure.AI.Personalizer
             scope.Start();
             try
             {
-                if (isLocalInference)
+                if (useLocalInference)
                 {
                     validateAndUpdateLiveModelConfig();
                     return rlNetProcessor.Value.Rank(options);
@@ -368,7 +368,7 @@ namespace Azure.AI.Personalizer
             try
             {
                 PersonalizerRewardOptions rewardOptions = new PersonalizerRewardOptions(reward);
-                if (isLocalInference)
+                if (useLocalInference)
                 {
                     validateAndUpdateLiveModelConfig();
                     return rlNetProcessor.Value.Reward(eventId, reward);
@@ -395,7 +395,7 @@ namespace Azure.AI.Personalizer
             scope.Start();
             try
             {
-                if (isLocalInference)
+                if (useLocalInference)
                 {
                     validateAndUpdateLiveModelConfig();
                     return rlNetProcessor.Value.Reward(eventId, reward);
@@ -423,7 +423,7 @@ namespace Azure.AI.Personalizer
             scope.Start();
             try
             {
-                if (isLocalInference)
+                if (useLocalInference)
                 {
                     validateAndUpdateLiveModelConfig();
                     return rlNetProcessor.Value.RewardMultiSlot(eventId, options.Reward);
@@ -461,7 +461,7 @@ namespace Azure.AI.Personalizer
             scope.Start();
             try
             {
-                if (isLocalInference)
+                if (useLocalInference)
                 {
                     validateAndUpdateLiveModelConfig();
                     return rlNetProcessor.Value.RewardMultiSlot(eventId, options.Reward);
@@ -498,7 +498,7 @@ namespace Azure.AI.Personalizer
             scope.Start();
             try
             {
-                if (isLocalInference)
+                if (useLocalInference)
                 {
                     validateAndUpdateLiveModelConfig();
                     return rlNetProcessor.Value.Activate(eventId);
@@ -524,7 +524,7 @@ namespace Azure.AI.Personalizer
             scope.Start();
             try
             {
-                if (isLocalInference)
+                if (useLocalInference)
                 {
                     validateAndUpdateLiveModelConfig();
                     return rlNetProcessor.Value.Activate(eventId);
@@ -550,7 +550,7 @@ namespace Azure.AI.Personalizer
             scope.Start();
             try
             {
-                if (isLocalInference)
+                if (useLocalInference)
                 {
                     validateAndUpdateLiveModelConfig();
                     return rlNetProcessor.Value.Activate(eventId);
@@ -576,7 +576,7 @@ namespace Azure.AI.Personalizer
             scope.Start();
             try
             {
-                if (isLocalInference)
+                if (useLocalInference)
                 {
                     validateAndUpdateLiveModelConfig();
                     return rlNetProcessor.Value.Activate(eventId);

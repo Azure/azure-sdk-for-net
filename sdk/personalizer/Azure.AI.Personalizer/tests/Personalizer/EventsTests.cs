@@ -22,7 +22,7 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task SingleSlotEventsLocalInferenceTests()
         {
-            PersonalizerClient client = await GetPersonalizerClientAsync(isSingleSlot: true, isLocalInference: true);
+            PersonalizerClient client = await GetPersonalizerClientAsync(isSingleSlot: true, useLocalInference: true);
             await SingleSlotEventsTests(client);
         }
 

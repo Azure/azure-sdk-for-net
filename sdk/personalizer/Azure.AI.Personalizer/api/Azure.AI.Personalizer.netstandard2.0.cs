@@ -68,7 +68,7 @@ namespace Azure.AI.Personalizer
     }
     public partial class PersonalizerClientOptions : Azure.Core.ClientOptions
     {
-        public PersonalizerClientOptions(Azure.AI.Personalizer.PersonalizerClientOptions.ServiceVersion version = Azure.AI.Personalizer.PersonalizerClientOptions.ServiceVersion.V1_1_preview_3, bool isLocalInference = false, float subsampleRate = 1f) { }
+        public PersonalizerClientOptions(Azure.AI.Personalizer.PersonalizerClientOptions.ServiceVersion version = Azure.AI.Personalizer.PersonalizerClientOptions.ServiceVersion.V1_1_preview_3, bool useLocalInference = false, float subsampleRate = 1f) { }
         public enum ServiceVersion
         {
             V1_1_preview_3 = 1,
@@ -261,7 +261,6 @@ namespace Azure.AI.Personalizer
         public PersonalizerRankableAction(string id, System.Collections.Generic.IEnumerable<object> features) { }
         public System.Collections.Generic.IList<object> Features { get { throw null; } }
         public string Id { get { throw null; } }
-        public int Index { get { throw null; } set { } }
     }
     public partial class PersonalizerRankedAction
     {

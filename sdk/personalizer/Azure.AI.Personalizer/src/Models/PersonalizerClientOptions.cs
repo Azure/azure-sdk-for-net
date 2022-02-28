@@ -13,7 +13,7 @@ namespace Azure.AI.Personalizer
     /// <summary> Client options for PersonalizerClient. </summary>
     public partial class PersonalizerClientOptions : ClientOptions
     {
-        private bool isLocalInference;
+        private bool useLocalInference;
         private float subsampleRate;
         private const ServiceVersion LatestVersion = ServiceVersion.V1_1_preview_3;
 
@@ -27,9 +27,9 @@ namespace Azure.AI.Personalizer
         internal string Version { get; }
 
         /// <summary> Initializes new instance of PersonalizerClientV1Preview3ClientOptions. </summary>
-        public PersonalizerClientOptions(ServiceVersion version = LatestVersion, bool isLocalInference = false, float subsampleRate = 1)
+        public PersonalizerClientOptions(ServiceVersion version = LatestVersion, bool useLocalInference = false, float subsampleRate = 1)
         {
-            this.isLocalInference = isLocalInference;
+            this.useLocalInference = useLocalInference;
             this.subsampleRate = subsampleRate;
 
             Version = version switch
@@ -42,6 +42,6 @@ namespace Azure.AI.Personalizer
         }
 
         internal float SubsampleRate { get => subsampleRate; }
-        internal bool IsLocalInference { get => isLocalInference; }
+        internal bool UseLocalInference { get => useLocalInference; }
     }
 }

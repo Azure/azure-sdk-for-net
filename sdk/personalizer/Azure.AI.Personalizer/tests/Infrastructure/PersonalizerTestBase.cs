@@ -90,7 +90,7 @@ namespace Azure.AI.Personalizer.Tests
             Sanitizer = new PersonalizerRecordedTestSanitizer();
         }
 
-        protected async Task<PersonalizerClient> GetPersonalizerClientAsync(bool isSingleSlot = false, bool isLocalInference = false, float subsampleRate = 1.0f)
+        protected async Task<PersonalizerClient> GetPersonalizerClientAsync(bool isSingleSlot = false, bool useLocalInference = false, float subsampleRate = 1.0f)
         {
             string endpoint = isSingleSlot ? TestEnvironment.SingleSlotEndpoint : TestEnvironment.MultiSlotEndpoint;
             string apiKey = isSingleSlot ? TestEnvironment.SingleSlotApiKey : TestEnvironment.MultiSlotApiKey;
@@ -100,9 +100,9 @@ namespace Azure.AI.Personalizer.Tests
                 await EnableMultiSlot(adminClient);
             }
             var credential = new AzureKeyCredential(apiKey);
-            var options = InstrumentClientOptions(new PersonalizerClientOptions(isLocalInference: isLocalInference, subsampleRate: subsampleRate));
+            var options = InstrumentClientOptions(new PersonalizerClientOptions(useLocalInference: useLocalInference, subsampleRate: subsampleRate));
             PersonalizerClient personalizerClient = null;
-            if (isLocalInference)
+            if (useLocalInference)
             {
                 if (Mode == RecordedTestMode.Playback)
                 {

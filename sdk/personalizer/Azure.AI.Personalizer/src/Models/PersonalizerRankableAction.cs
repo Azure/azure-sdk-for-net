@@ -19,6 +19,6 @@ namespace Azure.AI.Personalizer
         /// <summary>
         /// The index of the action in the original request
         /// </summary>
-        public int Index { get; set; }
+        internal int Index { get; set; }
     }
 }
