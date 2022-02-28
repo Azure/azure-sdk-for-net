@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("ipconfigurationId");
                 writer.WriteStringValue(IpconfigurationId);
             }
-            if (Optional.IsCollectionDefined(CustomBgpIpAddresses))
+            if (Optional.IsCollectionDefined(CustomBgpIPAddresses))
             {
                 writer.WritePropertyName("customBgpIpAddresses");
                 writer.WriteStartArray();
-                foreach (var item in CustomBgpIpAddresses)
+                foreach (var item in CustomBgpIPAddresses)
                 {
                     writer.WriteStringValue(item);
                 }

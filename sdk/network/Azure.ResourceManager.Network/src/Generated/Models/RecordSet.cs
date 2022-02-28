@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of RecordSet. </summary>
         internal RecordSet()
         {
-            IpAddresses = new ChangeTrackingList<string>();
+            IPAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RecordSet. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
             Fqdn = fqdn;
             ProvisioningState = provisioningState;
             Ttl = ttl;
-            IpAddresses = ipAddresses;
+            IPAddresses = ipAddresses;
         }
 
         /// <summary> Resource record type. </summary>
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Recordset time to live. </summary>
         public int? Ttl { get; }
         /// <summary> The private ip address of the private endpoint. </summary>
-        public IReadOnlyList<string> IpAddresses { get; }
+        public IReadOnlyList<string> IPAddresses { get; }
     }
 }
