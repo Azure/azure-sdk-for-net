@@ -250,13 +250,13 @@ For example:
     {
         public ConfigurationLiveTests()
         {
-            Sanitizer.SanitizedHeaders.Add("example-header");
-            Sanitizer.SanitizeQueryParameters.Add("example-query-parameter");
+            SanitizedHeaders.Add("example-header");
+            SanitizeQueryParameters.Add("example-query-parameter");
         }
     }
 ```
 
-Another sanitizer feature that is available is for sanitizing Json payloads.
+Another sanitization feature that is available involves sanitizing Json payloads.
 By adding a [Json Path](https://www.newtonsoft.com/json/help/html/QueryJsonSelectToken.htm) formatted string to the `JsonPathSanitizers` property, you can sanitize the value for a specific JSON property in request/response bodies.
 
 By default, the following values are added to the `JsonPathSanitizers` to be sanitized: `primaryKey`, `secondaryKey`, `primaryConnectionString`, `secondaryConnectionString`, and `connectionString`.
@@ -266,15 +266,15 @@ By default, the following values are added to the `JsonPathSanitizers` to be san
     {
         public FormRecognizerLiveTests()
         {
-            Sanitizer.JsonPathSanitizers.Add("$..accessToken");
-            Sanitizer.JsonPathSanitizers.Add("$..source");
+            JsonPathSanitizers.Add("$..accessToken");
+            JsonPathSanitizers.Add("$..source");
         }
     }
 ```
 
 ### Matching
 
-When tests are run in `Playback` mode, the HTTP method, Uri, and headers are used to match the request to the recordings. Some headers change on every request and are not controlled by the client code and should be ignored during matching. Common headers like `Date`, `x-ms-date`, `x-ms-client-request-id`, `User-Agent`, `Request-Id` are ignored by default but if more headers need to be ignored, use the `Matcher` property to customize as needed.
+When tests are run in `Playback` mode, the HTTP method, Uri, and headers are used to match the request to the recordings. Some headers change on every request and are not controlled by the client code and should be ignored during matching. Common headers like `Date`, `x-ms-date`, `x-ms-client-request-id`, `User-Agent`, `Request-Id` are ignored by default but if more headers need to be ignored, use the various matching properties to customize as needed.
 
 
 ``` C#
@@ -282,8 +282,8 @@ When tests are run in `Playback` mode, the HTTP method, Uri, and headers are use
     {
         public ConfigurationLiveTests()
         {
-            Matcher.IgnoredHeaders.Add("Sync-Token");
-            Matcher.IgnoredQueryParameters.Add("service-version");
+            IgnoredHeaders.Add("Sync-Token");
+            IgnoredQueryParameters.Add("service-version");
         }
     }
 ```

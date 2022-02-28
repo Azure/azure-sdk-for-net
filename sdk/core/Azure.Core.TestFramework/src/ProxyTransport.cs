@@ -111,8 +111,8 @@ namespace Azure.Core.TestFramework
                 throw _recording.MismatchException;
             }
 
-            _recording.HasRequests = true;
             var request = _innerTransport.CreateRequest();
+            _recording.HasRequests = true;
             lock (_recording.Random)
             {
                 // Make sure ClientRequestId are the same across request and response

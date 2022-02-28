@@ -29,18 +29,17 @@ namespace Azure.Core.TestFramework
         public SortedDictionary<string, string> Variables => _variables;
         private SortedDictionary<string, string> _variables = new();
 
-        private TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher, TestProxy proxy)
+        private TestRecording(RecordedTestMode mode, string sessionFile, TestProxy proxy, RecordedTestBase recordedTestBase)
         {
             Mode = mode;
             _sessionFile = sessionFile;
-            _sanitizer = sanitizer;
-            _matcher = matcher;
             _proxy = proxy;
+            _recordedTestBase = recordedTestBase;
         }
 
-        public static async Task<TestRecording> CreateAsync(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher, TestProxy proxy)
+        public static async Task<TestRecording> CreateAsync(RecordedTestMode mode, string sessionFile, TestProxy proxy, RecordedTestBase recordedTestBase)
         {
-            var recording = new TestRecording(mode, sessionFile, sanitizer, matcher, proxy);
+            var recording = new TestRecording(mode, sessionFile, proxy, recordedTestBase);
             await recording.InitializeProxySettingsAsync();
             return recording;
         }
@@ -77,7 +76,7 @@ namespace Azure.Core.TestFramework
                     // {
                     //     _proxy.Client.AddBodilessMatcher(RecordingId);
                     // }
-                    var excludedHeaders = new List<string>(_matcher.LegacyExcludedHeaders)
+                    var excludedHeaders = new List<string>(_recordedTestBase.LegacyExcludedHeaders)
                     {
                         "Content-Type",
                         "Content-Length",
@@ -87,12 +86,12 @@ namespace Azure.Core.TestFramework
                     await _proxy.Client.AddCustomMatcherAsync(new CustomDefaultMatcher
                     {
                         ExcludedHeaders = string.Join(",", excludedHeaders),
-                        IgnoredHeaders = _matcher.IgnoredHeaders.Count > 0 ? string.Join(",", _matcher.IgnoredHeaders) : null,
-                        IgnoredQueryParameters = _matcher.IgnoredQueryParameters.Count > 0 ? string.Join(",", _matcher.IgnoredQueryParameters): null,
-                        CompareBodies = _matcher.CompareBodies
+                        IgnoredHeaders = _recordedTestBase.IgnoredHeaders.Count > 0 ? string.Join(",", _recordedTestBase.IgnoredHeaders) : null,
+                        IgnoredQueryParameters = _recordedTestBase.IgnoredQueryParameters.Count > 0 ? string.Join(",", _recordedTestBase.IgnoredQueryParameters): null,
+                        CompareBodies = _recordedTestBase.CompareBodies
                     });
 
-                    foreach (HeaderTransform transform in _sanitizer.HeaderTransforms)
+                    foreach (HeaderTransform transform in _recordedTestBase.HeaderTransforms)
                     {
                         await _proxy.Client.AddHeaderTransformAsync(transform, RecordingId);
                     }
@@ -102,46 +101,46 @@ namespace Azure.Core.TestFramework
 
         private async Task AddProxySanitizersAsync()
         {
-            foreach (string header in _sanitizer.SanitizedHeaders)
+            foreach (string header in _recordedTestBase.SanitizedHeaders)
             {
                 await _proxy.Client.AddHeaderSanitizerAsync(new HeaderRegexSanitizer(header, Sanitized), RecordingId);
             }
 
-            foreach (var header in _sanitizer.HeaderRegexSanitizers)
+            foreach (var header in _recordedTestBase.HeaderRegexSanitizers)
             {
                 await _proxy.Client.AddHeaderSanitizerAsync(header, RecordingId);
             }
 
-            foreach (var (header, queryParameter) in _sanitizer.SanitizedQueryParametersInHeaders)
+            foreach (var (header, queryParameter) in _recordedTestBase.SanitizedQueryParametersInHeaders)
             {
                 await _proxy.Client.AddHeaderSanitizerAsync(
                     HeaderRegexSanitizer.CreateWithQueryParameter(header, queryParameter, Sanitized),
                     RecordingId);
             }
 
-            foreach (string jsonPath in _sanitizer.JsonPathSanitizers)
+            foreach (string jsonPath in _recordedTestBase.JsonPathSanitizers)
             {
                 await _proxy.Client.AddBodyKeySanitizerAsync(new BodyKeySanitizer(Sanitized) { JsonPath = jsonPath }, RecordingId);
             }
 
-            foreach (UriRegexSanitizer sanitizer in _sanitizer.UriRegexSanitizers)
+            foreach (UriRegexSanitizer sanitizer in _recordedTestBase.UriRegexSanitizers)
             {
                 await _proxy.Client.AddUriSanitizerAsync(sanitizer, RecordingId);
             }
 
-            foreach (string queryParameter in _sanitizer.SanitizedQueryParameters)
+            foreach (string queryParameter in _recordedTestBase.SanitizedQueryParameters)
             {
                 await _proxy.Client.AddUriSanitizerAsync(
                     UriRegexSanitizer.CreateWithQueryParameter(queryParameter, Sanitized),
                     RecordingId);
             }
 
-            foreach (string path in _sanitizer.JsonPathSanitizers)
+            foreach (string path in _recordedTestBase.JsonPathSanitizers)
             {
                 await _proxy.Client.AddBodyKeySanitizerAsync(new BodyKeySanitizer(Sanitized) { JsonPath = path }, RecordingId);
             }
 
-            foreach (BodyRegexSanitizer sanitizer in _sanitizer.BodyRegexSanitizers)
+            foreach (BodyRegexSanitizer sanitizer in _recordedTestBase.BodyRegexSanitizers)
             {
                 await _proxy.Client.AddBodyRegexSanitizerAsync(sanitizer, RecordingId);
             }
@@ -152,10 +151,6 @@ namespace Azure.Core.TestFramework
         private readonly AsyncLocal<EntryRecordModel> _disableRecording = new AsyncLocal<EntryRecordModel>();
 
         private readonly string _sessionFile;
-
-        private readonly RecordedTestSanitizer _sanitizer;
-
-        private readonly RecordMatcher _matcher;
 
         internal TestRecordingMismatchException MismatchException;
 
@@ -203,6 +198,7 @@ namespace Azure.Core.TestFramework
         private DateTimeOffset? _now;
 
         private readonly TestProxy _proxy;
+        private readonly RecordedTestBase _recordedTestBase;
 
         public string RecordingId { get; private set; }
 

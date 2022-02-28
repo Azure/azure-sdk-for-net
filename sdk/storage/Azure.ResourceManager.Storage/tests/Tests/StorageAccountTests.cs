@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Storage.Tests
         [RecordedTest]
         public async Task StorageAccountRegenerateKey()
         {
-            Sanitizer.JsonPathSanitizers.Add("$.keys.[*].value");
+            JsonPathSanitizers.Add("$.keys.[*].value");
             //create storage account and get keys
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();

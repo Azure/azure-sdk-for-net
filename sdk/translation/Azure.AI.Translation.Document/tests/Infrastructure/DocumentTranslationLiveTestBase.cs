@@ -20,7 +20,10 @@ namespace Azure.AI.Translation.Document.Tests
         public DocumentTranslationLiveTestBase(bool isAsync, RecordedTestMode? mode = null)
             : base(isAsync, mode)
         {
-            Sanitizer = new DocumentTranslationRecordedTestSanitizer();
+            JsonPathSanitizers.Add("$..sourceUrl");
+            JsonPathSanitizers.Add("$..targetUrl");
+            JsonPathSanitizers.Add("$..glossaryUrl");
+            SanitizedHeaders.Add(Constants.AuthorizationHeader);
         }
 
         protected static readonly List<TestDocument> oneTestDocuments = new()
