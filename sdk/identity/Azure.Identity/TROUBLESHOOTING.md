@@ -24,7 +24,7 @@ This troubleshooting guide covers failure investigation techniques, common error
 ## Handle Azure Identity Exceptions
 
 ### AuthenticationFailedException
-Exceptions arising from authentication errors can be raised on any service client method that makes a request to the service. This is because the the token is requested from the credential on the first call to the service and on any subsequent than need to refresh the token. 
+Exceptions arising from authentication errors can be raised on any service client method that makes a request to the service. This is because the token is requested from the credential on the first call to the service and on any subsequent requests to the service that need to refresh the token. 
 
 To distinguish these failures from failures in the service client, Azure Identity classes raise the `AuthenticationFailedException` with details describing the source of the error in the exception message and possibly the error message. Depending on the application, these errors may or may not be recoverable.
 
