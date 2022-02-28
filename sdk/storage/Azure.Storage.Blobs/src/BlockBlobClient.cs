@@ -529,7 +529,7 @@ namespace Azure.Storage.Blobs.Specialized
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
                 // TODO #27253
-                validationOptions: default, //options?.TransactionalHashingOptions,
+                //options?.TransactionalHashingOptions,
                 operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
 
             return uploader.UploadInternal(
@@ -587,7 +587,7 @@ namespace Azure.Storage.Blobs.Specialized
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
                 // TODO #27253
-                validationOptions: default, //options?.TransactionalHashingOptions,
+                //options?.TransactionalHashingOptions,
                 operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(
@@ -795,9 +795,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
-        /// <param name="hashingOptions">
-        /// Options for transactional hashing.
-        /// </param>
         /// <param name="immutabilityPolicy">
         /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.
         /// Note that is parameter is only applicable to a blob within a container that
@@ -836,7 +833,8 @@ namespace Azure.Storage.Blobs.Specialized
             BlobImmutabilityPolicy immutabilityPolicy,
             bool? legalHold,
             IProgress<long> progressHandler,
-            UploadTransactionalHashingOptions hashingOptions,
+            // TODO #27253
+            //UploadTransactionalHashingOptions hashingOptions,
             string operationName,
             bool async,
             CancellationToken cancellationToken)
@@ -864,13 +862,14 @@ namespace Azure.Storage.Blobs.Specialized
                     scope.Start();
                     Errors.VerifyStreamPosition(content, nameof(content));
 
+                    // TODO #27253
                     // compute hash BEFORE attaching progress handler
-                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, hashingOptions);
+                    //ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, hashingOptions);
                     // CRC not currently in generated code
-                    if (hashResult?.StorageCrc64 != default)
-                    {
-                        throw new NotImplementedException("CRC64 support not implemented for PUT Blob.");
-                    }
+                    //if (hashResult?.StorageCrc64 != default)
+                    //{
+                    //    throw new NotImplementedException("CRC64 support not implemented for PUT Blob.");
+                    //}
 
                     content = content?.WithNoDispose().WithProgress(progressHandler);
 
@@ -903,7 +902,8 @@ namespace Azure.Storage.Blobs.Specialized
                             immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
                             immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
-                            transactionalContentMD5: hashResult?.MD5,
+                            // TODO #27253
+                            //transactionalContentMD5: hashResult?.MD5,
                             // TODO #23578 CRC64 not in generated code
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -935,7 +935,8 @@ namespace Azure.Storage.Blobs.Specialized
                             immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
                             immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
-                            transactionalContentMD5: hashResult?.MD5,
+                            // TODO #27253
+                            //transactionalContentMD5: hashResult?.MD5,
                             // TODO CRC64 not in generated code
                             cancellationToken: cancellationToken);
                     }
@@ -2788,7 +2789,8 @@ namespace Azure.Storage.Blobs.Specialized
                     immutabilityPolicy: default,
                     legalHold: default,
                     progressHandler: default,
-                    hashingOptions: default,
+                    // TODO #27253
+                    //hashingOptions: default,
                     operationName: default,
                     async: async,
                     cancellationToken: cancellationToken)
@@ -2808,9 +2810,10 @@ namespace Azure.Storage.Blobs.Specialized
                     progressHandler: options?.ProgressHandler,
                     blobHttpHeaders: options?.HttpHeaders,
                     metadata: options?.Metadata,
-                    tags: options?.Tags,
+                    tags: options?.Tags
                     // TODO #27253
-                    hashingOptions: default); // options?.TransactionalHashingOptions);
+                    //options?.TransactionalHashingOptions
+                    );
             }
             catch (Exception ex)
             {
@@ -3158,13 +3161,14 @@ namespace Azure.Storage.Blobs.Specialized
         #region PartitionedUploader
         internal PartitionedUploader<BlobUploadOptions, BlobContentInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
-            UploadTransactionalHashingOptions validationOptions,
+            // TODO #27253
+            //UploadTransactionalHashingOptions validationOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
             =>  new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(
                 GetPartitionedUploaderBehaviors(this),
                 transferOptions,
-                validationOptions,
+                //validationOptions,
                 arrayPool,
                 operationName);
 
@@ -3172,7 +3176,8 @@ namespace Azure.Storage.Blobs.Specialized
         {
             return new PartitionedUploader<BlobUploadOptions, BlobContentInfo>.Behaviors
             {
-                SingleUpload = async (stream, args, progressHandler, hashingOptions, operationName, async, cancellationToken)
+                // TODO #27253
+                SingleUpload = async (stream, args, progressHandler, /*hashingOptions,*/ operationName, async, cancellationToken)
                     => await client.UploadInternal(
                         stream,
                         args?.HttpHeaders,
@@ -3183,11 +3188,11 @@ namespace Azure.Storage.Blobs.Specialized
                         args?.ImmutabilityPolicy,
                         args?.LegalHold,
                         progressHandler,
-                        hashingOptions,
                         operationName,
                         async,
                         cancellationToken).ConfigureAwait(false),
-                UploadPartition = async (stream, offset, args, progressHandler, validationOptions, async, cancellationToken)
+                // TODO #27253
+                UploadPartition = async (stream, offset, args, progressHandler, /*validationOptions,*/ async, cancellationToken)
                     =>
                 {
                     // Stage Block only accepts LeaseId.

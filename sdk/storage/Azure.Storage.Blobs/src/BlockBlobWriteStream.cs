@@ -29,12 +29,15 @@ namespace Azure.Storage.Blobs
             IProgress<long> progressHandler,
             BlobHttpHeaders blobHttpHeaders,
             IDictionary<string, string> metadata,
-            IDictionary<string, string> tags,
-            UploadTransactionalHashingOptions hashingOptions) : base(
+            IDictionary<string, string> tags
+            // TODO #27253
+            //UploadTransactionalHashingOptions hashingOptions
+            ) : base(
                 position,
                 bufferSize,
-                progressHandler,
-                hashingOptions)
+                progressHandler
+                //hashingOptions
+                )
         {
             ValidateBufferSize(bufferSize);
             _blockBlobClient = blockBlobClient;

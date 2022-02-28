@@ -1646,7 +1646,7 @@ namespace Azure.Storage.Blobs
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
                 // TODO #27253
-                validationOptions: default, // options?.TransactionalHashingOptions,
+                // options?.TransactionalHashingOptions,
                 operationName: $"{nameof(BlobClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(
@@ -1838,9 +1838,10 @@ namespace Azure.Storage.Blobs
 
         internal PartitionedUploader<BlobUploadOptions, BlobContentInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
-            UploadTransactionalHashingOptions validationOptions,
+            // TODO #27253
+            //UploadTransactionalHashingOptions validationOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
-            => BlockBlobClient.GetPartitionedUploader(transferOptions, validationOptions, arrayPool, operationName);
+            => BlockBlobClient.GetPartitionedUploader(transferOptions, /*validationOptions,*/ arrayPool, operationName);
     }
 }

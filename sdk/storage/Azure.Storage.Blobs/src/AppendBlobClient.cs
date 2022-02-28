@@ -2063,9 +2063,10 @@ namespace Azure.Storage.Blobs.Specialized
                     bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
                     position: position,
                     conditions: conditions,
-                    progressHandler: options?.ProgressHandler,
+                    progressHandler: options?.ProgressHandler
                     // TODO #27253
-                    hashingOptions: default /*options?.TransactionalHashingOptions*/);
+                    //options?.TransactionalHashingOptions
+                    );
             }
             catch (Exception ex)
             {

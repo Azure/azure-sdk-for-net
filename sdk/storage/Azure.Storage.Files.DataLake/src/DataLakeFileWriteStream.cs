@@ -22,12 +22,15 @@ namespace Azure.Storage.Files.DataLake
             long position,
             DataLakeRequestConditions conditions,
             IProgress<long> progressHandler,
-            UploadTransactionalHashingOptions hashingOptions,
+            // TODO #27253
+            //UploadTransactionalHashingOptions hashingOptions,
             bool? closeEvent) : base(
                 position,
                 bufferSize,
-                progressHandler,
-                hashingOptions)
+                progressHandler
+                // TODO #27253
+                //hashingOptions
+                )
         {
             ValidateBufferSize(bufferSize);
             _fileClient = fileClient;

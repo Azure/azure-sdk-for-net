@@ -3943,7 +3943,7 @@ namespace Azure.Storage.Files.DataLake
             var uploader = GetPartitionedUploader(
                 options.TransferOptions,
                 // TODO #27253
-                hashingOptions: default, //options.TransactionalHashingOptions,
+                //options.TransactionalHashingOptions,
                 operationName: $"{nameof(DataLakeFileClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(
@@ -4695,7 +4695,7 @@ namespace Azure.Storage.Files.DataLake
                     conditions: conditions,
                     progressHandler: options?.ProgressHandler,
                     // TODO #27253
-                    hashingOptions: default, // options?.TransactionalHashingOptions,
+                    // options?.TransactionalHashingOptions,
                     closeEvent: options?.Close);
             }
             catch (Exception ex)
@@ -4713,13 +4713,15 @@ namespace Azure.Storage.Files.DataLake
         #region PartitionedUploader
         internal PartitionedUploader<DataLakeFileUploadOptions, PathInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
-            UploadTransactionalHashingOptions hashingOptions,
+            // TODO #27253
+            //UploadTransactionalHashingOptions hashingOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
             => new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 GetPartitionedUploaderBehaviors(this),
                 transferOptions,
-                hashingOptions,
+                // TODO #27253
+                //hashingOptions,
                 arrayPool,
                 operationName);
 
@@ -4737,7 +4739,7 @@ namespace Azure.Storage.Files.DataLake
                         args.Conditions,
                         async,
                         cancellationToken).ConfigureAwait(false),
-                SingleUpload = async (stream, args, progressHandler, hashingOptions, operationName, async, cancellationToken) =>
+                SingleUpload = async (stream, args, progressHandler, operationName, async, cancellationToken) =>
                 {
                     // After the File is Create, Lease ID is the only valid request parameter.
                     if (args?.Conditions != null)
@@ -4771,7 +4773,7 @@ namespace Azure.Storage.Files.DataLake
                         cancellationToken)
                         .ConfigureAwait(false);
                 },
-                UploadPartition = async (stream, offset, args, progressHandler, hashingOptions, async, cancellationToken)
+                UploadPartition = async (stream, offset, args, progressHandler, async, cancellationToken)
                     => await client.AppendInternal(
                         stream,
                         offset,

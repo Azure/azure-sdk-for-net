@@ -68,7 +68,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 transferOptions: default,
-                hashingOptions: default,
+                // TODO #27253
+                //hashingOptions: default,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
@@ -94,7 +95,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 new StorageTransferOptions { MaximumTransferLength = 20, InitialTransferLength = 20 },
-                hashingOptions: default,
+                // TODO #27253
+                //hashingOptions: default,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
@@ -120,7 +122,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 new StorageTransferOptions() { MaximumTransferLength = 20 },
-                hashingOptions: default,
+                // TODO #27253
+                //hashingOptions: default,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
@@ -150,7 +153,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 transferOptions: default,
-                hashingOptions: default,
+                // TODO #27253
+                //hashingOptions: default,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
@@ -179,7 +183,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 new StorageTransferOptions() { MaximumTransferLength = 100 },
-                hashingOptions: default,
+                // TODO #27253
+                //hashingOptions: default,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
@@ -213,7 +218,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 new StorageTransferOptions() { MaximumTransferLength = 20 },
-                hashingOptions: default,
+                // TODO #27253
+                //hashingOptions: default,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
@@ -250,7 +256,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                     MaximumTransferSize = blockSize,
                     MaximumConcurrency = 2
                 },
-                hashingOptions: default,
+                // TODO #27253
+                //hashingOptions: default,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 

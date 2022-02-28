@@ -21,12 +21,16 @@ namespace Azure.Storage.Blobs
             long bufferSize,
             long position,
             PageBlobRequestConditions conditions,
-            IProgress<long> progressHandler,
-            UploadTransactionalHashingOptions hashingOptions) : base(
+            IProgress<long> progressHandler
+            // TODO #27253
+            //UploadTransactionalHashingOptions hashingOptions
+            ) : base(
                 position,
                 bufferSize,
-                progressHandler,
-                hashingOptions)
+                progressHandler
+                // TODO #27253
+                //hashingOptions
+                )
         {
             ValidateBufferSize(bufferSize);
             ValidatePosition(position);
