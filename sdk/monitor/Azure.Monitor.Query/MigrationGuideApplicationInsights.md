@@ -74,7 +74,6 @@ ServiceClientCredentials credentials = ApplicationTokenProvider.LoginSilentAsync
     "<domainId or tenantId>", "<clientId>", "<clientSecret>", adSettings).GetAwaiter().GetResult();
 var client = new ApplicationInsightsDataClient(credentials);
 ```
-```
 
 In `Azure.Monitor.Query` v1.0.x:
 
@@ -83,6 +82,7 @@ using Azure.Monitor.Query;
 using Azure.Identity;
 
 // code omitted for brevity
+
 var credential = new ClientSecretCredential("<domainId or tenantId>", "<clientId>", "<clientSecret>");
 var client = new LogsQueryClient(credential);
 ```
@@ -128,7 +128,10 @@ In `Microsoft.Azure.ApplicationInsights.Query` v1.0.0:
 using Microsoft.Azure.ApplicationInsights.Query.Models
 
 // code omitted for brevity
-HttpResponseMessage response = await client.QueryAsync("<appId>", "AzureActivity | top 10 by TimeGenerated").ConfigureAwait(false).Response;
+HttpResponseMessage response = await client.QueryAsync(
+  "<appId>", 
+  "AzureActivity | top 10 by TimeGenerated").
+  ConfigureAwait(false).Response;
 ```
 
 In `Azure.Monitor.Query` v1.0.x:
@@ -153,7 +156,6 @@ foreach (LogsTableRow row in rows)
     Console.WriteLine(row.GetTimeSpan(1)); 
     Console.WriteLine(row.ToString());
 }
-```
 ```
 
 ## Additional samples
