@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.TestFramework
 
             if (SessionRecording != null)
             {
-                await SessionRecording.DisposeAsync(true);
+                await SessionRecording.DisposeAsync();
             }
 
             GlobalClient = null;

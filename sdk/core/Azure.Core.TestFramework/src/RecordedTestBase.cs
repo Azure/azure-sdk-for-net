@@ -33,30 +33,6 @@ namespace Azure.Core.TestFramework
             (char)31, ':', '*', '?', '\\', '/'
         });
 
-        /// <summary>
-        /// Flag you can (temporarily) enable to save failed test recordings
-        /// and debug/re-run at the point of failure without re-running
-        /// potentially lengthy live tests.  This should never be checked in
-        /// and will throw an exception from CI builds to help make that easier
-        /// to spot.
-        /// </summary>
-        /// TODO - see if this can be added to Test Proxy - https://github.com/Azure/azure-sdk-tools/issues/2825
-        public bool SaveDebugRecordingsOnFailure
-        {
-            get => _saveDebugRecordingsOnFailure;
-            set
-            {
-                if (value && TestEnvironment.GlobalIsRunningInCI)
-                {
-                    throw new AssertionException($"Setting {nameof(SaveDebugRecordingsOnFailure)} must not be merged");
-                }
-
-                _saveDebugRecordingsOnFailure = value;
-            }
-        }
-
-        private bool _saveDebugRecordingsOnFailure;
-
         private TestProxy _proxy;
 
         private DateTime _testStartTime;
@@ -354,13 +330,9 @@ namespace Azure.Core.TestFramework
                 throw new InvalidOperationException("The test didn't instrument any clients but had recordings. Please call InstrumentClient for the client being recorded.");
             }
 
-            bool save = testPassed;
-#if DEBUG
-            save |= SaveDebugRecordingsOnFailure;
-#endif
             if (Recording != null)
             {
-                await Recording.DisposeAsync(save);
+                await Recording.DisposeAsync();
             }
 
             _proxy?.CheckForErrors();
