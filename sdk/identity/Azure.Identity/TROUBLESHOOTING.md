@@ -114,7 +114,7 @@ DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions()
 `AuthenticationFailedException`
   | Error Code | Description | Mitigation |
   |---|---|---|
-  |AADSTS700016|The specified application wasn’t found in the specified tenant.| Ensure the specified `clientId` and `tenantId` are correct for your application registration. For multi-tenant apps, ensure the application has been added to the desired tenant by a tenant admin. To add a new application in the desired tenant, follow the instructions [here](ttps://docs.microsoft.com/azure/active-directory/develop/howto-create-service-principal-portal).
+  |AADSTS700016|The specified application wasn’t found in the specified tenant.| Ensure the specified `clientId` and `tenantId` are correct for your application registration. For multi-tenant apps, ensure the application has been added to the desired tenant by a tenant admin. To add a new application in the desired tenant, follow the instructions [here](https://docs.microsoft.com/azure/active-directory/develop/howto-create-service-principal-portal).
 
 
 ## Troubleshoot `UsernamePasswordCredential` Authentication Issues
