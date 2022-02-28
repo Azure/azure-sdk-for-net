@@ -64,28 +64,22 @@ namespace Azure.Core
 
         private class StatusCodeHandler : ResponseClassificationHandler
         {
-            private int[] _statusCodes;
-            private bool[] _isErrorValues;
+            private (int Status, bool IsError)[] _statusCodes;
 
             public StatusCodeHandler((int Status, bool IsError)[] statusCodes)
             {
-                _statusCodes = new int[statusCodes.Length];
-                _isErrorValues = new bool[statusCodes.Length];
-
-                for (int i = 0; i < statusCodes.Length; i++)
-                {
-                    _statusCodes[i] = statusCodes[i].Status;
-                    _isErrorValues[i] = statusCodes[i].IsError;
-                }
+                _statusCodes = statusCodes;
             }
 
             public override bool TryClassify(HttpMessage message, out bool isError)
             {
-                int index = _statusCodes.AsSpan().IndexOf(message.Response.Status);
-                if (index >= 0)
+                foreach (var classification in _statusCodes.AsSpan())
                 {
-                    isError = _isErrorValues[index];
-                    return true;
+                    if (classification.Status == message.Response.Status)
+                    {
+                        isError = classification.IsError;
+                        return true;
+                    }
                 }
 
                 isError = false;
