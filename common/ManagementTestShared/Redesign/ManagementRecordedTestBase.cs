@@ -33,14 +33,7 @@ namespace Azure.ResourceManager.TestFramework
         private ArmClient _cleanupClient;
         private bool _waitForCleanup;
 
-        protected ManagementRecordedTestBase(bool isAsync) : base(isAsync)
-        {
-            SessionEnvironment = new TEnvironment();
-            SessionEnvironment.Mode = Mode;
-            Initialize();
-        }
-
-        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode mode, bool useLegacyTransport = false) : base(isAsync, mode, useLegacyTransport)
+        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;
@@ -156,7 +149,7 @@ namespace Azure.ResourceManager.TestFramework
             {
                 throw new IgnoreException((string)test.Properties.Get("SkipRecordings"));
             }
-            SessionRecording = await CreateTestRecordingAsync(Mode, GetSessionFilePath(), Sanitizer, Matcher);
+            SessionRecording = await CreateTestRecordingAsync(Mode, GetSessionFilePath());
             SessionEnvironment.SetRecording(SessionRecording);
             ValidateClientInstrumentation = SessionRecording.HasRequests;
         }
@@ -170,7 +163,7 @@ namespace Azure.ResourceManager.TestFramework
 
             if (SessionRecording != null)
             {
-                await SessionRecording.DisposeAsync(true);
+                await SessionRecording.DisposeAsync();
             }
 
             GlobalClient = null;
