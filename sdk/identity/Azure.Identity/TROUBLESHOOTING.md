@@ -24,7 +24,7 @@ This troubleshooting guide covers failure investigation techniques, common error
 ## Handle Azure Identity Exceptions
 
 ### AuthenticationFailedException
-Exceptions arising from authentication errors can be raised on any service client method that makes a request to the service. This is because the the token is requested from the credential on the first call to the service and on any subsequent than need to refresh the token. 
+Exceptions arising from authentication errors can be raised on any service client method that makes a request to the service. This is because the token is requested from the credential on the first call to the service and on any subsequent requests to the service that need to refresh the token. 
 
 To distinguish these failures from failures in the service client, Azure Identity classes raise the `AuthenticationFailedException` with details describing the source of the error in the exception message and possibly the error message. Depending on the application, these errors may or may not be recoverable.
 
@@ -66,7 +66,7 @@ This error contains several pieces of information:
 
 The Azure Identity library provides the same [logging capabilities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging) as the rest of the Azure SDK.
 
-The simplest way to see the logs to help debug authentication issues is to enable the console logging.
+The simplest way to see the logs to help debug authentication issues is to enable the console logger.
 
 ``` c#
 // Setup a listener to monitor logged events.
@@ -94,7 +94,7 @@ DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions()
 | Error |Description| Mitigation |
 |---|---|---|
 |`CredentialUnavailableException` raised with message. "DefaultAzureCredential failed to retrieve a token from the included credentials."|All credentials in the `DefaultAzureCredential` chain failed to retrieve a token, each throwing a `CredentialUnavailableException`|<ul><li>[Enable logging](#enabling-and-configuring-logging) to verify the credentials being tried, and get further diagnostic information.</li><li>Consult the troubleshooting guide for underlying credential types for more information.</li><ul><li>[EnvironmentCredential](#troubleshoot-environmentcredential-authentication-issues)</li><li>[ManagedIdentityCredential](#troubleshoot-managedidentitycredential-authentication-issues)</li><li>[VisualStudioCodeCredential](#troubleshoot-visualstudiocodecredential-authentication-issues)</li><li>[VisualStudioCredential](#troubleshoot-visualstudiocredential-authentication-issues)</li><li>[AzureCLICredential](#troubleshoot-azureclicredential-authentication-issues)</li><li>[AzurePowershellCredential](#troubleshoot-azurepowershellcredential-authentication-issues)</li></ul>|
-|`RequestFailedExcpetion` raised from the client with a status code of 401 or 403|Authentication succeeded but the authorizing Azure service responded with a 401 (Authenticate), or 403 (Forbidden) status code. This can often be caused by the `DefaultAzureCredential` authenticating an account other than the intended.|<ul><li>[Enable logging](#enabling-and-configuring-logging) to determine which credential in the chain returned the authenticating token.</li><li>In the case a credential other than the expected is returning a token, bypass this by either signing out of the corresponding development tool, or excluding the credential with the ExcludeXXXCredential property in the `DefaultAzureCredentialOptions`</li></ul>|
+|`RequestFailedExcpetion` raised from the client with a status code of 401 or 403|Authentication succeeded but the authorizing Azure service responded with a 401 (Authenticate), or 403 (Forbidden) status code. This can often be caused by the `DefaultAzureCredential` authenticating an account other than the intended or that the intended account does not have the correct permissions or roles assigned.|<ul><li>[Enable logging](#enabling-and-configuring-logging) to determine which credential in the chain returned the authenticating token.</li><li>In the case a credential other than the expected is returning a token, bypass this by either signing out of the corresponding development tool, or excluding the credential with the ExcludeXXXCredential property in the `DefaultAzureCredentialOptions`</li><li>Ensure that the correct role is assigned to the account being used. For example, a service specific role rather than the subscription Owner role.</li></ul>|
 
 ## Troubleshoot `EnvironmentCredential` Authentication Issues
 `CredentialUnavailableException`
@@ -114,7 +114,7 @@ DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions()
 `AuthenticationFailedException`
   | Error Code | Description | Mitigation |
   |---|---|---|
-  |AADSTS700016|The specified application wasn’t found in the specified tenant.| Ensure the specified `clientId` and `tenantId` are correct for your application registration. For multi-tenant apps, ensure the application has been added to the desired tenant by a tenant admin. To add a new application in the desired tenant, follow the instructions [here](ttps://docs.microsoft.com/azure/active-directory/develop/howto-create-service-principal-portal).
+  |AADSTS700016|The specified application wasn’t found in the specified tenant.| Ensure the specified `clientId` and `tenantId` are correct for your application registration. For multi-tenant apps, ensure the application has been added to the desired tenant by a tenant admin. To add a new application in the desired tenant, follow the instructions [here](https://docs.microsoft.com/azure/active-directory/develop/howto-create-service-principal-portal).
 
 
 ## Troubleshoot `UsernamePasswordCredential` Authentication Issues
