@@ -47,10 +47,12 @@ namespace Azure.Storage.Files.DataLake
                     offset: _writeIndex,
                     options: new DataLakeFileAppendOptions
                     {
-                        TransactionalHashingOptions = _hashingOptions,
+                        // TODO #27253
+                        //TransactionalHashingOptions = _hashingOptions,
                         ProgressHandler = _progressHandler,
                         LeaseId = _conditions?.LeaseId
                     },
+                    rangeContentMD5: default,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);

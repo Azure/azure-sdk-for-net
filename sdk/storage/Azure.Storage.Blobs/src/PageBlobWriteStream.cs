@@ -101,10 +101,12 @@ namespace Azure.Storage.Blobs
                     offset: _writeIndex,
                     options: new PageBlobUploadPagesOptions()
                     {
-                        TransactionalHashingOptions = _hashingOptions,
+                        // TODO #27253
+                        //TransactionalHashingOptions = _hashingOptions,
                         Conditions = _conditions,
                         ProgressHandler = _progressHandler
                     },
+                    pageRangeTransactionalContentMD5: default,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);

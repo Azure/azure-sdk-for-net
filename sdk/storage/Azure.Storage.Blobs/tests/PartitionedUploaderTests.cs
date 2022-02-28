@@ -341,6 +341,7 @@ namespace Azure.Storage.Blobs.Test
                     IsAny<string>(),
                     IsAny<Stream>(),
                     IsAny<BlockBlobStageBlockOptions>(),
+                    IsAny<byte[]>(),
                     _async,
                     s_cancellationToken
                 )).Returns<string, Stream, BlockBlobStageBlockOptions, bool, CancellationToken>(sink.StageInternal);

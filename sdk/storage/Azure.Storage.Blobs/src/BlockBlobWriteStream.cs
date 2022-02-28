@@ -68,10 +68,12 @@ namespace Azure.Storage.Blobs
                     content: _buffer,
                     new BlockBlobStageBlockOptions()
                     {
-                        TransactionalHashingOptions = _hashingOptions,
+                        // TODO #27253
+                        //TransactionalHashingOptions = _hashingOptions,
                         Conditions = conditions,
                         ProgressHandler = _progressHandler
                     },
+                    blockContentTransactionalMD5: default,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);

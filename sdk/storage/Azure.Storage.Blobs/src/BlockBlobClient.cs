@@ -528,7 +528,8 @@ namespace Azure.Storage.Blobs.Specialized
         {
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
-                options?.TransactionalHashingOptions,
+                // TODO #27253
+                validationOptions: default, //options?.TransactionalHashingOptions,
                 operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
 
             return uploader.UploadInternal(
@@ -585,7 +586,8 @@ namespace Azure.Storage.Blobs.Specialized
         {
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
-                options?.TransactionalHashingOptions,
+                // TODO #27253
+                validationOptions: default, //options?.TransactionalHashingOptions,
                 operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(
@@ -1022,13 +1024,14 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 options = new BlockBlobStageBlockOptions()
                 {
-                    TransactionalHashingOptions = transactionalContentHash != default
-                        ? new UploadTransactionalHashingOptions()
-                        {
-                            Algorithm = TransactionalHashAlgorithm.MD5,
-                            PrecalculatedHash = transactionalContentHash
-                        }
-                        : default,
+                    // TODO #27253
+                    //TransactionalHashingOptions = transactionalContentHash != default
+                    //    ? new UploadTransactionalHashingOptions()
+                    //    {
+                    //        Algorithm = TransactionalHashAlgorithm.MD5,
+                    //        PrecalculatedHash = transactionalContentHash
+                    //    }
+                    //    : default,
                     Conditions = conditions,
                     ProgressHandler = progressHandler
                 };
@@ -1037,6 +1040,7 @@ namespace Azure.Storage.Blobs.Specialized
                 base64BlockId,
                 content,
                 options,
+                blockContentTransactionalMD5: transactionalContentHash,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1106,13 +1110,14 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 options = new BlockBlobStageBlockOptions()
                 {
-                    TransactionalHashingOptions = transactionalContentHash != default
-                        ? new UploadTransactionalHashingOptions()
-                        {
-                            Algorithm = TransactionalHashAlgorithm.MD5,
-                            PrecalculatedHash = transactionalContentHash
-                        }
-                        : default,
+                    // TODO #27253
+                    //TransactionalHashingOptions = transactionalContentHash != default
+                    //    ? new UploadTransactionalHashingOptions()
+                    //    {
+                    //        Algorithm = TransactionalHashAlgorithm.MD5,
+                    //        PrecalculatedHash = transactionalContentHash
+                    //    }
+                    //    : default,
                     Conditions = conditions,
                     ProgressHandler = progressHandler
                 };
@@ -1121,6 +1126,7 @@ namespace Azure.Storage.Blobs.Specialized
                 base64BlockId,
                 content,
                 options,
+                blockContentTransactionalMD5: transactionalContentHash,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1171,6 +1177,7 @@ namespace Azure.Storage.Blobs.Specialized
                 base64BlockId,
                 content,
                 options,
+                blockContentTransactionalMD5: default,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1220,6 +1227,7 @@ namespace Azure.Storage.Blobs.Specialized
                 base64BlockId,
                 content,
                 options,
+                blockContentTransactionalMD5: default,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1248,6 +1256,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="options">
         /// Optional parameters.
         /// </param>
+        /// <param name="blockContentTransactionalMD5">
+        /// Transactional content MD5 for the block upload.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1267,6 +1278,7 @@ namespace Azure.Storage.Blobs.Specialized
             string base64BlockId,
             Stream content,
             BlockBlobStageBlockOptions options,
+            byte[] blockContentTransactionalMD5,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1298,7 +1310,8 @@ namespace Azure.Storage.Blobs.Specialized
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     // compute hash BEFORE attaching progress handler
-                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalHashingOptions);
+                    // TODO #27253
+                    //ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalHashingOptions);
 
                     content = content.WithNoDispose().WithProgress(options?.ProgressHandler);
 
@@ -1310,8 +1323,9 @@ namespace Azure.Storage.Blobs.Specialized
                             blockId: base64BlockId,
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             body: content,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
-                            transactionalContentMD5: hashResult?.MD5,
+                            // TODO #27253
+                            //transactionalContentCrc64: hashResult?.StorageCrc64,
+                            transactionalContentMD5: blockContentTransactionalMD5, // hashResult?.MD5,
                             leaseId: options?.Conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
@@ -1326,8 +1340,9 @@ namespace Azure.Storage.Blobs.Specialized
                             blockId: base64BlockId,
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             body: content,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
-                            transactionalContentMD5: hashResult?.MD5,
+                            // TODO #27253
+                            //transactionalContentCrc64: hashResult?.StorageCrc64,
+                            transactionalContentMD5: blockContentTransactionalMD5, // hashResult?.MD5,
                             leaseId: options?.Conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
@@ -2794,7 +2809,8 @@ namespace Azure.Storage.Blobs.Specialized
                     blobHttpHeaders: options?.HttpHeaders,
                     metadata: options?.Metadata,
                     tags: options?.Tags,
-                    hashingOptions: options?.TransactionalHashingOptions);
+                    // TODO #27253
+                    hashingOptions: default); // options?.TransactionalHashingOptions);
             }
             catch (Exception ex)
             {
@@ -3142,13 +3158,13 @@ namespace Azure.Storage.Blobs.Specialized
         #region PartitionedUploader
         internal PartitionedUploader<BlobUploadOptions, BlobContentInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
-            UploadTransactionalHashingOptions hashingOptions,
+            UploadTransactionalHashingOptions validationOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
             =>  new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(
                 GetPartitionedUploaderBehaviors(this),
                 transferOptions,
-                hashingOptions,
+                validationOptions,
                 arrayPool,
                 operationName);
 
@@ -3171,7 +3187,7 @@ namespace Azure.Storage.Blobs.Specialized
                         operationName,
                         async,
                         cancellationToken).ConfigureAwait(false),
-                UploadPartition = async (stream, offset, args, progressHandler, hashingOptions, async, cancellationToken)
+                UploadPartition = async (stream, offset, args, progressHandler, validationOptions, async, cancellationToken)
                     =>
                 {
                     // Stage Block only accepts LeaseId.
@@ -3188,10 +3204,12 @@ namespace Azure.Storage.Blobs.Specialized
                             stream,
                             new BlockBlobStageBlockOptions()
                             {
-                                TransactionalHashingOptions = hashingOptions,
+                                // TODO #27253
+                                //TransactionalHashingOptions = hashingOptions,
                                 Conditions = conditions,
                                 ProgressHandler = progressHandler
                             },
+                            blockContentTransactionalMD5: default,
                             async,
                             cancellationToken).ConfigureAwait(false);
                 },

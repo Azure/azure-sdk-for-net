@@ -1010,13 +1010,14 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 options = new AppendBlobAppendBlockOptions()
                 {
-                    TransactionalHashingOptions = transactionalContentHash != default
-                        ? new UploadTransactionalHashingOptions()
-                        {
-                            Algorithm = TransactionalHashAlgorithm.MD5,
-                            PrecalculatedHash = transactionalContentHash
-                        }
-                        : default,
+                    // TODO #27253
+                    //TransactionalHashingOptions = transactionalContentHash != default
+                    //    ? new UploadTransactionalHashingOptions()
+                    //    {
+                    //        Algorithm = TransactionalHashAlgorithm.MD5,
+                    //        PrecalculatedHash = transactionalContentHash
+                    //    }
+                    //    : default,
                     Conditions = conditions,
                     ProgressHandler = progressHandler
                 };
@@ -1024,6 +1025,7 @@ namespace Azure.Storage.Blobs.Specialized
             return AppendBlockInternal(
                 content,
                 options,
+                transactionalContentHash,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1085,13 +1087,14 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 options = new AppendBlobAppendBlockOptions()
                 {
-                    TransactionalHashingOptions = transactionalContentHash != default
-                        ? new UploadTransactionalHashingOptions()
-                        {
-                            Algorithm = TransactionalHashAlgorithm.MD5,
-                            PrecalculatedHash = transactionalContentHash
-                        }
-                        : default,
+                    // TODO #27253
+                    //TransactionalHashingOptions = transactionalContentHash != default
+                    //    ? new UploadTransactionalHashingOptions()
+                    //    {
+                    //        Algorithm = TransactionalHashAlgorithm.MD5,
+                    //        PrecalculatedHash = transactionalContentHash
+                    //    }
+                    //    : default,
                     Conditions = conditions,
                     ProgressHandler = progressHandler
                 };
@@ -1099,6 +1102,7 @@ namespace Azure.Storage.Blobs.Specialized
             return await AppendBlockInternal(
                 content,
                 options,
+                transactionalContentHash,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1141,6 +1145,7 @@ namespace Azure.Storage.Blobs.Specialized
             AppendBlockInternal(
                 content,
                 options,
+                transactionalContentMD5: default,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1182,6 +1187,7 @@ namespace Azure.Storage.Blobs.Specialized
             await AppendBlockInternal(
                 content,
                 options,
+                transactionalContentMD5: default,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1204,6 +1210,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="options">
         /// Optional parameters.
         /// </param>
+        /// <param name="transactionalContentMD5">
+        /// Transactional MD5 for content verification.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1222,6 +1231,7 @@ namespace Azure.Storage.Blobs.Specialized
         internal async Task<Response<BlobAppendInfo>> AppendBlockInternal(
             Stream content,
             AppendBlobAppendBlockOptions options,
+            byte[] transactionalContentMD5,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1250,7 +1260,8 @@ namespace Azure.Storage.Blobs.Specialized
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     // compute hash BEFORE attaching progress handler
-                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalHashingOptions);
+                    // TODO #27253
+                    //ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalHashingOptions);
 
                     content = content.WithNoDispose().WithProgress(options?.ProgressHandler);
 
@@ -1261,8 +1272,9 @@ namespace Azure.Storage.Blobs.Specialized
                         response = await AppendBlobRestClient.AppendBlockAsync(
                             contentLength: (content.Length - content.Position),
                             body: content,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
-                            transactionalContentMD5: hashResult?.MD5,
+                            // TODO #27253
+                            //transactionalContentCrc64: hashResult?.StorageCrc64,
+                            transactionalContentMD5: transactionalContentMD5, //hashResult?.MD5,
                             leaseId: options?.Conditions?.LeaseId,
                             maxSize: options?.Conditions?.IfMaxSizeLessThanOrEqual,
                             appendPosition: options?.Conditions?.IfAppendPositionEqual,
@@ -1283,8 +1295,9 @@ namespace Azure.Storage.Blobs.Specialized
                         response = AppendBlobRestClient.AppendBlock(
                             contentLength: (content.Length - content.Position),
                             body: content,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
-                            transactionalContentMD5: hashResult?.MD5,
+                            // TODO #27253
+                            //transactionalContentCrc64: hashResult?.StorageCrc64,
+                            transactionalContentMD5: transactionalContentMD5, //hashResult?.MD5,
                             leaseId: options?.Conditions?.LeaseId,
                             maxSize: options?.Conditions?.IfMaxSizeLessThanOrEqual,
                             appendPosition: options?.Conditions?.IfAppendPositionEqual,
@@ -2051,7 +2064,8 @@ namespace Azure.Storage.Blobs.Specialized
                     position: position,
                     conditions: conditions,
                     progressHandler: options?.ProgressHandler,
-                    hashingOptions: options?.TransactionalHashingOptions);
+                    // TODO #27253
+                    hashingOptions: default /*options?.TransactionalHashingOptions*/);
             }
             catch (Exception ex)
             {

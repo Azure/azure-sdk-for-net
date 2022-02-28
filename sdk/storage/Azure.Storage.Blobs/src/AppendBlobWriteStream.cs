@@ -44,10 +44,13 @@ namespace Azure.Storage.Blobs
                     content: _buffer,
                     new AppendBlobAppendBlockOptions()
                     {
-                        TransactionalHashingOptions = _hashingOptions,
+                        // TODO #27253
+                        //TransactionalHashingOptions = _hashingOptions,
                         Conditions = _conditions,
                         ProgressHandler = _progressHandler
                     },
+                    // TODO #27253
+                    transactionalContentMD5: default,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
