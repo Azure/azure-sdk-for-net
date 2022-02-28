@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups?api-version=2021-04-01",
+      "RequestUri": "/providers/Microsoft.Management/managementGroups?api-version=2018-03-01-preview",
       "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzP2FwaS12ZXJzaW9uPTIwMTgtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -76,7 +76,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups/azsmnet4158?api-version=2021-04-01",
+      "RequestUri": "/providers/Microsoft.Management/managementGroups/azsmnet4158?api-version=2018-03-01-preview",
       "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL2F6c21uZXQ0MTU4P2FwaS12ZXJzaW9uPTIwMTgtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"azsmnet4158\",\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyExemptionAtManagementGroup\",\r\n    \"details\": {\r\n      \"parent\": {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/AzGovPerfTest\"\r\n      }\r\n    }\r\n  }\r\n}",
@@ -111,7 +111,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/providers/Microsoft.Management/operationResults/create/managementGroups/azsmnet4158?api-version=2021-04-01"
+          "https://management.azure.com/providers/Microsoft.Management/operationResults/create/managementGroups/azsmnet4158?api-version=2018-03-01-preview"
         ],
         "Retry-After": [
           "10"
@@ -163,7 +163,7 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/providers/Microsoft.Management/operationResults/create/managementGroups/azsmnet4158?api-version=2021-04-01",
+      "RequestUri": "/providers/Microsoft.Management/operationResults/create/managementGroups/azsmnet4158?api-version=2018-03-01-preview",
       "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9vcGVyYXRpb25SZXN1bHRzL2NyZWF0ZS9tYW5hZ2VtZW50R3JvdXBzL2F6c21uZXQ0MTU4P2FwaS12ZXJzaW9uPTIwMTgtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -183,7 +183,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/providers/Microsoft.Management/operationResults/create/managementGroups/azsmnet4158?api-version=2021-04-01"
+          "https://management.azure.com/providers/Microsoft.Management/operationResults/create/managementGroups/azsmnet4158?api-version=2018-03-01-preview"
         ],
         "Retry-After": [
           "10"
@@ -232,7 +232,7 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/providers/Microsoft.Management/operationResults/create/managementGroups/azsmnet4158?api-version=2021-04-01",
+      "RequestUri": "/providers/Microsoft.Management/operationResults/create/managementGroups/azsmnet4158?api-version=2018-03-01-preview",
       "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9vcGVyYXRpb25SZXN1bHRzL2NyZWF0ZS9tYW5hZ2VtZW50R3JvdXBzL2F6c21uZXQ0MTU4P2FwaS12ZXJzaW9uPTIwMTgtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -252,7 +252,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/providers/Microsoft.Management/operationResults/create/managementGroups/azsmnet4158?api-version=2021-04-01"
+          "https://management.azure.com/providers/Microsoft.Management/operationResults/create/managementGroups/azsmnet4158?api-version=2018-03-01-preview"
         ],
         "Retry-After": [
           "10"
@@ -301,7 +301,7 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/providers/Microsoft.Management/operationResults/create/managementGroups/azsmnet4158?api-version=2021-04-01",
+      "RequestUri": "/providers/Microsoft.Management/operationResults/create/managementGroups/azsmnet4158?api-version=2018-03-01-preview",
       "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9vcGVyYXRpb25SZXN1bHRzL2NyZWF0ZS9tYW5hZ2VtZW50R3JvdXBzL2F6c21uZXQ0MTU4P2FwaS12ZXJzaW9uPTIwMTgtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -946,7 +946,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups/azsmnet4158?api-version=2021-04-01",
+      "RequestUri": "/providers/Microsoft.Management/managementGroups/azsmnet4158?api-version=2018-03-01-preview",
       "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL2F6c21uZXQ0MTU4P2FwaS12ZXJzaW9uPTIwMTgtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
@@ -975,7 +975,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/providers/Microsoft.Management/operationResults/delete/managementGroups/azsmnet4158?api-version=2021-04-01"
+          "https://management.azure.com/providers/Microsoft.Management/operationResults/delete/managementGroups/azsmnet4158?api-version=2018-03-01-preview"
         ],
         "Retry-After": [
           "10"
@@ -1027,7 +1027,7 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/providers/Microsoft.Management/operationResults/delete/managementGroups/azsmnet4158?api-version=2021-04-01",
+      "RequestUri": "/providers/Microsoft.Management/operationResults/delete/managementGroups/azsmnet4158?api-version=2018-03-01-preview",
       "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9vcGVyYXRpb25SZXN1bHRzL2RlbGV0ZS9tYW5hZ2VtZW50R3JvdXBzL2F6c21uZXQ0MTU4P2FwaS12ZXJzaW9uPTIwMTgtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1093,7 +1093,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.Management/operationResults/delete/managementGroups/azsmnet4158?api-version=2021-04-01",
+      "RequestUri": "/providers/Microsoft.Management/operationResults/delete/managementGroups/azsmnet4158?api-version=2018-03-01-preview",
       "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9vcGVyYXRpb25SZXN1bHRzL2RlbGV0ZS9tYW5hZ2VtZW50R3JvdXBzL2F6c21uZXQ0MTU4P2FwaS12ZXJzaW9uPTIwMTgtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
