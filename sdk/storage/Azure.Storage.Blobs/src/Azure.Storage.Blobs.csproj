@@ -31,7 +31,6 @@
     <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)AzureSasCredentialSynchronousPolicy.cs" LinkBase="SharedCore" />
-    <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)RetriableStream.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)CancellationHelper.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="SharedCore" />
