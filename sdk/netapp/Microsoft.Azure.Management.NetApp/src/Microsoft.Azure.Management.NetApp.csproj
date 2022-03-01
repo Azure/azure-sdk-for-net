@@ -13,7 +13,7 @@
     <PackageTags>MicrosoftAzure Management;NetApp</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Version 1.16.0 relates to NetApp Files (ANF) 2021-10-01.
+        Version 2.0.0 relates to NetApp Files (ANF) 2021-10-01.
           - Added support for Subvolumes
 		  - Added support for Volume Groups https://docs.microsoft.com/en-us/azure/azure-netapp-files/application-volume-group-introduction				
           - Added RestoreFiles operation to Snapshots, To restore the specified files from the specified snapshot to the active filesystem
@@ -24,7 +24,7 @@
 		  - Added UnixPermissions to volumePatch
 		  - Added forceDelete flag to volume delete, An option to force delete the volume in case of failed replication for example. Will cleanup resources connected to the particular volume  	
           					
-        Breakning changes:
+        Breaking changes:
           - Minimum and maximum size for capacity pool has changed to allow for smaller capacitypools
 		  - Snapshots operation signagure has changed in line with Azure SDK conventions.
             
