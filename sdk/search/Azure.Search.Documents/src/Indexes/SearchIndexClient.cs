@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes
     /// <summary>
     /// Azure Cognitive Search client that can be used to manage indexes on a Search service.
     /// </summary>
-    public class SearchIndexClient
+    public partial class SearchIndexClient
     {
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -27,7 +27,6 @@ namespace Azure.Search.Documents.Indexes
         private SearchServiceRestClient _serviceClient;
         private IndexesRestClient _indexesClient;
         private SynonymMapsRestClient _synonymMapsClient;
-        private AliasesRestClient _aliasesRestClient;
         private string _serviceName;
 
         /// <summary>
@@ -192,17 +191,6 @@ namespace Azure.Search.Documents.Indexes
         /// Gets the generated <see cref="SynonymMapsRestClient"/> to make requests.
         /// </summary>
         private SynonymMapsRestClient SynonymMapsClient => LazyInitializer.EnsureInitialized(ref _synonymMapsClient, () => new SynonymMapsRestClient(
-            _clientDiagnostics,
-            _pipeline,
-            Endpoint.AbsoluteUri,
-            null,
-            _version.ToVersionString())
-        );
-
-        /// <summary>
-        /// Gets the generated <see cref="AliasesRestClient"/> to make requests.
-        /// </summary>
-        private AliasesRestClient AliasesClient => LazyInitializer.EnsureInitialized(ref _aliasesRestClient, () => new AliasesRestClient(
             _clientDiagnostics,
             _pipeline,
             Endpoint.AbsoluteUri,
@@ -1369,230 +1357,6 @@ namespace Azure.Search.Documents.Indexes
                 throw;
             }
         }
-        #endregion
-
-        #region Alias operations
-
-        /// <summary>
-        /// Creates a new search alias.
-        /// </summary>
-        /// <param name="searchAlias">The definition of the alias to create.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns><see cref="SearchAlias"/> created by the service.</returns>
-        public virtual Response<SearchAlias> CreateAlias(SearchAlias searchAlias, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateAlias)}");
-            scope.Start();
-            try
-            {
-                return AliasesClient.Create(searchAlias, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates a new search alias.
-        /// </summary>
-        /// <param name="searchAlias">The definition of the alias to create.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns><see cref="SearchAlias"/> created by the service.</returns>
-        public virtual async Task<Response<SearchAlias>> CreateAliasAsync(SearchAlias searchAlias, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateAlias)}");
-            scope.Start();
-            try
-            {
-                return await AliasesClient.CreateAsync(searchAlias, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates a new search alias or updates an alias if it already exists.
-        /// </summary>
-        /// <param name="aliasName">The name of the alias to create or update.</param>
-        /// <param name="searchAlias">The definition of the alias to create or update.</param>
-        /// <param name="onlyIfUnchanged">
-        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchAlias.ETag"/> does not match the current alias version;
-        /// otherwise, the current version will be overwritten.
-        /// </param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns><see cref="SearchAlias"/> defined by <c>aliasName</c>.</returns>
-        public virtual Response<SearchAlias> CreateOrUpdateAlias(string aliasName, SearchAlias searchAlias, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateOrUpdateAlias)}");
-            scope.Start();
-            try
-            {
-                return AliasesClient.CreateOrUpdate(aliasName, searchAlias, onlyIfUnchanged ? searchAlias.ETag?.ToString() : null, null, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates a new search alias or updates an alias if it already exists.
-        /// </summary>
-        /// <param name="aliasName">The name of the alias to create or update.</param>
-        /// <param name="searchAlias">The definition of the alias to create or update.</param>
-        /// <param name="onlyIfUnchanged">
-        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchAlias.ETag"/> does not match the current alias version;
-        /// otherwise, the current version will be overwritten.
-        /// </param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns><see cref="SearchAlias"/> defined by <c>aliasName</c>.</returns>
-        public virtual async Task<Response<SearchAlias>> CreateOrUpdateAliasAsync(string aliasName, SearchAlias searchAlias, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateOrUpdateAlias)}");
-            scope.Start();
-            try
-            {
-                return await AliasesClient.CreateOrUpdateAsync(aliasName, searchAlias, onlyIfUnchanged ? searchAlias.ETag?.ToString() : null, null, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a search alias and its associated mapping to an index. This operation is permanent, with no recovery option. The mapped index is untouched by this operation.
-        /// </summary>
-        /// <param name="aliasName">The name of the alias to delete.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns><see cref="Response"/> from the service.</returns>
-        public virtual Response DeleteAlias(string aliasName, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(DeleteAlias)}");
-            scope.Start();
-            try
-            {
-                return AliasesClient.Delete(aliasName, null, null, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a search alias and its associated mapping to an index. This operation is permanent, with no recovery option. The mapped index is untouched by this operation.
-        /// </summary>
-        /// <param name="aliasName">The name of the alias to delete.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns><see cref="Response"/> from the service.</returns>
-        public virtual async Task<Response> DeleteAliasAsync(string aliasName, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(DeleteAlias)}");
-            scope.Start();
-            try
-            {
-                return await AliasesClient.DeleteAsync(aliasName, null, null, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieves an alias definition.
-        /// </summary>
-        /// <param name="aliasName">The name of the alias to retrieve.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns><see cref="SearchAlias"/> defined by <c>aliasName</c>.</returns>
-        public virtual Response<SearchAlias> GetAlias(string aliasName, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetAlias)}");
-            scope.Start();
-            try
-            {
-                return AliasesClient.Get(aliasName, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieves an alias definition.
-        /// </summary>
-        /// <param name="aliasName">The name of the alias to retrieve.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns><see cref="SearchAlias"/> defined by <c>aliasName</c>.</returns>
-        public virtual async Task<Response<SearchAlias>> GetAliasAsync(string aliasName, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetAlias)}");
-            scope.Start();
-            try
-            {
-                return await AliasesClient.GetAsync(aliasName, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists all aliases available for a search service.
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns>Collection of <see cref="SearchAlias"/> available for the search service.</returns>
-        public virtual Response<IReadOnlyList<SearchAlias>> ListAliases(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(ListAliases)}");
-            scope.Start();
-            try
-            {
-                Response<ListAliasesResult> result = AliasesClient.List(cancellationToken);
-                return Response.FromValue(result.Value.Aliases, result.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists all aliases available for a search service.
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns>Collection of <see cref="SearchAlias"/> available for the search service.</returns>
-        public virtual async Task<Response<IReadOnlyList<SearchAlias>>> ListAliasesAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(ListAliases)}");
-            scope.Start();
-            try
-            {
-                Response<ListAliasesResult> result = await AliasesClient.ListAsync(cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(result.Value.Aliases, result.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
         #endregion
     }
 }
