@@ -5,21 +5,16 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 azure-arm: true
 library-name: Resources
-c-sharp: true
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
 tag: package-track2-preview
 
 output-folder: Generated/
 clear-output-folder: true
-
-modelerfour:
-    lenient-model-deduplication: true
 skip-csproj: true
 model-namespace: true
 public-clients: false
 head-as-boolean: false
-payload-flattening-threshold: 2
 
 request-path-to-parent:
   /{scope}/providers/Microsoft.Resources/links: /{linkId}
@@ -123,10 +118,44 @@ directive:
     where: $.definitions.DeploymentOperationProperties
     transform: >
       $.properties.statusMessage["x-nullable"] = true;
-  - from: managedapplications.json
-    where: $.definitions.Identity.properties.type["x-ms-enum"]
+
+  - from: deploymentScripts.json
+    where: $.definitions.ManagedServiceIdentity.properties.type["x-ms-enum"]
     transform: >
-      $.name = "ApplicationResourceIdentityType"
+      $.name = "DeploymentScriptManagedIdentityType"
+  - from: deploymentScripts.json
+    where: $.definitions
+    transform: >
+      $["ManagedServiceIdentity"]["x-ms-client-name"] = "DeploymentScriptManagedIdentity";
+      $["AzureResourceBase"]["x-ms-client-name"] = "DeploymentScriptResourceBase";
+  - from: managedapplications.json
+    where: $.definitions.Identity
+    transform: >
+      $["x-ms-client-name"] = "ApplicationManagedIdentity";
+      $["properties"]["type"]["x-ms-enum"]["name"] = "ApplicationManagedIdentityType";
+  - from: managedapplications.json
+    where: $.definitions
+    transform: >
+      $["GenericResource"]["x-ms-client-name"] = "ApplicationResource";
+      $["Resource"]["x-ms-client-name"] = "ApplicationResourceBase";
+      $["Plan"]["x-ms-client-name"] = "ApplicationPlan";
+      $["Sku"]["x-ms-client-name"] = "ApplicationSku";
+      $["ErrorResponse"]["x-ms-client-name"] = "ApplicationErrorResponse";
+      $["OperationListResult"]["x-ms-client-name"] = "ApplicationOperationListResult";
+      $["Operation"]["x-ms-client-name"] = "ApplicationOperation";
+      $["Operation"]["properties"]["displayOfApplication"] = $["Operation"]["properties"]["display"];
+      $["Operation"]["properties"]["display"] = undefined;
+      $["JitRequestDefinition"]["x-ms-client-name"] = "JitRequest";
+      $["JitRequestDefinitionListResult"]["x-ms-client-name"] = "JitRequestListResult";
+  - from: resources.json
+    where: $.paths['/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf'].post.parameters[1].schema
+    transform: $['$ref'] = '#/definitions/DeploymentWhatIf'
+  - from: resources.json
+    where: $.paths['/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf'].post.parameters[2].schema
+    transform: $['$ref'] = '#/definitions/DeploymentWhatIf'
+  - from: resources.json
+    where: $.definitions.DeploymentWhatIf.properties.location
+    transform: $['description'] = 'The location to store the deployment data, only required at the tenant and management group scope.'
 ```
 
 ### Tag: package-track2-preview

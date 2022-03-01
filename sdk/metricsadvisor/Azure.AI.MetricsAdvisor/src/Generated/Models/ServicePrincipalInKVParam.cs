@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="servicePrincipalIdNameInKV"> The secret name of the service principal&apos;s client Id in the Key Vault. </param>
         /// <param name="servicePrincipalSecretNameInKV"> The secret name of the service principal&apos;s client secret in the Key Vault. </param>
         /// <param name="tenantId"> The tenant id of your service principal. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyVaultEndpoint"/>, <paramref name="keyVaultClientId"/>, <paramref name="servicePrincipalIdNameInKV"/>, <paramref name="servicePrincipalSecretNameInKV"/>, or <paramref name="tenantId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyVaultEndpoint"/>, <paramref name="keyVaultClientId"/>, <paramref name="servicePrincipalIdNameInKV"/>, <paramref name="servicePrincipalSecretNameInKV"/> or <paramref name="tenantId"/> is null. </exception>
         public ServicePrincipalInKVParam(string keyVaultEndpoint, string keyVaultClientId, string servicePrincipalIdNameInKV, string servicePrincipalSecretNameInKV, string tenantId)
         {
             if (keyVaultEndpoint == null)

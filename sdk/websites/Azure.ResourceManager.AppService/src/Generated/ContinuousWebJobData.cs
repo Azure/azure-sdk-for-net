@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -24,6 +25,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="status"> Job status. </param>
         /// <param name="detailedStatus"> Detailed status. </param>
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="error"> Error information. </param>
         /// <param name="usingSdk"> Using SDK?. </param>
         /// <param name="settings"> Job settings. </param>
-        internal ContinuousWebJobData(ResourceIdentifier id, string name, ResourceType type, string kind, ContinuousWebJobStatus? status, string detailedStatus, string logUrl, string runCommand, string url, string extraInfoUrl, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, object> settings) : base(id, name, type, kind)
+        internal ContinuousWebJobData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, ContinuousWebJobStatus? status, string detailedStatus, string logUrl, string runCommand, string url, string extraInfoUrl, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, object> settings) : base(id, name, type, systemData, kind)
         {
             Status = status;
             DetailedStatus = detailedStatus;

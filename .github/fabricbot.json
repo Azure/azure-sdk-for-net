@@ -1871,13 +1871,10 @@
             "Digital Twins"
           ],
           "mentionees": [
-            "drwill-ms",
-            "timtay-microsoft",
-            "abhipsaMisra",
-            "vinagesh",
-            "azabbasi",
-            "barustum",
-            "jamdavi"
+            "johngallardo",
+            "efriesner",
+            "abhinav-gha",
+            "Aashish93-stack"
           ]
         },
         {
@@ -1956,6 +1953,49 @@
           ],
           "mentionees": [
             "madhurinms"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "IoT"
+          ],
+          "mentionees": [
+            "drwill-ms",
+            "timtay-microsoft",
+            "abhipsaMisra",
+            "azabbasi",
+            "brycewang-microsoft",
+            "aandykwong-ms"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "IoTHub"
+          ],
+          "mentionees": [
+            "drwill-ms",
+            "timtay-microsoft",
+            "abhipsaMisra",
+            "azabbasi",
+            "brycewang-microsoft",
+            "aandykwong-ms"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "IoT Models Repository"
+          ],
+          "mentionees": [
+            "drwill-ms",
+            "timtay-microsoft",
+            "abhipsaMisra",
+            "azabbasi",
+            "digimaun",
+            "brycewang-microsoft",
+            "aandykwong-ms"
           ]
         },
         {
@@ -2478,7 +2518,8 @@
           ],
           "mentionees": [
             "shankarsama",
-            "DorothySun216"
+            "DorothySun216",
+            "EldertGrootenboer"
           ]
         },
         {
@@ -3465,7 +3506,7 @@
         {
           "name": "addReply",
           "parameters": {
-            "comment": "Hi @${issueAuthor}.  Thank you, for your interest in helping to improve the Azure SDK experience and for your contribution.  We've noticed that there hasn't been recent engagement on this pull request.  If this is still an active work stream, please let us know by pushing some changes or leaving a comment.  Otherwise, we'll close this out in 7 days."
+            "comment": "Hi @${issueAuthor}.  Thank you for your interest in helping to improve the Azure SDK experience and for your contribution.  We've noticed that there hasn't been recent engagement on this pull request.  If this is still an active work stream, please let us know by pushing some changes or leaving a comment.  Otherwise, we'll close this out in 7 days."
           }
         }
       ]
@@ -3988,6 +4029,237 @@
           "name": "addReply",
           "parameters": {
             "comment": "Thank you for your feedback.  This has been routed to the support team for assistance."
+          }
+        }
+      ]
+    }
+  },
+  {
+    "taskType": "scheduledAndTrigger",
+    "capabilityId": "IssueRouting",
+    "subCapability": "@Mention",
+    "version": "1.0",
+    "config": {
+      "taskName": "[SQUIRE TEST] Team Assignment",
+      "labelsAndMentions": [
+        {
+          "labels": [
+            "Event Hubs",
+            "Client",
+            "needs-team-triage"
+          ],
+          "mentionees": [
+            "jsquire"
+          ],
+          "assignToMentionees": true
+        },
+        {
+          "labels": [
+            "Service Bus",
+            "Client",
+            "needs-team-triage"
+          ],
+          "mentionees": [
+            "JoshLove-msft",
+            "jsquire"
+          ],
+          "assignToMentionees": true
+        }
+      ],
+      "requireBotAssign": false,
+      "replyTemplate": "Thank you for your feedback.   We are routing this to the appropriate team members for follow-up. "
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssuesOnlyResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "isOpen",
+            "parameters": {}
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "needs-team-triage"
+            }
+          },
+          {
+            "name": "isAssignedToSomeone",
+            "parameters": {}
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "hasLabel",
+                "parameters": {
+                  "label": "needs-triage"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "eventType": "issue",
+      "eventNames": [
+        "issues",
+        "project_card"
+      ],
+      "taskName": "[SQUIRE TEST] Adjust Labels on Team Assignment",
+      "actions": [
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "needs-team-triage"
+          }
+        },
+        {
+          "name": "addLabel",
+          "parameters": {
+            "label": "needs-team-attention"
+          }
+        }
+      ],
+      "dangerZone": {
+        "respondToBotActions": true,
+        "acceptRespondToBotActions": true
+      }
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssuesOnlyResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "isOpen",
+            "parameters": {}
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "needs-team-triage"
+            }
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isAssignedToSomeone",
+                "parameters": {}
+              }
+            ]
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "hasLabel",
+                "parameters": {
+                  "label": "needs-triage"
+                }
+              }
+            ]
+          },
+          {
+            "name": "titleContains",
+            "parameters": {
+              "titlePattern": "[SQUIRE TEST]"
+            }
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "hasLabel",
+                "parameters": {
+                  "label": "CXP Attention"
+                }
+              }
+            ]
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "hasLabel",
+                "parameters": {
+                  "label": "needs-team-attention"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "eventType": "issue",
+      "eventNames": [
+        "issues",
+        "project_card"
+      ],
+      "taskName": "[SQUIRE TEST] Route to CXP if no Team Assignment",
+      "actions": [
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "needs-team-triage"
+          }
+        },
+        {
+          "name": "addLabel",
+          "parameters": {
+            "label": "CXP Attention"
+          }
+        },
+        {
+          "name": "addLabel",
+          "parameters": {
+            "label": "needs-team-attention"
+          }
+        }
+      ],
+      "dangerZone": {
+        "respondToBotActions": true,
+        "acceptRespondToBotActions": true
+      }
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssueCommentResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "commentContains",
+            "parameters": {
+              "commentPattern": "/squire"
+            }
+          }
+        ]
+      },
+      "eventType": "issue",
+      "eventNames": [
+        "issue_comment"
+      ],
+      "taskName": "[SQUIRE TEST] Validate Rules Updated",
+      "actions": [
+        {
+          "name": "addReply",
+          "parameters": {
+            "comment": "Test rules iteration: 5"
           }
         }
       ]

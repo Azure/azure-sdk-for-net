@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="name"> A user defined name of the 3rd Party Artifact that is being procured. </param>
         /// <param name="publisher"> The publisher of the 3rd Party Artifact that is being bought. E.g. NewRelic. </param>
         /// <param name="product"> The 3rd Party artifact that is being procured. E.g. NewRelic. Product maps to the OfferID specified for the artifact at the time of Data Market onboarding. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="publisher"/>, or <paramref name="product"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="publisher"/> or <paramref name="product"/> is null. </exception>
         [InitializationConstructor]
         public Plan(string name, string publisher, string product)
         {

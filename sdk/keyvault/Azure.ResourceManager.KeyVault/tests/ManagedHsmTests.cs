@@ -149,6 +149,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             });
         }
 
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26841")]
         [PlaybackOnly("One location only support one MHSM")]
         [RecordedTest]
         public async Task ManagedHsmListKeys()
@@ -261,7 +262,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             //Assert.AreEqual(expectedCreateMode, managedHsmData.Properties.CreateMode);
             Assert.AreEqual(expectedEnablePurgeProtection, managedHsmData.Properties.EnablePurgeProtection);
             Assert.AreEqual(expectedEnableSoftDelete, managedHsmData.Properties.EnableSoftDelete);
-            Assert.AreEqual(expectedHsmUri, managedHsmData.Properties.HsmUri);
+            Assert.AreEqual(expectedHsmUri, managedHsmData.Properties.HsmUri.ToString());
             Assert.AreEqual(expectedInitialAdminObjectIds, managedHsmData.Properties.InitialAdminObjectIds);
             Assert.AreEqual(expectedNetworkAcls.Bypass, managedHsmData.Properties.NetworkAcls.Bypass);
             Assert.AreEqual(expectedNetworkAcls.DefaultAction, managedHsmData.Properties.NetworkAcls.DefaultAction);

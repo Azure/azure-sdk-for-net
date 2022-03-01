@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal VirtualMachineImage(string id, string name, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PurchasePlan plan, OSDiskImage osDiskImage, IList<DataDiskImage> dataDiskImages, AutomaticOSUpgradeProperties automaticOSUpgradeProperties, HyperVGenerationTypes? hyperVGeneration, DisallowedConfiguration disallowed, IList<VirtualMachineImageFeature> features) : base(id, name, location, tags, extendedLocation)
         {
             Plan = plan;
-            OsDiskImage = osDiskImage;
+            OSDiskImage = osDiskImage;
             DataDiskImages = dataDiskImages;
             AutomaticOSUpgradeProperties = automaticOSUpgradeProperties;
             HyperVGeneration = hyperVGeneration;
@@ -60,15 +60,41 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Used for establishing the purchase context of any 3rd Party artifact through MarketPlace. </summary>
         public PurchasePlan Plan { get; set; }
         /// <summary> Contains the os disk image information. </summary>
-        public OSDiskImage OsDiskImage { get; set; }
+        internal OSDiskImage OSDiskImage { get; set; }
+        /// <summary> The operating system of the osDiskImage. </summary>
+        public OperatingSystemTypes OSDiskImageOperatingSystem
+        {
+            get => OSDiskImage is null ? default : OSDiskImage.OperatingSystem;
+            set => OSDiskImage = new OSDiskImage(value);
+        }
+
         /// <summary> The list of data disk images information. </summary>
         public IList<DataDiskImage> DataDiskImages { get; }
         /// <summary> Describes automatic OS upgrade properties on the image. </summary>
-        public AutomaticOSUpgradeProperties AutomaticOSUpgradeProperties { get; set; }
+        internal AutomaticOSUpgradeProperties AutomaticOSUpgradeProperties { get; set; }
+        /// <summary> Specifies whether automatic OS upgrade is supported on the image. </summary>
+        public bool AutomaticOSUpgradeSupported
+        {
+            get => AutomaticOSUpgradeProperties is null ? default : AutomaticOSUpgradeProperties.AutomaticOSUpgradeSupported;
+            set => AutomaticOSUpgradeProperties = new AutomaticOSUpgradeProperties(value);
+        }
+
         /// <summary> Specifies the HyperVGeneration Type. </summary>
         public HyperVGenerationTypes? HyperVGeneration { get; set; }
         /// <summary> Specifies disallowed configuration for the VirtualMachine created from the image. </summary>
-        public DisallowedConfiguration Disallowed { get; set; }
+        internal DisallowedConfiguration Disallowed { get; set; }
+        /// <summary> VM disk types which are disallowed. </summary>
+        public VmDiskTypes? DisallowedVmDiskType
+        {
+            get => Disallowed is null ? default : Disallowed.VmDiskType;
+            set
+            {
+                if (Disallowed is null)
+                    Disallowed = new DisallowedConfiguration();
+                Disallowed.VmDiskType = value;
+            }
+        }
+
         /// <summary> Gets the features. </summary>
         public IList<VirtualMachineImageFeature> Features { get; }
     }

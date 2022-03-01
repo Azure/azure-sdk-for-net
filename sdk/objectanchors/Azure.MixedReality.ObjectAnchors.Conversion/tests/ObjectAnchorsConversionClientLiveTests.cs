@@ -24,6 +24,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
         private const float assetGravityY = -1;
         private const float assetGravityZ = 0;
         private const float assetScale = 0.001f;
+        private const string ClientCorrelationVectorHeaderName = "X-MRC-CV";
 
         private static string currentWorkingDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         private static readonly string assetLocalFilePath = Path.Combine(currentWorkingDirectory, assetsFolderName, assetsFileName);
@@ -32,14 +33,17 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
         public ObjectAnchorsConversionClientLiveTests(bool isAsync)
             : base(isAsync)
         {
-            Matcher = new MixedRealityRecordMatcher();
+#if NET461
+            CompareBodies = true;
+#else
+            CompareBodies = false;
+#endif
+            IgnoredHeaders.Add(ClientCorrelationVectorHeaderName);
         }
 
         [RecordedTest]
         public async Task RunAssetConversion()
         {
-            Recording.DisableIdReuse();
-
             string localFilePath = assetLocalFilePath;
             Vector3 assetGravity = new Vector3(assetGravityX, assetGravityY, assetGravityZ);
             float scale = assetScale;
@@ -88,8 +92,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
         [RecordedTest]
         public async Task ObserveExistingAssetConversion()
         {
-            Recording.DisableIdReuse();
-
             string localFilePath = assetLocalFilePath;
             Vector3 assetGravity = new Vector3(assetGravityX, assetGravityY, assetGravityZ);
             float scale = assetScale;

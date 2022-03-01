@@ -36,10 +36,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="description">Text describing the issue.</param>
         /// <param name="userId">A resource identifier for the user created the
         /// issue.</param>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type for API Management
-        /// resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="createdDate">Date and time when the issue was
         /// created.</param>
         /// <param name="state">Status of the issue. Possible values include:

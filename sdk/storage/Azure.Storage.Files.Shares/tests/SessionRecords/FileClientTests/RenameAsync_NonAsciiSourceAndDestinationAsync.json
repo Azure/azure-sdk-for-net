@@ -126,7 +126,7 @@
         ],
         "x-ms-client-request-id": "9d53f45b-3c76-93bd-fd26-2ea21f41fcb1",
         "x-ms-date": "Fri, 29 Oct 2021 19:40:29 GMT",
-        "x-ms-file-rename-source": "https%3A%2F%2F712xscnapby3pev55a.file.preprod.core.windows.net%2Ftest-share-b97fe9af-43cd-ab08-3637-928b01cc7047%2Ftest-directory-40396d73-3f10-4793-104f-f1f80b65eb4d%2Ftest-%C6%92%C2%A1%C2%A3%E2%82%AC%E2%80%BD%253A-cb6383f9-38de-2a4c-8adb-63d1d012b083=",
+        "x-ms-file-rename-source": "https://712xscnapby3pev55a.file.preprod.core.windows.net/test-share-b97fe9af-43cd-ab08-3637-928b01cc7047/test-directory-40396d73-3f10-4793-104f-f1f80b65eb4d/test-%C6%92%C2%A1%C2%A3%E2%82%AC%E2%80%BD%253A-cb6383f9-38de-2a4c-8adb-63d1d012b083",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2021-04-10"
       },

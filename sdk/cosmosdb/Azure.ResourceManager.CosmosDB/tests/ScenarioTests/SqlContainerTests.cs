@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifySqlContainers(container, container2);
 
-            SqlContainerCreateUpdateOptions updateOptions = new SqlContainerCreateUpdateOptions(container.Id, _containerName, container.Data.Type,
+            SqlContainerCreateUpdateOptions updateOptions = new SqlContainerCreateUpdateOptions(container.Id, _containerName, container.Data.Type, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 AzureLocation.WestUS, container.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountSqlDatabaseContainerThroughputSetting throughput2 = await throughput.CreateOrUpdate(false, new ThroughputSettingsUpdateOptions(AzureLocation.WestUS,
-                new ThroughputSettingsResource(TestThroughput2, null, null, null))).WaitForCompletionAsync();
+            DatabaseAccountSqlDatabaseContainerThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(true, new ThroughputSettingsUpdateOptions(AzureLocation.WestUS,
+                new ThroughputSettingsResource(TestThroughput2, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
         }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountSqlDatabaseContainerThroughputSetting throughput = await container.GetDatabaseAccountSqlDatabaseContainerThroughputSetting().GetAsync();
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = await throughput.MigrateSqlContainerToAutoscale(false).WaitForCompletionAsync();
+            ThroughputSettingsData throughputData = (await throughput.MigrateSqlContainerToAutoscaleAsync(true)).Value.Data;
             AssertAutoscale(throughputData);
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountSqlDatabaseContainerThroughputSetting throughput = await container.GetDatabaseAccountSqlDatabaseContainerThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = await throughput.MigrateSqlContainerToManualThroughput(false).WaitForCompletionAsync();
+            ThroughputSettingsData throughputData = (await throughput.MigrateSqlContainerToManualThroughputAsync(true)).Value.Data;
             AssertManualThroughput(throughputData);
         }
 
@@ -150,16 +150,16 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             var container = await CreateSqlContainer(null);
 
-            BackupInformation backupInfo =  await container.RetrieveContinuousBackupInformation(false, new ContinuousBackupRestoreLocation{ Location  = AzureLocation.WestUS}).WaitForCompletionAsync();
+            BackupInformation backupInfo = (await container.RetrieveContinuousBackupInformationAsync(true, new ContinuousBackupRestoreLocation { Location = AzureLocation.WestUS })).Value;
             long restoreTime = DateTimeOffset.Parse(backupInfo.ContinuousBackupInformation.LatestRestorableTimestamp).ToUnixTimeMilliseconds();
             Assert.True(restoreTime > 0);
 
-            SqlContainerCreateUpdateOptions updateOptions = new SqlContainerCreateUpdateOptions(container.Id, _containerName, container.Data.Type,
+            SqlContainerCreateUpdateOptions updateOptions = new SqlContainerCreateUpdateOptions(container.Id, _containerName, container.Data.Type, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 AzureLocation.WestUS, container.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
             container = (await SqlContainerCollection.CreateOrUpdateAsync(true, _containerName, updateOptions)).Value;
-            backupInfo =  await container.RetrieveContinuousBackupInformation(false, new ContinuousBackupRestoreLocation{ Location  = AzureLocation.WestUS}).WaitForCompletionAsync();
+            backupInfo = (await container.RetrieveContinuousBackupInformationAsync(true, new ContinuousBackupRestoreLocation { Location = AzureLocation.WestUS })).Value;
             long latestRestoreTime = DateTimeOffset.Parse(backupInfo.ContinuousBackupInformation.LatestRestorableTimestamp).ToUnixTimeMilliseconds();
             Assert.True(latestRestoreTime > 0);
             Assert.True(latestRestoreTime > restoreTime);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.Null(container);
         }
 
-        protected async Task<SqlContainer> CreateSqlContainer(AutoscaleSettings autoscale)
+        internal async Task<SqlContainer> CreateSqlContainer(AutoscaleSettings autoscale)
         {
             _containerName = Recording.GenerateAssetName("sql-container-");
             return await CreateSqlContainer(_containerName, autoscale, SqlContainerCollection);

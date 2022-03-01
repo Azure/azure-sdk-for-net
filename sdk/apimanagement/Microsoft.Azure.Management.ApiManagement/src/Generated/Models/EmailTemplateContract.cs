@@ -37,15 +37,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="subject">Subject of the Template.</param>
         /// <param name="body">Email Template Body. This should be a valid
         /// XDocument</param>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type for API Management
-        /// resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="title">Title of the Template.</param>
         /// <param name="description">Description of the Email
         /// Template.</param>
         /// <param name="isDefault">Whether the template is the default
-        /// template provided by Api Management or has been edited.</param>
+        /// template provided by API Management or has been edited.</param>
         /// <param name="parameters">Email Template Parameter values.</param>
         public EmailTemplateContract(string subject, string body, string id = default(string), string name = default(string), string type = default(string), string title = default(string), string description = default(string), bool? isDefault = default(bool?), IList<EmailTemplateParametersContractProperties> parameters = default(IList<EmailTemplateParametersContractProperties>))
             : base(id, name, type)
@@ -89,7 +91,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets whether the template is the default template provided by Api
+        /// Gets whether the template is the default template provided by API
         /// Management or has been edited.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isDefault")]

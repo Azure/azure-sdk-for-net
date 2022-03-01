@@ -11452,7 +11452,7 @@
         "x-ms-request-id": "abe0dd65-9875-4183-937d-46202022ca8c",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20220119T033943Z:da8e6676-a916-4eff-b53b-fda02a9ae85c"
       },
-      "ResponseBody": null
+      "ResponseBody": "null"
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus2/operationResults/abe0dd65-9875-4183-937d-46202022ca8c?api-version=2021-02-01",

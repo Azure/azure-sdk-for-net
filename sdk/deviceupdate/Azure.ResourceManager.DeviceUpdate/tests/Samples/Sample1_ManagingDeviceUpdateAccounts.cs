@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.DeviceUpdate;
 using Azure.ResourceManager.DeviceUpdate.Models;
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
             // Get the account collection from the specific resource group and create an account
             string accountName = "myAccount";
             DeviceUpdateAccountData input = new DeviceUpdateAccountData(AzureLocation.WestUS2);
-            DeviceUpdateAccountCreateOrUpdateOperation lro = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(true, accountName, input);
+            ArmOperation<DeviceUpdateAccount> lro = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(true, accountName, input);
             DeviceUpdateAccount account = lro.Value;
             #endregion Snippet:Managing_Accounts_CreateAnAccount
         }
@@ -53,6 +54,26 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
                 Console.WriteLine(account.Data.Name);
             }
             #endregion Snippet:Managing_Accounts_ListAllAccounts
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public async Task UpdateAccounts()
+        {
+            #region Snippet:Managing_Accounts_UpdateAnAccount
+            // First we need to get the account collection from the specific resource group
+            DeviceUpdateAccountCollection accountCollection = resourceGroup.GetDeviceUpdateAccounts();
+            // Now we can get the account with GetAsync()
+            DeviceUpdateAccount account = await accountCollection.GetAsync("myAccount");
+            // With UpdateAsync(), we can update the account
+            DeviceUpdateAccountUpdateOptions updateOptions = new DeviceUpdateAccountUpdateOptions()
+            {
+                Location = AzureLocation.WestUS2,
+                Identity = new ManagedServiceIdentity(ResourceManager.Models.ManagedServiceIdentityType.None)
+            };
+            ArmOperation<DeviceUpdateAccount> lro = await account.UpdateAsync(true, updateOptions);
+            account = lro.Value;
+            #endregion Snippet:Managing_Accounts_UpdateAnAccount
         }
 
         [Test]
@@ -82,7 +103,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
             // With the collection, we can create a new resource group with a specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+            ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = lro.Value;
             #endregion
 

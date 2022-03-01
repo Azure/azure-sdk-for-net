@@ -14,7 +14,23 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/ac40996ab146d1360a47
 tag: package-2021-08-01
 clear-output-folder: true
 skip-csproj: true
-  
+output-folder: ./Generated
+
+rename-rules:
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+
 #TODO: remove after we resolve why RestorePoint has no list
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}
@@ -30,6 +46,7 @@ override-operation-name:
   GallerySharingProfile_Update: UpdateSharingProfile
   VirtualMachineImages_ListSkus: GetVirtualMachineImageSkus
   VirtualMachineImagesEdgeZone_ListSkus: GetVirtualMachineImageEdgeZoneSkus
+  VirtualMachineScaleSetRollingUpgrades_StartOSUpgrade: StartOSUpgrade
 
 request-path-to-resource-data:
   /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}: SharedGallery
@@ -58,25 +75,23 @@ directive:
   - rename-model:
       from: RestorePointCollection
       to: RestorePointGroup
-  - rename-model:
-      from: VirtualMachineScaleSetVM
-      to: VirtualMachineScaleSetVm
-  - rename-model:
-      from: VirtualMachineScaleSetVMExtension
-      to: VirtualMachineScaleSetVmExtension
   - from: disk.json
     where: $.definitions.PurchasePlan
     transform: $["x-ms-client-name"] = "DiskPurchasePlan"
   - from: swagger-document
-    where: $.definitions.DiskProperties.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
+    where: $.definitions.VirtualMachineReimageParameters
+    transform: $["x-ms-client-name"] = "VirtualMachineReimageOptions"
   - from: swagger-document
-    where: $.definitions.DiskRestorePointProperties.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
+    where: $.definitions.VirtualMachineScaleSetVMReimageParameters
+    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmReimageOptions"
+# transform enum values
   - from: swagger-document
-    where: $.definitions.GalleryImageProperties.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
+    where: $.definitions.DiskSecurityType["x-ms-enum"].values[1]
+    transform: $["name"] = "ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey"
   - from: swagger-document
-    where: $.definitions.GalleryImageProperties.properties.osState
-    transform: $["x-ms-client-name"] = "OSState"
+    where: $.definitions.DiskSecurityType["x-ms-enum"].values[2]
+    transform: $["name"] = "ConfidentialVmDiskEncryptedWithPlatformKey"
+  - from: swagger-document
+    where: $.definitions.DiskSecurityType["x-ms-enum"].values[3]
+    transform: $["name"] = "ConfidentialVmDiskEncryptedWithCustomerKey"
 ```

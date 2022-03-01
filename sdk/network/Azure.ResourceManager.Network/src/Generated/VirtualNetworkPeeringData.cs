@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -71,11 +73,45 @@ namespace Azure.ResourceManager.Network
         /// <summary> If remote gateways can be used on this virtual network. If the flag is set to true, and allowGatewayTransit on remote peering is also true, virtual network will use gateways of remote virtual network for transit. Only one peering can have this flag set to true. This flag cannot be set if virtual network already has a gateway. </summary>
         public bool? UseRemoteGateways { get; set; }
         /// <summary> The reference to the remote virtual network. The remote virtual network can be in the same or different region (preview). See here to register for the preview and learn more (https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering). </summary>
-        public WritableSubResource RemoteVirtualNetwork { get; set; }
+        internal WritableSubResource RemoteVirtualNetwork { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier RemoteVirtualNetworkId
+        {
+            get => RemoteVirtualNetwork is null ? default : RemoteVirtualNetwork.Id;
+            set
+            {
+                if (RemoteVirtualNetwork is null)
+                    RemoteVirtualNetwork = new WritableSubResource();
+                RemoteVirtualNetwork.Id = value;
+            }
+        }
+
         /// <summary> The reference to the address space peered with the remote virtual network. </summary>
-        public AddressSpace RemoteAddressSpace { get; set; }
+        internal AddressSpace RemoteAddressSpace { get; set; }
+        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
+        public IList<string> RemoteAddressPrefixes
+        {
+            get
+            {
+                if (RemoteAddressSpace is null)
+                    RemoteAddressSpace = new AddressSpace();
+                return RemoteAddressSpace.AddressPrefixes;
+            }
+        }
+
         /// <summary> The reference to the current address space of the remote virtual network. </summary>
-        public AddressSpace RemoteVirtualNetworkAddressSpace { get; set; }
+        internal AddressSpace RemoteVirtualNetworkAddressSpace { get; set; }
+        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
+        public IList<string> RemoteVirtualNetworkAddressPrefixes
+        {
+            get
+            {
+                if (RemoteVirtualNetworkAddressSpace is null)
+                    RemoteVirtualNetworkAddressSpace = new AddressSpace();
+                return RemoteVirtualNetworkAddressSpace.AddressPrefixes;
+            }
+        }
+
         /// <summary> The reference to the remote virtual network&apos;s Bgp Communities. </summary>
         public VirtualNetworkBgpCommunities RemoteBgpCommunities { get; set; }
         /// <summary> The status of the virtual network peering. </summary>

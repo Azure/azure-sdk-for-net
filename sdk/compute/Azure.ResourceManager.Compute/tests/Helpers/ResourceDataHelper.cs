@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             return dest;
         }
 
-        public static void AssertTrackedResource(TrackedResource r1, TrackedResource r2)
+        public static void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
             Assert.AreEqual(r1.Name, r2.Name);
             Assert.AreEqual(r1.Id, r2.Id);
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                 {
                     VmSize = VirtualMachineSizeTypes.StandardF2
                 },
-                OsProfile = new OSProfile()
+                OSProfile = new OSProfile()
                 {
                     AdminUsername = adminUsername,
                     ComputerName = computerName,
@@ -234,9 +234,9 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                 },
                 StorageProfile = new StorageProfile()
                 {
-                    OsDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+                    OSDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
                     {
-                        OsType = OperatingSystemTypes.Linux,
+                        OSType = OperatingSystemTypes.Linux,
                         Caching = CachingTypes.ReadWrite,
                         ManagedDisk = new ManagedDiskParameters()
                         {
@@ -276,9 +276,9 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                 {
                     Mode = UpgradeMode.Manual,
                 },
-                VirtualMachineProfile = new VirtualMachineScaleSetVMProfile()
+                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                 {
-                    OsProfile = new VirtualMachineScaleSetOSProfile()
+                    OSProfile = new VirtualMachineScaleSetOSProfile()
                     {
                         ComputerNamePrefix = computerNamePrefix,
                         AdminUsername = adminUsername,
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                     },
                     StorageProfile = new VirtualMachineScaleSetStorageProfile()
                     {
-                        OsDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionTypes.FromImage)
+                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionTypes.FromImage)
                         {
                             Caching = CachingTypes.ReadWrite,
                             ManagedDisk = new VirtualMachineScaleSetManagedDiskParameters()
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                             new VirtualMachineScaleSetNetworkConfiguration("example")
                             {
                                 Primary = true,
-                                IpConfigurations =
+                                IPConfigurations =
                                 {
                                     new VirtualMachineScaleSetIPConfiguration("internal")
                                     {

@@ -33,7 +33,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
 
@@ -62,10 +62,6 @@ var routeTable = await resourceGroup.GetRouteTables().CreateOrUpdateAsync(true, 
 var vnetData = new VirtualNetworkData()
 {
     Location = AzureLocation.WestUS2,
-    AddressSpace = new AddressSpace()
-    {
-        AddressPrefixes = { "10.10.0.0/16", }
-    },
     Subnets =
     {
         new SubnetData()
@@ -81,6 +77,7 @@ var vnetData = new VirtualNetworkData()
         }
     },
 };
+vnetData.AddressPrefixes.Add("10.10.0.0/16");
 string vnetName = "myVnet";
 var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnetData);
 string subnetId = $"{vnet.Value.Data.Id}/subnets/ManagedInstance";

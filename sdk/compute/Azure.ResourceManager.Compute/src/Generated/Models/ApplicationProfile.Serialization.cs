@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ApplicationProfile : IUtf8JsonSerializable
+    internal partial class ApplicationProfile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ApplicationProfile DeserializeApplicationProfile(JsonElement element)
         {
-            Optional<IList<VMGalleryApplication>> galleryApplications = default;
+            Optional<IList<VmGalleryApplication>> galleryApplications = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("galleryApplications"))
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VMGalleryApplication> array = new List<VMGalleryApplication>();
+                    List<VmGalleryApplication> array = new List<VmGalleryApplication>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMGalleryApplication.DeserializeVMGalleryApplication(item));
+                        array.Add(VmGalleryApplication.DeserializeVmGalleryApplication(item));
                     }
                     galleryApplications = array;
                     continue;

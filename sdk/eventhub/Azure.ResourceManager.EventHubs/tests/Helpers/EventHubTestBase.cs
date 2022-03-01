@@ -21,14 +21,12 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
         protected Subscription DefaultSubscription;
         protected ArmClient Client { get; private set; }
-        protected EventHubTestBase(bool isAsync) : base(isAsync)
-        {
-            Sanitizer = new EventHubRecordedTestSanitizer();
-        }
 
-        public EventHubTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        public EventHubTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
-            Sanitizer = new EventHubRecordedTestSanitizer();
+            JsonPathSanitizers.Add("$..aliasPrimaryConnectionString");
+            JsonPathSanitizers.Add("$..aliasSecondaryConnectionString");
+            JsonPathSanitizers.Add("$..keyName");
         }
 
         [SetUp]
@@ -40,7 +38,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
         public async Task<ResourceGroup> CreateResourceGroupAsync()
         {
             string resourceGroupName = Recording.GenerateAssetName("testeventhubRG-");
-            ResourceGroupCreateOrUpdateOperation operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            ArmOperation<ResourceGroup> operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 true,
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)

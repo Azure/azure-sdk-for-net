@@ -1,13 +1,19 @@
 # Release History
 
-## 12.11.0-beta.3 (Unreleased)
+## 12.11.0-beta.4 (Unreleased)
+
+- Added support for progress reporting with DownloadToAsync().
+- Fixed a bug where BlobBaseClient.DownloadTo() would result in an ObjectDisposedException on .NET Framework in certain network conditions.
+- Added nullable version of `BlobProperties.CopyStatus` called `BlobCopyStatus`, allowing a null value when Storage doesn't return a value.
+- Fixed a bug where BlobContainerClient.GetProperties() would throw an ArgumentNullException when the AccessPolicy was null
+- Removed preview support for SDK-calculated transactional checksums on data transfer.
+
+## 12.11.0-beta.3 (2022-02-07)
 - Added support for service version 2021-04-10.
 - Added support for BlobContainerClient.FilterBlobsByTag().
 - Added support for BlobContainerClient.OpenWriteAsync().
 - Fixed bug where BlobSasBuilder.SetPermissions(string rawPermissions) was not properly handling the Permanent Delete ('y') and set Immutability Policy ('i') permissions.
 - Fixed a bug where BlobClient.Upload() and UploadAsync() would result in a NullReferenceException when trying to overwrite a blob with client-side encryption enabled
-
-### Other Changes
 
 ## 12.11.0-beta.2 (2021-11-30)
 - Added support for service version 2021-02-12

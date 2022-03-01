@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -41,6 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             ThroughputSettingsResource resource = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -74,6 +76,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -92,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ThroughputSettingsUpdateOptions(id, name, type, tags, location, resource);
+            return new ThroughputSettingsUpdateOptions(id, name, type, systemData, tags, location, resource);
         }
     }
 }

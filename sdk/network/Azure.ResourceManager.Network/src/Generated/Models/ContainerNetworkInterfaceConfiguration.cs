@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ContainerNetworkInterfaceConfiguration. </summary>
         public ContainerNetworkInterfaceConfiguration()
         {
-            IpConfigurations = new ChangeTrackingList<IPConfigurationProfile>();
+            IPConfigurations = new ChangeTrackingList<IPConfigurationProfile>();
             ContainerNetworkInterfaces = new ChangeTrackingList<WritableSubResource>();
         }
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
             Name = name;
             Type = type;
             Etag = etag;
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             ContainerNetworkInterfaces = containerNetworkInterfaces;
             ProvisioningState = provisioningState;
         }
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> A list of ip configurations of the container network interface configuration. </summary>
-        public IList<IPConfigurationProfile> IpConfigurations { get; }
+        public IList<IPConfigurationProfile> IPConfigurations { get; }
         /// <summary> A list of container network interfaces created from this container network interface configuration. </summary>
         public IList<WritableSubResource> ContainerNetworkInterfaces { get; }
         /// <summary> The provisioning state of the container network interface configuration resource. </summary>

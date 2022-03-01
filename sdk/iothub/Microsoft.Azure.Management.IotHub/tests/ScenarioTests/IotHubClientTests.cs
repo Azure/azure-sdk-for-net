@@ -54,7 +54,8 @@ namespace IotHub.Tests.ScenarioTests
                 // Create EH and AuthRule
                 var properties = new IotHubProperties
                 {
-                    Routing = await GetIotHubRoutingPropertiesAsync(resourceGroup).ConfigureAwait(false)
+                    Routing = await GetIotHubRoutingPropertiesAsync(resourceGroup).ConfigureAwait(false),
+                    EnableDataResidency = false
                 };
 
                 IotHubDescription iotHub = await _iotHubClient.IotHubResource
@@ -78,6 +79,8 @@ namespace IotHub.Tests.ScenarioTests
                 iotHub.Location.Should().Be(IotHubTestUtilities.DefaultLocation);
                 iotHub.Sku.Name.Should().Be(IotHubSku.S1);
                 iotHub.Sku.Capacity.Should().Be(1);
+                iotHub.SystemData.CreatedAt.Should().NotBeNull();
+                iotHub.Properties.EnableDataResidency.Should().BeFalse();
 
                 // Add and get tags
                 var tags = new Dictionary<string, string>
