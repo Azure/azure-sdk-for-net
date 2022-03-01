@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal AseV3NetworkingConfiguration(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _aseV3NetworkingConfigurationAppServiceEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string aseV3NetworkingConfigurationAppServiceEnvironmentsApiVersion);
+            TryGetApiVersion(ResourceType, out string aseV3NetworkingConfigurationAppServiceEnvironmentsApiVersion);
             _aseV3NetworkingConfigurationAppServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_aseV3NetworkingConfigurationAppServiceEnvironmentsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, aseV3NetworkingConfigurationAppServiceEnvironmentsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -82,10 +82,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking
-        /// OperationId: AppServiceEnvironments_GetAseV3NetworkingConfiguration
-        /// <summary> Description for Get networking configuration of an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get networking configuration of an App Service Environment
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking
+        /// Operation Id: AppServiceEnvironments_GetAseV3NetworkingConfiguration
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<AseV3NetworkingConfiguration>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -105,10 +106,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking
-        /// OperationId: AppServiceEnvironments_GetAseV3NetworkingConfiguration
-        /// <summary> Description for Get networking configuration of an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get networking configuration of an App Service Environment
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking
+        /// Operation Id: AppServiceEnvironments_GetAseV3NetworkingConfiguration
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AseV3NetworkingConfiguration> Get(CancellationToken cancellationToken = default)
         {
@@ -128,20 +130,18 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking
-        /// OperationId: AppServiceEnvironments_UpdateAseNetworkingConfiguration
-        /// <summary> Description for Update networking configuration of an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Update networking configuration of an App Service Environment
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking
+        /// Operation Id: AppServiceEnvironments_UpdateAseNetworkingConfiguration
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="aseNetworkingConfiguration"> The AseV3NetworkingConfiguration to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aseNetworkingConfiguration"/> is null. </exception>
         public async virtual Task<ArmOperation<AseV3NetworkingConfiguration>> CreateOrUpdateAsync(bool waitForCompletion, AseV3NetworkingConfigurationData aseNetworkingConfiguration, CancellationToken cancellationToken = default)
         {
-            if (aseNetworkingConfiguration == null)
-            {
-                throw new ArgumentNullException(nameof(aseNetworkingConfiguration));
-            }
+            Argument.AssertNotNull(aseNetworkingConfiguration, nameof(aseNetworkingConfiguration));
 
             using var scope = _aseV3NetworkingConfigurationAppServiceEnvironmentsClientDiagnostics.CreateScope("AseV3NetworkingConfiguration.CreateOrUpdate");
             scope.Start();
@@ -160,20 +160,18 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking
-        /// OperationId: AppServiceEnvironments_UpdateAseNetworkingConfiguration
-        /// <summary> Description for Update networking configuration of an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Update networking configuration of an App Service Environment
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking
+        /// Operation Id: AppServiceEnvironments_UpdateAseNetworkingConfiguration
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="aseNetworkingConfiguration"> The AseV3NetworkingConfiguration to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aseNetworkingConfiguration"/> is null. </exception>
         public virtual ArmOperation<AseV3NetworkingConfiguration> CreateOrUpdate(bool waitForCompletion, AseV3NetworkingConfigurationData aseNetworkingConfiguration, CancellationToken cancellationToken = default)
         {
-            if (aseNetworkingConfiguration == null)
-            {
-                throw new ArgumentNullException(nameof(aseNetworkingConfiguration));
-            }
+            Argument.AssertNotNull(aseNetworkingConfiguration, nameof(aseNetworkingConfiguration));
 
             using var scope = _aseV3NetworkingConfigurationAppServiceEnvironmentsClientDiagnostics.CreateScope("AseV3NetworkingConfiguration.CreateOrUpdate");
             scope.Start();

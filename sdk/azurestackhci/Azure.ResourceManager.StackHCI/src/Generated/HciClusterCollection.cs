@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.StackHCI
         internal HciClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _hciClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StackHCI", HciCluster.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(HciCluster.ResourceType, out string hciClusterClustersApiVersion);
+            TryGetApiVersion(HciCluster.ResourceType, out string hciClusterClustersApiVersion);
             _hciClusterClustersRestClient = new ClustersRestOperations(_hciClusterClustersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hciClusterClustersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -51,20 +51,21 @@ namespace Azure.ResourceManager.StackHCI
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        /// <summary> Create an HCI cluster. </summary>
+        /// <summary>
+        /// Create an HCI cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}
+        /// Operation Id: Clusters_Create
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cluster"> Details of the HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="cluster"/> is null. </exception>
         public async virtual Task<ArmOperation<HciCluster>> CreateOrUpdateAsync(bool waitForCompletion, string clusterName, HciClusterData cluster, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            if (cluster == null)
-            {
-                throw new ArgumentNullException(nameof(cluster));
-            }
+            Argument.AssertNotNull(cluster, nameof(cluster));
 
             using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterCollection.CreateOrUpdate");
             scope.Start();
@@ -83,20 +84,21 @@ namespace Azure.ResourceManager.StackHCI
             }
         }
 
-        /// <summary> Create an HCI cluster. </summary>
+        /// <summary>
+        /// Create an HCI cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}
+        /// Operation Id: Clusters_Create
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cluster"> Details of the HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="cluster"/> is null. </exception>
         public virtual ArmOperation<HciCluster> CreateOrUpdate(bool waitForCompletion, string clusterName, HciClusterData cluster, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            if (cluster == null)
-            {
-                throw new ArgumentNullException(nameof(cluster));
-            }
+            Argument.AssertNotNull(cluster, nameof(cluster));
 
             using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterCollection.CreateOrUpdate");
             scope.Start();
@@ -115,10 +117,14 @@ namespace Azure.ResourceManager.StackHCI
             }
         }
 
-        /// <summary> Get HCI cluster. </summary>
+        /// <summary>
+        /// Get HCI cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}
+        /// Operation Id: Clusters_Get
+        /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public async virtual Task<Response<HciCluster>> GetAsync(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -140,10 +146,14 @@ namespace Azure.ResourceManager.StackHCI
             }
         }
 
-        /// <summary> Get HCI cluster. </summary>
+        /// <summary>
+        /// Get HCI cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}
+        /// Operation Id: Clusters_Get
+        /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<HciCluster> Get(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -165,7 +175,11 @@ namespace Azure.ResourceManager.StackHCI
             }
         }
 
-        /// <summary> List all HCI clusters in a resource group. </summary>
+        /// <summary>
+        /// List all HCI clusters in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters
+        /// Operation Id: Clusters_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HciCluster" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HciCluster> GetAllAsync(CancellationToken cancellationToken = default)
@@ -203,7 +217,11 @@ namespace Azure.ResourceManager.StackHCI
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> List all HCI clusters in a resource group. </summary>
+        /// <summary>
+        /// List all HCI clusters in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters
+        /// Operation Id: Clusters_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HciCluster" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HciCluster> GetAll(CancellationToken cancellationToken = default)
@@ -241,10 +259,14 @@ namespace Azure.ResourceManager.StackHCI
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}
+        /// Operation Id: Clusters_Get
+        /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -264,10 +286,14 @@ namespace Azure.ResourceManager.StackHCI
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}
+        /// Operation Id: Clusters_Get
+        /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<bool> Exists(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -287,10 +313,14 @@ namespace Azure.ResourceManager.StackHCI
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}
+        /// Operation Id: Clusters_Get
+        /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public async virtual Task<Response<HciCluster>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -312,10 +342,14 @@ namespace Azure.ResourceManager.StackHCI
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}
+        /// Operation Id: Clusters_Get
+        /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<HciCluster> GetIfExists(string clusterName, CancellationToken cancellationToken = default)
         {

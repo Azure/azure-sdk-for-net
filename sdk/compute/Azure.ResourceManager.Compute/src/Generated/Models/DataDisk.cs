@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a data disk. </summary>
@@ -57,9 +59,33 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The disk name. </summary>
         public string Name { get; set; }
         /// <summary> The virtual hard disk. </summary>
-        public VirtualHardDisk Vhd { get; set; }
+        internal VirtualHardDisk Vhd { get; set; }
+        /// <summary> Specifies the virtual hard disk&apos;s uri. </summary>
+        public Uri VhdUri
+        {
+            get => Vhd is null ? default : Vhd.Uri;
+            set
+            {
+                if (Vhd is null)
+                    Vhd = new VirtualHardDisk();
+                Vhd.Uri = value;
+            }
+        }
+
         /// <summary> The source user image virtual hard disk. The virtual hard disk will be copied before being attached to the virtual machine. If SourceImage is provided, the destination virtual hard drive must not exist. </summary>
-        public VirtualHardDisk Image { get; set; }
+        internal VirtualHardDisk Image { get; set; }
+        /// <summary> Specifies the virtual hard disk&apos;s uri. </summary>
+        public Uri ImageUri
+        {
+            get => Image is null ? default : Image.Uri;
+            set
+            {
+                if (Image is null)
+                    Image = new VirtualHardDisk();
+                Image.Uri = value;
+            }
+        }
+
         /// <summary> Specifies the caching requirements. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **None** &lt;br&gt;&lt;br&gt; **ReadOnly** &lt;br&gt;&lt;br&gt; **ReadWrite** &lt;br&gt;&lt;br&gt; Default: **None for Standard storage. ReadOnly for Premium storage**. </summary>
         public CachingTypes? Caching { get; set; }
         /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>

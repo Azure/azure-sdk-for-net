@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal DataCenterResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _dataCenterResourceCassandraDataCentersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string dataCenterResourceCassandraDataCentersApiVersion);
+            TryGetApiVersion(ResourceType, out string dataCenterResourceCassandraDataCentersApiVersion);
             _dataCenterResourceCassandraDataCentersRestClient = new CassandraDataCentersRestOperations(_dataCenterResourceCassandraDataCentersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataCenterResourceCassandraDataCentersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -82,7 +82,11 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Get the properties of a managed Cassandra data center. </summary>
+        /// <summary>
+        /// Get the properties of a managed Cassandra data center.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/dataCenters/{dataCenterName}
+        /// Operation Id: CassandraDataCenters_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DataCenterResource>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -102,7 +106,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Get the properties of a managed Cassandra data center. </summary>
+        /// <summary>
+        /// Get the properties of a managed Cassandra data center.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/dataCenters/{dataCenterName}
+        /// Operation Id: CassandraDataCenters_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataCenterResource> Get(CancellationToken cancellationToken = default)
         {
@@ -122,7 +130,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Delete a managed Cassandra data center. </summary>
+        /// <summary>
+        /// Delete a managed Cassandra data center.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/dataCenters/{dataCenterName}
+        /// Operation Id: CassandraDataCenters_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -144,7 +156,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Delete a managed Cassandra data center. </summary>
+        /// <summary>
+        /// Delete a managed Cassandra data center.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/dataCenters/{dataCenterName}
+        /// Operation Id: CassandraDataCenters_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -166,17 +182,18 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Update some of the properties of a managed Cassandra data center. </summary>
+        /// <summary>
+        /// Update some of the properties of a managed Cassandra data center.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/dataCenters/{dataCenterName}
+        /// Operation Id: CassandraDataCenters_Update
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="body"> Parameters to provide for specifying the managed Cassandra data center. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public async virtual Task<ArmOperation<DataCenterResource>> UpdateAsync(bool waitForCompletion, DataCenterResourceData body, CancellationToken cancellationToken = default)
         {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
+            Argument.AssertNotNull(body, nameof(body));
 
             using var scope = _dataCenterResourceCassandraDataCentersClientDiagnostics.CreateScope("DataCenterResource.Update");
             scope.Start();
@@ -195,17 +212,18 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Update some of the properties of a managed Cassandra data center. </summary>
+        /// <summary>
+        /// Update some of the properties of a managed Cassandra data center.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/dataCenters/{dataCenterName}
+        /// Operation Id: CassandraDataCenters_Update
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="body"> Parameters to provide for specifying the managed Cassandra data center. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual ArmOperation<DataCenterResource> Update(bool waitForCompletion, DataCenterResourceData body, CancellationToken cancellationToken = default)
         {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
+            Argument.AssertNotNull(body, nameof(body));
 
             using var scope = _dataCenterResourceCassandraDataCentersClientDiagnostics.CreateScope("DataCenterResource.Update");
             scope.Start();

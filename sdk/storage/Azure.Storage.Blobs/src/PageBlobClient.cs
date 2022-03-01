@@ -1115,13 +1115,14 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 options = new PageBlobUploadPagesOptions()
                 {
-                    TransactionalHashingOptions = transactionalContentHash != default
-                        ? new UploadTransactionalHashingOptions()
-                        {
-                            Algorithm = TransactionalHashAlgorithm.MD5,
-                            PrecalculatedHash = transactionalContentHash
-                        }
-                        : default,
+                    // TODO #27253
+                    //TransactionalHashingOptions = transactionalContentHash != default
+                    //    ? new UploadTransactionalHashingOptions()
+                    //    {
+                    //        Algorithm = TransactionalHashAlgorithm.MD5,
+                    //        PrecalculatedHash = transactionalContentHash
+                    //    }
+                    //    : default,
                     Conditions = conditions,
                     ProgressHandler = progressHandler
                 };
@@ -1130,6 +1131,7 @@ namespace Azure.Storage.Blobs.Specialized
                 content,
                 offset,
                 options,
+                transactionalContentHash,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1195,13 +1197,14 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 options = new PageBlobUploadPagesOptions()
                 {
-                    TransactionalHashingOptions = transactionalContentHash != default
-                        ? new UploadTransactionalHashingOptions()
-                        {
-                            Algorithm = TransactionalHashAlgorithm.MD5,
-                            PrecalculatedHash = transactionalContentHash
-                        }
-                        : default,
+                    // TODO #27253
+                    //TransactionalHashingOptions = transactionalContentHash != default
+                    //    ? new UploadTransactionalHashingOptions()
+                    //    {
+                    //        Algorithm = TransactionalHashAlgorithm.MD5,
+                    //        PrecalculatedHash = transactionalContentHash
+                    //    }
+                    //    : default,
                     Conditions = conditions,
                     ProgressHandler = progressHandler
                 };
@@ -1210,6 +1213,7 @@ namespace Azure.Storage.Blobs.Specialized
                 content,
                 offset,
                 options,
+                transactionalContentHash,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1257,6 +1261,7 @@ namespace Azure.Storage.Blobs.Specialized
                 content,
                 offset,
                 options,
+                pageRangeTransactionalContentMD5: default,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1303,6 +1308,7 @@ namespace Azure.Storage.Blobs.Specialized
                 content,
                 offset,
                 options,
+                pageRangeTransactionalContentMD5: default,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1328,6 +1334,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="options">
         /// Optional parameters.
         /// </param>
+        /// <param name="pageRangeTransactionalContentMD5">
+        /// Optional transactional MD5 hash for the page range.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1347,6 +1356,7 @@ namespace Azure.Storage.Blobs.Specialized
             Stream content,
             long offset,
             PageBlobUploadPagesOptions options,
+            byte[] pageRangeTransactionalContentMD5,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1373,7 +1383,8 @@ namespace Azure.Storage.Blobs.Specialized
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     // compute hash BEFORE attaching progress handler
-                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalHashingOptions);
+                    // TODO #27253
+                    //ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalHashingOptions);
 
                     content = content?.WithNoDispose().WithProgress(options?.ProgressHandler);
                     HttpRange range = new HttpRange(offset, (content?.Length - content?.Position) ?? null);
@@ -1385,8 +1396,9 @@ namespace Azure.Storage.Blobs.Specialized
                         response = await PageBlobRestClient.UploadPagesAsync(
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             body: content,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
-                            transactionalContentMD5: hashResult?.MD5,
+                            // TODO #27253
+                            //transactionalContentCrc64: hashResult?.StorageCrc64,
+                            transactionalContentMD5: pageRangeTransactionalContentMD5, // hashResult?.MD5,
                             range: range.ToString(),
                             leaseId: options?.Conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
@@ -1409,8 +1421,9 @@ namespace Azure.Storage.Blobs.Specialized
                         response = PageBlobRestClient.UploadPages(
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             body: content,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
-                            transactionalContentMD5: hashResult?.MD5,
+                            // TODO #27253
+                            //transactionalContentCrc64: hashResult?.StorageCrc64,
+                            transactionalContentMD5: pageRangeTransactionalContentMD5, // hashResult?.MD5,
                             range: range.ToString(),
                             leaseId: options?.Conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
@@ -4241,8 +4254,10 @@ namespace Azure.Storage.Blobs.Specialized
                     bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
                     position: position,
                     conditions: conditions,
-                    progressHandler: options?.ProgressHandler,
-                    hashingOptions: options?.TransactionalHashingOptions);
+                    progressHandler: options?.ProgressHandler
+                    // TODO #27253
+                    //options?.TransactionalHashingOptions
+                    );
             }
             catch (Exception ex)
             {

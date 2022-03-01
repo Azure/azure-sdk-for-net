@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network
         internal Subnet(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _subnetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string subnetApiVersion);
+            TryGetApiVersion(ResourceType, out string subnetApiVersion);
             _subnetRestClient = new SubnetsRestOperations(_subnetClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subnetApiVersion);
             _resourceNavigationLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _resourceNavigationLinksRestClient = new ResourceNavigationLinksRestOperations(_resourceNavigationLinksClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
@@ -91,7 +91,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the specified subnet by virtual network and resource group. </summary>
+        /// <summary>
+        /// Gets the specified subnet by virtual network and resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}
+        /// Operation Id: Subnets_Get
+        /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<Subnet>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
@@ -112,7 +116,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified subnet by virtual network and resource group. </summary>
+        /// <summary>
+        /// Gets the specified subnet by virtual network and resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}
+        /// Operation Id: Subnets_Get
+        /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Subnet> Get(string expand = null, CancellationToken cancellationToken = default)
@@ -133,7 +141,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified subnet. </summary>
+        /// <summary>
+        /// Deletes the specified subnet.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}
+        /// Operation Id: Subnets_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -155,7 +167,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified subnet. </summary>
+        /// <summary>
+        /// Deletes the specified subnet.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}
+        /// Operation Id: Subnets_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -177,17 +193,18 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Prepares a subnet by applying network intent policies. </summary>
+        /// <summary>
+        /// Prepares a subnet by applying network intent policies.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/PrepareNetworkPolicies
+        /// Operation Id: Subnets_PrepareNetworkPolicies
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="prepareNetworkPoliciesRequestParameters"> Parameters supplied to prepare subnet by applying network intent policies. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prepareNetworkPoliciesRequestParameters"/> is null. </exception>
         public async virtual Task<ArmOperation> PrepareNetworkPoliciesAsync(bool waitForCompletion, PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
         {
-            if (prepareNetworkPoliciesRequestParameters == null)
-            {
-                throw new ArgumentNullException(nameof(prepareNetworkPoliciesRequestParameters));
-            }
+            Argument.AssertNotNull(prepareNetworkPoliciesRequestParameters, nameof(prepareNetworkPoliciesRequestParameters));
 
             using var scope = _subnetClientDiagnostics.CreateScope("Subnet.PrepareNetworkPolicies");
             scope.Start();
@@ -206,17 +223,18 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Prepares a subnet by applying network intent policies. </summary>
+        /// <summary>
+        /// Prepares a subnet by applying network intent policies.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/PrepareNetworkPolicies
+        /// Operation Id: Subnets_PrepareNetworkPolicies
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="prepareNetworkPoliciesRequestParameters"> Parameters supplied to prepare subnet by applying network intent policies. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prepareNetworkPoliciesRequestParameters"/> is null. </exception>
         public virtual ArmOperation PrepareNetworkPolicies(bool waitForCompletion, PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
         {
-            if (prepareNetworkPoliciesRequestParameters == null)
-            {
-                throw new ArgumentNullException(nameof(prepareNetworkPoliciesRequestParameters));
-            }
+            Argument.AssertNotNull(prepareNetworkPoliciesRequestParameters, nameof(prepareNetworkPoliciesRequestParameters));
 
             using var scope = _subnetClientDiagnostics.CreateScope("Subnet.PrepareNetworkPolicies");
             scope.Start();
@@ -235,17 +253,18 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Unprepares a subnet by removing network intent policies. </summary>
+        /// <summary>
+        /// Unprepares a subnet by removing network intent policies.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/UnprepareNetworkPolicies
+        /// Operation Id: Subnets_UnprepareNetworkPolicies
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="unprepareNetworkPoliciesRequestParameters"> Parameters supplied to unprepare subnet to remove network intent policies. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="unprepareNetworkPoliciesRequestParameters"/> is null. </exception>
         public async virtual Task<ArmOperation> UnprepareNetworkPoliciesAsync(bool waitForCompletion, UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
         {
-            if (unprepareNetworkPoliciesRequestParameters == null)
-            {
-                throw new ArgumentNullException(nameof(unprepareNetworkPoliciesRequestParameters));
-            }
+            Argument.AssertNotNull(unprepareNetworkPoliciesRequestParameters, nameof(unprepareNetworkPoliciesRequestParameters));
 
             using var scope = _subnetClientDiagnostics.CreateScope("Subnet.UnprepareNetworkPolicies");
             scope.Start();
@@ -264,17 +283,18 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Unprepares a subnet by removing network intent policies. </summary>
+        /// <summary>
+        /// Unprepares a subnet by removing network intent policies.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/UnprepareNetworkPolicies
+        /// Operation Id: Subnets_UnprepareNetworkPolicies
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="unprepareNetworkPoliciesRequestParameters"> Parameters supplied to unprepare subnet to remove network intent policies. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="unprepareNetworkPoliciesRequestParameters"/> is null. </exception>
         public virtual ArmOperation UnprepareNetworkPolicies(bool waitForCompletion, UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
         {
-            if (unprepareNetworkPoliciesRequestParameters == null)
-            {
-                throw new ArgumentNullException(nameof(unprepareNetworkPoliciesRequestParameters));
-            }
+            Argument.AssertNotNull(unprepareNetworkPoliciesRequestParameters, nameof(unprepareNetworkPoliciesRequestParameters));
 
             using var scope = _subnetClientDiagnostics.CreateScope("Subnet.UnprepareNetworkPolicies");
             scope.Start();
@@ -293,7 +313,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets a list of resource navigation links for a subnet. </summary>
+        /// <summary>
+        /// Gets a list of resource navigation links for a subnet.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/ResourceNavigationLinks
+        /// Operation Id: ResourceNavigationLinks_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceNavigationLink" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceNavigationLink> GetResourceNavigationLinksAsync(CancellationToken cancellationToken = default)
@@ -316,7 +340,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets a list of resource navigation links for a subnet. </summary>
+        /// <summary>
+        /// Gets a list of resource navigation links for a subnet.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/ResourceNavigationLinks
+        /// Operation Id: ResourceNavigationLinks_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceNavigationLink" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceNavigationLink> GetResourceNavigationLinks(CancellationToken cancellationToken = default)
@@ -339,7 +367,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets a list of service association links for a subnet. </summary>
+        /// <summary>
+        /// Gets a list of service association links for a subnet.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/ServiceAssociationLinks
+        /// Operation Id: ServiceAssociationLinks_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServiceAssociationLink" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceAssociationLink> GetServiceAssociationLinksAsync(CancellationToken cancellationToken = default)
@@ -362,7 +394,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets a list of service association links for a subnet. </summary>
+        /// <summary>
+        /// Gets a list of service association links for a subnet.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/ServiceAssociationLinks
+        /// Operation Id: ServiceAssociationLinks_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServiceAssociationLink" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceAssociationLink> GetServiceAssociationLinks(CancellationToken cancellationToken = default)

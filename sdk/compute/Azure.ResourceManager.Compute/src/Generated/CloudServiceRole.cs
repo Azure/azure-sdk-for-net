@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute
         internal CloudServiceRole(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _cloudServiceRoleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string cloudServiceRoleApiVersion);
+            TryGetApiVersion(ResourceType, out string cloudServiceRoleApiVersion);
             _cloudServiceRoleRestClient = new CloudServiceRolesRestOperations(_cloudServiceRoleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cloudServiceRoleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -82,7 +82,11 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a role from a cloud service. </summary>
+        /// <summary>
+        /// Gets a role from a cloud service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roles/{roleName}
+        /// Operation Id: CloudServiceRoles_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<CloudServiceRole>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -102,7 +106,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets a role from a cloud service. </summary>
+        /// <summary>
+        /// Gets a role from a cloud service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roles/{roleName}
+        /// Operation Id: CloudServiceRoles_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CloudServiceRole> Get(CancellationToken cancellationToken = default)
         {

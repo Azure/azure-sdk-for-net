@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ApplicationGateway data model. </summary>
-    public partial class ApplicationGatewayData : Models.Resource
+    public partial class ApplicationGatewayData : Resource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayData. </summary>
         public ApplicationGatewayData()
@@ -164,7 +164,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> Web application firewall configuration. </summary>
         public ApplicationGatewayWebApplicationFirewallConfiguration WebApplicationFirewallConfiguration { get; set; }
         /// <summary> Reference to the FirewallPolicy resource. </summary>
-        public WritableSubResource FirewallPolicy { get; set; }
+        internal WritableSubResource FirewallPolicy { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier FirewallPolicyId
+        {
+            get => FirewallPolicy is null ? default : FirewallPolicy.Id;
+            set
+            {
+                if (FirewallPolicy is null)
+                    FirewallPolicy = new WritableSubResource();
+                FirewallPolicy.Id = value;
+            }
+        }
+
         /// <summary> Whether HTTP2 is enabled on the application gateway resource. </summary>
         public bool? EnableHttp2 { get; set; }
         /// <summary> Whether FIPS is enabled on the application gateway resource. </summary>

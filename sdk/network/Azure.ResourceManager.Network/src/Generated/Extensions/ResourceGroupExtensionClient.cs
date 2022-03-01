@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            Client.TryGetApiVersion(resourceType, out string apiVersion);
+            TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.Network
             return new BastionHostCollection(Client, Id);
         }
 
-        /// <summary> Gets a collection of CustomIpPrefixes in the CustomIpPrefix. </summary>
-        /// <returns> An object representing collection of CustomIpPrefixes and their operations over a CustomIpPrefix. </returns>
-        public virtual CustomIpPrefixCollection GetCustomIpPrefixes()
+        /// <summary> Gets a collection of CustomIPPrefixes in the CustomIPPrefix. </summary>
+        /// <returns> An object representing collection of CustomIPPrefixes and their operations over a CustomIPPrefix. </returns>
+        public virtual CustomIPPrefixCollection GetCustomIPPrefixes()
         {
-            return new CustomIpPrefixCollection(Client, Id);
+            return new CustomIPPrefixCollection(Client, Id);
         }
 
         /// <summary> Gets a collection of DdosCustomPolicies in the DdosCustomPolicy. </summary>
@@ -140,18 +140,18 @@ namespace Azure.ResourceManager.Network
             return new FirewallPolicyCollection(Client, Id);
         }
 
-        /// <summary> Gets a collection of IpAllocations in the IpAllocation. </summary>
-        /// <returns> An object representing collection of IpAllocations and their operations over a IpAllocation. </returns>
-        public virtual IpAllocationCollection GetIpAllocations()
+        /// <summary> Gets a collection of IPAllocations in the IPAllocation. </summary>
+        /// <returns> An object representing collection of IPAllocations and their operations over a IPAllocation. </returns>
+        public virtual IPAllocationCollection GetIPAllocations()
         {
-            return new IpAllocationCollection(Client, Id);
+            return new IPAllocationCollection(Client, Id);
         }
 
-        /// <summary> Gets a collection of IpGroups in the IpGroup. </summary>
-        /// <returns> An object representing collection of IpGroups and their operations over a IpGroup. </returns>
-        public virtual IpGroupCollection GetIpGroups()
+        /// <summary> Gets a collection of IPGroups in the IPGroup. </summary>
+        /// <returns> An object representing collection of IPGroups and their operations over a IPGroup. </returns>
+        public virtual IPGroupCollection GetIPGroups()
         {
-            return new IpGroupCollection(Client, Id);
+            return new IPGroupCollection(Client, Id);
         }
 
         /// <summary> Gets a collection of LoadBalancers in the LoadBalancer. </summary>
@@ -301,11 +301,11 @@ namespace Azure.ResourceManager.Network
             return new VirtualRouterCollection(Client, Id);
         }
 
-        /// <summary> Gets a collection of VirtualWANs in the VirtualWAN. </summary>
-        /// <returns> An object representing collection of VirtualWANs and their operations over a VirtualWAN. </returns>
-        public virtual VirtualWANCollection GetVirtualWANs()
+        /// <summary> Gets a collection of VirtualWans in the VirtualWan. </summary>
+        /// <returns> An object representing collection of VirtualWans and their operations over a VirtualWan. </returns>
+        public virtual VirtualWanCollection GetVirtualWans()
         {
-            return new VirtualWANCollection(Client, Id);
+            return new VirtualWanCollection(Client, Id);
         }
 
         /// <summary> Gets a collection of VpnSites in the VpnSite. </summary>
@@ -357,7 +357,11 @@ namespace Azure.ResourceManager.Network
             return new WebApplicationFirewallPolicyCollection(Client, Id);
         }
 
-        /// <summary> Gets all of the available subnet delegations for this resource group in this region. </summary>
+        /// <summary>
+        /// Gets all of the available subnet delegations for this resource group in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableDelegations
+        /// Operation Id: AvailableResourceGroupDelegations_List
+        /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AvailableDelegation" /> that may take multiple service requests to iterate over. </returns>
@@ -396,7 +400,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all of the available subnet delegations for this resource group in this region. </summary>
+        /// <summary>
+        /// Gets all of the available subnet delegations for this resource group in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableDelegations
+        /// Operation Id: AvailableResourceGroupDelegations_List
+        /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AvailableDelegation" /> that may take multiple service requests to iterate over. </returns>
@@ -435,7 +443,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all available service aliases for this resource group in this region. </summary>
+        /// <summary>
+        /// Gets all available service aliases for this resource group in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableServiceAliases
+        /// Operation Id: AvailableServiceAliases_ListByResourceGroup
+        /// </summary>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AvailableServiceAlias" /> that may take multiple service requests to iterate over. </returns>
@@ -474,7 +486,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all available service aliases for this resource group in this region. </summary>
+        /// <summary>
+        /// Gets all available service aliases for this resource group in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableServiceAliases
+        /// Operation Id: AvailableServiceAliases_ListByResourceGroup
+        /// </summary>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AvailableServiceAlias" /> that may take multiple service requests to iterate over. </returns>
@@ -513,7 +529,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region. </summary>
+        /// <summary>
+        /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes
+        /// Operation Id: AvailablePrivateEndpointTypes_ListByResourceGroup
+        /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AvailablePrivateEndpointType" /> that may take multiple service requests to iterate over. </returns>
@@ -552,7 +572,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region. </summary>
+        /// <summary>
+        /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes
+        /// Operation Id: AvailablePrivateEndpointTypes_ListByResourceGroup
+        /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AvailablePrivateEndpointType" /> that may take multiple service requests to iterate over. </returns>
@@ -591,7 +615,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks whether the subscription is visible to private link service in the specified resource group. </summary>
+        /// <summary>
+        /// Checks whether the subscription is visible to private link service in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility
+        /// Operation Id: PrivateLinkServices_CheckPrivateLinkServiceVisibilityByResourceGroup
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
@@ -615,7 +643,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks whether the subscription is visible to private link service in the specified resource group. </summary>
+        /// <summary>
+        /// Checks whether the subscription is visible to private link service in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility
+        /// Operation Id: PrivateLinkServices_CheckPrivateLinkServiceVisibilityByResourceGroup
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
@@ -639,7 +671,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region. </summary>
+        /// <summary>
+        /// Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices
+        /// Operation Id: PrivateLinkServices_ListAutoApprovedPrivateLinkServicesByResourceGroup
+        /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
@@ -678,7 +714,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region. </summary>
+        /// <summary>
+        /// Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices
+        /// Operation Id: PrivateLinkServices_ListAutoApprovedPrivateLinkServicesByResourceGroup
+        /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>

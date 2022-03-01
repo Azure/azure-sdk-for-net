@@ -33,14 +33,7 @@ namespace Azure.ResourceManager.TestFramework
         private ArmClient _cleanupClient;
         private bool _waitForCleanup;
 
-        protected ManagementRecordedTestBase(bool isAsync) : base(isAsync)
-        {
-            SessionEnvironment = new TEnvironment();
-            SessionEnvironment.Mode = Mode;
-            Initialize();
-        }
-
-        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode mode, bool useLegacyTransport = false) : base(isAsync, mode, useLegacyTransport)
+        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;
@@ -65,8 +58,7 @@ namespace Azure.ResourceManager.TestFramework
                 return new ArmClient(
                     TestEnvironment.Credential,
                     TestEnvironment.SubscriptionId,
-                    GetUri(TestEnvironment.ResourceManagerUrl),
-                    new ArmClientOptions());
+                    new ArmClientOptions() { Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl)});
             }
             return null;
         }
@@ -76,19 +68,38 @@ namespace Azure.ResourceManager.TestFramework
         protected ArmClient GetArmClient(ArmClientOptions clientOptions = default, string subscriptionId = default)
         {
             var options = InstrumentClientOptions(clientOptions ?? new ArmClientOptions());
+            options.Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl);
             options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
 
             return InstrumentClient(new ArmClient(
                 TestEnvironment.Credential,
                 subscriptionId ?? TestEnvironment.SubscriptionId,
-                GetUri(TestEnvironment.ResourceManagerUrl),
                 options), new IInterceptor[] { new ManagementInterceptor(this) });
         }
 
-        private Uri GetUri(string endpoint)
+        private ArmEnvironment GetEnvironment(string endpoint)
         {
-            return !string.IsNullOrEmpty(endpoint) ? new Uri(endpoint) : new Uri("https://management.azure.com");
+            if (string.IsNullOrEmpty(endpoint))
+            {
+                return ArmEnvironment.AzureCloud;
+            }
+
+            var baseUri = new Uri(endpoint);
+
+            if (baseUri == ArmEnvironment.AzureCloud.BaseUri)
+                return ArmEnvironment.AzureCloud;
+
+            if (baseUri == ArmEnvironment.AzureChinaCloud.BaseUri)
+                return ArmEnvironment.AzureChinaCloud;
+
+            if (baseUri == ArmEnvironment.AzureGermanCloud.BaseUri)
+                return ArmEnvironment.AzureGermanCloud;
+
+            if (baseUri == ArmEnvironment.AzureUSGovernment.BaseUri)
+                return ArmEnvironment.AzureUSGovernment;
+
+            return new ArmEnvironment(new Uri(endpoint), TestEnvironment.ServiceManagementUrl ?? $"{endpoint}/.default");
         }
 
         [SetUp]
@@ -138,7 +149,7 @@ namespace Azure.ResourceManager.TestFramework
             {
                 throw new IgnoreException((string)test.Properties.Get("SkipRecordings"));
             }
-            SessionRecording = await CreateTestRecordingAsync(Mode, GetSessionFilePath(), Sanitizer, Matcher);
+            SessionRecording = await CreateTestRecordingAsync(Mode, GetSessionFilePath());
             SessionEnvironment.SetRecording(SessionRecording);
             ValidateClientInstrumentation = SessionRecording.HasRequests;
         }
@@ -152,7 +163,7 @@ namespace Azure.ResourceManager.TestFramework
 
             if (SessionRecording != null)
             {
-                await SessionRecording.DisposeAsync(true);
+                await SessionRecording.DisposeAsync();
             }
 
             GlobalClient = null;
@@ -169,11 +180,11 @@ namespace Azure.ResourceManager.TestFramework
             var options = InstrumentClientOptions(new ArmClientOptions(), SessionRecording);
             options.AddPolicy(OneTimeResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(OneTimeManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
+            options.Environment = GetEnvironment(SessionEnvironment.ResourceManagerUrl);
 
             GlobalClient = InstrumentClient(new ArmClient(
                 SessionEnvironment.Credential,
                 SessionEnvironment.SubscriptionId,
-                GetUri(SessionEnvironment.ResourceManagerUrl),
                 options), new IInterceptor[] { new ManagementInterceptor(this) });
         }
 

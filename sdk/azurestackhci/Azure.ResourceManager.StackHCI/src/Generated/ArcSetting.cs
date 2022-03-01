@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StackHCI
         internal ArcSetting(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _arcSettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StackHCI", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string arcSettingApiVersion);
+            TryGetApiVersion(ResourceType, out string arcSettingApiVersion);
             _arcSettingRestClient = new ArcSettingsRestOperations(_arcSettingClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, arcSettingApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -89,7 +89,11 @@ namespace Azure.ResourceManager.StackHCI
             return new ArcExtensionCollection(Client, Id);
         }
 
-        /// <summary> Get ArcSetting resource details of HCI Cluster. </summary>
+        /// <summary>
+        /// Get ArcSetting resource details of HCI Cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/arcSettings/{arcSettingName}
+        /// Operation Id: ArcSettings_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ArcSetting>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -109,7 +113,11 @@ namespace Azure.ResourceManager.StackHCI
             }
         }
 
-        /// <summary> Get ArcSetting resource details of HCI Cluster. </summary>
+        /// <summary>
+        /// Get ArcSetting resource details of HCI Cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/arcSettings/{arcSettingName}
+        /// Operation Id: ArcSettings_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ArcSetting> Get(CancellationToken cancellationToken = default)
         {
@@ -129,7 +137,11 @@ namespace Azure.ResourceManager.StackHCI
             }
         }
 
-        /// <summary> Delete ArcSetting resource details of HCI Cluster. </summary>
+        /// <summary>
+        /// Delete ArcSetting resource details of HCI Cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/arcSettings/{arcSettingName}
+        /// Operation Id: ArcSettings_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -151,7 +163,11 @@ namespace Azure.ResourceManager.StackHCI
             }
         }
 
-        /// <summary> Delete ArcSetting resource details of HCI Cluster. </summary>
+        /// <summary>
+        /// Delete ArcSetting resource details of HCI Cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/arcSettings/{arcSettingName}
+        /// Operation Id: ArcSettings_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)

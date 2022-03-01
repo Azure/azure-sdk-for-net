@@ -90,9 +90,33 @@ namespace Azure.ResourceManager.Network
         /// <summary> The reference to the Public IP resource. </summary>
         public PublicIPAddressData PublicIPAddress { get; set; }
         /// <summary> The reference to the Public IP Prefix resource. </summary>
-        public WritableSubResource PublicIPPrefix { get; set; }
+        internal WritableSubResource PublicIPPrefix { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier PublicIPPrefixId
+        {
+            get => PublicIPPrefix is null ? default : PublicIPPrefix.Id;
+            set
+            {
+                if (PublicIPPrefix is null)
+                    PublicIPPrefix = new WritableSubResource();
+                PublicIPPrefix.Id = value;
+            }
+        }
+
         /// <summary> The reference to gateway load balancer frontend IP. </summary>
-        public WritableSubResource GatewayLoadBalancer { get; set; }
+        internal WritableSubResource GatewayLoadBalancer { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier GatewayLoadBalancerId
+        {
+            get => GatewayLoadBalancer is null ? default : GatewayLoadBalancer.Id;
+            set
+            {
+                if (GatewayLoadBalancer is null)
+                    GatewayLoadBalancer = new WritableSubResource();
+                GatewayLoadBalancer.Id = value;
+            }
+        }
+
         /// <summary> The provisioning state of the frontend IP configuration resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

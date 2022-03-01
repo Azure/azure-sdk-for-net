@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="remotePort"> The remote port. Acceptable values are a single integer in the range (0-65535). Support for * for the source port, which depends on the direction. </param>
         /// <param name="localIPAddress"> The local IP address. Acceptable values are valid IPv4 addresses. </param>
         /// <param name="remoteIPAddress"> The remote IP address. Acceptable values are valid IPv4 addresses. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="localPort"/>, <paramref name="remotePort"/>, <paramref name="localIPAddress"/>, or <paramref name="remoteIPAddress"/> is null. </exception>
-        public VerificationIPFlowParameters(string targetResourceId, Direction direction, IpFlowProtocol protocol, string localPort, string remotePort, string localIPAddress, string remoteIPAddress)
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="localPort"/>, <paramref name="remotePort"/>, <paramref name="localIPAddress"/> or <paramref name="remoteIPAddress"/> is null. </exception>
+        public VerificationIPFlowParameters(string targetResourceId, Direction direction, IPFlowProtocol protocol, string localPort, string remotePort, string localIPAddress, string remoteIPAddress)
         {
             if (targetResourceId == null)
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The direction of the packet represented as a 5-tuple. </summary>
         public Direction Direction { get; }
         /// <summary> Protocol to be verified on. </summary>
-        public IpFlowProtocol Protocol { get; }
+        public IPFlowProtocol Protocol { get; }
         /// <summary> The local port. Acceptable values are a single integer in the range (0-65535). Support for * for the source port, which depends on the direction. </summary>
         public string LocalPort { get; }
         /// <summary> The remote port. Acceptable values are a single integer in the range (0-65535). Support for * for the source port, which depends on the direction. </summary>

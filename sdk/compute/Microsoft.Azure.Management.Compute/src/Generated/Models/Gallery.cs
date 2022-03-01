@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gallery resource. This property is updatable.</param>
         /// <param name="provisioningState">The current state of the
         /// gallery.</param>
-        public Gallery(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), GalleryIdentifier identifier = default(GalleryIdentifier), string provisioningState = default(string), SharingProfile sharingProfile = default(SharingProfile), SoftDeletePolicy softDeletePolicy = default(SoftDeletePolicy))
+        public Gallery(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), GalleryIdentifier identifier = default(GalleryIdentifier), string provisioningState = default(string), SharingProfile sharingProfile = default(SharingProfile), SoftDeletePolicy softDeletePolicy = default(SoftDeletePolicy), SharingStatus sharingStatus = default(SharingStatus))
             : base(location, id, name, type, tags)
         {
             Description = description;
@@ -52,6 +52,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             ProvisioningState = provisioningState;
             SharingProfile = sharingProfile;
             SoftDeletePolicy = softDeletePolicy;
+            SharingStatus = sharingStatus;
             CustomInit();
         }
 
@@ -92,6 +93,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.softDeletePolicy")]
         public SoftDeletePolicy SoftDeletePolicy { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sharingStatus")]
+        public SharingStatus SharingStatus { get; private set; }
 
         /// <summary>
         /// Validate the object.

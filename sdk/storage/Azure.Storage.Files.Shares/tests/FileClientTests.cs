@@ -1277,11 +1277,16 @@ namespace Azure.Storage.Files.Shares.Tests
                     content: stream);
             }
 
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                IgnoreReadOnly = true,
+                SetArchiveAttribute = true,
+            };
+
             // Act
             Response<ShareFileCopyInfo> response = await dest.StartCopyAsync(
                 sourceUri: source.Uri,
-                ignoreReadOnly: true,
-                setArchiveAttribute: true);
+                options: options);
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -1314,12 +1319,17 @@ namespace Azure.Storage.Files.Shares.Tests
             };
             string filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
 
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                SmbProperties = smbProperties,
+                FilePermission = filePermission,
+                FilePermissionCopyMode = PermissionCopyMode.Override
+            };
+
             // Act
             await dest.StartCopyAsync(
                 sourceUri: source.Uri,
-                smbProperties: smbProperties,
-                filePermission: filePermission,
-                filePermissionCopyMode: PermissionCopyMode.Override);
+                options: options);
 
             Response<ShareFileProperties> propertiesResponse = await dest.GetPropertiesAsync();
 
@@ -1355,12 +1365,17 @@ namespace Azure.Storage.Files.Shares.Tests
 
             string filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
 
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                SmbProperties = smbProperties,
+                FilePermission = filePermission,
+                FilePermissionCopyMode = PermissionCopyMode.Override
+            };
+
             // Act
             await dest.StartCopyAsync(
                 sourceUri: source.Uri,
-                smbProperties: smbProperties,
-                filePermission: filePermission,
-                filePermissionCopyMode: PermissionCopyMode.Override);
+                options: options);
 
             Response<ShareFileProperties> propertiesResponse = await dest.GetPropertiesAsync();
 
@@ -1397,11 +1412,16 @@ namespace Azure.Storage.Files.Shares.Tests
                 FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero)
             };
 
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                SmbProperties = smbProperties,
+                FilePermissionCopyMode = PermissionCopyMode.Override
+            };
+
             // Act
             await dest.StartCopyAsync(
                 sourceUri: source.Uri,
-                smbProperties: smbProperties,
-                filePermissionCopyMode: PermissionCopyMode.Override);
+                options: options);
 
             Response<ShareFileProperties> propertiesResponse = await dest.GetPropertiesAsync();
 
@@ -1435,10 +1455,15 @@ namespace Azure.Storage.Files.Shares.Tests
                     content: stream);
             }
 
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                Conditions = conditions
+            };
+
             // Act
             Response<ShareFileCopyInfo> response = await dest.StartCopyAsync(
                 sourceUri: source.Uri,
-                conditions: conditions);
+                options: options);
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -1467,11 +1492,16 @@ namespace Azure.Storage.Files.Shares.Tests
                     content: stream);
             }
 
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                Conditions = conditions
+            };
+
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 dest.StartCopyAsync(
                     sourceUri: source.Uri,
-                    conditions: conditions),
+                    options: options),
                 e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
 
@@ -1495,10 +1525,15 @@ namespace Azure.Storage.Files.Shares.Tests
 
             IDictionary<string, string> metadata = BuildMetadata();
 
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                Metadata = metadata
+            };
+
             // Act
             Response<ShareFileCopyInfo> copyResponse = await dest.StartCopyAsync(
                 sourceUri: source.Uri,
-                metadata: metadata);
+                options: options);
 
             await WaitForCopy(dest);
 
@@ -1541,6 +1576,123 @@ namespace Azure.Storage.Files.Shares.Tests
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.StartCopyAsync(sourceUri: s_invalidUri),
                 e => Assert.AreEqual("CannotVerifyCopySource", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        public async Task StartCopyAsync_CopySourceFileCreatedOnError()
+        {
+            // Arrange
+            await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient source = testSource.File;
+            await using DisposingFile testDest = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient dest = testDest.File;
+
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                SmbPropertiesToCopy = CopyableFileSmbProperties.CreatedOn,
+                SmbProperties = new FileSmbProperties
+                {
+                    FileCreatedOn = Recording.UtcNow
+                }
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                dest.StartCopyAsync(
+                    sourceUri: source.Uri,
+                    options: options),
+                e => Assert.AreEqual($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileCreatedOn)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.CreatedOn)} cannot both be set.",
+                e.Message));
+        }
+
+        [RecordedTest]
+        public async Task StartCopyAsync_CopySourceFileLastWrittenOnError()
+        {
+            // Arrange
+            await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient source = testSource.File;
+            await using DisposingFile testDest = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient dest = testDest.File;
+
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                SmbPropertiesToCopy = CopyableFileSmbProperties.LastWrittenOn,
+                SmbProperties = new FileSmbProperties
+                {
+                    FileLastWrittenOn = Recording.UtcNow
+                }
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                dest.StartCopyAsync(
+                    sourceUri: source.Uri,
+                    options: options),
+                e => Assert.AreEqual($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileLastWrittenOn)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.LastWrittenOn)} cannot both be set.",
+                e.Message));
+        }
+
+        [RecordedTest]
+        public async Task StartCopyAsync_CopySourceFileAttributesError()
+        {
+            // Arrange
+            await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient source = testSource.File;
+            await using DisposingFile testDest = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient dest = testDest.File;
+
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                SmbPropertiesToCopy = CopyableFileSmbProperties.FileAttributes,
+                SmbProperties = new FileSmbProperties
+                {
+                    FileAttributes = ShareExtensions.ToFileAttributes("Archive|ReadOnly")
+                }
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                dest.StartCopyAsync(
+                    sourceUri: source.Uri,
+                    options: options),
+                e => Assert.AreEqual($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileAttributes)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.FileAttributes)} cannot both be set.",
+                e.Message));
+        }
+
+        [RecordedTest]
+        public async Task StartCopyAsync_CopySourceFileSmbPropertiesAll()
+        {
+            // Arrange
+            await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient source = testSource.File;
+            await using DisposingFile testDest = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient dest = testDest.File;
+
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                SmbPropertiesToCopy = CopyableFileSmbProperties.All
+            };
+
+            // Act
+            await dest.StartCopyAsync(
+                sourceUri: source.Uri,
+                options: options);
+
+            // Assert
+            Response<ShareFileProperties> sourcePropertiesResponse = await source.GetPropertiesAsync();
+            Response<ShareFileProperties> destPropertiesResponse = await dest.GetPropertiesAsync();
+
+            Assert.AreEqual(
+                sourcePropertiesResponse.Value.SmbProperties.FileCreatedOn,
+                destPropertiesResponse.Value.SmbProperties.FileCreatedOn);
+
+            Assert.AreEqual(
+                sourcePropertiesResponse.Value.SmbProperties.FileLastWrittenOn,
+                destPropertiesResponse.Value.SmbProperties.FileLastWrittenOn);
+
+            Assert.AreEqual(
+                sourcePropertiesResponse.Value.SmbProperties.FileAttributes,
+                destPropertiesResponse.Value.SmbProperties.FileAttributes);
         }
 
         [RecordedTest]
@@ -1610,9 +1762,14 @@ namespace Azure.Storage.Files.Shares.Tests
                 LeaseId = fileLease.LeaseId
             };
 
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                Conditions = conditions
+            };
+
             Response<ShareFileCopyInfo> copyResponse = await dest.StartCopyAsync(
                 sourceUri: source.Uri,
-                conditions: conditions);
+                options: options);
 
             // Act
             try
@@ -2684,7 +2841,8 @@ namespace Azure.Storage.Files.Shares.Tests
                 stream,
                 progressHandler: null,
                 conditions: null,
-                hashingOptions: default,
+                // TODO #27253
+                //validationOptions: default,
                 singleRangeThreshold: 512,
                 async: IsAsync,
                 cancellationToken: CancellationToken.None);
@@ -2794,7 +2952,8 @@ namespace Azure.Storage.Files.Shares.Tests
                     content: stream,
                     progressHandler: default,
                     conditions: default,
-                    hashingOptions: default,
+                    // TODO #27253
+                    //validationOptions: default,
                     singleRangeThreshold: singleRangeThreshold,
                     async: true,
                     cancellationToken: CancellationToken.None);

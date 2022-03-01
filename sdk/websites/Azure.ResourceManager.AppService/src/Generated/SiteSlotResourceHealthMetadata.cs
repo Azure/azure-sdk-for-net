@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotResourceHealthMetadata(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotResourceHealthMetadataResourceHealthMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteSlotResourceHealthMetadataResourceHealthMetadataApiVersion);
+            TryGetApiVersion(ResourceType, out string siteSlotResourceHealthMetadataResourceHealthMetadataApiVersion);
             _siteSlotResourceHealthMetadataResourceHealthMetadataRestClient = new ResourceHealthMetadataRestOperations(_siteSlotResourceHealthMetadataResourceHealthMetadataClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotResourceHealthMetadataResourceHealthMetadataApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -82,10 +82,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/resourceHealthMetadata/default
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/resourceHealthMetadata/default
-        /// OperationId: ResourceHealthMetadata_GetBySiteSlot
-        /// <summary> Description for Gets the category of ResourceHealthMetadata to use for the given site. </summary>
+        /// <summary>
+        /// Description for Gets the category of ResourceHealthMetadata to use for the given site
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/resourceHealthMetadata/default
+        /// Operation Id: ResourceHealthMetadata_GetBySiteSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SiteSlotResourceHealthMetadata>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -105,10 +106,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/resourceHealthMetadata/default
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/resourceHealthMetadata/default
-        /// OperationId: ResourceHealthMetadata_GetBySiteSlot
-        /// <summary> Description for Gets the category of ResourceHealthMetadata to use for the given site. </summary>
+        /// <summary>
+        /// Description for Gets the category of ResourceHealthMetadata to use for the given site
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/resourceHealthMetadata/default
+        /// Operation Id: ResourceHealthMetadata_GetBySiteSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteSlotResourceHealthMetadata> Get(CancellationToken cancellationToken = default)
         {

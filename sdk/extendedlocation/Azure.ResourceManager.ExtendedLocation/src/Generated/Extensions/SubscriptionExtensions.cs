@@ -23,10 +23,11 @@ namespace Azure.ResourceManager.ExtendedLocation
             );
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ExtendedLocation/customLocations
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: CustomLocations_ListBySubscription
-        /// <summary> Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location. </summary>
+        /// <summary>
+        /// Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ExtendedLocation/customLocations
+        /// Operation Id: CustomLocations_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CustomLocation" /> that may take multiple service requests to iterate over. </returns>
@@ -35,10 +36,11 @@ namespace Azure.ResourceManager.ExtendedLocation
             return GetExtensionClient(subscription).GetCustomLocationsAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ExtendedLocation/customLocations
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: CustomLocations_ListBySubscription
-        /// <summary> Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location. </summary>
+        /// <summary>
+        /// Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ExtendedLocation/customLocations
+        /// Operation Id: CustomLocations_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CustomLocation" /> that may take multiple service requests to iterate over. </returns>

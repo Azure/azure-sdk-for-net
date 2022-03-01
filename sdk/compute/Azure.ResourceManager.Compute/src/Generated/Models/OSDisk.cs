@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the operating system disk used by the virtual machine. &lt;br&gt;&lt;br&gt; For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </summary>
@@ -18,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of OSDisk. </summary>
-        /// <param name="oSType"> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </param>
+        /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </param>
         /// <param name="encryptionSettings"> Specifies the encryption settings for the OS Disk. &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
         /// <param name="name"> The disk name. </param>
         /// <param name="vhd"> The virtual hard disk. </param>
@@ -30,9 +32,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskSizeGB"> Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This value cannot be larger than 1023 GB. </param>
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VM deletion. &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; **Delete** If this value is used, the OS disk is deleted when VM is deleted.&lt;br&gt;&lt;br&gt; **Detach** If this value is used, the os disk is retained after VM is deleted. &lt;br&gt;&lt;br&gt; The default value is set to **detach**. For an ephemeral OS Disk, the default value is set to **Delete**. User cannot change the delete option for ephemeral OS Disk. </param>
-        internal OSDisk(OperatingSystemTypes? oSType, DiskEncryptionSettings encryptionSettings, string name, VirtualHardDisk vhd, VirtualHardDisk image, CachingTypes? caching, bool? writeAcceleratorEnabled, DiffDiskSettings diffDiskSettings, DiskCreateOptionTypes createOption, int? diskSizeGB, ManagedDiskParameters managedDisk, DiskDeleteOptionTypes? deleteOption)
+        internal OSDisk(OperatingSystemTypes? osType, DiskEncryptionSettings encryptionSettings, string name, VirtualHardDisk vhd, VirtualHardDisk image, CachingTypes? caching, bool? writeAcceleratorEnabled, DiffDiskSettings diffDiskSettings, DiskCreateOptionTypes createOption, int? diskSizeGB, ManagedDiskParameters managedDisk, DiskDeleteOptionTypes? deleteOption)
         {
-            OSType = oSType;
+            OSType = osType;
             EncryptionSettings = encryptionSettings;
             Name = name;
             Vhd = vhd;
@@ -53,9 +55,33 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The disk name. </summary>
         public string Name { get; set; }
         /// <summary> The virtual hard disk. </summary>
-        public VirtualHardDisk Vhd { get; set; }
+        internal VirtualHardDisk Vhd { get; set; }
+        /// <summary> Specifies the virtual hard disk&apos;s uri. </summary>
+        public Uri VhdUri
+        {
+            get => Vhd is null ? default : Vhd.Uri;
+            set
+            {
+                if (Vhd is null)
+                    Vhd = new VirtualHardDisk();
+                Vhd.Uri = value;
+            }
+        }
+
         /// <summary> The source user image virtual hard disk. The virtual hard disk will be copied before being attached to the virtual machine. If SourceImage is provided, the destination virtual hard drive must not exist. </summary>
-        public VirtualHardDisk Image { get; set; }
+        internal VirtualHardDisk Image { get; set; }
+        /// <summary> Specifies the virtual hard disk&apos;s uri. </summary>
+        public Uri ImageUri
+        {
+            get => Image is null ? default : Image.Uri;
+            set
+            {
+                if (Image is null)
+                    Image = new VirtualHardDisk();
+                Image.Uri = value;
+            }
+        }
+
         /// <summary> Specifies the caching requirements. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **None** &lt;br&gt;&lt;br&gt; **ReadOnly** &lt;br&gt;&lt;br&gt; **ReadWrite** &lt;br&gt;&lt;br&gt; Default: **None** for Standard storage. **ReadOnly** for Premium storage. </summary>
         public CachingTypes? Caching { get; set; }
         /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>

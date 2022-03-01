@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal MigrateMySqlStatus(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _migrateMySqlStatusWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string migrateMySqlStatusWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string migrateMySqlStatusWebAppsApiVersion);
             _migrateMySqlStatusWebAppsRestClient = new WebAppsRestOperations(_migrateMySqlStatusWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, migrateMySqlStatusWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -82,10 +82,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/migratemysql/status
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/migratemysql/status
-        /// OperationId: WebApps_GetMigrateMySqlStatusSlot
-        /// <summary> Description for Returns the status of MySql in app migration, if one is active, and whether or not MySql in app is enabled. </summary>
+        /// <summary>
+        /// Description for Returns the status of MySql in app migration, if one is active, and whether or not MySql in app is enabled
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/migratemysql/status
+        /// Operation Id: WebApps_GetMigrateMySqlStatusSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<MigrateMySqlStatus>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -105,10 +106,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/migratemysql/status
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/migratemysql/status
-        /// OperationId: WebApps_GetMigrateMySqlStatusSlot
-        /// <summary> Description for Returns the status of MySql in app migration, if one is active, and whether or not MySql in app is enabled. </summary>
+        /// <summary>
+        /// Description for Returns the status of MySql in app migration, if one is active, and whether or not MySql in app is enabled
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/migratemysql/status
+        /// Operation Id: WebApps_GetMigrateMySqlStatusSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MigrateMySqlStatus> Get(CancellationToken cancellationToken = default)
         {

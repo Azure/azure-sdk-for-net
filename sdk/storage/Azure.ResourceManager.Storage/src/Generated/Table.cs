@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Storage
         internal Table(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _tableClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string tableApiVersion);
+            TryGetApiVersion(ResourceType, out string tableApiVersion);
             _tableRestClient = new TableRestOperations(_tableClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tableApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -82,7 +82,11 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the table with the specified table name, under the specified account if it exists. </summary>
+        /// <summary>
+        /// Gets the table with the specified table name, under the specified account if it exists.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/tableServices/default/tables/{tableName}
+        /// Operation Id: Table_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<Table>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -102,7 +106,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets the table with the specified table name, under the specified account if it exists. </summary>
+        /// <summary>
+        /// Gets the table with the specified table name, under the specified account if it exists.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/tableServices/default/tables/{tableName}
+        /// Operation Id: Table_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Table> Get(CancellationToken cancellationToken = default)
         {
@@ -122,7 +130,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Deletes the table with the specified table name, under the specified account if it exists. </summary>
+        /// <summary>
+        /// Deletes the table with the specified table name, under the specified account if it exists.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/tableServices/default/tables/{tableName}
+        /// Operation Id: Table_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -144,7 +156,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Deletes the table with the specified table name, under the specified account if it exists. </summary>
+        /// <summary>
+        /// Deletes the table with the specified table name, under the specified account if it exists.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/tableServices/default/tables/{tableName}
+        /// Operation Id: Table_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -166,7 +182,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Creates a new table with the specified table name, under the specified account. </summary>
+        /// <summary>
+        /// Creates a new table with the specified table name, under the specified account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/tableServices/default/tables/{tableName}
+        /// Operation Id: Table_Update
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<Table>> UpdateAsync(CancellationToken cancellationToken = default)
         {
@@ -184,7 +204,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Creates a new table with the specified table name, under the specified account. </summary>
+        /// <summary>
+        /// Creates a new table with the specified table name, under the specified account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/tableServices/default/tables/{tableName}
+        /// Operation Id: Table_Update
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Table> Update(CancellationToken cancellationToken = default)
         {

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machine scale set virtual machine profile. </summary>
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="applicationProfile"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
         internal VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile, VirtualMachineScaleSetStorageProfile storageProfile, VirtualMachineScaleSetNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, VirtualMachinePriorityTypes? priority, VirtualMachineEvictionPolicyTypes? evictionPolicy, BillingProfile billingProfile, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile)
         {
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             StorageProfile = storageProfile;
             NetworkProfile = networkProfile;
             SecurityProfile = securityProfile;
@@ -49,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the operating system settings for the virtual machines in the scale set. </summary>
-        public VirtualMachineScaleSetOSProfile OsProfile { get; set; }
+        public VirtualMachineScaleSetOSProfile OSProfile { get; set; }
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
         public VirtualMachineScaleSetStorageProfile StorageProfile { get; set; }
         /// <summary> Specifies properties of the network interfaces of the virtual machines in the scale set. </summary>
@@ -57,7 +60,19 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the Security related profile settings for the virtual machines in the scale set. </summary>
         public SecurityProfile SecurityProfile { get; set; }
         /// <summary> Specifies the boot diagnostic settings state. &lt;br&gt;&lt;br&gt;Minimum api-version: 2015-06-15. </summary>
-        public DiagnosticsProfile DiagnosticsProfile { get; set; }
+        internal DiagnosticsProfile DiagnosticsProfile { get; set; }
+        /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. &lt;br&gt;**NOTE**: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. &lt;br&gt;&lt;br&gt; You can easily view the output of your console log. &lt;br&gt;&lt;br&gt; Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
+        public BootDiagnostics BootDiagnostics
+        {
+            get => DiagnosticsProfile is null ? default : DiagnosticsProfile.BootDiagnostics;
+            set
+            {
+                if (DiagnosticsProfile is null)
+                    DiagnosticsProfile = new DiagnosticsProfile();
+                DiagnosticsProfile.BootDiagnostics = value;
+            }
+        }
+
         /// <summary> Specifies a collection of settings for extensions installed on virtual machines in the scale set. </summary>
         public VirtualMachineScaleSetExtensionProfile ExtensionProfile { get; set; }
         /// <summary> Specifies that the image or disk that is being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible values for Windows Server operating system are: &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE) &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing) &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux) &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </summary>
@@ -67,14 +82,60 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set. &lt;br&gt;&lt;br&gt;For Azure Spot virtual machines, both &apos;Deallocate&apos; and &apos;Delete&apos; are supported and the minimum api-version is 2019-03-01. &lt;br&gt;&lt;br&gt;For Azure Spot scale sets, both &apos;Deallocate&apos; and &apos;Delete&apos; are supported and the minimum api-version is 2017-10-30-preview. </summary>
         public VirtualMachineEvictionPolicyTypes? EvictionPolicy { get; set; }
         /// <summary> Specifies the billing related details of a Azure Spot VMSS. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. </summary>
-        public BillingProfile BillingProfile { get; set; }
+        internal BillingProfile BillingProfile { get; set; }
+        /// <summary> Specifies the maximum price you are willing to pay for a Azure Spot VM/VMSS. This price is in US Dollars. &lt;br&gt;&lt;br&gt; This price will be compared with the current Azure Spot price for the VM size. Also, the prices are compared at the time of create/update of Azure Spot VM/VMSS and the operation will only succeed if  the maxPrice is greater than the current Azure Spot price. &lt;br&gt;&lt;br&gt; The maxPrice will also be used for evicting a Azure Spot VM/VMSS if the current Azure Spot price goes beyond the maxPrice after creation of VM/VMSS. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; - Any decimal value greater than zero. Example: 0.01538 &lt;br&gt;&lt;br&gt; -1 – indicates default price to be up-to on-demand. &lt;br&gt;&lt;br&gt; You can set the maxPrice to -1 to indicate that the Azure Spot VM/VMSS should not be evicted for price reasons. Also, the default max price is -1 if it is not provided by you. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. </summary>
+        public double? BillingMaxPrice
+        {
+            get => BillingProfile is null ? default : BillingProfile.MaxPrice;
+            set
+            {
+                if (BillingProfile is null)
+                    BillingProfile = new BillingProfile();
+                BillingProfile.MaxPrice = value;
+            }
+        }
+
         /// <summary> Specifies Scheduled Event related configurations. </summary>
-        public ScheduledEventsProfile ScheduledEventsProfile { get; set; }
+        internal ScheduledEventsProfile ScheduledEventsProfile { get; set; }
+        /// <summary> Specifies Terminate Scheduled Event related configurations. </summary>
+        public TerminateNotificationProfile ScheduledEventsTerminateNotificationProfile
+        {
+            get => ScheduledEventsProfile is null ? default : ScheduledEventsProfile.TerminateNotificationProfile;
+            set
+            {
+                if (ScheduledEventsProfile is null)
+                    ScheduledEventsProfile = new ScheduledEventsProfile();
+                ScheduledEventsProfile.TerminateNotificationProfile = value;
+            }
+        }
+
         /// <summary> UserData for the virtual machines in the scale set, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </summary>
         public string UserData { get; set; }
         /// <summary> Specifies the capacity reservation related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-04-01. </summary>
-        public CapacityReservationProfile CapacityReservation { get; set; }
+        internal CapacityReservationProfile CapacityReservation { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier CapacityReservationGroupId
+        {
+            get => CapacityReservation is null ? default : CapacityReservation.CapacityReservationGroupId;
+            set
+            {
+                if (CapacityReservation is null)
+                    CapacityReservation = new CapacityReservationProfile();
+                CapacityReservation.CapacityReservationGroupId = value;
+            }
+        }
+
         /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
-        public ApplicationProfile ApplicationProfile { get; set; }
+        internal ApplicationProfile ApplicationProfile { get; set; }
+        /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
+        public IList<VmGalleryApplication> GalleryApplications
+        {
+            get
+            {
+                if (ApplicationProfile is null)
+                    ApplicationProfile = new ApplicationProfile();
+                return ApplicationProfile.GalleryApplications;
+            }
+        }
     }
 }

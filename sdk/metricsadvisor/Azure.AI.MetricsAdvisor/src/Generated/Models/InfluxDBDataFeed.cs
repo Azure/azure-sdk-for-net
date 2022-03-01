@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="metrics"> measure list. </param>
         /// <param name="dataStartFrom"> ingestion start time. </param>
         /// <param name="dataSourceParameter"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataFeedName"/>, <paramref name="metrics"/>, or <paramref name="dataSourceParameter"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFeedName"/>, <paramref name="metrics"/> or <paramref name="dataSourceParameter"/> is null. </exception>
         public InfluxDBDataFeed(string dataFeedName, DataFeedGranularityType granularityName, IEnumerable<DataFeedMetric> metrics, DateTimeOffset dataStartFrom, InfluxDBParameter dataSourceParameter) : base(dataFeedName, granularityName, metrics, dataStartFrom)
         {
             if (dataFeedName == null)

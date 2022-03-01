@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal CosmosDBLocation(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _cosmosDBLocationLocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string cosmosDBLocationLocationsApiVersion);
+            TryGetApiVersion(ResourceType, out string cosmosDBLocationLocationsApiVersion);
             _cosmosDBLocationLocationsRestClient = new LocationsRestOperations(_cosmosDBLocationLocationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cosmosDBLocationLocationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -89,7 +89,11 @@ namespace Azure.ResourceManager.CosmosDB
             return new RestorableDatabaseAccountCollection(Client, Id);
         }
 
-        /// <summary> Get the properties of an existing Cosmos DB location. </summary>
+        /// <summary>
+        /// Get the properties of an existing Cosmos DB location
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}
+        /// Operation Id: Locations_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<CosmosDBLocation>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -109,7 +113,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Get the properties of an existing Cosmos DB location. </summary>
+        /// <summary>
+        /// Get the properties of an existing Cosmos DB location
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}
+        /// Operation Id: Locations_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CosmosDBLocation> Get(CancellationToken cancellationToken = default)
         {

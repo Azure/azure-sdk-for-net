@@ -1,6 +1,6 @@
 # Azure client configuration samples
 
-**NOTE:** Samples in this file apply only to packages that follow [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html). Names of such packages usually start with `Azure`. 
+**NOTE:** Samples in this file apply only to packages that follow [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html). Names of such packages usually start with `Azure`.
 
 ## Configuring retry options
 
@@ -44,3 +44,14 @@ SecretClientOptions options = new SecretClientOptions
     Transport = new HttpClientTransport(handler)
 };
 ```
+
+## Configuring a proxy using environment variables
+
+You can also configure a proxy using the following environment variables:
+
+* `HTTP_PROXY`: the proxy server used on HTTP requests.
+* `HTTPS_PROXY`: the proxy server used on HTTPS requests.
+* `ALL_PROXY`: the proxy server used on HTTP and HTTPS requests in case `HTTP_PROXY` or `HTTPS_PROXY` are not defined.
+* `NO_PROXY`: a comma-separated list of hostnames that should be excluded from proxying.
+
+**Warning:** setting these environment variables will affect every new client created within the current process.

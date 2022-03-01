@@ -17,6 +17,8 @@ using Azure.Storage.Sas;
 using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
+#pragma warning disable SA1402  // File may only contain a single type
+
 namespace Azure.Storage.Files.DataLake
 {
     /// <summary>
@@ -624,7 +626,7 @@ namespace Azure.Storage.Files.DataLake
 
         private (PathRestClient DfsPathClient, PathRestClient BlobPathClient) BuildPathRestClients(Uri dfsUri, Uri blobUri)
         {
-            PathRestClient dfsPathRestClient =  new PathRestClient(
+            PathRestClient dfsPathRestClient = new PathRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
                 url: dfsUri.AbsoluteUri,
@@ -3425,5 +3427,103 @@ namespace Azure.Storage.Files.DataLake
             return sasUri.ToUri();
         }
         #endregion
+
+        #region GetParentDataLakeFileSystemClientCore
+
+        private DataLakeFileSystemClient _parentFileSystemClient;
+        private DataLakeDirectoryClient _parentDirectoryClient;
+
+        /// <summary>
+        /// Create a new <see cref="DataLakeFileSystemClient"/> that pointing to this <see cref="DataLakePathClient"/>'s parent container.
+        /// The new <see cref="DataLakeFileSystemClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="DataLakePathClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="BlobContainerClient"/> instance.</returns>
+        protected internal virtual DataLakeFileSystemClient GetParentDataLakeFileSystemClientCore()
+        {
+            if (_parentFileSystemClient == null)
+            {
+                DataLakeUriBuilder datalakeUriBuilder = new DataLakeUriBuilder(Uri)
+                {
+                    // erase parameters unrelated to container
+                    DirectoryOrFilePath = null,
+                    Snapshot = null,
+                };
+
+                _parentFileSystemClient = new DataLakeFileSystemClient(
+                    datalakeUriBuilder.ToUri(),
+                    ClientConfiguration);
+            }
+
+            return _parentFileSystemClient;
+        }
+
+        /// <summary>
+        /// Create a new <see cref="DataLakeDirectoryClient"/> that pointing to this <see cref="DataLakePathClient"/>'s parent container.
+        /// The new <see cref="DataLakeDirectoryClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="DataLakePathClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="DataLakeDirectoryClient"/> instance.</returns>
+        protected internal virtual DataLakeDirectoryClient GetParentDataLakeDirectoryClientCore()
+        {
+            if (_parentDirectoryClient == null)
+            {
+                DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(Uri)
+                {
+                    Snapshot = null,
+                };
+
+                if (dataLakeUriBuilder.DirectoryOrFilePath == null || dataLakeUriBuilder.LastDirectoryOrFileName == null)
+                {
+                    throw new InvalidOperationException();
+                }
+                dataLakeUriBuilder.DirectoryOrFilePath = dataLakeUriBuilder.DirectoryOrFilePath.GetParentPath();
+
+                _parentDirectoryClient = new DataLakeDirectoryClient(
+                    dataLakeUriBuilder.ToUri(),
+                    ClientConfiguration);
+            }
+
+            return _parentDirectoryClient;
+        }
+        #endregion
+    }
+
+    namespace Specialized
+    {
+        /// <summary>
+        /// Add easy to discover methods to <see cref="DataLakePathClient"/> for
+        /// creating <see cref="DataLakeFileSystemClient"/> instances.
+        /// </summary>
+        public static partial class SpecializedDataLakeExtensions
+        {
+            /// <summary>
+            /// Create a new <see cref="DataLakeFileSystemClient"/> that pointing to this <see cref="DataLakePathClient"/>'s parent container.
+            /// The new <see cref="DataLakeFileSystemClient"/>
+            /// uses the same request policy pipeline as the
+            /// <see cref="DataLakePathClient"/>.
+            /// </summary>
+            /// <param name="client">The <see cref="DataLakePathClient"/>.</param>
+            /// <returns>A new <see cref="DataLakeFileSystemClient"/> instance.</returns>
+            public static DataLakeFileSystemClient GetParentDataLakeFileSystemClient(this DataLakePathClient client)
+            {
+                return client.GetParentDataLakeFileSystemClientCore();
+            }
+
+            /// <summary>
+            /// Create a new <see cref="DataLakeDirectoryClient"/> that pointing to this <see cref="DataLakePathClient"/>'s parent directory.
+            /// The new <see cref="DataLakeDirectoryClient"/>
+            /// uses the same request policy pipeline as the
+            /// <see cref="DataLakePathClient"/>.
+            /// </summary>
+            /// <param name="client">The <see cref="DataLakePathClient"/>.</param>
+            /// <returns>A new <see cref="DataLakeDirectoryClient"/> instance.</returns>
+            public static DataLakeDirectoryClient GetParentDataLakeDirectoryClient(this DataLakePathClient client)
+            {
+                return client.GetParentDataLakeDirectoryClientCore();
+            }
+        }
     }
 }

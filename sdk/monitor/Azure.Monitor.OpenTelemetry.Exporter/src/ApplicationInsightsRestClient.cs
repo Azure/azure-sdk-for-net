@@ -3,12 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
-using OpenTelemetry.Contrib.Extensions.PersistentStorage;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
@@ -18,18 +16,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// This operation sends a sequence of telemetry events that will be monitored by Azure Monitor.
         /// </summary>
         /// <param name="body">The list of telemetry events to track.</param>
-        /// <param name="storage">Storage object</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns></returns>
-        internal async Task<int> InternalTrackAsync(IEnumerable<TelemetryItem> body, IPersistentStorage storage, CancellationToken cancellationToken = default)
+        internal async Task<HttpMessage> InternalTrackAsync(IEnumerable<TelemetryItem> body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateTrackRequest(body);
-            message.SetProperty("TelemetryItemCount", body.Count());
+            var message = CreateTrackRequest(body);
 
             try
             {
@@ -38,25 +34,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             catch (Exception ex)
             {
                 AzureMonitorExporterEventSource.Log.Write($"FailedToSend{EventLevelSuffix.Error}", ex.LogAsyncException());
-                if (ex.InnerException?.Source == "System.Net.Http")
+                if (ex.InnerException?.Source != "System.Net.Http")
                 {
-                    HttpPipelineHelper.SaveTelemetryToStorage(storage, message);
+                    message?.Dispose();
+                    throw;
                 }
             }
 
-            return message.TryGetProperty("ItemsAccepted", out var objItemsAccepted) && objItemsAccepted is int itemsAccepted ? itemsAccepted : 0;
+            return message;
         }
 
         /// <summary>
         /// This operation sends a blob from persistent storage that will be monitored by Azure Monitor.
         /// </summary>
         /// <param name="body">Content of blob to track.</param>
-        /// <param name="storage">Storage object</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns></returns>
-        internal async Task<int> InternalTrackAsync(ReadOnlyMemory<byte> body, IPersistentStorage storage, CancellationToken cancellationToken = default)
+        internal async Task<HttpMessage> InternalTrackAsync(ReadOnlyMemory<byte> body, CancellationToken cancellationToken = default)
         {
-            using var message = CreateTrackRequest(body);
+            var message = CreateTrackRequest(body);
 
             try
             {
@@ -65,13 +61,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             catch (Exception ex)
             {
                 AzureMonitorExporterEventSource.Log.Write($"FailedToSend{EventLevelSuffix.Error}", ex.LogAsyncException());
-                if (ex.InnerException?.Source == "System.Net.Http")
+                if (ex.InnerException?.Source != "System.Net.Http")
                 {
-                    HttpPipelineHelper.SaveTelemetryToStorage(storage, message);
+                    message?.Dispose();
+                    throw;
                 }
             }
 
-            return message.TryGetProperty("ItemsAccepted", out var objItemsAccepted) && objItemsAccepted is int itemsAccepted ? itemsAccepted : 0;
+            return message;
         }
 
         internal HttpMessage CreateTrackRequest(IEnumerable<TelemetryItem> body)
@@ -80,7 +77,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(host, false);
+            uri.AppendRaw(_host, false);
             uri.AppendRaw("/v2", false);
             uri.AppendPath("/track", false);
             request.Uri = uri;
@@ -103,7 +100,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(host, false);
+            uri.AppendRaw(_host, false);
             uri.AppendRaw("/v2", false);
             uri.AppendPath("/track", false);
             request.Uri = uri;

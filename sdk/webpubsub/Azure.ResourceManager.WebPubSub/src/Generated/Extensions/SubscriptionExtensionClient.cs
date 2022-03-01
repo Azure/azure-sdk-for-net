@@ -45,11 +45,15 @@ namespace Azure.ResourceManager.WebPubSub
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            Client.TryGetApiVersion(resourceType, out string apiVersion);
+            TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
-        /// <summary> Checks that the resource name is valid and is not already in use. </summary>
+        /// <summary>
+        /// Checks that the resource name is valid and is not already in use.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability
+        /// Operation Id: WebPubSub_CheckNameAvailability
+        /// </summary>
         /// <param name="location"> the region. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -69,7 +73,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Checks that the resource name is valid and is not already in use. </summary>
+        /// <summary>
+        /// Checks that the resource name is valid and is not already in use.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability
+        /// Operation Id: WebPubSub_CheckNameAvailability
+        /// </summary>
         /// <param name="location"> the region. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -89,7 +97,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Handles requests to list all resources in a subscription. </summary>
+        /// <summary>
+        /// Handles requests to list all resources in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/webPubSub
+        /// Operation Id: WebPubSub_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebPubSub" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebPubSub> GetWebPubSubsAsync(CancellationToken cancellationToken = default)
@@ -127,7 +139,11 @@ namespace Azure.ResourceManager.WebPubSub
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Handles requests to list all resources in a subscription. </summary>
+        /// <summary>
+        /// Handles requests to list all resources in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/webPubSub
+        /// Operation Id: WebPubSub_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebPubSub" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebPubSub> GetWebPubSubs(CancellationToken cancellationToken = default)
@@ -165,7 +181,11 @@ namespace Azure.ResourceManager.WebPubSub
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> List resource usage quotas by location. </summary>
+        /// <summary>
+        /// List resource usage quotas by location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages
+        /// Operation Id: Usages_List
+        /// </summary>
         /// <param name="location"> the location like &quot;eastus&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SignalRServiceUsage" /> that may take multiple service requests to iterate over. </returns>
@@ -204,7 +224,11 @@ namespace Azure.ResourceManager.WebPubSub
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> List resource usage quotas by location. </summary>
+        /// <summary>
+        /// List resource usage quotas by location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages
+        /// Operation Id: Usages_List
+        /// </summary>
         /// <param name="location"> the location like &quot;eastus&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SignalRServiceUsage" /> that may take multiple service requests to iterate over. </returns>

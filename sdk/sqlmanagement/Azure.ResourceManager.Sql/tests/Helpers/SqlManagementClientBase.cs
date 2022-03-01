@@ -72,10 +72,6 @@ namespace Azure.ResourceManager.Sql.Tests
             var vnetData = new VirtualNetworkData()
             {
                 Location = location,
-                AddressSpace = new AddressSpace()
-                {
-                    AddressPrefixes = { "10.10.0.0/16", }
-                },
                 Subnets =
                 {
                     new SubnetData() { Name = "subnet01", AddressPrefix = "10.10.1.0/24", },
@@ -92,6 +88,7 @@ namespace Azure.ResourceManager.Sql.Tests
                     }
                 },
             };
+            vnetData.AddressPrefixes.Add("10.10.0.0/16");
             var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnetData);
             string subnetId = $"{vnet.Value.Data.Id}/subnets/ManagedInstance";
 

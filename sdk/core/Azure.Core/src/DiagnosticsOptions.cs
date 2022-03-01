@@ -44,7 +44,8 @@ namespace Azure.Core
                 "Retry-After",
                 "Server",
                 "Transfer-Encoding",
-                "User-Agent"
+                "User-Agent",
+                "WWW-Authenticate" // OAuth Challenge header.
             };
             LoggedQueryParameters = new List<string>
             {

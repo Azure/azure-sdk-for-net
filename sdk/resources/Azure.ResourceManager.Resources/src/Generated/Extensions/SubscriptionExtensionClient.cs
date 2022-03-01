@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Resources
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            Client.TryGetApiVersion(resourceType, out string apiVersion);
+            TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
@@ -64,7 +64,11 @@ namespace Azure.ResourceManager.Resources
             return new DeploymentCollection(Client, Id);
         }
 
-        /// <summary> Gets all the applications within a subscription. </summary>
+        /// <summary>
+        /// Gets all the applications within a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Solutions/applications
+        /// Operation Id: Applications_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Application" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Application> GetApplicationsAsync(CancellationToken cancellationToken = default)
@@ -102,7 +106,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the applications within a subscription. </summary>
+        /// <summary>
+        /// Gets all the applications within a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Solutions/applications
+        /// Operation Id: Applications_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Application" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Application> GetApplications(CancellationToken cancellationToken = default)
@@ -140,7 +148,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Retrieves all JIT requests within the subscription. </summary>
+        /// <summary>
+        /// Retrieves all JIT requests within the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Solutions/jitRequests
+        /// Operation Id: JitRequests_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="JitRequest" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<JitRequest> GetJitRequestDefinitionsAsync(CancellationToken cancellationToken = default)
@@ -163,7 +175,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves all JIT requests within the subscription. </summary>
+        /// <summary>
+        /// Retrieves all JIT requests within the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Solutions/jitRequests
+        /// Operation Id: JitRequests_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="JitRequest" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<JitRequest> GetJitRequestDefinitions(CancellationToken cancellationToken = default)
@@ -186,7 +202,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Lists all deployment scripts for a given subscription. </summary>
+        /// <summary>
+        /// Lists all deployment scripts for a given subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentScripts
+        /// Operation Id: DeploymentScripts_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeploymentScript" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeploymentScript> GetDeploymentScriptsAsync(CancellationToken cancellationToken = default)
@@ -224,7 +244,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all deployment scripts for a given subscription. </summary>
+        /// <summary>
+        /// Lists all deployment scripts for a given subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentScripts
+        /// Operation Id: DeploymentScripts_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeploymentScript" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeploymentScript> GetDeploymentScripts(CancellationToken cancellationToken = default)
@@ -262,7 +286,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the Template Specs within the specified subscriptions. </summary>
+        /// <summary>
+        /// Lists all the Template Specs within the specified subscriptions.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/templateSpecs
+        /// Operation Id: TemplateSpecs_ListBySubscription
+        /// </summary>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TemplateSpec" /> that may take multiple service requests to iterate over. </returns>
@@ -301,7 +329,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the Template Specs within the specified subscriptions. </summary>
+        /// <summary>
+        /// Lists all the Template Specs within the specified subscriptions.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/templateSpecs
+        /// Operation Id: TemplateSpecs_ListBySubscription
+        /// </summary>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TemplateSpec" /> that may take multiple service requests to iterate over. </returns>

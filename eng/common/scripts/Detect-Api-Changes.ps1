@@ -60,7 +60,7 @@ function Should-Process-Package($pkgPath, $packageName)
     # Get package info from json file created before updating version to daily dev
     $pkgInfo = Get-Content $pkgPropPath | ConvertFrom-Json
     Write-Host "SDK Type: $($pkgInfo.SdkType)"
-    return ($pkgInfo.SdkType -eq "client" -and $pkgInfo.IsNewSdk)
+    return $pkgInfo.IsNewSdk
 }
 
 function Log-Input-Params()

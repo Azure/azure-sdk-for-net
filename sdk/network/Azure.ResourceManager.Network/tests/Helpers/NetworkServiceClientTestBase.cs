@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
         public async Task<ExpressRouteCircuit> UpdateDefaultExpressRouteCircuitWithIpv6MicrosoftPeering(Resources.ResourceGroup resourceGroup, string circuitName)
         {
-            var ipv6Peering = new Ipv6ExpressRouteCircuitPeeringConfig()
+            var iPv6Peering = new IPv6ExpressRouteCircuitPeeringConfig()
             {
                 PrimaryPeerAddressPrefix = ExpressRouteTests.MS_PrimaryPrefix_V6,
                 SecondaryPeerAddressPrefix = ExpressRouteTests.MS_SecondaryPrefix_V6,
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 PeeringType = ExpressRoutePeeringType.MicrosoftPeering,
                 PeerASN = Convert.ToInt32(ExpressRouteTests.MS_PeerASN),
                 VlanId = Convert.ToInt32(ExpressRouteTests.MS_VlanId),
-                Ipv6PeeringConfig = ipv6Peering
+                IPv6PeeringConfig = iPv6Peering
             };
 
             var circuitCollection = resourceGroup.GetExpressRouteCircuits();
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             {
                 Location = location,
                 Tags = { { "key", "value" } },
-                IpConfigurations = {
+                IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
                     {
                          Name = ipConfigName,
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
             if (!string.IsNullOrEmpty(publicIpAddressId))
             {
-                nicParameters.IpConfigurations[0].PublicIPAddress = new PublicIPAddressData() { /*Id = publicIpAddressId*/ };
+                nicParameters.IPConfigurations[0].PublicIPAddress = new PublicIPAddressData() { /*Id = publicIpAddressId*/ };
             }
 
             // Test NIC apis
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             Assert.AreEqual(getNicResponse.Value.Data.Name, name);
 
             // because its a single CA nic, primaryOnCA is always true
-            Assert.True(getNicResponse.Value.Data.IpConfigurations[0].Primary);
+            Assert.True(getNicResponse.Value.Data.IPConfigurations[0].Primary);
 
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
 
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             {
                 Location = location,
                 Tags = { { "key", "value" } },
-                IpConfigurations = {
+                IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
                     {
                          Name = ipConfigName,
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
             if (!string.IsNullOrEmpty(publicIpAddressId))
             {
-                nicParameters.IpConfigurations[0].PublicIPAddress = new PublicIPAddressData() { /*Id = publicIpAddressId*/ };
+                nicParameters.IPConfigurations[0].PublicIPAddress = new PublicIPAddressData() { /*Id = publicIpAddressId*/ };
             }
 
             // Test NIC apis
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             Assert.AreEqual(getNicResponse.Value.Data.Name, name);
 
             // because its a single CA nic, primaryOnCA is always true
-            Assert.True(getNicResponse.Value.Data.IpConfigurations[0].Primary);
+            Assert.True(getNicResponse.Value.Data.IPConfigurations[0].Primary);
 
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
 
