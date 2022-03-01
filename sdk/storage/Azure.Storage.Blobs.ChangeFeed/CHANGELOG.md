@@ -1,14 +1,7 @@
 # Release History
 
 ## 12.0.0-preview.20 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for event schema V3, V4, and V5.
 
 ## 12.0.0-preview.19 (2022-02-07)
 - Added support for service version 2021-04-10.

@@ -27,6 +27,20 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> Gets or sets the type of auth. None or ManagedIdentity is supported now. </summary>
         public UpstreamAuthType? Type { get; set; }
         /// <summary> Gets or sets the managed identity settings. It&apos;s required if the auth type is set to ManagedIdentity. </summary>
-        public ManagedIdentitySettings ManagedIdentity { get; set; }
+        internal ManagedIdentitySettings ManagedIdentity { get; set; }
+        /// <summary>
+        /// The Resource indicating the App ID URI of the target resource.
+        /// It also appears in the aud (audience) claim of the issued token.
+        /// </summary>
+        public string ManagedIdentityResource
+        {
+            get => ManagedIdentity is null ? default : ManagedIdentity.Resource;
+            set
+            {
+                if (ManagedIdentity is null)
+                    ManagedIdentity = new ManagedIdentitySettings();
+                ManagedIdentity.Resource = value;
+            }
+        }
     }
 }

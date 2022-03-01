@@ -380,22 +380,22 @@ namespace Azure.ResourceManager.Network
         /// <summary>
         /// Gets the configured and effective security group rules on the specified VM.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/securityGroupView
-        /// Operation Id: NetworkWatchers_GetVMSecurityRules
+        /// Operation Id: NetworkWatchers_GetVmSecurityRules
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> Parameters that define the VM to check security groups for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<SecurityGroupViewResult>> GetVMSecurityRulesAsync(bool waitForCompletion, SecurityGroupViewParameters parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SecurityGroupViewResult>> GetVmSecurityRulesAsync(bool waitForCompletion, SecurityGroupViewParameters parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
-            using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcher.GetVMSecurityRules");
+            using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcher.GetVmSecurityRules");
             scope.Start();
             try
             {
-                var response = await _networkWatcherRestClient.GetVMSecurityRulesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<SecurityGroupViewResult>(new SecurityGroupViewResultOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetVMSecurityRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _networkWatcherRestClient.GetVmSecurityRulesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<SecurityGroupViewResult>(new SecurityGroupViewResultOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetVmSecurityRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -410,22 +410,22 @@ namespace Azure.ResourceManager.Network
         /// <summary>
         /// Gets the configured and effective security group rules on the specified VM.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/securityGroupView
-        /// Operation Id: NetworkWatchers_GetVMSecurityRules
+        /// Operation Id: NetworkWatchers_GetVmSecurityRules
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> Parameters that define the VM to check security groups for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<SecurityGroupViewResult> GetVMSecurityRules(bool waitForCompletion, SecurityGroupViewParameters parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SecurityGroupViewResult> GetVmSecurityRules(bool waitForCompletion, SecurityGroupViewParameters parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
-            using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcher.GetVMSecurityRules");
+            using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcher.GetVmSecurityRules");
             scope.Start();
             try
             {
-                var response = _networkWatcherRestClient.GetVMSecurityRules(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkArmOperation<SecurityGroupViewResult>(new SecurityGroupViewResultOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetVMSecurityRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _networkWatcherRestClient.GetVmSecurityRules(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new NetworkArmOperation<SecurityGroupViewResult>(new SecurityGroupViewResultOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetVmSecurityRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -936,7 +936,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _networkWatcherRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new NetworkWatcher(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -967,7 +967,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _networkWatcherRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new NetworkWatcher(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -997,7 +997,7 @@ namespace Azure.ResourceManager.Network
             {
                 await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _networkWatcherRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new NetworkWatcher(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -1027,7 +1027,7 @@ namespace Azure.ResourceManager.Network
             {
                 TagResource.Delete(true, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _networkWatcherRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new NetworkWatcher(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -1056,7 +1056,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _networkWatcherRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new NetworkWatcher(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -1085,7 +1085,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _networkWatcherRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new NetworkWatcher(Client, originalResponse.Value), originalResponse.GetRawResponse());

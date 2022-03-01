@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Tests
                 EnableBgp = false,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 Tags = { { "test", "value" } },
-                GatewayIpAddress = gatewayIp,
+                GatewayIPAddress = gatewayIp,
                 LocalNetworkAddressSpace = new AddressSpace()
                 {
                     AddressPrefixes = { "192.168.0.0/16", }
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Network.Tests
                 EnableBgp = false,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Network.Tests
                 EnableBgp = false,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Network.Tests
                 GatewayDefaultSite = null,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 Tags = { { "test", "value" } },
-                GatewayIpAddress = gatewayIp,
+                GatewayIPAddress = gatewayIp,
                 LocalNetworkAddressSpace = new AddressSpace()
                 {
                     AddressPrefixes = { addressPrefixes, }
@@ -579,11 +579,11 @@ namespace Azure.ResourceManager.Network.Tests
 
             // 2. GetLocalNetworkGateway API
             Response<LocalNetworkGateway> getLocalNetworkGatewayResponse = await localNetworkGatewayCollection.GetAsync(localNetworkGatewayName);
-            Console.WriteLine("Local Network Gateway details:- GatewayLocation: {0}, GatewayId:{1}, GatewayName={2} GatewayIpAddress={3} LocalNetworkAddressSpace={4}",
+            Console.WriteLine("Local Network Gateway details:- GatewayLocation: {0}, GatewayId:{1}, GatewayName={2} GatewayIPAddress={3} LocalNetworkAddressSpace={4}",
                 getLocalNetworkGatewayResponse.Value.Data.Location,
                 getLocalNetworkGatewayResponse.Value.Id, getLocalNetworkGatewayResponse.Value.Data.Name,
-                getLocalNetworkGatewayResponse.Value.Data.GatewayIpAddress, getLocalNetworkGatewayResponse.Value.Data.LocalNetworkAddressSpace.AddressPrefixes[0].ToString());
-            Assert.AreEqual(gatewayIp, getLocalNetworkGatewayResponse.Value.Data.GatewayIpAddress);
+                getLocalNetworkGatewayResponse.Value.Data.GatewayIPAddress, getLocalNetworkGatewayResponse.Value.Data.LocalNetworkAddressSpace.AddressPrefixes[0].ToString());
+            Assert.AreEqual(gatewayIp, getLocalNetworkGatewayResponse.Value.Data.GatewayIPAddress);
             Assert.AreEqual(addressPrefixes, getLocalNetworkGatewayResponse.Value.Data.LocalNetworkAddressSpace.AddressPrefixes[0].ToString());
 
             // 3A. UpdateLocalNetworkgateway API :- LocalNetworkGateway LocalNetworkAddressSpace from "192.168.0.0/16" => "200.168.0.0/16"
@@ -595,9 +595,9 @@ namespace Azure.ResourceManager.Network.Tests
 
             // 3B. GetLocalNetworkGateway API after Updating LocalNetworkGateway LocalNetworkAddressSpace from "192.168.0.0/16" => "200.168.0.0/16"
             getLocalNetworkGatewayResponse = await localNetworkGatewayCollection.GetAsync(localNetworkGatewayName);
-            Console.WriteLine("Local Network Gateway details:- GatewayLocation: {0}, GatewayId:{1}, GatewayName={2} GatewayIpAddress={3} LocalNetworkAddressSpace={4}",
+            Console.WriteLine("Local Network Gateway details:- GatewayLocation: {0}, GatewayId:{1}, GatewayName={2} GatewayIPAddress={3} LocalNetworkAddressSpace={4}",
                 getLocalNetworkGatewayResponse.Value.Data.Location, getLocalNetworkGatewayResponse.Value.Id,
-                getLocalNetworkGatewayResponse.Value.Data.Name, getLocalNetworkGatewayResponse.Value.Data.GatewayIpAddress,
+                getLocalNetworkGatewayResponse.Value.Data.Name, getLocalNetworkGatewayResponse.Value.Data.GatewayIPAddress,
                 getLocalNetworkGatewayResponse.Value.Data.LocalNetworkAddressSpace.AddressPrefixes[0].ToString());
             Assert.AreEqual(newAddressPrefixes, getLocalNetworkGatewayResponse.Value.Data.LocalNetworkAddressSpace.AddressPrefixes[0].ToString());
 
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 Tags = { { "test", "value" } },
-                GatewayIpAddress = gatewayIp,
+                GatewayIPAddress = gatewayIp,
                 LocalNetworkAddressSpace = new AddressSpace()
                 {
                     AddressPrefixes = { "192.168.0.0/16", }
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.Network.Tests
                 EnableBgp = false,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -774,11 +774,11 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(listVirtualNetworkGatewayConectionResponse);
         }
 
-        // Tests Resource:-VirtualNetworkGatewayConnection with Ipsec Policies
+        // Tests Resource:-VirtualNetworkGatewayConnection with IPsec Policies
         [Test]
         [RecordedTest]
         [Ignore("TODO: TRACK2 - Might be test framework issue")]
-        public async Task VirtualNetworkGatewayConnectionWithIpsecPoliciesTest()
+        public async Task VirtualNetworkGatewayConnectionWithIPsecPoliciesTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 Tags = { { "test", "value" } },
-                GatewayIpAddress = gatewayIp,
+                GatewayIPAddress = gatewayIp,
                 LocalNetworkAddressSpace = new AddressSpace()
                 {
                     AddressPrefixes = { "192.168.0.0/16", }
@@ -834,7 +834,7 @@ namespace Azure.ResourceManager.Network.Tests
                 EnableBgp = false,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.Network.Tests
             Console.WriteLine("Virtual Network Gateway is deployed successfully.");
             Response<VirtualNetworkGateway> getVirtualNetworkGatewayResponse = await virtualNetworkGatewayCollection.GetAsync(virtualNetworkGatewayName);
 
-            // C. CreaetVirtualNetworkGatewayConnection API - Ipsec policy and policybased TS enabled
+            // C. CreaetVirtualNetworkGatewayConnection API - IPsec policy and policybased TS enabled
             string VirtualNetworkGatewayConnectionName = Recording.GenerateAssetName("azsmnet");
             var virtualNetworkGatewayConnection = new VirtualNetworkGatewayConnectionData(getVirtualNetworkGatewayResponse.Value.Data, VirtualNetworkGatewayConnectionType.IPsec)
             {
@@ -872,9 +872,9 @@ namespace Azure.ResourceManager.Network.Tests
                 LocalNetworkGateway2 = getLocalNetworkGatewayResponse.Value.Data,
                 RoutingWeight = 3,
                 SharedKey = "abc",
-                IpsecPolicies =
+                IPsecPolicies =
                 {
-                    new IpsecPolicy(300, 1024, IpsecEncryption.AES128, IpsecIntegrity.SHA256, IkeEncryption.AES192, IkeIntegrity.SHA1, DhGroup.DHGroup2, PfsGroup.PFS1)
+                    new IPsecPolicy(300, 1024, IPsecEncryption.AES128, IPsecIntegrity.SHA256, IkeEncryption.AES192, IkeIntegrity.SHA1, DhGroup.DHGroup2, PfsGroup.PFS1)
                 }
             };
 
@@ -888,29 +888,29 @@ namespace Azure.ResourceManager.Network.Tests
             // 2. GetVirtualNetworkGatewayConnection API
             Response<VirtualNetworkGatewayConnection> getVirtualNetworkGatewayConnectionResponse = await virtualNetworkGatewayConnectionCollection.GetAsync(VirtualNetworkGatewayConnectionName);
             Console.WriteLine("GatewayConnection details:- GatewayLocation: {0}, GatewayConnectionId:{1}, VirtualNetworkGateway1 name={2} & Id={3}, LocalNetworkGateway2 name={4} & Id={5}, " +
-                    "IpsecPolicies Count={6}, UsePolicyBasedTS={7}",
+                    "IPsecPolicies Count={6}, UsePolicyBasedTS={7}",
                     getVirtualNetworkGatewayConnectionResponse.Value.Data.Location, getVirtualNetworkGatewayConnectionResponse.Value.Id,
                     getVirtualNetworkGatewayConnectionResponse.Value.Data.Name,
                     getVirtualNetworkGatewayConnectionResponse.Value.Data.VirtualNetworkGateway1.Name, getVirtualNetworkGatewayConnectionResponse.Value.Data.VirtualNetworkGateway1.Id,
                     getVirtualNetworkGatewayConnectionResponse.Value.Data.LocalNetworkGateway2.Name, getVirtualNetworkGatewayConnectionResponse.Value.Data.LocalNetworkGateway2.Id,
-                    getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.Value.Data.UsePolicyBasedTrafficSelectors);
+                    getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.Value.Data.UsePolicyBasedTrafficSelectors);
 
             Assert.AreEqual(VirtualNetworkGatewayConnectionType.IPsec, getVirtualNetworkGatewayConnectionResponse.Value.Data.ConnectionType);
             Assert.AreEqual(virtualNetworkGatewayConnection.UsePolicyBasedTrafficSelectors, getVirtualNetworkGatewayConnectionResponse.Value.Data.UsePolicyBasedTrafficSelectors);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies.Count);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].IpsecEncryption, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].IpsecEncryption);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].IpsecIntegrity, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].IpsecIntegrity);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].IkeEncryption, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].IkeEncryption);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].IkeIntegrity, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].IkeIntegrity);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].DhGroup, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].DhGroup);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].PfsGroup, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].PfsGroup);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].SaDataSizeKilobytes, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].SaDataSizeKilobytes);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].SaLifeTimeSeconds, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].SaLifeTimeSeconds);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies.Count);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].IPsecEncryption, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].IPsecEncryption);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].IPsecIntegrity, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].IPsecIntegrity);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].IkeEncryption, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].IkeEncryption);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].IkeIntegrity, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].IkeIntegrity);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].DhGroup, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].DhGroup);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].PfsGroup, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].PfsGroup);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].SaDataSizeKilobytes, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].SaDataSizeKilobytes);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].SaLifeTimeSeconds, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].SaLifeTimeSeconds);
 
-            // 3A. UpdateVirtualNetworkGatewayConnection API : update ipsec policies and disable TS
+            // 3A. UpdateVirtualNetworkGatewayConnection API : update IPsec policies and disable TS
             virtualNetworkGatewayConnection.UsePolicyBasedTrafficSelectors = false;
-            virtualNetworkGatewayConnection.IpsecPolicies.Clear();
-            virtualNetworkGatewayConnection.IpsecPolicies.Add(new IpsecPolicy(600, 2048, IpsecEncryption.Gcmaes256, IpsecIntegrity.Gcmaes256, IkeEncryption.AES256, IkeIntegrity.SHA384, DhGroup.DHGroup2048, PfsGroup.ECP384));
+            virtualNetworkGatewayConnection.IPsecPolicies.Clear();
+            virtualNetworkGatewayConnection.IPsecPolicies.Add(new IPsecPolicy(600, 2048, IPsecEncryption.Gcmaes256, IPsecIntegrity.Gcmaes256, IkeEncryption.AES256, IkeIntegrity.SHA384, DhGroup.DHGroup2048, PfsGroup.ECP384));
 
             putVirtualNetworkGatewayConnectionResponseOperation = await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(true, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConnection);
             putVirtualNetworkGatewayConnectionResponse = await putVirtualNetworkGatewayConnectionResponseOperation.WaitForCompletionAsync();
@@ -919,26 +919,26 @@ namespace Azure.ResourceManager.Network.Tests
             // 3B. GetVirtualNetworkGatewayConnection API after Updating
             getVirtualNetworkGatewayConnectionResponse = await virtualNetworkGatewayConnectionCollection.GetAsync(VirtualNetworkGatewayConnectionName);
             Console.WriteLine("GatewayConnection details:- GatewayLocation: {0}, GatewayConnectionId:{1}, VirtualNetworkGateway1 name={2} & Id={3}, LocalNetworkGateway2 name={4} & Id={5}, " +
-                "IpsecPolicies Count={6}, UsePolicyBasedTS={7}",
+                "IPsecPolicies Count={6}, UsePolicyBasedTS={7}",
                 getVirtualNetworkGatewayConnectionResponse.Value.Data.Location, getVirtualNetworkGatewayConnectionResponse.Value.Id,
                 getVirtualNetworkGatewayConnectionResponse.Value.Data.Name,
                 getVirtualNetworkGatewayConnectionResponse.Value.Data.VirtualNetworkGateway1.Name, getVirtualNetworkGatewayConnectionResponse.Value.Data.VirtualNetworkGateway1.Id,
                 getVirtualNetworkGatewayConnectionResponse.Value.Data.LocalNetworkGateway2.Name, getVirtualNetworkGatewayConnectionResponse.Value.Data.LocalNetworkGateway2.Id,
-                getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.Value.Data.UsePolicyBasedTrafficSelectors);
+                getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.Value.Data.UsePolicyBasedTrafficSelectors);
 
             Assert.AreEqual(virtualNetworkGatewayConnection.UsePolicyBasedTrafficSelectors, getVirtualNetworkGatewayConnectionResponse.Value.Data.UsePolicyBasedTrafficSelectors);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies.Count);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].IpsecEncryption, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].IpsecEncryption);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].IpsecIntegrity, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].IpsecIntegrity);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].IkeEncryption, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].IkeEncryption);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].IkeIntegrity, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].IkeIntegrity);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].DhGroup, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].DhGroup);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].PfsGroup, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].PfsGroup);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].SaDataSizeKilobytes, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].SaDataSizeKilobytes);
-            Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].SaLifeTimeSeconds, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies[0].SaLifeTimeSeconds);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies.Count);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].IPsecEncryption, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].IPsecEncryption);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].IPsecIntegrity, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].IPsecIntegrity);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].IkeEncryption, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].IkeEncryption);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].IkeIntegrity, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].IkeIntegrity);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].DhGroup, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].DhGroup);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].PfsGroup, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].PfsGroup);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].SaDataSizeKilobytes, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].SaDataSizeKilobytes);
+            Assert.AreEqual(virtualNetworkGatewayConnection.IPsecPolicies[0].SaLifeTimeSeconds, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies[0].SaLifeTimeSeconds);
 
-            // 4A. UpdateVirtualNetworkGatewayConnection API : remove ipsec policies
-            (virtualNetworkGatewayConnection.IpsecPolicies as ChangeTrackingList<IpsecPolicy>).Reset();
+            // 4A. UpdateVirtualNetworkGatewayConnection API : remove IPsec policies
+            (virtualNetworkGatewayConnection.IPsecPolicies as ChangeTrackingList<IPsecPolicy>).Reset();
 
             putVirtualNetworkGatewayConnectionResponseOperation = await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(true, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConnection);
             putVirtualNetworkGatewayConnectionResponse = await putVirtualNetworkGatewayConnectionResponseOperation.WaitForCompletionAsync();
@@ -947,15 +947,15 @@ namespace Azure.ResourceManager.Network.Tests
             // 4B. GetVirtualNetworkGatewayConnection API after Updating
             getVirtualNetworkGatewayConnectionResponse = await virtualNetworkGatewayConnectionCollection.GetAsync(VirtualNetworkGatewayConnectionName);
             Console.WriteLine("GatewayConnection details:- GatewayLocation: {0}, GatewayConnectionId:{1}, VirtualNetworkGateway1 name={2} & Id={3}, LocalNetworkGateway2 name={4} & Id={5}, " +
-                "IpsecPolicies Count={6}, UsePolicyBasedTS={7}",
+                "IPsecPolicies Count={6}, UsePolicyBasedTS={7}",
                 getVirtualNetworkGatewayConnectionResponse.Value.Data.Location, getVirtualNetworkGatewayConnectionResponse.Value.Id,
                 getVirtualNetworkGatewayConnectionResponse.Value.Data.Name,
                 getVirtualNetworkGatewayConnectionResponse.Value.Data.VirtualNetworkGateway1.Name, getVirtualNetworkGatewayConnectionResponse.Value.Data.VirtualNetworkGateway1.Id,
                 getVirtualNetworkGatewayConnectionResponse.Value.Data.LocalNetworkGateway2.Name, getVirtualNetworkGatewayConnectionResponse.Value.Data.LocalNetworkGateway2.Id,
-                getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.Value.Data.UsePolicyBasedTrafficSelectors);
+                getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.Value.Data.UsePolicyBasedTrafficSelectors);
 
             Assert.AreEqual(virtualNetworkGatewayConnection.UsePolicyBasedTrafficSelectors, getVirtualNetworkGatewayConnectionResponse.Value.Data.UsePolicyBasedTrafficSelectors);
-            Assert.AreEqual(0, getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies.Count);
+            Assert.AreEqual(0, getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies.Count);
 
             // 4. ListVitualNetworkGatewayConnections API
             AsyncPageable<VirtualNetworkGatewayConnection> listVirtualNetworkGatewayConectionResponseAP = virtualNetworkGatewayConnectionCollection.GetAllAsync();
@@ -996,7 +996,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 Tags = { { "test", "value" } },
-                GatewayIpAddress = gatewayIp,
+                GatewayIPAddress = gatewayIp,
                 LocalNetworkAddressSpace = new AddressSpace()
                 {
                     AddressPrefixes = { "192.168.0.0/16", }
@@ -1041,7 +1041,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -1196,7 +1196,7 @@ namespace Azure.ResourceManager.Network.Tests
                 GatewayDefaultSite = null,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -1227,7 +1227,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 Tags = { { "test", "value" } },
-                GatewayIpAddress = gatewayIp,
+                GatewayIPAddress = gatewayIp,
                 LocalNetworkAddressSpace = new AddressSpace()
                 {
                     AddressPrefixes = { "192.168.0.0/16", }
@@ -1302,7 +1302,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 Tags = { { "test", "value" } },
-                GatewayIpAddress = gatewayIp,
+                GatewayIPAddress = gatewayIp,
                 LocalNetworkAddressSpace = new AddressSpace() { AddressPrefixes = { "192.168.0.0/16", } }
             };
 
@@ -1348,7 +1348,7 @@ namespace Azure.ResourceManager.Network.Tests
                 GatewayDefaultSite = new WritableSubResource() { Id = getLocalNetworkGatewayResponse.Value.Id },
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -1533,7 +1533,7 @@ namespace Azure.ResourceManager.Network.Tests
                 GatewayDefaultSite = null,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations = { ipconfig1, ipconfig2 },
+                IPConfigurations = { ipconfig1, ipconfig2 },
                 Sku = new VirtualNetworkGatewaySku() { Name = VirtualNetworkGatewaySkuName.HighPerformance, Tier = VirtualNetworkGatewaySkuTier.HighPerformance }
             };
 
@@ -1553,30 +1553,30 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(VirtualNetworkGatewayType.Vpn, getVirtualNetworkGatewayResponse.Value.Data.GatewayType);
             Assert.AreEqual(VpnType.RouteBased, getVirtualNetworkGatewayResponse.Value.Data.VpnType);
             Assert.AreEqual(VirtualNetworkGatewaySkuTier.HighPerformance, getVirtualNetworkGatewayResponse.Value.Data.Sku.Tier);
-            Assert.AreEqual(2, getVirtualNetworkGatewayResponse.Value.Data.IpConfigurations.Count);
+            Assert.AreEqual(2, getVirtualNetworkGatewayResponse.Value.Data.IPConfigurations.Count);
             Assert.True(getVirtualNetworkGatewayResponse.Value.Data.Active);
 
             // 3. Update ActiveActive VirtualNetworkGateway to ActiveStandby
             getVirtualNetworkGatewayResponse.Value.Data.Active = false;
-            getVirtualNetworkGatewayResponse.Value.Data.IpConfigurations.Remove(getVirtualNetworkGatewayResponse.Value.Data.IpConfigurations.First(config => config.Name.Equals(ipconfig2.Name)));
+            getVirtualNetworkGatewayResponse.Value.Data.IPConfigurations.Remove(getVirtualNetworkGatewayResponse.Value.Data.IPConfigurations.First(config => config.Name.Equals(ipconfig2.Name)));
             putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(true, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data);
             putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
 
             getVirtualNetworkGatewayResponse = await virtualNetworkGatewayCollection.GetAsync(virtualNetworkGatewayName);
             Assert.False(getVirtualNetworkGatewayResponse.Value.Data.Active);
-            Assert.AreEqual(1, getVirtualNetworkGatewayResponse.Value.Data.IpConfigurations.Count);
+            Assert.AreEqual(1, getVirtualNetworkGatewayResponse.Value.Data.IPConfigurations.Count);
 
             // 4. Update ActiveStandby VirtualNetworkGateway to ActiveActive again
             getVirtualNetworkGatewayResponse.Value.Data.Active = true;
-            getVirtualNetworkGatewayResponse.Value.Data.IpConfigurations.Add(ipconfig2);
+            getVirtualNetworkGatewayResponse.Value.Data.IPConfigurations.Add(ipconfig2);
             putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(true, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data);
             putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
 
             getVirtualNetworkGatewayResponse = await virtualNetworkGatewayCollection.GetAsync(virtualNetworkGatewayName);
             Assert.True(getVirtualNetworkGatewayResponse.Value.Data.Active);
-            Assert.AreEqual(2, getVirtualNetworkGatewayResponse.Value.Data.IpConfigurations.Count);
+            Assert.AreEqual(2, getVirtualNetworkGatewayResponse.Value.Data.IPConfigurations.Count);
         }
 
         [Test]
@@ -1626,7 +1626,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations = { ipconfig1 },
+                IPConfigurations = { ipconfig1 },
                 Sku = new VirtualNetworkGatewaySku() { Name = VirtualNetworkGatewaySkuName.Standard, Tier = VirtualNetworkGatewaySkuTier.Standard },
                 BgpSettings = new BgpSettings() { Asn = 1337, BgpPeeringAddress = null, PeerWeight = 5 }
             };
@@ -1653,7 +1653,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations = { ipconfig2 },
+                IPConfigurations = { ipconfig2 },
                 Sku = new VirtualNetworkGatewaySku() { Name = VirtualNetworkGatewaySkuName.Standard, Tier = VirtualNetworkGatewaySkuTier.Standard },
                 BgpSettings = new BgpSettings() { Asn = 9001, BgpPeeringAddress = null, PeerWeight = 5 }
             };
@@ -1724,7 +1724,7 @@ namespace Azure.ResourceManager.Network.Tests
             var learnedRoutesOperation = await virtualNetworkGatewayCollection.Get(gw1Name).Value.GetLearnedRoutesAsync(true);
             Response<GatewayRouteListResult> learnedRoutes = await learnedRoutesOperation.WaitForCompletionAsync();
             Assert.True(learnedRoutes.Value.Value.Count() > 0, "At least one route should be learned from gw2");
-            var advertisedRoutesOperation = await virtualNetworkGatewayCollection.Get(gw1Name).Value.GetAdvertisedRoutesAsync(true, gw2IpResponse.Value.Data.IpAddress);
+            var advertisedRoutesOperation = await virtualNetworkGatewayCollection.Get(gw1Name).Value.GetAdvertisedRoutesAsync(true, gw2IpResponse.Value.Data.IPAddress);
             Response<GatewayRouteListResult> advertisedRoutes = await advertisedRoutesOperation.WaitForCompletionAsync();
             Assert.True(learnedRoutes.Value.Value.Count() > 0, "At least one route should be advertised to gw2");
             var gw1PeersOperation = await virtualNetworkGatewayCollection.Get(gw1Name).Value.GetBgpPeerStatusAsync(true);
@@ -1773,7 +1773,7 @@ namespace Azure.ResourceManager.Network.Tests
                 EnableBgp = false,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -1881,7 +1881,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 Tags = { { "test", "value" } },
-                GatewayIpAddress = gatewayIp,
+                GatewayIPAddress = gatewayIp,
                 LocalNetworkAddressSpace = new AddressSpace()
                 {
                     AddressPrefixes = { "192.168.0.0/16", }
@@ -1921,7 +1921,7 @@ namespace Azure.ResourceManager.Network.Tests
                 EnableBgp = false,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -1946,7 +1946,7 @@ namespace Azure.ResourceManager.Network.Tests
             Console.WriteLine("Virtual Network Gateway is deployed successfully.");
             Response<VirtualNetworkGateway> getVirtualNetworkGatewayResponse = await virtualNetworkGatewayCollection.GetAsync(virtualNetworkGatewayName);
 
-            // C. CreaetVirtualNetworkGatewayConnection API - Ipsec policy and policybased TS enabled
+            // C. CreaetVirtualNetworkGatewayConnection API - IPsec policy and policybased TS enabled
             string virtualNetworkGatewayConnectionName = Recording.GenerateAssetName("azsmnet");
             var virtualNetworkGatewayConnection = new VirtualNetworkGatewayConnectionData(getVirtualNetworkGatewayResponse.Value.Data, VirtualNetworkGatewayConnectionType.IPsec)
             {
@@ -1956,8 +1956,8 @@ namespace Azure.ResourceManager.Network.Tests
                 SharedKey = "abc"
             };
 
-            virtualNetworkGatewayConnection.IpsecPolicies.Add(
-                    new IpsecPolicy(300, 1024, IpsecEncryption.AES128, IpsecIntegrity.SHA256, IkeEncryption.AES192, IkeIntegrity.SHA1, DhGroup.DHGroup2, PfsGroup.PFS1)
+            virtualNetworkGatewayConnection.IPsecPolicies.Add(
+                    new IPsecPolicy(300, 1024, IPsecEncryption.AES128, IPsecIntegrity.SHA256, IkeEncryption.AES192, IkeIntegrity.SHA1, DhGroup.DHGroup2, PfsGroup.PFS1)
                 );
 
             virtualNetworkGatewayConnection.UsePolicyBasedTrafficSelectors = true;
@@ -1971,12 +1971,12 @@ namespace Azure.ResourceManager.Network.Tests
             // 2. GetVirtualNetworkGatewayConnection API
             Response<VirtualNetworkGatewayConnection> getVirtualNetworkGatewayConnectionResponse = await virtualNetworkGatewayConnectionCollection.GetAsync(virtualNetworkGatewayConnectionName);
             Console.WriteLine("GatewayConnection details:- GatewayLocation: {0}, GatewayConnectionId:{1}, VirtualNetworkGateway1 name={2} & Id={3}, LocalNetworkGateway2 name={4} & Id={5}, " +
-                              "IpsecPolicies Count={6}, UsePolicyBasedTS={7}",
+                              "IPsecPolicies Count={6}, UsePolicyBasedTS={7}",
                 getVirtualNetworkGatewayConnectionResponse.Value.Data.Location, getVirtualNetworkGatewayConnectionResponse.Value.Id,
                 getVirtualNetworkGatewayConnectionResponse.Value.Data.Name,
                 getVirtualNetworkGatewayConnectionResponse.Value.Data.VirtualNetworkGateway1.Name, getVirtualNetworkGatewayConnectionResponse.Value.Data.VirtualNetworkGateway1.Id,
                 getVirtualNetworkGatewayConnectionResponse.Value.Data.LocalNetworkGateway2.Name, getVirtualNetworkGatewayConnectionResponse.Value.Data.LocalNetworkGateway2.Id,
-                getVirtualNetworkGatewayConnectionResponse.Value.Data.IpsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.Value.Data.UsePolicyBasedTrafficSelectors);
+                getVirtualNetworkGatewayConnectionResponse.Value.Data.IPsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.Value.Data.UsePolicyBasedTrafficSelectors);
 
             // List supported Vpn Devices
             Response<string> supportedVpnDevices = await virtualNetworkGatewayCollection.Get(virtualNetworkGatewayName).Value.SupportedVpnDevicesAsync();

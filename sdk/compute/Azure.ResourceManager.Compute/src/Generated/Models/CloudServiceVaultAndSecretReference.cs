@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -27,7 +28,19 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Gets or sets the source vault. </summary>
-        public WritableSubResource SourceVault { get; set; }
+        internal WritableSubResource SourceVault { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SourceVaultId
+        {
+            get => SourceVault is null ? default : SourceVault.Id;
+            set
+            {
+                if (SourceVault is null)
+                    SourceVault = new WritableSubResource();
+                SourceVault.Id = value;
+            }
+        }
+
         /// <summary> Gets or sets the secret url. </summary>
         public string SecretUrl { get; set; }
     }

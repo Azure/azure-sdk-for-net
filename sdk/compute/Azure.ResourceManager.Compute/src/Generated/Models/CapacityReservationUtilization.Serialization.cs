@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class CapacityReservationUtilization
+    internal partial class CapacityReservationUtilization
     {
         internal static CapacityReservationUtilization DeserializeCapacityReservationUtilization(JsonElement element)
         {

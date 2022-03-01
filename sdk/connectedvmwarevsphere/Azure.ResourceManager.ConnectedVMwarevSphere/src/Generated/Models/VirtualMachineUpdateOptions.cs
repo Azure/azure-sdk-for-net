@@ -27,8 +27,29 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> Defines the resource properties. </summary>
         public HardwareProfile HardwareProfile { get; set; }
         /// <summary> Defines the resource update properties. </summary>
-        public StorageProfileUpdate StorageProfile { get; set; }
+        internal StorageProfileUpdate StorageProfile { get; set; }
+        /// <summary> Gets or sets the list of virtual disks associated with the virtual machine. </summary>
+        public IList<VirtualDiskUpdate> StorageDisks
+        {
+            get
+            {
+                if (StorageProfile is null)
+                    StorageProfile = new StorageProfileUpdate();
+                return StorageProfile.Disks;
+            }
+        }
+
         /// <summary> Defines the update resource properties. </summary>
-        public NetworkProfileUpdate NetworkProfile { get; set; }
+        internal NetworkProfileUpdate NetworkProfile { get; set; }
+        /// <summary> Gets or sets the list of network interfaces associated with the virtual machine. </summary>
+        public IList<NetworkInterfaceUpdate> NetworkInterfaces
+        {
+            get
+            {
+                if (NetworkProfile is null)
+                    NetworkProfile = new NetworkProfileUpdate();
+                return NetworkProfile.NetworkInterfaces;
+            }
+        }
     }
 }

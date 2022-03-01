@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -43,6 +44,12 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> The resource type of the access policy. </summary>
         public string Location { get; }
         /// <summary> Properties of the access policy. </summary>
-        public VaultAccessPolicyProperties Properties { get; set; }
+        internal VaultAccessPolicyProperties Properties { get; set; }
+        /// <summary> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault&apos;s tenant ID. </summary>
+        public IList<AccessPolicyEntry> AccessPolicies
+        {
+            get => Properties is null ? default : Properties.AccessPolicies;
+            set => Properties = new VaultAccessPolicyProperties(value);
+        }
     }
 }

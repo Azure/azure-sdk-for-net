@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -54,7 +55,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Type of the resource. </summary>
         public string Type { get; }
         /// <summary> A reference to frontend IP addresses. </summary>
-        public WritableSubResource FrontendIPConfiguration { get; set; }
+        internal WritableSubResource FrontendIPConfiguration { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier FrontendIPConfigurationId
+        {
+            get => FrontendIPConfiguration is null ? default : FrontendIPConfiguration.Id;
+            set
+            {
+                if (FrontendIPConfiguration is null)
+                    FrontendIPConfiguration = new WritableSubResource();
+                FrontendIPConfiguration.Id = value;
+            }
+        }
+
         /// <summary> The reference to the transport protocol used by the inbound NAT pool. </summary>
         public TransportProtocol? Protocol { get; set; }
         /// <summary> The first port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values range between 1 and 65534. </summary>

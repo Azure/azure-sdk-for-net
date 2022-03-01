@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -17,20 +16,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayAvailableSslPredefinedPolicies. </summary>
         internal ApplicationGatewayAvailableSslPredefinedPolicies()
         {
-            Value = new ChangeTrackingList<ApplicationGatewaySslPredefinedPolicyData>();
-        }
-
-        /// <summary> Initializes a new instance of ApplicationGatewayAvailableSslPredefinedPolicies. </summary>
-        /// <param name="value"> List of available Ssl predefined policy. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal ApplicationGatewayAvailableSslPredefinedPolicies(IReadOnlyList<ApplicationGatewaySslPredefinedPolicyData> value, string nextLink)
-        {
-            Value = value;
-            NextLink = nextLink;
+            Value = new ChangeTrackingList<ApplicationGatewaySslPredefinedPolicy>();
         }
 
         /// <summary> List of available Ssl predefined policy. </summary>
-        public IReadOnlyList<ApplicationGatewaySslPredefinedPolicyData> Value { get; }
+        public IReadOnlyList<ApplicationGatewaySslPredefinedPolicy> Value { get; }
         /// <summary> URL to get the next set of results. </summary>
         public string NextLink { get; }
     }
