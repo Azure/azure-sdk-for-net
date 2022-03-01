@@ -194,6 +194,7 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual("RequestContext", beforeTransportValues.ElementAt(1));
         }
 
+        #region Helper methods
         public class AddHeaderPolicy : HttpPipelineSynchronousPolicy
         {
             private string _headerName;
@@ -214,5 +215,6 @@ namespace Azure.Core.Experimental.Tests
         private class TestOptions : ClientOptions
         {
         }
+        #endregion
     }
 }

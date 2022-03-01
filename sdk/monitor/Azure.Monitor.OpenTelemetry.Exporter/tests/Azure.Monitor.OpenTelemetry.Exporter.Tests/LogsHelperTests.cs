@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry.Logs;
 using Xunit;
@@ -151,6 +152,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("1", eventId);
             Assert.True(properties.TryGetValue("EventName", out string eventName));
             Assert.Equal("TestEvent", eventName);
+        }
+
+        [Fact]
+        public void ValidateSeverityLevels()
+        {
+            Assert.Equal(SeverityLevel.Critical, LogsHelper.GetSeverityLevel(LogLevel.Critical));
+            Assert.Equal(SeverityLevel.Error, LogsHelper.GetSeverityLevel(LogLevel.Error));
+            Assert.Equal(SeverityLevel.Warning, LogsHelper.GetSeverityLevel(LogLevel.Warning));
+            Assert.Equal(SeverityLevel.Information, LogsHelper.GetSeverityLevel(LogLevel.Information));
+            Assert.Equal(SeverityLevel.Verbose, LogsHelper.GetSeverityLevel(LogLevel.Debug));
+            Assert.Equal(SeverityLevel.Verbose, LogsHelper.GetSeverityLevel(LogLevel.Trace));
         }
     }
 }

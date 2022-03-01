@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
         {
             Subnets = new ChangeTrackingList<SubnetData>();
             VirtualNetworkPeerings = new ChangeTrackingList<VirtualNetworkPeeringData>();
-            IpAllocations = new ChangeTrackingList<WritableSubResource>();
+            IPAllocations = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkData. </summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
             EnableVmProtection = enableVmProtection;
             DdosProtectionPlan = ddosProtectionPlan;
             BgpCommunities = bgpCommunities;
-            IpAllocations = ipAllocations;
+            IPAllocations = ipAllocations;
         }
 
         /// <summary> The extended location of the virtual network. </summary>
@@ -122,6 +122,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET. </summary>
         public VirtualNetworkBgpCommunities BgpCommunities { get; set; }
         /// <summary> Array of IpAllocation which reference this VNET. </summary>
-        public IList<WritableSubResource> IpAllocations { get; }
+        public IList<WritableSubResource> IPAllocations { get; }
     }
 }

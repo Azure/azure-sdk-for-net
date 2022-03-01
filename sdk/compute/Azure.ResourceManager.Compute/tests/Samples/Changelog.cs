@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             var nicData = new NetworkInterfaceData()
             {
                 Location = location,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new NetworkInterfaceIPConfigurationData()
                     {

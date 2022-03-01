@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network
             Optional<BgpSettings> bgpSettings = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<int> vpnGatewayScaleUnit = default;
-            Optional<IReadOnlyList<VpnGatewayIpConfiguration>> ipConfigurations = default;
+            Optional<IReadOnlyList<VpnGatewayIPConfiguration>> ipConfigurations = default;
             Optional<bool> isRoutingPreferenceInternet = default;
             Optional<IList<VpnGatewayNatRuleData>> natRules = default;
             foreach (var property in element.EnumerateObject())
@@ -214,10 +214,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<VpnGatewayIpConfiguration> array = new List<VpnGatewayIpConfiguration>();
+                            List<VpnGatewayIPConfiguration> array = new List<VpnGatewayIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnGatewayIpConfiguration.DeserializeVpnGatewayIpConfiguration(item));
+                                array.Add(VpnGatewayIPConfiguration.DeserializeVpnGatewayIPConfiguration(item));
                             }
                             ipConfigurations = array;
                             continue;

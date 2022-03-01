@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of NextHopResult. </summary>
         /// <param name="nextHopType"> Next hop type. </param>
-        /// <param name="nextHopIpAddress"> Next hop IP Address. </param>
+        /// <param name="nextHopIPAddress"> Next hop IP Address. </param>
         /// <param name="routeTableId"> The resource identifier for the route table associated with the route being returned. If the route being returned does not correspond to any user created routes then this field will be the string &apos;System Route&apos;. </param>
-        internal NextHopResult(NextHopType? nextHopType, string nextHopIpAddress, string routeTableId)
+        internal NextHopResult(NextHopType? nextHopType, string nextHopIPAddress, string routeTableId)
         {
             NextHopType = nextHopType;
-            NextHopIpAddress = nextHopIpAddress;
+            NextHopIPAddress = nextHopIPAddress;
             RouteTableId = routeTableId;
         }
 
         /// <summary> Next hop type. </summary>
         public NextHopType? NextHopType { get; }
         /// <summary> Next hop IP Address. </summary>
-        public string NextHopIpAddress { get; }
+        public string NextHopIPAddress { get; }
         /// <summary> The resource identifier for the route table associated with the route being returned. If the route being returned does not correspond to any user created routes then this field will be the string &apos;System Route&apos;. </summary>
         public string RouteTableId { get; }
     }

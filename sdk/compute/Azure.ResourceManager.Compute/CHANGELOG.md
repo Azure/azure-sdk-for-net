@@ -246,7 +246,7 @@ VirtualNetwork vnet = vnetOperation.Value;
 var nicData = new NetworkInterfaceData()
 {
     Location = location,
-    IpConfigurations =
+    IPConfigurations =
     {
         new NetworkInterfaceIPConfigurationData()
         {
