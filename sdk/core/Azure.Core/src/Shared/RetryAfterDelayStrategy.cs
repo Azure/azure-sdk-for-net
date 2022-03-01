@@ -38,23 +38,24 @@ namespace Azure.Core
         /// <returns>Max value of retry-after header and <paramref name="suggestedInterval"/>.</returns>
         public override TimeSpan GetNextDelay(Response response, TimeSpan? suggestedInterval)
         {
+            TimeSpan delay = TimeSpan.Zero;
             if (response.Headers.TryGetValue(RetryAfterMsHeaderName, out string? retryAfterValue) ||
                 response.Headers.TryGetValue(XRetryAfterMsHeaderName, out retryAfterValue))
             {
                 if (int.TryParse(retryAfterValue, out int serverDelayInMilliseconds))
                 {
-                    return TimeSpan.FromMilliseconds(serverDelayInMilliseconds);
+                    delay = TimeSpan.FromMilliseconds(serverDelayInMilliseconds);
                 }
             }
             else if (response.Headers.TryGetValue(RetryAfterHeaderName, out retryAfterValue))
             {
                 if (int.TryParse(retryAfterValue, out int serverDelayInSeconds))
                 {
-                    return TimeSpan.FromSeconds(serverDelayInSeconds);
+                    delay = TimeSpan.FromSeconds(serverDelayInSeconds);
                 }
             }
 
-            return _fallbackStrategy.GetNextDelay(response, suggestedInterval);
+            return Max(delay, _fallbackStrategy.GetNextDelay(response, suggestedInterval));
         }
     }
 }
