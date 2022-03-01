@@ -2109,7 +2109,7 @@ namespace Azure.Storage.Files.Shares
                 response = await FileRestClient.DownloadAsync(
                     range: pageRange == default ? null : pageRange.ToString(),
                     // TODO #27253
-                    rangeGetContentMD5: requestRangeMD5, // options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
+                    rangeGetContentMD5: requestRangeMD5 ? true : null, // options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
                     leaseAccessConditions: options?.Conditions,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -2119,7 +2119,7 @@ namespace Azure.Storage.Files.Shares
                 response = FileRestClient.Download(
                     range: pageRange == default ? null : pageRange.ToString(),
                     // TODO #27253
-                    rangeGetContentMD5: requestRangeMD5, // options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
+                    rangeGetContentMD5: requestRangeMD5 ? true : null, // options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
                     leaseAccessConditions: options?.Conditions,
                     cancellationToken: cancellationToken);
             }

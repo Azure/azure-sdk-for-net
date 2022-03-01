@@ -1441,7 +1441,7 @@ namespace Azure.Storage.Blobs.Specialized
                     range: pageRange?.ToString(),
                     leaseId: options?.Conditions?.LeaseId,
                     // TODO #27253
-                    rangeGetContentMD5: rangeRequestMD5, // options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
+                    rangeGetContentMD5: rangeRequestMD5 ? true : null, // options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
                     //rangeGetContentCRC64: options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.StorageCrc64 ? true : null,
                     encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                     encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
@@ -1460,7 +1460,7 @@ namespace Azure.Storage.Blobs.Specialized
                     range: pageRange?.ToString(),
                     leaseId: options?.Conditions?.LeaseId,
                     // TODO #27253
-                    rangeGetContentMD5: rangeRequestMD5, // options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
+                    rangeGetContentMD5: rangeRequestMD5 ? true : null, // options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
                     //rangeGetContentCRC64: options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.StorageCrc64 ? true : null,
                     encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                     encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
