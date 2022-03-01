@@ -34,6 +34,10 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TypeBinder.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)DelayStrategy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationPoller.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)ConstantDelayStrategy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)RetryAfterDelayStrategy.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>

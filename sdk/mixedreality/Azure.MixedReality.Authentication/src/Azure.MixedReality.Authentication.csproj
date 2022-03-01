@@ -35,6 +35,10 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureMixedRealityAuthenticationSharedSources)\AuthenticationEndpoint.cs" LinkBase="Shared" />
     <Compile Include="$(AzureMixedRealityAuthenticationSharedSources)\MixedRealityAccountKeyCredential.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)DelayStrategy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationPoller.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)ConstantDelayStrategy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)RetryAfterDelayStrategy.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>

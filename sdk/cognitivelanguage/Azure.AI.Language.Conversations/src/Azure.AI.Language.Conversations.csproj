@@ -30,6 +30,10 @@
     <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)DelayStrategy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationPoller.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)ConstantDelayStrategy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)RetryAfterDelayStrategy.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>
