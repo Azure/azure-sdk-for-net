@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="vmScaleSetVMReimageInput"> Parameters for the Reimaging Virtual machine in ScaleSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> ReimageAsync(bool waitForCompletion, VirtualMachineScaleSetVmReimageParameters vmScaleSetVMReimageInput = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> ReimageAsync(bool waitForCompletion, VirtualMachineScaleSetVmReimageOptions vmScaleSetVMReimageInput = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetVmVirtualMachineScaleSetVMsClientDiagnostics.CreateScope("VirtualMachineScaleSetVm.Reimage");
             scope.Start();
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="vmScaleSetVMReimageInput"> Parameters for the Reimaging Virtual machine in ScaleSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Reimage(bool waitForCompletion, VirtualMachineScaleSetVmReimageParameters vmScaleSetVMReimageInput = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Reimage(bool waitForCompletion, VirtualMachineScaleSetVmReimageOptions vmScaleSetVMReimageInput = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetVmVirtualMachineScaleSetVMsClientDiagnostics.CreateScope("VirtualMachineScaleSetVm.Reimage");
             scope.Start();

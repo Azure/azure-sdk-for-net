@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute
             _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
 
-        internal HttpMessage CreateReimageRequest(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVmReimageParameters vmScaleSetVMReimageInput)
+        internal HttpMessage CreateReimageRequest(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVmReimageOptions vmScaleSetVMReimageInput)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetVMReimageInput"> Parameters for the Reimaging Virtual machine in ScaleSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/> or <paramref name="instanceId"/> is null. </exception>
-        public async Task<Response> ReimageAsync(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVmReimageParameters vmScaleSetVMReimageInput = null, CancellationToken cancellationToken = default)
+        public async Task<Response> ReimageAsync(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVmReimageOptions vmScaleSetVMReimageInput = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetVMReimageInput"> Parameters for the Reimaging Virtual machine in ScaleSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/> or <paramref name="instanceId"/> is null. </exception>
-        public Response Reimage(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVmReimageParameters vmScaleSetVMReimageInput = null, CancellationToken cancellationToken = default)
+        public Response Reimage(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVmReimageOptions vmScaleSetVMReimageInput = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {

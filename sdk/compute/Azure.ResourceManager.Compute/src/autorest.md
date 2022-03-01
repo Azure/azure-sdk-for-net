@@ -78,6 +78,12 @@ directive:
   - from: disk.json
     where: $.definitions.PurchasePlan
     transform: $["x-ms-client-name"] = "DiskPurchasePlan"
+  - from: swagger-document
+    where: $.definitions.VirtualMachineReimageParameters
+    transform: $["x-ms-client-name"] = "VirtualMachineReimageOptions"
+  - from: swagger-document
+    where: $.definitions.VirtualMachineScaleSetVMReimageParameters
+    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmReimageOptions"
 # transform enum values
   - from: swagger-document
     where: $.definitions.DiskSecurityType["x-ms-enum"].values[1]
