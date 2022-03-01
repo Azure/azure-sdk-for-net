@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Type of managed service identity. </summary>
     public enum ResourceIdentityType
     {
+        /// <summary> None. </summary>
+        None,
         /// <summary> SystemAssigned. </summary>
         SystemAssigned,
         /// <summary> UserAssigned. </summary>
         UserAssigned,
         /// <summary> SystemAssigned, UserAssigned. </summary>
-        SystemAssignedUserAssigned,
-        /// <summary> None. </summary>
-        None
+        SystemAssignedUserAssigned
     }
 }
