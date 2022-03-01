@@ -10,14 +10,9 @@ namespace Azure.Analytics.Purview.Catalog.Tests
 {
     public class CatalogClientTestBase : RecordedTestBase<PurviewCatalogTestEnvironment>
     {
-        public CatalogClientTestBase(bool isAsync) : base(isAsync)
+        public CatalogClientTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
-            Sanitizer = new PurviewRecordedTestSanitizer();
-        }
-
-        public CatalogClientTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
-        {
-            Sanitizer = new PurviewRecordedTestSanitizer();
+            this.AddPurviewSanitizers();
         }
 
         public PurviewCatalogClient GetCatalogClient()

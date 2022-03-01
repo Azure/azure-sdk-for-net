@@ -2,6 +2,7 @@
 
 ## 12.9.0-beta.4 (Unreleased)
 - Fixed bug where ShareFileClient.StartCopy() and .StartCopyAsync() were not sending the ignoreReadonly parameter correctly.
+- Added new overload of ShareFileClient.StartCopy() and .StartCopyAsync(), added new parameters allowing the copying of the source file's CreatedOn, LastWrittenOn, and FileAttributes properties.
 - Removed preview support for SDK-calculated transactional checksums on data transfer.
 
 ## 12.9.0-beta.3 (2022-02-07)
