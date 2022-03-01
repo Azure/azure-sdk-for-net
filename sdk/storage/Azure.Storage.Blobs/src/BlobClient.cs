@@ -1627,10 +1627,11 @@ namespace Azure.Storage.Blobs
             {
                 options ??= new BlobUploadOptions();
 
-                if (UsingClientSideEncryption && options.TransactionalHashingOptions != default)
-                {
-                    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
-                }
+                // TODO #27253
+                //if (UsingClientSideEncryption && options.TransactionalHashingOptions != default)
+                //{
+                //    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
+                //}
 
                 // if content length was known, we retain that for dividing REST requests appropriately
                 expectedContentLength = content.GetLengthOrDefault();
@@ -1644,7 +1645,8 @@ namespace Azure.Storage.Blobs
 
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
-                options?.TransactionalHashingOptions,
+                // TODO #27253
+                // options?.TransactionalHashingOptions,
                 operationName: $"{nameof(BlobClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(
@@ -1797,10 +1799,11 @@ namespace Azure.Storage.Blobs
         {
             if (UsingClientSideEncryption)
             {
-                if (UsingClientSideEncryption && options.TransactionalHashingOptions != default)
-                {
-                    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
-                }
+                // TODO #27253
+                //if (UsingClientSideEncryption && options.TransactionalHashingOptions != default)
+                //{
+                //    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
+                //}
 
                 return await new BlobClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
                     .ClientSideEncryptionOpenWriteInternal(
@@ -1835,9 +1838,10 @@ namespace Azure.Storage.Blobs
 
         internal PartitionedUploader<BlobUploadOptions, BlobContentInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
-            UploadTransactionalHashingOptions hashingOptions,
+            // TODO #27253
+            //UploadTransactionalHashingOptions validationOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
-            => BlockBlobClient.GetPartitionedUploader(transferOptions, hashingOptions, arrayPool, operationName);
+            => BlockBlobClient.GetPartitionedUploader(transferOptions, /*validationOptions,*/ arrayPool, operationName);
     }
 }

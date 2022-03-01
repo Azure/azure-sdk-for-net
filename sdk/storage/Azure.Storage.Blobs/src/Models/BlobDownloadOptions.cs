@@ -29,14 +29,15 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public IProgress<long> ProgressHandler { get; set; }
 
-        /// <summary>
-        /// Optional transactional hashing options.
-        /// Range must be provided explicitly stating a range withing Azure
-        /// Storage size limits for requesting a transactional hash. See the
-        /// <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob">
-        /// REST documentation</a> for range limitation details.
-        /// </summary>
-        public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        // TODO #27253
+        ///// <summary>
+        ///// Optional transactional hashing options.
+        ///// Range must be provided explicitly stating a range withing Azure
+        ///// Storage size limits for requesting a transactional hash. See the
+        ///// <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob">
+        ///// REST documentation</a> for range limitation details.
+        ///// </summary>
+        //public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
 
         /// <summary>
         /// Default constructor.
@@ -57,13 +58,14 @@ namespace Azure.Storage.Blobs.Models
             Conditions = BlobRequestConditions.CloneOrDefault(deepCopySource.Conditions);
             ProgressHandler = deepCopySource.ProgressHandler;
             // can't access an internal deep copy in Storage.Common
-            TransactionalHashingOptions = deepCopySource.TransactionalHashingOptions == default
-                ? default
-                : new DownloadTransactionalHashingOptions()
-                {
-                    Algorithm = deepCopySource.TransactionalHashingOptions.Algorithm,
-                    Validate = deepCopySource.TransactionalHashingOptions.Validate
-                };
+            // TODO #27253
+            //TransactionalHashingOptions = deepCopySource.TransactionalHashingOptions == default
+            //    ? default
+            //    : new DownloadTransactionalHashingOptions()
+            //    {
+            //        Algorithm = deepCopySource.TransactionalHashingOptions.Algorithm,
+            //        Validate = deepCopySource.TransactionalHashingOptions.Validate
+            //    };
         }
 
         /// <summary>
