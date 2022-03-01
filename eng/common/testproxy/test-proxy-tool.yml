@@ -9,7 +9,7 @@ steps:
     displayName: 'Language Specific Certificate Trust'
 
   - pwsh: |
-      $version = $(Get-Content C:\repo\sdk-for-python\eng\common\testproxy\target_version.txt -Raw).Trim()
+      $version = $(Get-Content "$(Build.SourcesDirectory)/eng/common/testproxy/target_version.txt" -Raw).Trim()
       $overrideVersion = "${{ parameters.targetVersion }}"
       
       if($overrideVersion) {
