@@ -8,24 +8,24 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Contains the IP tag associated with the public IP address. </summary>
-    public partial class VirtualMachineScaleSetIpTag
+    public partial class VirtualMachineScaleSetIPTag
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetIpTag. </summary>
-        public VirtualMachineScaleSetIpTag()
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetIPTag. </summary>
+        public VirtualMachineScaleSetIPTag()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetIpTag. </summary>
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetIPTag. </summary>
         /// <param name="ipTagType"> IP tag type. Example: FirstPartyUsage. </param>
         /// <param name="tag"> IP tag associated with the public IP. Example: SQL, Storage etc. </param>
-        internal VirtualMachineScaleSetIpTag(string ipTagType, string tag)
+        internal VirtualMachineScaleSetIPTag(string ipTagType, string tag)
         {
-            IpTagType = ipTagType;
+            IPTagType = ipTagType;
             Tag = tag;
         }
 
         /// <summary> IP tag type. Example: FirstPartyUsage. </summary>
-        public string IpTagType { get; set; }
+        public string IPTagType { get; set; }
         /// <summary> IP tag associated with the public IP. Example: SQL, Storage etc. </summary>
         public string Tag { get; set; }
     }

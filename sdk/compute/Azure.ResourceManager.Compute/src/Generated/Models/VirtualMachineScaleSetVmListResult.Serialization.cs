@@ -12,9 +12,9 @@ using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class VirtualMachineScaleSetVMListResult
+    internal partial class VirtualMachineScaleSetVmListResult
     {
-        internal static VirtualMachineScaleSetVMListResult DeserializeVirtualMachineScaleSetVMListResult(JsonElement element)
+        internal static VirtualMachineScaleSetVmListResult DeserializeVirtualMachineScaleSetVmListResult(JsonElement element)
         {
             IReadOnlyList<VirtualMachineScaleSetVmData> value = default;
             Optional<string> nextLink = default;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetVMListResult(value, nextLink.Value);
+            return new VirtualMachineScaleSetVmListResult(value, nextLink.Value);
         }
     }
 }
