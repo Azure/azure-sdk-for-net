@@ -258,6 +258,7 @@ namespace Azure.Storage
             public const string FileAttributesNone = "None";
             public const string FileTimeNow = "Now";
             public const string Preserve = "Preserve";
+            public const string Source = "Source";
             public const string FilePermissionInherit = "Inherit";
             public const int MaxFilePermissionHeaderSize = 8 * KB;
             public const int MaxFileUpdateRange = 4 * MB;

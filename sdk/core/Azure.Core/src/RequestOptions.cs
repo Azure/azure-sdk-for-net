@@ -69,6 +69,7 @@ namespace Azure
         /// Customizes the <see cref="ResponseClassifier"/> for this operation to change
         /// the default <see cref="Response"/> classification behavior so that it considers
         /// the passed-in status code to be an error or not, as specified.
+        /// Status code classifiers are applied after all <see cref="ResponseClassificationHandler"/> classifiers.
         /// This is useful for cases where you'd like to prevent specific response status codes from being treated as errors by
         /// logging and distributed tracing policies -- that is, if a response is not classified as an error, it will not appear as an error in
         /// logs or distributed traces.
@@ -89,7 +90,8 @@ namespace Azure
 
             int length = _statusCodes == null ? 0 : _statusCodes.Length;
             Array.Resize(ref _statusCodes, length + 1);
-            _statusCodes[length] = (statusCode, isError);
+            Array.Copy(_statusCodes, 0, _statusCodes, 1, length);
+            _statusCodes[0] = (statusCode, isError);
         }
 
         /// <summary>
@@ -123,26 +125,30 @@ namespace Azure
             _frozen = true;
         }
 
-        internal CoreResponseClassifier Apply(CoreResponseClassifier classifier)
+        internal ResponseClassifier Apply(ResponseClassifier classifier)
         {
             if (_statusCodes == null && _handlers == null)
             {
                 return classifier;
             }
 
-            CoreResponseClassifier clone = classifier.Clone();
-
-            clone.Handlers = _handlers;
-
-            if (_statusCodes != null)
+            if (classifier is CoreResponseClassifier coreClassifier)
             {
-                foreach (var classification in _statusCodes)
+                CoreResponseClassifier clone = coreClassifier.Clone();
+                clone.Handlers = _handlers;
+
+                if (_statusCodes != null)
                 {
-                    clone.AddClassifier(classification.Status, classification.IsError);
+                    foreach (var classification in _statusCodes)
+                    {
+                        clone.AddClassifier(classification.Status, classification.IsError);
+                    }
                 }
+
+                return clone;
             }
 
-            return clone;
+            return new ChainingClassifier(_statusCodes, _handlers, classifier);
         }
     }
 }

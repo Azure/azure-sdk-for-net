@@ -22,7 +22,24 @@ namespace Azure.Security.KeyVault.Tests
 
             public override TestResult Execute(TestExecutionContext context)
             {
-                context.CurrentResult = innerCommand.Execute(context);
+                RequestFailedException rex = null;
+                try
+                {
+                    context.CurrentResult = innerCommand.Execute(context);
+                }
+                catch (RequestFailedException ex)
+                {
+                    rex = ex;
+                }
+                catch (Exception ex) when (ex.InnerException is RequestFailedException _rex)
+                {
+                    rex = _rex;
+                }
+
+                if (rex != null)
+                {
+                    context.CurrentResult.SetResult(ResultState.Failure, rex.Message, rex.StackTrace);
+                }
 
                 if (context.CurrentResult.ResultState.Status == TestStatus.Failed &&
                     context.CurrentResult.Message.Contains("Status: 400") &&
