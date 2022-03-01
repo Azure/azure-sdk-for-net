@@ -6,6 +6,7 @@ This troubleshooting guide covers failure investigation techniques, common error
 - [Handle Azure Identity Exceptions](#handle-azure-identity-exceptions)
   - [AuthenticationFailedException](#authenticationfailedexception)
   - [CredentialUnavailableException](#credentialunavailableexception)
+  - [Permission Issues](#permission-issues)
 - [Find Relevant Information in Exception Messages](#find-relevant-information-in-exception-messages)
 - [Enable and Configure Logging](#enable-and-configure-logging)
 - [Troubleshoot DefaultAzureCredential Authentication Issues](#troubleshoot-defaultazurecredential-authentication-issues)
@@ -48,6 +49,10 @@ catch (AuthenticationFailedException e)
 ### CredentialUnavailableException
 
 The `CredentialUnavailableExcpetion` is a special exception type derived from `AuthenticationFailedException`. This exception type is used to indicate that the credential can’t authenticate in the current environment, due to lack of required configuration or setup. This exception is also used as a signal to chained credential types, such as `DefaultAzureCredential` and `ChainedTokenCredential`, that the chained credential should continue to try other credential types later in the chain.
+
+### Permission Issues
+
+Calls to service clients resulting in `RequestFailedException` with a `StatusCode` of 401 or 403 often indicate the caller doesn't have sufficient permissions for the specified API. Check the service documentation to determine which RBAC roles are needed for the specific request, and ensure the authenticated user or service principal have been granted the appropriate roles on the resource.
 
 ## Find Relevant Information in Exception Messages
 
