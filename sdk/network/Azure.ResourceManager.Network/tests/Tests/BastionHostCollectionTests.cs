@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Tests
             ipConfig.Subnet.Id = _subnet.Id;
             ipConfig.PublicIPAddress = new WritableSubResource();
             ipConfig.PublicIPAddress.Id = _publicIPAddress.Id;
-            data.IpConfigurations.Add(ipConfig);
+            data.IPConfigurations.Add(ipConfig);
             var bastionLro = await _resourceGroup.GetBastionHosts().CreateOrUpdateAsync(true, bastionName, data);
             return bastionLro.Value;
         }

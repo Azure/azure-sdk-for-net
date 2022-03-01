@@ -1449,7 +1449,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateSetVpnclientIpsecParametersRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VpnClientIPsecParameters vpnclientIpsecParams)
+        internal HttpMessage CreateSetVpnclientIPsecParametersRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VpnClientIPsecParameters vpnclientIpsecParams)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1481,7 +1481,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnclientIpsecParams"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/> or <paramref name="vpnclientIpsecParams"/> is null. </exception>
-        public async Task<Response> SetVpnclientIpsecParametersAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VpnClientIPsecParameters vpnclientIpsecParams, CancellationToken cancellationToken = default)
+        public async Task<Response> SetVpnclientIPsecParametersAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VpnClientIPsecParameters vpnclientIpsecParams, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1500,7 +1500,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(vpnclientIpsecParams));
             }
 
-            using var message = CreateSetVpnclientIpsecParametersRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, vpnclientIpsecParams);
+            using var message = CreateSetVpnclientIPsecParametersRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, vpnclientIpsecParams);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1519,7 +1519,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnclientIpsecParams"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/> or <paramref name="vpnclientIpsecParams"/> is null. </exception>
-        public Response SetVpnclientIpsecParameters(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VpnClientIPsecParameters vpnclientIpsecParams, CancellationToken cancellationToken = default)
+        public Response SetVpnclientIPsecParameters(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VpnClientIPsecParameters vpnclientIpsecParams, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1538,7 +1538,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(vpnclientIpsecParams));
             }
 
-            using var message = CreateSetVpnclientIpsecParametersRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, vpnclientIpsecParams);
+            using var message = CreateSetVpnclientIPsecParametersRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, vpnclientIpsecParams);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1550,7 +1550,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetVpnclientIpsecParametersRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName)
+        internal HttpMessage CreateGetVpnclientIPsecParametersRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1577,7 +1577,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The virtual network gateway name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public async Task<Response> GetVpnclientIpsecParametersAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        public async Task<Response> GetVpnclientIPsecParametersAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1592,7 +1592,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
             }
 
-            using var message = CreateGetVpnclientIpsecParametersRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateGetVpnclientIPsecParametersRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1609,7 +1609,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The virtual network gateway name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public Response GetVpnclientIpsecParameters(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        public Response GetVpnclientIPsecParameters(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1624,7 +1624,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
             }
 
-            using var message = CreateGetVpnclientIpsecParametersRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateGetVpnclientIPsecParametersRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

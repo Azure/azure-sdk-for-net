@@ -14,8 +14,10 @@ namespace Azure.AI.Personalizer.Tests
         public PersonalizerTestBase(bool isAsync): base(isAsync)
         {
             // TODO: Compare bodies again when https://github.com/Azure/azure-sdk-for-net/issues/22219 is resolved.
-            Matcher = new RecordMatcher(compareBodies: false);
-            Sanitizer = new PersonalizerRecordedTestSanitizer();
+            JsonPathSanitizers.Add("$..accessToken");
+            JsonPathSanitizers.Add("$..source");
+            SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
+            CompareBodies = false;
         }
 
         protected async Task<PersonalizerClient> GetPersonalizerClientAsync(bool isSingleSlot = false)

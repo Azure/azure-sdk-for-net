@@ -27,6 +27,12 @@ override-operation-name:
   CheckNameAvailability: CheckCdnNameAvailability
   CheckNameAvailabilityWithSubscription: CheckCdnNameAvailabilityWithSubscription
 directive:
+  - from: cdnwebapplicationfirewall.json
+    where: $.definitions.CdnWebApplicationFirewallPolicyProperties.properties.rateLimitRules
+    transform: $['x-ms-client-name'] = 'RateLimitSettings'
+  - from: cdnwebapplicationfirewall.json
+    where: $.definitions.CdnWebApplicationFirewallPolicyProperties.properties.customRules
+    transform: $['x-ms-client-name'] = 'CustomSettings'
   - from: swagger-document
     where: $.definitions
     transform: >

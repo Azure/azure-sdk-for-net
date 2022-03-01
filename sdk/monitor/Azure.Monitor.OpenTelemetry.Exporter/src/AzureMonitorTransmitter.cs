@@ -80,10 +80,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 return;
             }
 
-            try
+            long files = maxFilesToTransmit;
+            while (files > 0)
             {
-                long files = maxFilesToTransmit;
-                while (files > 0)
+                try
                 {
                     // TODO: Do we need more lease time?
                     var blob = _storage.GetBlob()?.Lease(10000);
@@ -110,13 +110,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                             HandleFailures(httpMessage, blob);
                         }
                     }
-
-                    files--;
                 }
-            }
-            catch (Exception ex)
-            {
-                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmitFromStorage{EventLevelSuffix.Error}", ex.LogAsyncException());
+                catch (Exception ex)
+                {
+                    AzureMonitorExporterEventSource.Log.Write($"FailedToTransmitFromStorage{EventLevelSuffix.Error}", ex.LogAsyncException());
+                }
+
+                files--;
             }
         }
 

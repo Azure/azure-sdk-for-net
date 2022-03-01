@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WebPubSub
     {
         public PrivateEndpointConnectionData() { }
         public System.Collections.Generic.IReadOnlyList<string> GroupIds { get { throw null; } }
-        public Azure.ResourceManager.WebPubSub.Models.PrivateEndpoint PrivateEndpoint { get { throw null; } set { } }
+        public string PrivateEndpointId { get { throw null; } set { } }
         public Azure.ResourceManager.WebPubSub.Models.PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.WebPubSub.Models.ProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -148,6 +148,7 @@ namespace Azure.ResourceManager.WebPubSub
     public partial class WebPubSubData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public WebPubSubData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public bool? ClientCertEnabled { get { throw null; } set { } }
         public bool? DisableAadAuth { get { throw null; } set { } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
         public string ExternalIP { get { throw null; } }
@@ -160,11 +161,10 @@ namespace Azure.ResourceManager.WebPubSub
         public Azure.ResourceManager.WebPubSub.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string PublicNetworkAccess { get { throw null; } set { } }
         public int? PublicPort { get { throw null; } }
-        public Azure.ResourceManager.WebPubSub.Models.ResourceLogConfiguration ResourceLogConfiguration { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.WebPubSub.Models.ResourceLogCategory> ResourceLogCategories { get { throw null; } }
         public int? ServerPort { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.WebPubSub.SharedPrivateLinkData> SharedPrivateLinkResources { get { throw null; } }
         public Azure.ResourceManager.WebPubSub.Models.WebPubSubSku Sku { get { throw null; } set { } }
-        public Azure.ResourceManager.WebPubSub.Models.WebPubSubTlsSettings Tls { get { throw null; } set { } }
         public string Version { get { throw null; } }
     }
     public partial class WebPubSubHub : Azure.ResourceManager.Core.ArmResource
@@ -289,11 +289,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public Azure.ResourceManager.WebPubSub.Models.ManagedIdentityType? Type { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
     }
-    public partial class ManagedIdentitySettings
-    {
-        public ManagedIdentitySettings() { }
-        public string Resource { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedIdentityType : System.IEquatable<Azure.ResourceManager.WebPubSub.Models.ManagedIdentityType>
     {
@@ -331,11 +326,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public NetworkAcl() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType> Allow { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType> Deny { get { throw null; } }
-    }
-    public partial class PrivateEndpoint
-    {
-        public PrivateEndpoint() { }
-        public string Id { get { throw null; } set { } }
     }
     public partial class PrivateEndpointAcl : Azure.ResourceManager.WebPubSub.Models.NetworkAcl
     {
@@ -412,11 +402,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public ResourceLogCategory() { }
         public string Enabled { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-    }
-    public partial class ResourceLogConfiguration
-    {
-        public ResourceLogConfiguration() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.WebPubSub.Models.ResourceLogCategory> Categories { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScaleType : System.IEquatable<Azure.ResourceManager.WebPubSub.Models.ScaleType>
@@ -511,7 +496,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
     public partial class UpstreamAuthSettings
     {
         public UpstreamAuthSettings() { }
-        public Azure.ResourceManager.WebPubSub.Models.ManagedIdentitySettings ManagedIdentity { get { throw null; } set { } }
+        public string ManagedIdentityResource { get { throw null; } set { } }
         public Azure.ResourceManager.WebPubSub.Models.UpstreamAuthType? Type { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -601,10 +586,5 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static implicit operator Azure.ResourceManager.WebPubSub.Models.WebPubSubSkuTier (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WebPubSub.Models.WebPubSubSkuTier left, Azure.ResourceManager.WebPubSub.Models.WebPubSubSkuTier right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class WebPubSubTlsSettings
-    {
-        public WebPubSubTlsSettings() { }
-        public bool? ClientCertEnabled { get { throw null; } set { } }
     }
 }

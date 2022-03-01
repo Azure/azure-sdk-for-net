@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
             Mode = mode;
             InternalMappings = internalMappings;
             ExternalMappings = externalMappings;
-            IpConfigurationId = ipConfigurationId;
+            IPConfigurationId = ipConfigurationId;
             EgressVpnSiteLinkConnections = egressVpnSiteLinkConnections;
             IngressVpnSiteLinkConnections = ingressVpnSiteLinkConnections;
         }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The private IP address external mapping for NAT. </summary>
         public IList<VpnNatRuleMapping> ExternalMappings { get; }
         /// <summary> The IP Configuration ID this NAT rule applies to. </summary>
-        public string IpConfigurationId { get; set; }
+        public string IPConfigurationId { get; set; }
         /// <summary> List of egress VpnSiteLinkConnections. </summary>
         public IReadOnlyList<WritableSubResource> EgressVpnSiteLinkConnections { get; }
         /// <summary> List of ingress VpnSiteLinkConnections. </summary>

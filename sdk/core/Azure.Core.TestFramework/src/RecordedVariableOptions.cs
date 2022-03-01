@@ -40,7 +40,7 @@ namespace Azure.Core.TestFramework
             return sanitizedValue switch
             {
                 SanitizedValue.Base64 => "Kg==",
-                _ => RecordedTestSanitizer.SanitizeValue,
+                _ => RecordedTestBase.SanitizeValue,
             };
         }
 

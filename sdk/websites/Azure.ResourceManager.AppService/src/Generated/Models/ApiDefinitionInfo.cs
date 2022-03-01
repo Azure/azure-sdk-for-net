@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Information about the formal API definition for the app. </summary>
-    public partial class ApiDefinitionInfo
+    internal partial class ApiDefinitionInfo
     {
         /// <summary> Initializes a new instance of ApiDefinitionInfo. </summary>
         public ApiDefinitionInfo()

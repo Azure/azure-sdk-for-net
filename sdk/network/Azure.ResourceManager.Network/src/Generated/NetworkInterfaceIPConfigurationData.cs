@@ -72,7 +72,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> Resource type. </summary>
         public string Type { get; set; }
         /// <summary> The reference to gateway load balancer frontend IP. </summary>
-        public WritableSubResource GatewayLoadBalancer { get; set; }
+        internal WritableSubResource GatewayLoadBalancer { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier GatewayLoadBalancerId
+        {
+            get => GatewayLoadBalancer is null ? default : GatewayLoadBalancer.Id;
+            set
+            {
+                if (GatewayLoadBalancer is null)
+                    GatewayLoadBalancer = new WritableSubResource();
+                GatewayLoadBalancer.Id = value;
+            }
+        }
+
         /// <summary> The reference to Virtual Network Taps. </summary>
         public IList<VirtualNetworkTapData> VirtualNetworkTaps { get; }
         /// <summary> The reference to ApplicationGatewayBackendAddressPool resource. </summary>

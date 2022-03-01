@@ -17,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests.Samples
             [HttpTrigger(AuthorizationLevel.Anonymous, "GET")] HttpRequest request,
             [Table("MyTable")] out TableEntity entity)
         {
-            entity = new TableEntity("<PartitionKey>", "<PartitionKey>")
+            entity = new TableEntity("<PartitionKey>", "<RowKey>")
             {
                 ["Text"] = "Hello"
             };
