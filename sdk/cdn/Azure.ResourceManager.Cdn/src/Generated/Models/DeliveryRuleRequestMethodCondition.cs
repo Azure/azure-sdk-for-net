@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the RequestMethod condition for the delivery rule. </summary>
-    internal partial class DeliveryRuleRequestMethodCondition : DeliveryRuleCondition
+    public partial class DeliveryRuleRequestMethodCondition : DeliveryRuleCondition
     {
         /// <summary> Initializes a new instance of DeliveryRuleRequestMethodCondition. </summary>
         /// <param name="parameters"> Defines the parameters for the condition. </param>

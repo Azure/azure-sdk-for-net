@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the UrlPath condition for the delivery rule. </summary>
-    internal partial class DeliveryRuleUrlPathCondition : DeliveryRuleCondition
+    public partial class DeliveryRuleUrlPathCondition : DeliveryRuleCondition
     {
         /// <summary> Initializes a new instance of DeliveryRuleUrlPathCondition. </summary>
         /// <param name="parameters"> Defines the parameters for the condition. </param>

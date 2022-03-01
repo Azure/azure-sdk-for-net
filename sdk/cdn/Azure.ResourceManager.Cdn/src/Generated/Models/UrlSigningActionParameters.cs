@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for the Url Signing action. </summary>
-    internal partial class UrlSigningActionParameters
+    public partial class UrlSigningActionParameters
     {
         /// <summary> Initializes a new instance of UrlSigningActionParameters. </summary>
         /// <param name="odataType"></param>

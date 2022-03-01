@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the IsDevice condition for the delivery rule. </summary>
-    internal partial class DeliveryRuleIsDeviceCondition : DeliveryRuleCondition
+    public partial class DeliveryRuleIsDeviceCondition : DeliveryRuleCondition
     {
         /// <summary> Initializes a new instance of DeliveryRuleIsDeviceCondition. </summary>
         /// <param name="parameters"> Defines the parameters for the condition. </param>

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for PostArgs match conditions. </summary>
-    internal partial class PostArgsMatchConditionParameters
+    public partial class PostArgsMatchConditionParameters
     {
         /// <summary> Initializes a new instance of PostArgsMatchConditionParameters. </summary>
         /// <param name="odataType"></param>

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class VM : IUtf8JsonSerializable
+    internal partial class Vm : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static VM DeserializeVM(JsonElement element)
+        internal static Vm DeserializeVm(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> name = default;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VM(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags));
+            return new Vm(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags));
         }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for IsDevice match conditions. </summary>
-    internal partial class IsDeviceMatchConditionParameters
+    public partial class IsDeviceMatchConditionParameters
     {
         /// <summary> Initializes a new instance of IsDeviceMatchConditionParameters. </summary>
         /// <param name="odataType"></param>

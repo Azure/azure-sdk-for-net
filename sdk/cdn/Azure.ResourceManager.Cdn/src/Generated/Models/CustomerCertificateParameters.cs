@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Customer Certificate used for https. </summary>
-    internal partial class CustomerCertificateParameters : SecretParameters
+    public partial class CustomerCertificateParameters : SecretParameters
     {
         /// <summary> Initializes a new instance of CustomerCertificateParameters. </summary>
         /// <param name="secretSource"> Resource reference to the KV secret. </param>

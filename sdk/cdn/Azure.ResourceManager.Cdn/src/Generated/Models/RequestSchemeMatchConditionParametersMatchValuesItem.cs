@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The RequestSchemeMatchConditionParametersMatchValuesItem. </summary>
-    internal readonly partial struct RequestSchemeMatchConditionParametersMatchValuesItem : IEquatable<RequestSchemeMatchConditionParametersMatchValuesItem>
+    public readonly partial struct RequestSchemeMatchConditionParametersMatchValuesItem : IEquatable<RequestSchemeMatchConditionParametersMatchValuesItem>
     {
         private readonly string _value;
 

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for RequestBody match conditions. </summary>
-    internal partial class RequestBodyMatchConditionParameters
+    public partial class RequestBodyMatchConditionParameters
     {
         /// <summary> Initializes a new instance of RequestBodyMatchConditionParameters. </summary>
         /// <param name="odataType"></param>

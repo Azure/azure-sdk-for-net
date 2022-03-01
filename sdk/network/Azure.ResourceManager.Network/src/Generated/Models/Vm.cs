@@ -10,20 +10,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Describes a Virtual Machine. </summary>
-    internal partial class VM : Resource
+    internal partial class Vm : Resource
     {
-        /// <summary> Initializes a new instance of VM. </summary>
-        public VM()
+        /// <summary> Initializes a new instance of Vm. </summary>
+        public Vm()
         {
         }
 
-        /// <summary> Initializes a new instance of VM. </summary>
+        /// <summary> Initializes a new instance of Vm. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal VM(string id, string name, string type, string location, IDictionary<string, string> tags) : base(id, name, type, location, tags)
+        internal Vm(string id, string name, string type, string location, IDictionary<string, string> tags) : base(id, name, type, location, tags)
         {
         }
     }

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The QueryStringMatchConditionParametersOdataType. </summary>
-    internal readonly partial struct QueryStringMatchConditionParametersOdataType : IEquatable<QueryStringMatchConditionParametersOdataType>
+    public readonly partial struct QueryStringMatchConditionParametersOdataType : IEquatable<QueryStringMatchConditionParametersOdataType>
     {
         private readonly string _value;
 

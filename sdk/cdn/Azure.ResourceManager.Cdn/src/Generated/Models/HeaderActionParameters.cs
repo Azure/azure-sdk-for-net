@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for the request header action. </summary>
-    internal partial class HeaderActionParameters
+    public partial class HeaderActionParameters
     {
         /// <summary> Initializes a new instance of HeaderActionParameters. </summary>
         /// <param name="odataType"></param>

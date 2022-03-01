@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The HttpVersionMatchConditionParametersOdataType. </summary>
-    internal readonly partial struct HttpVersionMatchConditionParametersOdataType : IEquatable<HttpVersionMatchConditionParametersOdataType>
+    public readonly partial struct HttpVersionMatchConditionParametersOdataType : IEquatable<HttpVersionMatchConditionParametersOdataType>
     {
         private readonly string _value;
 

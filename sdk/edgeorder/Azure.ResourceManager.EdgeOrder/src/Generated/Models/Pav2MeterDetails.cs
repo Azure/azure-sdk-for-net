@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Billing type PAV2 meter details. </summary>
-    internal partial class Pav2MeterDetails : MeterDetails
+    public partial class Pav2MeterDetails : MeterDetails
     {
         /// <summary> Initializes a new instance of Pav2MeterDetails. </summary>
         internal Pav2MeterDetails()

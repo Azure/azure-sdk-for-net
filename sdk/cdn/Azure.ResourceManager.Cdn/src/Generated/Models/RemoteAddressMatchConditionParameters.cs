@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for RemoteAddress match conditions. </summary>
-    internal partial class RemoteAddressMatchConditionParameters
+    public partial class RemoteAddressMatchConditionParameters
     {
         /// <summary> Initializes a new instance of RemoteAddressMatchConditionParameters. </summary>
         /// <param name="odataType"></param>

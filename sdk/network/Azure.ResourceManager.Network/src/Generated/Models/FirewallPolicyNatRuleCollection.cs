@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Firewall Policy NAT Rule Collection. </summary>
-    internal partial class FirewallPolicyNatRuleCollection : FirewallPolicyRuleCollection
+    public partial class FirewallPolicyNatRuleCollection : FirewallPolicyRuleCollection
     {
         /// <summary> Initializes a new instance of FirewallPolicyNatRuleCollection. </summary>
         public FirewallPolicyNatRuleCollection()

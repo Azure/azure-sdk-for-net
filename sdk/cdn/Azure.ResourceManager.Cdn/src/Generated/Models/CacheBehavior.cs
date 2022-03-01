@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Caching behavior for the requests. </summary>
-    internal readonly partial struct CacheBehavior : IEquatable<CacheBehavior>
+    public readonly partial struct CacheBehavior : IEquatable<CacheBehavior>
     {
         private readonly string _value;
 

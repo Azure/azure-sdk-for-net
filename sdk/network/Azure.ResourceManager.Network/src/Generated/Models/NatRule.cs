@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Rule of type nat. </summary>
-    internal partial class NatRule : FirewallPolicyRule
+    public partial class NatRule : FirewallPolicyRule
     {
         /// <summary> Initializes a new instance of NatRule. </summary>
         public NatRule()

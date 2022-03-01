@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The CookiesMatchConditionParametersOdataType. </summary>
-    internal readonly partial struct CookiesMatchConditionParametersOdataType : IEquatable<CookiesMatchConditionParametersOdataType>
+    public readonly partial struct CookiesMatchConditionParametersOdataType : IEquatable<CookiesMatchConditionParametersOdataType>
     {
         private readonly string _value;
 

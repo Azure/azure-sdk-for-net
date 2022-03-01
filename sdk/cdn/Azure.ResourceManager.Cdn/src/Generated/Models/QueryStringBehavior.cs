@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Caching behavior for the requests. </summary>
-    internal readonly partial struct QueryStringBehavior : IEquatable<QueryStringBehavior>
+    public readonly partial struct QueryStringBehavior : IEquatable<QueryStringBehavior>
     {
         private readonly string _value;
 

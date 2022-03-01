@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Describes operator to be matched. </summary>
-    internal readonly partial struct CookiesOperator : IEquatable<CookiesOperator>
+    public readonly partial struct CookiesOperator : IEquatable<CookiesOperator>
     {
         private readonly string _value;
 

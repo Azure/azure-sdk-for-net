@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The Network protocol of a Rule. </summary>
-    internal readonly partial struct FirewallPolicyRuleNetworkProtocol : IEquatable<FirewallPolicyRuleNetworkProtocol>
+    public readonly partial struct FirewallPolicyRuleNetworkProtocol : IEquatable<FirewallPolicyRuleNetworkProtocol>
     {
         private readonly string _value;
 

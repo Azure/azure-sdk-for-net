@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    internal partial class PurchaseMeterDetails
+    public partial class PurchaseMeterDetails
     {
         internal static PurchaseMeterDetails DeserializePurchaseMeterDetails(JsonElement element)
         {

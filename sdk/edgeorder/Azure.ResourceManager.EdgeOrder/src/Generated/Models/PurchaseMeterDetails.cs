@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Billing type Purchase meter details. </summary>
-    internal partial class PurchaseMeterDetails : MeterDetails
+    public partial class PurchaseMeterDetails : MeterDetails
     {
         /// <summary> Initializes a new instance of PurchaseMeterDetails. </summary>
         internal PurchaseMeterDetails()

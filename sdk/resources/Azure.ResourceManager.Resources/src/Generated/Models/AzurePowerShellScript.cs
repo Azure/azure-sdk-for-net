@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Object model for the Azure PowerShell script. </summary>
-    internal partial class AzurePowerShellScript : DeploymentScriptData
+    public partial class AzurePowerShellScript : DeploymentScriptData
     {
         /// <summary> Initializes a new instance of AzurePowerShellScript. </summary>
         /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>

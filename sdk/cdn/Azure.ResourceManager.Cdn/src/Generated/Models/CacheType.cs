@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The level at which the content needs to be cached. </summary>
-    internal readonly partial struct CacheType : IEquatable<CacheType>
+    public readonly partial struct CacheType : IEquatable<CacheType>
     {
         private readonly string _value;
 

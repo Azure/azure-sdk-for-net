@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the PostArgs condition for the delivery rule. </summary>
-    internal partial class DeliveryRulePostArgsCondition : DeliveryRuleCondition
+    public partial class DeliveryRulePostArgsCondition : DeliveryRuleCondition
     {
         /// <summary> Initializes a new instance of DeliveryRulePostArgsCondition. </summary>
         /// <param name="parameters"> Defines the parameters for the condition. </param>

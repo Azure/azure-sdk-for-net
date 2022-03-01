@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The object representing periodic mode backup policy. </summary>
-    internal partial class PeriodicModeBackupPolicy : BackupPolicy
+    public partial class PeriodicModeBackupPolicy : BackupPolicy
     {
         /// <summary> Initializes a new instance of PeriodicModeBackupPolicy. </summary>
         public PeriodicModeBackupPolicy()

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Describes what transforms are applied before matching. </summary>
-    internal readonly partial struct TransformCategory : IEquatable<TransformCategory>
+    public readonly partial struct TransformCategory : IEquatable<TransformCategory>
     {
         private readonly string _value;
 

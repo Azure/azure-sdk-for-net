@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    internal partial class DeliveryRuleRequestBodyCondition : IUtf8JsonSerializable
+    public partial class DeliveryRuleRequestBodyCondition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for Cookies match conditions. </summary>
-    internal partial class CookiesMatchConditionParameters
+    public partial class CookiesMatchConditionParameters
     {
         /// <summary> Initializes a new instance of CookiesMatchConditionParameters. </summary>
         /// <param name="odataType"></param>

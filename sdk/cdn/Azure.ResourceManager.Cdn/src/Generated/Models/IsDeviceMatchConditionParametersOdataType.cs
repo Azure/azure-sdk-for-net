@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The IsDeviceMatchConditionParametersOdataType. </summary>
-    internal readonly partial struct IsDeviceMatchConditionParametersOdataType : IEquatable<IsDeviceMatchConditionParametersOdataType>
+    public readonly partial struct IsDeviceMatchConditionParametersOdataType : IEquatable<IsDeviceMatchConditionParametersOdataType>
     {
         private readonly string _value;
 

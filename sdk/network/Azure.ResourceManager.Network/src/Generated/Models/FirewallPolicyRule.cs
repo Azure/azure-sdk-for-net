@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of a rule. </summary>
-    internal partial class FirewallPolicyRule
+    public partial class FirewallPolicyRule
     {
         /// <summary> Initializes a new instance of FirewallPolicyRule. </summary>
         public FirewallPolicyRule()

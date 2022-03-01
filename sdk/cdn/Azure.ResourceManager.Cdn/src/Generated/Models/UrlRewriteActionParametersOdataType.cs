@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The UrlRewriteActionParametersOdataType. </summary>
-    internal readonly partial struct UrlRewriteActionParametersOdataType : IEquatable<UrlRewriteActionParametersOdataType>
+    public readonly partial struct UrlRewriteActionParametersOdataType : IEquatable<UrlRewriteActionParametersOdataType>
     {
         private readonly string _value;
 

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for the url redirect action. </summary>
-    internal partial class UrlRedirectActionParameters
+    public partial class UrlRedirectActionParameters
     {
         /// <summary> Initializes a new instance of UrlRedirectActionParameters. </summary>
         /// <param name="odataType"></param>

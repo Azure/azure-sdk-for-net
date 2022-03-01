@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Describes operator to be matched. </summary>
-    internal readonly partial struct RemoteAddressOperator : IEquatable<RemoteAddressOperator>
+    public readonly partial struct RemoteAddressOperator : IEquatable<RemoteAddressOperator>
     {
         private readonly string _value;
 

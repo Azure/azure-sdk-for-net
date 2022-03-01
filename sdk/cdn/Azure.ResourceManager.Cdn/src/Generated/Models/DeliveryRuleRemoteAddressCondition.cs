@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the RemoteAddress condition for the delivery rule. </summary>
-    internal partial class DeliveryRuleRemoteAddressCondition : DeliveryRuleCondition
+    public partial class DeliveryRuleRemoteAddressCondition : DeliveryRuleCondition
     {
         /// <summary> Initializes a new instance of DeliveryRuleRemoteAddressCondition. </summary>
         /// <param name="parameters"> Defines the parameters for the condition. </param>

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Rule of type application. </summary>
-    internal partial class ApplicationRule : FirewallPolicyRule
+    public partial class ApplicationRule : FirewallPolicyRule
     {
         /// <summary> Initializes a new instance of ApplicationRule. </summary>
         public ApplicationRule()

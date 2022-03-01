@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Configuration values for periodic mode backup. </summary>
-    internal partial class PeriodicModeProperties
+    public partial class PeriodicModeProperties
     {
         /// <summary> Initializes a new instance of PeriodicModeProperties. </summary>
         public PeriodicModeProperties()

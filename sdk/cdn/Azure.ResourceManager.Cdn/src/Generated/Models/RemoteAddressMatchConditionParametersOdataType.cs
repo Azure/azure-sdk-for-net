@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The RemoteAddressMatchConditionParametersOdataType. </summary>
-    internal readonly partial struct RemoteAddressMatchConditionParametersOdataType : IEquatable<RemoteAddressMatchConditionParametersOdataType>
+    public readonly partial struct RemoteAddressMatchConditionParametersOdataType : IEquatable<RemoteAddressMatchConditionParametersOdataType>
     {
         private readonly string _value;
 

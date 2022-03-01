@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The OriginGroupOverrideActionParametersOdataType. </summary>
-    internal readonly partial struct OriginGroupOverrideActionParametersOdataType : IEquatable<OriginGroupOverrideActionParametersOdataType>
+    public readonly partial struct OriginGroupOverrideActionParametersOdataType : IEquatable<OriginGroupOverrideActionParametersOdataType>
     {
         private readonly string _value;
 

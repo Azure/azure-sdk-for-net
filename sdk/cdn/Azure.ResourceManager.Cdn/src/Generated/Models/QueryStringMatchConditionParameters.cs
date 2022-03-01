@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for QueryString match conditions. </summary>
-    internal partial class QueryStringMatchConditionParameters
+    public partial class QueryStringMatchConditionParameters
     {
         /// <summary> Initializes a new instance of QueryStringMatchConditionParameters. </summary>
         /// <param name="odataType"></param>
