@@ -14,6 +14,10 @@ namespace Microsoft.Azure.Management.StorageSync
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Microsoft Storage Sync Service API
@@ -118,6 +122,23 @@ namespace Microsoft.Azure.Management.StorageSync
         /// Gets the IOperationStatusOperations.
         /// </summary>
         IOperationStatusOperations OperationStatus { get; }
+
+        /// <summary>
+        /// Get Operation status
+        /// </summary>
+        /// <param name='locationName'>
+        /// The desired region to obtain information from.
+        /// </param>
+        /// <param name='operationId'>
+        /// operation Id
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<LocationOperationStatus,LocationOperationStatusHeaders>> LocationOperationStatusMethodWithHttpMessagesAsync(string locationName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }
