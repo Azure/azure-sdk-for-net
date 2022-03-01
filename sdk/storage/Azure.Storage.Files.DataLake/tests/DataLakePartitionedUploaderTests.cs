@@ -305,7 +305,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     IsAny<byte[]>(),
                     _async,
                     s_cancellationToken
-                )).Returns<Stream, long, DataLakeFileAppendOptions, bool, CancellationToken>(sink.AppendInternal);
+                )).Returns<Stream, long, DataLakeFileAppendOptions, byte[], bool, CancellationToken>(sink.AppendInternal);
 
             clientMock.Setup(
                 c => c.FlushInternal(
@@ -377,6 +377,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Stream stream,
                 long offset,
                 DataLakeFileAppendOptions options,
+                byte[] md5,
                 bool async,
                 CancellationToken cancellationToken)
             {
