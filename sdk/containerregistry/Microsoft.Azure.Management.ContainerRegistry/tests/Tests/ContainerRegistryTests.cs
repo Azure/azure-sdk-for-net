@@ -921,7 +921,7 @@ steps:
                 Assert.NotEmpty(credentials.Passwords);
                 Assert.NotEmpty(credentials.Username);
 
-                // Delete scope map
+                // Delete token
                 registryClient.Tokens.Delete(resourceGroup.Name, registry.Name, token.Name);
 
                 // Delete the container registry
@@ -1018,6 +1018,10 @@ steps:
 
                 // Delete connected registry
                 registryClient.ConnectedRegistries.Delete(resourceGroup.Name, registry.Name, connectedRegistry.Name);
+
+                // Delete connected registry dependencies
+                registryClient.Tokens.Delete(resourceGroup.Name, registry.Name, token.Name);
+                registryClient.ScopeMaps.Delete(resourceGroup.Name, registry.Name, scopeMap.Name);
 
                 // Delete the container registry
                 registryClient.Registries.Delete(resourceGroup.Name, registry.Name);
