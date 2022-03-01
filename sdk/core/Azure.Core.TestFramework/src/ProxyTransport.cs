@@ -112,6 +112,7 @@ namespace Azure.Core.TestFramework
             }
 
             var request = _innerTransport.CreateRequest();
+            _recording.HasRequests = true;
             lock (_recording.Random)
             {
                 // Make sure ClientRequestId are the same across request and response

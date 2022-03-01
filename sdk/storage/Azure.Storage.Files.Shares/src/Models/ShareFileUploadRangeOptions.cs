@@ -25,10 +25,11 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         public IProgress<long> ProgressHandler { get; set; }
 
-        /// <summary>
-        /// Optional <see cref="UploadTransactionalHashingOptions"/> for using transactional
-        /// hashing on uploads.
-        /// </summary>
-        public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        ///// <summary>
+        ///// Optional <see cref="UploadTransactionalHashingOptions"/> for using transactional
+        ///// hashing on uploads.
+        ///// </summary>
+        // TODO #27253
+        //public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
     }
 }

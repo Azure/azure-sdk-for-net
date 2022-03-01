@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Instance view statuses. </summary>
-    public partial class InstanceViewStatusesSummary
+    internal partial class InstanceViewStatusesSummary
     {
         /// <summary> Initializes a new instance of InstanceViewStatusesSummary. </summary>
         internal InstanceViewStatusesSummary()

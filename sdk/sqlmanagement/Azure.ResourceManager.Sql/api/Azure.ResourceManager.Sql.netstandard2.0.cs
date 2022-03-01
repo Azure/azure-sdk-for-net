@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.Sql
         public System.Collections.Generic.IList<string> Databases { get { throw null; } }
         public string Location { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Sql.Models.PartnerInfo> PartnerServers { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.FailoverGroupReadOnlyEndpoint ReadOnlyEndpoint { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.ReadOnlyEndpointFailoverPolicy? ReadOnlyEndpointFailoverPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.FailoverGroupReadWriteEndpoint ReadWriteEndpoint { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.FailoverGroupReplicationRole? ReplicationRole { get { throw null; } }
         public string ReplicationState { get { throw null; } }
@@ -649,8 +649,8 @@ namespace Azure.ResourceManager.Sql
     public partial class FirewallRuleData : Azure.ResourceManager.Sql.Models.ProxyResourceWithWritableName
     {
         public FirewallRuleData() { }
-        public string EndIpAddress { get { throw null; } set { } }
-        public string StartIpAddress { get { throw null; } set { } }
+        public string EndIPAddress { get { throw null; } set { } }
+        public string StartIPAddress { get { throw null; } set { } }
     }
     public partial class GeoBackupPolicy : Azure.ResourceManager.Core.ArmResource
     {
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.Sql
         public InstanceFailoverGroupData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Sql.Models.ManagedInstancePairInfo> ManagedInstancePairs { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Sql.Models.PartnerRegionInfo> PartnerRegions { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.InstanceFailoverGroupReadOnlyEndpoint ReadOnlyEndpoint { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.ReadOnlyEndpointFailoverPolicy? ReadOnlyEndpointFailoverPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.InstanceFailoverGroupReadWriteEndpoint ReadWriteEndpoint { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.InstanceFailoverGroupReplicationRole? ReplicationRole { get { throw null; } }
         public string ReplicationState { get { throw null; } }
@@ -1848,7 +1848,7 @@ namespace Azure.ResourceManager.Sql
     public partial class ManagedInstancePrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public ManagedInstancePrivateEndpointConnectionData() { }
-        public Azure.ResourceManager.Resources.Models.WritableSubResource PrivateEndpoint { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ManagedInstancePrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
     }
@@ -2085,7 +2085,7 @@ namespace Azure.ResourceManager.Sql
     public partial class PrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public PrivateEndpointConnectionData() { }
-        public Azure.ResourceManager.Resources.Models.WritableSubResource PrivateEndpoint { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.PrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.PrivateEndpointProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -4963,11 +4963,6 @@ namespace Azure.ResourceManager.Sql.Models
         public Azure.ResourceManager.Sql.Models.StorageKeyType StorageKeyType { get { throw null; } }
         public System.Uri StorageUri { get { throw null; } }
     }
-    public partial class FailoverGroupReadOnlyEndpoint
-    {
-        public FailoverGroupReadOnlyEndpoint() { }
-        public Azure.ResourceManager.Sql.Models.ReadOnlyEndpointFailoverPolicy? FailoverPolicy { get { throw null; } set { } }
-    }
     public partial class FailoverGroupReadWriteEndpoint
     {
         public FailoverGroupReadWriteEndpoint(Azure.ResourceManager.Sql.Models.ReadWriteEndpointFailoverPolicy failoverPolicy) { }
@@ -4996,7 +4991,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         public FailoverGroupUpdateOptions() { }
         public System.Collections.Generic.IList<string> Databases { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.FailoverGroupReadOnlyEndpoint ReadOnlyEndpoint { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.ReadOnlyEndpointFailoverPolicy? ReadOnlyEndpointFailoverPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.FailoverGroupReadWriteEndpoint ReadWriteEndpoint { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
@@ -5102,11 +5097,6 @@ namespace Azure.ResourceManager.Sql.Models
         public string StorageKey { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.StorageKeyType StorageKeyType { get { throw null; } }
         public System.Uri StorageUri { get { throw null; } }
-    }
-    public partial class InstanceFailoverGroupReadOnlyEndpoint
-    {
-        public InstanceFailoverGroupReadOnlyEndpoint() { }
-        public Azure.ResourceManager.Sql.Models.ReadOnlyEndpointFailoverPolicy? FailoverPolicy { get { throw null; } set { } }
     }
     public partial class InstanceFailoverGroupReadWriteEndpoint
     {
@@ -5677,7 +5667,7 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class ManagedInstancePrivateEndpointConnectionProperties
     {
         internal ManagedInstancePrivateEndpointConnectionProperties() { }
-        public Azure.ResourceManager.Resources.Models.WritableSubResource PrivateEndpoint { get { throw null; } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ManagedInstancePrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
     }
@@ -6076,7 +6066,7 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class PrivateEndpointConnectionProperties
     {
         internal PrivateEndpointConnectionProperties() { }
-        public Azure.ResourceManager.Resources.Models.WritableSubResource PrivateEndpoint { get { throw null; } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.PrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.PrivateEndpointProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -6599,7 +6589,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         public SecurityEvent() { }
         public string ApplicationName { get { throw null; } }
-        public string ClientIp { get { throw null; } }
+        public string ClientIP { get { throw null; } }
         public string Database { get { throw null; } }
         public System.DateTimeOffset? EventTime { get { throw null; } }
         public string PrincipalName { get { throw null; } }

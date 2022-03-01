@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of the AzureFirewallRCAction. </summary>
-    public partial class AzureFirewallRCAction
+    internal partial class AzureFirewallRCAction
     {
         /// <summary> Initializes a new instance of AzureFirewallRCAction. </summary>
         public AzureFirewallRCAction()

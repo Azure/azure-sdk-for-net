@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> AzureFirewall NAT Rule Collection Action. </summary>
-    public partial class AzureFirewallNatRCAction
+    internal partial class AzureFirewallNatRCAction
     {
         /// <summary> Initializes a new instance of AzureFirewallNatRCAction. </summary>
         public AzureFirewallNatRCAction()
