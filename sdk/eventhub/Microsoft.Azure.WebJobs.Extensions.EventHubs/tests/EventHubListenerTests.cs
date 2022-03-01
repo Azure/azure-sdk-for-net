@@ -12,6 +12,7 @@ using Azure.Messaging.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.EventHubs.Listeners;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host.Executors;
+using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Logging;
@@ -233,6 +234,40 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var scaleMonitor2 = listener.GetMonitor();
 
             Assert.AreSame(scaleMonitor, scaleMonitor2);
+        }
+
+        [Test]
+        public void Dispose_StopsTheProcessor()
+        {
+            var functionId = "FunctionId";
+            var eventHubName = "EventHubName";
+            var consumerGroup = "ConsumerGroup";
+            var host = new Mock<EventProcessorHost>(consumerGroup,
+                "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=",
+                eventHubName,
+                new EventProcessorOptions(),
+                3,null);
+            host.Setup(h => h.StopProcessingAsync(CancellationToken.None)).Returns(Task.CompletedTask);
+
+            var consumerClientMock = new Mock<IEventHubConsumerClient>();
+            consumerClientMock.SetupGet(c => c.ConsumerGroup).Returns(consumerGroup);
+            consumerClientMock.SetupGet(c => c.EventHubName).Returns(eventHubName);
+
+            var listener = new EventHubListener(
+                functionId,
+                Mock.Of<ITriggeredFunctionExecutor>(),
+                host.Object,
+                false,
+                consumerClientMock.Object,
+                Mock.Of<BlobsCheckpointStore>(),
+                new EventHubOptions(),
+                Mock.Of<LoggerFactory>());
+
+            (listener as IListener).Dispose();
+            host.Verify(h => h.StopProcessingAsync(CancellationToken.None), Times.Once);
+
+            (listener as IListener).Cancel();
+            host.Verify(h => h.StopProcessingAsync(CancellationToken.None), Times.Exactly(2));
         }
     }
 }
