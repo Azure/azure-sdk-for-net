@@ -66,11 +66,16 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         /// </summary>
         void IListener.Cancel()
         {
-            StopAsync(CancellationToken.None).Wait();
+#pragma warning disable AZC0102
+            StopAsync(CancellationToken.None).GetAwaiter().GetResult();
+#pragma warning restore AZC0102
         }
 
         void IDisposable.Dispose()
         {
+#pragma warning disable AZC0102
+            StopAsync(CancellationToken.None).GetAwaiter().GetResult();
+#pragma warning restore AZC0102
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)

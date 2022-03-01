@@ -70,7 +70,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="maintenanceConfigurationId">Maintenance configuration
         /// id assigned to the elastic pool. This configuration defines the
         /// period when the maintenance updates will will occur.</param>
-        public ElasticPool(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string state = default(string), System.DateTime? creationDate = default(System.DateTime?), long? maxSizeBytes = default(long?), ElasticPoolPerDatabaseSettings perDatabaseSettings = default(ElasticPoolPerDatabaseSettings), bool? zoneRedundant = default(bool?), string licenseType = default(string), string maintenanceConfigurationId = default(string))
+        /// <param name="highAvailabilityReplicaCount">The number of secondary
+        /// replicas associated with the elastic pool that are used to provide
+        /// high availability.</param>
+        public ElasticPool(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string state = default(string), System.DateTime? creationDate = default(System.DateTime?), long? maxSizeBytes = default(long?), ElasticPoolPerDatabaseSettings perDatabaseSettings = default(ElasticPoolPerDatabaseSettings), bool? zoneRedundant = default(bool?), string licenseType = default(string), string maintenanceConfigurationId = default(string), int? highAvailabilityReplicaCount = default(int?))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -82,6 +85,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             ZoneRedundant = zoneRedundant;
             LicenseType = licenseType;
             MaintenanceConfigurationId = maintenanceConfigurationId;
+            HighAvailabilityReplicaCount = highAvailabilityReplicaCount;
             CustomInit();
         }
 
@@ -163,6 +167,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.maintenanceConfigurationId")]
         public string MaintenanceConfigurationId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of secondary replicas associated with the
+        /// elastic pool that are used to provide high availability.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.highAvailabilityReplicaCount")]
+        public int? HighAvailabilityReplicaCount { get; set; }
 
         /// <summary>
         /// Validate the object.

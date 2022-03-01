@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             Name = name;
-            IpTags = new ChangeTrackingList<VirtualMachineScaleSetIpTag>();
+            IPTags = new ChangeTrackingList<VirtualMachineScaleSetIPTag>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetPublicIPAddressConfiguration. </summary>
@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publicIPPrefix"> The PublicIPPrefix from which to allocate publicIP addresses. </param>
         /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: &apos;IPv4&apos; and &apos;IPv6&apos;. </param>
         /// <param name="deleteOption"> Specify what happens to the public IP when the VM is deleted. </param>
-        internal VirtualMachineScaleSetPublicIPAddressConfiguration(string name, PublicIPAddressSku sku, int? idleTimeoutInMinutes, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetIpTag> ipTags, WritableSubResource publicIPPrefix, IPVersion? publicIPAddressVersion, DeleteOptions? deleteOption)
+        internal VirtualMachineScaleSetPublicIPAddressConfiguration(string name, PublicIPAddressSku sku, int? idleTimeoutInMinutes, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetIPTag> ipTags, WritableSubResource publicIPPrefix, IPVersion? publicIPAddressVersion, DeleteOptions? deleteOption)
         {
             Name = name;
             Sku = sku;
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             DnsSettings = dnsSettings;
-            IpTags = ipTags;
+            IPTags = ipTags;
             PublicIPPrefix = publicIPPrefix;
             PublicIPAddressVersion = publicIPAddressVersion;
             DeleteOption = deleteOption;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The list of IP tags associated with the public IP address. </summary>
-        public IList<VirtualMachineScaleSetIpTag> IpTags { get; }
+        public IList<VirtualMachineScaleSetIPTag> IPTags { get; }
         /// <summary> The PublicIPPrefix from which to allocate publicIP addresses. </summary>
         internal WritableSubResource PublicIPPrefix { get; set; }
         /// <summary> Gets or sets Id. </summary>
