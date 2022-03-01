@@ -20,6 +20,7 @@ This troubleshooting guide covers failure investigation techniques, common error
 - [Troubleshoot VisualStudioCredential Authentication Issues](#troubleshoot-visualstudiocredential-authenticaton-issues)
 - [Troubleshoot AzureCliCredential Authentication Issues](#troubleshoot-azureclicredential-authentication-issues)
 - [Troubleshoot AzurePowerShellCredential Authentication Issues](#troubleshoot-azurepowershellcredential-authentication-issues)
+- [Getting Additional Help](#getting-additional-help)
 
 ## Handle Azure Identity Exceptions
 
@@ -236,3 +237,7 @@ Once you've verified Azure PowerShell is using correct account, you can validate
 Get-AzAccessToken -ResourceUrl "https://management.core.windows.net"
 ```
 >Note that output of this command will contain a valid access token, and SHOULD NOT BE SHARED to avoid compromising account security.
+
+## Getting Additional Help
+
+Additional information on ways to reach out for support can be found in the [SUPPORT.md](https://github.com/Azure/azure-sdk-for-net/blob/main/SUPPORT.md) at the root of the repo.
