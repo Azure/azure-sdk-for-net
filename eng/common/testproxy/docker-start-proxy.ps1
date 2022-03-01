@@ -73,7 +73,7 @@ if ($IsWindows -and $env:TF_BUILD){
 
 # there isn't really a great way to get environment variables automagically from the CI environment to the docker image
 # handle loglevel here so that setting such a setting in CI will also bump the docker logging
-if ($env:Logging__LogLevel__Default){
+if ($env:Logging__LogLevel__Default) {
     $AdditionalContainerArgs += "-e Logging__LogLevel__Default=$($env:Logging__LogLevel__Default)"
 }
 
