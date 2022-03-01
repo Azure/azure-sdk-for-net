@@ -348,7 +348,7 @@ namespace Azure.Storage.Blobs.Test
                     IsAny<byte[]>(),
                     _async,
                     s_cancellationToken
-                )).Returns<string, Stream, BlockBlobStageBlockOptions, bool, CancellationToken>(sink.StageInternal);
+                )).Returns<string, Stream, BlockBlobStageBlockOptions, byte[], bool, CancellationToken>(sink.StageInternal);
 
             clientMock.Setup(
                 c => c.CommitBlockListInternal(
@@ -404,7 +404,7 @@ namespace Azure.Storage.Blobs.Test
                 return s_response;
             }
 
-            public async Task<Response<BlockInfo>> StageInternal(string s, Stream stream, BlockBlobStageBlockOptions options, bool async, CancellationToken cancellationToken)
+            public async Task<Response<BlockInfo>> StageInternal(string s, Stream stream, BlockBlobStageBlockOptions options, byte[] hash, bool async, CancellationToken cancellationToken)
             {
                 if (async)
                 {
