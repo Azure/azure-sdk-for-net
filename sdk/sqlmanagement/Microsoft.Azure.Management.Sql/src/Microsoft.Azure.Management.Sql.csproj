@@ -16,6 +16,7 @@ New features:
 - Backup storage redundancy now has GeoZone option and this is why API version upgrade was needed (2021-05-01-preview) for following operations: ManagedInstances, Databases, LongTermRetentionBackups, LongTermRetentionManagedInstanceBackups,
 RestorableDroppedDatabases, RestorableDroppedManagedDatabases, ServerConnecionPolicies
 - ManagedInstances StorageAccountType parameter is now replaced with RequestedBackupStorageRedundancy and CurrentBackupStorageRedundancy
+- Add IPv6 firewall rules management API (2021-08-01-preview)
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

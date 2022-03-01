@@ -29,38 +29,6 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region ApplicationGatewayAvailableSslOptions
-        /// <summary> Gets an object representing a ApplicationGatewayAvailableSslOptions along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationGatewayAvailableSslOptions" /> object. </returns>
-        public static ApplicationGatewayAvailableSslOptions GetApplicationGatewayAvailableSslOptions(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetClient(() =>
-            {
-                ApplicationGatewayAvailableSslOptions.ValidateResourceId(id);
-                return new ApplicationGatewayAvailableSslOptions(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ApplicationGatewaySslPredefinedPolicy
-        /// <summary> Gets an object representing a ApplicationGatewaySslPredefinedPolicy along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationGatewaySslPredefinedPolicy" /> object. </returns>
-        public static ApplicationGatewaySslPredefinedPolicy GetApplicationGatewaySslPredefinedPolicy(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetClient(() =>
-            {
-                ApplicationGatewaySslPredefinedPolicy.ValidateResourceId(id);
-                return new ApplicationGatewaySslPredefinedPolicy(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region ApplicationGatewayPrivateEndpointConnection
         /// <summary> Gets an object representing a ApplicationGatewayPrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -141,17 +109,17 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region CustomIpPrefix
-        /// <summary> Gets an object representing a CustomIpPrefix along with the instance operations that can be performed on it but with no data. </summary>
+        #region CustomIPPrefix
+        /// <summary> Gets an object representing a CustomIPPrefix along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CustomIpPrefix" /> object. </returns>
-        public static CustomIpPrefix GetCustomIpPrefix(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CustomIPPrefix" /> object. </returns>
+        public static CustomIPPrefix GetCustomIPPrefix(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                CustomIpPrefix.ValidateResourceId(id);
-                return new CustomIpPrefix(client, id);
+                CustomIPPrefix.ValidateResourceId(id);
+                return new CustomIPPrefix(client, id);
             }
             );
         }
@@ -397,33 +365,33 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region IpAllocation
-        /// <summary> Gets an object representing a IpAllocation along with the instance operations that can be performed on it but with no data. </summary>
+        #region IPAllocation
+        /// <summary> Gets an object representing a IPAllocation along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IpAllocation" /> object. </returns>
-        public static IpAllocation GetIpAllocation(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IPAllocation" /> object. </returns>
+        public static IPAllocation GetIPAllocation(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                IpAllocation.ValidateResourceId(id);
-                return new IpAllocation(client, id);
+                IPAllocation.ValidateResourceId(id);
+                return new IPAllocation(client, id);
             }
             );
         }
         #endregion
 
-        #region IpGroup
-        /// <summary> Gets an object representing a IpGroup along with the instance operations that can be performed on it but with no data. </summary>
+        #region IPGroup
+        /// <summary> Gets an object representing a IPGroup along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IpGroup" /> object. </returns>
-        public static IpGroup GetIpGroup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IPGroup" /> object. </returns>
+        public static IPGroup GetIPGroup(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                IpGroup.ValidateResourceId(id);
-                return new IpGroup(client, id);
+                IPGroup.ValidateResourceId(id);
+                return new IPGroup(client, id);
             }
             );
         }
@@ -1149,17 +1117,17 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region VirtualWAN
-        /// <summary> Gets an object representing a VirtualWAN along with the instance operations that can be performed on it but with no data. </summary>
+        #region VirtualWan
+        /// <summary> Gets an object representing a VirtualWan along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualWAN" /> object. </returns>
-        public static VirtualWAN GetVirtualWAN(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualWan" /> object. </returns>
+        public static VirtualWan GetVirtualWan(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                VirtualWAN.ValidateResourceId(id);
-                return new VirtualWAN(client, id);
+                VirtualWan.ValidateResourceId(id);
+                return new VirtualWan(client, id);
             }
             );
         }
@@ -1389,17 +1357,17 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region HubIpConfiguration
-        /// <summary> Gets an object representing a HubIpConfiguration along with the instance operations that can be performed on it but with no data. </summary>
+        #region HubIPConfiguration
+        /// <summary> Gets an object representing a HubIPConfiguration along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HubIpConfiguration" /> object. </returns>
-        public static HubIpConfiguration GetHubIpConfiguration(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HubIPConfiguration" /> object. </returns>
+        public static HubIPConfiguration GetHubIPConfiguration(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                HubIpConfiguration.ValidateResourceId(id);
-                return new HubIpConfiguration(client, id);
+                HubIPConfiguration.ValidateResourceId(id);
+                return new HubIPConfiguration(client, id);
             }
             );
         }

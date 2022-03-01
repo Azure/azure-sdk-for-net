@@ -183,11 +183,11 @@ namespace Azure.ResourceManager.Network.Tests
                         BackendAddresses = {
                             new ApplicationGatewayBackendAddress()
                             {
-                                IpAddress = "hello1.azurewebsites.net"
+                                IPAddress = "hello1.azurewebsites.net"
                             },
                             new ApplicationGatewayBackendAddress()
                             {
-                                IpAddress = "hello2.azurewebsites.net"
+                                IPAddress = "hello2.azurewebsites.net"
                             }
                         }
                     },
@@ -503,11 +503,11 @@ namespace Azure.ResourceManager.Network.Tests
                         BackendAddresses = {
                             new ApplicationGatewayBackendAddress()
                             {
-                                IpAddress = ipAddresses[0]
+                                IPAddress = ipAddresses[0]
                             },
                             new ApplicationGatewayBackendAddress()
                             {
-                                IpAddress = ipAddresses[1]
+                                IPAddress = ipAddresses[1]
                             }
                         }
                     },
@@ -704,10 +704,10 @@ namespace Azure.ResourceManager.Network.Tests
             // Assert.NotNull(availableWAFRuleSet.RuleGroups[0].Rules[0].RuleId);
 
             // Get availalbe SSL options
-            Response<ApplicationGatewayAvailableSslOptions> sslOptions = await _subscription.GetApplicationGatewayAvailableSslOptions().GetAsync();
-            Assert.NotNull(sslOptions.Value.Data.DefaultPolicy);
-            Assert.NotNull(sslOptions.Value.Data.AvailableCipherSuites);
-            Assert.NotNull(sslOptions.Value.Data.AvailableCipherSuites[20]);
+            //Response<ApplicationGatewayAvailableSslOptions> sslOptions = await _subscription.GetApplicationGatewayAvailableSslOptions().GetAsync();
+            //Assert.NotNull(sslOptions.Value.Data.DefaultPolicy);
+            //Assert.NotNull(sslOptions.Value.Data.AvailableCipherSuites);
+            //Assert.NotNull(sslOptions.Value.Data.AvailableCipherSuites[20]);
 
             //AsyncPageable<ApplicationGatewaySslPredefinedPolicy> policies = _subscription.GetApplicationGatewayAvailableSslPredefinedPoliciesAsync();
             //IAsyncEnumerator<ApplicationGatewaySslPredefinedPolicy> enumerator = policies.GetAsyncEnumerator();
@@ -740,8 +740,8 @@ namespace Azure.ResourceManager.Network.Tests
                 "ipconfig");
 
             // Add NIC to application gateway backend address pool.
-            nic1.Result.Data.IpConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.Data.BackendAddressPools[1]);
-            nic2.Result.Data.IpConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.Data.BackendAddressPools[1]);
+            nic1.Result.Data.IPConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.Data.BackendAddressPools[1]);
+            nic2.Result.Data.IPConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.Data.BackendAddressPools[1]);
             // Put Nics
             var networkInterfaceCollection = GetNetworkInterfaceCollection(resourceGroupName);
             var createOrUpdateOperation1 = await networkInterfaceCollection.CreateOrUpdateAsync(true, nic1name, nic1.Result.Data);
@@ -811,8 +811,8 @@ namespace Azure.ResourceManager.Network.Tests
             var vm2 = await CreateLinuxVM(virtualMachineName2, nicName2, location, resourceGroup, vnet);
 
             //associate VMs's nic with application gateway
-            var nicPrivateIpAdd1 = GetNetworkInterfaceCollection(resourceGroup).GetAsync(nicName1).Result.Value.Data.IpConfigurations.FirstOrDefault().PrivateIPAddress;
-            var nicPrivateIpAdd2 = GetNetworkInterfaceCollection(resourceGroup).GetAsync(nicName2).Result.Value.Data.IpConfigurations.FirstOrDefault().PrivateIPAddress;
+            var nicPrivateIpAdd1 = GetNetworkInterfaceCollection(resourceGroup).GetAsync(nicName1).Result.Value.Data.IPConfigurations.FirstOrDefault().PrivateIPAddress;
+            var nicPrivateIpAdd2 = GetNetworkInterfaceCollection(resourceGroup).GetAsync(nicName2).Result.Value.Data.IPConfigurations.FirstOrDefault().PrivateIPAddress;
             string[] ipAddresses = new string[2] { nicPrivateIpAdd1, nicPrivateIpAdd2 };
 
             //create ApplicationGateway
@@ -839,8 +839,8 @@ namespace Azure.ResourceManager.Network.Tests
             var nic2 = GetNetworkInterfaceCollection(resourceGroup).GetAsync(nicName2);
             Assert.NotNull(nic1);
             Assert.NotNull(nic2);
-            nic1.Result.Value.Data.IpConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.Data.BackendAddressPools[1]);
-            nic2.Result.Value.Data.IpConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.Data.BackendAddressPools[1]);
+            nic1.Result.Value.Data.IPConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.Data.BackendAddressPools[1]);
+            nic2.Result.Value.Data.IPConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.Data.BackendAddressPools[1]);
 
             // Put Nics
             var networkInterfaceCollection = GetNetworkInterfaceCollection(resourceGroup);

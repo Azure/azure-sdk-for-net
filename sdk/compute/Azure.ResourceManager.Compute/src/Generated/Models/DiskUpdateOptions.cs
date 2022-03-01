@@ -52,9 +52,27 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Purchase plan information to be added on the OS disk. </summary>
         public DiskPurchasePlan PurchasePlan { get; set; }
         /// <summary> List of supported capabilities (like accelerated networking) to be added on the OS disk. </summary>
-        public SupportedCapabilities SupportedCapabilities { get; set; }
+        internal SupportedCapabilities SupportedCapabilities { get; set; }
+        /// <summary> True if the image from which the OS disk is created supports accelerated networking. </summary>
+        public bool? AcceleratedNetwork
+        {
+            get => SupportedCapabilities is null ? default : SupportedCapabilities.AcceleratedNetwork;
+            set
+            {
+                if (SupportedCapabilities is null)
+                    SupportedCapabilities = new SupportedCapabilities();
+                SupportedCapabilities.AcceleratedNetwork = value;
+            }
+        }
+
         /// <summary> Properties of the disk for which update is pending. </summary>
-        public PropertyUpdatesInProgress PropertyUpdatesInProgress { get; }
+        internal PropertyUpdatesInProgress PropertyUpdatesInProgress { get; }
+        /// <summary> The target performance tier of the disk if a tier change operation is in progress. </summary>
+        public string PropertyUpdatesInProgressTargetTier
+        {
+            get => PropertyUpdatesInProgress.TargetTier;
+        }
+
         /// <summary> Indicates the OS on a disk supports hibernation. </summary>
         public bool? SupportsHibernation { get; set; }
         /// <summary> Policy for controlling export on the disk. </summary>

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Contains information about the soft deletion policy of the gallery. </summary>
-    public partial class SoftDeletePolicy
+    internal partial class SoftDeletePolicy
     {
         /// <summary> Initializes a new instance of SoftDeletePolicy. </summary>
         public SoftDeletePolicy()

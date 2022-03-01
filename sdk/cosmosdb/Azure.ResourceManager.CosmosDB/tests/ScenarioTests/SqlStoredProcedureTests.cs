@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.Null(storedProcedure);
         }
 
-        protected async Task<SqlStoredProcedure> CreateSqlStoredProcedure(AutoscaleSettings autoscale)
+        internal async Task<SqlStoredProcedure> CreateSqlStoredProcedure(AutoscaleSettings autoscale)
         {
             _storedProcedureName = Recording.GenerateAssetName("sql-stored-procedure-");
             SqlStoredProcedureCreateUpdateOptions sqlDatabaseCreateUpdateOptions = new SqlStoredProcedureCreateUpdateOptions(AzureLocation.WestUS,

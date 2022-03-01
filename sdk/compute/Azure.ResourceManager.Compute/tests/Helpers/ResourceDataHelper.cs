@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                 },
                 VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                 {
-                    OsProfile = new VirtualMachineScaleSetOSProfile()
+                    OSProfile = new VirtualMachineScaleSetOSProfile()
                     {
                         ComputerNamePrefix = computerNamePrefix,
                         AdminUsername = adminUsername,
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                             new VirtualMachineScaleSetNetworkConfiguration("example")
                             {
                                 Primary = true,
-                                IpConfigurations =
+                                IPConfigurations =
                                 {
                                     new VirtualMachineScaleSetIPConfiguration("internal")
                                     {
