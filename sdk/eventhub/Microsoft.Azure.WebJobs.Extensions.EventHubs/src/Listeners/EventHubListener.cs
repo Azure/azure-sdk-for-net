@@ -71,6 +71,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
         void IDisposable.Dispose()
         {
+            StopAsync(CancellationToken.None).Wait();
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
