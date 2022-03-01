@@ -58,7 +58,7 @@ Calls to service clients resulting in `RequestFailedException` with a `StatusCod
 
 `AuthenticationFailedException` is thrown when unexpected errors occurred while a credential is authenticating. This can include errors received from requests to the AAD STS and often contains information helpful to diagnosis. Consider the following `AuthenticationFailedException` message.
 
-![AuthenticationFailedException Message Example](./images/AuthFailedErrorMessageExample.png)
+![AuthenticationFailedException Message Example](https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/identity/Azure.Identity/images/AuthFailedErrorMessageExample.png)
 
 This error contains several pieces of information:
 
