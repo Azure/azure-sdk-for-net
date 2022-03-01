@@ -36,12 +36,13 @@ catch {
     Write-Error "Please check your docker invocation and try running the script again."
 }
 
-$SELECTED_IMAGE_TAG = "1.0.0-dev20220224.1"
+$SELECTED_IMAGE_TAG = $(Get-Content "$PSScriptRoot/target_version.txt" -Raw).Trim()
 $CONTAINER_NAME = "ambitious_azsdk_test_proxy"
 $LINUX_IMAGE_SOURCE = "azsdkengsys.azurecr.io/engsys/testproxy-lin:${SELECTED_IMAGE_TAG}"
 $WINDOWS_IMAGE_SOURCE = "azsdkengsys.azurecr.io/engsys/testproxy-win:${SELECTED_IMAGE_TAG}"
 
 if($VersionOverride) { 
+    Write-Host "Overriding default target proxy version of '$SELECTED_IMAGE_TAG' with override $VersionOverride."
     $SELECTED_IMAGE_TAG = $VersionOverride
 } 
 
