@@ -308,6 +308,8 @@ namespace Azure.Storage
                         async: true,
                         cancellationToken).ConfigureAwait(false))
                     {
+                        partitions.Add((block.AbsolutePosition, block.Length));
+
                         await StagePartitionAndDisposeInternal(
                             block,
                             block.AbsolutePosition,
@@ -315,8 +317,6 @@ namespace Azure.Storage
                             progressHandler,
                             async: true,
                             cancellationToken).ConfigureAwait(false);
-
-                        partitions.Add((block.AbsolutePosition, block.Length));
                     }
                 }
                 else
@@ -329,6 +329,8 @@ namespace Azure.Storage
                         async: false,
                         cancellationToken).EnsureSyncEnumerable())
                     {
+                        partitions.Add((block.AbsolutePosition, block.Length));
+
                         StagePartitionAndDisposeInternal(
                             block,
                             block.AbsolutePosition,
@@ -336,8 +338,6 @@ namespace Azure.Storage
                             progressHandler,
                             async: false,
                             cancellationToken).EnsureCompleted();
-
-                        partitions.Add((block.AbsolutePosition, block.Length));
                     }
                 }
 
