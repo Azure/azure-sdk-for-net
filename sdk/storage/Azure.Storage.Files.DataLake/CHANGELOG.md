@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- Removed preview support for SDK-calculated transactional checksums on data transfer.
 
 ## 12.9.0-beta.3 (2022-02-07)
 - Added support for service version 2021-04-10.
